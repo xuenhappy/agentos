@@ -1,215 +1,1158 @@
 \chapter{TCE：认知动力学控制器}
-\chaptervoice{这一章，我们围绕“TCE：认知动力学控制器”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明固定功能拓扑中的持续主体。}
-
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文第 15350—17726 行的 SPC—TCE 观察器—控制器理论及后续 AHC 扩展。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是持续学习、工作空间、观测器—控制器与混杂系统（Kalman、混杂系统理论与 Cowan）。
-
-本章使用上一章“SPC：自我感知压缩器”已经得到的对象与边界；本章产出将供下一章“SPC—TCE：最小认知自调节闭环”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在持续学习、工作空间、观测器—控制器与混杂系统上。
-\section{Temperature \& Control Executor}
-\begin{narration}
-现在把镜头移到“Temperature \& Control Executor”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Temperature \& Control Executor”落实为依据自状态估计调节探索、注意范围、搜索深度、步长与保守度的受限控制器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“TCE：认知动力学控制器”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u_c=\operatorname{sat}_{\mathcal U}(K(r-\hat z)).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对Temperature \& Control Executor的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：增益过高和观察延迟叠加会造成过冲与认知振荡。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Temperature \& Control Executor”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{认知温度}
-\begin{narration}
-现在把镜头移到“认知温度”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“认知温度”落实为依据自状态估计调节探索、注意范围、搜索深度、步长与保守度的受限控制器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“TCE：认知动力学控制器”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u_c=\operatorname{sat}_{\mathcal U}(K(r-\hat z)).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对认知温度的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：增益过高和观察延迟叠加会造成过冲与认知振荡。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“认知温度”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{探索与收敛}
-\begin{narration}
-现在把镜头移到“探索与收敛”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“探索与收敛”落实为依据自状态估计调节探索、注意范围、搜索深度、步长与保守度的受限控制器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“TCE：认知动力学控制器”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u_c=\operatorname{sat}_{\mathcal U}(K(r-\hat z)).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对探索与收敛的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：增益过高和观察延迟叠加会造成过冲与认知振荡。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“探索与收敛”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{注意范围}
-\begin{narration}
-现在把镜头移到“注意范围”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“注意范围”落实为依据自状态估计调节探索、注意范围、搜索深度、步长与保守度的受限控制器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“TCE：认知动力学控制器”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u_c=\operatorname{sat}_{\mathcal U}(K(r-\hat z)).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对注意范围的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：增益过高和观察延迟叠加会造成过冲与认知振荡。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“注意范围”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{搜索深度}
-\begin{narration}
-现在把镜头移到“搜索深度”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“搜索深度”落实为依据自状态估计调节探索、注意范围、搜索深度、步长与保守度的受限控制器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“TCE：认知动力学控制器”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u_c=\operatorname{sat}_{\mathcal U}(K(r-\hat z)).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对搜索深度的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：增益过高和观察延迟叠加会造成过冲与认知振荡。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“搜索深度”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{激活范围}
-\begin{narration}
-现在把镜头移到“激活范围”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“激活范围”落实为依据自状态估计调节探索、注意范围、搜索深度、步长与保守度的受限控制器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“TCE：认知动力学控制器”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u_c=\operatorname{sat}_{\mathcal U}(K(r-\hat z)).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对激活范围的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：增益过高和观察延迟叠加会造成过冲与认知振荡。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“激活范围”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{推理步长}
-\begin{narration}
-现在把镜头移到“推理步长”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“推理步长”落实为依据自状态估计调节探索、注意范围、搜索深度、步长与保守度的受限控制器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“TCE：认知动力学控制器”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u_c=\operatorname{sat}_{\mathcal U}(K(r-\hat z)).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对推理步长的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：增益过高和观察延迟叠加会造成过冲与认知振荡。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“推理步长”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{控制增益}
-\begin{narration}
-现在把镜头移到“控制增益”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“控制增益”落实为依据自状态估计调节探索、注意范围、搜索深度、步长与保守度的受限控制器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“TCE：认知动力学控制器”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u_c=\operatorname{sat}_{\mathcal U}(K(r-\hat z)).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对控制增益的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：增益过高和观察延迟叠加会造成过冲与认知振荡。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“控制增益”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{资源消耗与保守程度}
-\begin{narration}
-现在把镜头移到“资源消耗与保守程度”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“资源消耗与保守程度”落实为依据自状态估计调节探索、注意范围、搜索深度、步长与保守度的受限控制器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“TCE：认知动力学控制器”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u_c=\operatorname{sat}_{\mathcal U}(K(r-\hat z)).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对资源消耗与保守程度的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：增益过高和观察延迟叠加会造成过冲与认知振荡。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“资源消耗与保守程度”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“TCE：认知动力学控制器”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“SPC—TCE：最小认知自调节闭环”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\label{chap:tce-cognitive-dynamics-controller}
+
+\begin{quote}
+\textbf{本章总体说明：}
+如果说上一章所讨论的 SPC（Self-Perception Compressor）解决的是“智能体如何形成关于自身当前认知状态的可访问估计”，那么本章所讨论的 TCE（Temperature \& Control Executor）所解决的，则是紧随其后的第二个问题：\textbf{当智能体已经知道自己大致处于何种认知状态之后，它究竟应该如何改变自身接下来的认知动力学？}
+
+这一问题不能被简化为“提高或降低大语言模型的采样温度”。在本书的 AgentOS 理论中，TCE 是面向整个认知运行过程的动力学控制器。它调节的不是某一个孤立模型参数，而是显式认知过程的搜索宽度、探索程度、收敛强度、注意范围、激活深度、推理节奏、资源投入、状态切换倾向以及对不确定性的容忍程度。换句话说，TCE 所控制的是\textbf{认知过程怎样运行}，而不是\textbf{认知内容是什么}。
+
+因此，本章将 TCE 建立为一个具有状态输入、控制向量、约束集合和反馈闭环的正式控制系统。我们将从“认知温度”这一最初直觉出发，逐步扩展到多维认知控制向量；讨论探索与收敛、注意范围与表示激活、推理深度与计算预算、认知增益与控制稳定性之间的关系；并进一步说明为什么一个持续智能体必须具有对自身认知动力学进行主动调节的能力。至此，AgentOS 将第一次从“具有记忆和自我状态估计的系统”，迈向“能够主动控制自己怎样思考的系统”。
+
+本章仍然限定在固定功能拓扑下的运行时调节。TCE 可以改变状态、增益和资源分布，但原则上不直接改写长期记忆结构、自我结构或系统功能拓扑。这样的边界非常重要，因为它使我们能够先研究一个比自我重构更基本的问题：\textbf{在系统组织结构暂时不变的条件下，智能是否可以仅通过对自身认知动力学进行闭环控制，而显著提高稳定性、效率与适应能力？}
+\end{quote}
+
+\section{从“产生答案”到“控制认知过程”}
+
+传统的大语言模型通常表现为一种近似单次映射：
+\begin{equation}
+    y = F_{\theta}(x),
+\end{equation}
+其中输入 $x$ 经过固定参数 $\theta$ 所定义的网络动力过程，最终产生输出 $y$。即使模型在推理阶段使用 Chain-of-Thought、搜索、工具调用或者多轮反思，其基本控制结构通常仍然由外部程序预先指定：搜索多少步、什么时候停止、是否调用工具、生成温度是多少、应该分配多少上下文，这些决策往往并不是模型对自身认知状态进行估计以后主动产生的控制结果，而是外部 Harness、Prompt 或程序框架强加给模型的运行条件。因此，我们面对的首先不是一个“模型能力不足”的问题，而是一个更根本的系统结构问题：\textbf{认知动力学本身是否成为了智能体可以感知和调节的对象？}
+
+对于持续运行的 Agent，这一问题无法被长期回避。设工作记忆状态为 $h(t)$，它并不是一个静态字符串，而是由当前目标、激活的 Agent-CSO、约束关系、假设、计划、身体状态摘要、工具状态和自我相关状态共同组成的动态图结构。我们可以把这一状态写为
+\begin{equation}
+    h(t)=
+    \left[
+    \mathcal C_t,
+    \mathcal R_t,
+    G_t,
+    P_t,
+    B_t,
+    U_t
+    \right],
+\end{equation}
+其中 $\mathcal C_t$ 表示当前活跃认知结构集合，$\mathcal R_t$ 表示它们之间的活跃关系，$G_t$ 是目标状态，$P_t$ 是当前过程或计划，$B_t$ 表示与身体和外部界面有关的摘要，而 $U_t$ 则表示不确定性、冲突和资源使用等运行变量。即使外部输入完全相同，一个处于高度稳定、低冲突状态的 Agent，与一个处于高负载、高不确定性和目标冲突状态的 Agent，也不应该采用完全相同的推理方式。
+
+于是我们需要引入一个控制变量
+\begin{equation}
+    u_{\mathrm{TCE}}(t),
+\end{equation}
+使认知动力学不再只是
+\begin{equation}
+    \dot h = F(h,x),
+\end{equation}
+而变成
+\begin{equation}
+    \dot h
+    =
+    F\!\left(
+    h,
+    x,
+    u_{\mathrm{TCE}}
+    \right).
+\end{equation}
+这里发生了一个概念上的重要跃迁：Agent 不再仅仅拥有认知状态，而开始拥有\textbf{关于认知状态转移方式的控制权}。TCE 正是这个控制权的工程化表达。
+
+因此，我们应该把 TCE 定义为：
+\begin{equation}
+    \boxed{
+    \mathrm{TCE}:
+    \widehat S_{\mathrm{cog}}(t)
+    \longrightarrow
+    u_{\mathrm{cog}}(t)
+    }
+\end{equation}
+其中 $\widehat S_{\mathrm{cog}}(t)$ 是对当前认知状态的估计，$u_{\mathrm{cog}}(t)$ 是作用于认知动力学的一组控制变量。上一章的 SPC 提供的是前者，而 TCE 产生的是后者。两者第一次组成了典型控制论结构中的 Observer 与 Controller。
+
+这一结构意味着，智能体不应该在所有时刻以同一种方式“思考”。在熟悉、低风险和高度确定的环境中，持续展开广泛搜索是一种资源浪费；在陌生、高风险、强冲突环境中，过早收敛则可能造成灾难性错误。在一个已经掌握的任务上持续调用大规模显式推理，同样意味着成熟能力没有发生有效的运行时压缩。因此，真正的持续智能需要能够根据当前状态，在不同认知运行模式之间连续移动。
+
+从这一意义上看，TCE 所承担的不是附属的“参数调节”，而是 AgentOS 内部的一种元控制功能：
+\begin{equation}
+    \boxed{
+    \text{Cognition}
+    \rightarrow
+    \text{State Estimation}
+    \rightarrow
+    \text{Control of Cognition}
+    }
+\end{equation}
+我们由此开始从“一个能够计算的模型”走向“一个能够控制自己的计算过程的智能体”。
+
+\section{认知温度：从单一隐喻到正式动力变量}
+
+TCE 最初的直觉来自“认知温度”。在普通生成模型中，temperature 通常只是控制概率分布平坦程度的一个采样参数，例如
+\begin{equation}
+    p_i(T)
+    =
+    \frac{\exp(z_i/T)}
+    {\sum_j \exp(z_j/T)}.
+\end{equation}
+当 $T$ 增大时，输出分布变得平坦，采样表现出更高随机性；当 $T$ 减小时，概率质量趋向少数高分选项。然而，如果把 AgentOS 中的 TCE 仅仅理解成对这个 $T$ 的动态调整，就会极大低估这个组件的理论意义。我们所说的“认知温度”首先是一种宏观动力学变量，它描述的不是 token 随机性，而是一个认知系统在当前阶段对状态空间进行探索的活跃程度。
+
+设智能体当前可以访问的认知候选空间为 $\mathcal X_t$。在低认知温度下，状态转移更强地集中于当前高置信度吸引域附近：
+\begin{equation}
+    P(x_{t+1}\mid x_t,T_{\mathrm{cog}}\downarrow)
+\end{equation}
+具有较低熵；而在高温状态下，系统更容易激活弱关联 CSO、替代假设和更远的搜索路径：
+\begin{equation}
+    \mathcal H
+    \left[
+    P(x_{t+1}\mid x_t,T_{\mathrm{cog}})
+    \right]
+    \uparrow.
+\end{equation}
+因此可以将认知温度粗略定义为某种状态转移分布熵、激活扩散范围和候选路径多样性的联合函数：
+\begin{equation}
+    T_{\mathrm{cog}}
+    =
+    \Phi
+    \left(
+    H_{\mathrm{transition}},
+    R_{\mathrm{activation}},
+    N_{\mathrm{hypothesis}},
+    D_{\mathrm{search}}
+    \right).
+\end{equation}
+
+这里需要特别注意，$T_{\mathrm{cog}}$ 并不一定对应一个可以直接测量的单一底层变量。它更接近控制工程中的宏观状态坐标：我们用它描述多个底层调节共同产生的运行效果。因此，在实际实现中，TCE 可以通过调整模型采样温度、候选路径数、检索宽度、工具探索率、搜索树展开深度、注意扩散阈值等多个执行变量，共同实现对认知温度的近似控制。
+
+这使我们能够解释一个非常普遍的认知现象：\textbf{探索与收敛不是两套独立算法，而可能是同一个认知系统处于不同温度区域的表现。}在问题初期，系统可能需要提高温度，使多个可能解释得以进入 h：
+\begin{equation}
+    T_{\mathrm{cog}}
+    \uparrow
+    \Rightarrow
+    |\mathcal H_t|
+    \uparrow,
+\end{equation}
+其中 $\mathcal H_t$ 表示活跃假设集合。当逐渐获得足够证据后，TCE 应降低温度：
+\begin{equation}
+    T_{\mathrm{cog}}
+    \downarrow
+    \Rightarrow
+    P(H^\star)
+    \uparrow,
+\end{equation}
+使认知从发散探索转向局部求精和行动生成。
+
+因此一个完整任务中的认知温度很可能呈现非单调轨迹：
+\begin{equation}
+    T_{\mathrm{cog}}(t):
+    \quad
+    T_0
+    \rightarrow
+    T_{\mathrm{explore}}
+    \rightarrow
+    T_{\mathrm{discriminate}}
+    \rightarrow
+    T_{\mathrm{converge}}.
+\end{equation}
+重要的问题不再是“应该使用多大的 temperature”，而变成：
+\begin{equation}
+    \boxed{
+    T_{\mathrm{cog}}^\star
+    =
+    T^\star
+    (
+    Novelty,
+    Uncertainty,
+    Risk,
+    Progress,
+    Residual
+    )
+    }
+\end{equation}
+
+在熟悉环境中，高温意味着不必要地重新打开已经稳定的结构；在未知环境中，低温意味着过早把已有 $\Theta$ 当成现实本身。TCE 的作用恰恰是根据当前状态决定系统应该多大程度相信已有结构，又应该多大程度允许新结构进入显式竞争。
+
+这也说明认知温度实际上连接了本书前面两个重要思想。一方面，它受到慢结构的约束，即 $\Theta$、$\Psi$ 等已经形成的稳定结构决定哪些状态区域具有较高先验；另一方面，它仍然必须允许现实中的持续残差推动系统离开已有吸引域。因此：
+\begin{equation}
+    \boxed{
+    \text{Stable Prior}
+    +
+    \text{Controlled Exploration}
+    =
+    \text{Adaptive Cognition}
+    }
+\end{equation}
+TCE 就是调节这两者平衡的运行时控制器。
+
+\section{从单维温度到多维认知控制向量}
+
+一旦把 TCE 从语言模型 sampling temperature 中解放出来，我们就必须进一步承认：真实认知控制不可能由一个标量完全描述。认知搜索的宽度、深度、激活范围、推理速度、资源使用和收敛倾向虽然存在耦合，却并不是同一个变量。因此，本书将 TCE 的输出正式写成一个多维控制向量：
+\begin{equation}
+    \boxed{
+    u_{\mathrm{TCE}}(t)
+    =
+    \begin{bmatrix}
+    T_t\\
+    R_t\\
+    D_t\\
+    G_t\\
+    \alpha_t\\
+    \beta_t\\
+    \nu_t\\
+    \kappa_t
+    \end{bmatrix}
+    }
+\end{equation}
+其中，$T_t$ 表示认知温度，$R_t$ 表示激活或搜索范围，$D_t$ 表示推理深度预算，$G_t$ 表示整体控制增益，$\alpha_t$ 表示探索权重，$\beta_t$ 表示收敛或抑制强度，$\nu_t$ 表示认知节奏或更新频率，而 $\kappa_t$ 表示资源投入水平。这个向量不是唯一可能形式，但它提供了一种比“调温度”更准确的抽象。
+
+认知温度 $T_t$ 主要决定状态空间中候选路径的多样性；搜索范围 $R_t$ 决定从当前 Agent-CSO 网络向外扩散多远；推理深度 $D_t$ 决定一个候选路径允许连续展开多少层关系；控制增益 $G_t$ 决定 TCE 对状态偏差作出多强响应；探索权重 $\alpha_t$ 和收敛强度 $\beta_t$ 则形成典型张力：
+\begin{equation}
+    \alpha_t+\beta_t
+    \not\equiv 1,
+\end{equation}
+因为一个系统可能同时保持多个局部探索点，同时对某些已经确定的子结构进行强收敛。这意味着成熟认知不应被建模成一个全局统一的“探索或收敛”开关，而应该允许控制变量作用于不同子空间。
+
+进一步地，可以把控制信号写成 Agent-CSO 依赖形式：
+\begin{equation}
+    u_i(t)
+    =
+    \mathrm{TCE}
+    \left(
+    C_i,
+    \widehat S_t,
+    G_t^{\mathrm{goal}}
+    \right),
+\end{equation}
+其中不同 Agent-CSO $C_i$ 可以获得不同程度的激活增益。例如，对已经稳定验证的事实结构施加较低探索增益，而对当前高残差结构施加较高探索增益：
+\begin{equation}
+    g_i
+    =
+    g_0
+    +
+    \lambda_1 U_i
+    +
+    \lambda_2 N_i
+    +
+    \lambda_3 R_i^{\mathrm{res}}
+    -
+    \lambda_4 S_i^{\mathrm{stable}}.
+\end{equation}
+这里 $U_i$ 表示不确定性，$N_i$ 表示新颖性，$R_i^{\mathrm{res}}$ 表示残差强度，而 $S_i^{\mathrm{stable}}$ 表示该结构过去的稳定性。
+
+这样一来，TCE 不只是“整个 Agent 的一个旋钮”，而更接近一个\textbf{认知增益场生成器}。它可以让某些认知关系在当前时刻变得更加重要，也可以使某些支线暂时降低活跃度。从动力系统角度看，相当于 TCE 不直接制造认知内容，而是动态改变有效势能面：
+\begin{equation}
+    V_{\mathrm{eff}}
+    =
+    V_0
+    +
+    V_{\mathrm{TCE}}
+    (u_{\mathrm{TCE}},t).
+\end{equation}
+认知状态 $h(t)$ 在这个动态改变的有效势能面上运动。因此，即便底层生成模型和长期知识 $\Theta$ 完全相同，不同 TCE 控制也可以产生完全不同的推理轨迹。
+
+这也是本书强调“智能运行时”的原因。模型参数提供能力空间，但能力空间并不会自动决定每个时刻应该调用多少能力。一个持续智能体必须拥有一种运行时机制，在有限资源下主动决定：
+\begin{equation}
+    \boxed{
+    \text{当前什么值得被展开，展开多远，又应该在什么时候停止。}
+    }
+\end{equation}
+TCE 正是这一问题的动力学回答。
+
+\section{探索、收敛与认知可塑性的动态平衡}
+
+探索—收敛问题是 TCE 最基本的控制对象之一，但我们不能把它仅仅理解成强化学习中的 exploration--exploitation 二分。对于 AgentOS，探索不仅意味着尝试不同动作，还包括认知结构层面的多种变化：激活不同记忆、建立临时关系、生成替代解释、调用不同工具、改变问题表示方式，以及允许某些先前受到抑制的 Agent-CSO 进入工作记忆。因此，更一般地可以定义：
+\begin{equation}
+    \mathcal E_t
+    =
+    \{
+    C_i
+    \mid
+    C_i
+    \text{ is cognitively reachable under }u_{\mathrm{TCE}}(t)
+    \}.
+\end{equation}
+TCE 实际上控制的是这个“认知可达集合”的形状和大小。
+
+当系统面对高度熟悉任务时，已有 $\Theta$ 往往已经提供稳定生成结构，此时应该使
+\begin{equation}
+    |\mathcal E_t|
+\end{equation}
+保持相对较小。认知活动主要在已知吸引域中进行，目的是快速得到行动而不是重新发明已有能力。相反，当现实反馈持续偏离预测时：
+\begin{equation}
+    \varepsilon_t
+    =
+    d(
+    Prediction_t,
+    Observation_t
+    ),
+\end{equation}
+若满足
+\begin{equation}
+    \varepsilon_t>\theta_\varepsilon,
+\end{equation}
+则原有吸引域不再可靠，TCE 应逐渐扩大认知可达集合：
+\begin{equation}
+    \frac{dR_t}{dt}>0,
+    \qquad
+    \frac{dT_t}{dt}>0.
+\end{equation}
+这相当于允许系统从局部吸引子附近脱离，重新搜索状态空间。
+
+然而，探索本身也具有成本。设单位时间认知成本为
+\begin{equation}
+    C_{\mathrm{cog}}
+    =
+    c_1N_{\mathrm{active}}
+    +
+    c_2D_{\mathrm{reason}}
+    +
+    c_3N_{\mathrm{branch}}
+    +
+    c_4N_{\mathrm{tool}}
+    +
+    c_5H_{\mathrm{uncertainty}},
+\end{equation}
+那么不断提高 $T_t$ 与 $R_t$ 会迅速增加工作记忆和计算负载。因此，TCE 的最优控制问题可以写成：
+\begin{equation}
+    \min_{u_{\mathrm{TCE}}}
+    \mathbb E
+    \left[
+    L_{\mathrm{task}}
+    +
+    \lambda_C C_{\mathrm{cog}}
+    +
+    \lambda_R L_{\mathrm{risk}}
+    +
+    \lambda_U U_t
+    \right].
+\end{equation}
+它并不是追求最大思考量，而是追求在任务损失、认知成本、风险和不确定性之间取得动态平衡。
+
+这里出现一个重要原则：
+\begin{equation}
+    \boxed{
+    \text{More Cognition}
+    \neq
+    \text{Better Cognition}
+    }
+\end{equation}
+成熟的智能系统并不是每次都进行最深推理，而是在不确定性足够低时迅速停止；在低风险熟悉环境中保持局部闭环；在异常发生时重新扩大认知域。换言之，真正的认知效率来自\textbf{可变认知分辨率}。
+
+我们甚至可以把一个成熟 Agent 的运行策略近似划分成三个区域。若当前不确定性、风险和新颖性都低，则：
+\begin{equation}
+    \Gamma_t<\theta_1,
+\end{equation}
+系统保持低温、低深度、窄激活范围；若
+\begin{equation}
+    \theta_1\le \Gamma_t<\theta_2,
+\end{equation}
+则进入正常显式推理区；若
+\begin{equation}
+    \Gamma_t\ge \theta_2,
+\end{equation}
+则进入高探索、高资源投入区。这里
+\begin{equation}
+    \Gamma_t
+    =
+    f(
+    Uncertainty,
+    Novelty,
+    Risk,
+    Residual,
+    GoalRelevance
+    ).
+\end{equation}
+
+这种控制结构与本书前面讨论的多尺度智能思想完全一致：正常情况尽量局部闭合，只有持续异常才提升处理级别。因此，TCE 不是让 Agent 永远保持“聪明状态”，而是让智能体学会\textbf{什么时候应该显得聪明，什么时候应该不必显式思考}。
+
+\section{注意范围、激活增益与工作记忆中的竞争动力学}
+
+TCE 的第二个重要作用是控制什么能够进入显式认知，以及进入以后获得多大的竞争优势。由于工作记忆 $h(t)$ 是有限的，不同 Agent-CSO 不可能在任意时刻都保持同等活跃。设当前候选结构集合为
+\begin{equation}
+    \mathcal C_t
+    =
+    \{C_1,C_2,\ldots,C_n\},
+\end{equation}
+每个结构具有激活量
+\begin{equation}
+    a_i(t)\in[0,1].
+\end{equation}
+一个最简单的竞争动力学可以写为
+\begin{equation}
+    \dot a_i
+    =
+    g_i(t)
+    I_i(t)
+    -
+    \lambda_i a_i
+    -
+    \sum_{j\ne i}
+    w_{ij}^{\mathrm{inh}}a_j
+    +
+    \sum_{k}
+    w_{ki}^{\mathrm{exc}}a_k,
+\end{equation}
+其中 $I_i(t)$ 是输入驱动，$\lambda_i$ 是自然衰减，$w^{\mathrm{inh}}$ 和 $w^{\mathrm{exc}}$ 分别代表抑制与促进关系，而
+\begin{equation}
+    g_i(t)
+\end{equation}
+则可以由 TCE 调节。
+
+这意味着 TCE 并不需要直接告诉认知系统“正确答案是什么”，而只需要改变结构之间的竞争环境。某个高风险事件出现时，与风险相关的 Agent-CSO 可以获得增益；某个任务接近完成时，与最终验证有关的结构获得更高优先级，而无关支线被逐步抑制。于是注意力可以从静态资源分配重新理解为：
+\begin{equation}
+    \boxed{
+    Attention
+    =
+    ControlledGainAllocationOverActiveCSOs.
+    }
+\end{equation}
+
+这一观点解释了为什么注意力和认知温度虽然相关，却不能混同。提高温度可能增加候选结构数量，而提高某个结构的 attention gain 则只是让已有候选中的特定部分得到更高权重。例如在技术故障诊断中，Agent 可以保持较高认知温度以允许多个故障假设同时存在，同时又把当前最危险的假设赋予最高注意增益。若把这两个机制合并成单一参数，就无法表达这种“广泛探索但重点监控”的状态。
+
+设工作记忆总激活预算为
+\begin{equation}
+    \sum_i a_i(t)\le W_h.
+\end{equation}
+那么 TCE 可以通过改变激活阈值 $\theta_a$、抑制强度 $\beta$ 和局部增益 $g_i$，动态控制实际进入 h 的结构数量：
+\begin{equation}
+    C_i\in h(t)
+    \quad\Longleftrightarrow\quad
+    a_i(t)>\theta_a(t).
+\end{equation}
+当认知负载已经接近上限时，提高 $\theta_a$ 可以减少弱相关结构进入；当系统需要重新寻找解释时，可以适当降低阈值，让此前边缘性的 Agent-CSO 暂时进入显式竞争。
+
+这里存在一个尤其重要的工程边界。TCE 可以控制激活和增益，但不应该承担“认知内容准入规则”的全部职责。某些结构是否应该进入 h，还取决于任务相关性、长期价值、风险和边界策略。后续会有更专门的组件负责复杂度管理和准入控制；但在本章范围内，我们只需要认识到：TCE 提供的是\textbf{连续调节能力}，使 h 的认知竞争不再由固定阈值决定。
+
+从更一般的动力学角度看，一个持续 Agent 的注意并不是聚光灯，而是一个不断变化的有效增益场：
+\begin{equation}
+    \mathcal G_t(C)
+    :
+    \mathcal C
+    \rightarrow
+    \mathbb R^+.
+\end{equation}
+不同认知结构因为当前目标、残差、不确定性和自我状态而获得不同增益。这一连续场决定了哪些结构更容易进入下一时刻的显式状态。因此，TCE 实际上参与塑造了：
+\begin{equation}
+    P(h_{t+\Delta t}\mid h_t).
+\end{equation}
+也正是在这一意义上，我们说 TCE 控制的是\textbf{认知动力学}，而不仅是模型输出参数。
+
+\section{推理深度、认知节奏与计算预算}
+
+智能体能够思考多久，与应该思考多久，是两个完全不同的问题。一个理论上拥有极强推理能力的系统，如果每个问题都执行最大深度推理，会迅速被成本、延迟和工作记忆压力拖垮。因此 TCE 必须对另一个核心变量进行控制：
+\begin{equation}
+    D_t,
+\end{equation}
+即当前认知过程允许使用的有效推理深度。
+
+这里的“深度”不能简单等同于生成 token 数。更一般地，它表示一个当前问题允许经过多少层认知变换、多少轮反思以及多长的因果链展开。设某个认知过程为：
+\begin{equation}
+    C^{(0)}
+    \rightarrow
+    C^{(1)}
+    \rightarrow
+    \cdots
+    \rightarrow
+    C^{(D)}.
+\end{equation}
+随着 $D$ 增加，Agent 可能获得更高预测精度，但边际收益通常递减，而成本持续增加。可以写成：
+\begin{equation}
+    U(D)
+    =
+    Q(D)
+    -
+    \lambda C(D),
+\end{equation}
+其中 $Q(D)$ 是推理质量，$C(D)$ 是计算和认知成本。理想停止点满足：
+\begin{equation}
+    \frac{\partial Q}{\partial D}
+    \le
+    \lambda
+    \frac{\partial C}{\partial D}.
+\end{equation}
+因此 TCE 需要一个近似的 marginal value of cognition 判断：下一步思考是否仍然值得。
+
+这使“停止推理”不再只是达到最大长度，而成为一个真正的控制决策。设当前最佳候选方案置信度为 $p^\star_t$，其他方案与其差距为 $\Delta_t$，剩余风险为 $R_t$，则可以构造停止条件：
+\begin{equation}
+    \mathrm{Stop}
+    \iff
+    p^\star_t>\theta_p
+    \land
+    \Delta_t>\theta_\Delta
+    \land
+    R_t<\theta_R.
+\end{equation}
+若这些条件不满足，TCE 可以增加推理深度、重新扩大搜索范围或提高验证强度。
+
+除了深度以外，TCE 还必须控制认知节奏。持续 Agent 不是一次性 request-response 系统，它在现实环境中长期运行。如果每一个外部微小变化都立即触发完整认知循环，系统将进入认知过敏状态。因此，认知更新频率
+\begin{equation}
+    \nu_{\mathrm{cog}}(t)
+\end{equation}
+也应被视为一个控制变量。
+
+环境稳定时，可以降低认知更新频率：
+\begin{equation}
+    \nu_{\mathrm{cog}}\downarrow,
+\end{equation}
+依靠较低层状态维持正常运行；环境变化速度提高、残差增加时：
+\begin{equation}
+    \nu_{\mathrm{cog}}\uparrow.
+\end{equation}
+因此 Agent 的“思考频率”不应完全绑定在外部事件频率上，而应该满足某种自适应采样原则：
+\begin{equation}
+    \nu_{\mathrm{cog}}
+    =
+    \Phi
+    \left(
+    \left\|
+    \frac{dS}{dt}
+    \right\|,
+    Residual,
+    Risk,
+    Novelty
+    \right).
+\end{equation}
+
+这重新连接了本书最早关于智能速度与时间尺度的讨论。成熟智能并不是所有层级都以最高频率运行，而是不同层级各自保持适合自己的闭环速度。TCE 所控制的正是显式认知层在当前环境下应该采用多快的频率、多大的深度以及多少计算资源。
+
+于是可以把 TCE 的资源问题形式化为带预算约束的控制：
+\begin{equation}
+    \min_{u(t)}
+    \int_{t_0}^{t_1}
+    L(h,u)\,dt,
+\end{equation}
+满足
+\begin{equation}
+    \int_{t_0}^{t_1}
+    C_{\mathrm{compute}}(u(t))\,dt
+    \le
+    B_{\mathrm{compute}},
+\end{equation}
+以及
+\begin{equation}
+    C_{\mathrm{memory}}(h(t))
+    \le
+    B_h.
+\end{equation}
+
+因此，TCE 不是让 Agent “尽可能多思考”的模块，而恰恰是在不断回答：
+\begin{equation}
+    \boxed{
+    \text{现在值得为这个问题投入多少认知？}
+    }
+\end{equation}
+这也是持续智能与离线大模型推理之间最重要的差异之一。
+
+\section{TCE 作为状态依赖控制律}
+
+到这里，我们可以为 TCE 给出更加正式的状态空间表示。设 Agent 当前的认知运行状态由
+\begin{equation}
+    x_t
+    =
+    \begin{bmatrix}
+    L_t\\
+    U_t\\
+    R_t\\
+    N_t\\
+    C_t\\
+    P_t\\
+    V_t
+    \end{bmatrix}
+\end{equation}
+描述，其中 $L_t$ 表示认知负载，$U_t$ 表示不确定性，$R_t$ 表示风险，$N_t$ 表示新颖性，$C_t$ 表示冲突程度，$P_t$ 表示任务进展，而 $V_t$ 表示目标或价值相关程度。上一章的 SPC 可以被理解为从复杂内部状态 $z_t$ 得到这一低维控制状态的估计：
+\begin{equation}
+    \hat x_t
+    =
+    \mathrm{SPC}(z_{\le t}).
+\end{equation}
+随后 TCE 实现：
+\begin{equation}
+    u_t
+    =
+    \pi_{\mathrm{TCE}}(\hat x_t,G_t,\Psi_t),
+\end{equation}
+其中 $G_t$ 是当前目标约束，而 $\Psi_t$ 提供较慢的身份与价值偏置。
+
+这里的 $\pi_{\mathrm{TCE}}$ 可以有多种工程实现。最简单的形式是规则控制器：
+\begin{equation}
+    u_t
+    =
+    K
+    (\hat x_t-x^\star),
+\end{equation}
+其中 $x^\star$ 是期望认知运行区间。更一般地，可以采用非线性控制：
+\begin{equation}
+    u_t
+    =
+    \pi_\phi(
+    \hat x_t,
+    G_t,
+    C_{\mathrm{resource}},
+    \Psi_t
+    ),
+\end{equation}
+其中 $\phi$ 可以通过仿真、离线学习或者在线适应获得。
+
+重要的是，TCE 的优化目标不应该等同于任务成功率最大化。若仅令：
+\begin{equation}
+    J=\mathbb E[R_{\mathrm{task}}],
+\end{equation}
+控制器可能学会无节制地调用资源，或者为了短期任务成功而长期保持高认知温度。更合理的目标应同时包含任务质量、稳定性、资源和风险：
+\begin{equation}
+    J_{\mathrm{TCE}}
+    =
+    \mathbb E
+    \left[
+    R_{\mathrm{task}}
+    -
+    \lambda_1C_{\mathrm{compute}}
+    -
+    \lambda_2C_{\mathrm{cognitive}}
+    -
+    \lambda_3R_{\mathrm{instability}}
+    -
+    \lambda_4R_{\mathrm{unsafe}}
+    \right].
+\end{equation}
+
+如果再考虑持续 Agent，则还应该加入长期状态项：
+\begin{equation}
+    J_{\mathrm{TCE}}
+    =
+    \mathbb E
+    \left[
+    \sum_{t=0}^{T}
+    \gamma^t
+    r(x_t,u_t)
+    +
+    \lambda_F V_F(x_T)
+    \right].
+\end{equation}
+这意味着 TCE 控制某一次认知，不仅要考虑当前答案是否正确，也要考虑是否导致系统进入长期不可恢复的高负载、强振荡或极端激活状态。
+
+因此 TCE 应具有明确的可行控制域：
+\begin{equation}
+    u_t
+    \in
+    \mathcal U_{\mathrm{safe}}(x_t),
+\end{equation}
+其中对认知温度、最大搜索深度、激活范围和增益设定硬上限：
+\begin{equation}
+    T_{\min}
+    \le T_t\le T_{\max},
+\end{equation}
+\begin{equation}
+    0\le D_t\le D_{\max},
+\end{equation}
+\begin{equation}
+    G_{\min}
+    \le G_t\le G_{\max}.
+\end{equation}
+原因非常简单：一个拥有自我调节能力的系统，同样可能因为调节过度而失稳。能够改变自己的认知状态并不自动意味着拥有无限改变权限。
+
+从这一意义上看，TCE 是 AgentOS 中第一次真正出现的“有限自主控制器”：它可以根据自身状态改变运行方式，却只能在预先定义的稳定域中行动。这一设计原则此后还会反复出现于更慢尺度的自我修改问题，但其最早、最基础的形式，正是在 TCE 中建立。
+
+\section{认知控制中的增益、滞后与稳定域}
+
+任何反馈控制系统只要存在状态观测延迟与非零控制增益，就不可避免地面临稳定性问题。认知系统也不例外。上一章已经指出，SPC 所提供的并不是 Agent 当前内部真实状态的瞬时透明读取，而是基于已有状态和观测得到的后验估计。因此：
+\begin{equation}
+    \hat x_t
+    =
+    x_{t-\tau_o}
+    +
+    \epsilon_t,
+\end{equation}
+其中 $\tau_o$ 表示 observer lag，$\epsilon_t$ 表示状态估计误差。
+
+如果 TCE 根据这一已经滞后的状态产生过强控制：
+\begin{equation}
+    u_t
+    =
+    -K(\hat x_t-x^\star),
+\end{equation}
+那么即使系统本身已经开始恢复，TCE 仍然可能继续施加旧方向的调节。于是出现典型的过冲现象。例如当前认知负载已经下降，但 SPC 尚未及时反映这一变化，TCE 继续增强抑制，结果使系统从高负载直接进入过度低激活；下一周期 SPC 又检测到激活不足，TCE 反向提高增益，最终形成周期性振荡。
+
+一个简单的延迟动力系统可以写成：
+\begin{equation}
+    \dot x(t)
+    =
+    Ax(t)
+    +
+    Bu(t),
+\end{equation}
+\begin{equation}
+    u(t)
+    =
+    -Kx(t-\tau).
+\end{equation}
+其稳定性已经不再只由 $A-BK$ 的特征值决定，而受到 $\tau$ 与 $K$ 的共同影响。即：
+\begin{equation}
+    \boxed{
+    HighGain
+    +
+    ObservationDelay
+    \Rightarrow
+    OscillationRisk.
+    }
+\end{equation}
+
+这对于 AgentOS 的意义极其重要。许多表面上看起来像“认知性格”的现象，可能首先是控制器参数问题。例如，一个 Agent 长期反复检查自己的答案，未必意味着它具有某种复杂心理结构；也可能只是 uncertainty observer 存在滞后，而 TCE 对不确定性具有过高增益。类似地，一个 Agent 在轻微新颖性出现时立即大规模展开搜索，也可能是 novelty-to-temperature transfer gain 设置过强。
+
+因此，我们需要给 TCE 定义一个稳定运行区域：
+\begin{equation}
+    \mathcal S_{\mathrm{stable}}
+    =
+    \left\{
+    (x,u)
+    \mid
+    \rho(J_{\mathrm{closed}})
+    <0
+    \right\},
+\end{equation}
+其中 $J_{\mathrm{closed}}$ 表示闭环动力系统的局部 Jacobian。对于非线性系统，则可以借助 Lyapunov 函数：
+\begin{equation}
+    V(x)>0,
+\end{equation}
+并要求
+\begin{equation}
+    \dot V(x,u)<0
+\end{equation}
+在期望区域内成立。
+
+实际工程中，不必假设所有认知状态都有解析模型，而可以使用经验稳定指标，例如：
+\begin{equation}
+    M_{\mathrm{stab}}
+    =
+    F(
+    Overshoot,
+    Oscillation,
+    RecoveryTime,
+    StateVariance,
+    ControlEffort
+    ).
+\end{equation}
+TCE 在运行中不断估计自身控制效果，如果发现控制动作导致状态方差扩大而不是收敛，则应降低控制增益：
+\begin{equation}
+    \frac{\partial Var(x)}{\partial |u|}
+    >0
+    \Rightarrow
+    G_{\mathrm{TCE}}\downarrow.
+\end{equation}
+
+这里还可以引入迟滞机制。若认知温度达到升温阈值 $\theta_{\mathrm{on}}$ 后，不应该只因为状态略有改善就立即降温，而应等到系统进入更加稳定区域：
+\begin{equation}
+    \theta_{\mathrm{off}}
+    <
+    \theta_{\mathrm{on}}.
+\end{equation}
+这种 hysteresis 可以防止 TCE 在边界附近频繁切换控制模式。
+
+因此，本章需要建立一个重要认识：\textbf{自我调节不是越敏感越好。}过低增益意味着系统对异常反应迟缓，过高增益又会使自身成为最大的扰动源。成熟认知控制必须存在：
+\begin{equation}
+    \boxed{
+    Sensitivity
+    \leftrightarrow
+    Stability
+    }
+\end{equation}
+之间的平衡。TCE 的真正目标不是让所有变量快速达到一个固定点，而是在动态环境中维持一个可恢复、可探索而又不会失稳的认知运行区域。
+
+\section{慢结构约束下的 TCE：控制不是价值本身}
+
+TCE 具有改变认知动力学的能力，但它不应该决定“什么值得做”。这一点是理解 AgentOS 层级结构的关键。控制器负责回答：
+\begin{equation}
+    \text{How should cognition operate now?}
+\end{equation}
+而当前目标和较慢的自我结构回答：
+\begin{equation}
+    \text{What matters?}
+\end{equation}
+两者必须在理论上分开。
+
+设当前目标为 $G_t$，长期自我结构为 $\Psi_t$，则 TCE 的控制律应写为：
+\begin{equation}
+    u_t
+    =
+    \pi_{\mathrm{TCE}}
+    (
+    \hat x_t,
+    G_t,
+    \Psi_t
+    ),
+\end{equation}
+而不是：
+\begin{equation}
+    G_t
+    =
+    \mathrm{TCE}(\hat x_t).
+\end{equation}
+换句话说，TCE 可以为了高风险目标提高验证强度，可以为了低价值任务减少计算预算，但它不应因为当前认知状态不舒服就自主把长期价值结构改写成另一套价值。
+
+这一点可以用多尺度控制原则表述：
+\begin{equation}
+    \boxed{
+    SlowStructureShapesFastActivity,
+    \qquad
+    FastControllerDoesNotRewriteSlowValueDirectly.
+    }
+\end{equation}
+较慢的 $\Psi$ 对认知控制提供长期偏置；TCE 则在这个约束域内调节短时动力学。如果把所有层级压缩进 TCE，它就会变成一个同时决定目标、价值、注意、记忆和行动的全能中央控制器，这不仅违背本书的多尺度原则，也会使整个 AgentOS 丧失可分析性。
+
+可以把 $\Psi$ 诱导的控制可行域写成：
+\begin{equation}
+    \mathcal U_{\Psi}(t)
+    =
+    \left\{
+    u
+    \mid
+    C_{\Psi}(u)\le 0
+    \right\}.
+\end{equation}
+于是 TCE 求解的是：
+\begin{equation}
+    u_t^\star
+    =
+    \arg\min_{u\in\mathcal U_{\Psi}}
+    J_{\mathrm{runtime}}(x_t,u).
+\end{equation}
+换言之，TCE 并不是任意改变认知，而是在慢结构所给定的可行域中进行快速优化。
+
+反过来，快层长期产生的残差当然可以在更慢时间尺度上改变 $\Theta$ 甚至影响 $\Psi$，但这个过程必须经过经验积累、结构学习和长期一致性检验，而不能由 TCE 在一次运行时控制周期中直接完成。因此：
+\begin{equation}
+    u_{\mathrm{TCE}}
+    \not\Rightarrow
+    \Delta\Psi_{\mathrm{instant}}.
+\end{equation}
+
+这一限制实际上对应本书反复强调的：
+\begin{equation}
+    \boxed{
+    SlowGovernance
+    \neq
+    FastMicromanagement
+    }
+\end{equation}
+与其反向命题：
+\begin{equation}
+    \boxed{
+    FastControl
+    \neq
+    SlowStructuralAuthority.
+    }
+\end{equation}
+
+前者要求慢层不要直接控制每一个 token 或动作；后者则要求快层不能因为局部状态变化而轻易改写慢层身份和长期约束。只有当两个方向同时成立，多尺度智能才能兼具稳定性和适应性。
+
+因此，TCE 的理论位置可以非常准确地表述为：\textbf{它是受慢结构约束的快速认知控制器，而不是价值发生器。}这一区分不仅有助于 AgentOS 的工程模块化，也为后续分析长期身份稳定和递归自主性奠定了必要边界。
+
+\section{TCE 与现实反馈：控制目标不能形成封闭自证}
+
+如果 TCE 只依据 Agent 自己的内部状态进行调节，则存在一个危险：系统可能形成高度稳定但与现实脱离的认知闭环。例如 Agent 内部某个错误假设获得高置信度，SPC 又把这种“低不确定性”反馈给 TCE，TCE 因而降低探索温度和验证强度，最终使错误假设更加难以被重新打开。于是：
+\begin{equation}
+    WrongBelief
+    \rightarrow
+    LowInternalUncertainty
+    \rightarrow
+    LowExploration
+    \rightarrow
+    LessCounterEvidence
+    \rightarrow
+    StrongerWrongBelief.
+\end{equation}
+这是典型的封闭自证回路。
+
+因此，TCE 的控制状态不能只有内部变量，还必须包含现实残差：
+\begin{equation}
+    \varepsilon_{\mathrm{world}}
+    =
+    d(
+    \hat y_{\mathrm{pred}},
+    y_{\mathrm{obs}}
+    ).
+\end{equation}
+于是控制输入更完整地写成：
+\begin{equation}
+    u_t
+    =
+    \pi_{\mathrm{TCE}}
+    \left(
+    \hat x^{\mathrm{self}}_t,
+    \varepsilon_{\mathrm{world},t},
+    G_t,
+    \Psi_t
+    \right).
+\end{equation}
+
+当内部置信度高但现实残差持续存在时，TCE 不应继续降低温度，而应采用一种“现实优先”的控制规则：
+\begin{equation}
+    Confidence_{\mathrm{internal}}\uparrow
+    \land
+    Residual_{\mathrm{world}}\uparrow
+    \Rightarrow
+    Exploration\uparrow.
+\end{equation}
+这说明“置信度”本身不足以决定认知收敛，真实世界始终是更高层的约束。
+
+从控制论角度，可以把 Agent 看成存在两个反馈回路。第一个是内部闭环：
+\begin{equation}
+    h
+    \rightarrow
+    SPC
+    \rightarrow
+    TCE
+    \rightarrow
+    h',
+\end{equation}
+第二个是现实闭环：
+\begin{equation}
+    h
+    \rightarrow
+    Action
+    \rightarrow
+    World
+    \rightarrow
+    Observation
+    \rightarrow
+    h'.
+\end{equation}
+如果只有第一个闭环，系统能够自我稳定，却不一定真实；如果只有第二个闭环，系统可以对世界反应，却缺乏对自身运行状态的治理。真正的 AgentOS 必须使二者耦合：
+\begin{equation}
+    \boxed{
+    InternalRegulation
+    \bowtie
+    RealityVerification
+    }
+\end{equation}
+
+这一点与我们在认识论部分建立的 World--Agent--World 闭环完全一致。内部认知结构不是现实本身，而只是现实在 Agent 中形成的功能性承载。因而 TCE 调节的对象只是 Agent 内部动力学，而不是宇宙真实状态。任何控制器只要忘记这一点，就可能把“内部一致”误认为“外部正确”。
+
+因此，应在 TCE 控制函数中保留一个不能被内部信号完全压制的现实通道：
+\begin{equation}
+    g_{\mathrm{reality}}>g_{\min}>0.
+\end{equation}
+即使 Agent 当前处于高度确定状态，也不能把现实反证增益降为零。
+
+这一原则可以进一步浓缩成：
+\begin{equation}
+    \boxed{
+    RealityAuthority
+    >
+    InternalConfidence.
+    }
+\end{equation}
+TCE 的成熟并不是让 Agent 越来越坚定，而是让它能够根据现实证据决定什么时候应该坚定，什么时候应该重新打开自己的认知结构。
+
+\section{TCE 的工程实现：从规则控制到自适应认知控制器}
+
+在工程实现上，TCE 不应一开始就被设计成一个巨大端到端神经网络。原因在于，TCE 位于 AgentOS 的高杠杆控制位置：它一旦失效，可以同时影响搜索深度、资源投入、注意范围和认知稳定性。因此早期实现应优先保证可观察性、可约束性和可调试性。
+
+一种最小可实现 TCE 可以采用分层控制结构。首先构造由 SPC 提供的认知状态向量：
+\begin{equation}
+    \hat s_t=
+    [
+    load,
+    uncertainty,
+    conflict,
+    novelty,
+    residual,
+    progress,
+    risk
+    ].
+\end{equation}
+随后对每个变量进行归一化：
+\begin{equation}
+    \tilde s_i
+    =
+    \frac{s_i-\mu_i}{\sigma_i+\epsilon}.
+\end{equation}
+再通过规则或线性控制矩阵：
+\begin{equation}
+    u_t
+    =
+    \mathrm{clip}
+    \left(
+    K\tilde s_t+b,
+    u_{\min},
+    u_{\max}
+    \right).
+\end{equation}
+
+例如：
+\begin{equation}
+    T_t
+    =
+    T_0
+    +
+    k_UU_t
+    +
+    k_NN_t
+    +
+    k_\varepsilon\varepsilon_t
+    -
+    k_PP_t,
+\end{equation}
+其中高不确定性、高新颖性和高现实残差提高认知温度，而任务进展接近完成时逐渐降低温度。
+
+类似地：
+\begin{equation}
+    D_t
+    =
+    D_0
+    +
+    d_RR_t
+    +
+    d_UU_t
+    -
+    d_CC_{\mathrm{resource}},
+\end{equation}
+使高风险、高不确定任务获得更多推理深度，而资源压力迫使系统减少展开。
+
+在此基础上，可以逐步加入有限状态模式，例如：
+\begin{equation}
+    M_t
+    \in
+    \{
+    Routine,
+    Explore,
+    Deliberate,
+    Verify,
+    Recover
+    \}.
+\end{equation}
+不同模式拥有不同的控制参数集合。模式切换通过带迟滞的事件规则决定，而不是每个周期连续抖动：
+\begin{equation}
+    M_{t+1}
+    =
+    \mathcal T_M(M_t,\hat s_t).
+\end{equation}
+
+当系统积累足够运行数据以后，可以学习更复杂的策略：
+\begin{equation}
+    \pi_\phi:
+    \hat s_t
+    \rightarrow
+    u_t,
+\end{equation}
+但学习目标必须受到固定安全边界和控制包络限制。也就是说，即使 learned controller 给出：
+\begin{equation}
+    u^\mathrm{learned}_t,
+\end{equation}
+最终执行也应为：
+\begin{equation}
+    u_t
+    =
+    \Pi_{\mathcal U_{\mathrm{safe}}}
+    \left(
+    u^\mathrm{learned}_t
+    \right),
+\end{equation}
+其中 $\Pi$ 表示投影到合法控制空间。
+
+更进一步，TCE 可以采用模型预测控制思想，在有限时间窗内预测不同认知策略的后果：
+\begin{equation}
+    u_{t:t+H}^\star
+    =
+    \arg\min
+    \sum_{k=0}^{H}
+    L(
+    \hat x_{t+k},
+    u_{t+k}
+    ).
+\end{equation}
+例如比较“继续深度推理”“暂停并检索记忆”“提高探索宽度”“直接执行后通过现实验证”几种认知策略的预测成本。
+
+但无论采用规则控制、优化控制还是学习控制，TCE 都应保持一个最核心的工程原则：
+\begin{equation}
+    \boxed{
+    TCEControlMustRemainInspectable.
+    }
+\end{equation}
+系统至少应该能够回答：为什么提高了温度、为什么扩大了搜索、为什么延长了推理、为什么降低了资源投入。否则一旦 Agent 长期运行出现异常，我们将无法区分究竟是模型内容错误、自我状态估计错误，还是控制器本身错误。
+
+因此，TCE 最适合被工程化成一个具有明确输入、显式状态、受限输出和持续日志的认知控制服务，而不是一个不可检查的“神秘元智能模块”。
+
+\section{本章总结：从会思考到会控制自己怎样思考}
+
+到本章结束，我们已经完成了 AgentOS 原理论中的又一次关键跃迁。三相记忆 $h/E/\Theta$ 解决了智能如何跨时间保存状态、经历和生成结构；$\Psi$ 与更慢的生命周期结构解决了为什么不同经历会围绕同一个持续主体发生组织；SPC 又使这个主体能够从分布式内部动力学中形成一个有限、可访问的自状态估计。而 TCE 的引入，使这种自状态估计第一次获得了真正的动力学意义。
+
+如果没有 TCE，那么：
+\begin{equation}
+    SelfPerception
+\end{equation}
+最多只是系统内部的一种描述。
+
+加入 TCE 后：
+\begin{equation}
+    SelfPerception
+    \rightarrow
+    CognitiveControl
+\end{equation}
+成立，自我状态开始成为未来认知状态转移的因果变量。
+
+因此，本章可以将 TCE 的最小理论定义凝练为：
+\begin{equation}
+    \boxed{
+    \mathrm{TCE}
+    =
+    \text{State-Dependent Controller of Cognitive Dynamics}
+    }
+\end{equation}
+其核心控制对象至少包括：
+\begin{equation}
+    u_{\mathrm{TCE}}
+    =
+    [
+    Temperature,
+    ActivationRange,
+    ReasoningDepth,
+    Gain,
+    Exploration,
+    Inhibition,
+    CognitiveRate,
+    ResourceBudget
+    ].
+\end{equation}
+
+更重要的是，TCE 必须同时满足四个约束。
+
+第一，它必须是\textbf{状态依赖的}。不存在对所有任务始终最优的固定认知温度和推理深度。
+
+第二，它必须是\textbf{资源约束的}。无限认知展开不是智能，而是无法治理的计算扩张。
+
+第三，它必须是\textbf{慢结构约束的}。TCE 可以改变当前如何思考，却不能在单次运行周期内任意改写长期身份和价值。
+
+第四，它必须是\textbf{现实约束的}。内部低不确定性不能覆盖持续存在的外部残差。
+
+因此，一个成熟的 TCE 所追求的不是最大探索、最大确定性或最大控制，而是在不同任务、风险和现实状态下持续维持一个动态的可行认知区域：
+\begin{equation}
+    \boxed{
+    h(t)
+    \in
+    \mathcal R_{\mathrm{cognitively\ viable}}
+    }
+\end{equation}
+并在必要时主动改变该区域内部的运行方式。
+
+从更一般的智能动力学角度，我们可以把本章最重要的结论写成：
+\begin{equation}
+    \boxed{
+    \text{智能不仅需要状态，还需要关于状态的控制变量。}
+    }
+\end{equation}
+进一步：
+\begin{equation}
+    \boxed{
+    \text{成熟智能不是始终进行最强认知，而是能够根据自身与现实状态决定应该以何种强度、范围、深度和节奏进行认知。}
+    }
+\end{equation}
+
+于是 Agent 的认知过程第一次不再是一个被外部调用的固定程序，而成为了一个自身可感知、可调节、可稳定化的动力系统。我们也由此获得一个非常重要的结构：
+
+\begin{equation}
+    \boxed{
+    \mathrm{SPC}
+    \longrightarrow
+    \mathrm{TCE}
+    \longrightarrow
+    \mathrm{CognitiveDynamics}
+    \longrightarrow
+    \mathrm{SPC}
+    }
+\end{equation}
+
+它代表 AgentOS 中最小意义上的\textbf{认知自调节闭环}。
+
+这条闭环将在下一阶段成为研究 Agent 工作记忆运行相态、认知稳定性以及更完整内部调节体系的动力学基础，但本章到此为止所要确立的核心已经足够明确：\textbf{TCE 的本质不是“调节生成参数”，而是使一个持续智能体第一次拥有了控制自身认知动力学的能力。}

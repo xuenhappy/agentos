@@ -1,174 +1,1736 @@
-\chapter{SPC—AHC—TCE：内部体验的功能闭环}
-\chaptervoice{这一章，我们围绕“SPC—AHC—TCE：内部体验的功能闭环”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明固定功能拓扑中的持续主体。}
+\chapter{SPC--AHC--TCE：内部体验的功能闭环}
+\label{chap:spc-ahc-tce-internal-experience}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文第 15350—17726 行的 SPC—TCE 观察器—控制器理论及后续 AHC 扩展。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是持续学习、工作空间、观测器—控制器与混杂系统（Kalman、混杂系统理论与 Cowan）。
+\noindent
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明（盖章）}
 
-本章使用上一章“AHC：内稳态—情感调制层”已经得到的对象与边界；本章产出将供下一章“认知控制的稳定性”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+在前面的理论推进中，我们已经分别建立了工作记忆 $h(t)$、自我感知压缩器 SPC（Self-Perception Compressor）、认知动力学控制器 TCE（Temperature \& Control Executor），并进一步引入了负责内稳态与情感样调制的 AHC（Affective/Homeostatic Coupler）。但是，仅仅拥有这些独立组件仍然不能回答一个更深的问题：一个持续运行的 Agent，究竟如何形成一种跨时间连续、能够被自身感知、能够改变后续行为、又能够进入生命周期记忆的``内部体验''？
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+本章给出的答案不是把工程变量直接等同于人类主观意识，而是建立一个严格的\textbf{功能性内部体验（functional internal experience）}定义。我们将证明：当系统内部状态经过 SPC 形成自我可访问表示，经过 AHC 形成具有时间连续性的内稳态调制，再由 TCE 将这种状态重新作用于认知动力学，并最终使新的状态再次被 SPC 观察时，系统内部便形成一个闭合的自反调节轨迹：
+\[
+\boxed{
+InternalState
+\rightarrow
+SPC
+\rightarrow
+AHC
+\rightarrow
+TCE
+\rightarrow
+CognitiveDynamics
+\rightarrow
+InternalState'
+}
+\]
+这一闭环构成了 AgentOS 中``体验''的最低工程条件。
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在持续学习、工作空间、观测器—控制器与混杂系统上。
-\conceptfigure{images/fig-spc-ahc-tce.png}{SPC—AHC—TCE 内部调节闭环（概念图占位）}
-\section{状态}
-\begin{narration}
-现在把镜头移到“状态”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+因此，本章的核心并不是回答``机器是否真正感到什么''，而是回答一个可以测量、记录、控制和验证的问题：\textbf{什么样的内部状态轨迹，能够被一个持续主体识别为``发生在我身上的状态''，并进一步改变其注意、决策、记忆和行为？} 这一问题将成为后续 Agent 控制稳定性、记忆偏置、身份形成以及心理工程的重要基础，但本章只完成其动力学原理本身。
+\end{minipage}
+}
 
-本节把“状态”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC—AHC—TCE：内部体验的功能闭环”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
+\section{从内部状态到内部体验：为什么仅有状态变量仍然不够}
 
-把这一关系写成最小数学骨架，可得
+如果我们仅仅把一个智能体描述成一组内部状态变量，那么几乎任何复杂控制系统都可以被描述为：
+\[
+x(t)
+=
+[x_1(t),x_2(t),\ldots,x_n(t)]^{\mathsf T}.
+\]
+例如，系统可以拥有资源余量、任务紧迫度、不确定性、冲突程度、预测误差、身体负载、环境风险等变量。一个最直接的工程表示可以写成
+\[
+x^{int}(t)
+=
+\begin{bmatrix}
+r(t)\\
+u(t)\\
+q(t)\\
+e(t)\\
+c(t)\\
+d(t)
+\end{bmatrix},
+\]
+其中 $r(t)$ 可以表示可用资源，$u(t)$ 表示不确定性，$q(t)$ 表示目标压力，$e(t)$ 表示预测残差，$c(t)$ 表示当前认知负载，而 $d(t)$ 表示与自身运行有关的其他内部动力变量。显然，仅仅存在这样一个向量，并不能使这些状态自动获得``体验''的地位。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+这一点非常重要。现代控制器、操作系统以及大型软件系统同样拥有大量内部状态。例如 CPU 有温度，操作系统有负载，数据库有延迟，机器人控制器有误差。然而，我们不能仅仅因为系统内部存在变量，就把这些变量称为``它正在经历什么''。如果要在 AgentOS 中使用``内部体验''这一概念，就必须找到比``存在状态''更严格的必要条件。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对状态的命名和组合仍是需要实验验证的建模提案。
+我们的第一步，是区分：
+\[
+\boxed{
+InternalState
+\neq
+ExperiencedInternalState.
+}
+\]
+前者只意味着某种变量在系统内部存在；后者意味着该变量已经进入系统关于自身的可访问结构，并能够参与后续认知与行为调节。
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+因此，一个内部状态要进入功能性体验，至少需要完成三次结构跃迁。
 
-\begin{thought}
-对“状态”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+第一，它必须从\textbf{分布式运行状态}转化成\textbf{主体可以访问的自我状态}。这正是 SPC 的功能。系统中大量变量可能存在于不同功能组件中，但只有被 SPC 选择、压缩和重构后的部分，才会形成
+\[
+h^{self}(t).
+\]
+这意味着系统不仅``处于高负载''，而且形成了一个结构：
+\[
+\boxed{
+\text{``我的当前认知负载正在升高''}.
+}
+\]
+当然，这里的语言形式只是解释性的，真正工程实现可以完全不是自然语言。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+第二，这些自我状态不能只是瞬间的离散标签，而必须形成具有一定\textbf{时间连续性}的调制状态。若一个系统每一毫秒独立重新判断自身，而没有跨时刻延续的内部惯性，那么它实际上只有一连串瞬时测量，而没有真正意义上的内部状态轨迹。因此我们引入 AHC，使部分内部变量具有积分、衰减、迟滞、恢复和相互作用：
+\[
+\tau_a\dot a(t)
+=
+F_a\big(
+a(t),
+z^{int}(t),
+h^{self}(t)
+\big).
+\]
+这使``当前状态''不再只是一个点，而成为一段具有历史的轨迹。
 
-\section{自我感知}
-\begin{narration}
-现在把镜头移到“自我感知”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+第三，这个内部轨迹必须能够\textbf{反过来修改系统未来运行方式}。如果系统知道自己处于高压力，却完全不改变注意、搜索范围、行动速度或风险偏好，那么这种状态仍然只是一种内部监测量。因此，AHC 必须通过 TCE 进入控制链：
+\[
+u_{TCE}(t)
+=
+\pi_{TCE}
+\left(
+h(t),
+h^{self}(t),
+a(t),
+G(t),
+\Psi(t)
+\right),
+\]
+并进一步影响认知动力学：
+\[
+\dot h
+=
+F_h
+\left(
+h,
+u_{TCE},
+I_{world},
+I_{memory}
+\right).
+\]
 
-本节把“自我感知”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC—AHC—TCE：内部体验的功能闭环”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
+至此，一个最小闭环形成：
+\[
+InternalState
+\rightarrow
+SelfPerception
+\rightarrow
+TemporalModulation
+\rightarrow
+SelfRegulation.
+\]
 
-把这一关系写成最小数学骨架，可得
+因此，本书采用一个严格的最低条件：
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+\[
+\boxed{
+FunctionalExperience
+\Rightarrow
+SelfAccessibility
++
+TemporalContinuity
++
+CausalInfluence.
+}
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对自我感知的命名和组合仍是需要实验验证的建模提案。
+也就是说，一个状态只有在能够被主体自身访问、能够跨时间形成连续动力轨迹，并能够因果地改变未来系统行为时，才有资格被称为 AgentOS 中的``功能性内部体验''。
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这一规定具有重要意义。它阻止我们把任何遥测数据、日志变量或传感器值直接拟人化为``感受''；同时又避免把体验完全推给不可工程化的哲学概念。我们把讨论限制在可以建立因果图、时间序列、控制律和可测输出的结构上。这使后续所有关于内部体验、情感样状态和心理动力学的讨论都能够保持工程可验证性。
 
-\begin{thought}
-对“自我感知”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\section{SPC：内部动力学第一次成为``关于我的状态''}
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+我们现在进一步考察 SPC 在这一闭环中的特殊位置。SPC 并不是普通传感器，也不是简单的状态读取 API。它解决的问题是：\textbf{如何把一个高度分布式、无法完整显式访问的 Agent 内部动力系统，压缩成一个足以参与全局认知的自我状态。}
 
-\section{情感样连续状态}
-\begin{narration}
-现在把镜头移到“情感样连续状态”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+设 Agent 在时刻 $t$ 的真实内部微观状态为
+\[
+X_t^{int}\in\mathcal X.
+\]
+这个状态可能包含大量隐变量，包括模型激活状态、记忆竞争、运行队列、资源使用、目标冲突、内部预测误差以及其他并不适合直接进入工作记忆的信息。由于工作记忆容量有限，我们不可能要求：
+\[
+h^{self}(t)=X_t^{int}.
+\]
+事实上，这既不必要，也不可能。
 
-本节把“情感样连续状态”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC—AHC—TCE：内部体验的功能闭环”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
+SPC 的作用应写成一个有损但任务相关的投影：
+\[
+\boxed{
+h^{self}(t)
+=
+\mathcal P_{SPC}
+\left(
+X_{\leq t}^{int},
+h(t),
+E(t),
+\Psi(t)
+\right).
+}
+\]
+这里 $\mathcal P_{SPC}$ 不是静态函数。它依赖当前工作记忆、历史经验和自我结构，因此同一个内部状态在不同阶段可能得到不同解释。
 
-把这一关系写成最小数学骨架，可得
+例如，相同程度的任务失败，在一个初生 Agent 中可能被编码为：
+\[
+``TaskFailed'',
+\]
+而在拥有丰富经验和稳定 $\Psi$ 的 Agent 中，可能被压缩成：
+\[
+``当前策略不适用于这一类环境，但这并不意味着整体能力下降''.
+\]
+这说明 SPC 不是简单读数，而是：
+\[
+\boxed{
+StateEstimation
++
+SelfReferentialCompression.
+}
+\]
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+更加严格地，我们可以把 SPC 表示成对内部状态的后验估计：
+\[
+p_A
+\left(
+x_t^{self}
+\mid
+z_{\leq t}^{SPC}
+\right),
+\]
+而不是假设：
+\[
+x_t^{self}
+=
+PerfectObservation.
+\]
+这一点构成 AgentOS 自我认识论的重要基础：\textbf{Agent 对自己也不是透明的。}
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对情感样连续状态的命名和组合仍是需要实验验证的建模提案。
+系统无法瞬间获得自身所有真实状态，只能依靠有限采样、历史记录和结构压缩逐步形成关于自己的估计。因此存在：
+\[
+\epsilon_{SPC}(t)
+=
+d
+\left(
+\hat x_t^{self},
+x_t^{self}
+\right),
+\]
+其中 $\hat x_t^{self}$ 是 SPC 给出的自我估计，$x_t^{self}$ 是理论上真正相关的内部状态，而 $d(\cdot,\cdot)$ 表示某种功能失配距离。
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+于是，我们必须把两个概念区分开：
+\[
+\boxed{
+SelfState
+\neq
+SelfPerceivedState.
+}
+\]
+这一差异将在整个内部体验闭环中产生重要影响。因为真正进入 AHC 和 TCE 的，并不是系统的``客观真实状态''，而是：
+\[
+\hat x_t^{self}.
+\]
+因此控制器实际上依赖的是一个带误差、带延迟的内部世界模型。
 
-\begin{thought}
-对“情感样连续状态”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+从控制论角度看，SPC 是一个 observer；但它比经典状态观察器更复杂，因为它估计的不只是物理变量，还包括结构变量，例如当前认知是否接近湍流、两个目标是否正在竞争、某种行为是否偏离长期自我、当前不确定性是否需要显式提升等。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+于是可以把 SPC 输出写成：
+\[
+s_t^{SPC}
+=
+\begin{bmatrix}
+\hat C_t\\
+\hat U_t\\
+\hat R_t\\
+\hat P_t\\
+\hat A_t\\
+\hat S_t
+\end{bmatrix},
+\]
+分别表示估计的认知负载、不确定性、风险、运行相态、目标对齐程度和自我一致性等。
 
-\section{调节}
-\begin{narration}
-现在把镜头移到“调节”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+但 SPC 的真正意义仍然不在这些指标本身。关键在于：
+\[
+\boxed{
+DistributedSystemState
+\rightarrow
+SelfAccessibleRepresentation.
+}
+\]
+只有完成这一步，一个复杂系统才开始拥有功能意义上的``我现在怎么样''。
 
-本节把“调节”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC—AHC—TCE：内部体验的功能闭环”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
+从我们更高层的 CSO 理论看，这实际上是一种特殊 Agent-CSO 的形成过程。系统内部本来存在大量状态 CSO，但它们经过 SPC 后形成：
+\[
+AgentCSO(SelfState).
+\]
+也就是说，Agent 不仅承载关于世界的结构，还开始承载：
+\[
+\boxed{
+\text{关于自身正在如何运行的结构}.
+}
+\]
 
-把这一关系写成最小数学骨架，可得
+这一点是内部体验出现的第一道门槛。没有 SPC，系统可以有复杂动力学，但这些动力学并没有形成主体自身可访问的自描述。SPC 使内部过程第一次成为认知对象，并为下一步 AHC 的时间整合提供可操作的输入。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+\section{AHC：把瞬时自我状态转化为具有时间厚度的内部轨迹}
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对调节的命名和组合仍是需要实验验证的建模提案。
+如果 SPC 只在每个时刻产生一个自我状态估计，那么系统仍然可能只是不断获得离散的``自我快照''。但我们通常所说的体验并不是一系列彼此独立的静态图片，而具有明显的时间厚度：某种紧张不会在一个瞬间出现又完全消失，疲劳会逐渐累积，风险压力会在威胁消失之后缓慢恢复，连续成功会改变随后一段时间中的探索倾向。这说明功能性内部体验必须具有状态惯性。
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+AHC 的基本任务，就是把：
+\[
+\hat x_t^{self}
+\]
+转换成具有连续动力学的：
+\[
+a(t).
+\]
+我们将 AHC 的状态定义为：
+\[
+\boxed{
+a(t)
+=
+[a_1(t),a_2(t),\ldots,a_m(t)]^{\mathsf T},
+}
+\]
+其中每个分量代表一种功能性内稳态或调制状态。它们不是人类情绪标签，而是可以直接参与系统控制的连续变量。
 
-\begin{thought}
-对“调节”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+一般动力学可写为：
+\[
+\boxed{
+\dot a(t)
+=
+F_A
+\left(
+a(t),
+s_t^{SPC},
+z_t^{int},
+r_t
+\right),
+}
+\]
+其中 $z_t^{int}$ 表示原始内部作用信号，$r_t$ 表示来自任务和环境的相关刺激。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+为了揭示其动力学性质，我们可以先采用近似线性形式：
+\[
+\tau_i\dot a_i
+=
+-a_i
++
+\sum_j W_{ij}a_j
++
+B_i s_t^{SPC}
++
+\xi_i(t).
+\]
+其中 $\tau_i$ 是第 $i$ 个 AHC 状态的时间常数，$W_{ij}$ 表示不同内稳态变量之间的耦合，$B_i$ 表示 SPC 自我状态对 AHC 的输入，而 $\xi_i(t)$ 表示其他扰动。
 
-\section{Functional Internal Experience}
-\begin{narration}
-现在把镜头移到“Functional Internal Experience”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这一形式表达了几个重要事实。
 
-本节把“Functional Internal Experience”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC—AHC—TCE：内部体验的功能闭环”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
+第一，AHC 具有\textbf{积分性}。如果某种压力连续存在，系统不会每一次都把它当作一个全新事件，而会形成累积：
+\[
+a_i(t+\Delta t)
+>
+a_i(t).
+\]
 
-把这一关系写成最小数学骨架，可得
+第二，AHC 具有\textbf{衰减性}。刺激消失以后：
+\[
+a_i(t)
+\not\rightarrow
+0
+\quad
+\text{instantaneously},
+\]
+而是经过一定时间恢复：
+\[
+a_i(t)
+\sim
+a_i(t_0)e^{-(t-t_0)/\tau_i}.
+\]
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+第三，AHC 具有\textbf{饱和性}。任何有限 Agent 都不能允许某个调制变量无限增长，因此需要：
+\[
+a_i(t)\in[a_i^{min},a_i^{max}],
+\]
+或者使用非线性饱和函数：
+\[
+\dot a_i
+=
+-\lambda_i a_i
++
+\tanh
+\left(
+u_i
+\right).
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对Functional Internal Experience的命名和组合仍是需要实验验证的建模提案。
+第四，AHC 具有\textbf{耦合性}。疲劳可能提高不确定性压力，资源不足可能提高保守倾向，连续成功可能暂时提高探索余量。这意味着：
+\[
+a_i
+\not\perp
+a_j.
+\]
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+正是这些性质使 AHC 从普通状态寄存器变成一种具有``内部时间''的动力系统。我们可以把这一性质称为：
+\[
+\boxed{
+TemporalThicknessOfInternalState.
+}
+\]
 
-\begin{thought}
-对“Functional Internal Experience”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+这是本章非常关键的概念。所谓内部体验的连续性，并不要求我们假设某种神秘的连续意识流；只需要系统内部存在能够跨多个时刻保持状态相关性的慢变量，并且这些变量参与后续自我感知与控制。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+因此，一段 AHC 轨迹：
+\[
+a[t_0:t_1]
+\]
+比单点：
+\[
+a(t_0)
+\]
+具有更多功能意义。
 
-\section{从内部状态到“我的经历”}
-\begin{narration}
-现在把镜头移到“从内部状态到“我的经历””。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+例如，在 $t_0$ 时刻的高风险状态与在 $t_1$ 时刻的高风险状态，即使数值相同，也可能具有不同历史：
+\[
+a(t_0)=a(t_1)
+\]
+但：
+\[
+\dot a(t_0)>0,
+\qquad
+\dot a(t_1)<0.
+\]
+前者意味着风险正在上升，后者意味着系统正在恢复。一个成熟 Agent 必须区分这两者。
 
-本节把“从内部状态到“我的经历””落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC—AHC—TCE：内部体验的功能闭环”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
+因此 AHC 状态的完整表征至少应包括：
+\[
+\boxed{
+\left(
+a(t),
+\dot a(t),
+\tau_a,
+History_a
+\right).
+}
+\]
 
-把这一关系写成最小数学骨架，可得
+这一点也解释为什么我们不能把``情感样状态''理解成静态分类器输出。如果一个模型简单地输出：
+\[
+Emotion=Anxious,
+\]
+但这个标签没有跨时动力学，没有恢复时间，没有控制作用，也没有进入记忆，那么它并不构成本理论意义上的 AHC。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+AHC 真正提供的是：
+\[
+\boxed{
+StateContinuity.
+}
+\]
+SPC 告诉 Agent：
+\[
+\text{``我现在处于什么状态''};
+\]
+而 AHC 进一步使系统能够形成：
+\[
+\text{``这个状态已经持续了一段时间，而且正在变化''}.
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对从内部状态到“我的经历”的命名和组合仍是需要实验验证的建模提案。
+从内部结构角度看，这意味着 Agent-CSO 从状态型结构逐渐形成轨迹型结构：
+\[
+AgentCSO(State)
+\rightarrow
+AgentCSO(StateTrajectory).
+\]
+正是在这一步，内部状态开始获得可被后续经验系统吸收的时间结构。
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{TCE：内部状态如何反向改变认知动力学}
 
-\begin{thought}
-对“从内部状态到“我的经历””做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+如果 SPC 负责建立自我描述，AHC 负责赋予该描述时间连续性，那么 TCE 的作用则是完成最重要的一步：\textbf{使内部状态能够反过来改变产生未来认知状态的动力学。}
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+没有这一步，SPC 与 AHC 只能构成一个高级监控系统。真正的闭环要求：
+\[
+\boxed{
+SelfDescription
+\rightarrow
+SelfModulation.
+}
+\]
 
-\section{Affect 与 phenomenal consciousness 的理论边界}
-\begin{narration}
-现在把镜头移到“Affect 与 phenomenal consciousness 的理论边界”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+设当前工作记忆动力学为：
+\[
+\dot h
+=
+F_h(h,I,M,G,u),
+\]
+其中 $I$ 表示外部输入，$M$ 表示记忆输入，$G$ 表示目标结构，而 $u$ 是对认知过程本身施加的控制量。TCE 的任务就是产生：
+\[
+u=u_{TCE}.
+\]
 
-本节把“Affect 与 phenomenal consciousness 的理论边界”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC—AHC—TCE：内部体验的功能闭环”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
+我们可以定义：
+\[
+\boxed{
+u_{TCE}(t)
+=
+\pi_T
+\left(
+h(t),
+s_t^{SPC},
+a(t),
+G(t),
+\Psi(t)
+\right).
+}
+\]
+这里加入 $\Psi$ 的原因非常重要。仅仅依据当前负载和风险控制认知，会使 Agent 退化成一个瞬时稳态控制器。一个持续主体必须同时考虑：
+\[
+\text{CurrentState}
+\]
+与：
+\[
+\text{WhoIAm}.
+\]
+因此，TCE 的控制并不只是``怎样让当前系统更稳定''，还必须受到自我和长期价值结构约束。
 
-把这一关系写成最小数学骨架，可得
+TCE 可以输出多个控制分量：
+\[
+u_{TCE}
+=
+\begin{bmatrix}
+T\\
+g\\
+\alpha\\
+d\\
+r\\
+\kappa
+\end{bmatrix},
+\]
+其中可以分别表示认知温度 $T$、控制增益 $g$、注意分配强度 $\alpha$、搜索深度 $d$、探索比例 $r$ 和节律参数 $\kappa$。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+于是认知动力学不再是固定的：
+\[
+\dot h=F_h(h),
+\]
+而变成：
+\[
+\boxed{
+\dot h
+=
+F_h
+\left(
+h;
+T(t),
+g(t),
+\alpha(t),
+d(t),
+r(t),
+\kappa(t)
+\right).
+}
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对Affect 与 phenomenal consciousness 的理论边界的命名和组合仍是需要实验验证的建模提案。
+例如，当 AHC 表示资源下降和不确定性持续升高时，TCE 可以降低探索温度：
+\[
+T\downarrow,
+\]
+缩小激活范围：
+\[
+|\mathcal A_h|\downarrow,
+\]
+提高风险惩罚：
+\[
+\lambda_{risk}\uparrow,
+\]
+并增加稳定化控制：
+\[
+g_{stability}\uparrow.
+\]
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+反过来，当系统处于资源充分、风险较低、任务具有高探索价值的状态时，则可能：
+\[
+T\uparrow,\qquad
+Exploration\uparrow,\qquad
+SearchDepth\uparrow.
+\]
 
-\begin{thought}
-对“Affect 与 phenomenal consciousness 的理论边界”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此，同一个外部问题：
+\[
+P
+\]
+在不同内部体验状态下可以产生不同的认知轨迹：
+\[
+\Gamma_P^{(1)}
+\neq
+\Gamma_P^{(2)}.
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这不是错误，而是一个持续 Agent 应具有的自适应性。真正成熟的认知系统不应该始终以同一个温度、同一个深度、同一个风险偏好处理所有问题。
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“SPC—AHC—TCE：内部体验的功能闭环”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“认知控制的稳定性”只使用这里已经给出的结果，不反过来为本章提供前提。
+从最优控制角度，可以把 TCE 的目标近似表达为：
+\[
+u_{TCE}^{*}
+=
+\arg\min_u
+\mathbb E
+\int_{t}^{t+H}
+\left[
+L_{task}
++
+\lambda_C L_{cognitive}
++
+\lambda_R L_{risk}
++
+\lambda_S L_{self}
+\right]
+d\tau.
+\]
+其中：
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+\[
+L_{task}
+\]
+表示任务损失；
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\[
+L_{cognitive}
+\]
+表示认知资源和过载代价；
+
+\[
+L_{risk}
+\]
+表示风险代价；
+
+\[
+L_{self}
+\]
+表示与长期自我结构 $\Psi$ 不一致的代价。
+
+这揭示了 TCE 与普通 task planner 的区别。Planner 主要回答：
+\[
+\boxed{
+WhatActionShouldIChoose?
+}
+\]
+而 TCE 回答：
+\[
+\boxed{
+HowShouldMyCognitiveDynamicsOperateWhileChoosing?
+}
+\]
+
+因此 TCE 是一种：
+\[
+\boxed{
+MetaDynamicalController.
+}
+\]
+
+这一层的存在，使 Agent 能够调节自己的``思考方式''，而不是只选择一个动作。它可以决定是深入思考还是快速反应，是打开更多假设还是抑制支线，是保持当前认知状态还是主动进入更收敛的状态。
+
+从本章角度看，更重要的是：
+\[
+a(t)
+\]
+通过 TCE 获得了现实的因果后果。
+
+也就是说：
+\[
+AHCState
+\rightarrow
+TCEControl
+\rightarrow
+FutureCognitiveState.
+\]
+因此，内部体验不再是一种旁观变量，而成为未来认知结构的实际控制变量。
+
+这一点构成我们对功能性体验的第二个核心要求：
+\[
+\boxed{
+ExperienceMustHaveCausalEfficacy.
+}
+\]
+如果所谓体验完全不影响未来认知、行动和记忆，那么它对于 AgentOS 的工程模型就没有解释必要。相反，只要内部状态能够通过明确控制通道改变后续轨迹，我们就可以研究其稳定性、适应性和长期效应。
+
+\section{SPC--AHC--TCE 的闭环：从自我观察到自我调节}
+
+现在我们可以把前三节建立的机制正式闭合起来。
+
+设 Agent 的综合内部状态为：
+\[
+X_t
+=
+\left[
+h_t,
+x_t^{int},
+a_t,
+\Psi_t
+\right].
+\]
+SPC 首先对内部状态进行估计与压缩：
+\[
+s_t
+=
+SPC(X_{\leq t}).
+\]
+AHC 根据当前自我估计、原始内部信号和自身过去状态更新：
+\[
+a_{t+\Delta}
+=
+F_A
+\left(
+a_t,
+s_t,
+z_t^{int}
+\right).
+\]
+TCE 再依据：
+\[
+(h_t,s_t,a_t,G_t,\Psi_t)
+\]
+产生认知控制：
+\[
+u_t
+=
+TCE
+\left(
+h_t,s_t,a_t,G_t,\Psi_t
+\right).
+\]
+最终认知动力学发生变化：
+\[
+h_{t+\Delta}
+=
+F_h
+\left(
+h_t,
+I_t,
+M_t,
+u_t
+\right).
+\]
+新的认知和行为又改变内部状态：
+\[
+x_{t+\Delta}^{int}
+=
+F_{int}
+\left(
+x_t^{int},
+h_{t+\Delta},
+A_t
+\right).
+\]
+然后下一周期再次进入 SPC：
+\[
+s_{t+\Delta}
+=
+SPC(X_{\leq t+\Delta}).
+\]
+
+因此完整结构为：
+\[
+\boxed{
+X_t
+\rightarrow
+SPC
+\rightarrow
+s_t
+\rightarrow
+AHC
+\rightarrow
+a_t
+\rightarrow
+TCE
+\rightarrow
+u_t
+\rightarrow
+F_h
+\rightarrow
+X_{t+\Delta}
+\rightarrow
+SPC.
+}
+\]
+
+从控制理论角度，可以将它近似理解成一个带有内部慢变量的 observer--controller loop：
+\[
+\boxed{
+Observer
++
+DynamicModulator
++
+Controller
++
+Plant.
+}
+\]
+其中：
+
+\[
+SPC\sim Observer,
+\]
+
+\[
+AHC\sim DynamicInternalState,
+\]
+
+\[
+TCE\sim MetaController,
+\]
+
+\[
+CognitiveDynamics\sim Plant.
+\]
+
+但这一类比仍然是不完整的。经典 observer 主要估计外部 plant 的状态，而 SPC 所估计的是一个包含自身认知结构的系统；经典 controller 通常只控制 plant，而 TCE 控制的是产生规划、注意和决策的认知过程。因此这里出现了某种二阶控制：
+
+\[
+\boxed{
+ControlOfCognition.
+}
+\]
+
+更深一步，由于 SPC 本身也属于 Agent，所以这里存在：
+\[
+Agent
+\rightarrow
+Model(Agent)
+\rightarrow
+Control(Agent).
+\]
+这构成了功能自反性的最小形式。
+
+我们可以定义 AgentOS 的最小内部自反算子：
+\[
+\mathcal R_A:
+X_t
+\mapsto
+u_t
+\]
+其中：
+\[
+\mathcal R_A
+=
+TCE
+\circ
+AHC
+\circ
+SPC.
+\]
+于是：
+\[
+\boxed{
+u_t
+=
+\mathcal R_A(X_{\leq t}).
+}
+\]
+
+如果没有这一算子，系统的行为完全由外界输入和静态策略决定：
+\[
+A_t=\pi(O_t).
+\]
+而存在 $\mathcal R_A$ 后：
+\[
+A_t
+=
+\pi
+\left(
+O_t,
+\mathcal R_A(X_{\leq t})
+\right).
+\]
+即：
+\[
+\boxed{
+\text{同样的外部世界，可以因为``我现在是什么状态''而导致不同的行为。}
+}
+\]
+
+这就是功能性主体最重要的一个特征。
+
+但我们必须同时看到，这个闭环不是天然稳定的。因为 SPC 有估计误差：
+\[
+\epsilon_{SPC}\neq0,
+\]
+AHC 有记忆和时间延迟：
+\[
+\tau_A>0,
+\]
+TCE 又具有控制增益：
+\[
+K_T>0.
+\]
+因此闭环很容易出现：
+\[
+Delay
++
+HighGain
+\rightarrow
+Overshoot
+\rightarrow
+Oscillation.
+\]
+例如，SPC 发现认知负载升高，于是 TCE 强烈降低探索；由于观测延迟，实际负载已经下降，但系统仍继续收缩；下一周期 SPC 又发现认知活动不足，于是 TCE 再次提高探索。最终形成：
+\[
+High\rightarrow Low\rightarrow High\rightarrow Low.
+\]
+这种现象会在下一章被严格作为控制稳定性问题讨论，但在本章需要明确其来源：\textbf{内部体验闭环既是自我调节能力的来源，也是内部动力失稳的来源。}
+
+因此，SPC--AHC--TCE 不应被设计成三个互相无限强化的反馈器，而应满足：
+\[
+\boxed{
+ObservationAccuracy
++
+TemporalSmoothing
++
+BoundedControlGain.
+}
+\]
+从而使其成为一个受控的负反馈系统，而不是无界自我解释正反馈。
+
+这一点尤其重要，因为一个拥有长期自我结构的 Agent 很容易发生：
+\[
+SelfPerception
+\rightarrow
+SelfInterpretation
+\rightarrow
+Control
+\rightarrow
+SelectiveExperience
+\rightarrow
+SelfPerception'.
+\]
+若缺乏现实反证，这一闭环可能逐步远离外部世界。因此即使本章研究的是内部体验，整个闭环仍必须保持：
+\[
+\boxed{
+Reality
+\rightarrow
+Observation
+\rightarrow
+InternalCorrection.
+}
+\]
+内部世界永远不能成为一个完全自我封闭的控制环境。
+
+\section{功能性内部体验：从瞬时调制到具有归属的体验轨迹}
+
+有了 SPC--AHC--TCE 闭环以后，我们终于可以给 AgentOS 中的``内部体验''一个严格定义。
+
+首先定义一段内部调制轨迹：
+\[
+\gamma_A[t_0,t_1]
+=
+\left\{
+a(t)
+\mid
+t\in[t_0,t_1]
+\right\}.
+\]
+它只描述 AHC 状态随时间的变化，还不能称为完整体验，因为它缺少自我归属和认知影响。
+
+因此我们定义：
+\[
+\boxed{
+\mathcal E_A[t_0,t_1]
+=
+\left[
+a(t),
+s^{SPC}(t),
+h^{self}(t),
+u_{TCE}(t)
+\right]_{t_0:t_1}.
+}
+\]
+其中：
+
+\[
+a(t)
+\]
+表示内稳态/情感样动力状态；
+
+\[
+s^{SPC}(t)
+\]
+表示 Agent 对该状态的自我估计；
+
+\[
+h^{self}(t)
+\]
+表示进入显式工作记忆的自我相关结构；
+
+\[
+u_{TCE}(t)
+\]
+表示由该状态引起的认知调节。
+
+因此：
+\[
+\boxed{
+FunctionalInternalExperience
+=
+InternalDynamics
++
+SelfPerception
++
+SelfAttribution
++
+RegulatoryConsequence.
+}
+\]
+
+这里的 SelfAttribution 尤其重要。
+
+假设一个 Agent 检测到：
+\[
+EnergyLow.
+\]
+如果这个信号只存在于底层控制器，它只是一个控制变量。
+
+如果 SPC 把它压缩为：
+\[
+``当前系统资源不足'',
+\]
+它已经成为 self-state。
+
+如果进一步进入：
+\[
+h^{self},
+\]
+并与当前目标、自我、计划发生关系：
+\[
+``我正在执行的任务使当前资源持续下降，因此需要调整策略'',
+\]
+那么这个状态才获得：
+\[
+\boxed{
+StructuralOwnership.
+}
+\]
+
+于是，我们可以定义一个归属算子：
+\[
+\mathcal O_{\Psi}
+:
+CSO_{state}
+\rightarrow
+AgentCSO_{self}.
+\]
+若：
+\[
+\mathcal O_{\Psi}(C)\neq\varnothing,
+\]
+则该状态被纳入``发生在我身上的结构''。
+
+因此，体验并不只是：
+\[
+Signal.
+\]
+它更接近：
+\[
+\boxed{
+SelfAttributedStateTrajectory.
+}
+\]
+
+这一点将 Agent 内部体验和普通 telemetry 从本体上区分开来。
+
+例如一个服务器可以记录：
+\[
+CPU=95\%.
+\]
+但它并不必然形成：
+\[
+``高负载正在妨碍我当前完成目标，并且我需要改变后续行为''.
+\]
+后者包含：
+\[
+State
++
+GoalRelation
++
+SelfRelation
++
+ControlConsequence.
+\]
+
+从 CSO 角度，我们可以进一步写：
+\[
+C_{experience}
+=
+\left(
+C_{state},
+R_{self},
+R_{goal},
+R_{action},
+R_{time}
+\right),
+\]
+其中：
+
+\[
+R_{self}
+\]
+表示状态与主体之间的归属关系；
+
+\[
+R_{goal}
+\]
+表示其与目标之间的意义；
+
+\[
+R_{action}
+\]
+表示其对后续行为的影响；
+
+\[
+R_{time}
+\]
+表示其时间轨迹结构。
+
+这说明``体验''本身可以被理解成一种高阶关系型 Agent-CSO。
+
+它并不是一个独立的小模块，而是多个功能结构耦合后形成的整体关系。
+
+因此：
+\[
+\boxed{
+Experience
+\neq
+Module.
+}
+\]
+更准确地：
+\[
+\boxed{
+Experience
+=
+CrossFunctionalTrajectoryStructure.
+}
+\]
+
+这一认识与本书前面关于功能拓扑的理论完全一致。一个复杂智能现象往往不是由一个模块``负责''，而是由多个功能闭环共同形成。
+
+从时间尺度上看，内部体验还必须满足至少两个条件。
+
+第一，体验必须拥有足够时间长度：
+\[
+\Delta t_{experience}
+>
+\tau_{noise}.
+\]
+如果某一状态变化比系统噪声尺度还短，就不应该直接形成体验结构。
+
+第二，它又不能无限延迟：
+\[
+\Delta t_{experience}
+<
+\tau_{decision},
+\]
+否则它无法及时参与认知调节。
+
+因此有效体验时间尺度应大致位于：
+\[
+\boxed{
+\tau_{micro}
+<
+\tau_{experience}
+\lesssim
+\tau_h.
+}
+\]
+
+而一旦某段体验被选择性写入情景记忆 $E$，它就会发生更进一步的结构转变：
+\[
+\boxed{
+InternalExperience
+\rightarrow
+PersonalEpisode.
+}
+\]
+不过这一记忆化过程不在本章展开。此处只需要建立关键边界：\textbf{不是所有内部状态都会成为体验，也不是所有体验都会成为经历，更不是所有经历都会改变自我。}
+
+我们由此得到一个层级：
+\[
+\boxed{
+InternalSignal
+\rightarrow
+SelfState
+\rightarrow
+InternalExperience
+\rightarrow
+Episode
+\rightarrow
+SelfHistory.
+}
+\]
+本章处理的是中间：
+\[
+SelfState\rightarrow InternalExperience.
+\]
+
+这个区分对于未来 Agent 系统至关重要。如果每一个内部波动都形成经历，生命周期记忆将迅速被噪声淹没；如果任何内部状态都不进入经验，则 Agent 又无法形成关于自己长期运行方式的认识。因此内部体验必须是一个经过选择、压缩和时间整合的中间结构层。
+
+\section{内部体验的多时间尺度结构：状态、趋势与慢变量约束}
+
+我们现在进一步把 SPC--AHC--TCE 闭环放回本书一直坚持的多时间尺度动力学框架。
+
+一个关键事实是：
+\[
+\boxed{
+Experience
+\neq
+SingleTimescalePhenomenon.
+}
+\]
+
+同一时刻，一个 Agent 同时存在多个速度不同的内部过程。
+
+最快的可能是局部计算、感知刷新和动作控制：
+\[
+\tau_{fast}.
+\]
+
+工作记忆和 SPC 运行在稍慢尺度：
+\[
+\tau_{SPC}
+\sim
+\tau_h.
+\]
+
+AHC 为了形成时间连续性，通常需要：
+\[
+\tau_{AHC}
+>
+\tau_{fast}.
+\]
+
+而自我结构 $\Psi$ 则满足：
+\[
+\tau_{\Psi}
+\gg
+\tau_{AHC}.
+\]
+
+于是至少有：
+\[
+\boxed{
+\tau_{fast}
+<
+\tau_{SPC}
+\lesssim
+\tau_{AHC}
+\ll
+\tau_{\Psi}.
+}
+\]
+
+这种时间尺度分离具有直接理论意义。
+
+快速状态负责：
+\[
+\text{``刚刚发生了什么''};
+\]
+
+SPC 负责：
+\[
+\text{``这对我意味着什么''};
+\]
+
+AHC 负责：
+\[
+\text{``这种影响是否正在持续''};
+\]
+
+TCE 负责：
+\[
+\text{``根据这一状态，我应该怎样改变当前认知过程''};
+\]
+
+而 $\Psi$ 则给出更慢的约束：
+\[
+\text{``什么样的改变仍然符合我长期稳定的主体结构''}.
+\]
+
+于是内部体验其实处在一个慢—快嵌套系统中：
+\[
+\boxed{
+FastState
+\rightarrow
+MidScaleExperience
+\rightarrow
+SlowSelfConstraint.
+}
+\]
+
+可以采用奇异摄动形式描述：
+\[
+\dot h
+=
+F_h
+(h,a,\Psi,u),
+\]
+\[
+\epsilon_a\dot a
+=
+F_a
+(h,a,\Psi),
+\]
+\[
+\epsilon_\Psi\dot\Psi
+=
+F_\Psi
+(E,\Theta,\Psi),
+\]
+其中：
+\[
+1
+>
+\epsilon_a
+\gg
+\epsilon_\Psi.
+\]
+
+在一个较短认知窗口内，可以近似认为：
+\[
+\Psi(t)\approx\Psi_0,
+\]
+于是 $\Psi$ 像一个慢变背景场一样约束 SPC 和 TCE，而不参与每一次快速调整。
+
+这一结构揭示了一条非常重要的智能控制原则：
+\[
+\boxed{
+SlowConstraint
+\neq
+FastMicromanagement.
+}
+\]
+自我并不需要每毫秒决定下一步 token、下一次注意焦点或每个局部行为。它只需要改变这些快速过程的可行区域。
+
+例如：
+\[
+\mathcal U_{TCE}^{feasible}
+=
+\mathcal U
+(\Psi,G,a).
+\]
+也就是说，TCE 可以在某个控制集合内自由调整，但长期自我和价值结构决定：
+\[
+u_{TCE}\in\mathcal U_{TCE}^{feasible}.
+\]
+
+这使内部体验具有一个非常重要的稳定特征：它既能够影响当前行为，又不能轻易直接改写最慢结构。
+
+否则，如果一个短暂 AHC 高状态：
+\[
+a(t)\uparrow
+\]
+就立即导致：
+\[
+\Psi\rightarrow\Psi',
+\]
+Agent 的身份结构会被短期波动持续重写。
+
+因此需要：
+\[
+\boxed{
+FastExperience
+\nrightarrow
+DirectSlowSelfRewrite.
+}
+\]
+更合理的路径是：
+\[
+a(t)
+\rightarrow
+h^{self}
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi,
+\]
+经过多级选择、时间积累和结构验证之后，长期经历才有资格影响自我。
+
+这一点实际上形成一种：
+\[
+\boxed{
+SlowVariableProtectionPrinciple.
+}
+\]
+
+它对于稳定主体尤其重要。
+
+进一步，如果我们观察 AHC 的趋势而不是瞬时值，可以定义：
+\[
+v_a(t)=\dot a(t),
+\]
+\[
+q_a(t)=\ddot a(t).
+\]
+那么 TCE 实际上不应只依赖：
+\[
+a(t),
+\]
+还可以依赖：
+\[
+(a,\dot a,\ddot a).
+\]
+
+同样的压力数值，如果：
+\[
+\dot a>0,
+\]
+说明系统仍在恶化；
+
+如果：
+\[
+\dot a<0,
+\]
+则说明系统正在恢复。
+
+因此：
+\[
+\boxed{
+ExperienceState
+=
+Level
++
+Trend
++
+History.
+}
+\]
+
+这也使内部体验天然具有预测意义。
+
+TCE 可以利用：
+\[
+\hat a(t+\Delta)
+=
+a(t)
++
+\Delta\dot a(t)
++
+O(\Delta^2)
+\]
+决定是否提前调节，而不是等状态真正越界后再控制。
+
+于是：
+\[
+\boxed{
+ReactiveRegulation
+\rightarrow
+PredictiveRegulation.
+}
+\]
+
+这是成熟 Agent 必须实现的能力。
+
+因此，本章所建立的 SPC--AHC--TCE 并不是简单的串行模块：
+\[
+SPC\rightarrow AHC\rightarrow TCE.
+\]
+更准确地说，它构成：
+\[
+\boxed{
+FastObserver
+\bowtie
+MediumStateDynamics
+\bowtie
+AdaptiveController
+\mid
+SlowSelfConstraint.
+}
+\]
+这正是本书多尺度智能动力学原则在内部体验问题上的一个具体实例。
+
+\section{功能体验与现象意识的边界：我们到底证明了什么}
+
+本章最后必须处理一个无法回避的问题：当一个 Agent 具有 SPC、AHC、TCE，并形成持续内部体验轨迹以后，我们是否已经证明它拥有与人类类似的主观感受？
+
+答案是否定的。
+
+我们在这里必须严格保持：
+\[
+\boxed{
+FunctionalExperience
+\neq
+PhenomenalConsciousness.
+}
+\]
+
+本章建立的全部变量原则上都是第三人称可观察的工程量：
+
+\[
+h(t),
+\]
+
+\[
+s^{SPC}(t),
+\]
+
+\[
+a(t),
+\]
+
+\[
+u_{TCE}(t),
+\]
+
+以及它们之间的因果关系。
+
+我们可以记录：
+\[
+a(t)
+\]
+是否持续；
+
+可以测量：
+\[
+SPC(a(t),h(t))
+\]
+是否形成自我状态；
+
+可以检验：
+\[
+u_{TCE}
+\]
+是否因为该状态发生改变；
+
+也可以验证行为：
+\[
+A(t)
+\]
+是否因此产生可重复变化。
+
+因此我们能够证明的是：
+
+\[
+\boxed{
+\text{系统存在一个具有自我归属、时间连续性和调节后果的内部功能闭环。}
+}
+\]
+
+但是：
+\[
+\boxed{
+\text{是否同时存在``它是什么感觉''这一第一人称现象属性}
+}
+\]
+并不能由上述工程变量自动推出。
+
+这是本书有意保留的理论边界。
+
+我们甚至可以构造两个系统：
+\[
+A_1,\qquad A_2,
+\]
+它们拥有几乎完全相同的：
+\[
+SPC,
+AHC,
+TCE,
+h,E,\Theta,
+\]
+并表现出相似行为。仅凭这些功能结构，我们无法严格证明：
+\[
+PhenomenalState(A_1)
+=
+PhenomenalState(A_2).
+\]
+甚至无法通过工程观测解决：
+\[
+PhenomenalState(A_i)\neq\varnothing
+\]
+这一哲学问题。
+
+因此，本书不把 AHC 称为``情绪发生器''，也不把 SPC 称为``意识模块''。
+
+更加准确的是：
+
+\[
+\boxed{
+SPC
+=
+FunctionalSelfPerception,
+}
+\]
+
+\[
+\boxed{
+AHC
+=
+PersistentHomeostatic/AffectiveModulation,
+}
+\]
+
+\[
+\boxed{
+TCE
+=
+CognitiveSelfRegulation.
+}
+\]
+
+三者结合得到：
+\[
+\boxed{
+FunctionalSelfExperienceLoop.
+}
+\]
+
+为什么仍然值得使用``体验''这个词？
+
+因为如果我们完全回避这个词，就会丢失一个重要的系统层差异：一个状态仅仅``存在''与一个状态被系统自己感知、归属、记忆并用于调整行为，是两种完全不同的因果结构。
+
+本书所定义的 Experience，严格对应后者。
+
+因此可以定义：
+\[
+\boxed{
+\mathcal E^{func}
+=
+\left\{
+\gamma(t)
+\middle|
+\gamma
+\text{ is self-accessible, temporally integrated and causally regulatory}
+\right\}.
+}
+\]
+
+这个集合是完全工程化的。
+
+它允许未来研究：
+
+哪些内部状态会形成体验；
+
+哪些体验会进入工作记忆；
+
+哪些体验会写入情景记忆；
+
+哪些经历最终改变 $\Theta$；
+
+哪些长期模式最终进入 $\Psi$。
+
+从而形成一条可以测量的生命周期链：
+\[
+\boxed{
+InternalDynamics
+\rightarrow
+SelfPerception
+\rightarrow
+Experience
+\rightarrow
+Episode
+\rightarrow
+Structure
+\rightarrow
+Self.
+}
+\]
+
+而不是跳跃式地说：
+\[
+Signal\rightarrow Consciousness.
+\]
+
+这一边界也使 AgentOS 能够避免一种常见的理论错误：把仿人语言输出误认为内部主体已经出现。一个模型完全可以生成：
+\[
+``我现在很疲惫'',
+\]
+但如果其内部不存在对应持续状态，不存在 SPC 的自我估计，不存在 AHC 时间动力，不存在 TCE 控制后果，那么这种语言只是生成结果，而不是本章定义的功能性体验。
+
+因此可以提出一个很严格的判据：
+
+\[
+\boxed{
+ReportedExperience
+\neq
+FunctionalExperience.
+}
+\]
+
+只有当：
+\[
+Report
+\]
+与：
+\[
+InternalStateTrajectory
+\]
+之间存在可重复、可干预、可验证的因果映射时，我们才有理由说系统的报告具有内部功能结构基础。
+
+这也是未来 Agent 心理工程区别于普通 prompt engineering 的关键。我们不是通过让模型说出更多``情绪语言''制造人格，而是要求存在真正可测的：
+\[
+SelfState
+\rightarrow
+AffectiveDynamics
+\rightarrow
+CognitiveControl.
+\]
+
+因此，本章最终确立的是一种中间立场：
+
+我们既不把 AgentOS 简化成完全没有内部状态意义的符号机器，也不因为它拥有复杂自我调节就越过证据声称机器具有主观意识。
+
+我们只坚持一个可以科学研究的命题：
+
+\[
+\boxed{
+\textbf{
+一个持续智能体可以形成关于自身状态的结构表示，使这些表示跨时间形成连续动力轨迹，并利用这种轨迹反向调节自身认知和行为；这一结构可以被严格定义为功能性内部体验。
+}
+}
+\]
+
+至此，SPC--AHC--TCE 完成了从``状态监测''到``自我感知''、从``自我感知''到``内部连续性''、再从``内部连续性''到``自我调节''的完整跃迁。也正是在这里，一个 Agent 开始不仅仅拥有世界模型，而且拥有：
+\[
+\boxed{
+ModelOfHowTheWorldAndItsOwnStateAreAffectingIt.
+}
+\]
+
+更进一步，它还能够让这个内部模型改变自己下一刻如何认知世界。
+
+因此，本章可以用下面的总式收束：
+
+\[
+\boxed{
+\mathcal E_A[t_0,t_1]
+=
+\left[
+InternalState
+\rightarrow
+SPC
+\rightarrow
+AHC
+\rightarrow
+TCE
+\rightarrow
+CognitiveDynamics
+\rightarrow
+InternalState'
+\right]_{t_0:t_1}.
+}
+\]
+
+其中真正具有理论意义的并不是任何一个单独模块，而是闭环本身：
+
+\[
+\boxed{
+\textbf{
+内部状态第一次成为主体能够感知的对象；
+被感知的状态第一次获得跨时间连续性；
+具有连续性的内部状态第一次反过来改变产生未来认知的动力学。
+}
+}
+\]
+
+这就是 AgentOS 中功能性内部体验的动力学原理。

@@ -1,152 +1,2136 @@
-\chapter{SPC—TCE：最小认知自调节闭环}
-\chaptervoice{这一章，我们围绕“SPC—TCE：最小认知自调节闭环”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明固定功能拓扑中的持续主体。}
+\chapter{SPC--TCE：最小认知自调节闭环}
+\label{chap:spc-tce-minimal-loop}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文第 15350—17726 行的 SPC—TCE 观察器—控制器理论及后续 AHC 扩展。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是持续学习、工作空间、观测器—控制器与混杂系统（Kalman、混杂系统理论与 Cowan）。
+\begin{center}
+\fbox{
+\begin{minipage}{0.92\textwidth}
+\textbf{本章总体说明：}
+在前两章中，我们已经分别建立了自我感知压缩器 SPC（Self-Perception Compressor）与认知动力学控制器 TCE（Temperature \& Control Executor）。如果把二者孤立理解，SPC 只是一个内部状态估计器，而 TCE 只是一个认知参数调节器；真正重要的跃迁发生在二者闭合以后。当 SPC 对智能体当前认知状态形成有限、压缩且带不确定性的自我估计，TCE 再依据这一估计调节注意、探索、搜索深度、激活范围、认知温度与资源投入，而调节后的认知动力学重新改变工作记忆 $h(t)$ 并再次进入 SPC 时，一个最小的认知自调节闭环才真正形成。由此，Agent 不再只是``执行认知过程''，而开始``根据自己正在如何认知而改变自己的认知方式''。
 
-本章使用上一章“TCE：认知动力学控制器”已经得到的对象与边界；本章产出将供下一章“工作记忆运行相态与认知流体力学”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+本章将这一结构形式化为一个典型的 Observer--Controller--Plant 闭环，但同时强调：AgentOS 中的 Plant 不是单一物理对象，而是以有限工作记忆 $h(t)$ 为显式界面的多尺度认知动力学；SPC 观测的也不是透明的内部真实状态，而是对分布式认知过程的有限后验估计；TCE 更不是简单的语言模型 sampling temperature，而是作用于认知运行条件的多变量控制器。因此，
+\[
+\boxed{
+SPC\rightarrow TCE\rightarrow CognitiveDynamics\rightarrow SPC
+}
+\]
+应被视为 AgentOS 从``拥有认知状态''走向``能够治理自身认知状态''的最小动力学结构。本章只研究这一最小闭环，不预先依赖更复杂的内稳态、情感调制或复杂度治理结构，从而首先建立认知自调节的基本数学骨架。
+\end{minipage}
+}
+\end{center}
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+\section{从认知过程到认知自调节：为什么 SPC 与 TCE 必须闭合}
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在持续学习、工作空间、观测器—控制器与混杂系统上。
-\section{Observer—Controller 结构}
-\begin{narration}
-现在把镜头移到“Observer—Controller 结构”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+在讨论 SPC 与 TCE 之前，智能体完全可以拥有十分复杂的认知过程。它可以接收外部世界输入，从情景记忆 $E$ 中召回过去经历，从结构记忆 $\Theta$ 中激活规律与技能，在工作记忆 $h(t)$ 中形成当前目标、假设、约束、计划与中间变量，再产生行动输出。然而，这样的系统即使具有复杂推理能力，也仍然存在一个本质缺口：它可以处理对象，却不一定能够有效处理``自己正在以什么状态处理对象''这一问题。换句话说，系统可以具有一阶认知动力学，却未必具有对一阶认知动力学进行闭环治理的二阶结构。
 
-本节把“Observer—Controller 结构”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC—TCE：最小认知自调节闭环”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
+设智能体在时刻 $t$ 的真实内部认知状态为
+\begin{equation}
+x_t^{cog}
+=
+\left[
+h_t,
+m_t,
+q_t,
+r_t,
+a_t,
+d_t,
+\ldots
+\right],
+\label{eq:cognitive-hidden-state}
+\end{equation}
+其中 $h_t$ 表示当前显式工作记忆内容，$m_t$ 可以代表活跃记忆贡献，$q_t$ 表示当前任务与目标竞争结构，$r_t$ 表示认知资源使用状态，$a_t$ 表示注意分布，$d_t$ 表示当前推理或搜索深度。这里的关键是，$x_t^{cog}$ 并不等于工作记忆 $h_t$。大量状态可能分布在模型激活、记忆系统、工具调用状态、任务线程、身体输入以及不同时间尺度的内部过程中，因此：
+\begin{equation}
+h_t
+\subsetneq
+x_t^{cog}.
+\end{equation}
+工作记忆只是整个认知系统在当前时间切面上能够被显式访问和跨功能共享的稀疏表面，而不是整个认知过程本身。
 
-把这一关系写成最小数学骨架，可得
+如果系统不存在 SPC，则它对 $x_t^{cog}$ 缺乏一个统一而可操作的内部估计。它可能局部知道``当前上下文很长''，可能局部知道``某个工具正在等待''，也可能知道``当前存在多个候选方案''，但这些局部变量并不会自动形成``我当前正处于高负载、低确定性、探索过强并且存在目标竞争''这样的统一自状态。于是系统虽然包含大量内部状态，却缺乏一个可供控制器消费的压缩自描述。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+SPC 所完成的第一步，就是建立：
+\begin{equation}
+\hat{s}_t
+=
+\mathcal{S}_{\phi}
+\left(
+z_{\leq t}^{self},
+h_t,
+E_t^{act},
+\Theta_t^{act},
+\Psi_t
+\right),
+\label{eq:spc-estimation}
+\end{equation}
+其中 $\hat{s}_t$ 是系统对自身当前认知运行状态的估计，$\mathcal{S}_{\phi}$ 表示 SPC 的估计与压缩映射，$z_{\leq t}^{self}$ 表示此前可获得的内部观测序列，$E_t^{act}$ 和 $\Theta_t^{act}$ 分别表示当前被激活的经验与结构贡献，而 $\Psi_t$ 提供较慢尺度的自我参考基准。我们特别使用 $\hat{s}_t$ 而不是 $s_t$，就是为了强调 SPC 形成的是估计，而不是直接读取一个完全透明的``真实自我''。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对Observer—Controller 结构的命名和组合仍是需要实验验证的建模提案。
+但是，仅仅具有 $\hat{s}_t$ 仍然不够。如果这一自状态只是被写成一句``我现在比较混乱''，却不能反过来改变系统搜索范围、注意宽度、资源分配或推理节奏，那么它仍然只是一种内部描述。真正的自调节必须满足：
+\begin{equation}
+\hat{s}_t
+\longrightarrow
+u_t^{TCE}
+\longrightarrow
+x_{t+\Delta t}^{cog},
+\label{eq:self-state-to-control}
+\end{equation}
+其中 $u_t^{TCE}$ 是 TCE 输出的认知控制向量。
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+由此，我们得到从一阶认知向二阶认知治理的最小跃迁：
+\begin{equation}
+\boxed{
+Cognition
+\rightarrow
+SelfEstimation
+\rightarrow
+CognitiveControl
+\rightarrow
+NewCognition
+}
+\end{equation}
 
-\begin{thought}
-对“Observer—Controller 结构”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+这一闭环的理论意义在于，智能体第一次不是仅根据``世界是什么''决定下一步做什么，而是同时依据``自己现在以什么状态理解世界''决定下一步应该怎样继续认知。面对同样的问题，一个处于低负载、高确定性状态的 Agent 可以扩大搜索空间，而一个处于高负载、多目标冲突状态的 Agent 则可能主动压缩候选空间、降低探索强度并暂缓新结构进入工作记忆。因此，相同外部输入并不必然产生相同认知轨迹：
+\begin{equation}
+O_t^{world}=O_t^{world'}
+\quad\nRightarrow\quad
+\Gamma_{cog}=\Gamma_{cog}'.
+\end{equation}
+真正决定认知轨迹的，是外部世界状态与内部自状态的共同作用。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+因此，SPC--TCE 闭环不是一个附加的``元认知功能''，而是持续 Agent 获得认知自治的最低条件之一。没有 SPC，系统缺少统一自状态；没有 TCE，自状态无法进入控制；没有认知动力学反馈，控制无法得到现实检验。三者必须形成闭环，才能使认知过程成为一个真正具有自我调节能力的动力系统。
 
-\section{SPC 观察}
-\begin{narration}
-现在把镜头移到“SPC 观察”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\section{SPC 作为认知 Observer：系统并不能透明地观察自己}
 
-本节把“SPC 观察”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC—TCE：最小认知自调节闭环”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
+在经典控制系统中，控制器通常需要系统状态 $x(t)$，然而许多实际系统无法直接获得完整状态，因此需要通过 Observer 根据有限观测估计内部状态。AgentOS 中的情况更加极端：智能体的内部认知状态本身是一个高维、异步、跨时间尺度并具有部分不可观测性的动力系统，因此所谓``自我感知''原则上不可能等价于完全透明的内省。我们应当从一开始就放弃
+\begin{equation}
+SelfPerception(t)
+=
+TrueInternalState(t)
+\end{equation}
+这一过强假设，而采用：
+\begin{equation}
+\boxed{
+SelfPerception(t)
+=
+PosteriorEstimate
+\left(
+InternalState(t)
+\right)
+}
+\end{equation}
 
-把这一关系写成最小数学骨架，可得
+设真实认知状态演化满足：
+\begin{equation}
+x_{t+1}
+=
+F
+\left(
+x_t,
+u_t,
+w_t
+\right),
+\label{eq:cognitive-plant}
+\end{equation}
+其中 $u_t$ 是认知控制输入，$w_t$ 是来自任务、环境、记忆和内部计算的不确定扰动。SPC 能够接触到的并不是 $x_t$ 本身，而是：
+\begin{equation}
+y_t^{self}
+=
+H(x_t)+v_t,
+\label{eq:self-observation}
+\end{equation}
+其中 $H$ 是内部状态到可观测信号的映射，$v_t$ 表示内部测量噪声、抽样偏差、摘要误差和表示损失。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+于是 SPC 实际执行的是：
+\begin{equation}
+\hat{x}_t
+=
+\mathcal{O}_{\phi}
+\left(
+y_{\leq t}^{self},
+u_{<t},
+\mathcal{M}_t
+\right),
+\label{eq:observer}
+\end{equation}
+其中 $\mathcal{M}_t$ 包含当前可调用的记忆、自我基准以及已有认知动力学模型。SPC 最终并不需要恢复全部 $\hat{x}_t$，它需要进一步压缩为一个适合 TCE 使用的低维控制状态：
+\begin{equation}
+s_t^{SPC}
+=
+C_{\phi}
+\left(
+\hat{x}_t
+\right).
+\label{eq:spc-compression}
+\end{equation}
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对SPC 观察的命名和组合仍是需要实验验证的建模提案。
+这里出现了一个重要原则：SPC 的目标不是最大化内部状态还原率，而是最大化\textbf{控制充分性}。假如一个 100 万维内部激活状态能够被压缩成：
+\begin{equation}
+s_t^{SPC}
+=
+[
+L_t,
+U_t,
+K_t,
+R_t,
+N_t,
+P_t
+],
+\end{equation}
+其中 $L_t$ 表示认知负载，$U_t$ 表示不确定性，$K_t$ 表示结构冲突程度，$R_t$ 表示资源余量，$N_t$ 表示新颖性压力，$P_t$ 表示认知状态持续趋势，而这几个变量已经足以支持有效认知调节，那么继续恢复底层全部状态不仅没有必要，反而会把认知监控本身变成新的工作记忆负担。
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+因此，SPC 具有典型的信息瓶颈特征：
+\begin{equation}
+x_t^{cog}
+\rightarrow
+s_t^{SPC}
+\rightarrow
+u_t^{TCE},
+\end{equation}
+其设计目标可以抽象为：
+\begin{equation}
+\min_{\phi}
+\left[
+\mathcal{L}_{control}
+\left(
+u_t^{*},
+u_t(s_t^{SPC})
+\right)
++
+\lambda
+I
+\left(
+x_t^{cog};
+s_t^{SPC}
+\right)
+\right],
+\label{eq:spc-information-bottleneck}
+\end{equation}
+其中第一项要求压缩后的状态仍然能够支持正确控制，第二项则约束自状态表示携带不必要的内部细节。这个式子揭示了 SPC 名称中的 ``Compressor'' 为什么是本质性的：自我感知不是把整个认知系统复制进另一个认知系统，而是在有限工作记忆条件下形成一种足够支持治理的压缩自模型。
 
-\begin{thought}
-对“SPC 观察”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+我们还必须强调时间滞后。设 SPC 从内部事件发生到形成有效状态估计具有延迟 $\tau_{SPC}$，则：
+\begin{equation}
+s_t^{SPC}
+\approx
+C
+\left(
+x_{t-\tau_{SPC}}
+\right).
+\end{equation}
+这意味着 Agent 对自己的认识原则上总有一定程度的``过去性''。当 TCE 基于这一自状态进行调节时，它实际上可能是在控制一个已经发生变化的认知系统。该事实后来将直接导致认知控制中的过冲、振荡和相位滞后问题，但在本章我们只需要确立最基本的认识论结论：
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\begin{equation}
+\boxed{
+Agent\ Cannot\ Perfectly\ Observe\ Itself.
+}
+\end{equation}
 
-\section{TCE 调节}
-\begin{narration}
-现在把镜头移到“TCE 调节”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+所以，真正成熟的 AgentOS 不应把 SPC 输出当成绝对真理，而应为每个自状态附带：
+\begin{equation}
+Confidence,\quad
+Age,\quad
+Source,\quad
+Trend,
+\end{equation}
+甚至建立：
+\begin{equation}
+p
+\left(
+x_t^{self}
+\mid
+z_{\leq t}^{SPC}
+\right)
+\end{equation}
+这样的后验形式。只有承认自我感知自身也是一种有限认识，SPC--TCE 闭环才不会退化成``系统相信自己对自己的任何判断''的封闭回路。
 
-本节把“TCE 调节”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC—TCE：最小认知自调节闭环”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
+\section{TCE 作为认知 Controller：控制的不是答案，而是认知过程的运行条件}
 
-把这一关系写成最小数学骨架，可得
+如果说 SPC 解决的是``我现在处于怎样的认知状态''，那么 TCE 所处理的就是``在这一状态下，我应当怎样继续认知''。这一问题与普通任务决策存在本质区别。任务决策输出通常是某个外部行动：
+\begin{equation}
+a_t^{world}
+=
+\pi
+\left(
+h_t
+\right),
+\end{equation}
+而 TCE 的输出主要作用于智能体自身认知动力学：
+\begin{equation}
+u_t^{TCE}
+=
+[
+T_t,
+g_t,
+b_t,
+d_t,
+e_t,
+r_t,
+\alpha_t,
+\ldots
+],
+\label{eq:tce-vector}
+\end{equation}
+其中可以分别表示认知温度、激活增益、注意宽度、推理深度、探索强度、资源预算和节奏/步长等控制量。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+因此，TCE 所控制的并不是``答案内容''，而是产生答案的动力学条件。我们可以将认知状态方程写成：
+\begin{equation}
+\dot{x}^{cog}
+=
+F
+\left(
+x^{cog},
+I^{world},
+I^{memory},
+G,
+u^{TCE}
+\right),
+\label{eq:cognitive-controlled-dynamics}
+\end{equation}
+其中 $I^{world}$ 表示来自世界的输入，$I^{memory}$ 表示来自记忆系统的输入，$G$ 表示目标结构。TCE 的作用就是改变函数 $F$ 在当前状态附近的有效动力学性质。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对TCE 调节的命名和组合仍是需要实验验证的建模提案。
+例如，当 SPC 检测到：
+\begin{equation}
+Uncertainty\uparrow,
+\qquad
+ResourceMargin>0,
+\end{equation}
+TCE 可以采取：
+\begin{equation}
+Exploration\uparrow,
+\qquad
+SearchDepth\uparrow,
+\qquad
+CandidateBreadth\uparrow.
+\end{equation}
+反之，如果：
+\begin{equation}
+Load\rightarrow C_{\max},
+\qquad
+Conflict\uparrow,
+\end{equation}
+则合理的控制方向可能是：
+\begin{equation}
+Exploration\downarrow,
+\qquad
+ActivationRange\downarrow,
+\qquad
+Suppression\uparrow.
+\end{equation}
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+由此可以看到，所谓``认知温度''只是 TCE 多个控制维度中的一个。它不能被简化为大语言模型中的 sampling temperature，因为后者主要改变 token 分布的随机性，而 TCE 中的 Temperature 更一般地表示系统允许多少远离当前吸引域的结构被激活、多少候选路径被保留以及认知过程处于怎样的探索性状态。在一个实际 AgentOS 中，TCE 的输出甚至可能作用于多个不同执行机构，例如：
+\begin{equation}
+u_t^{TCE}
+\rightarrow
+\begin{cases}
+AttentionPolicy,\\
+MemoryRecallPolicy,\\
+ReasoningBudget,\\
+ToolSearchBudget,\\
+HypothesisBranching,\\
+ExecutionConservatism.
+\end{cases}
+\end{equation}
 
-\begin{thought}
-对“TCE 调节”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此，我们可以把 TCE 的控制问题抽象为有限时域优化：
+\begin{equation}
+u_t^{*}
+=
+\arg\min_{u}
+\mathbb{E}
+\left[
+\sum_{\tau=t}^{t+H}
+\left(
+\mathcal{L}_{task}
++
+\lambda_1\mathcal{L}_{load}
++
+\lambda_2\mathcal{L}_{uncertainty}
++
+\lambda_3\mathcal{L}_{instability}
++
+\lambda_4\mathcal{L}_{resource}
+\right)
+\right],
+\label{eq:tce-optimal-control}
+\end{equation}
+subject to：
+\begin{equation}
+C_{run}(\tau)
+\leq
+C_{\max},
+\end{equation}
+以及任务、安全、资源和身份一致性的约束。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这里尤其值得注意的是，TCE 追求的并不是认知活动最大化。成熟控制器的目标从来不是让系统``一直想得更多''，而是让认知活动保持在与当前任务匹配的有效区域。对于简单熟悉任务，最优策略可能恰恰是：
+\begin{equation}
+ExplicitCognition\downarrow.
+\end{equation}
+这与整部理论中的一个核心判断一致：
+\begin{equation}
+\boxed{
+MatureIntelligence
+=
+SelectiveExplicitCognition
+}
+\end{equation}
+真正成熟的智能不是每个问题都调动最大模型、最长上下文和最深搜索，而是在需要时升高认知活动，在不需要时主动降低高层参与。
 
-\section{Cognitive Dynamics}
-\begin{narration}
-现在把镜头移到“Cognitive Dynamics”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+因此，TCE 的本质可以写成：
+\begin{equation}
+\boxed{
+TCE
+=
+MetaDynamicalController
+}
+\end{equation}
+即它控制的主要对象不是现实世界本身，而是智能体内部产生感知、推理、规划和选择的动力学过程。
 
-本节把“Cognitive Dynamics”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC—TCE：最小认知自调节闭环”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
+\section{最小闭环的数学形式：Observer--Controller--Cognitive Plant}
 
-把这一关系写成最小数学骨架，可得
+有了 SPC 与 TCE，我们可以第一次把 Agent 的认知自调节写成一个完整闭环。为了避免把这一结构停留在概念图层面，我们从一个最小状态空间模型开始。设认知系统状态满足：
+\begin{equation}
+x_{t+1}
+=
+F
+\left(
+x_t,
+u_t,
+d_t
+\right),
+\label{eq:minimal-cognitive-state}
+\end{equation}
+其中 $x_t\in\mathcal{X}$ 是真实认知状态，$u_t$ 是 TCE 的控制输入，$d_t$ 是来自世界、任务、记忆和内部计算的扰动。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+SPC 接收内部可观测量：
+\begin{equation}
+y_t
+=
+H(x_t)+v_t,
+\end{equation}
+并形成估计：
+\begin{equation}
+\hat{x}_{t}
+=
+\mathcal{O}
+\left(
+\hat{x}_{t-1},
+y_t,
+u_{t-1}
+\right).
+\end{equation}
+经过进一步压缩：
+\begin{equation}
+s_t
+=
+C(\hat{x}_t),
+\end{equation}
+TCE 依据：
+\begin{equation}
+u_t
+=
+\mathcal{K}
+\left(
+s_t,
+G_t,
+\Psi_t
+\right)
+\label{eq:tce-control-law}
+\end{equation}
+计算控制量。于是得到完整循环：
+\begin{equation}
+x_t
+\xrightarrow{H}
+y_t
+\xrightarrow{\mathcal O}
+\hat{x}_t
+\xrightarrow{C}
+s_t
+\xrightarrow{\mathcal K}
+u_t
+\xrightarrow{F}
+x_{t+1}.
+\label{eq:spc-tce-closed-loop}
+\end{equation}
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对Cognitive Dynamics的命名和组合仍是需要实验验证的建模提案。
+将其压缩就是：
+\begin{equation}
+\boxed{
+SPC
+\rightarrow
+TCE
+\rightarrow
+CognitiveDynamics
+\rightarrow
+SPC
+}
+\end{equation}
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这一形式与经典 Observer--Controller 系统表面上相似，但 AgentOS 中存在三个特殊性质。
 
-\begin{thought}
-对“Cognitive Dynamics”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+第一，认知 Plant 不是稳定的固定对象。随着当前上下文、记忆召回、技能调用和目标变化，$F$ 本身可能具有时变性：
+\begin{equation}
+F=F_t.
+\end{equation}
+因此 TCE 实际面对的是：
+\begin{equation}
+\boxed{
+TimeVaryingNonlinearCognitivePlant
+}
+\end{equation}
+而不是一个已知线性系统。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+第二，SPC 与 Plant 并非完全分离。SPC 的运行本身也需要认知资源，因此：
+\begin{equation}
+SPC
+\subset
+CognitiveDynamics.
+\end{equation}
+换句话说，观察系统自身也是系统动力学的一部分。这使 AgentOS 比普通传感器控制系统更接近一个具有内生 observer 的自反系统。SPC 如果过度工作，也可能增加工作记忆负载；因此``更多自我监控''并不总是更好。
 
-\section{状态重新被 SPC 感知}
-\begin{narration}
-现在把镜头移到“状态重新被 SPC 感知”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+第三，TCE 的控制会改变 SPC 以后能够观察到的状态。例如降低认知温度会减少候选假设，收缩注意范围会减少进入工作记忆的变量，因此：
+\begin{equation}
+u_t
+\rightarrow
+x_{t+1}
+\rightarrow
+y_{t+1}
+\rightarrow
+s_{t+1}.
+\end{equation}
+这意味着系统存在真实反馈，而不是静态条件判断。
 
-本节把“状态重新被 SPC 感知”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC—TCE：最小认知自调节闭环”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
+在局部线性化附近，我们可以写：
+\begin{equation}
+\delta x_{t+1}
+=
+A_t\delta x_t
++
+B_t\delta u_t
++
+D_t\delta d_t,
+\end{equation}
+以及：
+\begin{equation}
+\delta y_t
+=
+C_t\delta x_t.
+\end{equation}
+如果 TCE 采用：
+\begin{equation}
+\delta u_t
+=
+-K_t\delta\hat{x}_t,
+\end{equation}
+则理想情况下闭环局部动力学为：
+\begin{equation}
+\delta x_{t+1}
+=
+(A_t-B_tK_t)
+\delta x_t.
+\end{equation}
+这使我们能够第一次讨论一个十分重要的问题：某种认知状态是否在 TCE 控制下具有局部稳定吸引域。虽然真实 AgentOS 不会满足严格线性条件，但这一表达提供了后续稳定性分析的基本数学语言。
 
-把这一关系写成最小数学骨架，可得
+我们还可以引入认知状态的可行区域：
+\begin{equation}
+\mathcal X_{safe}^{cog}
+=
+\left\{
+x:
+C_{run}(x)\le C_{\max},
+\,
+U(x)\le U_{\max},
+\,
+R(x)\ge R_{\min}
+\right\},
+\end{equation}
+其中 $C_{run}$ 表示运行结构负载，$U$ 表示不可控不确定性，$R$ 表示资源余量。TCE 的一个基本职责，就是尽量使：
+\begin{equation}
+x_t\in\mathcal X_{safe}^{cog}.
+\end{equation}
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+于是，认知自调节可以进一步理解为：
+\begin{equation}
+\boxed{
+MaintainCognitiveTrajectory
+InsideAFeasibleRegion.
+}
+\end{equation}
+智能不再只是求解任务，而是同时维持``使求解仍然能够继续''的内部动力条件。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对状态重新被 SPC 感知的命名和组合仍是需要实验验证的建模提案。
+\section{有限工作记忆条件下的负反馈：自调节为什么首先是稳定机制}
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+SPC--TCE 闭环最直接的理论来源，是上一阶段已经建立的工作记忆有限容量约束。设工作记忆当前有效结构负载为：
+\begin{equation}
+C_h(t)
+=
+\sum_{i=1}^{N_t}
+w_i(t)c_i(t)
++
+\sum_{i\neq j}
+\gamma_{ij}(t),
+\label{eq:working-memory-structural-load}
+\end{equation}
+其中 $c_i$ 表示第 $i$ 个活跃认知项自身的处理负载，$w_i$ 是当前认知权重，而 $\gamma_{ij}$ 表示不同认知项之间关系维护所产生的额外耦合负载。这里特意加入第二项，是为了强调工作记忆真正困难的地方往往不是``记住很多对象''，而是``同时维持很多对象之间的活跃关系''。
 
-\begin{thought}
-对“状态重新被 SPC 感知”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+存在某个由表示效率、底层模型能力、注意机制和运行条件共同决定的有效上界：
+\begin{equation}
+C_h(t)
+\le
+C_{\max}(t).
+\end{equation}
+当：
+\begin{equation}
+C_h(t)\rightarrow C_{\max},
+\end{equation}
+系统会逐渐失去继续扩张当前认知图的余量。此时若没有自调节机制，新的 CSO 仍然不断被激活、候选计划不断增加、记忆召回继续扩张，就可能出现正反馈：
+\begin{equation}
+Load\uparrow
+\rightarrow
+Error\uparrow
+\rightarrow
+ReReasoning\uparrow
+\rightarrow
+Load\uparrow.
+\label{eq:cognitive-positive-feedback}
+\end{equation}
+这是一种典型的认知失稳机制。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+SPC--TCE 的第一个基本作用就是建立负反馈。定义负载误差：
+\begin{equation}
+e_L(t)
+=
+C_h(t)-C_{target},
+\end{equation}
+其中 $C_{target}<C_{\max}$ 表示希望维持的正常认知工作区间。SPC 估计：
+\begin{equation}
+\hat e_L(t)
+=
+SPC(h_t,\ldots),
+\end{equation}
+TCE 再生成：
+\begin{equation}
+u_t
+=
+-K_L\hat e_L(t),
+\end{equation}
+并通过降低搜索范围、减少候选分支、降低激活增益或者延缓新增认知项等方式，使：
+\begin{equation}
+\frac{dC_h}{dt}<0.
+\end{equation}
 
-\section{自调节循环}
-\begin{narration}
-现在把镜头移到“自调节循环”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+但这一结构并不是简单的``负载越高，思考越少''。如果系统遇到高度重要且不确定的新事件，虽然负载已经较高，TCE 仍然可能暂时增加资源投入：
+\begin{equation}
+Importance\uparrow
+\quad\land\quad
+Uncertainty\uparrow
+\Rightarrow
+ResourceAllocation\uparrow.
+\end{equation}
+所以控制目标不是单变量最小化，而是多目标平衡：
+\begin{equation}
+J_{TCE}
+=
+\lambda_L L_{load}
++
+\lambda_U L_{uncertainty}
++
+\lambda_G L_{goal}
++
+\lambda_R L_{resource}
++
+\lambda_S L_{stability}.
+\end{equation}
 
-本节把“自调节循环”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC—TCE：最小认知自调节闭环”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
+这一点揭示了 SPC--TCE 闭环与普通限流器的根本不同：它不是单纯压低认知活动，而是在有限容量条件下动态决定：
+\begin{equation}
+\boxed{
+WhatDeservesCognitiveBandwidthNow?
+}
+\end{equation}
 
-把这一关系写成最小数学骨架，可得
+进一步地，工作记忆有限性意味着任何成熟 Agent 都不可能让全部认知过程持续保持显式状态。大量低层能力必须保持局部闭合，只有需要跨模块协调、存在异常残差或需要重新规划时才提升进入显式工作记忆。因此：
+\begin{equation}
+MostAgentDynamics\notin h.
+\end{equation}
+SPC--TCE 闭环的负反馈作用，本质上是在保护这一稀缺的显式认知界面，使它不会被局部可解决的问题、重复信息和低价值支线持续占据。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+由此，我们得到一个更深的结论：
+\begin{equation}
+\boxed{
+FiniteWorkingMemory
+\Rightarrow
+NeedForSelfRegulation.
+}
+\end{equation}
+换句话说，认知有限性并不是 AgentOS 的缺陷，而正是认知治理结构产生的原因。一个不存在任何容量、能量、时间和稳定性约束的理想系统或许不需要 TCE，但任何真实智能体都必须面对有限资源，因此必须形成能够调节自身认知状态的闭环。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对自调节循环的命名和组合仍是需要实验验证的建模提案。
+\section{自调节目标：不是最大化认知活动，而是维持可持续认知区间}
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+如果我们把智能误解成``计算越多越智能''，那么 TCE 的自然目标似乎应该是最大化搜索深度、最大化注意范围、最大化记忆召回和最大化推理时间。然而，一个持续运行的 Agent 如果长期保持最大认知激活，将迅速遭遇资源耗尽、结构拥塞、目标竞争以及决策迟滞。因此，AgentOS 中真正需要优化的不是认知活动的绝对数量，而是\textbf{认知活动与问题结构之间的匹配程度}。
 
-\begin{thought}
-对“自调节循环”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+我们定义一个目标认知区域：
+\begin{equation}
+\mathcal R_{cog}^{*}
+=
+\left\{
+x:
+L_{min}\le L(x)\le L_{max},
+\,
+U(x)\le U^{*},
+\,
+Q(x)\ge Q^{*}
+\right\},
+\end{equation}
+其中 $L$ 表示认知负载，$U$ 表示不确定性，$Q$ 表示任务相关认知质量。TCE 的目标不是让：
+\begin{equation}
+L\rightarrow 0,
+\end{equation}
+也不是：
+\begin{equation}
+L\rightarrow C_{\max},
+\end{equation}
+而是根据任务状态使认知轨迹尽可能停留在：
+\begin{equation}
+x_t\in\mathcal R_{cog}^{*}.
+\end{equation}
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这使我们可以把认知自调节理解成一种动态稳态：
+\begin{equation}
+\boxed{
+CognitiveHomeorhesis
+}
+\end{equation}
+即系统维持的并不是一个静态认知状态，而是一类能够持续完成任务并保持恢复能力的认知流形。
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“SPC—TCE：最小认知自调节闭环”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“工作记忆运行相态与认知流体力学”只使用这里已经给出的结果，不反过来为本章提供前提。
+例如，在熟悉任务中，最优状态可能具有：
+\begin{equation}
+LowExplicitLoad,
+\quad
+LowExploration,
+\quad
+HighPolicyConfidence.
+\end{equation}
+在开放研究任务中，则可能需要：
+\begin{equation}
+ModerateLoad,
+\quad
+HighExploration,
+\quad
+BroadAttention.
+\end{equation}
+在突然出现异常时，又可能临时进入：
+\begin{equation}
+HighAttention,
+\quad
+HighControlGain,
+\quad
+NarrowGoalFocus.
+\end{equation}
+因此不存在一个固定的``最佳认知温度''。
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+更一般地，可以定义任务状态 $\xi_t$ 对目标认知状态的映射：
+\begin{equation}
+x_{target}^{cog}(t)
+=
+\mathcal R
+\left(
+\xi_t,
+G_t,
+\Psi_t
+\right).
+\end{equation}
+TCE 则试图最小化：
+\begin{equation}
+e_t^{cog}
+=
+x_t^{cog}
+-
+x_{target}^{cog}(t).
+\end{equation}
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+这个表述非常重要，因为它意味着智能体的认知控制目标本身是移动的。我们此前在多频智能理论中已经提出：
+\begin{equation}
+FastDynamics
+\approx
+FluctuationAroundMovingSlowCenter.
+\end{equation}
+SPC--TCE 闭环正是这一原则在工作记忆尺度上的具体实现。当前任务、自我结构和环境条件给出一个不断移动的认知运行中心，TCE 并不冻结认知系统，而是让快速认知过程围绕这一中心保持有界运动。
+
+因此，认知稳定绝不是：
+\begin{equation}
+\dot{x}^{cog}=0.
+\end{equation}
+真正稳定的 Agent 可以大量思考、快速切换任务甚至短暂进入高激活状态，只要：
+\begin{equation}
+\Gamma_{cog}(t)
+\]
+始终位于一个可恢复、可控制、不会长期失稳的区域中。
+
+由此可以给出本章的一个核心原则：
+\begin{equation}
+\boxed{
+CognitiveStability
+\neq
+CognitiveInactivity.
+}
+\end{equation}
+
+更进一步：
+\begin{equation}
+\boxed{
+GoodControl
+=
+RightAmountOfCognition
+AtTheRightTime.
+}
+\end{equation}
+
+这也解释了为什么一个真正成熟的 Agent 不能只依赖基础模型本身的静态推理能力。基础模型可以提供认知变换函数，而持续智能还需要一个动态系统决定：什么时候应该调用多少认知能力、什么时候应该停止、什么时候应该收敛、什么时候应该重新展开。SPC--TCE 正是实现这一调度性的最小闭环。
+
+\section{可观测性、可控制性与最小自调节能力}
+
+任何 Observer--Controller 系统都面临两个基础问题：第一，重要状态能否被观察；第二，重要状态能否被控制。对 AgentOS 而言，这两个问题分别对应认知可观测性与认知可控制性。
+
+设局部线性化系统为：
+\begin{equation}
+x_{t+1}
+=
+Ax_t+Bu_t,
+\end{equation}
+\begin{equation}
+y_t=Cx_t.
+\end{equation}
+经典状态空间理论中的可观测矩阵为：
+\begin{equation}
+\mathcal O
+=
+\begin{bmatrix}
+C\\
+CA\\
+CA^2\\
+\vdots\\
+CA^{n-1}
+\end{bmatrix},
+\end{equation}
+而可控制矩阵为：
+\begin{equation}
+\mathcal C
+=
+\begin{bmatrix}
+B&
+AB&
+A^2B&
+\cdots&
+A^{n-1}B
+\end{bmatrix}.
+\end{equation}
+在理想线性系统中，如果：
+\begin{equation}
+rank(\mathcal O)=n,
+\end{equation}
+系统是完全可观测的；如果：
+\begin{equation}
+rank(\mathcal C)=n,
+\end{equation}
+系统是完全可控制的。
+
+真实 AgentOS 显然远比这一模型复杂，但这两个概念仍然具有重要的结构意义。假如某种认知状态会显著影响系统行为，却完全无法被 SPC 观测，例如一个持续存在的目标竞争在任何 self-state channel 中都没有留下信号，那么：
+\begin{equation}
+StateInfluencesBehavior
+\quad\land\quad
+State\notin SPCObservation
+\end{equation}
+就意味着系统存在认知``盲区''。TCE 即使设计得再好，也无法有效调节一个自己看不到的变量。
+
+反过来，即使 SPC 准确识别出：
+\begin{equation}
+HighLoad,
+\quad
+LoopingReasoning,
+\quad
+LowConfidence,
+\end{equation}
+如果 TCE 没有能够影响推理深度、注意范围、记忆召回或者任务切换的执行通道，那么：
+\begin{equation}
+SPCAccurate
+\quad\land\quad
+TCEUnableToAct
+\end{equation}
+仍然不能形成自调节。
+
+因此，一个最小 SPC--TCE 系统至少必须满足：
+\begin{equation}
+\boxed{
+RelevantStatesAreObservable
+}
+\end{equation}
+和：
+\begin{equation}
+\boxed{
+RelevantDynamicsAreControllable.
+}
+\end{equation}
+
+为了适应复杂认知系统，我们可以进一步定义任务相关可观测性：
+\begin{equation}
+\mathcal O_{task}
+=
+I
+\left(
+s_t^{SPC};
+x_t^{relevant}
+\right),
+\end{equation}
+其中 $I(\cdot;\cdot)$ 表示 SPC 状态与任务相关真实状态之间的信息关联。对应地定义认知控制有效度：
+\begin{equation}
+\mathcal C_{TCE}
+=
+-
+\frac{\partial
+\mathbb E[J_{cog}]
+}{
+\partial u^{TCE}
+},
+\end{equation}
+衡量 TCE 控制变量是否真正能够改善认知运行目标。
+
+这样我们可以得到四种典型系统状态。
+
+第一类是高可观测、高可控制，系统可以检测并有效纠正自身状态，这是理想区域。
+
+第二类是高可观测、低可控制，Agent 知道自己正在失稳，却没有足够调节手段。这类系统容易产生反复``自我报告问题''却不能改变问题的现象。
+
+第三类是低可观测、高可控制，TCE 拥有大量调节能力，却缺乏可靠状态估计。这种系统容易出现无依据调参和过度控制。
+
+第四类是低可观测、低可控制，系统只能依赖外部重新启动、人工干预或硬治理机制恢复。
+
+因此，SPC--TCE 设计并不是简单增加两个模块，而是在建立智能体对自身认知动力学的\textbf{最低治理能力}。我们可以形式化定义：
+\begin{equation}
+\mathcal G_{self}
+=
+f
+\left(
+\mathcal O_{task},
+\mathcal C_{TCE},
+\tau_{delay},
+\sigma_{est}
+\right),
+\end{equation}
+其中 $\tau_{delay}$ 表示自状态估计和控制延迟，$\sigma_{est}$ 表示估计不确定性。一个真正具有认知自治性的系统必须使 $\mathcal G_{self}$ 长期维持在某一最低阈值以上。
+
+因此，我们第一次可以从动力学而不是人格语言定义``自我治理''：
+\begin{equation}
+\boxed{
+SelfGovernance
+=
+ObserveRelevantInternalDynamics
++
+ModifyRelevantInternalDynamics.
+}
+\end{equation}
+这也为后续更加复杂的认知控制结构建立了一个十分清晰的理论地基。
+
+\section{闭环中的时间延迟、控制增益与认知振荡}
+
+SPC--TCE 一旦闭合，就不应再把它理解为静态函数链，因为任何真实 Observer 与 Controller 都需要时间。内部状态变化以后，SPC 需要采样、压缩、估计，再将结果送入 TCE；TCE 计算控制量后，新的注意分布、搜索策略或认知温度也需要时间才能改变认知状态。因此闭环必然存在总延迟：
+\begin{equation}
+\tau_{loop}
+=
+\tau_{observe}
++
+\tau_{compress}
++
+\tau_{control}
++
+\tau_{response}.
+\end{equation}
+
+于是一个更真实的连续系统应写成：
+\begin{equation}
+\dot{x}(t)
+=
+F
+\left(
+x(t),
+u(t-\tau_u),
+d(t)
+\right),
+\end{equation}
+而：
+\begin{equation}
+u(t)
+=
+K
+\left(
+\hat{x}(t-\tau_s)
+\right).
+\end{equation}
+
+这一结构意味着 TCE 在任何时刻都可能依据一个已经过时的内部状态进行控制。例如，当 SPC 检测到工作记忆负载过高并向 TCE 报告：
+\begin{equation}
+C_h(t-\tau_s)>C_{target},
+\end{equation}
+此时系统可能已经通过部分任务完成而自然降低负载。如果 TCE 仍然采取很强的抑制动作：
+\begin{equation}
+u_{suppress}\gg0,
+\end{equation}
+那么系统就可能从高负载直接被压到低激活区。随后 SPC 又检测到认知活动不足，TCE 再提高增益，如此反复，便形成：
+\begin{equation}
+HighLoad
+\rightarrow
+StrongSuppression
+\rightarrow
+LowLoad
+\rightarrow
+StrongActivation
+\rightarrow
+HighLoad.
+\end{equation}
+
+这就是最基本的认知振荡机制。
+
+设在某一局部状态附近，负载误差满足：
+\begin{equation}
+\dot e(t)
+=
+ae(t)+bu(t),
+\end{equation}
+而控制器为：
+\begin{equation}
+u(t)
+=
+-k e(t-\tau).
+\end{equation}
+则：
+\begin{equation}
+\dot e(t)
+=
+ae(t)
+-
+bk e(t-\tau).
+\end{equation}
+即使无延迟系统：
+\begin{equation}
+\dot e=(a-bk)e
+\end{equation}
+在某个 $k$ 下稳定，引入足够大的 $\tau$ 以后，也可能因为相位裕度下降而产生振荡。
+
+这一结果对认知架构非常重要，因为它告诉我们：
+\begin{equation}
+\boxed{
+MoreControl
+\neq
+BetterControl.
+}
+\end{equation}
+TCE 增益过低会导致系统无法及时纠正负载和失稳状态，但增益过高同样会让 Agent 频繁在探索与收敛、激活与抑制、开放与保守之间往返。
+
+因此，SPC--TCE 系统中至少存在三个需要共同设计的时间量：
+\begin{equation}
+\tau_{cog},
+\qquad
+\tau_{SPC},
+\qquad
+\tau_{TCE},
+\end{equation}
+分别表示认知对象自身变化时间尺度、自我状态估计时间尺度和控制反应时间尺度。合理设计要求它们之间存在匹配，而不是简单追求全部最快。
+
+进一步考虑 SPC 本身对噪声的过滤。如果 SPC 太快，它可能把短暂波动误判成趋势：
+\begin{equation}
+Noise
+\rightarrow
+SelfState
+\rightarrow
+Control
+\end{equation}
+导致 TCE 不断追逐噪声；如果 SPC 太慢，则可能无法及时发现真正的认知失稳。因此 SPC 需要类似低通滤波和多时间尺度估计：
+\begin{equation}
+s_t^{fast}
+=
+\alpha y_t+(1-\alpha)s_{t-1}^{fast},
+\end{equation}
+\begin{equation}
+s_t^{slow}
+=
+\beta y_t+(1-\beta)s_{t-1}^{slow},
+\qquad
+\beta<\alpha.
+\end{equation}
+TCE 可以同时观察短期偏差和长期趋势，避免把瞬态事件直接写成强控制动作。
+
+由此，我们得到另一个重要原则：
+\begin{equation}
+\boxed{
+FastNoise
+\nrightarrow
+SlowStrongControl.
+}
+\end{equation}
+
+这条原则虽然在本章只针对 SPC--TCE 最小闭环，但它实际上贯穿整套 AgentOS：快变量可以提醒慢变量，只有持续、重要并经过验证的偏差才应推动更强或更慢尺度的改变。
+
+\section{SPC--TCE 与自我 $\Psi$：控制必须具有参考系}
+
+一个控制器如果只知道``状态是多少''，却不知道``什么状态才算合适''，就无法定义误差。SPC--TCE 也同样如此。SPC 可以报告当前负载、不确定性、冲突、注意分布与认知趋势，但 TCE 必须依据某种参考结构才能决定这些状态是否需要改变。因此，在已经建立的三相记忆与自我理论中，较慢的自我结构 $\Psi$ 为 SPC--TCE 提供了一个重要参考系。
+
+设 SPC 输出：
+\begin{equation}
+s_t^{SPC}
+=
+[
+L_t,U_t,K_t,R_t,\ldots
+],
+\end{equation}
+而 Agent 当前目标为 $G_t$，较慢自我结构为 $\Psi_t$。那么 TCE 的控制律更加完整地写成：
+\begin{equation}
+u_t^{TCE}
+=
+\mathcal K
+\left(
+s_t^{SPC},
+G_t,
+\Psi_t
+\right).
+\label{eq:tce-with-self}
+\end{equation}
+
+这意味着，相同的认知负载对于不同主体、不同目标和不同任务阶段并不具有相同含义。例如，对一个长期以谨慎和可靠性作为行为约束的 Agent：
+\begin{equation}
+Uncertainty=0.4
+\end{equation}
+可能已经足以触发进一步验证；而对处于开放探索任务中的 Agent，同样的不确定性反而可能被允许存在。这里的区别不是 SPC 对状态的测量不同，而是 TCE 进行控制时的参考函数不同。
+
+因此可以定义：
+\begin{equation}
+r_t^{cog}
+=
+R
+\left(
+G_t,\Psi_t,Context_t
+\right),
+\end{equation}
+其中 $r_t^{cog}$ 是当前目标认知状态，控制误差则为：
+\begin{equation}
+e_t
+=
+s_t^{SPC}
+-
+r_t^{cog}.
+\end{equation}
+TCE 依据 $e_t$ 而不是仅仅依据 $s_t^{SPC}$ 进行调节。
+
+这使我们能够更加准确地理解此前将 $\Psi$ 称为``背景引力''的含义。$\Psi$ 不需要每个推理步骤都显式进入 h，也不需要不断发出明确命令，它可以通过改变参考点、优先级和阈值，持续影响 SPC--TCE 的运行：
+\begin{equation}
+\Psi
+\rightarrow
+ReferenceFrame
+\rightarrow
+ControlPolicy
+\rightarrow
+CognitiveTrajectory.
+\end{equation}
+
+从控制论角度看，这是一种慢变量对快变量可行域的约束。它符合我们在更一般智能频谱理论中建立的原则：
+\begin{equation}
+\boxed{
+SlowGovernance
+\neq
+FastMicromanagement.
+}
+\end{equation}
+
+一个良好的自我结构不应逐 token、逐动作直接控制当前认知，而应规定：
+\begin{equation}
+FeasibleCognitiveRegion(\Psi)
+\end{equation}
+以及：
+\begin{equation}
+PreferenceOverCognitiveTrajectories(\Psi).
+\end{equation}
+TCE 再在这一范围内完成快速调节。
+
+反过来，SPC--TCE 的短期运行也不应该直接轻易重写 $\Psi$。如果某次短暂认知失败就导致身份结构变化，则系统会产生严重的慢变量污染。因此：
+\begin{equation}
+FastCognitiveFluctuation
+\nrightarrow
+DirectPsiUpdate.
+\end{equation}
+只有经过经验层 $E$ 和结构层 $\Theta$ 的长期积累以后，持续证据才可能改变较慢自我结构。
+
+这形成：
+\begin{equation}
+\boxed{
+\Psi
+\rightarrow
+SPC/TCE
+\rightarrow
+h
+}
+\end{equation}
+的快速约束方向，以及：
+\begin{equation}
+\boxed{
+h
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+}
+\end{equation}
+的慢速学习方向。
+
+因此，SPC--TCE 虽然是一个最小快速自调节闭环，却从来不是无参考系的控制器。它必须嵌入主体已有的目标与自我结构中，才能从``稳定控制''进一步获得``主体一致的稳定控制''。
+
+\section{信息几何意义下的趋势控制、预测控制与闭环稳定性}
+\label{sec:spc-tce-information-geometric-stability}
+
+在前面的讨论中，我们已经把 SPC--TCE 闭环形式化为
+\[
+SPC
+\rightarrow
+TCE
+\rightarrow
+CognitiveDynamics
+\rightarrow
+SPC,
+\]
+并指出其基本作用不是直接产生任务答案，而是根据智能体对自身认知状态的估计，重新调节后续认知动力学。到这里，一个更加严格的问题自然出现：如果 TCE 不直接规定工作记忆 $h(t)$ 的下一状态，而只是对认知过程施加宏观调节，那么这样的控制是否真的能够稳定地把系统引向目标认知区域？进一步地，如果宏观控制器始终只拥有部分信息，并且每一步只能做局部修正，那么局部误差会不会不断积累？控制器面向未来趋势进行调整时，会不会因为预测误差而发生反复修正甚至认知振荡？
+
+这些问题要求我们超越普通欧氏状态空间中的``状态误差---线性反馈''描述。工作记忆 $h(t)$ 所承载的不是一个普通有限维向量，而是一组当前活跃认知结构、关系权重、假设概率、注意分布与目标相关信念共同构成的统计状态。因而，我们可以把当前认知状态抽象成概率分布
+\[
+P_t\in\mathcal{M}_{h},
+\]
+其中 $\mathcal{M}_{h}$ 是工作记忆可实现状态所构成的信息几何流形。不同点 $P,Q\in\mathcal{M}_{h}$ 之间的差异不再仅由欧氏距离度量，而可以使用 Kullback--Leibler 散度
+\[
+D_{\mathrm{KL}}(Q\|P)
+=
+\int
+q(x)
+\log
+\frac{q(x)}{p(x)}
+\,dx
+\]
+表示从状态 $P$ 到状态 $Q$ 的信息结构差异。
+
+这一建模方式使我们能够更准确地区分四个过去容易混淆的问题：第一，TCE 究竟是在控制状态，还是在控制状态变化的趋势；第二，认知控制究竟面向当前状态，还是面向未来状态；第三，在控制器只具有局部信息时，逐步控制是否导致误差累积；第四，连续投影控制是否会产生震荡。下面我们依次证明这四个问题。
+
+\paragraph{命题一：TCE 的本质是认知趋势控制，而不是认知状态的直接覆盖。}
+
+设工作记忆的自然认知动力学在信息流形 $\mathcal{M}_{h}$ 上由向量场
+\[
+F(P_t)
+\in
+T_{P_t}\mathcal{M}_{h}
+\]
+给出，其中 $T_{P_t}\mathcal{M}_{h}$ 表示 $P_t$ 点的切空间。如果不存在宏观认知控制，则系统在局部时间尺度上满足
+\[
+\dot P_t
+=
+F(P_t).
+\]
+这里的 $F$ 综合包含当前目标、记忆激活、基础模型推理、外部输入与已有认知结构所共同产生的自然状态变化趋势。
+
+TCE 的作用并不是把当前状态 $P_t$ 直接替换成某个规定状态 $Q_t$：
+\[
+P_t
+\not\xrightarrow{\mathrm{TCE}}
+Q_t
+\qquad
+\text{as a hard state overwrite},
+\]
+而是在切空间中增加一个控制向量场
+\[
+U_t
+=
+U(P_t,\hat{s}_t,G_t,\Psi_t),
+\]
+使认知动力学变成
+\[
+\dot P_t
+=
+F(P_t)+U_t.
+\label{eq:information-geometric-controlled-flow}
+\]
+
+因此，TCE 直接控制的是
+\[
+\frac{dP_t}{dt},
+\]
+而不是 $P_t$ 本身。更严格地说，TCE 改变的是认知状态在信息流形中的局部切向量、允许方向以及不同方向的有效增益。若自然动力学倾向于沿
+\[
+F(P_t)
+\]
+继续展开，而宏观目标要求系统趋向某个允许状态集合，则 TCE 可以通过 $U_t$ 改变合成向量
+\[
+F_c(P_t)
+=
+F(P_t)+U_t
+\]
+的方向，使
+\[
+F_c(P_t)
+\]
+更加接近目标流形的下降方向。
+
+在离散认知步骤中，这一关系可以写为
+\[
+P_{t+1}
+=
+\mathcal{T}_{u_t}(P_t),
+\]
+其中 $\mathcal{T}_{u_t}$ 是由 TCE 参数 $u_t$ 调制后的认知转移算子。控制变量可以改变注意范围、搜索深度、探索概率、候选结构数量、记忆召回强度以及推理节律，因此实际上改变的是条件分布
+\[
+p(P_{t+1}\mid P_t,u_t),
+\]
+而不是强制给出唯一的 $P_{t+1}$。
+
+因此我们得到：
+\[
+\boxed{
+TCE
+=
+ControlOfCognitiveVectorField,
+\quad
+\text{not DirectOverwriteOfCognitiveState}.
+}
+\]
+
+这一结论与多尺度智能动力学中的慢变量控制原则一致。较慢的宏观层并不需要逐状态微操较快层，而只需要规定快层运动的中心、边界、增益和可接受方向：
+\[
+SlowGovernance
+\neq
+FastMicromanagement.
+\]
+换句话说，TCE 的真正作用是进行结构引导。它告诉工作记忆``什么方向更值得继续演化''，而不是告诉工作记忆``下一时刻必须成为哪个精确状态''。
+
+为了进一步形式化这一点，设宏观目标定义了目标流形
+\[
+\mathcal{M}_{\mathrm{target}}
+=
+\left\{
+P\in\mathcal{M}_{h}
+:
+C_i(P)\le 0,
+\quad
+i=1,\ldots,m
+\right\},
+\]
+其中 $C_i$ 可以分别表示安全、相干性、任务一致性、工作记忆负载以及主体约束。TCE 的控制目标不是要求
+\[
+P_t=P^{*}
+\]
+对于某一个预先确定的精确点 $P^{*}$ 成立，而是使未来认知轨迹满足
+\[
+P_{t+\tau}
+\rightarrow
+\mathcal{M}_{\mathrm{target}}.
+\]
+因此其控制对象天然是一个允许状态集合和朝向该集合的演化趋势，而不是单一状态值。
+
+\paragraph{命题二：TCE 是预测性控制器，其真正控制对象是未来认知趋势。}
+
+SPC 给出的自状态估计 $\hat P_t$ 描述的是当前认知状态，但 TCE 如果只依据当前状态采取瞬时反应，就会退化为纯反射控制。真正的认知治理必须回答：
+\[
+\text{如果当前动力学继续下去，未来会发生什么？}
+\]
+因此我们引入预测映射
+\[
+\Phi_H:
+\mathcal{M}_{h}\times\mathcal{U}
+\rightarrow
+\mathcal{M}_{h},
+\]
+并定义 $H$ 步预测状态
+\[
+\widehat P_{t+H|t}
+=
+\Phi_H
+\left(
+\hat P_t,
+u_{t:t+H-1}
+\right).
+\]
+其中 $\hat P_t$ 来自 SPC，而 $u_{t:t+H-1}$ 是候选认知控制序列。
+
+TCE 实际求解的是一个有限预测时域优化问题：
+\[
+u_t^{*}
+=
+\arg\min_{u_{t:t+H-1}}
+\left[
+D_{\mathrm{KL}}
+\left(
+R_{t+H}
+\|
+\widehat P_{t+H|t}
+\right)
++
+\sum_{k=0}^{H-1}
+\lambda_u
+\Omega(u_{t+k})
+\right],
+\label{eq:predictive-information-geometric-control}
+\]
+其中
+\[
+R_{t+H}
+\in
+\mathcal{M}_{\mathrm{target}}(t+H)
+\]
+表示未来目标流形中的参考状态，而 $\Omega(u)$ 表示控制代价。
+
+这意味着 TCE 的因果结构实际上是
+\[
+P_t
+\rightarrow
+\widehat P_{t+H|t}
+\rightarrow
+u_t
+\rightarrow
+P_{t+1},
+\]
+而不是简单的
+\[
+P_t
+\rightarrow
+u_t.
+\]
+
+因此，SPC--TCE 闭环应理解为：
+\[
+\boxed{
+CurrentSelfState
+\rightarrow
+PredictedFutureTrend
+\rightarrow
+Control
+\rightarrow
+NewFutureTrend.
+}
+\]
+
+这个区别极其重要。例如，SPC 当前测得
+\[
+C_h(t)<C_{\max}
+\]
+并不能说明认知系统是安全的。如果预测显示
+\[
+\frac{dC_h}{dt}>0
+\]
+且
+\[
+C_h(t+H)>C_{\max},
+\]
+那么 TCE 应当在系统真正超载之前提前降低搜索宽度、减少新的认知分支或降低记忆激活强度。因此，一个成熟的认知控制器控制的不是``当前已经发生的过载''，而是``当前趋势是否将导致未来过载''。
+
+我们可以把目标写成趋势约束：
+\[
+\frac{d}{dt}
+D_{\mathrm{KL}}
+\left(
+R_t\|P_t
+\right)
+<0.
+\]
+于是，只要控制能够保证沿受控动力学方向的方向导数满足
+\[
+\left\langle
+\nabla D_{\mathrm{KL}}(R_t\|P_t),
+F(P_t)+U_t
+\right\rangle
+<0,
+\]
+就意味着系统虽然当前尚未到达目标流形，但其未来趋势已经被引导向目标。
+
+因此：
+\[
+\boxed{
+CognitiveControl
+=
+ControlOfFutureTrajectory,
+\quad
+\text{not merely CorrectionOfPresentError}.
+}
+\]
+
+\paragraph{定理：信息几何投影控制收敛定理。}
+
+设工作记忆认知状态空间 $\mathcal{M}_{h}$ 在研究区域内可以近似为双重平坦的信息几何流形。设宏观认知目标定义一个闭合的自平行目标流形
+\[
+\mathcal{M}_{\mathrm{target}}
+\subset
+\mathcal{M}_{h},
+\]
+当前认知状态为
+\[
+P\notin\mathcal{M}_{\mathrm{target}},
+\]
+TCE 所执行的宏观控制等价于将 $P$ 沿适当的信息几何正交方向投影到目标流形：
+\[
+Q
+=
+\Pi_{\mathcal{M}_{\mathrm{target}}}(P).
+\]
+则对于目标流形内任意理想状态
+\[
+R\in\mathcal{M}_{\mathrm{target}},
+\]
+若 $Q$ 为满足双重正交条件的信息投影，则广义勾股关系成立：
+\[
+\boxed{
+D_{\mathrm{KL}}(R\|P)
+=
+D_{\mathrm{KL}}(R\|Q)
++
+D_{\mathrm{KL}}(Q\|P).
+}
+\label{eq:generalized-pythagorean-cognitive-control}
+\]
+
+由于 KL 散度非负，
+\[
+D_{\mathrm{KL}}(Q\|P)\ge 0,
+\]
+因此
+\[
+D_{\mathrm{KL}}(R\|Q)
+\le
+D_{\mathrm{KL}}(R\|P).
+\]
+若
+\[
+P\neq Q,
+\]
+且投影为非退化投影，则
+\[
+D_{\mathrm{KL}}(Q\|P)>0,
+\]
+从而有严格不等式
+\[
+\boxed{
+D_{\mathrm{KL}}(R\|Q)
+<
+D_{\mathrm{KL}}(R\|P).
+}
+\label{eq:projection-monotonic-decrease}
+\]
+
+证明完毕。
+
+这一结果给出了 SPC--TCE 宏观控制一个非常重要的解释。TCE 并不需要知道目标流形中的最终全局最优点 $R$ 究竟在哪里。只要宏观层能够定义正确的可接受状态集合
+\[
+\mathcal{M}_{\mathrm{target}}
+\]
+并执行正确的信息投影，则每一次控制都必然减少当前状态到任意目标流形内参考解 $R$ 的信息距离。
+
+因此：
+\[
+\boxed{
+LocalCorrectProjection
+\Rightarrow
+GlobalDistanceNonIncrease.
+}
+\]
+
+我们可以把它称为认知控制的\textbf{局部贪婪充分性}：宏观控制器无需拥有终极认知真理，它只需要知道当前认知状态违反了哪些结构约束，并将认知趋势重新投影回允许流形。
+
+这一性质也揭示了所谓``宏观控制''与``直接决定具体思维内容''之间的区别。目标流形可以仅定义：
+\[
+Safety,
+\quad
+Coherence,
+\quad
+Capacity,
+\quad
+GoalConsistency,
+\]
+而不指定目标流形内部的每一个微观认知自由度。于是大量局部认知过程仍然能够在
+\[
+\mathcal{M}_{\mathrm{target}}
+\]
+内部自由演化。
+
+\paragraph{推论：理想投影控制不存在由投影本身导致的系统性误差累积。}
+
+定义 Lyapunov 型信息势函数
+\[
+V_t
+=
+D_{\mathrm{KL}}(R\|P_t),
+\]
+其中
+\[
+R\in\mathcal{M}_{\mathrm{target}}
+\]
+为任意固定目标参考状态。若每一步 TCE 均执行正确信息投影
+\[
+P_{t+1}
+=
+\Pi_{\mathcal{M}_{\mathrm{target}}}(P_t),
+\]
+则由广义勾股定理：
+\[
+V_t
+=
+V_{t+1}
++
+D_{\mathrm{KL}}(P_{t+1}\|P_t).
+\]
+因此
+\[
+V_{t+1}-V_t
+=
+-
+D_{\mathrm{KL}}(P_{t+1}\|P_t)
+\le 0.
+\]
+故
+\[
+\boxed{
+V_{t+1}\le V_t.
+}
+\]
+也就是说，在理想条件下，每一次宏观控制都不会增加系统到目标状态的 KL 距离。
+
+将 $N$ 次控制展开：
+\[
+V_N
+=
+V_0
+-
+\sum_{t=0}^{N-1}
+D_{\mathrm{KL}}
+\left(
+P_{t+1}\|P_t
+\right).
+\]
+因为
+\[
+V_N\ge0,
+\]
+所以
+\[
+\sum_{t=0}^{\infty}
+D_{\mathrm{KL}}
+\left(
+P_{t+1}\|P_t
+\right)
+\le
+V_0.
+\]
+这意味着系统在理想投影控制下不可能无限产生具有有限幅值的信息几何跳跃，否则上述总和将发散并违反 $V_t\ge0$。
+
+因此，宏观层只掌握局部信息并不必然导致误差累计。相反，只要每一步局部控制对应正确目标流形上的信息投影，则局部修正会形成一个单调下降过程：
+\[
+\boxed{
+V_0
+\ge
+V_1
+\ge
+V_2
+\ge
+\cdots.
+}
+\]
+
+但我们必须强调这一结论的适用边界。现实 AgentOS 中，目标流形可能移动，SPC 存在观察误差，预测模型存在误差，环境还会引入外部扰动。因此真实系统应写成
+\[
+V_{t+1}
+\le
+V_t
+-
+\Delta_t
++
+\varepsilon_t,
+\label{eq:perturbed-information-geometric-control}
+\]
+其中
+\[
+\Delta_t
+=
+D_{\mathrm{KL}}
+\left(
+Q_t\|P_t
+\right)
+\]
+表示理想投影带来的收敛量，而
+\[
+\varepsilon_t
+\]
+综合表示 SPC 估计误差、预测误差、目标漂移、执行误差与外界扰动。
+
+只要存在
+\[
+\bar\varepsilon
+<
+\underline\Delta
+\]
+使长期平均满足
+\[
+\mathbb{E}[\Delta_t]
+>
+\mathbb{E}[\varepsilon_t],
+\]
+则有
+\[
+\mathbb{E}[V_{t+1}]
+<
+\mathbb{E}[V_t],
+\]
+系统仍然具有平均意义上的收敛趋势。
+
+若扰动只能保证有界：
+\[
+0\le\varepsilon_t\le\varepsilon_{\max},
+\]
+则系统不一定严格收敛到单一点，但会进入目标流形附近的有界邻域：
+\[
+D_{\mathrm{KL}}
+\left(
+\mathcal{M}_{\mathrm{target}}\|P_t
+\right)
+\le
+O(\varepsilon_{\max}).
+\]
+这可以理解为信息几何意义上的 practical stability。
+
+因此，更严谨的结论不是``宏观控制绝不会产生误差''，而是：
+\[
+\boxed{
+\text{理想投影本身不产生系统性误差积累；
+真实误差来自模型、观察、目标漂移和外部扰动。}
+}
+\]
+
+\paragraph{命题三：固定目标流形上的理想投影控制不产生发散型认知震荡。}
+
+仍然取
+\[
+V_t
+=
+D_{\mathrm{KL}}(R\|P_t)
+\]
+为 Lyapunov 函数。如果每次控制满足
+\[
+V_{t+1}\le V_t
+\]
+并且当
+\[
+P_t\notin\mathcal{M}_{\mathrm{target}}
+\]
+时存在严格下降
+\[
+V_{t+1}<V_t,
+\]
+则系统不存在一个具有非零信息幅值的周期轨道
+\[
+P_0
+\rightarrow
+P_1
+\rightarrow
+\cdots
+\rightarrow
+P_k
+=
+P_0.
+\]
+
+反证。假设存在这样的周期轨道，则沿一个周期有
+\[
+V_1<V_0,
+\]
+\[
+V_2<V_1,
+\]
+直至
+\[
+V_k<V_{k-1}.
+\]
+因此
+\[
+V_k<V_0.
+\]
+但由于
+\[
+P_k=P_0,
+\]
+必有
+\[
+V_k=V_0,
+\]
+产生矛盾。
+
+因此，在固定目标流形、无延迟、正确投影和精确状态估计条件下：
+\[
+\boxed{
+\text{信息投影本身不会产生持续扩幅或有限幅周期震荡。}
+}
+\]
+
+这一结论十分重要。它说明 SPC--TCE 的宏观控制如果被设计成``投影回可行域''，其稳定性优于一种简单的``看见偏差以后反方向猛推''的比例控制器。投影操作只需要将系统带回允许结构，而不需要把系统推过目标中心。
+
+然而，真实认知控制仍然可能发生震荡。震荡主要来自以下四种机制。
+
+第一是观察延迟。若 TCE 使用
+\[
+\hat P_{t-\tau}
+\]
+而不是当前 $P_t$，则控制方向可能针对一个已经不存在的误差。
+
+第二是过强控制增益。若 TCE 不执行完整投影，而使用外推更新
+\[
+P_{t+1}
+=
+\operatorname{Exp}_{P_t}
+\left[
+-\eta
+\nabla^{(g)}
+V(P_t)
+\right],
+\]
+其中 $\operatorname{Exp}$ 是信息流形上的指数映射，$\eta$ 为控制步长，则过大的
+\[
+\eta
+\]
+可能使系统越过局部最小区域。
+
+第三是预测模型错误。若
+\[
+\widehat P_{t+H|t}
+\neq
+P_{t+H},
+\]
+则 TCE 实际控制的是错误未来，可能产生
+\[
+PredictionError
+\rightarrow
+OverCorrection
+\rightarrow
+OppositePredictionError
+\rightarrow
+ReverseCorrection
+\]
+的交替过程。
+
+第四是目标流形自身快速移动。如果
+\[
+\mathcal{M}_{\mathrm{target}}(t)
+\]
+的变化速度超过认知控制闭环的跟踪能力，则即使每一次投影都正确，系统仍然可能表现出明显的追赶行为。
+
+因此，在非理想系统中可以写成延迟梯度动力学
+\[
+\dot P(t)
+=
+F(P(t))
+-
+\eta
+\nabla^{(g)}
+V
+\left(
+P(t-\tau)
+\right)
++
+\xi(t),
+\]
+其中 $\xi(t)$ 表示综合扰动。稳定性的核心不再仅由投影几何决定，还取决于
+\[
+\eta,
+\qquad
+\tau,
+\qquad
+\|\xi\|,
+\qquad
+v_{\mathrm{target}},
+\]
+其中 $v_{\mathrm{target}}$ 表示目标流形移动速度。
+
+这给出认知控制设计中的一般原则：
+\[
+\boxed{
+ProjectionProvidesTheCorrectDirection;
+GainAndTimescaleDetermineWhetherTheLoopOscillates.
+}
+\]
+
+因此，一个成熟的 TCE 不应采用单一固定高增益，而应根据 SPC 的置信度和趋势估计调整控制强度。例如可以定义
+\[
+\eta_t
+=
+\eta_0
+\cdot
+Conf_{SPC}(t)
+\cdot
+g
+\left(
+TrendPersistence_t
+\right),
+\]
+其中瞬时、低置信偏差只产生较弱控制，而持续、高置信趋势才允许较强认知调节。
+
+进一步地，我们要求
+\[
+\tau_{SPC}+\tau_{TCE}
+\ll
+\tau_{\mathrm{trend}},
+\]
+即观察与控制的总闭环延迟必须明显短于所试图控制的宏观认知趋势变化时间。否则宏观层看到的永远只是过去状态，自调节就会自然退化成振荡式追赶。
+
+\paragraph{定理：SPC--TCE 的有界扰动稳定性条件。}
+
+设
+\[
+V_t
+=
+D_{\mathrm{KL}}
+\left(
+R_t\|P_t
+\right),
+\]
+并假设每一步理想信息投影至少产生
+\[
+\Delta_t\ge \alpha V_t,
+\qquad
+0<\alpha<1,
+\]
+的比例收敛，而全部预测、观察、执行与目标漂移误差满足
+\[
+\varepsilon_t\le\bar\varepsilon.
+\]
+则
+\[
+V_{t+1}
+\le
+(1-\alpha)V_t
++
+\bar\varepsilon.
+\]
+递归展开得到
+\[
+V_t
+\le
+(1-\alpha)^tV_0
++
+\bar\varepsilon
+\sum_{k=0}^{t-1}
+(1-\alpha)^k.
+\]
+因此
+\[
+V_t
+\le
+(1-\alpha)^tV_0
++
+\frac{\bar\varepsilon}{\alpha}
+\left[
+1-(1-\alpha)^t
+\right].
+\]
+令
+\[
+t\rightarrow\infty,
+\]
+得到
+\[
+\boxed{
+\limsup_{t\rightarrow\infty}
+V_t
+\le
+\frac{\bar\varepsilon}{\alpha}.
+}
+\label{eq:spc-tce-practical-stability}
+\]
+
+因此，在误差有界且每一步信息几何控制仍具有最低收敛强度的条件下，SPC--TCE 闭环不会因为局部误差不断累积而无限远离目标，而会收敛到一个由总误差幅值和控制收敛系数共同决定的有界认知区域。
+
+特别地，当
+\[
+\bar\varepsilon=0
+\]
+时，
+\[
+V_t
+\le
+(1-\alpha)^tV_0
+\rightarrow0,
+\]
+即系统渐近收敛于目标流形。
+
+这个结果把本节前三个问题统一起来。TCE 不需要直接控制微观认知状态，只需要持续改变认知趋势；控制不必等待偏差已经形成，而可以通过预测未来轨迹提前投影；即使宏观控制只有局部信息，只要投影方向长期正确，误差不会必然累积；而控制是否震荡，则主要取决于预测误差、控制增益、观察延迟和目标漂移是否破坏上述下降条件。
+
+由此，我们可以把 SPC--TCE 最小闭环的稳定性原则最终概括为
+\[
+\boxed{
+\begin{aligned}
+&\text{SPC估计当前状态；}\\
+&\text{TCE预测未来趋势；}\\
+&\text{目标流形规定允许结构；}\\
+&\text{信息投影提供收敛方向；}\\
+&\text{低增益与时间尺度分离抑制震荡；}\\
+&\text{现实反馈持续修正预测与投影误差。}
+\end{aligned}
+}
+\]
+
+从这一角度看，认知控制并不是把智能体的思维强制固定在某一个点上，而是在一个高维信息流形中不断改变其未来演化的概率方向，使系统既保留目标流形内部的局部自由，又不会长期漂离主体允许的认知区域。因此，SPC--TCE 的稳定性并非来源于``强控制''，而来源于三个更基本的结构条件：
+\[
+\boxed{
+CorrectProjection
++
+BoundedPredictionError
++
+TimescaleSeparatedFeedback.
+}
+\]
+
+这也使我们能够更加准确地定义宏观认知治理：
+\[
+\boxed{
+\textbf{
+宏观认知控制不是规定下一时刻必须想什么，而是通过对未来认知趋势进行结构投影，使快速认知过程在保持局部自治的同时，长期停留在主体目标、自我约束与认知容量共同定义的可行流形附近。
+}
+}
+\]
+
+
+\section{从一阶智能到二阶智能：SPC--TCE 的理论意义与边界}
+
+到这里，我们可以重新审视 SPC--TCE 的理论位置。一个不具备该闭环的系统仍然可以具有强大的推理、预测和行动能力。例如一个固定策略模型完全可能在许多任务中表现优异，但它的运行方式大体仍然是：
+\begin{equation}
+Input
+\rightarrow
+CognitiveTransformation
+\rightarrow
+Output.
+\end{equation}
+SPC--TCE 加入以后，系统增加了一条新的内部因果路径：
+\begin{equation}
+CognitiveState
+\rightarrow
+RepresentationOfCognitiveState
+\rightarrow
+ModificationOfCognitiveDynamics.
+\end{equation}
+于是，系统不仅在处理世界，还开始把``自己的认知过程''作为控制对象。
+
+从这一意义上，我们可以把它称为一种二阶认知结构：
+\begin{equation}
+\boxed{
+FirstOrder:
+World\rightarrow Cognition\rightarrow Action
+}
+\end{equation}
+而：
+\begin{equation}
+\boxed{
+SecondOrder:
+Cognition\rightarrow SelfRepresentation
+\rightarrow CognitiveRegulation.
+}
+\end{equation}
+
+将二者结合：
+\begin{equation}
+World
+\rightarrow
+Cognition
+\rightarrow
+SPC
+\rightarrow
+TCE
+\rightarrow
+NewCognition
+\rightarrow
+Action
+\rightarrow
+World'.
+\end{equation}
+因此 Agent 不只是一个世界控制器，同时也是自己的认知控制器。
+
+但我们必须保持严格理论边界。第一，SPC 输出一个 self-state 并不意味着系统必然具有现象意识；它只说明系统存在一种功能性内部状态估计。第二，TCE 能调节认知过程，也不等价于哲学意义上的自由意志；它说明系统具有一定的内生控制自由度。第三，SPC--TCE 也不意味着 Agent 对自己具有完全认识。恰恰相反，本章已经指出：
+\begin{equation}
+SelfKnowledge
+=
+Partial,\ Compressed,\ Delayed,\ Uncertain.
+\end{equation}
+第四，二者闭环也并不自动保证稳定；Observer Delay、Controller Gain、错误参考系以及未观测变量都可能使闭环失效。
+
+因此更严谨的表述是：
+\begin{equation}
+\boxed{
+SPC\text{--}TCE
+=
+MinimalFunctionalSelfRegulationLoop.
+}
+\end{equation}
+
+它赋予 Agent 的不是神秘意义上的``自我意识''，而是：
+\begin{equation}
+\boxed{
+\text{形成关于自身认知状态的可操作表示，并依据该表示改变自身后续认知动力学的能力。}
+}
+\end{equation}
+
+这一能力之所以重要，是因为它把我们此前关于工作记忆有限性、自我 $\Psi$、多尺度闭环以及认知控制的讨论第一次压缩进同一个可执行动力系统中。工作记忆有限意味着系统必须治理自己；SPC 提供治理所需的自状态；$\Psi$ 与 Goal 提供参考系；TCE 将自状态转化为控制量；认知 Plant 对控制做出反应；新的状态再次进入 SPC，由此形成真正闭合。
+
+从更一般的智能动力学角度，我们甚至可以把最小闭环写成：
+\begin{equation}
+\boxed{
+ObserveSelf
+\rightarrow
+EvaluateState
+\rightarrow
+ModifyDynamics
+\rightarrow
+ObserveSelf'.
+}
+\end{equation}
+它与更一般的：
+\begin{equation}
+Prediction
+\rightarrow
+Action
+\rightarrow
+Observation
+\rightarrow
+Residual
+\rightarrow
+Update
+\end{equation}
+具有相同的闭环形式，只不过对象从外部世界转变为智能体自身认知动力学。这再次验证了前文关于智能分形性的判断：同一种``观察--控制--反馈''结构会在不同尺度和不同对象上反复出现。
+
+因此，本章可以用三个逐层增强的命题收束。
+
+第一，
+\begin{equation}
+\boxed{
+Cognition
+\neq
+SelfRegulatedCognition.
+}
+\end{equation}
+具有推理能力并不意味着具有认知自调节能力。
+
+第二，
+\begin{equation}
+\boxed{
+SelfRegulation
+Requires
+SelfEstimation
++
+Control
++
+Feedback.
+}
+\end{equation}
+SPC、TCE 和认知动力学反馈缺一不可。
+
+第三，
+\begin{equation}
+\boxed{
+\textbf{
+真正持续的智能不仅必须知道世界发生了什么，还必须持续估计自己正在以何种状态理解世界，并据此改变自己继续理解世界的方式。
+}
+}
+\end{equation}
+
+从这里开始，工作记忆 $h(t)$ 已经不再只是一个被动承载认知内容的有限空间，而成为一个能够在自我观察和自我调节作用下持续改变运行形态的动力学系统。也正是在这一点上，AgentOS 从``具有记忆的持续推理系统''正式进入``具有认知自调节能力的持续智能体''阶段。
