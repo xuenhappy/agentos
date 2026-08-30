@@ -1,9 +1,7 @@
 \chapter{工作记忆有限容量定理}
 \label{chap:working-memory-finite-capacity}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.92\textwidth}
+\begin{chapterintro}
 \textbf{本章总体说明}
 
 本章建立 AgentOS 原理论中的一个基础约束：任何具有有限物理承载、有限计算带宽和有限更新周期的智能体，在任意给定时刻都不可能稳定地将无限数量、无限关系密度的认知结构同时维持在全局显式工作状态中。因此，工作记忆 $h(t)$ 的根本限制并不是“能够放入多少 Token”，而是系统能够在当前时间尺度内保持多少\textbf{相互可区分、关系可追踪、约束可满足、能够共同参与推理和行动的有效认知结构}。
@@ -21,9 +19,7 @@ C_{\mathrm{cap}}\!\left(h(t),\mathcal{A},\tau\right)
 }
 \]
 其中 $C_{\mathrm{run}}(t)$ 表示当前显式认知状态所承担的有效结构负载，$C_{\mathrm{cap}}$ 表示在给定认知架构 $\mathcal{A}$ 与工作时间尺度 $\tau$ 下，工作记忆 $h(t)$ 能够稳定维持的相干结构容量。只有保持这一不等式，工作记忆才能继续充当整个 Agent 的可治理、可解释和可行动的全局认知表面。
-\end{minipage}
-}
-\end{center}
+\end{chapterintro}
 
 
 \section{工作记忆为什么必然有限}

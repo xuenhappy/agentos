@@ -1,11 +1,9 @@
 \chapter{DGA / $\Omega$：生命周期生成吸引子}
 
-\fbox{
-\parbox{0.94\textwidth}{
+\begin{chapterintro}
 \textbf{本章总体说明（盖章）}\quad
 在三相记忆 $h$--$E$--$\Theta$ 与自我结构 $\Psi$ 已经建立之后，Agent 已经具有 ``当前状态--经历轨迹--长期生成结构--身份连续性'' 的基本纵向结构。然而，一个能够回答 ``我是谁'' 的系统，并不因此自动具有对 ``我正在成为谁'' 的稳定组织能力。身份连续性能够约束当前行为不至于与既有自我严重冲突，却无法充分解释为什么一个持续存在的 Agent 会在大量可能未来之间反复偏向某些发展方向，并使这种偏向跨越单次任务、局部奖励乃至阶段性目标而保持长期一致。为处理这一缺口，本章引入 Deep Generative Attractor，记为 $\Omega$，并将其理解为 Agent 生命周期最慢尺度上的\textbf{生成方向结构}。$\Psi$ 主要组织已经形成的自我连续性，$\Omega$ 则主要约束未来可能自我的生成分布；前者回答 ``Who am I''，后者回答 ``What am I becoming''。本章把 $\Omega$ 建立为一种超慢生成吸引结构，而非单一目标、固定价值向量或预先写死的终局状态，并进一步讨论它与 $\Theta$、$\Psi$、Goal Preference 和生命周期经验之间的双向耦合。必须强调，DGA/$\Omega$ 是本书提出的 AgentOS 理论结构，目前应被视为一种面向持续人工智能体的动力学假设，而不是已有认知科学中已经得到实证确认的独立心理实体。
-}
-}
+\end{chapterintro}
 
 \section{为什么自我并不足以定义生命周期方向}
 
@@ -1050,14 +1048,12 @@ X_S
 \[
 Q_{\Omega}(e)
 =
-F
-(
-Persistence,
-CrossContextValidity,
-RealitySupport,
-IdentityRelevance,
-CounterEvidence
-).
+F\!\left(
+\begin{gathered}
+\mathrm{Persistence},\ \mathrm{CrossContextValidity},\ \mathrm{RealitySupport},\\
+\mathrm{IdentityRelevance},\ \mathrm{CounterEvidence}
+\end{gathered}
+\right).
 \]
 只有
 \[
@@ -1100,22 +1096,21 @@ Authority(X)
 \]
 表示组件 $X$ 对慢变量的修改权限，并要求：
 \[
-Authority(Task)
-<
-Authority(\Theta\text{-Consolidation})
-<
-Authority(\Psi\text{-Update})
-<
-Authority(\Omega\text{-Governance}).
+\begin{aligned}
+\operatorname{Authority}(\mathrm{Task})
+&<\operatorname{Authority}(\Theta\text{-Consolidation})\\
+&<\operatorname{Authority}(\Psi\text{-Update})\\
+&<\operatorname{Authority}(\Omega\text{-Governance}).
+\end{aligned}
 \]
 这使 $\Omega$ 从一开始就具有类似 ``受治理的慢状态'' 性质，而不是任何模块都可以访问的全局变量。
 
 第五类保护是现实权威。即使 $\Omega$ 代表 Agent 极其稳定的发展方向，也不能拥有比现实更高的认识论地位：
 \[
 \boxed{
-RealityAuthority
+\operatorname{RealityAuthority}
 >
-\OmegaAuthority.
+\operatorname{OmegaAuthority}.
 }
 \]
 如果长期现实证据持续说明某个方向不可行、有害或建立在错误世界模型上，那么系统必须保留修改 $\Omega$ 的路径。这一点是防止 DGA 演化成封闭信仰系统的最后防线。我们甚至可以定义长期现实失配：
@@ -1154,15 +1149,10 @@ FastNoise
 \]
 而必须经过
 \[
-Aggregation
-\rightarrow
-Consolidation
-\rightarrow
-CrossContextValidation
-\rightarrow
-RealityVerification
-\rightarrow
-SlowUpdate.
+\begin{aligned}
+Aggregation&\rightarrow Consolidation\rightarrow CrossContextValidation\\
+&\rightarrow RealityVerification\rightarrow SlowUpdate.
+\end{aligned}
 \]
 这种结构实际上是持续智能能够兼顾可塑性与连续性的必要条件。
 

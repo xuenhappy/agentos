@@ -7,8 +7,14 @@
 \setsansfont{TeX Gyre Heros}
 \usepackage{mathtools,eso-pic}
 \usepackage{longtable,tabularx}
+\usepackage{adjustbox}
 \usepackage{microtype}
 \setlength{\emergencystretch}{3em}
+% Keep emphasized display statements inside the text block without shrinking
+% boxes that already fit naturally.
+\let\naturalboxed\boxed
+\renewcommand{\boxed}[1]{%
+  \adjustbox{max width=.96\linewidth}{\(\naturalboxed{#1}\)}}
 \hypersetup{unicode=true,colorlinks=true,linkcolor=blue!35!black,citecolor=green!35!black,urlcolor=cyan!35!black,pdftitle={智能动力学与 AgentOS},pdfauthor={AgentOS 理论研究}}
 \definecolor{deepblue}{HTML}{07172E}
 \definecolor{cyanink}{HTML}{176B87}
@@ -22,7 +28,9 @@
   {\begin{quote}\small\color{deepblue}\setlength{\parskip}{.65em}\noindent}
   {\end{quote}\medskip}
 \input{chapter-art}
-\newcommand{\chaptervoice}[1]{\begin{narration}#1\end{narration}\ChapterArt{\number\value{chapter}}}
+\newcommand{\chaptervoice}[1]{%
+  \begin{chapterintro}#1\end{chapterintro}%
+  \ChapterArt{\number\value{chapter}}}
 \newcommand{\conceptfigure}[2]{\begin{figure}[htbp]\centering\includegraphics[width=.86\textwidth]{#1}\caption{#2}\end{figure}}
 \newcommand{\partvoice}[1]{\clearpage\thispagestyle{empty}\vspace*{.28\textheight}\begin{center}\begin{minipage}{.72\textwidth}\Large\color{cyanink}\itshape #1\end{minipage}\end{center}\clearpage}
 \title{智能动力学与 AgentOS}

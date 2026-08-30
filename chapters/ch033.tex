@@ -1,9 +1,7 @@
 \chapter{SPC--TCE：最小认知自调节闭环}
 \label{chap:spc-tce-minimal-loop}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.92\textwidth}
+\begin{chapterintro}
 \textbf{本章总体说明：}
 在前两章中，我们已经分别建立了自我感知压缩器 SPC（Self-Perception Compressor）与认知动力学控制器 TCE（Temperature \& Control Executor）。如果把二者孤立理解，SPC 只是一个内部状态估计器，而 TCE 只是一个认知参数调节器；真正重要的跃迁发生在二者闭合以后。当 SPC 对智能体当前认知状态形成有限、压缩且带不确定性的自我估计，TCE 再依据这一估计调节注意、探索、搜索深度、激活范围、认知温度与资源投入，而调节后的认知动力学重新改变工作记忆 $h(t)$ 并再次进入 SPC 时，一个最小的认知自调节闭环才真正形成。由此，Agent 不再只是``执行认知过程''，而开始``根据自己正在如何认知而改变自己的认知方式''。
 
@@ -14,9 +12,7 @@ SPC\rightarrow TCE\rightarrow CognitiveDynamics\rightarrow SPC
 }
 \]
 应被视为 AgentOS 从``拥有认知状态''走向``能够治理自身认知状态''的最小动力学结构。本章只研究这一最小闭环，不预先依赖更复杂的内稳态、情感调制或复杂度治理结构，从而首先建立认知自调节的基本数学骨架。
-\end{minipage}
-}
-\end{center}
+\end{chapterintro}
 
 \section{从认知过程到认知自调节：为什么 SPC 与 TCE 必须闭合}
 
@@ -760,7 +756,7 @@ SPC--TCE 闭环正是这一原则在工作记忆尺度上的具体实现。当�
 真正稳定的 Agent 可以大量思考、快速切换任务甚至短暂进入高激活状态，只要：
 \begin{equation}
 \Gamma_{cog}(t)
-\]
+\end{equation}
 始终位于一个可恢复、可控制、不会长期失稳的区域中。
 
 由此可以给出本章的一个核心原则：
