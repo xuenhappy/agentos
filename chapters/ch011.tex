@@ -1,8 +1,6 @@
 \chapter{CSO 与 Agent-CSO：本体与承载的分离}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.92\textwidth}
+\begin{chapterintro}
 \textbf{【本章总体说明】}
 
 本章完成智能动力学认识论中的一次关键对象分离：我们不再把“一个智能体内部存在的表示”与“这个表示所指向的认知结构本身”视为同一事物。前者属于具体智能体在特定身体、记忆、功能拓扑与时间尺度上的实现，后者则属于我们为了比较不同智能、分析结构迁移并讨论实现独立性而建立的认知本体层。为此，本章正式区分 Cognitive Structure Object（CSO）与 Agent-CSO。
@@ -20,9 +18,7 @@ Functional\ Dynamics
 }
 \]
 它把“结构是什么”“结构如何被某个智能体承载”和“这些承载如何参与动力学”三个问题第一次严格分开。
-\end{minipage}
-}
-\end{center}
+\end{chapterintro}
 
 \section{CSO 不等于智能体内部的 Representation}
 
@@ -802,6 +798,7 @@ AgentCSO_{t+\Delta}
 
 这里的 $\kappa_C$ 不应被理解成一个固定 cosine similarity，而应综合：
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 SemanticConsistency,
 \quad
 FunctionalConsistency,
@@ -809,6 +806,7 @@ FunctionalConsistency,
 RelationalConsistency,
 \quad
 CausalConsistency.
+$}
 \]
 这一点会在未来真正实现 Agent-CSO tracking 时非常关键，因为“表示相似”远弱于“结构连续”。
 
@@ -960,7 +958,7 @@ CSO 与 Agent-CSO 的区分最终使我们能够提出实现独立性原则：
 \[
 \boxed{
 CognitiveOntology
-\ \text{is not uniquely determined by}\ 
+\ \text{is not uniquely determined by}\
 ImplementationSubstrate.
 }
 \]

@@ -1,8 +1,6 @@
 \chapter{双图理论：认知结构图与功能拓扑图}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.92\textwidth}
+\begin{chapterintro}
 \textbf{【本章总体说明】}
 
 在前一章中，我们已经把智能体从传统的“模块集合”重新定义为一个由功能节点、功能关系与多尺度闭环组成的动态功能拓扑。然而，仅有功能拓扑仍然不足以描述智能。功能拓扑能够告诉我们“系统有哪些处理能力、这些能力怎样相互作用”，却不能回答另一个同样根本的问题：\textbf{系统此刻究竟在处理什么结构，这些认知结构之间存在怎样的语义、因果、时间、目标与自指关系？}
@@ -43,9 +41,7 @@ Dynamics\ Of\ Topology
 \]
 
 需要特别说明的是，本章借用了图论、多层网络、超图、动态网络、双部图、图映射以及控制系统中的状态--实现分离思想，但“双图理论”在本书中的具体含义，是为CSO、Agent-CSO及AgentOS长期智能动力学服务的理论构造，不应与任何一种现成图神经网络或知识图谱模型直接等同。
-\end{minipage}
-}
-\end{center}
+\end{chapterintro}
 
 \section{为什么一张图不足以描述智能}
 
@@ -140,7 +136,7 @@ CSO@F_j
 因此，本章建立的第一条原则是：
 \[
 \boxed{
-\textbf{认知关系结构与实现这些关系的功能结构必须分层描述。}
+\parbox{.86\linewidth}{\centering\bfseries 认知关系结构与实现这些关系的功能结构必须分层描述。}
 }
 \]
 
@@ -305,7 +301,7 @@ M_t
 因此，本节的核心结论是：
 \[
 \boxed{
-\textbf{
+\parbox{.86\linewidth}{\centering\bfseries
 $\mathcal G_C$描述的是智能体认知世界中的结构关系，而不是承载这些结构的处理器位置。
 }
 }
@@ -1499,7 +1495,7 @@ PersistentCSOFlow.
 因此我们得到本书后续发育理论最重要的命题之一：
 \[
 \boxed{
-\textbf{
+\parbox{.86\linewidth}{\centering\bfseries
 功能拓扑是长期认知结构流的慢速历史沉积。
 }
 }
@@ -1689,6 +1685,7 @@ ReducedFutureCoordinationCost.
 
 所以Agent生命周期最终表现为：
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 \boxed{
 WorldStructure
 \rightarrow
@@ -1700,6 +1697,7 @@ Action
 \rightarrow
 NewWorldStructure.
 }
+$}
 \]
 
 这把本章与前面的World--Agent--World认识论重新闭合。
@@ -1840,7 +1838,7 @@ AgentOSHypothesis.
 
 \[
 \boxed{
-\textbf{
+\parbox{.86\linewidth}{\centering\bfseries
 双图理论认为，一个智能体应同时由认知结构图$\mathcal G_C$与功能拓扑图$\mathcal G_F$描述：前者表示智能体所承载的对象、关系、目标、约束、自我与可能性结构，后者表示这些结构被感知、变换、记忆、调节、执行与外化时所依赖的功能组织。二者通过动态承载映射$\mu_t$耦合，并在不同时间尺度上发生共同演化。
 }
 }
@@ -1919,7 +1917,7 @@ Development
 
 \[
 \boxed{
-\textbf{
+\parbox{.86\linewidth}{\centering\bfseries
 CSO流塑造功能拓扑，功能拓扑又塑造未来CSO流。
 }
 }
@@ -1946,7 +1944,7 @@ FutureCSOFlow.
 
 \[
 \boxed{
-\textbf{
+\parbox{.86\linewidth}{\centering\bfseries
 成熟智能会把自己的历史变成结构。
 }
 }

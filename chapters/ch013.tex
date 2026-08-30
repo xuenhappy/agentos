@@ -1,9 +1,7 @@
 \chapter{CSO迁移：学习的新定义}
 \label{chap:cso-migration}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
+\begin{chapterintro}
 \textbf{本章总体说明}
 
 在上一章中，我们完成了一次重要的本体论修正：不再把“复杂度”理解成一种能够像能量一样在系统内部流动的实体，而是把复杂度重新放回描述层，把真正发生变化的对象确定为认知结构对象及其具体承载，即 CSO 与 Agent-CSO。本章将在这一修正之上重新定义“学习”。
@@ -28,16 +26,15 @@ S_A
 因此，本章的研究对象不是单一模型的梯度下降，而是一个更广义的问题：
 
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 \boxed{
 \text{一个认知结构在一个智能体的一生中，究竟以什么形式、由什么功能、在什么时间尺度、通过什么载体继续存在？}
 }
+$}
 \]
 
 后续关于三相记忆、工作记忆、认知卸载、技能编译、Body Runtime 和功能拓扑学习的讨论，都将在这一迁移理论之上获得统一解释。
-\end{minipage}
-}
-\end{center}
-
+\end{chapterintro}
 
 \section{表示迁移：同一认知结构可以改变其内部编码}
 
@@ -330,6 +327,7 @@ B_A(C,t).
 
 这里的 $B$ 不只是“内部/外部”二元变量，而可以表示一组承载域：
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 B
 \in
 \{
@@ -344,6 +342,7 @@ Environment,
 OtherAgent,
 Organization
 \}.
+$}
 \]
 于是边界迁移定义为
 \[
@@ -652,13 +651,16 @@ Recompile.
 
 因此，我们在 CSO 理论中把这一思想修正为\textbf{结构连续性原则}：
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 \boxed{
 EffectiveCognitiveStructure
 \text{ does not ordinarily disappear merely because explicit processing decreases;}
 }
+$}
 \]
 而是倾向于发生
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 RepresentationChange,
 \quad
 FunctionalMigration,
@@ -670,6 +672,7 @@ CarrierMigration,
 Compression,
 \quad
 Abstraction.
+$}
 \]
 
 这一原则首先解释了专家与新手之间的一个经典差异。新手在完成任务时可能需要工作记忆中维持大量显式关系：
@@ -882,6 +885,7 @@ x_C^B(t_\infty).
 
 同时，这也说明我们不能仅凭最终参数判断两个 Agent 的学习程度。更完整的评价应同时考虑：
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 RepresentationQuality,
 \quad
 FunctionalPlacement,
@@ -891,6 +895,7 @@ TimescaleFit,
 CarrierReliability,
 \quad
 ReactivationCost.
+$}
 \]
 这将成为未来 AgentOS 评估体系的重要基础。
 
@@ -927,7 +932,7 @@ ChangeOfCSORealizationAndPlacement.
 
 \[
 \boxed{
-\textbf{学习，是认知结构在智能体生命周期中改变其表示方式、功能位置、运行时间尺度和承载关系，并由此改变未来认知与行动能力的过程。}
+\parbox{.86\linewidth}{\centering\bfseries 学习，是认知结构在智能体生命周期中改变其表示方式、功能位置、运行时间尺度和承载关系，并由此改变未来认知与行动能力的过程。}
 }
 \]
 
@@ -1073,6 +1078,7 @@ StructuralReorganization.
 
 最后，我们可以得到本章最核心的动力学图景：
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 \boxed{
 CSO
 \rightarrow
@@ -1088,6 +1094,7 @@ Carrier
 \rightarrow
 FutureAction.
 }
+$}
 \]
 而每一次行动和现实反馈，又会反过来修改未来 Agent-CSO：
 \[

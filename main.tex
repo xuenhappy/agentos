@@ -8,6 +8,7 @@
 \usepackage{mathtools,eso-pic}
 \usepackage{longtable,tabularx}
 \usepackage{microtype}
+\setlength{\emergencystretch}{3em}
 \hypersetup{unicode=true,colorlinks=true,linkcolor=blue!35!black,citecolor=green!35!black,urlcolor=cyan!35!black,pdftitle={智能动力学与 AgentOS},pdfauthor={AgentOS 理论研究}}
 \definecolor{deepblue}{HTML}{07172E}
 \definecolor{cyanink}{HTML}{176B87}
@@ -17,6 +18,9 @@
 \newenvironment{bookproposition}{\par\smallskip\noindent\textbf{命题}\quad}{\par\smallskip}
 \newenvironment{proofidea}{\par\noindent\textit{论证思路}\quad}{\par\smallskip}
 \newenvironment{readercheck}{\par\smallskip\noindent\color{cyanink}\textbf{读者检验}\quad}{\par\smallskip}
+\newenvironment{chapterintro}
+  {\begin{quote}\small\color{deepblue}\setlength{\parskip}{.65em}\noindent}
+  {\end{quote}\medskip}
 \input{chapter-art}
 \newcommand{\chaptervoice}[1]{\begin{narration}#1\end{narration}\ChapterArt{\number\value{chapter}}}
 \newcommand{\conceptfigure}[2]{\begin{figure}[htbp]\centering\includegraphics[width=.86\textwidth]{#1}\caption{#2}\end{figure}}

@@ -1,9 +1,7 @@
 \chapter{同类智能判定与语义类规约}
 \label{chap:intelligence-equivalence}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.92\textwidth}
+\begin{chapterintro}
 \textbf{【本章总体说明】}
 
 本章讨论一个在智能研究中极易被实现细节遮蔽、却具有基础认识论意义的问题：如果两个智能系统分别由完全不同的物理材料、计算架构、状态表示和运行速度构成，我们依据什么判断它们是否属于``同一种智能''？
@@ -21,9 +19,7 @@
 基础上，逐步构造更加严格的``语义类规约''与``多尺度认知动力学同构''概念。最终我们将得到一个重要结论：判断两个系统是否属于同类智能，不能只比较它们在某一时刻输出了什么，而应比较它们\textbf{如何形成问题、如何组织认知结构、如何在反馈中改变状态，以及这些结构如何跨尺度稳定、迁移和重新进入未来行为}。
 
 需要特别说明的是，本章会借鉴行为等价、双模拟（bisimulation）、系统辨识、功能主义以及图同态等已有理论，但这些理论仅作为数学和认识论工具。本书提出的``智能同类性''具有额外要求：它必须同时处理认知语义、功能拓扑与时间尺度，因此不能直接约化为已有的程序等价或输入输出等价。
-\end{minipage}
-}
-\end{center}
+\end{chapterintro}
 
 \section{不同材料能否产生同一种智能}
 
@@ -113,7 +109,7 @@ F_B\circ\Phi.
 这一思想将在后文逐步发展为``多尺度认知动力学同构''。因此，本章的第一原则可以写为：
 \[
 \boxed{
-\textbf{智能同类性的研究对象不是材料，而是跨实现仍然保持的认知组织关系。}
+\parbox{.86\linewidth}{\centering\bfseries 智能同类性的研究对象不是材料，而是跨实现仍然保持的认知组织关系。}
 }
 \]
 
@@ -212,6 +208,7 @@ StableSkill',
 
 因此智能同类性不是一个二值开关，而应看成层级关系：
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 OutputEquivalence
 \subset
 BehavioralEquivalence
@@ -219,6 +216,7 @@ BehavioralEquivalence
 FunctionalEquivalence
 \subset
 CognitiveDynamicalEquivalence.
+$}
 \]
 这里的包含关系并非严格数学集合定理，而是一种理论强度排序。
 
@@ -545,7 +543,7 @@ FunctionalConsequence.
 从这一点出发，本书可以提出一个非常强的同类智能原则：
 \[
 \boxed{
-\textbf{
+\parbox{.86\linewidth}{\centering\bfseries
 真正的语义等价不是两个系统拥有相似标签，而是相应语义结构在各自系统中具有相似的因果功能。
 }
 }
@@ -1090,7 +1088,7 @@ g_\tau
 因此，本章最终得到的不是``所有智能都是一样的''，而恰恰是一个更加严格的判断框架：
 \[
 \boxed{
-\textbf{
+\parbox{.86\linewidth}{\centering\bfseries
 智能既不能因为实现不同而被轻易判为异类，也不能因为行为相似而被轻易判为同类。
 }
 }

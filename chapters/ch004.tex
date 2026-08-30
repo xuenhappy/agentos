@@ -1,8 +1,6 @@
 \chapter{石头文明与闪电文明：异种速率智能的共存悖论}
 
-\begin{center}
-\fbox{
-\parbox{0.92\textwidth}{
+\begin{chapterintro}
 \textbf{【本章总体说明】}
 
 本章通过“石头文明”与“闪电文明”这一极端思想实验，研究不同时间尺度智能之间的可观测性、可交互性与可对齐性问题。这里的“石头”与“闪电”并不指特定物质形态，而分别代表特征认知周期极慢与极快的两类智能系统。我们将看到，智能之间真正重要的差异并不只在于计算能力、知识规模或参数数量，而在于它们以何种时间尺度形成状态、完成闭环、积累经验并修改自身结构。当两个智能体的特征时间尺度相差足够大时，即使它们共享完全相同的空间，也可能事实上生活在两个近乎不可互见的“时间世界”中。
@@ -10,10 +8,7 @@
 本章的中心命题是：\textbf{不同时间尺度智能之间并不存在天然的实时可理解性；跨尺度智能协作必须通过时间粗粒化、事件压缩、预测性接口和非实时宏观对齐建立新的共同时间层。}这一思想随后将成为本书多尺度智能频谱、三相记忆、快慢闭环、Body Runtime、组织智能以及人类与高速人工智能共存理论的重要认识论基础。
 
 需要特别强调，本章属于理论思想实验与动力系统分析，而不是关于现实宇宙中已经存在“石头文明”或“闪电文明”的经验主张。我们借助采样理论、多速率控制、异步分布式系统、时间尺度分离和粗粒化思想建立形式化模型，以揭示一种比“谁更聪明”更加基础的问题：\textbf{两个智能是否处在彼此能够感知、理解和反馈的时间尺度上。}
-}
-}
-\end{center}
-
+\end{chapterintro}
 
 \section{两种极端时间尺度文明}
 
@@ -533,6 +528,7 @@ StructuralChange
 
 与之相对应，慢速系统向高速系统发送的也不是逐动作命令，而是一个约束包络：
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 \mathcal E_A(t)
 =
 (
@@ -543,6 +539,7 @@ SafetyBounds,
 ReportingConditions,
 ReviewHorizon
 ).
+$}
 \]
 于是跨尺度协作从：
 \[
@@ -618,6 +615,7 @@ EscalateTo(A).
 
 我们现在可以看到，这个看似关于两个科幻文明的协议，实际上已经预演了后来 AgentOS 的大量设计原则：
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 SPC,\quad
 Boundary,\quad
 Scheduler,\quad
@@ -625,6 +623,7 @@ BPCC,\quad
 ResidualEscalation,\quad
 PredictiveEnvelope,\quad
 SafetyBoundary.
+$}
 \]
 它们本质上都在解决同一个问题：\textbf{不同速度层之间不可能共享全部状态，因此必须建立选择性、结构化、事件驱动的跨尺度接口。}
 
@@ -821,6 +820,7 @@ FastMachineAutonomyWithinBoundaries.
 
 因此，人类真正需要控制的不是 AI 每一个 token、每一次工具调用或者每个毫秒动作，而是更慢层的结构变量，例如：
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 GoalSpace,
 \quad
 Authority,
@@ -832,6 +832,7 @@ SafetyBoundary,
 SelfModificationEnvelope,
 \quad
 ReviewProtocol.
+$}
 \]
 这些变量应当变化得比 AI 内部普通决策慢得多，但其约束效力必须贯穿所有高速行为。
 
@@ -933,7 +934,7 @@ HumanGovernance.
 
 \[
 \boxed{
-\textbf{
+\parbox{.86\linewidth}{\centering\bfseries
 不同时间尺度的智能若想构成更大的统一智能体系，不需要拥有相同速度；真正需要的是在不同频率之间建立能够保持因果连续性的结构接口。
 }
 }

@@ -1,12 +1,11 @@
 \chapter{World--Agent--World：智能的双向结构闭环}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.92\textwidth}
+\begin{chapterintro}
 \textbf{【本章总体说明】}
 
 本章完成本书认识论部分的一次关键视角翻转。此前我们从智能的时空尺度、多频闭环、CSO、Agent-CSO、结构迁移与功能拓扑出发，主要是在回答一个问题：\emph{智能体内部究竟如何承载和组织认知结构？} 本章进一步指出，仅仅研究智能体内部是不充分的，因为智能体并不是位于宇宙之外、面对一个与自身无关的“客观世界”的观察者。任何实际智能体本身都是现实世界中的一个物理或数字结构，其内部 Agent-CSO 由现实作用形成，其行动又重新进入现实并改变后续能够被观察到的 CSO。因此，完整的智能过程必须写成
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 \boxed{
 UniverseCSO
 \;\xrightarrow{\;Observation\;}\;
@@ -16,16 +15,14 @@ AgentCSO'
 \;\xrightarrow{\;Action\;}\;
 UniverseCSO'
 }
+$}
 \]
 并继续通过新的观测形成下一轮循环。
 
 本章由此建立本书后续一切具身理论、Body Runtime、SGC、FCS、BPCC、KRA 与现实验证原则的认识论基础。其核心命题是：\textbf{智能不是对世界进行一次性表示，而是现实结构与内部认知结构通过观测--行动边界持续相互塑造的动力学过程。} 内部世界是现实在特定智能体中的选择性结构投影；行动则使内部形成的结构重新成为现实因果链的一部分。由此，学习不仅表现为 Agent 内部的参数变化或 CSO 迁移，还包括智能体主动改变环境、工具、身体以及未来观察条件的能力。
 
 需要特别声明，本章中的 ``World''、``Universe-CSO'' 与 ``Agent-CSO'' 属于本书提出的结构动力学抽象。它可以与控制论、POMDP、主动感知、具身认知、Enactivism、Active Inference 等既有理论形成联系，但不能把这些理论之间的相似性直接解释成本体同一。本章所建立的是一种面向持续人工智能体的统一结构语言，而不是宣称现有物理学或认知科学已经证明了本书全部命题。
-\end{minipage}
-}
-\end{center}
-
+\end{chapterintro}
 
 \section{智能体不是宇宙之外的观察者}
 
@@ -1164,6 +1161,7 @@ Agency_A
 
 经过以上推导，本章可以把此前相对分散的认识统一成一个最基本的智能动力学闭环：
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 \boxed{
 World
 \rightarrow
@@ -1179,6 +1177,7 @@ Action
 \rightarrow
 World'
 }
+$}
 \]
 而 $World'$ 又立即成为下一轮 Observation 的现实来源。因此更严格地，这是一个递归映射：
 \[
@@ -1322,6 +1321,7 @@ AgentCSO(Self),
 \]
 并让这种自我表示参与后续控制，就会出现比普通 World Model 更高阶的结构：
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 \boxed{
 Structure
 \rightarrow
@@ -1331,6 +1331,7 @@ RepresentationOfOwnStructure
 \rightarrow
 Self-Modulation.
 }
+$}
 \]
 这正是下一章需要处理的 ``功能自反性''。
 
@@ -1338,7 +1339,7 @@ Self-Modulation.
 
 \[
 \boxed{
-\textbf{
+\parbox{.86\linewidth}{\centering\bfseries
 智能不是世界在主体内部的一份静态副本，而是现实结构通过观测在主体中形成可操作的 Agent-CSO，主体再通过这些结构产生预测、目标和行动，并将内部形成的结构重新作用于现实的持续闭环。
 }
 }
@@ -1348,7 +1349,7 @@ Self-Modulation.
 
 \[
 \boxed{
-\textbf{
+\parbox{.86\linewidth}{\centering\bfseries
 学习不仅是内部结构发生变化，而且是未来 World--Agent 耦合方式发生稳定变化。
 }
 }
@@ -1358,7 +1359,7 @@ Self-Modulation.
 
 \[
 \boxed{
-\textbf{
+\parbox{.86\linewidth}{\centering\bfseries
 Agent 不仅学习如何在世界中行动，而且逐渐学习如何改变自身与世界发生关系的方式。
 }
 }

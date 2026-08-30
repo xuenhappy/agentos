@@ -1,8 +1,6 @@
 \chapter{CSO流塑造拓扑：认知结构迁移的长期结构沉降}
 
-\begin{center}
-\fbox{
-\parbox{0.92\textwidth}{
+\begin{chapterintro}
 \textbf{【本章总体说明】}
 
 在前两章中，我们已经分别建立了智能系统的两个基本结构对象：一方面，认知内容及其关系构成认知结构图 $\mathcal{G}_{C}$；另一方面，承担感知、推理、控制、记忆、规划、行动等作用的功能关系构成功能拓扑 $\mathcal{G}_{F}$。二者通过随时间变化的承载映射 $\mu_t$ 联系起来。由此，一个尚未回答的根本问题自然出现：\textbf{功能拓扑为什么会形成现在的样子？为什么某些功能之间存在稳定直接连接，而另一些认知过程必须经过漫长、昂贵的中间协调？}
@@ -22,10 +20,7 @@ FunctionalTopology
 需要特别强调，本章并不把``复杂度''视为一种能够像能量一样流动的本体。早期讨论中的``复杂度迁移''在这里被重新解释为：具有具体语义与功能关系的 Agent-CSO 改变自身的表示方式、时间尺度、功能位置和承载位置，而其中长期稳定的功能迁移会进一步改变承载这些结构的功能拓扑。因此，拓扑学习并不是与 CSO 迁移平行的第五种迁移，而是\textbf{长期功能迁移在更慢时间尺度上的结构性积分结果}。
 
 本章只讨论``CSO流如何塑造拓扑''，至于什么时候已有拓扑已经无法有效承载新的 CSO 流、什么时候应该真正触发拓扑重构，以及如何防止拓扑因短时噪声而频繁改变，将在下一章的``智能结构相变与发育''中进一步处理。
-}
-}
-\end{center}
-
+\end{chapterintro}
 
 \section{从动态认知过程到稳定功能结构}
 
@@ -373,6 +368,7 @@ w_{ij},
 
 于是拓扑沉降可以概括为：
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 \boxed{
 DynamicCoordination
 \rightarrow
@@ -382,6 +378,7 @@ PredictableCoordination
 \rightarrow
 DirectFunctionalCoupling.
 }
+$}
 \]
 
 这里存在一个关键认识：\textbf{学习不一定表现为``系统知道更多''，也可能表现为``系统以后不必再为同样的问题进行这么多全局协调''。}例如一个新任务最初可能需要：
@@ -848,6 +845,7 @@ SlowGlobalStructure.
 
 这一点也与 AgentOS 第一代``固定功能拓扑''设计形成连续关系。第一代 AgentOS 并不要求系统在线修改核心结构，它首先通过 $h/E/\Theta/\Psi/\Omega$、SPC、AHC、TCE、CCM、Boundary 和 Offloading 实现高度丰富的\textbf{拓扑内适应}。只有当这些低成本调整长期无法解决结构失配时，才有必要进一步进入拓扑学习。因此本章并不是推翻固定拓扑 AgentOS，而是说明它在更长生命周期之后可能自然进入下一层发育阶段：
 \[
+\resizebox{.96\linewidth}{!}{$\displaystyle
 \boxed{
 StateAdaptation
 \rightarrow
@@ -859,6 +857,7 @@ FunctionalMigration
 \rightarrow
 TopologyEvolution.
 }
+$}
 \]
 
 下一章我们还会进一步把这一序列扩展成``最小必要重组原则''，使系统始终优先使用较浅、较可逆、较低成本的适应机制，而把拓扑修改保留为真正的慢结构变化。
