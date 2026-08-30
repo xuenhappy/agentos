@@ -1,0 +1,53 @@
+# Build outputs
+/build/
+*.pdf
+
+# LaTeX intermediate files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Operating-system metadata
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# Editors and IDEs
+.idea/
+.vscode/
+*.code-workspace
+*.swp
+*.swo
+*~
+
+# Temporary and local-only files
+*.bak
+*.orig
+*.rej
+*.temp
+*.tmp
+.cache/
+.env
+.env.*
+!.env.example

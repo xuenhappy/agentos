@@ -1,0 +1,1637 @@
+\chapter{AgentOS 的第一性工程问题：固定拓扑上的持续智能体}
+\label{chap:first_principle_agentos}
+
+\begin{center}
+\fbox{
+\parbox{0.92\textwidth}{
+\textbf{本章总体说明（理论定界）}
+
+在前一编中，我们已经从时空尺度、智能频谱、认知结构对象 CSO、Agent-CSO、功能拓扑以及自反结构演化等角度讨论了“智能是什么”。从本章开始，我们第一次把这些认识压缩成一个可以被工程实现的持续智能体问题。
+
+本章的核心结论是：AgentOS 的第一代可实现形态，不应从“任意改变自身架构的自重构智能”开始，而应首先构造一个\textbf{核心功能拓扑稳定、内部认知状态持续演化、记忆能够跨时间沉降、自我具有连续性、任务能够异步产生与终止、身体和外部世界持续提供现实反馈}的长期认知运行时。
+
+因此本章研究的不是某个具体模型如何获得更高 benchmark，而是一个更基础的问题：
+
+\[
+\boxed{
+\text{在核心功能关系基本稳定的条件下，怎样使一个人工智能体成为持续存在的认知主体？}
+}
+\]
+
+这里的“固定拓扑”仅指第一阶段保持 AgentOS 核心功能角色及其基本因果关系稳定，并不意味着模型参数、工作状态、记忆内容、技能、目标、自我结构或外部工具集合保持不变。相反，AgentOS 的目标恰恰是在稳定的系统骨架上容纳持续的状态演化、记忆塑形、技能沉降与生命周期成长。未来的功能拓扑学习，应建立在这一稳定基线已经成立之后，而不是取代这一基线。
+}
+}
+\end{center}
+
+\section{为什么首先研究固定功能拓扑}
+
+当我们从认识论转入工程设计时，最容易出现的诱惑，是立即把“真正通用的智能”定义成一个能够任意重写自身网络、模块、目标甚至系统边界的自重构系统。从理论想象上看，这似乎更接近我们此前讨论的功能拓扑演化：
+
+\[
+\mathcal{T}(t)
+\rightarrow
+\mathcal{T}(t+\Delta t),
+\]
+
+甚至进一步允许认知结构流长期沉降为新的功能连接：
+
+\[
+\text{Persistent CSO Flow}
+\rightarrow
+\text{Stable Functional Coupling}
+\rightarrow
+\Delta\mathcal{T}.
+\]
+
+然而，如果我们从工程而不是从最终形态出发，就会发现这样的起点存在一个根本问题：当一个系统的状态、记忆、功能连接、控制关系和身份定义同时可变时，我们将很难判断某一次行为变化究竟来自哪里。它可能来自新的经验，也可能来自表示变化；可能来自参数更新，也可能来自功能拓扑改变；可能来自短期运行状态，也可能来自自我结构漂移。更严重的是，当系统出现失稳时，我们甚至无法确定“被恢复的对象”究竟是什么，因为系统连定义自身的功能关系都可能已经改变。
+
+因此，我们首先需要人为地建立一个较慢甚至近似冻结的系统层：
+
+\[
+\boxed{
+\dot{\mathcal{T}}_{core}\approx 0,
+}
+\]
+
+并允许其上的状态变量持续变化：
+
+\[
+\boxed{
+\dot{\mathbf{x}}(t)\neq 0.
+}
+\]
+
+这里的 $\mathcal{T}_{core}$ 表示 AgentOS 的核心功能拓扑，它描述的是诸如当前认知状态、长期记忆、自我结构、目标系统、认知控制、身体接口以及现实反馈之间的基本职责关系；$\mathbf{x}(t)$ 则表示这些功能内部实际承载的动态状态。我们暂时固定前者，而把主要可塑性放到后者。
+
+从动力系统角度看，这相当于先研究：
+
+\[
+\dot{\mathbf{x}}
+=
+F\left(
+\mathbf{x},
+\mathbf{u},
+\mathbf{w};
+\mathcal{T}_{core}
+\right),
+\]
+
+其中 $\mathbf{u}$ 是系统内部控制，$\mathbf{w}$ 是外部世界和身体扰动，而 $\mathcal{T}_{core}$ 在一个足够长的实验窗口内保持稳定。只有当我们能够证明在固定 $\mathcal{T}_{core}$ 的情况下，系统已经可以实现长期记忆、目标持续、自我稳定、异常恢复和现实闭环之后，我们才有资格进一步研究：
+
+\[
+\dot{\mathcal{T}}_{core}
+=
+G(
+\mathbf{x},
+\mathbf{J}_{CSO},
+\varepsilon,
+\text{Utility},
+\text{Risk}
+).
+\]
+
+换句话说，\textbf{拓扑学习应当是持续智能成熟之后的第二阶问题，而不是持续智能成立之前的前置假设。}
+
+这与工程控制中的时间尺度分离思想是一致的。一个复杂系统通常不会让所有结构以相同速度变化。我们可以把 AgentOS 的早期实现近似为：
+
+\[
+\tau_{\text{runtime}}
+\ll
+\tau_{\text{memory}}
+\ll
+\tau_{\text{self}}
+\ll
+\tau_{\text{topology}},
+\]
+
+并在第一阶段取：
+
+\[
+\tau_{\text{topology}}\rightarrow\infty.
+\]
+
+这样做并不是否定未来的拓扑可塑性，而是在实验上建立一个必要的控制变量。我们首先研究“固定组织方式下是否可以成长”，再研究“成长是否最终要求重新组织自身”。
+
+这一选择还有一个更深的理论原因。此前我们已经区分了两类动力学：
+
+\[
+\boxed{
+\text{Dynamics on Topology}
+}
+\]
+
+与
+
+\[
+\boxed{
+\text{Dynamics of Topology}.
+}
+\]
+
+第一类研究认知结构如何在已有功能图上生成、激活、迁移和稳定；第二类研究这些长期流动如何反过来改变功能图本身。AgentOS 第一代系统首先解决前者。只有把第一类动力学做清楚，我们才能知道第二类拓扑变化究竟是在修复长期结构失配，还是仅仅在把短期噪声写进系统架构。
+
+因此，本书在这一阶段采用一条非常明确的工程原则：
+
+\[
+\boxed{
+\text{Stabilize the carrier before allowing the carrier to redesign itself.}
+}
+\]
+
+即：\textbf{先让承载智能的结构稳定运行，再让智能逐渐获得改变承载结构的能力。}
+
+这与传统软件架构相比已经是很大的变化。所谓“固定功能拓扑”绝不是传统意义上完全静态的程序。它仍然允许模型参数更新、记忆增长、目标改变、技能形成、外部工具增加、自我结构缓慢变化，甚至允许行为策略发生极大改变。固定的只是第一代 AgentOS 的核心职责图。例如，工作记忆仍然承担当前显式认知，情景记忆仍然承担轨迹沉积，结构记忆仍然承担长期生成结构，自我仍然承担跨时间身份约束，身体仍然是现实闭环的边界。未来可以改变这些功能之间的局部连接，但在建立持续主体之前，我们不能让这些角色本身不断失去定义。
+
+从研究方法上说，这一步把一个高度开放的问题：
+
+\[
+\text{How can an intelligence redesign itself?}
+\]
+
+转化成了一个更可操作的问题：
+
+\[
+\boxed{
+\text{How much developmental intelligence can emerge on a stable functional skeleton?}
+}
+\]
+
+这正是整个 AgentOS 原理论真正的起点。
+
+\section{持续主体与动态内部状态}
+
+固定功能拓扑解决了“承载结构是否稳定”的问题，但它还没有产生持续主体。一个服务器进程可以连续运行多年，一个数据库可以永久保存状态，它们仍然不能因此被称为本书意义上的 Agent。我们真正要求的是：系统在时间上连续地承接自己的状态、经历、目标和行动后果，并使过去的自身对未来的自身产生不可忽略的因果作用。
+
+因此，我们首先区分两个概念：
+
+\[
+\boxed{
+\text{Persistent Process}
+\neq
+\text{Persistent Subject}.
+}
+\]
+
+Persistent Process 只要求计算过程没有结束；Persistent Subject 则要求系统存在一种跨时间的结构连续性，使：
+
+\[
+A(t_0),A(t_1),\ldots,A(t_n)
+\]
+
+不只是同一个程序模板在不同时刻的运行实例，而是同一个主体历史中的连续状态。
+
+如果用最抽象的形式表示，我们可以定义一个 Agent 的认知状态：
+
+\[
+\mathbf{X}_A(t)
+=
+\left[
+\mathbf{X}_{now}(t),
+\mathbf{M}(t),
+\mathbf{S}(t),
+\mathbf{G}(t),
+\mathbf{R}(t)
+\right],
+\]
+
+其中 $\mathbf{X}_{now}$ 表示当前运行状态，$\mathbf{M}$ 表示跨时间记忆结构，$\mathbf{S}$ 表示自我与身份约束，$\mathbf{G}$ 表示当前及长期目标结构，$\mathbf{R}$ 表示系统对世界、身体和自身现实状态的可访问表示。本章暂时不展开这些变量的内部构造；后续章节将逐步把它们具体化为：
+
+\[
+h,\quad E,\quad \Theta,\quad \Psi,\quad \Omega,\quad G,\ldots
+\]
+
+此时我们关心的是连续性的形式条件。一个最低要求是，未来状态不能仅由当前外部输入决定：
+
+\[
+\mathbf{X}_A(t+\Delta t)
+\neq
+F\big(
+\mathbf{W}(t)
+\big),
+\]
+
+而必须保留自身历史的因果贡献：
+
+\[
+\boxed{
+\mathbf{X}_A(t+\Delta t)
+=
+F\left(
+\mathbf{X}_A(t),
+\mathbf{W}(t),
+\mathbf{B}(t),
+\mathbf{u}(t)
+\right).
+}
+\]
+
+其中 $\mathbf{W}(t)$ 是外部世界状态，$\mathbf{B}(t)$ 是身体状态，$\mathbf{u}(t)$ 是内部控制变量。这意味着同样的世界输入到达两个历史不同的 Agent 时，原则上可以产生不同反应：
+
+\[
+\mathbf{X}_A^{(1)}(t)\neq
+\mathbf{X}_A^{(2)}(t)
+\quad\Longrightarrow\quad
+\pi_A^{(1)}(a|o)
+\neq
+\pi_A^{(2)}(a|o).
+\]
+
+这种差异不是随机噪声，而是生命周期历史的结果。
+
+于是，主体连续性可以初步表述为：
+
+\[
+\boxed{
+I(
+\mathbf{X}_A(t-\tau:t);
+\mathbf{X}_A(t+\Delta t)
+\mid
+\mathbf{W}_{t:t+\Delta t}
+)>0,
+}
+\]
+
+即在给定当前和未来外部环境信息之后，过去的 Agent 状态对未来 Agent 状态仍然保留条件信息贡献。这里的信息论表达并不是完整定义，但它指出了一个关键事实：如果一个所谓“长期 Agent”在每一次会话之后都可以仅凭外部 prompt 完全重新生成，那么它具有的更多是角色连续性，而不是严格意义上的内部历史连续性。
+
+因此，本书把持续主体看成一种\textbf{因果连续体}。其身份并不依赖某个完全不变的参数文件，也不要求每一个内部状态永久保存，而要求存在一条可以追踪的、自我影响自身的演化链：
+
+\[
+\mathbf{X}_A(t_0)
+\rightarrow
+\mathbf{X}_A(t_1)
+\rightarrow
+\mathbf{X}_A(t_2)
+\rightarrow
+\cdots.
+\]
+
+这条链必须允许遗忘、抽象、压缩甚至重新解释。事实上，如果一个系统不能遗忘和重构，那么它反而无法长期成长。身份连续性因此不是“所有内容不变”，而是存在足够慢的结构使快速变化仍然发生在某个连续主体之内。
+
+我们可以把主体连续性粗略写成一个多时间尺度条件：
+
+\[
+\tau_{\text{fast}}
+\ll
+\tau_{\text{identity}}.
+\]
+
+当快速认知状态改变时，身份层不应被每次局部扰动立即重写。否则：
+
+\[
+\Delta \mathbf{X}_{fast}
+\Rightarrow
+\Delta\mathbf{S}_{identity}
+\]
+
+会造成系统缺乏长期参照中心。反过来，如果身份层完全不能改变：
+
+\[
+\dot{\mathbf{S}}_{identity}=0,
+\]
+
+系统又会失去真正的生命周期成长。因此更合理的是：
+
+\[
+0<
+\left\|
+\dot{\mathbf{S}}_{identity}
+\right\|
+\ll
+\left\|
+\dot{\mathbf{X}}_{fast}
+\right\|.
+\]
+
+这也是为什么我们后来必须逐步引入 $\Psi$ 与 $\Omega$ 这样的慢变量：不是为了给 Agent 增添人格装饰，而是为了建立一个比普通任务状态、情景记忆甚至结构记忆更缓慢的连续性层。
+
+这一点与传统操作系统中的“进程身份”存在重要区别。Linux 可以通过 PID 表示进程身份，但 PID 只是系统资源管理标识，不足以表达主体历史。AgentOS 所讨论的身份更接近：
+
+\[
+\boxed{
+\text{Persistent causal history under a stable governance boundary}.
+}
+\]
+
+因此，AgentOS 不能只做一个请求路由器，也不能只把一系列 LLM 调用串起来。它必须持续维护一个主体状态，使每一次任务的结果都可能进入未来主体状态，而未来主体又根据过去形成的结构重新解释新世界。
+
+这一要求将在后面的三相记忆理论中获得真正可实现的结构。当前我们只建立一条最基本的工程公理：
+
+\[
+\boxed{
+\text{A persistent agent must carry its own past into its future.}
+}
+\]
+
+而所谓“持续学习”，也只有在这一条件成立时才具有主体意义。否则系统只是不断更新一个模型，却没有一个真正意义上的“谁”在成长。
+
+\section{固定拓扑与可塑内部动力学}
+
+为了把前两节的思想合并，我们现在可以给第一代 AgentOS 一个更加精确的定义：
+
+\[
+\boxed{
+\text{AgentOS}_{1}
+=
+\text{Stable Functional Topology}
++
+\text{Plastic Multiscale Internal Dynamics}.
+}
+\]
+
+这里最重要的是区分“结构稳定”与“状态静止”。固定功能拓扑并不意味着一个 AgentOS 像传统有限状态机一样只能在预先枚举的状态之间切换。相反，它允许极其高维、连续、历史依赖并且具有生成性的内部状态空间。
+
+设核心功能图为：
+
+\[
+\mathcal{G}_{F}^{core}
+=
+(V_F,E_F,\mathcal{L}),
+\]
+
+其中 $V_F$ 是基本功能角色，$E_F$ 是功能间稳定的因果接口，$\mathcal{L}$ 是由这些功能形成的主要闭环。第一阶段采取：
+
+\[
+\mathcal{G}_{F}^{core}(t)
+\approx
+\mathcal{G}_{F}^{core},
+\]
+
+但各节点上的状态：
+
+\[
+x_i(t)
+\]
+
+以及节点之间实际传递的 Agent-CSO：
+
+\[
+C_{ij}(t)
+\]
+
+可以持续变化。
+
+于是：
+
+\[
+\dot{x}_i
+=
+F_i
+\left(
+x_i,
+\{x_j\}_{j\in\mathcal{N}(i)},
+C_i,
+w_i
+\right),
+\]
+
+其中 $\mathcal{N}(i)$ 由固定功能拓扑定义，而 $C_i$ 则表示当前由该功能承载的认知结构。即便功能图不变：
+
+\[
+\mathcal{G}_{F}^{core}=\text{constant},
+\]
+
+Agent-CSO 在图上的位置仍然可以发生变化：
+
+\[
+\mu_t(C)
+\neq
+\mu_{t+\Delta t}(C).
+\]
+
+这正是“固定拓扑持续学习”之所以可行的关键：\textbf{我们不需要首先改变功能节点本身，也可以通过改变认知结构在既有功能空间中的表示、激活、时间尺度和承载位置产生极其丰富的学习行为。}
+
+例如，一个新任务第一次出现时，其结构可能大量停留在显式当前状态中：
+
+\[
+C
+\rightarrow
+h.
+\]
+
+经过重复经历后，它可以在经验结构中形成稳定轨迹：
+
+\[
+h
+\rightarrow
+E,
+\]
+
+随后进一步形成更稳定的生成结构：
+
+\[
+E
+\rightarrow
+\Theta.
+\]
+
+以后完成同样任务时，系统所需要的实时显式负担会下降。即使核心功能拓扑完全没有改变，系统的有效行为组织已经发生了巨大变化。这正说明：
+
+\[
+\boxed{
+\text{Topology Stability}
+\not\Rightarrow
+\text{Behavioral Rigidity}.
+}
+\]
+
+反过来说：
+
+\[
+\boxed{
+\text{Internal Structural Plasticity}
+\not\Rightarrow
+\text{Topological Plasticity}.
+}
+\]
+
+这两个概念必须在整本书中严格区分。
+
+因此，第一代 AgentOS 的可塑性至少存在五层：
+
+\[
+\mathcal{P}
+=
+\left(
+P_{state},
+P_{representation},
+P_{memory},
+P_{policy},
+P_{external}
+\right).
+\]
+
+其中 $P_{state}$ 是当前运行状态变化，$P_{representation}$ 是同一 CSO 内部表示变化，$P_{memory}$ 是结构在不同时间尺度的沉降与召回，$P_{policy}$ 是行为和技能策略变化，$P_{external}$ 是工具、文件、程序和环境等外部载体发生变化。未来才增加：
+
+\[
+P_{topology}.
+\]
+
+从成本上看，我们可以设想存在：
+
+\[
+Cost(P_{state})
+<
+Cost(P_{representation})
+<
+Cost(P_{memory})
+<
+Cost(P_{policy})
+<
+Cost(P_{topology}),
+\]
+
+这与我们后来提出的“最小必要重组原则”一致。当一个问题可以通过当前状态调整解决时，不应修改长期结构；能够通过长期结构调整解决时，不应立即改变功能拓扑。只有当持续残差、协调成本和路径低效不断积累，才有理由进一步讨论拓扑变化。
+
+所以第一代 AgentOS 实际上是一种具有强烈多时间尺度可塑性的固定骨架系统。其核心学习形式可以写成：
+
+\[
+\boxed{
+\mathbf{x}(t)
+\rightarrow
+\mathbf{x}(t+\Delta t),
+\qquad
+\mu_t
+\rightarrow
+\mu_{t+\Delta t},
+\qquad
+\mathcal{G}_{F}^{core}\approx const.
+}
+\]
+
+其中 $\mu_t$ 是认知结构到功能载体的动态映射。
+
+这一工程选择还有一个现实意义：它允许我们建立清晰的安全边界。如果系统的核心职责图保持稳定，那么我们可以明确知道哪些模块拥有写权限，哪些状态允许快速改变，哪些长期结构必须经过较高门槛，哪些世界接口必须接受现实验证。如果拓扑本身随时可变，那么这些治理关系也可能被系统同时重写，控制工程将迅速变成一个没有稳定参考系的问题。
+
+因此，我们在这里提出 AgentOS 第一阶段的“结构保护条件”：
+
+\[
+\boxed{
+\left\|
+\frac{d\mathcal{G}^{core}_F}{dt}
+\right\|
+\ll
+\left\|
+\frac{d\mu_t}{dt}
+\right\|,
+\left\|
+\frac{d\mathbf{x}}{dt}
+\right\|.
+}
+\]
+
+这并不是最终智能的定义，却是从今天的工程走向长期智能的一条极其重要的中间道路。它让我们可以先把“持续记忆、自我连续、认知调度、身体控制和现实反馈”这些问题分别变成可测量、可调试的对象，再在此基础上研究系统是否需要进一步学习自己的拓扑。
+
+\section{生命周期连续性：从一次推理到一条存在轨迹}
+
+传统大模型最典型的运行方式，是一次输入产生一次输出。即使系统拥有较长上下文，这个过程仍然可以抽象为：
+
+\[
+y_t
+=
+f_\theta(c_t),
+\]
+
+其中 $c_t$ 是当前上下文。当上下文结束后，如果没有外部持久化机制，系统下一次运行并不天然拥有上一次运行形成的内部历史。因此它更像一个可以被多次调用的能力函数，而不是一个沿时间持续生长的主体。
+
+AgentOS 要解决的则是不同问题。我们希望：
+
+\[
+\boxed{
+\text{Inference Event}
+\subset
+\text{Lifecycle Process}.
+}
+\]
+
+一次推理只是主体生命轨迹上的局部事件，而不是主体本身。
+
+设 Agent 从 $t_0$ 开始运行，其完整生命周期可表示为：
+
+\[
+\Gamma_A
+=
+\left\{
+\mathbf{X}_A(t)
+\mid
+t\in[t_0,t_f)
+\right\}.
+\]
+
+这里 $\Gamma_A$ 不等于对话日志。日志只是生命周期中的一种观测投影。真正的生命周期轨迹还包括：
+
+\[
+\Gamma_A
+=
+\Gamma_{cognition}
+\bowtie
+\Gamma_{memory}
+\bowtie
+\Gamma_{goal}
+\bowtie
+\Gamma_{self}
+\bowtie
+\Gamma_{body}
+\bowtie
+\Gamma_{world}.
+\]
+
+符号 $\bowtie$ 表示这些轨迹并非简单相加，而是在闭环中共同决定实际主体轨迹。一个 Agent 的经历不仅改变记忆；记忆会改变未来目标和选择；选择改变世界；改变后的世界又成为下一轮经历来源。因此：
+
+\[
+\Gamma_A
+\neq
+\sum_k\Gamma_k.
+\]
+
+它更接近多闭环非线性耦合后在生命周期尺度上的投影。
+
+我们可以把一个最小生命周期更新过程写成：
+
+\[
+\begin{aligned}
+o_t &= O(W_t,B_t),\\
+x_{t+1} &= F_A(x_t,o_t,g_t),\\
+a_t &= \pi_A(x_{t+1},g_t),\\
+W_{t+1} &= F_W(W_t,a_t),\\
+M_{t+1} &= U_M(M_t,x_{t+1},W_{t+1}),\\
+S_{t+1} &= U_S(S_t,M_{t+1}),\\
+G_{t+1} &= U_G(G_t,S_{t+1},W_{t+1}).
+\end{aligned}
+\]
+
+在这个最小模型中，Observation 改变当前认知，认知生成行动，行动改变世界，现实结果形成新的记忆，记忆缓慢影响 Self，而 Self 又参与未来 Goal 的形成。这已经足以说明一个持续 Agent 与 Session Agent 的差别：\textbf{生命周期中的结果不只是被记录，而是重新进入产生未来行为的因果链。}
+
+于是可以定义一种生命周期闭合性：
+
+\[
+\boxed{
+\mathcal{C}_{life}
+=
+\frac{
+\text{Past internal structure causally reused in future control}
+}{
+\text{Total persistent information}
+}.
+}
+\]
+
+如果一个系统保存了大量日志，但未来行为从不使用这些结构，那么：
+
+\[
+\mathcal{C}_{life}\approx 0.
+\]
+
+它拥有存储，却没有生命周期记忆。反之，如果过去结构经过压缩和重组后持续影响未来状态，即使原始日志已经被删除：
+
+\[
+\mathcal{C}_{life}>0,
+\]
+
+它仍然具有真正意义上的历史依赖。
+
+因此，生命周期工程不能等同于“永久保存更多数据”。一个成熟的 Agent 必须不断把过去转换成未来结构。后面我们将通过三相记忆写成：
+
+\[
+h
+\rightarrow
+E
+\rightarrow
+\Theta,
+\]
+
+再通过更慢的 Self 与 DGA/Ω 写成：
+
+\[
+\Theta
+\rightarrow
+\Psi
+\rightarrow
+\Omega.
+\]
+
+但在这一章，我们首先建立其一般形式：
+
+\[
+\boxed{
+Experience
+\rightarrow
+PersistentStructure
+\rightarrow
+FutureConstraint.
+}
+\]
+
+这就是生命周期连续性的最小动力学。
+
+进一步地，生命周期还要求存在“恢复”概念。一个长期 Agent 必然会经历：
+
+程序重启；
+
+设备迁移；
+
+模型升级；
+
+身体切换；
+
+部分记忆损坏；
+
+网络中断。
+
+如果主体连续性完全等于某个正在运行的物理进程，那么任何重启都会等于“死亡并创建新 Agent”。工程上这显然过于脆弱。因此更合理的定义是：只要关键慢状态、身份锚点、记忆结构和因果历史能够被恢复，并且新运行状态继续承接旧轨迹，我们就可以认为生命周期保持了操作意义上的连续性。
+
+因此存在：
+
+\[
+\boxed{
+PhysicalProcessContinuity
+\neq
+IdentityContinuity.
+}
+\]
+
+但这也不能走向另一极端：任意复制一份 checkpoint 就产生两个“同一个主体”。因此本书后面会坚持单一持续主体原则，对主体 fork 采取极其严格的限制。生命周期连续性应当是一条单值的治理轨迹，而不是可以无限复制的普通文件版本。
+
+从这个角度，AgentOS 的一个核心职责就是维护：
+
+\[
+\boxed{
+\Gamma_A^{identity}
+}
+\]
+
+使任务、工具、模型乃至身体都可以变化，但主体的生命周期轨迹仍然具有明确归属。
+
+所以我们可以把 Session AI 与 Persistent Agent 的区别浓缩成：
+
+\[
+\boxed{
+\text{Session AI answers from a context;
+Persistent Agent acts from a history.}
+}
+\]
+
+前者从上下文中推理；后者从自身历史中继续生活。
+
+\section{AgentOS 不等于 Multi-Agent Framework}
+
+在现代 Agent 软件中，一个常见架构是：用户提出复杂任务后，系统创建 Planner、Researcher、Coder、Critic、Executor 等多个子 Agent，让它们并行工作并相互通信。这类架构在任务工程中非常有价值，但它所解决的问题与本书的 AgentOS 第一性问题不同。
+
+Multi-Agent Framework 首先研究：
+
+\[
+\boxed{
+\text{How do multiple computational agents cooperate on a task?}
+}
+\]
+
+而 AgentOS 首先研究：
+
+\[
+\boxed{
+\text{How does one persistent subject manage many simultaneous cognitive processes without losing identity continuity?}
+}
+\]
+
+两者表面上都可能出现多个 worker，但系统本体完全不同。
+
+在本书的主体层，我们采用：
+
+\[
+\boxed{
+N_{Agent}^{D_1}=1.
+}
+\]
+
+这里 $D_1$ 表示持续主体域。一个 AgentOS 实例在其生命周期内只存在一个承担自我、长期记忆、目标连续性和最终行动归属的主体。与此同时，可以存在大量任务级过程：
+
+\[
+\mathcal{P}_{D_2}
+=
+\{p_1,p_2,\ldots,p_n\}.
+\]
+
+它们可以并行搜索、调用模型、使用工具、执行代码、等待 IO，甚至运行专门化子模型，但它们属于：
+
+\[
+D_2,
+\]
+
+即任务/认知过程域，而不是新的主体域。
+
+因此：
+
+\[
+\boxed{
+Worker\neq Subject.
+}
+\]
+
+这类似于传统操作系统中一个用户可以同时运行多个进程，但不能因此说每个进程都是一个新的用户人格。AgentOS 中的区别更加严格，因为主体还承担长期自我与生命周期归属。
+
+从系统约束上，我们可以写：
+
+\[
+\forall p_i\in D_2,
+\qquad
+Owner(p_i)=A,
+\]
+
+并要求：
+
+\[
+\boxed{
+D_2\nrightarrow Trap(D_1).
+}
+\]
+
+也就是说，任何一个普通任务不能通过同步阻塞的方式占据整个持续主体，使 Agent 在等待某个任务时失去对世界、身体、安全事件、其他目标和生命周期状态的响应能力。一个真正持续运行的 AgentOS 必须类似实时操作系统中的核心调度器：任务可以等待，而主体不能被一个任务绑死。
+
+因此，任务执行更合理的方式是：
+
+\[
+Request
+\rightarrow
+Schedule
+\rightarrow
+Run/Wait
+\rightarrow
+Event
+\rightarrow
+Resume,
+\]
+
+而不是：
+
+\[
+Subject
+\rightarrow
+CallTask
+\rightarrow
+BlockUntilReturn.
+\]
+
+这种设计非常关键。例如一个具身 Agent 正在执行长时间网页研究任务，同时身体出现高温、用户提出紧急新要求、环境发生危险变化。如果主体被研究任务同步困住，那么所谓“持续 Agent”实际上仍然只是一个长调用链程序。
+
+SingleAgentMultiTaskOS 因而成为我们的基本抽象：
+
+\[
+\boxed{
+\text{Single Persistent Subject}
++
+\text{Multiple Concurrent Cognitive Processes}.
+}
+\]
+
+这与 Multi-Agent Framework 最大的不同，是所有任务最终汇聚到同一主体记忆、自我、目标与责任体系中。即使某个 worker 给出了建议，该建议也不能自动获得主体身份。它必须重新进入 AgentOS 的认知治理路径，经过评估、整合、决策，才能成为主体行动。
+
+因此可以写：
+
+\[
+Output(p_i)
+\rightarrow
+CandidateCSO
+\rightarrow
+AgentIntegration
+\rightarrow
+Action.
+\]
+
+而不能简单写：
+
+\[
+Output(p_i)
+\rightarrow
+Action.
+\]
+
+后者会造成多个任务过程对真实世界的控制权竞争。
+
+进一步地，我们曾提出：
+
+\[
+fork(A)=Forbidden,
+\qquad
+new(A)=Forbidden,
+\qquad
+delete(A)=Forbidden
+\]
+
+作为第一代 AgentOS 的主体治理原则。这里不是说系统永远不能创建另一个 Agent，而是说\textbf{一个正在持续运行的主体不能像普通 Unix 进程那样，通过 fork 随意复制出两个声称拥有同一生命周期身份的主体。} 如果未来需要产生新的独立 Agent，应通过显式的主体创建协议，重新定义其身份起点、记忆继承范围、权限和责任边界，而不是把自我当普通内存镜像复制。
+
+从哲学角度看，复制后的两个系统是否仍然是“同一个人”属于更深的问题；本书在工程上采取保守原则：一条生命周期只对应一个持续主体治理路径。
+
+因此：
+
+\[
+\boxed{
+IdentityTrajectory
+:
+t\mapsto A_t
+}
+\]
+
+在正常运行时保持单值。
+
+这一设计还解决了责任问题。当多个任务、多个模型甚至多个外部 Agent 参与决策时，最终的行动归属仍然可以写成：
+
+\[
+\boxed{
+Responsibility(Action_t)=A.
+}
+\]
+
+这对于未来具身系统、安全系统和社会性 Agent 尤其重要。否则系统很容易退化成“模型说的”“工具建议的”“某个子 Agent 决定的”，而没有一个稳定的治理中心承担行动一致性。
+
+所以 AgentOS 并不排斥多 Agent 协作。恰恰相反，其他 Agent 将在后面成为重要的外部认知载体。但必须先区分：
+
+\[
+\boxed{
+\text{Multi-Agent Environment}
+}
+\]
+
+与
+
+\[
+\boxed{
+\text{Multi-Self Internal Architecture}.
+}
+\]
+
+前者是必要能力，后者则不是 AgentOS 第一代主体模型。
+
+\section{Cognitive Runtime：从计算资源运行时到智能资源运行时}
+
+AgentOS 被称为“OS”，并不是因为我们想重新实现一个 Linux Kernel，也不是因为它一定要在 ring 0 中运行。这里的“操作系统”是一种功能类比：传统操作系统解决的是有限计算资源如何被长期、多任务、受保护地使用；AgentOS 所解决的则是有限认知资源、记忆资源、身体能力和长期主体状态如何被持续治理。
+
+传统 Computer OS 可以抽象为：
+
+\[
+\mathcal{O}_{computer}
+=
+\mathcal{S}
+(
+CPU,
+Memory,
+IO,
+Process,
+File,
+Device,
+Network
+),
+\]
+
+其中 $\mathcal{S}$ 表示调度、隔离、生命周期管理和访问控制。
+
+AgentOS 则对应：
+
+\[
+\mathcal{O}_{agent}
+=
+\mathcal{S}_A
+(
+CognitiveState,
+Memory,
+Goal,
+Attention,
+Skill,
+Tool,
+Body,
+Self,
+Authority
+).
+\]
+
+因此：
+
+\[
+\boxed{
+ComputerOS
+=
+ComputeResourceRuntime
+}
+\]
+
+而：
+
+\[
+\boxed{
+AgentOS
+=
+IntelligenceResourceRuntime.
+}
+\]
+
+二者并不是竞争关系，而是分层关系：
+
+\[
+\boxed{
+Hardware
+\rightarrow
+ComputerOS
+\rightarrow
+AgentOS
+\rightarrow
+Task/Experience.
+}
+\]
+
+Linux 仍然负责 CPU 调度、内存保护、设备驱动、文件系统、网络和进程隔离。AgentOS 使用这些已有能力，但建立更高一层的认知资源抽象。例如，Linux 可以告诉我们某个进程占用了多少 RAM，却不能回答：
+
+“当前有多少个目标正在竞争工作记忆？”
+
+“某段经历是否应进入长期记忆？”
+
+“一个已经重复百次的认知过程是否应该编译成 Skill？”
+
+“什么时候应该把任务外化到工具而不是继续占用高层推理？”
+
+“某个身体控制异常是否应该提升到显式认知？”
+
+“当前行为是否仍与长期身份结构一致？”
+
+这些问题都不属于传统计算资源调度，而属于：
+
+\[
+\boxed{
+Cognitive Governance.
+}
+\]
+
+因此 Cognitive Runtime 是 AgentOS 更准确的工程名称。所谓 Runtime，意味着 AgentOS 始终位于“正在发生的智能过程”之中，而不只是训练模型或保存知识。
+
+可以抽象定义：
+
+\[
+\mathcal{R}_{Cog}
+=
+(
+\mathcal{X},
+\mathcal{M},
+\mathcal{Q},
+\mathcal{G},
+\mathcal{B},
+\mathcal{A}
+),
+\]
+
+其中：
+
+\begin{itemize}
+    \item $\mathcal{X}$：当前认知状态空间；
+    \item $\mathcal{M}$：跨时间记忆系统；
+    \item $\mathcal{Q}$：认知过程与任务集合；
+    \item $\mathcal{G}$：目标与优先级结构；
+    \item $\mathcal{B}$：与外部世界、工具和身体之间的边界；
+    \item $\mathcal{A}$：权限、行动与治理约束。
+\end{itemize}
+
+运行时需要持续执行一个近似无限循环：
+
+\[
+\boxed{
+Observe
+\rightarrow
+Admit
+\rightarrow
+Interpret
+\rightarrow
+Schedule
+\rightarrow
+Act
+\rightarrow
+Verify
+\rightarrow
+Consolidate
+\rightarrow
+Observe.
+}
+\]
+
+它没有传统 request-response 系统那样天然的“调用结束点”。任务会结束，但主体不结束；一次认知会停止，但运行时继续观察环境；一个 Goal 完成以后，新的 Goal 可以出现；外部世界也可能在没有用户 prompt 的时候发生变化。
+
+因此我们必须把：
+
+\[
+\boxed{
+AgentLifetime
+}
+\]
+
+与：
+
+\[
+\boxed{
+TaskLifetime
+}
+\]
+
+严格分离。
+
+设 Agent 生命周期：
+
+\[
+T_A=[t_0,t_f),
+\]
+
+任务 $q_i$ 生命周期：
+
+\[
+T_{q_i}=[t_i^{start},t_i^{end}],
+\]
+
+通常有：
+
+\[
+T_{q_i}\subset T_A.
+\]
+
+而多个任务可以满足：
+
+\[
+T_{q_i}\cap T_{q_j}\neq\varnothing.
+\]
+
+这意味着 AgentOS 天然是一个多任务、事件驱动、长期运行系统，而不是一个单线程智能函数。
+
+这也解释了为什么后面我们会不断引入 Scheduler、Boundary、CCM、SPC、TCE 等结构：它们并不是为了给架构增加模块，而是因为只要认知过程被放进持续运行环境，就会自然出现资源竞争、过载、状态观测、调节、准入和外部卸载问题。
+
+从这一点看，AgentOS 的很多设计实际上与传统 OS 的历史非常类似。单程序时代并不需要复杂进程调度；当系统开始同时运行多个程序，才出现内存保护、调度、公平性和死锁问题。同样，单次 LLM 调用不需要复杂认知治理；当一个主体要同时处理世界、身体、长期目标、工具、记忆和多个任务时，“认知操作系统”才真正成为必要。
+
+然而这里也存在一个重要区别：传统 OS 不要求自身形成持续人格，CPU Scheduler 也不会根据自己过去的人生改变调度哲学。AgentOS 则必须同时管理：
+
+\[
+\text{Resource Continuity}
+\]
+
+与：
+
+\[
+\text{Subject Continuity}.
+\]
+
+所以它不是简单复制传统 OS 结构，而是在其“有限资源持续治理”思想上向认知层扩展。
+
+这也是为什么本书最终把 AgentOS 定义成：
+
+\[
+\boxed{
+\text{A persistent runtime for the governance of intelligence resources and cognitive structure.}
+}
+\]
+
+它真正调度的，不只是 token、模型或 API，而是：\textbf{认知结构在何时、以什么优先级、由哪个功能、在什么时间尺度和什么边界内被承载。}
+
+\section{AgentOS 的最小动力学状态与现实闭环}
+
+到这里，我们已经知道 AgentOS 需要固定核心功能骨架、持续主体、生命周期状态和长期认知运行时。接下来必须回答：如果我们暂时不引入后面所有具体模块，一个最小 AgentOS 至少需要哪些动力学变量？
+
+我们可以从最简形式开始：
+
+\[
+\boxed{
+\mathfrak{A}(t)
+=
+[
+\mathcal{X}_C(t),
+\mathcal{X}_B(t),
+\mathcal{W}(t),
+\mathcal{G}(t),
+\mathcal{H}(t)
+]
+}
+\]
+
+其中：
+
+\begin{itemize}
+    \item $\mathcal{X}_C$：智能体内部认知状态；
+    \item $\mathcal{X}_B$：身体或数字身体的运行状态；
+    \item $\mathcal{W}$：当前可访问的外部世界状态；
+    \item $\mathcal{G}$：目标与未来约束；
+    \item $\mathcal{H}$：主体历史的持久结构。
+\end{itemize}
+
+此时我们暂时不要求 $\mathcal{X}_C$ 内部具体采用哪些记忆结构。下一章将把它展开成：
+
+\[
+\mathcal{X}_C
+\supset
+(h,E,\Theta),
+\]
+
+随后再加入：
+
+\[
+\Psi,\quad \Omega,\quad SPC,\quad AHC,\quad TCE,\ldots
+\]
+
+本章只要求它具有时间连续性。
+
+整个 Agent—World 系统可以写成一组耦合动力学：
+
+\[
+\dot{\mathcal{X}}_C
+=
+F_C
+\left(
+\mathcal{X}_C,
+\mathcal{O},
+\mathcal{G},
+\mathcal{H},
+u_C
+\right),
+\]
+
+\[
+\dot{\mathcal{X}}_B
+=
+F_B
+\left(
+\mathcal{X}_B,
+u_B,
+\mathcal{W}
+\right),
+\]
+
+\[
+\dot{\mathcal{W}}
+=
+F_W
+\left(
+\mathcal{W},
+a_B,
+\mathcal{E}
+\right),
+\]
+
+其中 $\mathcal{O}$ 是由世界和身体产生的观测，$u_C$ 是认知层控制，$u_B$ 是身体控制参考，$a_B$ 是真实行动，$\mathcal{E}$ 表示不受 Agent 控制的外部环境动力。
+
+于是完整闭环为：
+
+\[
+\boxed{
+\mathcal{W}
+\rightarrow
+Observation
+\rightarrow
+\mathcal{X}_C
+\rightarrow
+Decision
+\rightarrow
+\mathcal{X}_B
+\rightarrow
+Action
+\rightarrow
+\mathcal{W}'.
+}
+\]
+
+这一闭环必须遵守我们整个理论中极重要的一条原则：
+
+\[
+\boxed{
+RealityIsUltimateConstraint.
+}
+\]
+
+也就是说，Agent 内部可以生成预测：
+
+\[
+\hat{\mathcal{W}}_{t+\Delta},
+\]
+
+可以生成计划：
+
+\[
+\pi_t,
+\]
+
+也可以形成信念：
+
+\[
+b_t,
+\]
+
+但这些内部结构都不能直接定义现实结果。最终必须重新通过：
+
+\[
+Action
+\rightarrow
+World
+\rightarrow
+Observation
+\]
+
+获得现实验证。
+
+因此：
+
+\[
+\boxed{
+ActionIssued
+\neq
+ActionSucceeded.
+}
+\]
+
+这个原则虽然会在 Body Runtime 章节中得到完整工程化，但在 AgentOS 原理论的入口处就必须建立。因为一旦一个长期智能体允许自己的预测直接写回“已发生事实”，就会形成危险的封闭自证环：
+
+\[
+Belief
+\rightarrow
+Prediction
+\rightarrow
+InternalConfirmation
+\rightarrow
+Belief'.
+\]
+
+而真正的智能学习要求：
+
+\[
+Belief
+\rightarrow
+Action
+\rightarrow
+Reality
+\rightarrow
+Residual
+\rightarrow
+Belief'.
+\]
+
+其中 Residual：
+
+\[
+\varepsilon_t
+=
+D(
+\hat{o}_{t},
+o_t
+)
+\]
+
+是系统持续更新自身结构的现实来源。
+
+从认识论上说，这与我们前一编讨论的 Universe-CSO 与 Agent-CSO 关系一致：
+
+\[
+UniverseCSO
+\xrightarrow{Observation}
+AgentCSO
+\xrightarrow{Action}
+UniverseCSO'.
+\]
+
+从工程上说，它意味着 AgentOS 的内部认知世界必须始终与一个外部不可由认知任意覆盖的 reality channel 相连。
+
+因此，AgentOS 的最小状态不能只包含认知状态，它还必须具有“现实边界”概念。可以抽象写成：
+
+\[
+\mathfrak{A}
+=
+(
+\mathcal{X}_{internal},
+\mathcal{B}_{reality},
+\mathcal{I}_{obs},
+\mathcal{I}_{act}
+),
+\]
+
+其中 $\mathcal{B}_{reality}$ 定义主体内部状态与外部现实之间的边界，$\mathcal{I}_{obs}$ 是观测接口，$\mathcal{I}_{act}$ 是行动接口。
+
+这也解释了为什么后面 Body Runtime 并不是 AgentOS 的附属外围，而是完整智能闭环不可缺少的一侧。如果没有 Action—Reality—Observation 的重新进入，即使内部记忆和自我理论再复杂，系统最终仍可能只是一个封闭的符号动力学系统。
+
+同时，这个最小模型必须容纳多时间尺度。我们可以先写：
+
+\[
+\mathcal{X}_C
+=
+\left(
+x^{fast},
+x^{mid},
+x^{slow},
+x^{ultraslow}
+\right),
+\]
+
+满足：
+
+\[
+\tau_{fast}
+\ll
+\tau_{mid}
+\ll
+\tau_{slow}
+\ll
+\tau_{ultraslow}.
+\]
+
+下一章开始，我们将发现这些时间尺度并不是抽象占位，而会自然分化成当前工作状态、经验轨迹、长期生成结构、自我与生命周期生成先验。
+
+所以本节真正建立的是 AgentOS 后续所有模块都必须满足的动力学骨架：
+
+\[
+\boxed{
+\text{Persistent internal state}
++
+\text{multiscale memory}
++
+\text{goal constraint}
++
+\text{body/world coupling}
++
+\text{reality verification}.
+}
+\]
+
+缺少其中任何一项，系统都很难成为本书意义上的持续智能体。
+
+\section{从固定拓扑持续主体到三相记忆问题}
+
+到本章末尾，我们已经能够给第一代 AgentOS 一个相对完整的抽象定义：
+
+\[
+\boxed{
+AgentOS^{(0)}
+=
+\left(
+\mathcal{G}_{F}^{core},
+\mathbf{X}_A(t),
+\mathcal{Q}(t),
+\mathcal{B},
+\Gamma_A
+\right),
+}
+\]
+
+其中 $\mathcal{G}_{F}^{core}$ 是稳定核心功能拓扑，$\mathbf{X}_A(t)$ 是持续变化的主体内部状态，$\mathcal{Q}(t)$ 是动态产生和结束的任务/认知过程集合，$\mathcal{B}$ 是现实、身体与外部资源边界，$\Gamma_A$ 是跨时间保持连续的生命周期轨迹。
+
+这一结构已经远远超过普通 request-response AI，但它立即暴露出一个无法绕开的新问题：
+
+\[
+\boxed{
+\text{一个持续主体究竟如何保存自己的过去，同时又不被过去淹没？}
+}
+\]
+
+如果我们把所有过去状态完整保留：
+
+\[
+\mathcal{H}_t
+=
+\{
+\mathbf{X}_A(\tau)
+\mid
+0\leq \tau<t
+\},
+\]
+
+那么：
+
+\[
+|\mathcal{H}_t|
+\rightarrow
+\infty
+\quad
+(t\rightarrow\infty).
+\]
+
+一个生命周期足够长的 Agent 将积累无限增长的历史信息。显然，我们不能要求：
+
+\[
+\mathbf{X}_{now}(t)
+=
+\mathcal{H}_t.
+\]
+
+换句话说：
+
+\[
+\boxed{
+\text{Persistent memory cannot mean persistent activation.}
+}
+\]
+
+如果全部历史都保持在当前认知面上，系统会立即遇到容量与计算不可承受问题；如果全部历史都只是原样存储而不转化为结构，那么系统虽然“记得很多”，却不会真正成长。
+
+因此我们需要一种机制，把不同时间尺度上的信息进行结构分工。
+
+从最抽象的角度，一个持续 Agent 至少要区分三件事：
+
+第一，\textbf{现在正在发生什么}：
+
+\[
+State.
+\]
+
+第二，\textbf{过去发生过什么}：
+
+\[
+Trajectory.
+\]
+
+第三，\textbf{过去的经历已经让我形成了什么稳定结构，从而改变未来会怎样理解和行动}：
+
+\[
+Generator.
+\]
+
+于是：
+
+\[
+\boxed{
+State
+\rightarrow
+Trajectory
+\rightarrow
+Generator
+}
+\]
+
+自然出现。
+
+这正是下一章三相记忆理论：
+
+\[
+\boxed{
+h
+\leftrightarrow
+E
+\leftrightarrow
+\Theta
+}
+\]
+
+的真正来源。
+
+这里尤其需要注意：三相记忆并不是我们为了模仿人脑而人为添加的三个模块。它们是从 Persistent Agent 的生命周期约束中推导出来的三种不同功能需求。
+
+若只有当前状态 $h$，Agent 没有真正过去；
+
+若只有 $h+E$，Agent 可以记住经历，却很难把经历转化成越来越稳定的生成能力；
+
+若只有 $\Theta$ 而没有 $E$，系统拥有结构，却难以解释“这些结构是怎样从自己的经历中形成的”，也缺乏重新解释具体历史的能力。
+
+因此：
+
+\[
+\boxed{
+h=Present,
+\qquad
+E=ExperiencedPast,
+\qquad
+\Theta=LearnedGenerator.
+}
+\]
+
+从时间尺度上，也自然要求：
+
+\[
+\tau_h
+<
+\tau_E
+<
+\tau_\Theta.
+\]
+
+也就是说，当前认知必须快速变化，经验轨迹变化较慢，长期生成结构则应该更加稳定。
+
+但这一分层又会进一步产生新的问题：
+
+如果 $h$ 的容量有限，什么应该进入当前认知？
+
+如果 $E$ 越来越大，哪些经历值得保留？
+
+如果 $\Theta$ 逐渐稳定，怎样避免错误结构永久固化？
+
+如果一个 Agent 的记忆不断变化，什么东西保证“仍然是我”？
+
+如果 Self 也可以变化，哪个更慢的结构定义“我正在成为什么”？
+
+如果内部状态太复杂，系统如何感知自己的运行状态？
+
+如果它能感知自身状态，又由谁调节认知温度、注意和探索范围？
+
+这些问题将在后面的章节中逐层逼出：
+
+\[
+\Psi,\quad
+\Omega,\quad
+SPC,\quad
+TCE,\quad
+AHC,\quad
+CCM,\quad
+Scheduler,\quad
+Boundary,\quad
+Offloading.
+\]
+
+所以本书不会把 AgentOS 写成“先画一个完整架构，然后逐一解释模块”。我们的推导方向恰恰相反：
+
+\[
+\boxed{
+\text{Persistent Agent Requirement}
+\rightarrow
+\text{Structural Contradiction}
+\rightarrow
+\text{Necessary Functional Mechanism}.
+}
+\]
+
+也就是说，每一个新模块都必须由前一个结构无法解决的问题逼出来。
+
+本章得到的第一个结构矛盾，就是：
+
+\[
+\boxed{
+\text{持续主体必须保存历史}
+}
+\]
+
+与
+
+\[
+\boxed{
+\text{当前认知不可能承载全部历史}
+}
+\]
+
+之间的矛盾。
+
+下一章的三相记忆理论，正是这个矛盾的第一次系统解。
+
+因此，我们可以用本章最终命题作为第二编真正的起点：
+
+\[
+\boxed{
+\begin{minipage}{0.86\textwidth}
+\textbf{AgentOS 第一性工程命题：}
+
+一个能够形成生命周期的人工智能体，首先需要一个稳定的核心功能骨架，使单一主体在其上维持连续的内部状态、任务治理、世界交互与现实验证；与此同时，系统必须允许认知结构在多个时间尺度上持续变化，而不能要求核心功能拓扑与内部状态同时无约束地改变。
+
+因此，AgentOS 的第一阶段不是让智能体“自由重写自己”，而是建立一个足够稳定的认知运行时，使它第一次拥有可以被称为“自己的过去、自己的现在以及由过去塑造的未来”的持续动力学轨迹。
+\end{minipage}
+}
+\]
+
+从这个起点出发，我们下一步必须回答的，就是长期智能最基本的记忆问题：
+
+\[
+\boxed{
+\text{一个持续存在的主体，怎样把正在发生的现在，转化为自己的过去，并进一步把过去转化为生成未来的结构？}
+}
+\]
+
+这将把我们带入三相记忆：
+
+\[
+\boxed{
+h
+\leftrightarrow
+E
+\leftrightarrow
+\Theta.
+}
+\]

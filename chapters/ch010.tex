@@ -1,0 +1,2199 @@
+\chapter{CSO：智能面对的认知结构本体}
+\label{chap:cso-ontology}
+
+\begin{center}
+\fbox{
+\parbox{0.92\textwidth}{
+\textbf{本章总体说明｜认知本体层}
+
+本章完成本书从“智能动力学”进入“认知对象理论”的第一次关键收缩：此前我们已经从时空尺度、多频闭环、智能相与功能拓扑等角度讨论了智能如何存在和运行，但仍然留下一个更基础的问题——\textbf{一个智能系统在这些动力学过程中究竟在处理什么？}
+
+本章提出认知结构对象（Cognitive Structure Object，CSO）作为回答这一问题的第一性认知对象。CSO 不是 Token，不是向量，不是 Embedding，不是某个数据库节点，也不是某种特定模型内部的神经激活；这些都属于 CSO 的可能承载方式。CSO 所表达的是：对于一个智能过程而言，能够被区分、关联、预测、约束、评价、操作并进入后续认知动力学的\textbf{结构性认知对象}。
+
+因此，本章首先建立 CSO 的本体层，而暂不讨论同一 CSO 在某一具体智能体内部如何表示、存储和承载。后者将在下一章通过 Agent-CSO 正式展开。这样的层级分离具有决定性意义：
+
+\[
+\boxed{
+\text{CSO Ontology}
+\neq
+\text{Agent-Specific Representation}
+}
+\]
+
+本章所要建立的是前者。
+
+在此基础上，我们将对象、关系、目标、约束、事件、因果、规则、计划、预测、自我、价值等看似不同的认知内容统一放入 CSO 框架，并进一步说明：智能并不是在处理孤立的信息碎片，而是在持续生成、激活、连接、重构和使用一个不断变化的认知结构网络。由此，CSO 将成为后续 Agent-CSO、结构迁移、功能拓扑、三相记忆以及整个 AgentOS 理论能够共享的本体语言。
+}
+}
+\end{center}
+
+
+\section{从信息到结构：智能真正处理的对象是什么}
+
+如果我们从传统计算理论出发描述一个人工智能系统，很容易把智能过程归结为“输入信息、处理信息、输出信息”。在数字计算机内部，这种描述并没有错误：文字最终可以编码成比特，图像可以表示成矩阵，语言模型将输入转换为 Token 序列，再将 Token 映射为高维向量，神经网络进一步对这些向量实施变换。因此，从实现层看，我们完全可以写出
+
+\[
+x
+\rightarrow
+\mathrm{Token}(x)
+\rightarrow
+\mathbf e(x)
+\rightarrow
+F_{\theta}(\mathbf e)
+\rightarrow
+y.
+\]
+
+然而，如果我们试图仅用这一层语言解释智能，就会立刻遇到一个根本困难：\textbf{Token 和向量说明了信息怎样被编码，却没有说明系统认知的对象是什么。}
+
+例如，当一个智能体看到“杯子放在桌上”时，底层系统当然可以得到图像像素、视觉特征或语言 Token，但一个真正能够行动的智能系统所需要保留的结构远比这些编码更明确。它至少需要区分：
+
+\[
+\mathrm{Cup},
+\qquad
+\mathrm{Table},
+\qquad
+\mathrm{On}(\mathrm{Cup},\mathrm{Table}),
+\]
+
+还可能进一步形成：
+
+\[
+\mathrm{Fragile}(\mathrm{Cup}),
+\qquad
+\mathrm{Reachable}(\mathrm{Cup}),
+\qquad
+\mathrm{Goal}(\mathrm{PickUpCup}),
+\]
+
+以及：
+
+\[
+\mathrm{Constraint}
+\left(
+\mathrm{AvoidSpill}
+\right).
+\]
+
+此时真正进入认知过程的已经不是几个离散的信息元素，而是一组具有对象、关系、状态、目标和约束的结构。
+
+因此，我们必须从
+
+\[
+\boxed{
+Information
+}
+\]
+
+进一步走向
+
+\[
+\boxed{
+StructuredCognitiveContent
+}.
+\]
+
+这里所谓“结构”，至少意味着存在一个可区分的元素集合以及元素之间具有功能意义的关系。如果把认知内容记为
+
+\[
+\mathcal C
+=
+(V_C,E_C),
+\]
+
+那么 \(V_C\) 中的节点并不只是数据项，而是可以被当前智能过程当作一个认知单位使用的结构对象；\(E_C\) 则表示这些结构对象之间的语义、时序、因果、约束、空间、目标或价值关系。
+
+于是，“信息量”和“认知结构”之间必须严格区分。一个文件可能具有极大的比特量，却对于当前 Agent 几乎没有认知意义；一个只有数个元素构成的约束关系，反而可能决定整个任务能否完成。比如
+
+\[
+A>B,\quad B>C,\quad C>A
+\]
+
+只包含极少符号，却形成逻辑冲突。认知负担来自这些元素之间需要同时维持的结构关系，而不是字符数量本身。
+
+因此，我们可以给出一个初步判断：
+
+\[
+\boxed{
+\text{认知对象的有效结构不能被信息量本身充分描述。}
+}
+\]
+
+信息理论中的熵可以描述不确定性，算法复杂度可以描述描述长度，向量空间可以描述某种分布式表示，但这些概念都没有天然告诉我们：“一个智能体现在把什么当成对象、哪些对象之间形成什么关系、这些关系为何会影响其下一步行动。”
+
+这就是 CSO 理论存在的第一原因。
+
+在本书中，我们将“信息”理解为更加底层和宽泛的概念，而把 CSO 理解为信息经过主体相关的区分、关联和结构化以后，进入智能动力学的有效认知单位。因此可以写成一个抽象过程：
+
+\[
+\boxed{
+RawInformation
+\xrightarrow{\;\mathcal S\;}
+StructuredCognitiveObject
+}
+\]
+
+其中 \(\mathcal S\) 表示结构化过程。它并不一定对应某一个具体模块，可以由感知、记忆、语言、推理、环境交互和长期学习共同完成。
+
+这也使我们能够解释一个长期存在的现象：同样的数据对于不同主体并不形成同样的认知世界。一个普通人看到医学影像时可能只看到明暗纹理，而一个专业医生能够从同样像素中形成病灶、边界、异常形态、风险和诊断假设。底层信息并没有改变，改变的是其中被认知系统稳定抽取出来的结构。
+
+因此：
+
+\[
+\boxed{
+\text{Data}
+\neq
+\text{Information}
+\neq
+\text{Cognitive Structure}.
+}
+\]
+
+CSO 理论真正研究的是第三层。
+
+这一观点与知识表示、知识图谱、Frame Semantics、Schema Theory、Object-Centric Representation 等外部理论具有明显关联，但我们不会简单把 CSO 等同于其中任何一种现有表示。知识图谱中的节点和边通常已经是外显符号结构，而 CSO 还允许存在未被显式语言化、处于生成态、预测态甚至部分激活态的结构。Frame 和 Schema 强调结构化知识模板，而 CSO 的范围进一步覆盖事件、目标、自我、价值与行动约束。因此，本章借鉴这些理论对于“结构优先于孤立符号”的洞见，但把 CSO 作为更加一般的认知动力学对象来使用。
+
+
+\section{认知结构对象：CSO 的基本定义}
+
+现在我们可以正式给出 CSO 的第一层定义。所谓认知结构对象，是指在某个智能问题域中，可以被区分为一个相对独立认知单位，并能够与其他认知单位形成稳定或暂态关系、进入预测、记忆、评价、推理、控制或者行动过程的结构。
+
+记整个可能认知对象空间为
+
+\[
+\mathfrak C.
+\]
+
+则：
+
+\[
+C_i\in\mathfrak C
+\]
+
+表示一个 CSO。
+
+为了避免把 CSO 错误理解为一个简单“概念标签”，我们进一步将一个一般 CSO 表示成：
+
+\[
+\boxed{
+C_i
+=
+\left(
+\mathcal I_i,
+\mathcal P_i,
+\mathcal R_i,
+\mathcal D_i,
+\mathcal A_i
+\right)
+}
+\]
+
+其中：
+
+\[
+\mathcal I_i
+\]
+
+表示该结构的身份或区分条件；
+
+\[
+\mathcal P_i
+\]
+
+表示其属性结构；
+
+\[
+\mathcal R_i
+\]
+
+表示它与其他 CSO 之间可以成立的关系集合；
+
+\[
+\mathcal D_i
+\]
+
+表示其自身可能的状态转移或动力学；
+
+\[
+\mathcal A_i
+\]
+
+表示该结构在当前认知或行动系统中的可操作接口。
+
+这一表示不是要求实际 Agent 必须把每个 CSO 存成五字段数据结构，而是在本体层说明：一个真正进入智能过程的对象通常不仅具有“是什么”，还具有“与什么有关”“如何变化”“能够被怎样操作”。
+
+例如，“门”作为一个 CSO 时，不只是一个字符串 \texttt{door}。对于具身 Agent，它可能包含：
+
+\[
+C_{\mathrm{door}}
+=
+(
+Identity,
+State,
+Relation,
+Dynamics,
+Affordance
+).
+\]
+
+其中可能存在：
+
+\[
+State\in
+\{
+Open,
+Closed,
+Locked
+\},
+\]
+
+以及关系：
+
+\[
+Connected(Room_A,Room_B),
+\]
+
+同时还可能存在操作：
+
+\[
+Open(Door),
+\quad
+Close(Door),
+\quad
+Unlock(Door).
+\]
+
+于是，门之所以是一个有效认知结构，并不是因为 Agent 给它贴了“门”这个语义标签，而是因为这一结构能够参与未来预测和行动。
+
+更一般地，一个 CSO 的认知有效性可以写成：
+
+\[
+\boxed{
+\Gamma(C_i)
+=
+F(
+Distinguishability,
+Relationality,
+PredictiveUtility,
+ActionRelevance,
+Persistence
+)
+}
+\]
+
+其中 \(\Gamma(C_i)\) 表示结构 \(C_i\) 在某个认知过程中成为有效对象的程度。
+
+这一表达还揭示一个重要事实：CSO 并不要求具有永久、清晰、离散的边界。某些 CSO 可以非常稳定，例如“我工作的城市”；某些则可能只在几秒钟的任务过程中存在，例如“当前推理中的第三个候选假设”。还有一些结构本身是概率性的，比如“明天下雨的可能场景”。因此：
+
+\[
+\boxed{
+CSO
+\neq
+PermanentSymbol.
+}
+\]
+
+我们真正要求的是它在某一认知尺度内形成了足够的结构闭合，使智能系统可以把它作为一个整体继续操作。
+
+从这一点出发，我们可以引入“结构闭合度”：
+
+\[
+\chi(C_i)
+\in[0,1].
+\]
+
+若
+
+\[
+\chi(C_i)\approx 0,
+\]
+
+说明其内部仍然只是松散信息，尚不足以成为稳定认知对象；而当
+
+\[
+\chi(C_i)\rightarrow 1,
+\]
+
+则说明它在当前尺度上已经具有高度稳定的内部关系和功能边界。
+
+不过必须强调：这里的 \(1\) 不意味着本体上绝对完整，而只是意味着\textbf{相对于当前认知任务，它可以被当作一个相对稳定整体处理}。
+
+这与本书前面讨论的多尺度思想直接一致。同一个结构可以在某一尺度被当作 CSO，而在更细尺度重新展开。例如“汽车”可以作为驾驶 Agent 的一个 CSO；但对于维修 Agent，汽车本身又展开为发动机、电池、轮胎、制动系统等更细 CSO。因此：
+
+\[
+\boxed{
+CSO
+=
+ScaleRelativeCognitiveStructure.
+}
+\]
+
+这里的“相对”不是否认现实，而是在强调智能必须通过有限认知容量工作。任何 Agent 都不可能同时在每个尺度上展开全部结构。
+
+外部理论中，ontology engineering 强调对象类型和关系，knowledge graph 强调实体—关系结构，object-centric learning 强调从连续感知中形成相对稳定的对象单位。这些理论都为 CSO 提供重要参照。但 CSO 的目标不是建立一种静态知识库，而是为后续的\textbf{认知结构动力学}提供统一本体：结构可以被激活、弱化、组合、迁移、沉降、外化，甚至改变其功能承载位置。因此，CSO 从一开始就是一个面向动力学的本体对象。
+
+
+\section{对象型 CSO：可区分实体与认知边界}
+
+最直观的 CSO 是对象型结构。我们通常首先通过“东西”理解世界：人、桌子、汽车、程序、文件、星球、组织、目标设备，甚至抽象概念都可以在适当尺度上被当作对象。但对象型 CSO 的真正理论价值，不在于重新发明“实体”概念，而在于解释智能系统为什么需要把连续世界切分成可以被独立跟踪和操作的认知单位。
+
+设原始输入状态空间为
+
+\[
+\mathcal X.
+\]
+
+一个对象形成过程可以被理解为寻找某个映射
+
+\[
+\Pi_O:
+\mathcal X
+\rightarrow
+\{C_1,C_2,\ldots,C_n\},
+\]
+
+将连续、高维、不断变化的感知状态压缩为有限个可持续认知对象。
+
+一个对象型 CSO 至少要回答四个问题：
+
+\[
+Who/What,
+\qquad
+Where,
+\qquad
+State,
+\qquad
+Continuity.
+\]
+
+也就是说，系统必须能够在变化过程中维持某种对象身份。某辆汽车从摄像头左边移动到右边时，其像素已经发生大规模变化，但智能体仍需要维持：
+
+\[
+C_{\mathrm{car}}(t)
+\approx
+C_{\mathrm{car}}(t+\Delta t).
+\]
+
+因此，对象恒常性可以表示成：
+
+\[
+P
+\left(
+ID_{t+\Delta t}=ID_t
+\mid
+O_{\leq t+\Delta t}
+\right)
+>\theta_{id}.
+\]
+
+这里 \(O\) 表示观测，而 \(\theta_{id}\) 是系统在当前任务下维持身份连续的阈值。
+
+这一点对于后续 AgentOS 尤其重要，因为工作记忆不能每个时间步都把世界重新解释成完全新的对象。如果对象无法保持连续，情景记忆 \(E\) 也就无法形成有效轨迹，因果关系无法积累，计划无法跨时间执行。
+
+对象型 CSO 因而具有一种“认知压缩”的功能。假设一个物体包含数百万个底层视觉特征，Agent 并不需要让这些特征持续占据工作记忆，只需要保留：
+
+\[
+\mathrm{ObjectID},
+\mathrm{Position},
+\mathrm{State},
+\mathrm{RelevantAttributes}.
+\]
+
+可以把这种压缩关系写成：
+
+\[
+\boxed{
+\dim(C_O)
+\ll
+\dim(X_{\mathrm{raw}})
+}
+\]
+
+但仍满足：
+
+\[
+I(C_O;Y_{\mathrm{task}})
+\]
+
+足够高，其中 \(Y_{\mathrm{task}}\) 表示与当前任务有关的未来变量。
+
+因此，对象形成实际上是一种任务相关的结构压缩：
+
+\[
+\boxed{
+ObjectFormation
+=
+Compression
++
+IdentityPersistence
++
+ActionRelevance.
+}
+\]
+
+值得注意的是，对象边界并不完全来自现实，也不完全来自主体。现实中确实存在稳定结构，但 Agent 的任务会决定哪些稳定结构值得被单独建模。例如城市交通控制系统可能把“车流”作为一个整体 CSO，而不跟踪每辆汽车；自动驾驶汽车则必须跟踪具体车辆。对于高层城市规划系统，一整条道路甚至可以成为单一对象。
+
+因此：
+
+\[
+\boxed{
+ObjectBoundary
+=
+RealityStructure
+\cap
+AgentResolution
+\cap
+TaskRelevance.
+}
+\]
+
+这个交集观点非常重要。它避免了两个极端：一个极端认为对象完全是主体任意构造；另一个极端则认为世界天然已经按照唯一尺度切分成对象。
+
+与现有 object-centric representation、object permanence、tracking、Gestalt organization 等理论相比，CSO 对象型结构更加关心对象形成以后如何进入整个智能动力学。例如一个对象可以进一步成为关系 CSO 的端点、目标 CSO 的作用对象、约束 CSO 的限制对象、事件 CSO 的参与者。也就是说：
+
+\[
+ObjectCSO
+\]
+
+不是本体体系的全部，而只是网络中的基本锚点。
+
+从本书整体架构来看，对象型 CSO 将来还会在 SGC 中获得非常具体的具身表达：现实中的对象会带有位置、属性、可信度和可行动性。但在本章我们暂时停留于本体层，只确认：\textbf{一个智能系统需要能够形成跨时间可追踪、可以参与关系并且能够被后续认知操作的对象结构。}
+
+
+\section{关系型 CSO：智能并不主要存在于对象之中}
+
+如果说对象型 CSO 是智能认识世界的第一个切分，那么真正产生认知结构的往往不是对象本身，而是对象之间的关系。三个孤立对象：
+
+\[
+A,\quad B,\quad C
+\]
+
+可以具有很低的认知负载；但一旦形成：
+
+\[
+A>B,
+\qquad
+B>C,
+\qquad
+C>A,
+\]
+
+系统立即面对一个需要整体处理的冲突结构。
+
+因此，我们可以说：
+
+\[
+\boxed{
+\text{对象提供认知节点，关系产生认知结构。}
+}
+\]
+
+定义一个一般关系 CSO：
+
+\[
+C_R
+=
+R(C_{i_1},C_{i_2},\ldots,C_{i_k}),
+\]
+
+其中 \(R\) 是一个 \(k\) 元关系。最简单的是二元关系：
+
+\[
+R:C_i\times C_j\rightarrow \mathcal V_R.
+\]
+
+例如：
+
+\[
+Above(A,B),
+\]
+
+\[
+Owns(Person,Object),
+\]
+
+\[
+Depends(Task_2,Task_1).
+\]
+
+关系本身必须被视为 CSO，而不能只把它理解成对象之间的一条无意义连线。原因在于，很多认知行为直接针对关系本身发生。例如我们可能记得“甲信任乙”，却忘记导致这种信任的全部历史细节；系统也可能修改“依赖关系”而不修改参与对象。
+
+于是：
+
+\[
+\boxed{
+Relation
+\in
+\mathfrak C
+}
+\]
+
+而不是：
+
+\[
+Relation
+\notin
+\mathfrak C.
+\]
+
+这一判断会在后续理论中发挥巨大作用，因为所谓认知结构迁移，很多时候迁移的并不是对象本身，而是关系模式。例如一个 Agent 学会“在某种条件下，把 A 类对象与 B 类工具建立作用关系”，真正沉降到长期结构中的可能就是：
+
+\[
+R_{\mathrm{use}}
+(
+Class_A,
+Tool_B
+).
+\]
+
+关系还具有阶数。我们可以有一阶关系：
+
+\[
+R_1(A,B),
+\]
+
+也可以形成对关系的关系：
+
+\[
+R_2
+\left(
+R_1(A,B),
+C
+\right).
+\]
+
+例如：
+
+“我相信甲与乙存在合作关系。”
+
+其中“甲与乙合作”首先是一个关系 CSO，而“我相信这个关系”又形成了第二层结构。于是智能很快进入递归结构空间。
+
+这使 CSO 网络天然具有高阶性质。用普通图：
+
+\[
+\mathcal G_C=(V,E)
+\]
+
+有时已经不够，需要考虑超图或者关系节点化表示。更一般地，可以写：
+
+\[
+\mathcal H_C
+=
+(V_C,\mathcal E_C),
+\]
+
+其中：
+
+\[
+e_k
+\subseteq
+V_C
+\]
+
+可以连接多个 CSO。
+
+这与本书早期“一个节点可以同时属于多个闭环”的思想高度一致：认知世界不是树，而是一张高阶耦合网络。
+
+关系还存在不同语义类型。最少可以区分：
+
+\[
+\mathcal R
+=
+\mathcal R_{spatial}
+\cup
+\mathcal R_{temporal}
+\cup
+\mathcal R_{causal}
+\cup
+\mathcal R_{social}
+\cup
+\mathcal R_{logical}
+\cup
+\mathcal R_{functional}.
+\]
+
+空间关系回答“在哪里”，时序关系回答“先后”，因果关系回答“为何变化”，社会关系回答“主体之间怎样关联”，逻辑关系回答“哪些命题能够同时成立”，功能关系则回答“谁对谁产生何种作用”。
+
+从认知有限性的角度看，关系型 CSO 还将直接成为后续工作记忆容量理论的重要基础。工作记忆并不是因为装不下字符才有限，而是因为在有限资源下同时维持大量高阶依赖关系会迅速增加协调负担。因此后续我们会把工作记忆有效负载更多理解为：
+
+\[
+C_h
+\sim
+F(
+|V_h|,
+|E_h|,
+Order(E_h),
+Coupling(E_h)
+),
+\]
+
+而不是只用 Token 数量描述。
+
+在外部理论上，关系型 CSO 与 Knowledge Graph、Relational Learning、Graphical Models、Relational Reasoning 有紧密联系。但本书强调的区别仍然在于：关系不仅是知识库中的静态边，而是智能运行时可以成为注意对象、被预测、被否定、被重构甚至被赋予价值的认知实体。因此，我们把关系从“数据结构中的连接”提升为认知本体本身的一部分。
+
+
+\section{目标型 CSO：未来结构如何进入当前认知}
+
+到目前为止，对象型 CSO 和关系型 CSO 主要描述“世界当前是什么样”。但智能与普通被动物理系统之间一个极其重要的差别在于：智能系统不仅被当前状态推动，还会被一个尚未实现的结构约束。
+
+这就是目标。
+
+我们将目标定义为一种特殊 CSO：
+
+\[
+\boxed{
+C_G
+=
+GoalStructure
+}
+\]
+
+它描述的不是当前已经成立的世界结构，而是智能体希望未来达到或维持的结构条件。
+
+设当前世界状态为
+
+\[
+x_t,
+\]
+
+则传统动力系统通常写成：
+
+\[
+x_{t+1}=F(x_t).
+\]
+
+而一旦目标参与其中：
+
+\[
+u_t
+=
+\pi(x_t,C_G),
+\]
+
+于是：
+
+\[
+x_{t+1}
+=
+F(x_t,u_t).
+\]
+
+目标之所以必须被视为 CSO，是因为它不是一个简单标量 reward。一个复杂目标通常具有内部结构，例如：
+
+\[
+C_G
+=
+\{
+g_1,
+g_2,
+\ldots,
+g_n,
+R_G,
+Priority_G,
+Termination_G
+\}.
+\]
+
+也就是说，目标可能包含多个子目标、依赖关系、优先级、完成条件和禁止条件。
+
+例如“建造一所房子”并不能被合理压缩为一个简单奖励数字。Agent 必须形成：
+
+\[
+Foundation
+\rightarrow
+Structure
+\rightarrow
+Roof
+\rightarrow
+Utilities
+\]
+
+等结构依赖；还需要同时维护安全、材料、时间、环境等约束。因此：
+
+\[
+\boxed{
+Goal
+\neq
+ScalarReward.
+}
+\]
+
+奖励可以参与评价目标，但目标本身是一个结构对象。
+
+更进一步，目标型 CSO 具有一种特殊的时间方向：它把未来可能结构引入现在。可以表示为：
+
+\[
+C_G(t)
+=
+\hat C(t+\Delta),
+\]
+
+其中 \(\hat C\) 并不是未来真实状态，而是当前系统内部存在的未来结构表示。
+
+于是所谓“未来影响现在”，真正的因果链并不是未来状态直接反向作用，而是：
+
+\[
+\boxed{
+RepresentationOfFuture
+\rightarrow
+PresentAction.
+}
+\]
+
+这一点将在后面我们讨论 Agent-CSO、DGA 和功能自反性时再次出现。此处需要首先确认：\textbf{未来结构的表示本身，就是当前真实存在的认知结构。}
+
+因此目标 CSO 还可以定义一个误差：
+
+\[
+e_G(t)
+=
+d
+\left(
+C_{\mathrm{current}}(t),
+C_G
+\right),
+\]
+
+并使控制过程朝着：
+
+\[
+e_G(t)\rightarrow 0
+\]
+
+演化。
+
+但现实中的智能目标往往不是一个精确点，而是一个可接受集合：
+
+\[
+\mathcal G
+\subseteq
+\mathcal X.
+\]
+
+于是更合理的表达是：
+
+\[
+C_G
+=
+\{
+x\mid
+\phi_G(x)=1
+\}.
+\]
+
+这与后续 AgentOS 中“高层给低层提供可行区域，而不是逐动作微操”的原则高度一致：
+
+\[
+\boxed{
+HigherLevelSetsFeasibleRegion.
+}
+\]
+
+此外，目标之间可能冲突：
+
+\[
+C_{G_1}
+\not\parallel
+C_{G_2}.
+\]
+
+此时需要建立目标关系 CSO：
+
+\[
+Conflict(C_{G_1},C_{G_2}),
+\]
+
+再通过更高层价值、自我或长期结构进行裁决。
+
+因此目标系统本质上不是一个优先级队列，而是一个：
+
+\[
+\boxed{
+GoalCSOGraph.
+}
+\]
+
+在外部理论中，目标 CSO 可以与 Goal-Oriented Planning、Control Theory、Utility Theory、Reinforcement Learning 以及 Hierarchical Task Networks 建立联系。但本书刻意把 Goal 从 reward 中抽离出来，因为长期 Agent 的目标具有语言、关系、伦理、自我和生命周期结构，远远超出标量强化信号可以直接表达的范围。
+
+
+\section{约束型 CSO：智能并非只知道要去哪里，也必须知道不能怎么走}
+
+目标告诉智能体“希望形成什么未来结构”，而约束则规定在形成这个未来结构的过程中，哪些状态、路径和操作不能被接受。
+
+因此我们定义：
+
+\[
+\boxed{
+C_K
+=
+ConstraintStructure.
+}
+\]
+
+如果状态空间为 \(\mathcal X\)，动作空间为 \(\mathcal U\)，那么一个约束可以写成：
+
+\[
+g_i(x,u)\leq 0,
+\]
+
+或：
+
+\[
+h_j(x,u)=0.
+\]
+
+多个约束共同形成可行域：
+
+\[
+\boxed{
+\mathcal F
+=
+\left\{
+(x,u)
+\mid
+g_i(x,u)\leq0,
+\;
+h_j(x,u)=0
+\right\}.
+}
+\]
+
+这意味着，智能过程不是简单地寻找：
+
+\[
+\arg\max_u Reward(u),
+\]
+
+而是在：
+
+\[
+u\in\mathcal F
+\]
+
+的条件下寻找某种可接受行为。
+
+从 CSO 观点来看，这一点非常重要，因为约束本身必须进入认知。Agent 不仅需要执行约束，而且常常需要知道：
+
+“为什么某条路径不可用”、
+
+“哪个约束导致当前计划失败”、
+
+“哪个约束可以被重新协商”、
+
+“哪个约束属于安全边界，绝不能修改”。
+
+因此，约束同样具有身份、作用范围、来源、优先级和可塑性：
+
+\[
+C_K
+=
+(
+Domain,
+Predicate,
+Authority,
+Priority,
+Plasticity
+).
+\]
+
+例如：
+
+\[
+C_{safety},
+\quad
+C_{physical},
+\quad
+C_{legal},
+\quad
+C_{resource},
+\quad
+C_{self}.
+\]
+
+其中物理约束来自现实世界，例如机器人无法穿墙；安全约束来自系统治理；法律约束来自社会结构；资源约束来自当前能量、算力和时间；自我约束则可能来自长期身份结构和价值体系。
+
+不同约束的 Authority 必须不同。后续 AgentOS 工程中我们会明确：
+
+\[
+\boxed{
+SafetyAuthority
+>
+OrdinaryCognitiveAuthority.
+}
+\]
+
+这一原则在本体层已经有基础：并不是所有 Constraint-CSO 都具有相同可修改性。
+
+我们可以定义：
+
+\[
+a(C_K)
+\]
+
+表示约束的权限等级；
+
+\[
+p(C_K)
+\]
+
+表示其可塑度。一个安全硬约束可能具有：
+
+\[
+a(C_K)\rightarrow 1,
+\qquad
+p(C_K)\rightarrow0.
+\]
+
+而普通任务偏好可能具有更高可塑性。
+
+目标与约束还形成一个重要二元关系：
+
+\[
+\boxed{
+Goal
+=
+WhereToGo,
+\qquad
+Constraint
+=
+WhereYouMayGo.
+}
+\]
+
+这将在后续多尺度控制理论中发展为：
+
+\[
+HigherLevel
+\rightarrow
+FeasibleRegion
+\rightarrow
+LowerLevelOptimization.
+\]
+
+另外，工作记忆有限容量理论也将在很大程度上受到约束型 CSO 数量和耦合方式影响。一个任务如果只有一个目标，却同时存在几十个相互依赖的约束，认知难度可能非常高。因此复杂度不应只看对象数量，还要看约束关系图：
+
+\[
+\mathcal G_K
+=
+(V_K,E_K).
+\]
+
+当多个约束形成互相矛盾的不可满足结构时：
+
+\[
+\bigcap_i \mathcal F_i
+=
+\varnothing,
+\]
+
+系统必须将这个结构作为新的冲突 CSO 提升到显式认知层，而不能继续在局部执行器中盲目搜索。
+
+这里与 Constraint Satisfaction Problem、Model Predictive Control、Formal Methods、Optimization Theory 都存在直接数学联系。但本书将其放入 CSO 本体，是为了强调约束不是算法外部的一组固定参数，而是 Agent 可以识别、解释、记忆、比较和部分重构的认知对象。
+
+
+\section{事件、因果与规则型 CSO：从静态世界走向变化世界}
+
+只有对象和关系，我们仍然得到的是一张接近静态的认知图。然而智能真正面对的是一个持续变化的世界。对象出现、消失，状态改变，行为产生后果，某些变化反复发生并逐渐形成规律。因此我们必须引入事件、因果和规则三类高度相关的结构。
+
+一个事件可以定义为：
+
+\[
+\boxed{
+C_E
+=
+Event(
+C_{before},
+\Delta,
+C_{after},
+\tau
+)
+}
+\]
+
+其中 \(C_{before}\) 表示事件发生之前的相关结构，\(\Delta\) 表示变化，\(C_{after}\) 表示变化后的结构，\(\tau\) 表示时间位置或持续区间。
+
+例如“杯子从桌上掉到地上”并不是简单的两个状态：
+
+\[
+On(Cup,Table),
+\]
+
+\[
+On(Cup,Floor),
+\]
+
+而是一个具有时间方向的结构：
+
+\[
+On(Cup,Table)
+\xrightarrow{Fall}
+On(Cup,Floor).
+\]
+
+因此：
+
+\[
+\boxed{
+Event
+=
+StructuredTransition.
+}
+\]
+
+而情景记忆 \(E\) 在后续章节中本质上就是大量事件 CSO 及其关系形成的轨迹块。
+
+进一步，如果系统发现某类事件具有稳定条件依赖，就会形成因果 CSO。可以写成：
+
+\[
+\boxed{
+C_{\mathrm{cause}}
+=
+Cause(A,B\mid Z),
+}
+\]
+
+表达在条件 \(Z\) 下，结构 \(A\) 的变化对 \(B\) 的变化具有稳定解释或干预意义。
+
+本书不在此处解决哲学上的全部因果问题，而采用一个面向智能控制的操作性标准：一个因果结构至少应该能够支持比纯相关关系更强的预测和干预。
+
+理想情况下：
+
+\[
+P(B\mid do(A),Z)
+\neq
+P(B\mid Z).
+\]
+
+这使因果 CSO 与行动天然相连。
+
+只有知道：
+
+\[
+A\rightarrow B,
+\]
+
+Agent 才能够为了改变 \(B\) 而主动操作 \(A\)。
+
+随着大量因果事件被积累，智能体还会抽象出规则：
+
+\[
+\boxed{
+C_R^{rule}
+=
+Condition
+\Rightarrow
+Transition/Action/Expectation.
+}
+\]
+
+例如：
+
+\[
+Rain
+\land
+Outdoor
+\Rightarrow
+TakeUmbrella.
+\]
+
+规则与单次事件不同。事件描述某一次发生；因果描述某类作用关系；规则则把反复出现的条件—结果结构压缩为可以跨情境复用的生成模式。
+
+于是可以形成：
+
+\[
+\boxed{
+Event
+\rightarrow
+CausalPattern
+\rightarrow
+Rule.
+}
+\]
+
+这与三相记忆后续的：
+
+\[
+h\rightarrow E\rightarrow\Theta
+\]
+
+高度一致。当前状态中的一次变化进入 \(E\) 成为事件轨迹；大量事件经过长期结构化以后，某些稳定关系进入 \(\Theta\) 成为生成规则。
+
+不过在本章我们必须保持本体与承载的分离。我们只说明 Event、Cause、Rule 都属于不同类型 CSO，而不提前讨论它们如何具体写入 \(E\) 或 \(\Theta\)。
+
+从数学角度，事件 CSO 接近 state transition，因果 CSO 可以借鉴 Structural Causal Models，规则 CSO 可以与 production rules、automata、program semantics、schema induction 建立联系。但是 CSO 理论强调三者并不是三个完全独立的数据类型，而是同一变化结构在不同抽象尺度上的表达：
+
+\[
+\boxed{
+SingleTransition
+\rightarrow
+StableDependency
+\rightarrow
+ReusableGenerativeStructure.
+}
+\]
+
+这已经隐约展示了后续结构迁移理论的一个核心方向：智能会不断把昂贵的具体事件处理压缩为更加稳定、更加泛化的生成结构。
+
+
+\section{未来可能性 CSO：预测、计划与反事实世界}
+
+一个持续智能系统不能只表示实际发生过的世界。它必须形成大量\textbf{尚未发生、甚至永远不会发生}的结构。预测、计划、假设、反事实和想象都属于这一类。
+
+设当前世界结构为：
+
+\[
+C_t.
+\]
+
+系统可以形成未来候选结构：
+
+\[
+\hat C_{t+\Delta}^{(1)},
+\hat C_{t+\Delta}^{(2)},
+\ldots,
+\hat C_{t+\Delta}^{(n)}.
+\]
+
+这些结构并不是现实，但它们在当前认知系统中是真实存在的 CSO。
+
+因此定义未来可能性空间：
+
+\[
+\boxed{
+\mathcal P_t
+=
+\left\{
+C^{(k)}_{future}
+\right\}_{k=1}^{N}.
+}
+\]
+
+若赋予概率，则：
+
+\[
+P
+\left(
+C_{future}^{(k)}
+\mid
+C_{\leq t}
+\right).
+\]
+
+此时我们可以区分至少四类未来结构。
+
+第一类是预测 CSO：
+
+\[
+C_{pred},
+\]
+
+表示系统认为现实可能自然演化到的结构。
+
+第二类是计划 CSO：
+
+\[
+C_{plan},
+\]
+
+它不是单一未来状态，而是一系列行动—状态转换：
+
+\[
+C_t
+\xrightarrow{a_1}
+C_1
+\xrightarrow{a_2}
+C_2
+\cdots
+\xrightarrow{a_n}
+C_G.
+\]
+
+第三类是假设 CSO：
+
+\[
+C_{hyp},
+\]
+
+用于暂时解释当前世界，但尚未被充分证实。
+
+第四类是反事实 CSO：
+
+\[
+C_{cf},
+\]
+
+表示：
+
+\[
+WhatWouldHaveHappenedIf
+(
+A'
+).
+\]
+
+例如：
+
+“如果我刚才没有执行这个动作，结果会怎样？”
+
+反事实结构对于高级智能尤其重要，因为它让系统不仅从实际轨迹学习，还能够比较未被执行的可能轨迹。设实际选择为：
+
+\[
+a_t,
+\]
+
+系统还可以考虑：
+
+\[
+a_t'\neq a_t,
+\]
+
+并构造：
+
+\[
+\hat C_{future}(a_t').
+\]
+
+于是评价：
+
+\[
+V
+\left(
+\hat C_{future}(a_t)
+\right)
+-
+V
+\left(
+\hat C_{future}(a_t')
+\right).
+\]
+
+这构成后续递归自主性、反思和自我培育的重要基础。
+
+未来 CSO 的存在还使智能中的时间结构发生一个非常重要的变化。普通动力系统只有：
+
+\[
+Past
+\rightarrow
+Present
+\rightarrow
+Future.
+\]
+
+而智能系统具有：
+
+\[
+Past
+\rightarrow
+Present
+\rightarrow
+RepresentationOfFuture
+\rightarrow
+PresentAction
+\rightarrow
+Future.
+\]
+
+因此：
+
+\[
+\boxed{
+\text{未来本身没有反向作用现在；
+未来的内部结构表示能够作用现在。}
+}
+\]
+
+这是全书必须反复保持的理论边界。
+
+未来可能性 CSO 还为“想象”提供了一个去神秘化的定义。想象可以理解为在现实观测约束较弱时，对内部生成结构进行采样，形成暂时未被现实确认的 CSO：
+
+\[
+C_{imagined}
+\sim
+P_{\Theta}
+(C\mid Context).
+\]
+
+这与后面结构记忆 \(\Theta\) 的生成性质密切相关。
+
+外部理论上，这里可以借鉴 Bayesian prediction、model-based reinforcement learning、planning、counterfactual inference、predictive processing 和 generative models。但 CSO 理论将这些不同机制统一成一个更加基础的问题：\textbf{智能系统如何让“不存在于当前现实中的结构”获得足够稳定的内部存在，使其能够参与当前决策。}
+
+
+\section{Self-CSO：当认知结构把自身也纳入认知世界}
+
+当一个系统能够形成外部对象、关系、事件、因果和未来可能性以后，我们仍然没有得到完整的主体。真正关键的一步发生在系统把“自己”也纳入认知世界。
+
+因此定义：
+
+\[
+\boxed{
+C_{self}
+\in
+\mathfrak C.
+}
+\]
+
+Self-CSO 不是指一个写着“我”的 Token，也不是一条固定 persona 描述，而是关于当前主体自身状态、能力、历史、关系、边界和连续性的结构集合。
+
+最小 Self-CSO 可以写为：
+
+\[
+C_{self}
+=
+(
+Identity,
+State,
+Capability,
+Boundary,
+History,
+Relation,
+Expectation
+).
+\]
+
+例如：
+
+\[
+IAmAt(Location),
+\]
+
+\[
+IHaveCapability(C),
+\]
+
+\[
+IAmResponsibleFor(Task),
+\]
+
+\[
+IPreviouslyExperienced(E),
+\]
+
+都属于不同维度的 Self-CSO。
+
+一个最简单的世界模型可能只有：
+
+\[
+WorldModel.
+\]
+
+而真正主体化的内部世界至少需要：
+
+\[
+\boxed{
+WorldModel
++
+SelfInWorldModel.
+}
+\]
+
+即：
+
+\[
+C_{world}
+\supset
+C_{self}.
+\]
+
+这一点以后会在 SGC 中发展成：
+
+\[
+Body\in SGC,
+\]
+
+但其本体基础已经在这里出现：Agent 不是一个观察世界的无位置摄像头，它必须把自己作为世界关系网络中的一个对象。
+
+Self-CSO 还具有递归性质。系统不仅可以表示：
+
+\[
+C_{self},
+\]
+
+还可以形成：
+
+\[
+Belief(C_{self}),
+\]
+
+甚至：
+
+\[
+Evaluation
+(
+Belief(C_{self})
+).
+\]
+
+于是：
+
+\[
+C_{self}^{(0)}
+\rightarrow
+C_{self}^{(1)}
+\rightarrow
+C_{self}^{(2)}
+\]
+
+形成元认知递归。
+
+但这里必须保持重要限制：Self-CSO 并不等于后续的长期自我结构 \(\Psi\)。Self-CSO 是本体类型，可以描述“关于自己的某个结构”；\(\Psi\) 则是 Agent 生命周期中大量 Self-CSO、价值关系与经历解释长期沉降后形成的慢约束场。
+
+因此：
+
+\[
+\boxed{
+SelfCSO
+\neq
+\Psi.
+}
+\]
+
+更准确地：
+
+\[
+\Psi
+=
+\mathcal F
+\left(
+\{C_{self}^{(i)}\}_{history},
+E,
+\Theta,
+Value
+\right).
+\]
+
+也就是说，Self-CSO 为自我提供基本认知对象，\(\Psi\) 则是这些结构长期组织之后形成的更高阶生命周期变量。
+
+同样，Self-CSO 也不自动意味着现象意识。一个系统可以具备丰富的自状态表示和自我预测，却仍然不能由此证明它具有主观体验。本书始终坚持：
+
+\[
+\boxed{
+FunctionalSelfRepresentation
+\not\Rightarrow
+PhenomenalConsciousness.
+}
+\]
+
+这一科学边界非常重要。
+
+但是，从功能智能角度看，一旦 Self-CSO 出现，系统就获得了一种重要的新能力：
+
+\[
+\boxed{
+World
+\rightarrow
+WorldIncludingSelf.
+}
+\]
+
+于是目标可以从：
+
+“让物体移动到那里”
+
+升级为：
+
+“让我能够完成这件事”；
+
+预测可以从：
+
+“环境会发生什么”
+
+升级为：
+
+“我的行动将怎样改变环境以及未来的我”。
+
+这为后续 SPC、自我连续、培育工程和递归自主性奠定了本体基础。
+
+外部理论中，Self-Model Theory、metacognition、body schema、self-schema、narrative identity 等都可以提供参考。但本章刻意不把 Self 归约为任何一个脑区、一个模块或者一种叙事，而首先确认：\textbf{一个成熟智能体的认知本体中，必须存在指向自身的结构对象，并允许这些结构参与与外部 CSO 相同的关系网络。}
+
+
+\section{价值型 CSO：什么值得被保留、接近、避免与改变}
+
+如果一个 Agent 只有对象、关系、事件、预测和目标，它仍然缺少一个更深的问题：为什么这个目标值得追求？为什么有些结果应该避免？为什么两个同样可行的未来，系统会稳定偏向其中一个？
+
+因此，我们需要把价值关系本身纳入 CSO 本体。
+
+定义：
+
+\[
+\boxed{
+C_V
+=
+ValueStructure.
+}
+\]
+
+价值 CSO 不应被简单理解成 reward scalar。一个标量：
+
+\[
+r_t\in\mathbb R
+\]
+
+可以表达局部评价强度，却无法完整表示：
+
+“什么被评价”、
+
+“依据什么标准评价”、
+
+“对于谁”、
+
+“在什么时间尺度上”、
+
+“与哪些更高价值冲突”。
+
+因此，一个较完整的价值 CSO 可以写成：
+
+\[
+C_V
+=
+(
+Target,
+Criterion,
+Polarity,
+Intensity,
+Timescale,
+Authority
+).
+\]
+
+例如：
+
+\[
+Value(
+Safety,
+Positive,
+High
+),
+\]
+
+\[
+Value(
+ResourceWaste,
+Negative
+),
+\]
+
+\[
+Value(
+IdentityConsistency,
+Positive,
+SlowTimescale
+).
+\]
+
+价值 CSO 可以作用于对象：
+
+\[
+V(C_O),
+\]
+
+作用于事件：
+
+\[
+V(C_E),
+\]
+
+作用于未来：
+
+\[
+V(C_{future}),
+\]
+
+甚至作用于自身结构：
+
+\[
+V(C_{self}).
+\]
+
+因此价值网络实际上形成：
+
+\[
+\boxed{
+\mathcal G_V
+\subseteq
+\mathcal G_C.
+}
+\]
+
+有了价值 CSO，目标生成才具有来源。例如：
+
+\[
+C_V
++
+C_{world}
+\rightarrow
+C_G.
+\]
+
+如果系统认为某种未来结构高价值，就可能生成对应目标；如果某种状态强负价值，则产生回避目标或硬约束。
+
+因此：
+
+\[
+\boxed{
+Value
+\rightarrow
+GoalPreference
+\rightarrow
+ActionSelection.
+}
+\]
+
+不过价值不是固定不变的。短期评价可能发生变化，而更慢、更稳定的价值关系未来会参与 \(\Psi\) 和 DGA/\(\Omega\) 的形成。
+
+所以：
+
+\[
+C_V(t)
+\]
+
+本身是 CSO，而：
+
+\[
+\Psi,\Omega
+\]
+
+则是大量价值关系在更慢时间尺度上的结构组织。
+
+这一区分非常重要：
+
+\[
+\boxed{
+ValueCSO
+\neq
+\Psi
+\neq
+\Omega.
+}
+\]
+
+Value-CSO 是局部、具体、可以针对某个对象或事件的评价结构；
+
+\[
+\Psi
+\]
+
+描述的是相对稳定的“我是谁”以及长期自我关系；
+
+\[
+\Omega
+\]
+
+进一步描述“我倾向于成为什么”。
+
+因此，从局部价值到生命周期方向，可以形成：
+
+\[
+C_V
+\rightarrow
+Goal
+\rightarrow
+Experience
+\rightarrow
+\Psi
+\rightarrow
+\Omega.
+\]
+
+价值 CSO 还具有冲突结构。例如：
+
+\[
+V_1=Safety,
+\]
+
+\[
+V_2=Speed.
+\]
+
+在某些场景中：
+
+\[
+Conflict(V_1,V_2).
+\]
+
+此时智能系统必须处理价值之间的关系，而不能简单把两个 reward 相加。某些价值具有 lexical priority，某些价值可以进行连续权衡。
+
+因此价值体系更准确地应该表示为：
+
+\[
+\mathcal V
+=
+(V_V,E_V,\preceq_V),
+\]
+
+其中 \(\preceq_V\) 描述优先级或支配关系。
+
+这与 Utility Theory、Multi-objective Optimization、Preference Learning、Value Alignment 等领域相关。但 CSO 理论特别强调：价值不仅是控制器之外预先给定的目标函数，而是可以被智能体表示、讨论、记忆、冲突检测和长期重解释的认知结构。也正是这一点，未来才可能讨论真正的价值连续性和身份连续性，而不仅是 reward engineering。
+
+
+\section{CSO 与语义本体：从结构集合到认知世界}
+
+到这里，我们已经得到对象、关系、目标、约束、事件、因果、规则、未来、自我与价值等一系列 CSO。最后必须回答一个问题：这些结构只是一个杂乱集合，还是能够共同构成一个统一认知世界？
+
+我们的回答是后者。
+
+设所有当前可能存在的认知结构集合为：
+
+\[
+V_C
+=
+\{
+C_1,C_2,\ldots,C_N
+\}.
+\]
+
+这些 CSO 之间形成不同类型关系：
+
+\[
+E_C
+=
+E_{semantic}
+\cup
+E_{spatial}
+\cup
+E_{temporal}
+\cup
+E_{causal}
+\cup
+E_{goal}
+\cup
+E_{constraint}
+\cup
+E_{value}
+\cup
+E_{self}.
+\]
+
+于是得到：
+
+\[
+\boxed{
+\mathcal G_C
+=
+(V_C,E_C).
+}
+\]
+
+这就是本书后续将反复使用的 CSO Cognitive Graph。
+
+但我们应当立即指出：这张图并不意味着整个认知世界在某个数据库里以显式图结构完整存储。它是本体与数学描述。实际实现可以分布在参数、latent、工作记忆、数据库、程序、身体状态和外部环境中。下一章的 Agent-CSO 正是为了讨论这种“本体结构”与“具体承载结构”的区别。
+
+因此：
+
+\[
+\boxed{
+\mathcal G_C
+\neq
+PhysicalMemoryGraph.
+}
+\]
+
+它表示的是：
+
+\[
+\boxed{
+\text{the structure that cognition is about},
+}
+\]
+
+而不是：
+
+\[
+\boxed{
+\text{the exact data structure used to store it}.
+}
+\]
+
+这一点可以视为全书最重要的本体分层之一。
+
+为了进一步数学化，我们可以给 CSO 网络引入类型映射：
+
+\[
+\tau_C:
+V_C
+\rightarrow
+\mathcal T_C,
+\]
+
+其中：
+
+\[
+\mathcal T_C
+=
+\{
+Object,
+Relation,
+Event,
+Goal,
+Constraint,
+Rule,
+Prediction,
+Self,
+Value,
+\ldots
+\}.
+\]
+
+再定义关系类型映射：
+
+\[
+\tau_E:
+E_C
+\rightarrow
+\mathcal T_E.
+\]
+
+于是认知本体可以表示为：
+
+\[
+\boxed{
+\mathfrak O_C
+=
+(
+V_C,
+E_C,
+\tau_C,
+\tau_E,
+\mathcal A_C
+)
+}
+\]
+
+其中 \(\mathcal A_C\) 表示允许的结构组合、约束和操作规则。
+
+例如我们可能规定：
+
+\[
+Goal
+\xrightarrow{targets}
+Object,
+\]
+
+\[
+Constraint
+\xrightarrow{restricts}
+Goal,
+\]
+
+\[
+Event
+\xrightarrow{changes}
+ObjectState,
+\]
+
+\[
+Value
+\xrightarrow{evaluates}
+Goal,
+\]
+
+\[
+Self
+\xrightarrow{participatesIn}
+Event.
+\]
+
+这样，本体不仅告诉我们有哪些东西，还告诉我们“哪些东西能够以什么方式连接”。
+
+这与 ontology engineering 中的 type system、schema 和 relation constraint 有相似之处，但本书还要进一步强调动态性：
+
+\[
+\mathfrak O_C(t).
+\]
+
+智能体的有效认知本体并不是永久固定的。随着学习，新的 CSO 类型或新的结构组合可能被形成；旧结构可能被抽象、合并或失活。
+
+因此：
+
+\[
+\boxed{
+CognitiveOntology
+=
+DynamicStructuredSpace.
+}
+\]
+
+这里尤其需要区分“语义本体”与“语言词典”。一个新 CSO 完全可能在尚未获得名字以前已经存在。比如一个机器人经过长期行动发现“某种身体姿态下施加某种力能够稳定通过狭窄区域”，这一结构最初可能没有自然语言标签，但它已经具有：
+
+输入条件；
+
+内部关系；
+
+预测后果；
+
+可重复行动价值。
+
+因此它已经是 CSO。
+
+所以：
+
+\[
+\boxed{
+SemanticStructure
+\neq
+NaturalLanguageSymbol.
+}
+\]
+
+语言是一种非常强大的 CSO 外显接口，但不是 CSO 存在的必要条件。
+
+同样，Embedding 也不能等同于 CSO。Embedding 是一种表示坐标：
+
+\[
+\mathbf z_i\in\mathbb R^d,
+\]
+
+而 CSO 是这个向量可能承载的结构对象。
+
+同一个 CSO：
+
+\[
+C
+\]
+
+可以在两个系统中分别映射为：
+
+\[
+\mathbf z_A(C)
+\]
+
+和：
+
+\[
+\mathbf z_B(C),
+\]
+
+即使：
+
+\[
+\mathbf z_A(C)
+\neq
+\mathbf z_B(C).
+\]
+
+这也为下一章的 Agent-CSO 埋下接口。
+
+从外部理论依赖看，本章与 Ontology Engineering、Knowledge Representation、Knowledge Graph、Frame Semantics、Schema Theory、Object-Centric Representation、Relational Learning 等具有直接联系。但是 CSO 理论试图进一步提供一种跨实现、跨模态、跨时间尺度的本体语言，使我们能够讨论：
+
+\[
+\boxed{
+\text{什么结构存在}
+}
+\]
+
+而不立即陷入：
+
+\[
+\boxed{
+\text{它被哪个模型以什么 Tensor 表示}
+}
+\]
+
+的问题。
+
+
+\section{本章收束：从信息处理器到认知结构系统}
+
+现在我们可以重新回答本章开头的问题：智能究竟在处理什么？
+
+如果只停留于实现层，我们会回答：
+
+Token、Tensor、Activation、Parameter。
+
+如果只停留于传统信息论，我们可能回答：
+
+信息。
+
+如果停留于知识工程，我们可能回答：
+
+符号、概念或者知识图。
+
+但本书需要一个更加一般的答案：
+
+\[
+\boxed{
+\textbf{
+智能在操作认知结构对象及其关系。
+}
+}
+\]
+
+因此可以把本章的核心定义写成：
+
+\[
+\boxed{
+\textbf{
+CSO（Cognitive Structure Object）是在给定认知尺度和问题域中，能够被智能过程区分、关联、预测、评价、记忆、约束、变换或作用，并能够参与后续认知动力学的结构性认知单位。
+}
+}
+\]
+
+一个一般 CSO 可以具有：
+
+\[
+Identity,
+Attributes,
+Relations,
+Dynamics,
+Actionability.
+\]
+
+而 CSO 空间可以包含：
+
+\[
+\begin{aligned}
+&Object,\\
+&Relation,\\
+&Event,\\
+&Cause,\\
+&Rule,\\
+&Goal,\\
+&Constraint,\\
+&Prediction,\\
+&Counterfactual,\\
+&Self,\\
+&Value,\\
+&SkillStructure,\ldots
+\end{aligned}
+\]
+
+它们共同形成：
+
+\[
+\boxed{
+\mathcal G_C
+=
+(V_C,E_C),
+}
+\]
+
+即认知结构图。
+
+由此，本书前面的智能动力学开始获得一个真正的“内容层”。此前我们说：
+
+\[
+\text{智能是多时空尺度上的多层嵌套闭环过程},
+\]
+
+现在可以进一步问：
+
+这些闭环到底在传播什么？
+
+答案不再是模糊的“复杂度”，而首先是：
+
+\[
+\boxed{
+CSO.
+}
+\]
+
+此前我们说：
+
+\[
+SlowStructureShapesFastDynamics,
+\]
+
+现在可以更加具体地理解成：
+
+较慢尺度上稳定存在的 CSO 结构，正在约束当前快速激活的 CSO。
+
+此前我们说：
+
+\[
+PersistentFastResidualShapesSlowStructure,
+\]
+
+以后则可以重新表达为：
+
+快速活动中持续无法解决的结构关系，会推动新的 CSO 形成、重组或向其他承载位置迁移。
+
+因此 CSO 是本书由“动力学外壳”进入“认知本体内部”的转折点。
+
+不过，本章仍然故意留下了一个未解决的问题。
+
+我们现在知道：
+
+\[
+C\in\mathfrak C
+\]
+
+可以作为认知本体存在。
+
+但一个机器人、一个人类、一个数字 Agent 或一个未来异构智能系统，显然不会以同一种内部形式承载 \(C\)。
+
+同一个：
+
+\[
+C_{\mathrm{door}}
+\]
+
+在人脑中可能由神经网络活动实现，在机器人中可能由对象图、latent state、数据库和控制模型共同实现，在语言 Agent 中又可能主要以参数结构、上下文状态和外部记忆组合存在。
+
+于是出现下一步不可避免的问题：
+
+\[
+\boxed{
+\text{同一个 CSO，在一个具体 Agent 中究竟以什么形式存在？}
+}
+\]
+
+这要求我们把：
+
+\[
+\boxed{
+CSO
+}
+\]
+
+与：
+
+\[
+\boxed{
+Agent\text{-}CSO
+}
+\]
+
+正式分离。
+
+也正因此，下一章将从本体层进入实现层：
+
+\[
+\boxed{
+CSO
+\xrightarrow{\pi_A}
+AgentCSO_A.
+}
+\]
+
+到那时，我们才能进一步讨论一个认知结构如何获得：
+
+表示 \(R\)；
+
+功能位置 \(F\)；
+
+时间尺度 \(\tau\)；
+
+内部或外部承载边界 \(B\)；
+
+以及激活状态 \(S\)。
+
+而这一分离将最终使学习获得一个新的定义：
+
+\[
+\boxed{
+Learning
+=
+ChangeOfCognitiveStructureRealizationAndPlacement.
+}
+\]
+
+本章因此不是一个孤立的“知识表示章节”，而是整个后续理论的本体入口。它使我们可以从这一刻开始，不再把智能描述成一个模糊的“信息处理系统”，而把它严格地看成：
+
+\[
+\boxed{
+\textbf{
+一个持续生成、维持、连接、变换并使用认知结构的多尺度动力系统。
+}
+}
+\]
+
+这正是下一章 Agent-CSO 理论、随后 CSO 迁移理论、功能拓扑理论以及最终 AgentOS 工程实现能够建立起来的基础。

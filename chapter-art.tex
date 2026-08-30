@@ -1,0 +1,134 @@
+% 逐章人工选图映射。相邻章节仅在概念连续时复用同一原图。
+\newcommand{\SourceArt}[2]{\begin{figure}[htbp]\centering\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/source/#1}\caption{#2（取自《比较智能差异》原始图谱）}\end{figure}}
+\newcommand{\AigcArt}[2]{\begin{figure}[htbp]\centering\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/aigc/#1}\caption{#2（AIGC 无文字概念插图）}\end{figure}}
+\newcommand{\ChapterAigcArt}[2]{\begin{figure}[htbp]\centering\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/chapters/ch#1.png}\caption{#2（AIGC 章节概念插图）}\end{figure}}
+\newcommand{\ChapterReviewTable}{%
+\begin{table}[htbp]\centering\small
+\begin{tabularx}{.94\textwidth}{>{\bfseries}p{.18\textwidth}X>{\bfseries}p{.18\textwidth}X}
+\toprule
+观察对象 & 本章标题所指的结构或闭环 & 前置条件 & 仅使用前章已经定义的对象\\
+证据类型 & 原始讨论图、状态方程与现实残差 & 输出用途 & 供下一章扩展，不反向充当前提\\
+失效检查 & 删除、冻结、延迟或越权干预 & 科学边界 & 功能模型不自动推出意识或生物同一性\\
+\bottomrule
+\end{tabularx}
+\caption{本章阅读与验证检查表}
+\end{table}}
+
+\newcommand{\ChapterArt}[1]{%
+\ifcase#1\relax
+\or\ChapterAigcArt{001}{会话模型与持续主体的生命周期差异}
+\or\ChapterAigcArt{002}{有限观察窗口中的异速率智能}
+\or\ChapterAigcArt{003}{尺度、吞吐与闭环速度的结构制约}
+\or\ChapterAigcArt{004}{石头文明与闪电文明的非实时同步窗口}
+\or\ChapterAigcArt{005}{多尺度闭环的动力学同构}
+\or\ChapterAigcArt{006}{快慢循环组成的智能频谱}
+\or\SourceArt{217b26fd-5742-4003-9017-4ee93624e652.png}{集中度与拓扑可塑度构成的智能相图}
+\or\AigcArt{fractal-semantic-space.png}{低生成维原语展开为多样智能形态}
+\or\AigcArt{fractal-semantic-space.png}{跨载体语义关系与多尺度动力同构}
+\or\AigcArt{cso-functional-topology.png}{认知结构对象的关系图形态}
+\or\AigcArt{cso-functional-topology.png}{CSO 本体与 Agent-CSO 承载的分离}
+\or\SourceArt{31c5b1ae-1131-45af-8e53-f4930f13ebed.png}{复杂度宏观描述及其结构来源}
+\or\AigcArt{cso-functional-topology.png}{CSO 在表示、功能、尺度和载体间迁移}
+\or\AigcArt{cso-functional-topology.png}{功能节点、功能边与稳定拓扑凝聚}
+\or\AigcArt{cso-functional-topology.png}{CSO 图、功能图与多对多承载映射}
+\or\AigcArt{cso-functional-topology.png}{长期 CSO 流对功能拓扑的沉降作用}
+\or\AigcArt{cso-functional-topology.png}{结构压力、迟滞与最小必要重组}
+\or\SourceArt{Universe.png}{宇宙粗粒化结构与 Agent-CSO 的承载位置}
+\or\SourceArt{a736f3e1-99a1-4231-ab2f-a5395c651521.png}{World—Agent—World 的现实反馈闭环}
+\or\SourceArt{957f2571-8207-4c07-a258-880141a3a649.png}{结构自表示参与调节的功能自反}
+\or\AigcArt{civilization-reflexive-loop.png}{语言、科学、工程与文明自反闭环}
+\or\SourceArt{255e9e84-545b-4ce8-80e7-785e6dd4dae5.png}{固定拓扑 AgentOS 的最小工程框架}
+\or\SourceArt{73f5ae82-30f2-4aaf-8336-125f3717e1b2.png}{工作、情景与结构记忆的相变解释}
+\or\SourceArt{7e51752c-df88-4b80-bb99-cb4a438db709.png}{记忆相态与记忆功能的正交关系}
+\or\SourceArt{e99523f0-d602-4c59-9e49-32c781a2b6fd.png}{过去凝固、现在切面与未来生成空间}
+\or\SourceArt{e99523f0-d602-4c59-9e49-32c781a2b6fd.png}{自我慢变量贯穿三相记忆的投影}
+\or\SourceArt{631efe45-daf4-4eed-bc88-1551bcfee21b.png}{自我、目标偏好与 DGA 的层级关系}
+\or\SourceArt{e99523f0-d602-4c59-9e49-32c781a2b6fd.png}{生命周期方向与内部结构时间}
+\or\SourceArt{7e51752c-df88-4b80-bb99-cb4a438db709.png}{有限工作容量与记忆结构分工}
+\or\SourceArt{84ce42a8-3cdc-4e29-9c0d-edb85ba865ea.png}{h(t) 作为稀疏显式认知总线}
+\or\SourceArt{b3afe2c3-23be-4bc8-a975-8c85b188fd36.png}{SPC 对分布式内部状态的压缩观察}
+\or\SourceArt{34480439-c7e6-4d11-b1f7-bcc971dcde5d.png}{TCE 温度与控制强度的运行相图}
+\or\SourceArt{3873fad4-4390-42d3-bd89-061c5d50ec85.png}{SPC—TCE 观察器—控制器闭环}
+\or\SourceArt{34480439-c7e6-4d11-b1f7-bcc971dcde5d.png}{基态、心流、湍流与解体运行区域}
+\or\SourceArt{cd040d0d-50c5-4f03-8ec7-2b0bb870e97b.png}{AHC 多通道内稳态调制结构}
+\or\SourceArt{b3afe2c3-23be-4bc8-a975-8c85b188fd36.png}{SPC—AHC—TCE 内部体验功能闭环}
+\or\SourceArt{f990aab4-d3f5-4b14-ae44-70722767f6d7.png}{观察延迟、控制增益与稳定裕度}
+\or\SourceArt{31c5b1ae-1131-45af-8e53-f4930f13ebed.png}{复杂度分解、折叠和表示重构}
+\or\SourceArt{49f75aa6-386d-4f4c-9617-9eb9eccebddb.png}{任务、注意、记忆与工具的认知调度}
+\or\SourceArt{76ecae7a-2261-4cd5-8975-c744f742f795.png}{动态认知边界与准入分类}
+\or\SourceArt{f54b52f8-84fa-43c8-9ae3-3bf1bf0ef042.png}{认知结构向文件、工具和环境卸载}
+\or\SourceArt{31c5b1ae-1131-45af-8e53-f4930f13ebed.png}{认知复杂度治理的五类动作}
+\or\SourceArt{e0e1b9da-1839-4558-b182-ef36d7d3951c.png}{内部记忆、外部记忆与可调用的 Me}
+\or\SourceArt{85feefae-9943-4044-9ab6-b676eff794fc.png}{具身现实沉降与主动认知卸载}
+\or\SourceArt{a736f3e1-99a1-4231-ab2f-a5395c651521.png}{连续认知执行与离散治理事件}
+\or\SourceArt{631efe45-daf4-4eed-bc88-1551bcfee21b.png}{单一主体和异步任务闭环}
+\or\SourceArt{470eb32a-9ba3-4ed7-971e-8efc3b73d650.png}{AgentOS L0—L6 多层循环关系}
+\or\SourceArt{0f1d1d0a-9eec-4fe3-bece-b4784ac2e77c.png}{固定拓扑持续学习的统一闭环}
+\or\SourceArt{51c25b94-2c06-4f27-b054-86c2dce91b49.png}{Cognitive Kernel 与 Body Runtime 的完整主体}
+\or\SourceArt{85feefae-9943-4044-9ab6-b676eff794fc.png}{身体尺度迁移与认知卸载的区别}
+\or\SourceArt{51c25b94-2c06-4f27-b054-86c2dce91b49.png}{Kernel 与 Body Runtime 的状态空间分工}
+\or\SourceArt{d8f527b8-c34b-42ff-a76a-c57be23c40b4.png}{FBI 与系统软件接口层级}
+\or\SourceArt{968ae716-e9aa-4429-ae1b-412486fcdf76.png}{具身输入的来源—信息形态四象限}
+\or\SourceArt{e5ccb11e-da7e-404e-b183-6fba45862447.png}{Agent 记忆研究坐标与 SGC 结构轴}
+\or\SourceArt{fc6b6a0c-49b2-4f49-a743-ea25ba6078f0.png}{SGC 预测环、观察状态与行动现实}
+\or\SourceArt{e99523f0-d602-4c59-9e49-32c781a2b6fd.png}{现实信号对主体状态的连续影响场}
+\or\SourceArt{51c25b94-2c06-4f27-b054-86c2dce91b49.png}{SGC 内容几何与 FCS 作用几何的耦合}
+\or\SourceArt{25dcf80f-ae16-4428-9707-7f2afdc38259.png}{语义、调制与紧急安全三信号通道}
+\or\SourceArt{255e9e84-545b-4ce8-80e7-785e6dd4dae5.png}{BPCC 的局部预测控制位置}
+\or\SourceArt{64d0af22-1c1c-47ef-909c-a77b4ceb3268.png}{Kernel 全局预测与 BPCC 局部预测}
+\or\SourceArt{470eb32a-9ba3-4ed7-971e-8efc3b73d650.png}{异常残差上浮与稳定能力下沉}
+\or\SourceArt{f54b52f8-84fa-43c8-9ae3-3bf1bf0ef042.png}{技能编译、外部载体与重新认知路径}
+\or\SourceArt{fc6b6a0c-49b2-4f49-a743-ea25ba6078f0.png}{Observation、Prediction 与 Reality Authority}
+\or\SourceArt{25dcf80f-ae16-4428-9707-7f2afdc38259.png}{实时身体安全包络与权限旁路}
+\or\SourceArt{b964c6ed-e14e-49d0-8f56-2dd6faa8ba02.png}{KRA 的语义、时间、控制与学习耦合}
+\or\SourceArt{b964c6ed-e14e-49d0-8f56-2dd6faa8ba02.png}{功能锚点、契约包络与持续校准}
+\or\SourceArt{f990aab4-d3f5-4b14-ae44-70722767f6d7.png}{Kernel—KRA—BPCC 联合学习稳定性}
+\or\SourceArt{f77ddaae-b67c-4eab-a686-58ec6a08b1d8.png}{功能层级与时间层级的双轴架构}
+\or\SourceArt{d8f527b8-c34b-42ff-a76a-c57be23c40b4.png}{Linux、计算机 OS 与 AgentOS 的职责映射}
+\or\SourceArt{e849b018-cfe4-4254-a4db-db4dac6ab41a.png}{AgentOS Kernel 的组件与信号结构}
+\or\SourceArt{49f75aa6-386d-4f4c-9617-9eb9eccebddb.png}{Kernel—KRA—Body Runtime 的现实闭合数据流}
+\or\SourceArt{ae587e46-f8a9-424b-9ece-8bfe8c123793.png}{AgentOS 三条主线与两类基础设施}
+\or\SourceArt{51c25b94-2c06-4f27-b054-86c2dce91b49.png}{Body Runtime 的研发组件与接口关系}
+\or\SourceArt{e121b2a5-ee51-45ad-a71b-2516c64f80ad.png}{Agent Kernel 各层能力的递进路线}
+\or\SourceArt{f990aab4-d3f5-4b14-ae44-70722767f6d7.png}{连续—离散控制的稳定性研究面板}
+\or\SourceArt{baa6eb0e-30bc-44f6-bc56-540693b4797c.png}{AgentOS 技术演化六阶段路线}
+\or\SourceArt{edba88ea-55a7-499a-8ef1-eee847658ebe.png}{多身体环境中的现实闭环与进化搜索}
+\or\SourceArt{baa6eb0e-30bc-44f6-bc56-540693b4797c.png}{从数字身体到复杂具身产品的成熟次序}
+\or\SourceArt{c5a78935-c639-4b22-86df-b9d5d89468dc.png}{Companion Agent 的多维成熟度覆盖}
+\or\SourceArt{255e9e84-545b-4ce8-80e7-785e6dd4dae5.png}{推理硬件与身体快速控制硬件的层级}
+\or\SourceArt{d8f527b8-c34b-42ff-a76a-c57be23c40b4.png}{AgentOS 开放接口与系统软件基础}
+\or\SourceArt{e849b018-cfe4-4254-a4db-db4dac6ab41a.png}{开放规范、商业运行时与治理边界}
+\or\SourceArt{64d0af22-1c1c-47ef-909c-a77b4ceb3268.png}{从 AgentOS 产品到智能资源运行时}
+\or\SourceArt{ae587e46-f8a9-424b-9ece-8bfe8c123793.png}{控制、培育、心理三类生命周期工程}
+\or\SourceArt{f990aab4-d3f5-4b14-ae44-70722767f6d7.png}{控制工程面对的多尺度稳定性对象}
+\or\SourceArt{bdb6aff3-6a0d-446d-bcbb-4aae041f233c.png}{SPC Observer 的状态估计与校准路径}
+\or\SourceArt{cd040d0d-50c5-4f03-8ec7-2b0bb870e97b.png}{AHC 多通道时间常数与恢复动力学}
+\or\SourceArt{34480439-c7e6-4d11-b1f7-bcc971dcde5d.png}{TCE 控制量与运行相区域}
+\or\SourceArt{f990aab4-d3f5-4b14-ae44-70722767f6d7.png}{多回路耦合、相变与恢复区域}
+\or\SourceArt{25dcf80f-ae16-4428-9707-7f2afdc38259.png}{可修改集合、权限边界与安全治理}
+\or\SourceArt{c5a78935-c639-4b22-86df-b9d5d89468dc.png}{训练与生命周期培育的系统差异}
+\or\SourceArt{ae587e46-f8a9-424b-9ece-8bfe8c123793.png}{Agent 生命周期阶段与慢变量形成}
+\or\SourceArt{c5a78935-c639-4b22-86df-b9d5d89468dc.png}{经历多样性、难度、恢复与责任设计}
+\or\SourceArt{c5a78935-c639-4b22-86df-b9d5d89468dc.png}{能力、信任、权限与自治成长螺旋}
+\or\SourceArt{e99523f0-d602-4c59-9e49-32c781a2b6fd.png}{经验积累推动结构与自我跃迁}
+\or\SourceArt{ae587e46-f8a9-424b-9ece-8bfe8c123793.png}{选择对未来自身结构的递归因果贡献}
+\or\SourceArt{25dcf80f-ae16-4428-9707-7f2afdc38259.png}{培育过程中的权限、安全与慢变量保护}
+\or\SourceArt{bfeff7ae-3bbd-418d-a3c8-361e5fd9a0e9.png}{持续主体的内部记忆与异常来源}
+\or\SourceArt{bdb6aff3-6a0d-446d-bcbb-4aae041f233c.png}{经验回路、记忆巩固与自我解释三层诊断}
+\or\SourceArt{b3afe2c3-23be-4bc8-a975-8c85b188fd36.png}{SPC 偏差、延迟与过度监控异常}
+\or\SourceArt{cd040d0d-50c5-4f03-8ec7-2b0bb870e97b.png}{AHC 饱和、恢复和映射异常}
+\or\SourceArt{34480439-c7e6-4d11-b1f7-bcc971dcde5d.png}{TCE 增益与认知振荡异常}
+\or\SourceArt{73f5ae82-30f2-4aaf-8336-125f3717e1b2.png}{沿三相转换定位记忆异常}
+\or\SourceArt{e99523f0-d602-4c59-9e49-32c781a2b6fd.png}{自我解释回路与身份连续性风险}
+\or\SourceArt{631efe45-daf4-4eed-bc88-1551bcfee21b.png}{Self 与 DGA 失配及长期方向漂移}
+\or\SourceArt{f990aab4-d3f5-4b14-ae44-70722767f6d7.png}{从运行态到慢变量的最小侵入干预}
+\or\SourceArt{217b26fd-5742-4003-9017-4ee93624e652.png}{稳定、恢复、学习与身份连续的健康区域}
+\or\AigcArt{civilization-reflexive-loop.png}{角色、协议、制度和共享记忆形成的组织智能}
+\or\AigcArt{civilization-reflexive-loop.png}{无中央主体的文明慢尺度认知结构}
+\or\AigcArt{civilization-reflexive-loop.png}{AI 加速文明自描述、行动与现实校准}
+\or\SourceArt{Universe.png}{引力组织与表征驱动宏观结构的比较}
+\or\SourceArt{c404e8d8-cdd6-459e-8674-bc9164617c6f.png}{从维持、感知到自表示和自修改的结构阶梯}
+\or\SourceArt{957f2571-8207-4c07-a258-880141a3a649.png}{智能作为现实反馈下的自反结构过程}
+\or\SourceArt{0f1d1d0a-9eec-4fe3-bece-b4784ac2e77c.png}{从 AgentOS 实例抽象到智能动力学研究纲领}
+\fi
+\ChapterReviewTable}

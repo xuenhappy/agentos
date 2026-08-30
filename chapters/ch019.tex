@@ -1,0 +1,1379 @@
+\chapter{World--Agent--World：智能的双向结构闭环}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.92\textwidth}
+\textbf{【本章总体说明】}
+
+本章完成本书认识论部分的一次关键视角翻转。此前我们从智能的时空尺度、多频闭环、CSO、Agent-CSO、结构迁移与功能拓扑出发，主要是在回答一个问题：\emph{智能体内部究竟如何承载和组织认知结构？} 本章进一步指出，仅仅研究智能体内部是不充分的，因为智能体并不是位于宇宙之外、面对一个与自身无关的“客观世界”的观察者。任何实际智能体本身都是现实世界中的一个物理或数字结构，其内部 Agent-CSO 由现实作用形成，其行动又重新进入现实并改变后续能够被观察到的 CSO。因此，完整的智能过程必须写成
+\[
+\boxed{
+UniverseCSO
+\;\xrightarrow{\;Observation\;}\;
+AgentCSO
+\;\xrightarrow{\;InternalDynamics\;}\;
+AgentCSO'
+\;\xrightarrow{\;Action\;}\;
+UniverseCSO'
+}
+\]
+并继续通过新的观测形成下一轮循环。
+
+本章由此建立本书后续一切具身理论、Body Runtime、SGC、FCS、BPCC、KRA 与现实验证原则的认识论基础。其核心命题是：\textbf{智能不是对世界进行一次性表示，而是现实结构与内部认知结构通过观测--行动边界持续相互塑造的动力学过程。} 内部世界是现实在特定智能体中的选择性结构投影；行动则使内部形成的结构重新成为现实因果链的一部分。由此，学习不仅表现为 Agent 内部的参数变化或 CSO 迁移，还包括智能体主动改变环境、工具、身体以及未来观察条件的能力。
+
+需要特别声明，本章中的 ``World''、``Universe-CSO'' 与 ``Agent-CSO'' 属于本书提出的结构动力学抽象。它可以与控制论、POMDP、主动感知、具身认知、Enactivism、Active Inference 等既有理论形成联系，但不能把这些理论之间的相似性直接解释成本体同一。本章所建立的是一种面向持续人工智能体的统一结构语言，而不是宣称现有物理学或认知科学已经证明了本书全部命题。
+\end{minipage}
+}
+\end{center}
+
+
+\section{智能体不是宇宙之外的观察者}
+
+在开始讨论感知、世界模型与行动之前，我们首先需要清除一种长期存在于人工智能研究中的隐含假设，即把 ``Agent'' 与 ``World'' 想象成两个已经预先分离的对象：世界位于外部，智能体位于内部，智能体通过某种传感器读取世界，再根据内部计算向世界输出动作。如果仅仅把这种图式作为工程接口，它当然是有效的；但是如果把它提升为认识论本身，它就会产生一个严重问题：它似乎默认了一个站在现实之外观察现实的主体。真实情况恰恰相反。无论生物智能、机器人、数字 Agent，还是未来更复杂的 AgentOS，其物理实现、计算资源、身体状态、存储介质以及执行机构本身都属于现实世界的一部分。因此，我们首先有
+\[
+\boxed{
+A_t \subset U_t
+}
+\]
+其中 $U_t$ 表示时刻 $t$ 的现实世界状态，而 $A_t$ 是这一现实状态中的一个局部结构。这里的包含关系不是简单的集合论位置描述，而意味着 Agent 的任何内部状态最终都必须由现实中的某种载体实现。例如一个神经系统的内部表示由神经活动承载，一个数字 Agent 的 Agent-CSO 最终由内存、参数、磁盘状态和计算过程承载，而机器人关于 ``前方存在障碍物'' 的世界模型也必须体现为某种现实存在的计算状态。
+
+因此，一个更加严格的 Agent--World 系统不应写成彼此独立的
+\[
+A \quad \text{and} \quad U,
+\]
+而应写成一个耦合系统
+\[
+\mathfrak{W}(t)
+=
+\left[
+U(t),A(t),\mathcal{I}_{OA}(t)
+\right],
+\]
+其中 $\mathcal{I}_{OA}$ 是 Observation--Action Interface，即观测--行动耦合界面。Agent 并没有直接访问完整 $U(t)$ 的特权。它只能通过其物理位置、身体结构、传感器、注意机制、先验结构和当前任务，在现实的一部分结构上产生有限作用。由此可以把有效观测域定义为
+\[
+\Omega_A^{obs}(t)
+\subseteq
+\Omega_U(t),
+\]
+同时定义其有效行动域
+\[
+\Omega_A^{act}(t)
+\subseteq
+\Omega_U(t).
+\]
+一个 Agent 能够 ``知道'' 什么，在第一层面上受到 $\Omega_A^{obs}$ 约束；能够 ``改变'' 什么，则受到 $\Omega_A^{act}$ 约束。后面 Body Scale 理论所讨论的感知迁移能力、预测迁移能力和控制迁移能力，本质上都是在改变这两个集合的范围、分辨率和动力学带宽。
+
+这一认识使我们能够重新理解所谓 ``世界模型''。世界模型并不是宇宙在 Agent 内部的一份缩小副本，而是现实世界通过 Agent 的特定耦合边界，在内部产生的一个行动相关结构。我们可以写成
+\[
+W_A(t)
+=
+\Pi_A
+\left(
+U_{\leq t};
+B_A,
+\Theta_A,
+\Psi_A,
+G_A
+\right),
+\]
+其中 $\Pi_A$ 是 Agent 特定的结构投影算子，$B_A$ 表示身体和边界条件，$\Theta_A$ 表示长期生成结构，$\Psi_A$ 表示自我与价值慢变量，$G_A$ 表示当前目标集合。这个表达式的重要之处在于，内部世界并不是仅由外界决定的；同一个现实状态 $U$ 通过不同身体、不同历史、不同目标和不同结构记忆，会形成不同的 $W_A$。因此
+\[
+\Pi_A(U)\neq \Pi_B(U)
+\]
+完全可能成立，而这并不自动意味着其中一个 Agent ``错误''。真正需要检验的是这些内部结构是否能够在后续的预测--行动--现实验证闭环中维持稳定有效的功能对应关系。
+
+从控制论角度看，这里与部分可观测系统具有明显联系。POMDP 中的 Agent 不能直接获得环境真实状态 $s_t$，只能接收观察 $o_t$，并维持关于状态的 belief：
+\[
+b_t(s)
+=
+P(s_t=s\mid o_{\leq t},a_{<t}).
+\]
+但是本书进一步关心的是：长期 Agent 的 belief 并不只是一个瞬时概率分布，它会沉积到 $E$、$\Theta$、$\Psi$ 与更慢的结构之中，并逐步改变未来观测的选择方式和行动边界。因此，我们研究的不只是 ``在固定世界中估计隐藏状态''，而是
+\[
+\boxed{
+\text{Agent 的状态估计过程本身逐渐改变 Agent 与世界发生关系的方式。}
+}
+\]
+
+这也是本书与单纯输入--输出式智能观的重要分界。只要 Agent 被理解成现实内部的持续结构，那么每一次学习都不仅意味着内部状态改变，还意味着这个现实子系统未来参与现实因果链的方式发生了变化。后续我们会看到，工具、环境、身体、社会关系乃至组织制度，都可以因此进入广义认知体系。智能的边界不再由 ``神经网络参数到哪里结束'' 决定，而是由稳定的观测--行动闭环、控制权限和结构依赖关系共同定义。
+
+
+\section{Observation：从 Universe-CSO 到 Agent-CSO}
+
+在本书的 CSO 本体中，现实并不是以 ``原始 token'' 的形式存在。我们首先假设在某个给定尺度上，现实中存在能够形成稳定区分、关系和动力学作用的结构对象，将其记为
+\[
+C_i^U \in \mathcal{C}_U.
+\]
+这里的上标 $U$ 表示该结构属于 Reality/Universe 一侧。它可以是一张桌子、一辆车、一段道路关系、一次碰撞事件、某个社会关系，也可以是在更基础尺度上定义的物理结构。不同尺度下的 CSO 可以通过粗粒化关系连接：
+\[
+C_{k+1}
+=
+\Pi_{k+1,k}
+\left(
+C_k^1,\ldots,C_k^n
+\right).
+\]
+因此，所谓观测并不是把 ``现实对象'' 原样复制到 Agent 内部，而是现实 CSO 在 Agent 的观测界面、身体和内部生成结构作用下，形成对应的 Agent-CSO。
+
+我们可以把这一过程形式化为
+\[
+\boxed{
+\mathcal{O}_A:
+\mathcal{C}_U
+\times
+\mathcal{B}_A
+\times
+\mathcal{X}_A
+\longrightarrow
+\mathcal{C}_A
+}
+\]
+其中 $\mathcal{B}_A$ 表示 Agent 的身体和感知边界，$\mathcal{X}_A$ 表示其当前内部状态，$\mathcal{C}_A$ 表示 Agent-CSO 空间。于是对于现实结构 $C^U$，
+\[
+C_A
+=
+\mathcal{O}_A
+(C^U;B_A,X_A).
+\]
+这里必须强调，$\mathcal{O}_A$ 不是传统意义上的一个传感器函数，而是一个多层复合算子。更细致地，它至少可以分解为
+\[
+\mathcal{O}_A
+=
+\mathcal{I}_A
+\circ
+\mathcal{G}_A
+\circ
+\mathcal{S}_A
+\circ
+\mathcal{P}_A,
+\]
+其中 $\mathcal{P}_A$ 表示物理感知过程，$\mathcal{S}_A$ 表示选择与过滤，$\mathcal{G}_A$ 表示 grounding 与结构绑定，$\mathcal{I}_A$ 表示内部语义解释。这样一来，从光学信号、声音、电流或网络事件，到 ``这是某个人''、``这个人正在接近我''、``这一动作可能具有威胁性''，中间经历的是一个逐步结构化过程，而不是简单的信息搬运。
+
+因此，同一个 Universe-CSO 在不同 Agent 中形成不同 Agent-CSO 是理论上的正常现象：
+\[
+\pi_A(C^U)
+\neq
+\pi_B(C^U).
+\]
+例如同一个台阶，对于双足机器人可能被表示成
+\[
+C_A
+=
+\{\text{stair},\text{climbable},\text{estimated effort}\},
+\]
+而对于轮式机器人则可能成为
+\[
+C_B
+=
+\{\text{height discontinuity},\text{non-traversable obstacle}\}.
+\]
+现实中的几何结构并没有因为 Agent 改变而改变，但 ``这一现实结构对我意味着什么'' 已经发生变化。这说明 Agent-CSO 具有不可消除的身体依赖和行动依赖。后面我们将在 SGC 中把这一关系进一步形式化为 Body-Centered Actionable Reality。
+
+从认识论角度看，Observation 还必然具有不完备性。令完整现实结构集合为 $\mathcal{C}_U(t)$，Agent 当前实际形成表示的集合为
+\[
+\mathcal{C}_A^{obs}(t)
+=
+\mathcal{O}_A
+\left(
+\mathcal{C}_U(t)
+\right).
+\]
+一般有
+\[
+\left|
+\mathcal{C}_A^{obs}
+\right|
+\ll
+\left|
+\mathcal{C}_U
+\right|,
+\]
+更严格地说，两个集合甚至不存在可以直接比较的相同维度，因为 Agent 已经进行抽象与压缩。关键不是 Agent 是否 ``保存全部事实''，而是它是否保留了当前尺度、目标和行动所需要的足够统计量。可引入行动充分性概念：
+\[
+\mathcal{Suff}_A(C_A,G)
+=
+I(C_A;Y_G),
+\]
+其中 $Y_G$ 表示与目标 $G$ 相关的未来结果变量。如果一个压缩后的 Agent-CSO 对预测和控制目标仍然保留足够信息，那么详细微观信息的丢失并不构成认知失败。
+
+这使我们可以提出一个重要原则：
+\[
+\boxed{
+Intelligence
+\neq
+CompleteRepresentationOfReality
+}
+\]
+而更接近
+\[
+\boxed{
+Intelligence
+=
+ConstructionOfAction-SufficientStructure.
+}
+\]
+智能并不要求复制宇宙，而要求在有限工作记忆、有限带宽和有限生命周期中形成足够有效的结构。这也解释了为什么认知抽象、注意、遗忘和结构压缩并非智能的缺陷，而恰恰是有限主体得以存在的必要条件。
+
+Observation 还会受到 Agent 历史的反向影响。设
+\[
+\Theta_t
+=
+\mathcal{L}(E_{\leq t}),
+\]
+那么后续观测映射更准确地写为
+\[
+C_{A,t}
+=
+\mathcal{O}
+\left(
+C_t^U
+\mid
+\Theta_t,\Psi_t,G_t,B_t
+\right).
+\]
+过去学习形成的 $\Theta$ 会决定哪些关系容易被识别，$\Psi$ 会改变哪些结构具有自我相关性，Goal 会改变注意优先级，身体则决定哪些结构能够真正被感知。因此：
+\[
+\boxed{
+Observation
+\text{本身已经包含历史、身体、目标和先验。}
+}
+\]
+这与主动感知、预测加工和具身认知存在外部理论上的联系，但本书进一步把这些作用统一到 Agent-CSO 的动态生成过程之中。
+
+最后，我们还必须把 Observation 与 Reality Authority 结合起来。Agent-CSO 是现实作用形成的内部结构，却绝不因此自动拥有 ``真实'' 身份。Agent 形成
+\[
+\hat C_t^U
+\]
+后，仍然需要通过未来观察与行动结果不断检验：
+\[
+\varepsilon_t
+=
+D
+\left(
+C^{pred}_{t},
+C^{obs}_{t}
+\right).
+\]
+残差 $\varepsilon_t$ 不是认知系统的偶发噪声，而是世界对内部结构施加约束的主要通道。后续 AgentOS 中的预测、Body Runtime、BPCC、SPC 和 KRA 都必须保留这条现实回路。没有这条回路，内部 Agent-CSO 很容易形成自洽但与现实脱离的封闭系统。
+
+
+\section{Action：从 Agent-CSO 到 Universe-CSO$'$}
+
+如果说 Observation 解决的是 ``现实如何进入智能体''，那么 Action 解决的就是反方向问题：智能体内部形成的认知结构如何重新成为现实世界中的因果因素。传统 AI 描述中，Action 往往只被处理成一个离散动作 $a_t$，例如 ``move left''、``click'' 或 ``call API''。对于长期 AgentOS，这样的描述过于贫乏，因为我们真正关心的是一个内部 Agent-CSO 如何通过身体和控制链逐级落地，最终改变现实中某些 CSO 的状态、关系或生成条件。
+
+设 Agent 在时刻 $t$ 的内部状态为
+\[
+X_A(t)
+=
+[h_t,E_t,\Theta_t,\Psi_t,\Omega_t,G_t,\ldots],
+\]
+决策过程从中构造目标相关的行动结构
+\[
+C_A^{act}(t)
+=
+\mathcal{D}
+\left(
+X_A(t)
+\right).
+\]
+但这个结构还不是现实行为。它必须进一步经过控制映射
+\[
+u_t
+=
+\mathcal{K}_A
+\left(
+C_A^{act},
+B_A
+\right),
+\]
+再进入现实动力学：
+\[
+U_{t+\Delta t}
+=
+\mathcal{F}_U
+\left(
+U_t,
+u_t,
+\xi_t
+\right),
+\]
+其中 $\xi_t$ 表示 Agent 无法完全控制的现实扰动。最终：
+\[
+\boxed{
+AgentCSO^{act}
+\rightarrow
+Control
+\rightarrow
+RealityDynamics
+\rightarrow
+UniverseCSO'
+}
+\]
+
+这里揭示了一个本书后面会反复强调的原则：
+\[
+\boxed{
+ActionIssued
+\neq
+ActionSucceeded.
+}
+\]
+Agent 的内部计划只是一种结构，它没有权力直接宣布现实已经改变。只有经过物理或数字世界真正执行之后，产生的新观测才能确认 Universe-CSO 是否发生了预期变化。这一原则将在 Body Runtime 一编中进一步发展成
+\[
+Control
+\rightarrow
+Reality
+\rightarrow
+BodyRuntime
+\rightarrow
+SGC^{obs},FCS^{obs}.
+\]
+也就是说，所有实际结果都必须重新从现实进入观测系统，而不能由预测器直接写回 ``observed state''。
+
+从因果结构角度看，Action 的出现使 Agent-CSO 获得了一种特殊地位。一个内部计划、未来想象或目标在产生之前只是 Agent 内部结构，但一旦它通过动作链控制现实，便参与到了新的现实状态生成中。可以写成
+\[
+C^{future}_A
+\longrightarrow
+u_t
+\longrightarrow
+C^U_{t+1}.
+\]
+这容易产生 ``未来影响现在'' 的语言误解。严格来说，真正具有因果作用的并不是未来事件本身，而是
+\[
+\boxed{
+\text{关于未来的当前内部表示。}
+}
+\]
+即
+\[
+Representation(Future)
+\in
+U_t
+\]
+本身就是当前现实中的物理结构。因此因果链依旧满足普通时间顺序：
+\[
+U_{past}
+\rightarrow
+AgentModel_{present}
+\rightarrow
+Action_{present}
+\rightarrow
+U_{future}.
+\]
+特殊之处只在于，现在现实的一部分已经能够构造多种未来可能性的表示，并让这种表示参与当前控制。
+
+由此，Goal 的理论地位也变得更加清晰。Goal 并不是来自世界的直接描述，而是 Agent 内部对未来状态集合施加的偏好约束。令可达未来状态集合为
+\[
+\mathcal{R}(U_t,A),
+\]
+Agent 的目标选择一个期望子集
+\[
+\mathcal{G}_t
+\subset
+\mathcal{R}(U_t,A).
+\]
+Action Policy 则试图最大化现实状态进入 $\mathcal G_t$ 的概率：
+\[
+\pi_A^*
+=
+\arg\max_{\pi}
+P
+\left(
+U_{t+H}\in\mathcal G_t
+\mid
+U_t,\pi
+\right).
+\]
+因此 Agent 的行动不是简单 ``响应刺激''，而是当前现实状态、内部世界模型和未来约束共同作用的结果。
+
+这一结构使智能区别于大量非表征性动力过程。一块岩石同样能够改变周围世界，一颗恒星也会通过引力和辐射改变环境，但我们并不因此称它们为智能行动。智能行动的关键不是 ``产生影响''，而是影响过程受到内部世界结构和未来可能性模型调节：
+\[
+\boxed{
+Action_{intelligent}
+=
+RepresentationGuidedWorldTransformation.
+}
+\]
+这一定义仍然是功能性的，并不要求主观意识。
+
+Action 还具有结构尺度。快速动作可能只作用于局部：
+\[
+\tau_{servo}
+\sim
+10^{-3}\text{--}10^{-1}\;\mathrm{s},
+\]
+而更慢行为可能持续数小时、数年乃至跨代。例如建造建筑、创建软件系统、制定制度，都是内部结构长期外化为外部 CSO 的过程。因此我们不能把 ``行动'' 局限在瞬时 motor command。更一般地，可以定义：
+\[
+\mathcal A:
+\mathcal C_A
+\rightarrow
+\Delta \mathcal G_U,
+\]
+即 Action 是 Agent-CSO 对现实 CSO 图的一种局部改写算子。它可能改变节点状态
+\[
+C_i^U\rightarrow C_i^{U'},
+\]
+增加新节点
+\[
+\varnothing\rightarrow C_j^U,
+\]
+建立新关系
+\[
+e_{ij}:0\rightarrow1,
+\]
+或者改变未来结构生成概率。
+
+这样，行动便与本书此前的拓扑理论重新连通：Agent 内部存在
+\[
+DynamicsOfTopology,
+\]
+而 Agent 通过行动还能够影响外部世界的结构拓扑。智能真正表现为：
+\[
+\boxed{
+\text{内部结构动力学通过身体进入外部结构动力学。}
+}
+\]
+
+
+\section{内部世界不是外部世界的完整复制}
+
+建立了 Observation 与 Action 以后，我们接下来必须处理一个容易被忽略但非常关键的问题：如果 Agent-CSO 并不是现实 CSO 的直接复制，那么它和现实之间究竟是什么关系？最粗糙的世界模型理论会暗含一种 ``镜像认识论''：现实存在一个状态 $U_t$，智能体内部试图建立一个尽可能完整的 $\hat U_t$，然后要求
+\[
+\hat U_t
+\approx
+U_t.
+\]
+这种思想对于某些状态估计问题具有工程价值，但如果把它作为一般智能的认识论，就会遇到不可克服的容量问题。任何有限 Agent 都无法实时复制包含自身在内的整个现实，而且即使具有足够存储能力，完整复制也不是高效行动所必需的。
+
+因此，我们把 Agent 内部世界理解为一种
+\[
+\boxed{
+Selective,\ Compressed,\ Action-Oriented
+}
+\]
+的结构投影。设现实状态空间为 $\mathcal U$，Agent 内部有效状态空间为 $\mathcal Z_A$，则
+\[
+\Pi_A:\mathcal U\rightarrow\mathcal Z_A.
+\]
+通常
+\[
+\dim(\mathcal Z_A)
+\ll
+\dim(\mathcal U)
+\]
+至少在有效自由度意义上成立。$\Pi_A$ 的目标不是保持全部细节，而是在资源约束下保持与 Agent 当前和潜在行为最相关的结构。
+
+可以定义一个结构充分性条件。设未来任务结果为 $Y$，如果
+\[
+P(Y\mid U_t)
+\approx
+P(Y\mid Z_t),
+\qquad
+Z_t=\Pi_A(U_t),
+\]
+那么 $Z_t$ 就可以被视为关于该任务的近似充分表示。这个思想与统计学中的 sufficient statistic、POMDP belief state 和 representation learning 存在联系，但本书把它推广到生命周期 Agent：充分性不是固定任务上的一次性性质，而会随 Goal、Body、Capability 和长期 $\Theta$ 改变。
+
+因此：
+\[
+\boxed{
+GoodRepresentation
+\neq
+MaximumInformation.
+}
+\]
+恰恰相反，一个好的 Agent-CSO 往往要求主动舍弃大量无关自由度。工作记忆有限容量定理进一步要求：
+\[
+C_{run}(h_t)
+\leq
+C_{\max}(W).
+\]
+也就是说，即使 Agent 的长期系统能够持有非常丰富的世界结构，也只有少部分结构应该进入当前 $h(t)$。后续 AgentOS 的 Boundary、CCM、Scheduler 和 Offloading 本质上都是在控制
+\[
+UniverseCSO
+\rightarrow
+AgentCSO
+\rightarrow
+h
+\]
+这条路径上的结构带宽。
+
+内部世界还具有预测性。Agent 不仅承载当前观测结构
+\[
+C_A^{obs}(t),
+\]
+还包含预测结构
+\[
+C_A^{pred}(t+\Delta),
+\]
+反事实结构
+\[
+C_A^{cf},
+\]
+以及 Goal 所定义的期望结构
+\[
+C_A^{goal}.
+\]
+因此 Agent 的内部世界严格来说并不是 ``当前现实地图''，而是一个多认识论状态的结构空间：
+\[
+\mathcal W_A
+=
+\mathcal C^{obs}
+\cup
+\mathcal C^{derived}
+\cup
+\mathcal C^{pred}
+\cup
+\mathcal C^{cf}
+\cup
+\mathcal C^{goal}.
+\]
+后面 SGC 体系中的 Observed、Derived、Predicted、Counterfactual 等 metadata，正是这一认识论结构在工程接口上的实现。
+
+这里必须引入一个极重要的区分：
+\[
+\boxed{
+RepresentationIdentity
+\neq
+FunctionalAlignment.
+}
+\]
+不同 Agent 即使形成完全不同的内部表示，只要它们保持关键因果、关系和行动可达性的同构，就可能在功能上具有等价世界模型。例如一个人可以以 ``门把手'' 的概念表示某个对象，机器人可以用关节、抓取面、接触几何和 affordance 参数表示同一对象，二者内部结构并不相同，但均能稳定完成 ``开门'' 行为。于是我们可以通过映射
+\[
+\Phi:
+\mathcal G_A
+\rightarrow
+\mathcal G_B
+\]
+检查是否保持关键结构关系，而不是要求所有 latent 相同。这一原则后来也会成为 KRA 中
+\[
+FunctionalAlignment
+>
+RepresentationAlignment
+\]
+的理论来源。
+
+另一方面，内部世界又不能无限脱离现实。一个非常自洽但不断产生失败行动的结构并不能因为内部逻辑完整而被视为有效。为此我们定义现实一致性：
+\[
+\mathcal R_A
+=
+F
+\left(
+PredictionAccuracy,
+ActionSuccess,
+CrossContextStability,
+CorrectionAbility
+\right).
+\]
+一个 Agent 的世界模型越能够经受不同时间、环境和行动结果的反复检验，其 Agent-CSO 与 Universe-CSO 的功能耦合就越稳定。因此所谓 ``真实'' 在工程层面至少包含：
+\[
+\boxed{
+PredictiveConsistency
++
+InterventionalConsistency.
+}
+\]
+它既能预测世界，也能在行动之后正确解释世界为什么发生了变化。
+
+这使世界模型从传统的 ``被动描述器'' 转变成一个持续参与现实闭环的结构系统。Agent 的内部世界不是现实复制品，却可以成为现实中极其重要的因果结构，因为它决定 Agent 接下来观察什么、忽略什么、改造什么以及如何重新组织自己。
+
+
+\section{行动把内部结构重新写回现实}
+
+当我们把 Action 理解成 Agent-CSO 到 Universe-CSO 的映射之后，一个比普通控制问题更深的现象出现了：认知结构可以离开原来的内部载体，以物理或数字形式重新沉降到外部世界之中。一个计划最初存在于工作记忆，一个算法最初存在于 $\Theta$ 中，一个规则最初存在于社会主体的内部 Agent-CSO，但通过行动，这些结构可以变成文件、程序、建筑、道路、工具、法律或组织流程。因此，现实世界的一部分宏观结构实际上可以具有明确的认知历史。
+
+设 Agent 内部存在一个稳定结构
+\[
+C_A^{int}.
+\]
+通过外化算子
+\[
+\mathcal E_A,
+\]
+产生
+\[
+C_U^{ext}
+=
+\mathcal E_A(C_A^{int}).
+\]
+例如：
+\[
+AgentCSO_{\text{algorithm}}
+\rightarrow
+Code_{\text{world}},
+\]
+或者
+\[
+AgentCSO_{\text{building-plan}}
+\rightarrow
+Building_{\text{world}}.
+\]
+这里并不是说建筑等同于内部计划，而是两者之间存在一个可追踪的结构生成关系。最终现实中的新结构还会受到材料、环境、其他 Agent 和实际执行误差影响：
+\[
+C_U^{ext}
+=
+\mathcal F_U
+\left(
+\mathcal E_A(C_A^{int}),
+U,
+\xi
+\right).
+\]
+因此，外化结果从来不是内部结构的完美复制。
+
+这个过程具有非常重要的认知意义。内部结构一旦被外化，其生命周期往往可以超过原始 Agent。一个个体的记忆可能消失，但其文本、软件、工具和制度可以继续存在，并成为另一个 Agent 的 Observation 输入：
+\[
+AgentCSO_i
+\rightarrow
+ExternalCSO
+\rightarrow
+AgentCSO_j.
+\]
+于是现实世界开始承担跨主体认知结构的传递媒介。文明为什么能够累积，根本原因之一正在于
+\[
+\boxed{
+Agent 内部形成的结构可以脱离原主体，成为未来 Agent 的现实环境。
+}
+\]
+文字、数据库、程序、城市和制度因此都可以被放入同一套广义结构理论中。
+
+这一点也揭示了一个重要时间尺度转换。某些复杂结构在 $h$ 中可能只存在数分钟，但外化后可以存续数十年：
+\[
+\tau_{h}
+\ll
+\tau_{artifact}.
+\]
+因此外化不仅是空间边界迁移，也是一种时间尺度迁移。内部快速变化的结构可以被固定到一个更加缓慢的外部载体。用我们此前的语言：
+\[
+\boxed{
+FastInternalStructure
+\rightarrow
+SlowExternalStructure.
+}
+\]
+这种沉降能够极大降低未来认知成本。例如，一个人不需要每天重新推导乘法算法，因为它可以存在于教育体系、纸张、计算器和软件之中；一个 Agent 不需要每次重新显式推理重复操作，因为它可以将其编译为 Skill 或 Script。
+
+由此产生一个更一般的结构连续性原则：
+\[
+\boxed{
+StructureDoesNotNecessarilyDisappear;
+ItMayChangeCarrier.
+}
+\]
+所谓 ``思考得更少'' 并不等于 ``系统拥有的结构更少''。一个成熟系统常常恰恰因为更多认知结构已经沉降到稳定内部或外部载体，才不再需要每次使用工作记忆重新构建它们。
+
+在生命周期尺度上，我们可以把外化建模为一个结构流：
+\[
+J_{A\rightarrow U}^{CSO}(C,t),
+\]
+表示某类 Agent-CSO 从内部向外部现实沉降的速率。相反，通过观察、学习和文化传递，又有
+\[
+J_{U\rightarrow A}^{CSO}(C,t).
+\]
+于是一个 Agent 与世界之间形成双向结构通量：
+\[
+\boxed{
+J_{coupling}
+=
+J_{U\rightarrow A}^{CSO}
+-
+J_{A\rightarrow U}^{CSO}.
+}
+\]
+这不是物理意义上的守恒量，而是一种描述认知结构跨边界迁移的形式化语言。
+
+更重要的是，外化结构会反过来改变未来智能活动的可达空间。建立道路以后，未来移动问题发生变化；创造计算机以后，未来思考和工具使用结构发生变化；建立互联网以后，社会 Agent 的通信拓扑发生变化。因此
+\[
+U_{t+1}
+=
+F_U(U_t,A_t)
+\]
+改变的不仅是即时现实状态，还可能改变未来所有
+\[
+\mathcal O_A
+\quad\text{与}\quad
+\mathcal A_A
+\]
+的可实现集合。
+
+这意味着成熟智能不只是 ``在给定世界中求最优行为''，还能够
+\[
+\boxed{
+ChangeTheProblemByChangingTheWorld.
+}
+\]
+这一点将在后面的 Offloading、Body Scale、工具使用和文明尺度理论中反复出现。智能的力量并不只是计算出更好的答案；它还可以创造新的外部结构，使原本困难的问题以后不再需要同样的内部计算。
+
+
+\section{工具作为外化的认知结构}
+
+工具在传统人工智能架构中往往被理解为 Agent 可以调用的外部 API，而在本书的 World--Agent--World 框架中，这一定义过于狭窄。一个真正意义上的工具，是现实世界中已经稳定存在、能够把某类 Agent-CSO 映射成现实变化或新 Agent-CSO 的外部功能结构。换言之，Tool 本身是 Universe-CSO 的一种特殊类别，并且承担部分原本需要 Agent 内部完成的认知或控制功能。
+
+定义工具 $T$ 的功能映射：
+\[
+T:
+\mathcal X_T
+\rightarrow
+\mathcal Y_T.
+\]
+若 Agent 不使用工具，需要内部完成
+\[
+C_A
+\xrightarrow{\mathcal F_A}
+C_A',
+\]
+而使用工具以后：
+\[
+C_A
+\rightarrow
+q_T
+\rightarrow
+T
+\rightarrow
+r_T
+\rightarrow
+C_A'.
+\]
+此时部分中间变换
+\[
+\mathcal F_A
+\]
+被迁移到了外部结构 $T$。因此，可以把 Tool 形式化成
+\[
+\boxed{
+Tool
+=
+ExternalizedFunctionalCarrierOfCSOTransformation.
+}
+\]
+
+例如计算器并不只是 ``外部设备''。对于计算任务，它承担了原本可以存在于工作记忆、结构记忆或内部程序中的数值转换。地图承担空间关系的外部结构化；数据库承担大规模事实保持；搜索引擎承担外部检索；编译器承担结构转换；机器人夹具则承担部分物理约束和操作技能。工具的共同特征是：它们把稳定、重复的结构关系沉降到环境，使 Agent 以后可以通过一个低复杂度接口调用更高复杂度功能。
+
+这可以用认知成本描述。设不使用工具完成任务的内部成本为
+\[
+C_{int}^{0},
+\]
+使用工具后的总成本为
+\[
+C_{total}^{T}
+=
+C_{interface}
++
+C_{query}
++
+C_{verification}
++
+C_{residual}.
+\]
+如果
+\[
+C_{total}^{T}
+<
+C_{int}^{0},
+\]
+且可靠性满足
+\[
+R_T
+\geq
+R_{\min},
+\]
+那么把该结构长期外化为 Tool 是合理的。由此，Offloading 不应被理解成无条件地把东西 ``扔出去''，而应是一个包含接口成本、调用成本、验证成本、依赖风险与未来修改代价的优化过程。
+
+工具还可以改变 Body Scale。没有望远镜的人类视觉系统只能观察有限尺度；使用望远镜后，Observation Space 被扩展：
+\[
+\Omega_A^{obs}
+\rightarrow
+\Omega_{A+T}^{obs}.
+\]
+机械臂、车辆和遥控设备扩展
+\[
+\Omega_A^{act}.
+\]
+计算机同时扩展观察、内部处理和行动能力。因此，从更一般的角度：
+\[
+\boxed{
+Tool
+=
+ExtensionOfObservationActionBoundary.
+}
+\]
+
+这一结论直接连接后面的 Body 定义。我们不应该简单根据 ``工具在皮肤外、身体在皮肤内'' 区分 Body 与 Tool。更重要的是稳定性、控制权限、低延迟耦合、状态透明性和持续依赖。如果某种工具长期以低延迟、稳定、可感知的方式被 Agent 控制，那么它可能逐渐进入 Functional Body 的范围。因此智能体边界
+\[
+\mathcal B_A(t)
+\]
+不是绝对静态的，而是可以随着工具使用发生扩展和收缩。
+
+工具还承担一种更深的结构编译功能。反复出现的认知过程
+\[
+C_A^1\rightarrow C_A^2\rightarrow\cdots\rightarrow C_A^n
+\]
+可以被外化成一个程序
+\[
+T_C,
+\]
+以后直接完成
+\[
+C_A^1
+\xrightarrow{T_C}
+C_A^n.
+\]
+于是：
+\[
+\boxed{
+RepeatedCognition
+\rightarrow
+ExternalCompilation.
+}
+\]
+这与 Agent 内部的 Skill Compilation 是同一条规律在边界另一侧的表现。内部成熟能力可以沉降到 $\Theta$ 或 Body Skill，外部成熟能力可以沉降成 Tool、Script、Program 或 Environment Structure。
+
+由此可以看到，工具生态不是 AgentOS 的附加外围，而是长期智能扩展的重要组成部分。一个持续主体不可能把所有世界知识、技能和控制结构都保存在自身内部。真正可扩展的 Agent 必然成为
+\[
+\boxed{
+InternalCognition
++
+ExternalFunctionalStructure
+}
+\]
+的组合系统。
+
+这也为后面 AgentOS 为什么要把 Skill、Tool、File、DB、Program 和 Other Agent 统一纳入 Boundary/Offloading 管理提供理论基础。工具不是简单的插件；它是认知结构跨越 Agent 边界之后形成的稳定功能载体。
+
+
+\section{环境作为外部记忆与外部结构}
+
+工具理论继续向前推导，会得到一个更加一般的结论：环境本身也可以成为智能体认知结构的承载者。传统记忆理论通常把记忆理解成存在于主体内部的某种结构，但从 World--Agent--World 闭环来看，只要 Agent 能够通过稳定索引重新利用某个外部结构，使其在未来行为中发挥与内部记忆类似的功能，那么该结构就可以被纳入广义 External Memory。
+
+设内部记忆过程需要保存结构 $C$。一种方式是
+\[
+C
+\rightarrow
+M_A^{internal}.
+\]
+另一种方式是修改环境
+\[
+U_t
+\xrightarrow{\mathcal A_C}
+U_{t+1},
+\]
+使
+\[
+U_{t+1}
+\supset
+C^{ext}.
+\]
+如果 Agent 在未来时刻 $t+k$ 可以通过观察
+\[
+\mathcal O_A(U_{t+k})
+\]
+恢复足够的 $C$，则环境承担了外部记忆功能。可以定义恢复算子
+\[
+\mathcal R_A:
+C^{ext}
+\rightarrow
+\hat C_A,
+\]
+并要求
+\[
+D(C,\hat C_A)
+<
+\epsilon.
+\]
+这样，记忆就从 ``保存内部状态'' 扩展成
+\[
+\boxed{
+MaintainingRecoverableStructureAcrossTime.
+}
+\]
+
+人类日常行为早已大量使用这种机制。把物品放在固定位置，是把未来搜索问题部分编码进环境；写便签，是把工作记忆压力沉降到外部；道路标志把导航规则嵌入空间；软件目录结构把文件分类关系嵌入文件系统；工厂流水线把任务顺序写进物理布局。对于 AgentOS，这些都不应该被看成与认知无关的 ``外界细节''，而应理解成 Agent 可以主动设计的未来认知条件。
+
+这导致一个非常重要的推论：
+\[
+\boxed{
+Action
+\text{可以优化未来的 Observation。}
+}
+\]
+传统控制目标通常只考虑使世界达到某个任务状态
+\[
+U_{goal}.
+\]
+但成熟 Agent 还可以选择使未来世界更加容易理解、预测和控制。例如：
+\[
+\min_{\mathcal A}
+\left[
+L_{task}
++
+\lambda C_{future\_cognition}
+\right].
+\]
+其中
+\[
+C_{future\_cognition}
+\]
+表示未来 Agent 为完成类似任务所需的认知成本。这就是认知卸载理论非常深的一层：Agent 不只是为了完成眼前任务改变环境，还可以主动把环境改造成以后更容易处理的结构。
+
+因此，整理房间、创建目录、建立索引、制定协议、修建道路、建立标准，在抽象上都具有类似形式：
+\[
+\boxed{
+CurrentEffort
+\rightarrow
+ExternalStructure
+\rightarrow
+ReducedFutureCognitiveEffort.
+}
+\]
+这里出现了跨时间的认知投资。
+
+环境作为记忆还意味着 ``记忆位置'' 不是固定的。一个 CSO 可以经历
+\[
+h
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+Tool/Environment.
+\]
+例如一个操作流程最初需要显式工作记忆，随后成为经验，再抽象成技能，最终可能被完全写进设备自动化结构。此时 Agent 自身 ``记住得更少''，却拥有更高的整体能力。用结构连续性语言：
+\[
+\boxed{
+CapabilityPersistence
+\not\Rightarrow
+InternalRepresentationPersistence.
+}
+\]
+
+这给复杂度卸载理论提供了更加坚实的本体解释。过去我们说 ``复杂度从内部迁移到了环境''，现在更准确的说法是：承担任务所需的 Agent-CSO 关系被重新编码到外部 Universe-CSO，使未来内部系统只需要保留索引、触发条件和异常处理结构。也就是说
+\[
+\boxed{
+AgentCSO^{explicit}
+\rightarrow
+ExternalCSO^{stable}
++
+AgentCSO^{index}.
+}
+\]
+这种形式尤其重要，因为完全外化而不保留索引意味着 Agent 无法再次利用结构；完全内部化又会增加长期认知维护成本。最佳结构通常是内部保持稀疏索引，外部承担高体量稳定细节。
+
+这一思想还会自然推广到社会。一个 Agent 可以把结构写进另一个 Agent、组织流程或制度中，由此形成 Social External Memory。但是在进入社会尺度之前，我们首先应当看到其一般规律：\textbf{智能不仅通过内部学习改变自己，还可以通过改变世界，把一部分未来认知过程预先写进环境。} 从这个意义上，智能的成长既发生在脑内，也发生在世界中。
+
+
+\section{世界与智能体的共同演化}
+
+前七节建立了一个完整的双向关系：现实结构通过 Observation 形成 Agent-CSO，Agent-CSO 通过内部动力学形成 Goal、Prediction 与 Action，Action 又重新修改 Universe-CSO。最后我们可以把整个过程写成一组耦合动力方程：
+\[
+\dot U
+=
+F_U
+\left(
+U,
+u_A,
+\xi_U
+\right),
+\]
+\[
+\dot X_A
+=
+F_A
+\left(
+X_A,
+\mathcal O_A(U),
+\Theta_A,
+\Psi_A,
+G_A
+\right),
+\]
+\[
+u_A
+=
+\Pi_A
+\left(
+X_A,U_A^{belief}
+\right).
+\]
+其中 $U$ 与 $X_A$ 不再是两个各自独立演化的系统，而是通过 Observation 与 Action 构成闭环：
+\[
+\boxed{
+U
+\overset{\mathcal O_A}{\longrightarrow}
+X_A
+\overset{\Pi_A}{\longrightarrow}
+u_A
+\longrightarrow
+U'.
+}
+\]
+
+如果 Agent 只是短期控制器，我们可以把 $F_A$ 近似看成固定。但是持续 Agent 的核心恰恰在于
+\[
+F_A=F_A(t),
+\]
+因为 Agent 会通过经历改变 $E$，通过学习改变 $\Theta$，通过长期经历改变 $\Psi$，甚至在更高阶段改变功能拓扑 $\mathcal T_A$。与此同时，Agent 还在不断改变 $U$。因此真正的长期系统是
+\[
+\boxed{
+\dot U=F_U(U,A),
+\qquad
+\dot A=F_A(A,U),
+}
+\]
+即一个 co-evolutionary dynamical system。
+
+进一步，将内部功能拓扑加入状态：
+\[
+A(t)
+=
+\left[
+\mathcal G_C^A(t),
+\mathcal G_F^A(t),
+\mu_t,
+B_A(t)
+\right].
+\]
+那么生命周期演化可以写为
+\[
+\frac{d}{dt}
+\left[
+U,
+\mathcal G_C^A,
+\mathcal G_F^A,
+\mu_t,
+B_A
+\right]
+=
+\mathcal F
+\left[
+U,
+A,
+O,
+Act
+\right].
+\]
+这个表达式揭示了本书之后大量理论之间的统一关系。三相记忆描述
+\[
+\mathcal G_C^A
+\]
+如何跨时间稳定；CSO Migration 描述 $\mu_t$ 如何改变；Topology Learning 描述
+\[
+\mathcal G_F^A
+\]
+如何改变；Body Scale 描述 $B_A$ 和 Observation--Action Interface 如何扩展；而工具和环境改造则进入 $U$ 的结构变化。
+
+在这种共同演化中，可以区分四种基本反馈：
+
+第一种是\textbf{现实校准反馈}：
+\[
+U
+\rightarrow
+A,
+\]
+即现实不断修改 Agent 对世界的模型。
+
+第二种是\textbf{行动反馈}：
+\[
+A
+\rightarrow
+U,
+\]
+即内部结构改变现实。
+
+第三种是\textbf{自我学习反馈}：
+\[
+A_t
+\rightarrow
+A_{t+1},
+\]
+即过去的行为和经历改变未来 Agent。
+
+第四种是\textbf{环境塑形反馈}：
+\[
+A_t
+\rightarrow
+U_{t+1}
+\rightarrow
+A_{t+k},
+\]
+即 Agent 通过改变环境间接改变未来的自己。
+
+第四种尤其重要，因为它意味着：
+\[
+\boxed{
+Agent 的未来并不只由内部学习决定，
+也由它今天创造的世界决定。
+}
+\]
+对生物个体而言，这表现为生态位构建；对数字 Agent 而言，可以表现为文件结构、脚本、工具库、工作区和长期外部记忆；对文明而言，则表现为城市、法律、科研体系、计算基础设施和 AI 系统。
+
+因此，学习的统一定义需要从
+\[
+Parameters_t
+\rightarrow
+Parameters_{t+1}
+\]
+扩展到
+\[
+\boxed{
+Learning
+=
+ChangeOfFutureWorld--AgentCoupling.
+}
+\]
+只要某种经验使未来的 Observation、Representation、Action 或 World Dynamics 的耦合方式稳定改变，就可以认为长期智能系统发生了广义学习。
+
+这还使 ``适应环境'' 和 ``改变环境'' 之间不再存在绝对边界。初级智能主要满足：
+\[
+Agent\rightarrow AdaptToWorld.
+\]
+更高级智能则逐渐表现为
+\[
+Agent\leftrightarrow World,
+\]
+即一方面改变自身以适应现实，另一方面改变现实以降低未来适应成本。一个成熟系统不会把所有复杂度都吸收到内部，而会寻找：
+\[
+\min
+\left(
+C_{internal}
++
+C_{external}
++
+C_{coordination}
++
+C_{future}
+\right).
+\]
+这种优化就是后面认知卸载、Boundary、Tool、Skill、Body 与社会性外部记忆理论共同指向的更一般结构。
+
+从这一角度，我们终于可以重新理解 ``主体''。主体并不是一颗封闭的内部计算核心，而是一个在时间中保持连续、能够维持相对稳定 $\Psi$、拥有自己的 Observation--Action Boundary，并持续通过这一边界与现实共同演化的结构过程。其身份连续性并不要求所有内部状态保持不变，而要求存在足够稳定的慢变量与因果连续关系：
+\[
+Identity_A
+\sim
+Continuity
+\left(
+\Psi_A,
+\Omega_A,
+History_A,
+Boundary_A,
+Agency_A
+\right).
+\]
+因此，主体不是静态结构，而是一条有自我约束的世界--主体耦合轨迹。
+
+
+\section{World--Agent--World 作为智能的基本闭环}
+
+经过以上推导，本章可以把此前相对分散的认识统一成一个最基本的智能动力学闭环：
+\[
+\boxed{
+World
+\rightarrow
+Observation
+\rightarrow
+AgentCSO
+\rightarrow
+InternalDynamics
+\rightarrow
+Prediction/Goal
+\rightarrow
+Action
+\rightarrow
+World'
+}
+\]
+而 $World'$ 又立即成为下一轮 Observation 的现实来源。因此更严格地，这是一个递归映射：
+\[
+\mathfrak W_{t+1}
+=
+\mathcal F_{\mathrm{WAW}}
+\left(
+\mathfrak W_t
+\right),
+\]
+其中
+\[
+\mathfrak W_t
+=
+\left(
+U_t,A_t,\mathcal I_t
+\right).
+\]
+
+如果进一步展开 Agent 的内部部分：
+\[
+A_t
+=
+\left[
+h_t,
+E_t,
+\Theta_t,
+\Psi_t,
+\Omega_t,
+\mathcal G_F(t),
+B_t
+\right],
+\]
+那么完整闭环可以写成
+\[
+U_t
+\xrightarrow{\mathcal O}
+h_t
+\xrightarrow{}
+E_t
+\xrightarrow{}
+\Theta_t
+\xrightarrow{}
+\Psi_t,\Omega_t
+\xrightarrow{}
+G_t
+\xrightarrow{}
+u_t
+\xrightarrow{}
+U_{t+1}.
+\]
+同时存在快速返回：
+\[
+U_t
+\rightarrow
+h_t
+\rightarrow
+u_t
+\rightarrow
+U_{t+\delta},
+\]
+和慢速返回：
+\[
+U_{t:t+T}
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\rightarrow
+FuturePolicy.
+\]
+因此 World--Agent--World 不是单个环，而是多个时间尺度嵌套的耦合闭环。
+
+这一点与本书最早提出的
+\[
+\boxed{
+\text{智能是多时空尺度上的多层嵌套闭环进程}
+}
+\]
+重新闭合。我们现在能够看到，这一命题不仅适用于 Agent 内部，也适用于 Agent 与现实之间的整体关系。最内层是微秒到毫秒尺度的感知--动作闭环，随后是工作记忆与任务闭环，再向外是经验、结构、自我、生命周期以及社会尺度。每个层级都不是脱离现实运行，而是以不同频率参与同一个 World--Agent--World 总过程。
+
+从智能动力学角度，我们可以定义 Agent 的有效耦合能力：
+\[
+\mathcal K_A
+=
+F
+\left(
+\mathcal O_A,
+\mathcal M_A,
+\mathcal P_A,
+\mathcal A_A
+\right),
+\]
+其中 $\mathcal O_A$ 表示观测能力，$\mathcal M_A$ 表示内部模型能力，$\mathcal P_A$ 表示预测与计划能力，$\mathcal A_A$ 表示行动能力。一个系统即使内部模型极其庞大，如果
+\[
+\mathcal A_A\approx 0,
+\]
+它更接近观察型认知系统；如果行动很强而
+\[
+\mathcal O_A,\mathcal M_A
+\]
+极弱，则更接近自动控制器。真正通用的长期 Agent 要求四者形成可持续闭环，并且能够学习这一闭环本身。
+
+因此可以进一步定义自适应耦合：
+\[
+\dot{\mathcal K}_A
+\neq
+0.
+\]
+也就是说，成熟 Agent 不只是不断调整其内部状态，而是逐渐改变
+\[
+\mathcal O_A,\quad
+\mathcal M_A,\quad
+\mathcal P_A,\quad
+\mathcal A_A
+\]
+本身。它可以学习新的感知方式、创造新工具、形成新技能、改变身体能力、建立新的世界模型，甚至重构功能拓扑。此时我们就从 ``Agent 在世界中行动'' 进入了
+\[
+\boxed{
+Agent learns how to couple with the world.
+}
+\]
+
+这也是本章和后续 Body 理论之间最重要的接口。Body 并不是给一个已经完成的 ``大脑'' 外接几个传感器，而是 World--Agent--World 闭环的具体边界实现。后面的 SGC 会回答：现实如何以 Agent 可行动的结构形式进入内部；FCS 会回答：现实如何作用于主体；BPCC 会回答：快速身体动力如何局部闭合；KRA 则回答：不同身体的动力学如何与相对稳定的 Cognitive Kernel 长期适配。换言之：
+\[
+\boxed{
+BodyRuntime
+=
+Physical/DigitalImplementation
+\left(
+ObservationActionBoundary
+\right).
+}
+\]
+
+同时，本章也为下一章 ``功能自反性'' 留下了明确问题。World--Agent--World 已经说明宇宙中的局部结构能够形成关于现实的 Agent-CSO，并使用这些 Agent-CSO 改变现实。但是如果 Agent 进一步把自己的内部过程也作为 Observation 对象，即形成
+\[
+AgentCSO(Self),
+\]
+并让这种自我表示参与后续控制，就会出现比普通 World Model 更高阶的结构：
+\[
+\boxed{
+Structure
+\rightarrow
+RepresentationOfStructure
+\rightarrow
+RepresentationOfOwnStructure
+\rightarrow
+Self-Modulation.
+}
+\]
+这正是下一章需要处理的 ``功能自反性''。
+
+因此，本章最终给出以下基本定义：
+
+\[
+\boxed{
+\textbf{
+智能不是世界在主体内部的一份静态副本，而是现实结构通过观测在主体中形成可操作的 Agent-CSO，主体再通过这些结构产生预测、目标和行动，并将内部形成的结构重新作用于现实的持续闭环。
+}
+}
+\]
+
+更进一步：
+
+\[
+\boxed{
+\textbf{
+学习不仅是内部结构发生变化，而且是未来 World--Agent 耦合方式发生稳定变化。
+}
+}
+\]
+
+而智能发展的更高形式则表现为：
+
+\[
+\boxed{
+\textbf{
+Agent 不仅学习如何在世界中行动，而且逐渐学习如何改变自身与世界发生关系的方式。
+}
+}
+\]
+
+至此，我们完成了从
+\[
+CSO
+\rightarrow
+AgentCSO
+\]
+到
+\[
+AgentCSO
+\rightarrow
+World'
+\]
+的闭合。现实通过智能体形成内部结构，内部结构又借助行动重新进入现实。正是在这个循环中，认知不再只是 ``关于世界'' 的东西，而成为现实世界自身未来结构生成过程的一部分。

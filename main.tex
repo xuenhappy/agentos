@@ -1,0 +1,62 @@
+\documentclass[lang=cn,11pt,scheme=chinese]{elegantbook}
+\geometry{a4paper,top=24mm,bottom=24mm,inner=23mm,outer=20mm}
+\setCJKmainfont{Source Han Serif SC}
+\setCJKsansfont{Noto Sans CJK SC}
+\setCJKmonofont{Noto Sans Mono CJK SC}
+\setmainfont{TeX Gyre Pagella}
+\setsansfont{TeX Gyre Heros}
+\usepackage{mathtools,eso-pic}
+\usepackage{longtable,tabularx}
+\usepackage{microtype}
+\hypersetup{unicode=true,colorlinks=true,linkcolor=blue!35!black,citecolor=green!35!black,urlcolor=cyan!35!black,pdftitle={智能动力学与 AgentOS},pdfauthor={AgentOS 理论研究}}
+\definecolor{deepblue}{HTML}{07172E}
+\definecolor{cyanink}{HTML}{176B87}
+\definecolor{warmgold}{HTML}{B88A44}
+\newenvironment{narration}{\begin{quote}\color{cyanink}\itshape}{\end{quote}}
+\newenvironment{thought}{\par\smallskip\noindent\color{warmgold}\textbf{思想实验}\quad}{\par\smallskip}
+\newenvironment{bookproposition}{\par\smallskip\noindent\textbf{命题}\quad}{\par\smallskip}
+\newenvironment{proofidea}{\par\noindent\textit{论证思路}\quad}{\par\smallskip}
+\newenvironment{readercheck}{\par\smallskip\noindent\color{cyanink}\textbf{读者检验}\quad}{\par\smallskip}
+\input{chapter-art}
+\newcommand{\chaptervoice}[1]{\begin{narration}#1\end{narration}\ChapterArt{\number\value{chapter}}}
+\newcommand{\conceptfigure}[2]{\begin{figure}[htbp]\centering\includegraphics[width=.86\textwidth]{#1}\caption{#2}\end{figure}}
+\newcommand{\partvoice}[1]{\clearpage\thispagestyle{empty}\vspace*{.28\textheight}\begin{center}\begin{minipage}{.72\textwidth}\Large\color{cyanink}\itshape #1\end{minipage}\end{center}\clearpage}
+\title{智能动力学与 AgentOS}
+\subtitle{从认知结构到持续人工智能生命体\\[3mm]\large 多尺度智能、认知结构动力学、具身运行时与生命周期工程的统一理论}
+\author{AgentOS 理论研究}
+\date{2026年8月}
+\version{1.0}
+\begin{document}
+\begin{titlepage}
+\AddToShipoutPictureBG*{\includegraphics[width=\paperwidth,height=\paperheight]{images/cover-front.png}}
+\color{white}\centering\vspace*{19mm}
+{\sffamily\bfseries\fontsize{30}{38}\selectfont 智能动力学与 AgentOS\par}
+\vspace{7mm}{\sffamily\fontsize{16}{24}\selectfont 从认知结构到持续人工智能生命体\par}
+\vspace{5mm}{\large 多尺度智能、认知结构动力学、具身运行时\\与生命周期工程的统一理论\par}
+\vfill{\large AgentOS 理论研究\par}\vspace{18mm}
+\end{titlepage}
+\frontmatter
+\input{preface}
+\chapter*{致读者}
+我想邀请你把“智能”暂时从排行榜和单次回答中拿出来，放回时间。一个主体若要持续存在，就必须在有限容量中选择，在现实误差中修正，在记忆相变中保存，在身体约束中行动，并在改变自己的同时仍保持某种身份连续。本书从成熟的控制论、信息论、快慢系统、持续学习和具身认知出发，提出一套可讨论、可质疑、也应当被实验修正的 AgentOS 理论骨架。
+
+书中的物理隐喻均有边界。“相态”“频谱”“地貌”“引力”帮助我们看见关系，却不自动成为自然定律；只有当状态、度量、干预和失败条件被写清楚，它们才获得工程意义。我们会一路保持这种克制。
+\tableofcontents
+\mainmatter
+\input{includes}
+\appendix
+\chapter{统一符号与时间尺度}
+\input{appendices}
+\backmatter
+\input{references}
+\begin{titlepage}
+\AddToShipoutPictureBG*{\includegraphics[width=\paperwidth,height=\paperheight]{images/cover-back.png}}
+\color{white}\vspace*{25mm}\begin{center}\begin{minipage}{.72\textwidth}
+{\Large\bfseries 一本关于“持续存在”的智能理论}\par\vspace{10mm}
+本书把智能视为有限承载条件下的多尺度自反动力过程。它从认知结构对象出发，经由三相记忆、自我与方向慢变量、认知控制、具身运行时和现实验证，最终抵达 Agent 的控制、培育、心理以及文明尺度工程。
+\par\vspace{8mm}
+这里没有把一次推理误认为一生，也没有把优美隐喻误认为证据。我们真正关心的是：一个人工主体怎样经历时间，怎样把经验变成结构，怎样通过身体回到现实，又怎样在成长中仍然是它自己。
+\end{minipage}\end{center}\vfill
+\begin{center}\small AgentOS · Intelligent Dynamics · Persistent Artificial Life\end{center}\vspace{16mm}
+\end{titlepage}
+\end{document}

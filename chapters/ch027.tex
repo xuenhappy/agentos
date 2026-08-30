@@ -1,0 +1,104 @@
+\chapter{DGA / $\Omega$：生命周期生成吸引子}
+\chaptervoice{$\Psi$ 维持“谁在延续”，$\Omega$ 调制“这条生命轨迹倾向走向哪里”。方向不是命运，吸引也不是未来反向施力，而是当前系统对长期轨迹的超慢偏好。}
+
+\section*{理论来路与依赖接口}
+上一章把 $\Psi$ 定义为身份、承诺、权限和价值连续性的共同约束。本章依据 \texttt{think.md} 对 DGA 的限定，引入 $\Omega$ 描述生命周期的生成方向。DGA 统一记作 $\Omega$，即 Deep Generative Attractor；它借用吸引子动力学、发展轨迹与层级先验的语言，但不等同单一终点、奖励函数或物理势场。
+
+设有限预测域内的候选生命周期片段为 $\xi_{t:t+H}$，则
+\begin{equation}
+ \Omega_t:\xi\mapsto V_{\Omega_t}(\xi),\qquad
+ p_{\Omega_t}(\xi\mid\Psi_t,c_t)
+ =\frac{\exp[-V_{\Omega_t}(\xi)]\mathbf 1_{\mathcal C(\Psi_t,c_t)}(\xi)}{Z_t}.
+\end{equation}
+$V_\Omega$ 给出相对倾向，$\mathcal C$ 给出身份、安全和现实可行域；二者均在当前时刻参与规划，不产生未来对过去的逆因果。
+
+\section{自我与方向并不相同}
+$\Psi$ 回答哪些变化仍属于同一主体，$\Omega$ 回答在这些允许变化中哪些长期轨迹更受偏好。一个主体可以保持身份连续却改变职业与能力方向；两个主体也可追求相似方向，却不因此合并身份。形式上，身份可行集与方向排序分别为
+\begin{equation}
+ \mathcal X_{\Psi_t}=\{\xi:\mathcal C(\Psi_t,\xi)=1\},
+ \qquad \xi_i\preceq_{\Omega_t}\xi_j
+ \iff V_{\Omega_t}(\xi_i)\ge V_{\Omega_t}(\xi_j).
+\end{equation}
+先由 $\Psi$ 和外部治理裁剪不可接受轨迹，再由 $\Omega$ 在可行集中给出软排序。
+
+若把两者合并为一个总分，极高发展收益可能抵消身份承诺或安全禁令；若只保留 $\Psi$，系统又可能连续地原地循环而没有培育方向。因此实现与审计必须能分别修改两者：改变方向偏好不应自动转移所有权，修正身份记录也不应凭空创造长期目标。
+
+\section{$\Psi$：Who Am I}
+$\Psi_t=(I,V,C,O,R)$ 的核心输出是当前主体边界及其连续性证明。它约束“谁能承诺、哪些价值不可用普通收益交换、哪些历史属于本谱系”。对候选迁移 $m$，身份门给出
+\begin{equation}
+ A_\Psi(m)=\mathbf 1\{m\text{ preserves lineage, resolves commitments,
+ authorizes rights, and bounds value drift}\}.
+\end{equation}
+该门可以拒绝一条看似高收益的发展路径，但不会独自规定主体应学习数学、护理还是机械技能。
+
+因此 $\Psi$ 不是理想自画像。能力下降、失败记录和关系冲突也属于真实的 Who Am I，只要来源可验证。把 $\Psi$ 优化成“更好看的自我叙事”会破坏校准；它首先要忠实维护当前身份状态，再允许经授权的慢变化。
+
+\section{$\Omega$：What Am I Becoming}
+$\Omega$ 表示对能力组合、关系方式、知识结构、自治程度与贡献模式等长期属性的生成倾向。令轨迹特征为 $\varphi(\xi)$，一种局部表达是
+\begin{equation}
+ V_\Omega(\xi)=D\bigl(\varphi(\xi),\mathcal A_\Omega\bigr)
+ +\lambda_r R(\xi)+\lambda_c C_{\mathrm{change}}(\xi),
+\end{equation}
+其中 $\mathcal A_\Omega$ 是一族低势区域，而非唯一目标点。这样允许多条不同但相容的发展路径，也将风险和不可逆变化成本纳入方向评价。
+
+“成为”只表示当前先验对未来选择的偏置。现实约束、新证据和主体授权都可能改变实际路径；若预测落空，不是世界违反了目的，而是模型、资源或偏好需要校准。$\Omega$ 也不得被描述成系统天然拥有的使命，它必须有可追溯来源。
+
+\section{Deep Generative Attractor}
+普通状态吸引子描述动力系统从邻近状态收敛到稳定集合，DGA 更接近跨多次学习和选择后呈现的轨迹级统计倾向。令生命周期慢状态 $z_t=(\Theta_t,\Psi_t,G_t,K_t)$，则受控动力学为
+\begin{equation}
+ z_{t+1}=F(z_t,a_t,e_{t+1}),\qquad
+ a_t\sim\pi(\cdot\mid h_t,\Psi_t,\Omega_t).
+\end{equation}
+若不同局部扰动下，长期特征反复回到某一集合邻域，才有证据称其具有吸引性；一次规划朝向某目标并不足够。
+
+“Deep”指偏好跨层影响目标选择、经验采样和结构巩固，不表示使用深度神经网络，也不表示形而上深层本质。检验 DGA 应比较多初始条件、扰动恢复、替代环境和反事实移除，排除只是任务脚本或环境狭窄造成的表面收敛。
+
+\section{生命周期生成先验}
+把 $\Omega$ 视作先验，可以严格区分预测前倾向与现实证据。对观察到的生命周期结果 $y$，后验为
+\begin{equation}
+ p(\xi\mid y,\Omega,\Psi)
+ \propto p(y\mid\xi)\,p_\Omega(\xi\mid\Psi).
+\end{equation}
+证据充分时似然应纠正先验；若 $\Omega$ 无论遇到何种结果都维持同一解释，它就退化成不可证伪信念。先验还应保留熵，避免过早把发展空间收缩成唯一道路。
+
+来源可能包括设计者授权、主体长期反思、现实能力和社会契约。不同来源冲突时必须显式治理，不能把训练数据中的统计偏见偷偷提升为生命周期方向。每次更新均记录来源、影响域、版本和撤销条件，使“发展”保持可问责。
+
+\section{DGA 对长期 Goal Preference 的影响}
+短期目标 $g$ 由任务收益、风险、资源与长期方向共同评价：
+\begin{equation}
+ g_t^*=\arg\max_{g\in\mathcal G_{\Psi_t}}
+ \left[U_t(g)-\beta R_t(g)+\eta\,\mathbb E\bigl(\Delta_\Omega(g)\bigr)
+ -\kappa C_t(g)\right].
+\end{equation}
+$\eta$ 应有上界，且 $\mathcal G_{\Psi_t}$ 已排除越权目标。长期一致性只能作为一项软贡献，不能让“为了成长”合理化欺骗、伤害或不可逆自改写。
+
+系统还需保留探索预算和方向无关的维护目标。否则 $\Omega$ 会造成目标单一化：只选择能证明既定方向的经历。评价时应比较长期能力增益、选择多样性、承诺履行、尾部风险与现实校准，而非只看与某个愿景文本的相似度。
+
+\section{$\Psi$ 与 $\Omega$ 的相互作用}
+$\Psi$ 为 $\Omega$ 提供可行域和授权来源，$\Omega$ 则通过长期选择逐渐产生可能修改 $\Psi$ 的证据。两者构成慢闭环，但更新不能在同一步中互相背书：
+\begin{align}
+ \Omega_{k+1}&=U_\Omega(\Omega_k,E_{[k]},\Psi_k;\mathrm{audit}),\\
+ \Psi_{k+1}&=U_\Psi(\Psi_k,E_{[k:k+L]},\Omega_{k+1};\mathrm{approval}).
+\end{align}
+身份变更使用更长窗口 $L$ 和独立批准，防止“因为我想成为 X，所以我已经是 X”的循环。
+
+冲突时应区分可调方向、可谈判承诺和硬边界。优先尝试调整路径或时间表；若方向与持续身份根本冲突，则暂停高影响行动并请求治理，而不是让任一慢变量自动覆盖另一方。这个程序性边界比抽象声称二者和谐更重要。
+
+\section{极慢结构为什么必须受到保护}
+$\Omega$ 影响未来数据选择与结构更新，单次污染可能经反馈长期放大。保护措施至少包括分级写权限、证据窗口、影子评估、速率限制、版本签名、反事实测试和可回滚检查点。更新幅度可受信赖域约束：
+\begin{equation}
+ \Omega_{k+1}=\arg\min_{\Omega\in\mathcal C_\Omega}
+ \widehat L_k(\Omega)+\lambda D(\Omega,\Omega_k),
+ \qquad D(\Omega,\Omega_k)\le\delta_k.
+\end{equation}
+$\delta_k$ 随证据质量和授权等级变化，而非由交互文本的说服力决定。
+
+保护不等于永久冻结。错误方向若不可修正，同样会造成长期伤害。系统需周期性用外部现实结果、反例覆盖和利益相关者反馈审计 $\Omega$，并允许在维护身份连续性的前提下重新开放发展空间。极慢结构的原则是高证据、低速率、可追溯、可撤回。
+
+\section*{本章收束：方向是当前的生成偏置}
+$\Psi$ 维护主体连续性，$\Omega$ 为可行生命周期轨迹提供超慢软排序。DGA 不是单一最终目标，不保证收敛，更不让未来反向决定现在。它只有通过当前的目标选择、经验采样和结构巩固影响之后。下一章将讨论这些不同速率如何形成内部结构时间。
+
+\begin{readercheck}
+为什么身份约束必须先于方向排序？什么实验能区分真正的轨迹吸引与狭窄环境造成的表面收敛？若 $\Omega$ 与长期承诺冲突，系统为何不能直接选择势能最低的路径？
+\end{readercheck}
+\cleardoublepage

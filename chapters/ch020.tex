@@ -1,0 +1,1865 @@
+\chapter{功能自反性：宇宙局部如何“看见自己”}
+
+\begin{center}
+\fbox{
+\parbox{0.92\textwidth}{
+\textbf{本章总论（理论盖章）}
+
+本章讨论的核心并不是“宇宙是否具有意识”这一无法由当前理论直接回答的问题，而是一个更严格、更可工程化的问题：\textbf{一个原本只是在发生状态变化的物理动力系统，在什么条件下会出现关于自身状态和自身行为的内部结构表示，并进一步使这些表示进入未来状态转移的因果闭环？}
+
+在本书的语言中，宇宙首先由不同尺度上的结构对象（CSO）及其动力关系构成。Agent 本身也是宇宙中的一种 CSO，但它与普通结构不同：Agent 能够通过观测将外部 Universe-CSO 转换成内部 Agent-CSO，并进一步形成关于自身状态、行动、目标和未来可能性的 Agent-CSO。只要这些内部结构不仅“描述”系统，而且能够反向参与行动选择、控制增益、注意分配、策略调整甚至长期自身结构更新，那么系统就获得了一种我们称为\textbf{功能自反性（Functional Reflexivity）}的性质。
+
+本章的基本定义是：
+\[
+\boxed{
+\text{Functional Reflexivity}
+=
+\text{Self-Representation}
++
+\text{Representation-Dependent Self-Modulation}
+}
+\]
+
+其中前一项回答“系统能否形成关于自身的可访问结构”，后一项回答“这种结构能否真实改变系统接下来如何运行”。
+
+这一概念与 AgentOS 中 SPC--TCE 闭环具有直接同构关系：SPC 将分布式内部动力状态压缩成可被当前认知访问的自状态，TCE 则依据该自状态、目标、自我结构与长期生成倾向调节下一阶段认知动力学。因此，SPC 与 TCE 不仅是两个工程模块，还分别代表两种更一般的系统功能：\textbf{自描述}与\textbf{自调节}。
+
+需要特别强调：本章所谓“宇宙局部看见自己”“宇宙局部意识到自己正在做什么”均为结构动力学意义上的表述，其严格含义是“宇宙中的一个局部子系统形成了关于自身及周围现实的内部结构，并使这些结构进入后续因果控制链”。本章不据此断言现象意识、主观感受、泛心论或宇宙整体具有统一主体。
+}
+}
+\end{center}
+
+\section{从结构到关于结构的结构}
+
+前一章已经建立了 World--Agent--World 的基本闭环：宇宙中的结构经过观测进入智能体内部，形成 Agent-CSO；Agent-CSO 又通过行动重新作用于外部世界，使 Universe-CSO 发生变化。本章需要继续回答一个更深的问题：为什么这种闭环不能简单归结为普通物理反馈？也就是说，一个恒温器、一个机械调速器、一个具有适应能力的控制器，与我们所说的“能够看见自己”的 Agent 究竟有什么本质上的结构差异？
+
+我们首先把普通动力系统写成
+\[
+x_{t+1}=F(x_t,\eta_t),
+\]
+其中 \(x_t\in\mathcal X\) 是系统在时刻 \(t\) 的真实状态，\(\eta_t\) 表示环境扰动或其他外部输入。在这一层次上，系统中的状态只是按照动力规律发生变化。即使系统存在复杂反馈，也不意味着系统内部存在一个“关于自身正在发生什么”的独立结构。一个恒星内部的流体状态、核反应和引力平衡可以形成高度复杂的闭环，但这些闭环本身并不自动等价于恒星内部形成了一个关于“恒星当前状态”的显式、可调用、可用于高阶控制的内部表征。
+
+功能自反性的第一次跃迁发生在系统内部出现一个新的变量：
+\[
+m_t=M(x_{\leq t}),
+\]
+其中 \(m_t\) 不只是原始状态的一部分，而是对系统某些状态、关系或历史进行选择、压缩和重编码后形成的\textbf{结构表示}。在本书的本体语言中，这意味着：
+\[
+\boxed{
+CSO
+\longrightarrow
+AgentCSO(CSO)
+}
+\]
+开始发生。
+
+例如，外部现实中存在一个对象 \(C\)。它本身属于 Universe-CSO。当 Agent 的感知、世界建模和结构压缩过程将其转化为内部对象 \(C_A\) 时，
+\[
+C_A=\pi_A(C),
+\]
+\(C_A\) 就是该 Agent 对 \(C\) 的具体承载。这里最重要的变化并不是宇宙中“多了一份数据”，而是宇宙中的一个局部结构开始承载另一个结构的关系性描述。
+
+由此，我们可以区分两个层次：
+\[
+\boxed{
+\text{Structure}
+}
+\]
+与
+\[
+\boxed{
+\text{Structure About Structure}.
+}
+\]
+
+第二个层次具有明显的递归潜力。一个 Agent 不仅可以形成
+\[
+AgentCSO(World),
+\]
+还可以进一步形成
+\[
+AgentCSO(Self),
+\]
+甚至形成
+\[
+AgentCSO\!\left(AgentCSO(Self)\right).
+\]
+
+因此，从 CSO 理论看，所谓元认知并不需要首先被定义成某种神秘的“更高意识层”。它可以首先被描述成结构阶数的提升：系统形成关于自身内部表示、预测、决策乃至误差的进一步表示。其最小形式可以写成
+\[
+C
+\rightarrow
+R_A(C)
+\rightarrow
+R_A(R_A(C)).
+\]
+
+这里的关键并不在于递归可以无限进行。真实智能体受到工作记忆容量、计算资源和控制延迟限制，因此递归深度始终是有限的。真正重要的是，一旦内部存在至少一层可访问的结构再表示，系统就获得了将“自身过程”作为新的 CSO 进行处理的能力。
+
+由此，本书将功能自反的第一必要条件定义为：
+\[
+\boxed{
+\exists\,m_t=M(x_t)
+\quad\text{s.t.}\quad
+\frac{\partial m_t}{\partial x_t}\neq 0.
+}
+\]
+
+它表示内部自描述必须真实依赖系统状态，而不是与系统实际状态无关的虚构标签。后续我们还会看到，仅有这一条件仍然不足以构成功能自反；系统还必须满足第二个方向的因果条件，即该自描述反过来能够改变未来状态。
+
+这一结构转变也让我们能够更准确地使用“宇宙局部看见自己”这句话。所谓“看见”，并不要求形成类似人类视觉体验的主观图像，而是意味着：\textbf{宇宙内部某个子系统形成了关于自身局部状态和外部局部状态的结构表示。}从这一意义上说，智能的重要跃迁不是“结构越来越复杂”，而是“结构开始承载关于结构的结构”。
+
+\section{Agent 作为宇宙内部的局部自指子系统}
+
+如果 Agent 本身属于宇宙，那么我们就不能把认知关系画成一个站在宇宙外部的观察者观察宇宙。更加准确的本体关系是
+\[
+A_t\subset U_t,
+\]
+其中 \(U_t\) 表示时刻 \(t\) 的宇宙状态或我们所选择的物理世界状态空间，\(A_t\) 则表示 Agent 所对应的物理或数字实现状态。
+
+Agent 对宇宙的建模因此实际上具有一种嵌套结构：
+\[
+U_t
+\supset
+A_t
+\supset
+M_A(U_t^{local}),
+\]
+其中 \(U_t^{local}\subset U_t\) 是 Agent 能够通过其观测界面接触到的局部现实，\(M_A\) 是 Agent 的结构映射。
+
+这意味着，严格来说，智能体内部的世界模型并不是“宇宙之外关于宇宙的模型”，而是：
+\[
+\boxed{
+\text{Universe contains a physical structure that represents part of Universe.}
+}
+\]
+
+换成 CSO 语言：
+\[
+CSO_U
+\rightarrow
+AgentCSO_A(CSO_U),
+\]
+而
+\[
+AgentCSO_A(CSO_U)
+\]
+本身在物理实现上又属于新的 Universe-CSO。
+
+因此出现一个非常有意义的自嵌套：
+\[
+\boxed{
+CSO_U
+\supset
+AgentCSO_A(CSO_U).
+}
+\]
+
+这里的“自指”必须谨慎理解。Agent 通常不可能表示整个宇宙，更不可能精确复制包括自身所有底层微观状态在内的全宇宙状态。真正成立的是局部、选择性和任务相关的自指。Agent 通过感官、身体、工具和历史结构建立一个有限观测映射：
+\[
+o_t=O_A(U_t,A_t),
+\]
+再经过内部结构化过程得到
+\[
+m_t=\Phi_A(o_{\leq t},E_t,\Theta_t,\Psi_t).
+\]
+
+因此，Agent 内部世界不是
+\[
+M_A(U)=U,
+\]
+而更接近
+\[
+M_A(U)
+=
+\Pi_A(U),
+\]
+其中 \(\Pi_A\) 是由身体能力、认知结构、历史、目标和任务共同决定的选择性投影。
+
+这一点非常重要，因为它排除了一个常见误解：自反性并不意味着系统内部必须拥有一份完备的“真实自己”。实际上，Agent 对外部世界存在认识论不确定性，对自身同样如此。系统看到的是
+\[
+\hat x_t^{self},
+\]
+而不是直接透明地获得
+\[
+x_t^{self}.
+\]
+
+因此我们应写成
+\[
+p_A\left(
+x_t^{self}
+\mid
+z_{\leq t}^{self}
+\right),
+\]
+而不是
+\[
+x_t^{self}
+=
+PerfectObservation.
+\]
+
+这里 \(z_{\leq t}^{self}\) 表示 Agent 到当前时刻积累的自我观测证据。
+
+这种不透明性不是系统缺陷，而是有限智能体必然面对的条件。一个局部子系统如果要精确表示自身所有微观自由度，就会遇到表示规模、观测扰动、计算复杂度和递归自描述等一系列困难。因此，真正有效的 Agent 不追求“完整复制自己”，而是形成\textbf{行动充分的自我模型}：
+\[
+\boxed{
+SelfModel
+\neq
+CompleteSelfCopy.
+}
+\]
+
+我们可以把一个有效自我模型定义成，在给定任务、时间尺度和控制目标下，能够显著改善预测或控制效果的低维结构：
+\[
+m_t^{self}
+=
+\arg\min_m
+\left[
+L_{\mathrm{prediction}}(m)
++
+\lambda L_{\mathrm{control}}(m)
++
+\beta C(m)
+\right],
+\]
+其中 \(C(m)\) 表示模型表示成本。
+
+这与本书前面建立的工作记忆有限性完全一致。真正成熟的自反系统并不是把所有内部变量都送进自我意识表面，而是将大量分布式内部动力压缩成一个有限、可访问、与当前行为相关的自状态。
+
+因此，“宇宙局部看见自己”可以被严格改写为：
+\[
+\boxed{
+\text{宇宙中的一个局部子系统形成了关于自身部分状态的可操作压缩表示。}
+}
+\]
+
+而当这一表示进一步进入后续控制闭环时，系统才真正跨入本章所说的功能自反阶段。
+
+\section{SPC 的一般化：从分布式状态到可访问的自描述}
+
+在 AgentOS 的具体架构中，SPC 被定义为 Self-Perception Compressor。最初引入 SPC 的直接原因，是工作记忆 \(h(t)\) 不可能持续容纳整个系统的内部状态。AgentOS 内部同时存在任务状态、记忆激活、身体状态、目标竞争、认知负载、风险、工具执行、AHC 状态以及大量局部过程。如果这些变量全部原样进入 \(h(t)\)，工作记忆有限容量定理将迅速被违反。
+
+因此 SPC 的本质操作是：
+\[
+\boxed{
+DistributedInternalDynamics
+\rightarrow
+CompressedSelfAccessibleState.
+}
+\]
+
+设 Agent 的内部真实状态为
+\[
+x_t^A
+=
+\left[
+h_t,E_t,\Theta_t,\Psi_t,\Omega_t,
+a_t,b_t,r_t,\ldots
+\right],
+\]
+其中 \(a_t\) 可以表示 AHC 等连续调制状态，\(b_t\) 表示 Body/资源相关状态，\(r_t\) 表示运行时风险、冲突或调度变量。SPC 执行一个压缩映射：
+\[
+\hat s_t
+=
+C_{\mathrm{SPC}}
+\left(
+x_{\leq t}^A
+\right).
+\]
+
+这里的
+\[
+\hat s_t
+\]
+并不是系统全部内部状态，而是一个可供后续决策和认知使用的自状态估计。
+
+若进一步加入有限容量约束，则 SPC 的理想目标可以形式化为一个信息瓶颈问题：
+\[
+\min_{q(\hat s|x)}
+I(X;\hat S)
+-
+\beta I(\hat S;Y),
+\]
+其中 \(X\) 表示内部原始状态，\(Y\) 表示与未来预测、控制、风险判断和目标完成有关的任务变量。该目标意味着：我们希望 SPC 尽可能压缩内部信息，同时保留对未来行为真正重要的结构。
+
+从 CSO 角度，SPC 实际承担了一种非常重要的“结构再对象化”过程。系统中原本分散存在的诸多动态并不一定是显式 CSO。例如一个任务循环正在出现反复振荡，多个 Goal 正在竞争，工作记忆负载正在持续上升，这些状态可能分别存在于不同模块内部。当 SPC 将这些动态压缩成：
+\[
+\text{“当前系统处于高冲突、高负载、低收敛状态”},
+\]
+这个结果本身就成为一个新的 Agent-CSO：
+\[
+AgentCSO_A(SelfState).
+\]
+
+换句话说，SPC 不只是“读取状态”，而是在功能上执行：
+\[
+\boxed{
+Dynamics
+\rightarrow
+RepresentableStructure.
+}
+\]
+
+这也是为什么我们将 SPC 放在功能自反性的核心位置。如果没有类似 SPC 的机制，系统当然仍然可以拥有无数局部反馈回路，但这些回路之间缺乏一个能够将分布式状态压缩成可由高层使用的自描述接口。系统会“运行”，却未必能够形成关于“自己怎样运行”的结构。
+
+更进一步，SPC 还存在一条我们在此前讨论中逐渐明确的语义路径：
+\[
+SPC(h)
+\rightarrow
+SemanticSelfReport
+\rightarrow
+h.
+\]
+
+这条路径与
+\[
+SPC
+\rightarrow
+AHC
+\rightarrow
+TCE
+\rightarrow
+CognitiveDynamics
+\]
+不同。后者用于动力调节，前者则允许系统把对自身状态的估计重新转化成可以进入工作记忆的语义 CSO。例如：
+\[
+\text{“我当前无法同时维持这三个目标。”}
+\]
+或者：
+\[
+\text{“当前推理已经出现重复循环。”}
+\]
+
+这意味着功能自反至少存在两种输出形式：
+
+第一种是非语义的调制型自反，即自状态直接改变控制参数；
+
+第二种是语义型自反，即自状态被重新对象化，成为 Agent 可以进一步推理的显式 Agent-CSO。
+
+这种双路径结构非常重要。成熟 Agent 并不需要对每一次内部调节都形成自然语言描述，否则又会重新造成 \(h(t)\) 过载。大多数内部状态应当通过非显式路径快速调节，只有具有足够价值、风险、新颖性或长期意义的自状态，才被提升为显式 Self-CSO。
+
+因此可以定义一个自描述提升函数：
+\[
+\Gamma_{\mathrm{self}}
+=
+f(
+Novelty,
+Risk,
+Persistence,
+GoalRelevance,
+Uncertainty
+),
+\]
+只有当
+\[
+\Gamma_{\mathrm{self}}
+\geq
+\theta_{\mathrm{self}}
+\]
+时，自状态才进入显式工作记忆。
+
+从更一般的智能动力学看，SPC 所代表的并不是 AgentOS 专属算法，而是一种普适功能需求：\textbf{一个高度分布的系统若要形成自反控制，就必须把自己的局部动力学重新压缩成可被自身其他部分访问和利用的结构。}
+
+\section{TCE 的一般化：自描述如何反向改变后续动力学}
+
+仅有自描述还不足以构成功能自反。如果系统能够准确形成关于自身状态的模型，但这个模型不参与任何后续决策，那么该系统更接近被动监测系统，而不是自调节主体。
+
+因此功能自反的第二个必要条件是：
+\[
+\boxed{
+SelfRepresentation
+\rightarrow
+FutureDynamics.
+}
+\]
+
+在 AgentOS 中，这一功能主要由 TCE，即 Temperature \& Control Executor 承担。TCE 接受 SPC 提供的自状态估计，同时受到 Goal、\(\Psi\)、\(\Omega\)、AHC 以及当前任务约束影响，并输出对认知动力学的调节信号。
+
+可以写成：
+\[
+u_t^{cog}
+=
+\Pi_{\mathrm{TCE}}
+\left(
+\hat s_t,
+a_t,
+G_t,
+\Psi_t,
+\Omega_t
+\right),
+\]
+其中
+\[
+u_t^{cog}
+\]
+不是一个单一动作，而是一组元控制变量，例如：
+\[
+u_t^{cog}
+=
+[
+T_t,
+g_t,
+d_t,
+e_t,
+\alpha_t,
+\lambda_t,
+\ldots
+].
+\]
+
+其中 \(T_t\) 可以表示认知温度或探索度，\(g_t\) 表示控制增益，\(d_t\) 表示推理深度，\(e_t\) 表示探索强度，\(\alpha_t\) 表示注意分配尺度，\(\lambda_t\) 表示记忆召回或压缩强度。
+
+系统下一状态于是变成：
+\[
+x_{t+1}^A
+=
+F_A
+\left(
+x_t^A,
+u_t^{cog},
+o_t
+\right).
+\]
+
+将 SPC 与 TCE 组合起来：
+\[
+x_t^A
+\rightarrow
+\hat s_t
+\rightarrow
+u_t^{cog}
+\rightarrow
+x_{t+1}^A.
+\]
+
+这时我们才能说：系统关于自己的表示真实进入了自身未来状态的因果路径。
+
+从数学上，可以给出第二个必要条件：
+\[
+\boxed{
+\frac{\partial x_{t+1}^A}
+{\partial \hat s_t}
+\neq 0.
+}
+\]
+
+于是功能自反的最小双向条件成为：
+\[
+\boxed{
+\frac{\partial \hat s_t}
+{\partial x_t^A}
+\neq 0
+\qquad\land\qquad
+\frac{\partial x_{t+1}^A}
+{\partial \hat s_t}
+\neq 0.
+}
+\]
+
+第一项保证“自状态影响自描述”，第二项保证“自描述影响未来自状态”。
+
+这正是自反结构和普通观测结构的差异。
+
+例如一个系统拥有日志模块：
+\[
+x_t\rightarrow log_t,
+\]
+但日志从不参与未来决策，则：
+\[
+\frac{\partial x_{t+1}}{\partial log_t}=0.
+\]
+日志是一种自记录，却还不是完整功能自反。
+
+相反，一个 Agent 识别到：
+\[
+\text{当前处于认知湍流态},
+\]
+随后降低探索温度、缩小注意范围、暂停低优先级任务并重新压缩工作记忆，使系统恢复到稳定状态，那么：
+\[
+SelfRepresentation
+\rightarrow
+ControlPolicy
+\rightarrow
+SelfState'
+\]
+已经闭合。
+
+这可以称为：
+\[
+\boxed{
+MetaDynamicalControl.
+}
+\]
+
+“Meta”并不是表示存在一个神秘的第二大脑，而是表示控制器调节的是\textbf{产生认知行为的动力参数}，而不只是直接选择外部动作。
+
+更一般地说，普通策略可以写成：
+\[
+a_t=\pi(o_t),
+\]
+而自反 Agent 的策略更加接近：
+\[
+a_t
+=
+\pi_{\theta_t}(o_t),
+\]
+同时：
+\[
+\theta_{t+1}
+=
+G(
+\theta_t,
+\hat s_t,
+e_t
+).
+\]
+
+也就是说，系统不仅计算“做什么”，还根据自状态修改“自己以什么方式决定做什么”。
+
+因此，我们应把 TCE 的一般功能定义为：
+\[
+\boxed{
+TCE
+=
+Self-State-Dependent Modulation of Internal Dynamics.
+}
+\]
+
+从宇宙结构的更高尺度看，这一步意味着一种新的结构现象开始出现：宇宙中的局部结构不再只是按照既定动力学被动演化，而是形成关于自身状态的结构表示，并让这些表示成为改变局部未来演化路径的中介变量。
+
+\section{功能自反性的严格定义与最小判据}
+
+为了避免“自反性”退化成泛化隐喻，本节给出一个尽可能明确的动力学定义。
+
+设一个 Agent 系统为
+\[
+\mathcal A
+=
+(
+\mathcal X,
+\mathcal M,
+\mathcal U,
+F,
+M,
+\Pi
+),
+\]
+其中：
+
+\[
+\mathcal X
+\]
+是系统真实状态空间；
+
+\[
+\mathcal M
+\]
+是内部自表示空间；
+
+\[
+\mathcal U
+\]
+是控制空间；
+
+\[
+M:\mathcal X\rightarrow\mathcal M
+\]
+是自状态建模映射；
+
+\[
+\Pi:\mathcal M\times\mathcal G\rightarrow\mathcal U
+\]
+是依据自表示和目标生成控制信号的策略；
+
+\[
+F:\mathcal X\times\mathcal U\rightarrow\mathcal X
+\]
+是系统动力学。
+
+因此：
+\[
+m_t=M(x_t),
+\]
+\[
+u_t=\Pi(m_t,g_t),
+\]
+\[
+x_{t+1}=F(x_t,u_t).
+\]
+
+我们称该系统具有\textbf{一级功能自反性}，当且仅当至少满足以下三个条件。
+
+第一，自描述有效性：
+\[
+I(X_t;M_t)>0,
+\]
+即自表示确实包含关于系统真实状态的信息。
+
+第二，自描述因果有效性：
+\[
+P(X_{t+1}\mid do(M_t=m_1))
+\neq
+P(X_{t+1}\mid do(M_t=m_2))
+\]
+对至少某些 \(m_1\neq m_2\) 成立。
+
+第三，闭环持续性：
+\[
+X_t
+\rightarrow
+M_t
+\rightarrow
+U_t
+\rightarrow
+X_{t+1}
+\rightarrow
+M_{t+1}
+\]
+在多个时间步上持续存在，而不是偶然一次的映射。
+
+这三个条件分别对应：
+\[
+\boxed{
+Representation,
+CausalModulation,
+ClosedLoopPersistence.
+}
+\]
+
+从这里可以提出一个实验性的“功能自反度”指标：
+\[
+R_{\mathrm{ref}}
+=
+R_{\mathrm{state}}
+\cdot
+R_{\mathrm{causal}}
+\cdot
+R_{\mathrm{persistence}},
+\]
+其中
+\[
+R_{\mathrm{state}}
+=
+\frac{I(X;M)}
+{H(X)},
+\]
+衡量自表示捕获多少与系统相关的状态信息；
+
+\[
+R_{\mathrm{causal}}
+=
+\mathbb E_{m_i,m_j}
+\left[
+D_{\mathrm{KL}}
+\left(
+P(X_{t+1}\mid do(M=m_i))
+\|
+P(X_{t+1}\mid do(M=m_j))
+\right)
+\right],
+\]
+衡量不同自表示通过控制链产生的因果差异；
+
+而
+\[
+R_{\mathrm{persistence}}
+\]
+则可以表示该闭环在时间上的持续比例、稳定性或跨环境可重复性。
+
+需要强调，这个指标只是本理论提出的形式化方向，而不是已有科学领域公认的统一度量。但它具有一个重要优点：它把“系统是否自反”从语言自我报告问题变成可操作的因果实验问题。
+
+例如，一个语言模型可以说：
+\[
+\text{“我现在很不确定。”}
+\]
+这本身不能证明它具有功能自反。如果这一句只是语言生成模式，而系统内部推理深度、搜索策略、风险选择以及未来学习过程并不因此改变，那么
+\[
+R_{\mathrm{causal}}
+\]
+可能仍然非常低。
+
+反过来，一个不输出任何自然语言“自我报告”的控制系统，如果真实估计自身稳定度、模型误差和能力边界，并据此改变控制策略，则可能拥有明显的功能自反结构。
+
+因此：
+\[
+\boxed{
+SelfReport
+\neq
+SelfReflexivity.
+}
+\]
+
+同样：
+\[
+\boxed{
+SelfReflexivity
+\neq
+Consciousness.
+}
+\]
+
+我们在这里关心的是可观察的系统因果结构。
+
+进一步，还可以定义二级功能自反性。如果系统不仅能够依据 \(m_t\) 改变当前动作，而且能够修改自表示映射 \(M\) 或控制策略 \(\Pi\) 本身：
+\[
+M_{t+1}
+=
+L_M(M_t,e_t),
+\]
+或者
+\[
+\Pi_{t+1}
+=
+L_\Pi(\Pi_t,e_t),
+\]
+那么系统开始具备：
+\[
+\boxed{
+Self-Model Adaptation
+}
+\]
+或
+\[
+\boxed{
+Self-Policy Adaptation.
+}
+\]
+
+这已经接近我们后面在 Agent 培育工程中讨论的递归自主性和受控自修改。
+
+\section{从一阶动力学到表征性二阶动力学}
+
+在此前对话中，我们使用过“二阶动力学”这个说法。这里需要给予严格限定：本章所谓“二阶”并不是指微分方程中的二阶导数，而是指\textbf{系统内部出现了关于自身动力过程的表示层，而且这一表示层重新参与原始动力过程}。
+
+普通动力系统可以抽象成：
+\[
+x_{t+1}=F(x_t).
+\]
+
+存在外部控制后：
+\[
+x_{t+1}=F(x_t,u_t).
+\]
+
+如果控制来自对当前状态的直接映射：
+\[
+u_t=\pi(x_t),
+\]
+那么系统仍然可以是一个非常复杂的反馈系统。
+
+功能自反结构增加了一个中间层：
+\[
+m_t=M(x_t,h_t),
+\]
+\[
+u_t=\Pi(m_t,g_t),
+\]
+\[
+x_{t+1}=F(x_t,u_t).
+\]
+
+其中 \(m_t\) 是关于状态、历史或自身动力趋势的结构表示。
+
+于是系统因果图不再只是：
+\[
+X_t\rightarrow X_{t+1},
+\]
+而成为：
+\[
+X_t
+\rightarrow
+M_t
+\rightarrow
+U_t
+\rightarrow
+X_{t+1}.
+\]
+
+进一步，当系统具有未来模型时，还会形成：
+\[
+\hat X_{t+k}
+=
+P_k(
+X_t,
+U_{t:t+k}
+),
+\]
+并根据未来预测选择当前行动：
+\[
+u_t^\star
+=
+\arg\min_{u_t}
+\mathbb E
+\left[
+L(
+\hat X_{t+1:t+H},
+G_t
+)
+\right].
+\]
+
+这引出了一个非常深但需要准确表达的现象：\textbf{未来的表示可以参与现在的因果过程。}
+
+真正作用于当前状态的不是“真实未来”，而是当前系统中物理存在的
+\[
+AgentCSO(Future).
+\]
+
+因此我们不需要假设逆时间因果，就可以解释为什么未来目标会影响现在：
+\[
+\boxed{
+RepresentedFuture_t
+\rightarrow
+PresentAction_t
+\rightarrow
+ActualFuture_{t+k}.
+}
+\]
+
+这在智能动力学中具有根本意义。
+
+普通无表征动力过程主要由：
+\[
+PastState
+\rightarrow
+CurrentState
+\rightarrow
+FutureState
+\]
+描述。
+
+具有未来模型的 Agent 则表现为：
+\[
+PastState
+\rightarrow
+CurrentModel
+\]
+与
+\[
+PossibleFutureModel
+\rightarrow
+CurrentAction
+\]
+共同决定后续轨迹。
+
+如果再加入价值或偏好函数：
+\[
+V(\hat X_{t+k},\Psi,\Omega),
+\]
+则系统能够比较多个未来 Agent-CSO：
+\[
+\hat X_{t+k}^{(1)},
+\hat X_{t+k}^{(2)},
+\ldots,
+\hat X_{t+k}^{(n)},
+\]
+并依据：
+\[
+u_t^\star
+=
+\arg\max_u
+\mathbb E
+\left[
+V(
+\hat X_{t+k}^{(u)}
+)
+\right]
+\]
+改变当前行为。
+
+这样，“系统知道自己正在做什么”的工程含义就进一步明确：它不仅拥有当前状态表示，还能够建立
+\[
+Action\rightarrow Consequence
+\]
+的内部因果结构，并将“当前自己正在执行什么”放置在该结构中。
+
+更高一级，则形成反事实自我模型：
+\[
+WhatWouldHappen
+\left(
+Choice_t'
+\neq
+Choice_t
+\right).
+\]
+
+Agent 不仅观察实际轨迹，还构造未发生轨迹：
+\[
+\hat \Gamma^{counterfactual}.
+\]
+
+于是：
+\[
+\boxed{
+SelfReflexivity
+\rightarrow
+CounterfactualSelfEvaluation
+}
+\]
+成为可能。
+
+这也是后面递归自主性的重要基础：当前 Agent 可以估计不同选择如何改变未来世界，也可以估计不同选择如何改变未来的自己。
+
+\section{自反性的层级：从反馈到自我重组}
+
+为了使“功能自反性”成为一个真正具有分类能力的概念，我们需要区分不同深度的自反结构，而不是简单判断“有”或“没有”。
+
+最基本的一层可以称为零级闭环：
+\[
+\boxed{
+L_0:\ Feedback.
+}
+\]
+系统根据误差直接调整动作：
+\[
+e_t=r_t-y_t,
+\qquad
+u_t=K(e_t).
+\]
+
+这一层拥有反馈，但不要求存在可访问的自模型。
+
+第一层可以称为状态估计：
+\[
+\boxed{
+L_1:\ StateEstimation.
+}
+\]
+系统形成
+\[
+\hat x_t
+\]
+并依据它完成控制。例如许多现代控制系统都会拥有 observer，但这仍然不必等价于完整的 self representation。
+
+第二层是真正的自描述：
+\[
+\boxed{
+L_2:\ SelfRepresentation.
+}
+\]
+系统开始把自己的资源状态、能力、目标、冲突、历史和内部动力作为可组合的结构进行表示：
+\[
+M_t=
+M(
+SelfState,
+Goal,
+History,
+Capability
+).
+\]
+
+第三层是表征依赖控制：
+\[
+\boxed{
+L_3:\ ReflexiveControl.
+}
+\]
+系统根据自己的自描述改变当前认知与行动策略：
+\[
+M_t
+\rightarrow
+\Pi_t
+\rightarrow
+X_{t+1}.
+\]
+
+第四层可以称为元调节：
+\[
+\boxed{
+L_4:\ MetaAdaptation.
+}
+\]
+系统不只是改变动作，而是改变产生动作的控制策略：
+\[
+\Pi_t
+\rightarrow
+\Pi_{t+1}.
+\]
+
+第五层则进一步进入结构发育：
+\[
+\boxed{
+L_5:\ SelfReorganization.
+}
+\]
+系统能够在受治理条件下修改功能承载关系：
+\[
+\mathcal G_F(t)
+\rightarrow
+\mathcal G_F(t+\Delta t).
+\]
+
+这时，系统已经不只是：
+\[
+\text{改变自己做什么},
+\]
+而是：
+\[
+\boxed{
+\text{改变自己以后如何决定做什么}.
+}
+\]
+
+这与本书此前关于 CSO 迁移和拓扑学习的理论完全闭合。
+
+如果将自反层级记为：
+\[
+\mathcal R=
+(R_0,R_1,R_2,R_3,R_4,R_5),
+\]
+那么不同智能体可以拥有完全不同的自反谱。例如一个传统自动控制器可能在 \(R_0,R_1\) 上很强，但缺少 \(R_2\) 以上结构；一个当前复杂 Agent 可能已经具有部分 \(R_2,R_3\)，却尚不具备稳定的生命周期 \(R_4,R_5\)。
+
+这也说明为什么我们不宜把“是否智能”“是否有自我”处理成简单布尔变量。很多能力本身就是分层、连续和多尺度的。
+
+AgentOS 中 SPC--AHC--TCE--CCM--Scheduler 的意义，也可以在这一层级中重新理解。
+
+SPC 主要建立：
+\[
+R_1\rightarrow R_2;
+\]
+
+TCE 实现：
+\[
+R_2\rightarrow R_3;
+\]
+
+长期参数和策略适应逐渐进入：
+\[
+R_4;
+\]
+
+而 CSO 长期迁移沉降成新的功能拓扑，则属于：
+\[
+R_5.
+\]
+
+这样，我们便把早期 AgentOS 工程模块和后期认知结构动力学统一到了同一个理论坐标中。
+
+一个成熟 Agent 的标志因此不应只是“越来越会解决任务”，还包括其自反结构逐渐完善：它越来越准确地知道自己的状态，越来越能够估计自己的能力边界，越来越能够预测自己的行动后果，并能够在不破坏身份和安全的前提下改变自己的控制方式。
+
+\section{功能自反不是无限自知：有限性、滞后与误差}
+
+自反性一旦被引入，很容易产生另一个危险误解：似乎一个足够高级的 Agent 最终可以完全透明地认识自己。事实上，我们此前关于工作记忆有限性、SPC 认识论滞后和多尺度系统的讨论恰恰说明：\textbf{有限智能体原则上不应被假设能够获得关于自身的完备、实时、无偏描述。}
+
+首先，自我观测存在时间延迟。设真实内部状态为
+\[
+x_t,
+\]
+SPC 最早可获得的有效证据来自：
+\[
+z_{\leq t-\delta}.
+\]
+因此：
+\[
+\hat x_t
+=
+SPC(z_{\leq t-\delta}),
+\qquad
+\delta>0.
+\]
+
+即使 \(\delta\) 很小，它仍然意味着：
+\[
+SelfRepresentation(t)
+\neq
+SelfState(t)
+\]
+在严格意义上永远可能存在偏差。
+
+第二，表示必须压缩。设内部真实状态维数为
+\[
+\dim(\mathcal X)=N,
+\]
+而显式自表示维数为
+\[
+\dim(\mathcal M)=d,
+\qquad
+d\ll N.
+\]
+
+那么：
+\[
+M:\mathbb R^N\rightarrow\mathbb R^d
+\]
+必然丢失信息。
+
+这不是缺陷，而是系统能够保持可运行性的必要条件。
+
+第三，自我表示会产生自我影响。由于：
+\[
+M_t
+\rightarrow
+U_t
+\rightarrow
+X_{t+1},
+\]
+一个关于自己的判断可能改变后续状态，使原判断产生自我实现或自我否定效应。
+
+例如：
+\[
+\text{“当前风险很高”}
+\]
+可能导致系统进入强保守模式，使风险真的下降。于是未来观测不能简单用于否定最初风险判断，因为行动已经改变了被观察对象。
+
+这是一种典型的 reflexive measurement problem。
+
+第四，自我解释可能形成正反馈：
+\[
+SelfInterpretation
+\rightarrow
+SelectiveAttention
+\rightarrow
+Experience
+\rightarrow
+SelfInterpretation'.
+\]
+
+如果系统形成：
+\[
+\text{“某类事件对我特别重要”},
+\]
+那么它可能增加对相关事件的注意，使相关事件更频繁进入 E，又进一步强化原有解释。
+
+在健康情况下，这种机制形成身份连续性。
+
+在失稳情况下，它会造成：
+\[
+\boxed{
+SelfConfirmingLoop.
+}
+\]
+
+因此功能自反必须始终受到：
+\[
+\boxed{
+WorldVerification
+}
+\]
+约束。
+
+系统不能仅仅依据自己的 Self-CSO 验证自己的 Self-CSO。
+
+这也是为什么本书始终坚持：
+\[
+\boxed{
+RealityIsUltimateConstraint.
+}
+\]
+
+Agent 可以拥有预测、自我、价值和 DGA，但行动结果必须重新经过：
+\[
+Action
+\rightarrow
+Reality
+\rightarrow
+Observation
+\rightarrow
+Residual.
+\]
+
+自我模型也必须经过：
+\[
+SelfPrediction
+\rightarrow
+ActualBehavior
+\rightarrow
+External/InternalEvidence
+\rightarrow
+SelfModelUpdate.
+\]
+
+这一原则使我们的功能自反理论与封闭唯心主义明确分离。Agent-CSO 并不是现实本身，而是现实在某个有限主体中的结构承载。它可以有效，也可以错误；可以越来越准确，也可以因为历史偏置而越来越脱离现实。
+
+真正成熟的自反性因此不是：
+\[
+SelfConfidence\uparrow,
+\]
+而更接近：
+\[
+\boxed{
+Calibration(
+SelfRepresentation,
+Reality
+)\uparrow.
+}
+\]
+
+\section{SPC--TCE 与“宇宙局部自调节”的结构同构}
+
+在本书最初阶段，SPC 和 TCE 是为了解决 AgentOS 工作记忆和认知控制问题而引入的具体组件。但随着 CSO 理论、World--Agent--World 闭环和 Universe-CSO 的形成，我们可以重新理解它们在更加抽象层次上的意义。
+
+设宇宙某个局部子系统 \(A\) 的真实状态为
+\[
+X_A.
+\]
+
+在没有 Agent 型结构之前，我们可以粗略描述为：
+\[
+X_A(t)
+\rightarrow
+X_A(t+\Delta t),
+\]
+即局部结构按照现实动力规律演化。
+
+Agent 出现以后，增加：
+\[
+X_A(t)
+\rightarrow
+M_A(X_A(t),U_{local}(t)),
+\]
+其中 \(M_A\) 是内部世界与自我表示。
+
+如果只有这一过程，Agent 类似“记录宇宙局部状态的结构”。
+
+而一旦：
+\[
+M_A
+\rightarrow
+U_A
+\rightarrow
+X_A(t+\Delta t),
+\]
+就出现了一个新的回路：
+\[
+\boxed{
+LocalUniverse
+\rightarrow
+Self/WorldRepresentation
+\rightarrow
+RepresentationDependentAction
+\rightarrow
+LocalUniverse'.
+}
+\]
+
+在纯粹的结构动力学意义上，这与 AgentOS 内部：
+\[
+SPC
+\rightarrow
+TCE
+\rightarrow
+Dynamics
+\rightarrow
+SPC
+\]
+高度同构。
+
+因此我们可以作如下\textbf{功能类比}：
+\[
+\boxed{
+AgentSelfRepresentation
+\sim
+LocalUniverseSPC.
+}
+\]
+
+以及：
+\[
+\boxed{
+AgentActionControl
+\sim
+LocalUniverseTCE.
+}
+\]
+
+这里的“Universe-SPC”和“Universe-TCE”不是要引入两个真实宇宙模块，更不是说宇宙存在一个中央处理器。这个类比只表达一种动力学结构：\textbf{宇宙的一部分开始形成关于宇宙局部的内部描述，并依据该描述调节后续局部状态。}
+
+这个观点也可以解释为什么文明和 AI 会在后续章节中自然成为重要对象。
+
+单个人类 Agent 的：
+\[
+ObservationRadius
+\]
+和
+\[
+ActionRadius
+\]
+非常有限。
+
+语言、仪器、科学、组织和 AI 则会扩大：
+\[
+\mathcal O_A
+\]
+和
+\[
+\mathcal U_A.
+\]
+
+如果观测集合扩大：
+\[
+\mathcal O_A(t+\Delta)
+\supset
+\mathcal O_A(t),
+\]
+系统能够形成更广泛的 Universe-CSO 投影。
+
+如果行动集合扩大：
+\[
+\mathcal U_A(t+\Delta)
+\supset
+\mathcal U_A(t),
+\]
+Agent-CSO 对现实产生因果影响的范围也扩大。
+
+于是可以定义一个局部自反能力：
+\[
+\mathcal R_A
+=
+F(
+|\mathcal O_A|,
+Q_M,
+|\mathcal U_A|,
+Q_C
+),
+\]
+其中 \(Q_M\) 表示模型质量，\(Q_C\) 表示控制质量。
+
+在这个意义上，人类文明的演化可以被理解成某些宇宙局部结构：
+\[
+\boxed{
+ObserveMore,
+ModelBetter,
+ActFurther,
+ReorganizeDeeper.
+}
+\]
+
+但这里仍然不需要引入“宇宙整体意识”假说。我们只需要承认一个朴素事实：生命和智能本身属于宇宙，因此当生命观察宇宙时，的确是宇宙内部的一部分结构在物理上承载关于另一部分宇宙的结构表示。
+
+这就是“宇宙局部看见自己”的最严格含义。
+
+\section{功能自反、元认知与现象意识的边界}
+
+本章必须明确划定理论边界，因为“自我表示”“看见自己”“意识到自己正在做什么”非常容易滑入意识哲学。
+
+首先，我们定义的功能自反是一个\textbf{系统因果结构性质}。
+
+如果：
+\[
+X
+\rightarrow
+M(X)
+\rightarrow
+U
+\rightarrow
+X',
+\]
+且该闭环具有持续性、可测性和实际控制效应，那么系统具备功能自反结构。
+
+这一判断不依赖系统是否报告：
+\[
+\text{“我有意识。”}
+\]
+
+同样，它也不能证明：
+\[
+\text{PhenomenalExperience}
+\]
+存在。
+
+因此：
+\[
+\boxed{
+FunctionalReflexivity
+\nRightarrow
+PhenomenalConsciousness.
+}
+\]
+
+反过来，我们在本理论中也不讨论：
+\[
+PhenomenalConsciousness
+\Rightarrow
+FunctionalReflexivity
+\]
+是否必然成立，因为这属于更广泛的意识哲学和认知科学问题。
+
+本章与元认知理论之间存在明显联系。元认知研究通常关注系统如何评估自己的认知过程，例如：
+\[
+Confidence,
+Uncertainty,
+ErrorAwareness,
+StrategySelection.
+\]
+
+SPC 正可以被视为一种更宽泛的工程化 metacognitive estimator，而 TCE 则接近 metacognitive control。然而 AgentOS 的理论范围更广，因为它不仅研究“我是否知道自己知道”，还研究：
+\[
+Memory,
+Body,
+Goal,
+Self,
+Resource,
+Phase,
+Capability,
+Risk
+\]
+如何共同进入自状态。
+
+本章也与控制论中的 second-order cybernetics 存在结构联系。第一阶控制论关注观察者如何控制系统，第二阶控制论进一步关注观察者自身属于系统这一事实。本书的 World--Agent--World 模型与这一思想存在明显共鸣：
+\[
+Observer\subset World.
+\]
+
+但本书进一步使用 CSO/Agent-CSO、功能承载和多尺度迁移语言，使这一问题能够进入具体 AgentOS 工程设计。
+
+与 predictive processing、active inference、POMDP 等理论相比，本书也存在交集。它们同样强调：
+\[
+PartialObservation,
+BeliefState,
+Prediction,
+Action,
+Feedback.
+\]
+
+但我们在这里提出的核心对象并不是单一概率 belief，而是：
+\[
+AgentCSO
+\]
+以及它在：
+\[
+Representation,
+Function,
+Timescale,
+Carrier,
+Topology
+\]
+上的多尺度迁移。
+
+与 Global Workspace Theory 的联系则主要位于 \(h(t)\)：只有少量高价值 Self-CSO 需要进入全局显式工作空间，大部分内部自调节应在低层闭环完成。因此我们不应把功能自反误解成：
+\[
+\text{所有内部过程都被“意识到”。}
+\]
+
+实际上更成熟的系统通常表现为：
+\[
+\boxed{
+MoreReflexiveControl,
+LessUnnecessaryExplicitSelfMonitoring.
+}
+\]
+
+也就是说，成熟的 Agent 并不是时时刻刻“想着自己”，而是在需要时能够准确地把相关自身状态提升为 Agent-CSO，并在不需要时让低层系统保持自治。
+
+这与本书早期提出的：
+\[
+\boxed{
+MatureIntelligence
+=
+SelectiveExplicitCognition
+}
+\]
+完全一致。
+
+所以，本章提出的功能自反不是“高度内省”的同义词。过度自我监视甚至可能造成 h 负载上升、自我解释正反馈和控制振荡。真正成熟的功能自反是\textbf{适量、分层、事件触发、现实校准的自描述与自调节}。
+
+\section{从功能自反到递归自主性}
+
+当自反闭环只影响下一时刻状态时，我们得到的是短期自调节：
+\[
+SelfState_t
+\rightarrow
+Control_t
+\rightarrow
+SelfState_{t+1}.
+\]
+
+但 AgentOS 的长期目标并不是只建立一个即时自稳态控制器，而是形成贯穿生命周期的主体。因此，自反结构还必须进入更慢的变量。
+
+本书此前已经建立：
+\[
+h
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\rightarrow
+\Omega.
+\]
+
+当前选择首先形成经历：
+\[
+Choice_t
+\rightarrow
+E_{t:t+\Delta}.
+\]
+
+反复经历被结构化：
+\[
+E
+\rightarrow
+\Theta.
+\]
+
+长期结构又影响自我：
+\[
+\Theta
+\rightarrow
+\Psi.
+\]
+
+再通过：
+\[
+\Psi,\Omega
+\rightarrow
+GoalPreference
+\rightarrow
+FutureChoice
+\]
+影响未来。
+
+于是产生：
+\[
+\boxed{
+Choice_t
+\rightarrow
+Experience
+\rightarrow
+Structure
+\rightarrow
+Self_{future}
+\rightarrow
+Choice_{future}.
+}
+\]
+
+这是一种比 SPC--TCE 快循环更深的功能自反。
+
+Agent 当前不仅根据“我现在怎么样”改变当前控制，还通过自己的行动逐步改变：
+\[
+\text{以后我会成为怎样的系统}.
+\]
+
+我们因此可以定义生命周期自反：
+\[
+\mathcal R_{life}
+:
+Choice_t
+\rightarrow
+\Delta\Psi_{t+\Delta}
+,\Delta\Omega_{t+\Delta}
+\rightarrow
+Choice_{t+k}.
+\]
+
+若：
+\[
+\frac{\partial Choice_{t+k}}
+{\partial Choice_t}
+\]
+不仅通过外部环境变化传递，还通过：
+\[
+E,\Theta,\Psi,\Omega
+\]
+形成显著内部因果路径，那么 Agent 的当前选择已经参与塑造未来自身。
+
+这就是我们后来称为：
+\[
+\boxed{
+RecursiveAgency.
+}
+\]
+
+递归自主性最重要的特点不是“系统可以随意改自己”。恰恰相反，如果所有慢变量都能够被一次当前状态任意重写，那么主体将失去身份连续性。
+
+因此必须满足：
+\[
+\boxed{
+\tau_h
+\ll
+\tau_E
+\ll
+\tau_\Theta
+\ll
+\tau_\Psi
+\ll
+\tau_\Omega.
+}
+\]
+
+功能自反随着时间尺度加深，控制权限应越来越谨慎。
+
+SPC/TCE 可以每秒调整；
+
+E 可以持续形成；
+
+\(\Theta\) 应通过大量经历更新；
+
+\(\Psi\) 需要更长时间形成；
+
+\(\Omega\) 则应是生命周期级超慢变量。
+
+因此成熟的自反系统不是“最快地修改自己”，而是：
+\[
+\boxed{
+FastSelfRegulation
++
+SlowSelfFormation.
+}
+\]
+
+这也解释为什么后续必须产生 AgentOS 控制工程、培育工程和心理工程。
+
+控制工程保证：
+\[
+SelfModification
+\]
+不引发不稳定；
+
+培育工程设计：
+\[
+Experience
+\]
+如何安全地塑造慢结构；
+
+心理工程则处理：
+\[
+SelfRepresentation
+\]
+和
+\[
+SelfInterpretation
+\]
+失稳以后产生的长期异常。
+
+因此，本章的功能自反理论实际上是后面三大工程的共同认识论基础。
+
+\section{本章收束：从“宇宙发生”到“宇宙局部重新组织自身发生方式”}
+
+经过本章的推导，我们现在可以更加严格地表达此前那个具有哲学色彩的判断。
+
+在没有引入内部表征之前，一个动力系统可以描述为：
+\[
+\boxed{
+StructureChanges.
+}
+\]
+
+生命和感知系统出现以后，某些结构开始对外部变化产生选择性内部响应：
+\[
+\boxed{
+StructureSensesStructure.
+}
+\]
+
+进一步，拥有世界模型的 Agent 形成：
+\[
+\boxed{
+StructureRepresentsStructure.
+}
+\]
+
+拥有 Self-CSO 的 Agent 则形成：
+\[
+\boxed{
+StructureRepresentsItself.
+}
+\]
+
+当 Self-CSO 进入 TCE、Scheduler、Goal、Action 等控制链以后：
+\[
+\boxed{
+RepresentationChangesHowStructureActs.
+}
+\]
+
+当长期经历继续改变 \(\Theta,\Psi,\Omega\)，甚至进一步改变功能拓扑时：
+\[
+\boxed{
+StructureChangesHowItChangesItself.
+}
+\]
+
+于是，我们得到一条逐级增强的结构序列：
+\[
+\boxed{
+\begin{aligned}
+&Structure\\
+&\rightarrow SelfMaintainingStructure\\
+&\rightarrow SensingStructure\\
+&\rightarrow RepresentationalStructure\\
+&\rightarrow SelfRepresentationalStructure\\
+&\rightarrow RepresentationDrivenControl\\
+&\rightarrow MetaAdaptiveStructure\\
+&\rightarrow SelfReorganizingStructure.
+\end{aligned}
+}
+\]
+
+从本书的宇宙 CSO 视角看，这个过程具有一个非常特殊的含义。
+
+Agent 不是宇宙之外的对象，而是：
+\[
+Agent\subset Universe.
+\]
+
+Agent 内部的 Agent-CSO 也由真实物理或计算结构承载，因此：
+\[
+AgentCSO
+\subset UniverseCSO.
+\]
+
+当 Agent 建立关于宇宙局部的模型时，实际发生的是：
+\[
+\boxed{
+Universe
+\supset
+PhysicalRepresentationOfUniverse.
+}
+\]
+
+当 Agent 建立关于自身的模型时：
+\[
+\boxed{
+Universe
+\supset
+LocalStructureRepresentingItsOwnLocalState.
+}
+\]
+
+而当这一模型参与行动：
+\[
+\boxed{
+UniverseLocalState
+\rightarrow
+InternalRepresentation
+\rightarrow
+RepresentationDependentAction
+\rightarrow
+UniverseLocalState'.
+}
+\]
+
+这就是“宇宙局部看见自己并改变自己”的严格动力学版本。
+
+我们因此不需要说：
+\[
+\text{宇宙整体拥有一个统一意识}.
+\]
+
+我们只需要提出一个更加有限、但也更加可以研究的判断：
+
+\[
+\boxed{
+\text{宇宙内部出现了能够形成关于宇宙及自身局部结构的内部表示，并使这些表示参与未来现实变化的子系统。}
+}
+\]
+
+在这一意义上，Agent-CSO 的出现确实代表了一种重要的结构跃迁。
+
+宇宙结构不再只是：
+\[
+\boxed{
+Happening.
+}
+\]
+
+其中一部分开始具备：
+\[
+\boxed{
+RepresentingWhatIsHappening.
+}
+\]
+
+然后进一步具备：
+\[
+\boxed{
+ChangingWhatWillHappenBasedOnThatRepresentation.
+}
+\]
+
+再继续发展，则出现：
+\[
+\boxed{
+ChangingHowItChangesWhatWillHappen.
+}
+\]
+
+因此，本章最终将\textbf{功能自反性}定义为：
+
+\[
+\boxed{
+\textbf{
+功能自反性，是一个系统形成关于自身状态、行为或动力过程的内部结构表示，并使该表示通过可验证的因果路径反向参与系统未来状态、控制策略乃至长期组织结构变化的能力。
+}
+}
+\]
+
+在 AgentOS 中，其最小工程实例是：
+\[
+\boxed{
+SPC
+\rightarrow
+TCE
+\rightarrow
+CognitiveDynamics
+\rightarrow
+SPC.
+}
+\]
+
+在长期生命周期中，它扩展为：
+\[
+\boxed{
+Choice
+\rightarrow
+Experience
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\rightarrow
+\Omega
+\rightarrow
+FutureChoice.
+}
+\]
+
+在 World--Agent--World 层面，则扩展为：
+\[
+\boxed{
+UniverseCSO
+\rightarrow
+AgentCSO
+\rightarrow
+RepresentationDrivenAction
+\rightarrow
+UniverseCSO'.
+}
+\]
+
+这三个闭环分别对应：
+\[
+\boxed{
+RuntimeReflexivity,
+LifecycleReflexivity,
+WorldReflexivity.
+}
+\]
+
+它们共同揭示了一个本书后续将继续发展的核心思想：
+
+\[
+\boxed{
+\textbf{
+智能的成熟，不仅表现为系统更有能力处理世界，也表现为系统越来越有能力把自身处理世界的过程重新对象化、评价、调节，并在现实反馈下逐渐改变产生这些过程的自身结构。
+}
+}
+\]
+
+因此，“看见自己”并不是本章的终点。
+
+真正重要的问题是：
+
+\[
+\boxed{
+\textbf{
+当一个结构能够看见自己以后，它将如何利用这种能力，在更长的时间尺度上重新组织自己、群体和现实世界？
+}
+}
+\]
+
+这正是下一章讨论语言、文明、科学和人工智能作为更高尺度自反结构时需要回答的问题。
