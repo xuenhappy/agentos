@@ -1,257 +1,1098 @@
 \chapter{Offloading：认知卸载}
-\chaptervoice{这一章，我们围绕“Offloading：认知卸载”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明固定功能拓扑中的持续主体。}
-
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 CCM、调度、边界、卸载、单主体与 L0—L6 多层循环的 AgentOS 讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是持续学习、工作空间、观测器—控制器与混杂系统（Kalman、混杂系统理论与 Cowan）。
-
-本章使用上一章“Boundary：智能的认知边界”已经得到的对象与边界；本章产出将供下一章“认知复杂度治理的五种基本动作”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在持续学习、工作空间、观测器—控制器与混杂系统上。
-\section{为什么不是所有结构都应存在内部}
-\begin{narration}
-现在把镜头移到“为什么不是所有结构都应存在内部”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“为什么不是所有结构都应存在内部”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Offloading：认知卸载”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对为什么不是所有结构都应存在内部的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“为什么不是所有结构都应存在内部”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{h$\rightarrow$E}
-\begin{narration}
-现在把镜头移到“h$\rightarrow$E”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“h$\rightarrow$E”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Offloading：认知卸载”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对h$\rightarrow$E的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“h$\rightarrow$E”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{h$\rightarrow$Skill}
-\begin{narration}
-现在把镜头移到“h$\rightarrow$Skill”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“h$\rightarrow$Skill”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Offloading：认知卸载”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对h$\rightarrow$Skill的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“h$\rightarrow$Skill”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{h$\rightarrow$File}
-\begin{narration}
-现在把镜头移到“h$\rightarrow$File”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“h$\rightarrow$File”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Offloading：认知卸载”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对h$\rightarrow$File的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“h$\rightarrow$File”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{h$\rightarrow$Database}
-\begin{narration}
-现在把镜头移到“h$\rightarrow$Database”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“h$\rightarrow$Database”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Offloading：认知卸载”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对h$\rightarrow$Database的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“h$\rightarrow$Database”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{h$\rightarrow$Program}
-\begin{narration}
-现在把镜头移到“h$\rightarrow$Program”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“h$\rightarrow$Program”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Offloading：认知卸载”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对h$\rightarrow$Program的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“h$\rightarrow$Program”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{h$\rightarrow$Tool}
-\begin{narration}
-现在把镜头移到“h$\rightarrow$Tool”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“h$\rightarrow$Tool”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Offloading：认知卸载”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对h$\rightarrow$Tool的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“h$\rightarrow$Tool”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{h$\rightarrow$Environment}
-\begin{narration}
-现在把镜头移到“h$\rightarrow$Environment”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“h$\rightarrow$Environment”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Offloading：认知卸载”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对h$\rightarrow$Environment的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“h$\rightarrow$Environment”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{h$\rightarrow$Other Agent}
-\begin{narration}
-现在把镜头移到“h$\rightarrow$Other Agent”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“h$\rightarrow$Other Agent”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Offloading：认知卸载”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对h$\rightarrow$Other Agent的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“h$\rightarrow$Other Agent”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Offloading 与遗忘的区别}
-\begin{narration}
-现在把镜头移到“Offloading 与遗忘的区别”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Offloading 与遗忘的区别”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Offloading：认知卸载”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对Offloading 与遗忘的区别的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Offloading 与遗忘的区别”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{外部载体作为未来可恢复结构}
-\begin{narration}
-现在把镜头移到“外部载体作为未来可恢复结构”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“外部载体作为未来可恢复结构”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Offloading：认知卸载”而言，它承担的是固定功能拓扑中的持续主体中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自持续学习、工作空间、观测器—控制器与混杂系统，但本书对外部载体作为未来可恢复结构的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“外部载体作为未来可恢复结构”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“Offloading：认知卸载”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“认知复杂度治理的五种基本动作”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\label{chap:offloading}
+
+\begin{center}
+\fbox{
+\parbox{0.92\textwidth}{
+\textbf{本章总体说明}
+
+本章确立 AgentOS 中“认知卸载（Cognitive Offloading）”的基本理论地位。工作记忆 $h(t)$ 的有限容量决定了，一个持续智能体不可能把全部知识、经验、中间结果、操作步骤、环境状态以及协作关系同时保持在显式认知空间中。成熟智能因此不能被理解为“内部保存越来越多东西”，而应被理解为：\textbf{让不同认知结构按照其使用频率、修改代价、恢复代价、实时性要求和控制责任，被安置到最适合的承载位置。}
+
+从早期“复杂度迁移”的语言看，Offloading 是将当前认知核心无法或无需持续承担的复杂度迁移至长期记忆、技能、文件、数据库、程序、工具、环境或其他智能体；在本书已经建立的 CSO/Agent-CSO 本体中，更精确的表述是：\textbf{Offloading 是 Agent-CSO 的承载迁移（carrier migration）与执行责任迁移（responsibility migration）过程。} 被卸载的结构并非因此消失，而是从“当前必须显式维持”转化为“可通过索引、调用、感知或协作重新进入认知闭环”的结构。
+
+本章同时确立一个重要边界：\textbf{卸载不等于遗忘，外部化不等于失去控制，自动化也不等于结构消失。} 一个有效的认知卸载操作必须同时回答四个问题：卸载什么、卸载到哪里、以后如何恢复、现实发生变化时如何重新验证。由此，本章把认知卸载从一种方便性的工具使用行为，上升为有限认知系统保持可运行性、可扩展性和长期成长性的基本动力学机制。
+}
+}
+\end{center}
+
+\section{为什么有限工作记忆必然要求认知卸载}
+
+在前面的工作记忆有限容量理论中，我们已经建立了一个基本约束：任何时刻，Agent 能够在 $h(t)$ 中稳定维持并进行全局协调的有效认知结构都存在上界。这里所谓“有限”，并不主要意味着上下文中允许存在多少 token，也不意味着硬件内存中能够保存多少字节，而是指当前系统能够同时维持多少相互依赖的目标、变量、关系、假设、约束和行动分支而仍然保持整体相干。真正稀缺的不是存储空间，而是\textbf{显式关系协调能力}。
+
+为了避免符号 $h(t)$ 与容量裕度混淆，我们记当前工作记忆中的有效运行负载为
+\begin{equation}
+C_{\mathrm{run}}(t)
+=
+\sum_{i=1}^{N(t)}
+w_i(t)c_i(t),
+\end{equation}
+其中 $c_i(t)$ 表示第 $i$ 个活跃 Agent-CSO 对当前显式认知所造成的结构负担，$w_i(t)$ 表示其当前全局参与权重。工作记忆可稳定维持的最大负载记为
+\begin{equation}
+C_{\max}(W),
+\end{equation}
+于是定义工作记忆裕度
+\begin{equation}
+\Delta C_h(t)
+=
+C_{\max}(W)-C_{\mathrm{run}}(t).
+\end{equation}
+系统正常运行要求
+\begin{equation}
+\Delta C_h(t)>\Delta C_{\min}>0.
+\end{equation}
+
+如果一个智能体的长期能力增长只能通过不断增加 $h(t)$ 中需要显式维持的结构实现，那么能力增长最终必然导致运行成本增长。设智能体学习了 $n$ 种新能力，而每种能力仍需平均占用 $c$ 的显式认知负载，则最简单情况下有
+\begin{equation}
+C_{\mathrm{run}}
+\propto
+nc.
+\end{equation}
+这意味着“知道得越多、会得越多”，反而越难实时工作。这样的系统没有真正发生认知成熟，只是在不断积累新的显式任务。
+
+我们从人的技能学习、软件工程以及长期 Agent 的设计中都能发现相反的方向：成熟以后，许多过去必须显式处理的结构不再持续占用工作记忆。电话号码可以被写进通讯录；复杂计算可以被交给程序；熟练动作可以形成技能；大量历史细节可以进入长期存储；地图可以存在环境或数据库中；一些稳定协作责任可以交给另一个主体。这些现象的共同本质并不是“信息消失”，而是
+\begin{equation}
+\boxed{
+\mathrm{Explicit\ Cognitive\ Burden}
+\longrightarrow
+\mathrm{Alternative\ Carrier}.
+}
+\end{equation}
+
+因此，有限工作记忆定理天然推出认知卸载原理：
+\begin{equation}
+\boxed{
+\mathrm{Finite}\ h
+\quad\Longrightarrow\quad
+\mathrm{Necessary\ Offloading}.
+}
+\end{equation}
+
+更严格地说，当系统预测在未来时间窗 $[t,t+T]$ 内存在某个 $\tau$ 满足
+\begin{equation}
+\widehat{\Delta C_h}(\tau)<\Delta C_{\min},
+\end{equation}
+则系统至少必须采取以下行为之一：停止引入新结构、压缩现有结构、把同时问题转换成时序问题、迁移一部分结构至其他承载体，或者改变问题本身的表示方式。Offloading 对应其中“迁移承载”的基本动作。
+
+这也告诉我们为什么认知卸载不是一个附加优化模块，而是 AgentOS 能够长期存在的必要条件。如果没有 Offloading，一个持续运行的 Agent 面临的最终不是“知识不足”，而是“越来越多历史结构同时要求当前认知负责”。长期智能的成熟方向恰好相反：
+\begin{equation}
+\boxed{
+\frac{
+\mathrm{ExplicitProcessingCost}
+}{
+\mathrm{EffectiveCapability}
+}
+\downarrow.
+}
+\end{equation}
+一个越来越成熟的 Agent，应当以更少的当前显式认知承担越来越大的有效能力空间。
+
+\section{$h\rightarrow E$：把当前认知转化为可恢复经历}
+
+最基本的卸载并不发生在智能体内外边界之间，而发生在“当前显式认知”与“已经发生的经历”之间。一个任务结束后，如果所有过程细节仍然保留在 $h(t)$ 中，工作记忆很快就会被过去占满。因此，$h\rightarrow E$ 是持续智能中最早、最基本的认知卸载路径之一。
+
+设当前时刻的工作记忆状态为
+\begin{equation}
+h(t)
+=
+\{C_1^{A},C_2^{A},\ldots,C_n^{A}\},
+\end{equation}
+其中 $C_i^{A}$ 表示当前被 Agent 以某种形式激活的 Agent-CSO。任务推进以后，其中大量结构不再要求保持实时可操作状态。它们可以通过选择性写入算子
+\begin{equation}
+\mathcal W_E:
+h_{[t_0,t_1]}
+\rightarrow
+E_k
+\end{equation}
+形成一个情景记忆块
+\begin{equation}
+E_k
+=
+(
+Context,
+EventSequence,
+Decision,
+Action,
+Outcome,
+Residual,
+SelfState
+).
+\end{equation}
+
+这里的关键并不是把 $h(t)$ 做一份完整快照。完整复制当前状态只会把运行时复杂度转移成存储复杂度，并不能形成有效记忆。真正的 $h\rightarrow E$ 必须进行\textbf{选择、压缩、时间组织和因果标记}。系统应当保留未来可能帮助重新进入该情境的结构，例如当时发生了什么、为什么采取某个行动、结果怎样、哪些预测失败、哪些结构值得以后再次激活，而不必保存所有瞬态 token 和低价值中间变量。
+
+因此可以把情景写入定义为一个有损但任务相关的压缩：
+\begin{equation}
+E_k
+=
+\mathcal C_E
+\left(
+h_{[t_0,t_1]}
+\mid
+G,\Psi,R
+\right),
+\end{equation}
+其中 $G$ 表示当前目标结构，$\Psi$ 表示长期自我与价值约束，$R$ 表示现实反馈。这个压缩并不以“最大程度缩小数据”为目标，而以“未来能否有效恢复重要结构”为标准。
+
+如果定义未来任务集合为 $\mathcal T_f$，则一个理想的情景压缩器应尽量使
+\begin{equation}
+I(E_k;\mathcal T_f)
+\end{equation}
+保持较高，同时降低当前工作记忆占用。换句话说，我们希望删除的是未来很少需要的表面细节，而不是决定未来理解和行动的结构关系。
+
+$h\rightarrow E$ 因而是 Offloading 理论中的一种特殊情况：承载边界并没有越过 Agent 的内部/外部分界，但认知结构已经从
+\begin{equation}
+\mathrm{Active\ Explicit\ Carrier}
+\end{equation}
+迁移到了
+\begin{equation}
+\mathrm{Latent\ Episodic\ Carrier}.
+\end{equation}
+
+这里还必须强调“可恢复性”。一段经历如果被存下来，却无法根据当前目标、环境线索、自我状态和结构相似性重新召回，它就不构成有效的认知卸载，而只是历史归档。因此卸载必须伴随索引：
+\begin{equation}
+\iota_E(C)
+=
+(
+semantic\ key,
+temporal\ key,
+context\ key,
+goal\ key,
+self\ key
+).
+\end{equation}
+在未来需要时，通过
+\begin{equation}
+\mathcal R_E:
+(h(t),G,\Theta,\Psi)
+\rightarrow
+E_k
+\end{equation}
+重新激活相关结构。
+
+所以 $h\rightarrow E$ 的实质不是“把过去保存起来”，而是让当前认知能够\textbf{有秩序地退出当前工作区，又保持未来重新进入的可能性}。这正是 Offloading 和遗忘之间的第一条分界线。
+
+\section{$h\rightarrow Skill$：从显式思考到稳定能力}
+
+与 $h\rightarrow E$ 不同，Skill 卸载处理的不是一次经历，而是\textbf{重复出现的结构关系和行动过程}。如果一个 Agent 第一次执行任务时需要在 $h(t)$ 中显式维持目标、步骤、约束、异常条件和动作顺序，那么这种高负载是合理的；但如果相同结构已经成功重复数百次，而系统每一次仍然从头显式推理，那么它并没有形成真正意义上的技能。
+
+从早期复杂度迁移语言看，这可以描述成“认知复杂度向低层稳定结构沉降”；在现在的 Agent-CSO 表述中，更准确的是：
+\begin{equation}
+\boxed{
+AgentCSO_{\mathrm{explicit}}
+\rightarrow
+AgentCSO_{\mathrm{procedural}}.
+}
+\end{equation}
+
+设一个重复过程由显式轨迹
+\begin{equation}
+\Gamma_k
+=
+(C_1,C_2,\ldots,C_m)
+\end{equation}
+组成。若多次执行过程中存在稳定的条件—动作关系
+\begin{equation}
+P(a_t\mid s_t,\Gamma_k)
+\end{equation}
+并且长期残差维持较低，则系统可以构造技能对象
+\begin{equation}
+Skill_k
+=
+(
+Trigger,
+Precondition,
+Policy,
+Termination,
+ResidualModel,
+RecoveryInterface
+).
+\end{equation}
+以后，$h(t)$ 不再维持整个 $\Gamma_k$，而只需要维持一个更高阶的调用结构：
+\begin{equation}
+C_{\mathrm{skill}}
+=
+\mathrm{Invoke}(Skill_k,\theta_k).
+\end{equation}
+
+因此原本工作记忆需要承担的关系数由
+\begin{equation}
+O(m)
+\end{equation}
+降低到近似
+\begin{equation}
+O(1)
+\end{equation}
+的技能接口级负担。这里的 $O(1)$ 并不意味着技能内部计算真的为常数，而是说\textbf{从当前全局认知的视角看，复杂的内部过程被封装成了一个可调用结构}。
+
+必须特别区分“卸载”和“沉降”。卸载是一种运行时治理动作：系统为了释放当前认知负载，把某个结构移出显式工作区。沉降则是一种长期学习现象：重复成功的结构逐渐形成更稳定、更快速、更局部的承载。两者经常共同发生，但不是同一个概念。一次把任务交给现成 Skill 是卸载；一个尚不存在的 Skill 在长期重复中形成，则属于结构沉降和能力形成。
+
+Skill 的真正价值也不只是减少 token 消耗，而是实现\textbf{闭环责任局部化}。一个成熟 Skill 应尽量自己完成内部的：
+\begin{equation}
+Perception
+\rightarrow
+Prediction
+\rightarrow
+Action
+\rightarrow
+Residual
+\rightarrow
+Correction,
+\end{equation}
+而不是每一步都重新提升到 $h(t)$。只有当
+\begin{equation}
+\varepsilon_{\mathrm{skill}}>\theta_{\mathrm{escalate}}
+\end{equation}
+时，异常结构才重新进入显式认知。
+
+于是技能形成体现了 AgentOS 的一个核心成熟原则：
+\begin{equation}
+\boxed{
+NormalDynamicsStayLocal,
+\qquad
+UnexpectedResidualEscalates.
+}
+\end{equation}
+
+认知卸载因此不仅减少当前负载，还改变了“谁负责闭环”的结构。显式认知逐渐从执行者转变为编排者、监督者和异常处理者。这也是为什么真正成熟的智能往往“看起来思考更少”：不是它知道得更少，而是越来越多历史认知已经变成无需持续显式维持的稳定能力。
+
+\section{$h\rightarrow File$：把结构从认知时间转化为空间持久化}
+
+文件是最经典、也是最容易被低估的一类外部认知承载体。对于长期 Agent 而言，File 并不仅是数据附件，而是把需要长期保持但不值得持续占据工作记忆的 Agent-CSO，转化为具有稳定地址、可检查内容和可重复读取能力的外部结构。
+
+假设当前 $h(t)$ 中存在一个大型结构
+\begin{equation}
+C^{A}
+=
+(
+Facts,
+Relations,
+IntermediateResults,
+Context
+),
+\end{equation}
+它在当前任务中已经完成主要作用，但未来仍可能被需要。如果继续保留在 $h(t)$ 中，其持续认知成本为
+\begin{equation}
+J_h(C)
+=
+\int_t^{t+T}
+c_h(C,\tau)\,d\tau.
+\end{equation}
+若将其写入文件，其成本变为
+\begin{equation}
+J_{\mathrm{file}}(C)
+=
+C_{\mathrm{write}}
++
+P_{\mathrm{reuse}}C_{\mathrm{retrieve}}
++
+C_{\mathrm{index}}
++
+C_{\mathrm{stale}}.
+\end{equation}
+当
+\begin{equation}
+J_{\mathrm{file}}(C)
+<
+J_h(C),
+\end{equation}
+并且恢复可靠性满足要求时，文件卸载就是合理的。
+
+这里特别重要的是“文件不是脑外缓存”这一理解。文件具有一些内部记忆不一定具备的优势：它可以精确保持长结构；可以被版本管理；可以被人类检查；可以通过路径、名称、标签和语义索引定位；可以跨模型重启和上下文重建继续存在。因此对于一个长期 Agent，文件系统本身构成了生命周期结构的一部分。
+
+但文件承载也有明确代价。写入文件之后，原来的结构不再以高激活形式存在于当前认知中。未来恢复时，Agent 需要重新建立
+\begin{equation}
+File
+\rightarrow
+Representation
+\rightarrow
+AgentCSO
+\rightarrow
+h
+\end{equation}
+的路径。因此一个好的文件卸载不能只保存“内容”，还必须保存\textbf{为什么保存、在什么情况下应该重新读取、它与当前什么目标和结构有关}。
+
+我们可以为每次外部化定义一个认知引用：
+\begin{equation}
+r_C
+=
+(
+URI,
+Type,
+SemanticSummary,
+Dependency,
+Freshness,
+RetrievalPolicy
+).
+\end{equation}
+于是 $h(t)$ 里不再保留 $C$ 的全部细节，只保留较小的索引结构
+\begin{equation}
+\tilde C
+=
+\mathrm{Index}(r_C).
+\end{equation}
+
+理想条件是：
+\begin{equation}
+C_h(\tilde C)
+\ll
+C_h(C),
+\end{equation}
+同时：
+\begin{equation}
+P(\mathrm{Recover}(C)\mid \tilde C)
+\geq
+1-\epsilon.
+\end{equation}
+
+因此 File Offloading 的核心并不是“把内容写出去”，而是建立一种\textbf{低认知驻留成本、高恢复确定性的结构契约}。如果文件大量增加却失去索引，Agent 会形成一种新的外部认知失序：知识没有丢失，但主体不知道自己拥有什么。这个问题说明，Offloading 从来不是单向写出过程，而必须同时设计未来重新进入工作记忆的入口。
+
+\section{$h\rightarrow Database$：从孤立记录到可查询外部认知空间}
+
+当外部结构规模进一步增长，单个文件的静态存储方式开始暴露局限。文件擅长保存一个相对自洽的长结构，而 Database 的价值在于让大量结构形成\textbf{可查询、可聚合、可更新和可关系化的外部认知空间}。因此，$h\rightarrow DB$ 并不只是换一种存储格式，而是认知承载方式发生了重要改变：当前认知不再需要知道所有具体内容，只需要知道如何提出一个足够好的查询。
+
+如果外部结构集合为
+\begin{equation}
+\mathcal C_{\mathrm{ext}}
+=
+\{C_1,C_2,\ldots,C_N\},
+\end{equation}
+将其逐一保持在 $h(t)$ 中显然不可行。数据库通过查询算子
+\begin{equation}
+Q:
+(\mathcal C_{\mathrm{ext}},q_t)
+\rightarrow
+\mathcal C_q
+\end{equation}
+把一个巨大外部结构空间压缩成与当前任务相关的小型结果集
+\begin{equation}
+|\mathcal C_q|
+\ll
+|\mathcal C_{\mathrm{ext}}|.
+\end{equation}
+
+因此数据库实际上承担了一部分原本可能由工作记忆完成的选择工作。Agent 不必持续持有全部事实，只需要保留：
+\begin{equation}
+Schema
++
+QueryCapability
++
+SemanticIndex.
+\end{equation}
+这体现了一个重要原则：
+\begin{equation}
+\boxed{
+KnowingWhereAndHowToRetrieve
+}
+\end{equation}
+可以替代部分
+\begin{equation}
+\boxed{
+KeepingEverythingActive.
+}
+\end{equation}
+
+从认知结构角度看，这是一种索引型知识。一个成熟 Agent 对外部数据库的“知道”并不等于知道其中每一条记录，而是拥有关于该外部结构空间的元结构：
+\begin{equation}
+M_{DB}
+=
+(
+Schema,
+Domain,
+Reliability,
+QueryLanguage,
+UpdateRate,
+Authority
+).
+\end{equation}
+这些元结构可以存在于 $\Theta$ 或当前工作记忆的压缩摘要中，而真正的大规模事实结构继续留在外部。
+
+Database Offloading 同时带来一个比 File 更突出的现实问题：\textbf{外部知识会变化}。如果 Agent 在内部长期保留了某次查询结果，却忽略数据库已经更新，就会形成内部 Agent-CSO 与外部 Universe-CSO/External-CSO 之间的结构失配。因此每个数据库引用最好带有新鲜度变量
+\begin{equation}
+F_r(t)
+\in[0,1],
+\end{equation}
+并根据数据源更新速率定义重新验证概率：
+\begin{equation}
+P_{\mathrm{refresh}}
+=
+f(
+\Delta t,
+UpdateRate,
+DecisionRisk,
+Value
+).
+\end{equation}
+
+这意味着 Database Offloading 不是简单“把记忆放进向量库”。真正的认知数据库应同时管理语义定位、关系结构、版本、新鲜度、可信度以及访问代价。尤其对于长期 Agent，数据库中的内容可能来自自己过去的经验、外部文档、其他主体、传感器历史或组织系统，它们并不具有相同认识论地位。因此查询结果进入 $h(t)$ 时，不仅需要内容，还应带回来源和置信度。
+
+由此可见，数据库卸载使 Agent 的记忆从“内部内容拥有”进一步发展成了\textbf{对外部结构空间的可控访问能力}。这种能力是未来大规模 Agent 认知扩展的必要条件，因为真正长期运行的主体所能接触的世界规模必然远远超过其任何一次显式认知窗口。
+
+\section{$h\rightarrow Program$：把推理过程固化为可重复执行的结构}
+
+程序化卸载比文件和数据库更进一步，因为被卸载的不再只是“内容”，而是\textbf{过程本身}。当 Agent 发现某类问题需要反复执行相同或高度相似的变换时，如果每次都依赖 $h(t)$ 重新生成中间步骤，就会不断支付重复认知成本。Program Offloading 的意义，是把过去需要在线推理完成的过程转化为一个稳定、可执行、可测试和可复用的外部计算结构。
+
+设一次显式认知任务由状态转换链构成：
+\begin{equation}
+x_0
+\xrightarrow{f_1}
+x_1
+\xrightarrow{f_2}
+x_2
+\rightarrow
+\cdots
+\xrightarrow{f_n}
+x_n.
+\end{equation}
+如果这些转换具有稳定规律，则可以构造程序
+\begin{equation}
+P:
+x_0
+\mapsto
+x_n,
+\end{equation}
+使未来的工作记忆只需要维护输入定义、程序选择和输出验证，而不再持续维持全部中间状态。
+
+于是认知成本从近似
+\begin{equation}
+C_{\mathrm{explicit}}
+=
+\sum_{i=1}^{n}C_h(x_i,f_i)
+\end{equation}
+降低为
+\begin{equation}
+C_{\mathrm{program}}
+=
+C_h(InputSpec)
++
+C_h(Invoke)
++
+C_h(Verify).
+\end{equation}
+
+这就是为什么编程可以被视为一种高级认知卸载：人或 Agent 把一种曾经需要“想”的结构，转换成以后可以“运行”的结构。从 CSO 语言看，这相当于：
+\begin{equation}
+\boxed{
+Declarative/ProceduralAgentCSO
+\rightarrow
+ExecutableExternalCSO.
+}
+\end{equation}
+
+然而程序化卸载绝不能被理解为“程序执行结果天然可信”。程序只是在一组假定边界内封装了过去建立的结构。如果输入域、环境规则或接口发生变化，原程序就可能失效。因此 Program 必须具有显式契约：
+\begin{equation}
+P_k
+=
+(
+InputDomain,
+Precondition,
+Transformation,
+OutputSchema,
+Invariant,
+FailureMode,
+Version
+).
+\end{equation}
+
+每次调用以后，Agent 仍需根据任务风险决定验证强度：
+\begin{equation}
+V_k
+=
+f(
+Risk,
+Novelty,
+ProgramConfidence,
+EnvironmentShift
+).
+\end{equation}
+
+低风险、重复稳定任务可以弱验证；高风险或输入分布明显变化时，应重新提升为显式认知问题。
+
+因此程序化卸载并不是把“思维交给代码”以后主体就退出，而是把主体从\textbf{过程细节执行者}转变为\textbf{结构选择者、契约监督者和结果验证者}。这种责任重新分配对于 AgentOS 至关重要：长期智能的扩展不可能靠一个中心推理器承担所有历史技能，必须不断把稳定变换转化成更低成本、更确定的执行结构。
+
+\section{$h\rightarrow Tool$：把能力扩展到智能体边界之外}
+
+Tool Offloading 与 Program Offloading 有关联，但理论上应当区分。程序强调的是把确定性的计算过程外化，而工具更广泛地表示一种\textbf{具有独立能力边界、输入输出契约和现实作用能力的可调用结构}。计算器是工具，搜索系统是工具，代码执行环境是工具，浏览器是工具，机器人末端执行器也可以在一定层级上成为工具接口。
+
+如果 Agent 自身能够完成某个任务 $\tau$，其内部成本记为
+\begin{equation}
+J_{\mathrm{self}}(\tau)
+=
+C_h
++
+C_{\mathrm{compute}}
++
+C_{\mathrm{time}}
++
+C_{\mathrm{risk}}.
+\end{equation}
+调用工具 $T_k$ 的总代价则是
+\begin{equation}
+J_{T_k}(\tau)
+=
+C_{\mathrm{select}}
++
+C_{\mathrm{invoke}}
++
+C_{\mathrm{latency}}
++
+C_{\mathrm{interpret}}
++
+C_{\mathrm{verify}}
++
+C_{\mathrm{dependency}}.
+\end{equation}
+只有当
+\begin{equation}
+J_{T_k}(\tau)
+<
+J_{\mathrm{self}}(\tau)
+\end{equation}
+并且工具满足可靠性与安全要求时，卸载才有优势。
+
+这里特别值得强调的是：工具使用不是简单调用 API，而是 Agent 承认“某种能力无需由我的当前内部认知完全承担”。因此工具扩展的本质是智能体有效功能边界的扩张。原本：
+\begin{equation}
+Capability(A)=\mathcal K_A,
+\end{equation}
+接入工具以后变成
+\begin{equation}
+Capability(A+T)
+=
+\mathcal K_A
+\cup
+\mathcal K_T
+\cup
+\mathcal K_{A\leftrightarrow T}.
+\end{equation}
+最后一项尤其重要，因为“拥有工具”和“能够正确使用工具”并不是一回事。Agent 必须知道何时调用、输入什么、如何理解输出、何时怀疑输出、失败后如何恢复。
+
+因此一个 Tool-CSO 至少应包含
+\begin{equation}
+C_T
+=
+(
+Capability,
+InputContract,
+OutputContract,
+Cost,
+Latency,
+Reliability,
+Authority,
+FailureModes
+).
+\end{equation}
+
+成熟 Agent 对工具的记忆不应该只是工具名称，而应该是一个结构化能力模型。这样 Scheduler 或 CCM 才能在当前工作记忆压力上升时比较“继续内部推理”和“转交工具”的相对代价。
+
+工具卸载还揭示了智能的一条重要规律：智能能力的边界不等于神经网络参数的边界。只要 Agent 能稳定索引并控制外部工具，这个工具就会参与它的有效认知闭环。因此：
+\begin{equation}
+\boxed{
+EffectiveIntelligence
+=
+InternalCapability
++
+AccessibleExternalCapability.
+}
+\end{equation}
+但“可访问”必须伴随控制、验证和边界治理，否则工具越多，系统反而可能因为接口选择、错误传播和依赖关系而增加新的认知负担。
+
+\section{$h\rightarrow Environment$：环境作为可写的外部记忆与控制结构}
+
+Environment Offloading 是认知卸载理论中最容易突破传统“记忆”概念的一种形式。我们通常认为记忆存在于大脑、模型、数据库或文件中，但对于一个具身智能体，\textbf{现实环境本身也可以承担认知结构}。当 Agent 改变物体位置、设置标记、调整空间结构、建立固定路线、修改数字桌面布局或者改变软件环境配置时，它实际上正在改变未来感知和行动所面对的问题结构。
+
+最简单的例子是把需要记住的对象放到一个显眼位置。内部方案需要维持：
+\begin{equation}
+C_{\mathrm{remember}}
+\in h/E,
+\end{equation}
+而环境化方案则通过行动
+\begin{equation}
+Act(C)
+:
+U_t
+\rightarrow
+U_{t+1}
+\end{equation}
+使未来环境状态本身携带提示：
+\begin{equation}
+Observation(U_{t+1})
+\rightarrow
+C_{\mathrm{reactivated}}.
+\end{equation}
+
+于是形成一个非常重要的外化闭环：
+\begin{equation}
+\boxed{
+AgentCSO
+\rightarrow
+Action
+\rightarrow
+EnvironmentalCSO
+\rightarrow
+FutureObservation
+\rightarrow
+AgentCSO'.
+}
+\end{equation}
+
+这说明环境化卸载与文件卸载有根本共性：它们都把内部结构写入一个外部稳定载体。但环境比文件更进一步，因为它不仅保存信息，还直接改变未来行动空间。例如把常用工具摆在伸手可及的位置，不只是“记住工具在哪里”，还减少了未来完成任务的动作成本；修建道路不仅记录了一条路线，而且改变了以后所有交通参与者的可达性结构。
+
+因此我们可以定义环境卸载的收益：
+\begin{equation}
+B_{\mathrm{env}}
+=
+\Delta C_h
++
+\Delta C_{\mathrm{planning}}
++
+\Delta C_{\mathrm{action}}
++
+\Delta C_{\mathrm{future}}.
+\end{equation}
+一项环境改造可能需要一次较高初始成本
+\begin{equation}
+C_{\mathrm{modify}},
+\end{equation}
+但如果未来被重复使用 $N$ 次，总收益可能满足
+\begin{equation}
+N B_{\mathrm{reuse}}
+>
+C_{\mathrm{modify}}.
+\end{equation}
+
+这也解释了为什么智能体会倾向于“整理世界”，而不只是“适应世界”。一个完全被动的智能体只能不断增加内部计算来适应环境；一个能够修改环境的智能体，则可以把反复出现的认知和行动负担直接写入现实结构，从而改变未来问题本身。
+
+不过，Environment Offloading 必须受到 Reality Authority 的约束。环境不是 Agent 私有内存，它具有独立动力学、他者使用权和不可逆后果。智能体不能假定写入环境的结构会永久保持。设环境外化结构为 $C_U$，其保持概率为
+\begin{equation}
+P_{\mathrm{persist}}(C_U,\Delta t).
+\end{equation}
+当环境具有高变化率时，该概率下降，Agent 就必须提高重新观测频率。因此成熟的环境卸载本质上是一种\textbf{可写现实与可验证认知之间的动态协议}，而不是把世界当作无限可靠的外部硬盘。
+
+\section{$h\rightarrow OtherAgent$：社会性认知卸载}
+
+当智能体进入社会环境以后，最复杂的外部承载体不是文件、数据库或程序，而是\textbf{其他具有自身目标、记忆、能力和边界的智能体}。把任务的一部分交给另一个 Agent，可以显著降低当前工作记忆负载，并扩展能力空间；但这种卸载不能被理解为普通函数调用，因为被调用对象本身拥有独立状态和自主动力学。
+
+设当前 Agent 为 $A_i$，另一个主体为 $A_j$，任务结构为 $C_\tau$。社会性卸载可以表示为
+\begin{equation}
+\mathcal D_{ij}:
+C_\tau^{A_i}
+\rightarrow
+C_\tau^{A_j}.
+\end{equation}
+但这里真正发生的不是 CSO 本体从一个主体“搬”到另一个主体，而是 $A_i$ 建立一个委派关系，使 $A_j$ 形成自己的
+\begin{equation}
+AgentCSO_j(C_\tau)
+\end{equation}
+并承担部分后续处理责任。
+
+因此委派结构应至少包含：
+\begin{equation}
+D_{ij}
+=
+(
+Task,
+Goal,
+Constraint,
+Authority,
+ExpectedResult,
+Deadline,
+Verification,
+Trust
+).
+\end{equation}
+
+和工具调用相比，社会性卸载增加了一个关键变量：
+\begin{equation}
+T_{ij}(t),
+\end{equation}
+即主体 $A_i$ 对 $A_j$ 在特定能力域中的动态信任。信任不是一种情感标签，而是对
+\begin{equation}
+P(
+CorrectResult
+\mid
+A_j,
+TaskClass,
+Context
+)
+\end{equation}
+以及行为一致性、响应成本和利益冲突风险的综合估计。
+
+因此社会性卸载的总成本可以表示成
+\begin{equation}
+J_{\mathrm{social}}
+=
+C_{\mathrm{communication}}
++
+C_{\mathrm{alignment}}
++
+C_{\mathrm{monitor}}
++
+C_{\mathrm{verification}}
++
+C_{\mathrm{trustRisk}}.
+\end{equation}
+如果这些成本过高，把工作交给他者反而可能比自己完成更复杂。这也解释了现实组织为什么会产生稳定角色、协议和责任边界：它们实际上在降低反复社会性卸载时的协调成本。
+
+从认知角度，一个主体“知道某个人会什么”本身就是一种重要外部认知结构。Agent 不需要把另一个专家的全部知识复制进自己内部，只需要保持
+\begin{equation}
+C_{A_j}
+=
+(
+Capability,
+Availability,
+Reliability,
+Protocol,
+AuthorityBoundary
+)
+\end{equation}
+这样的社会性索引。当遇到相关问题时，通过查询、协作、授权或委派重新激活外部能力。
+
+这一机制把智能从单体结构扩展到分布式结构：
+\begin{equation}
+\boxed{
+IndividualCognition
+\longrightarrow
+DistributedCognition.
+}
+\end{equation}
+但本章只需要确立它的认知卸载意义：\textbf{其他主体可以成为可访问的认知承载者，但不能因此被视为自己的内部模块。}社会性卸载始终必须保持主体边界、授权边界和验证路径，否则认知协作会退化为责任不清和错误传播。
+
+\section{Offloading 与遗忘：迁移、删除和失去可恢复性的区别}
+
+认知卸载理论最容易产生的误解，是把“移出当前认知”与“从系统中消失”混为一谈。实际上，Offloading、Forgetting 和 Deletion 是三个完全不同的动力过程。
+
+设一个 Agent-CSO 为
+\begin{equation}
+C_A(t)
+=
+(C,R,F,\tau,B,S).
+\end{equation}
+Offloading 主要改变的是：
+\begin{equation}
+(F,\tau,B,S)
+\rightarrow
+(F',\tau',B',S'),
+\end{equation}
+而本体关联 $C$ 以及重新恢复该结构的路径仍然存在。例如一个中间结果从 $h$ 写入文件以后：
+\begin{equation}
+B:h
+\rightarrow
+File,
+\end{equation}
+当前激活状态
+\begin{equation}
+S:Active
+\rightarrow
+Latent,
+\end{equation}
+但 Agent 仍然知道它在哪里以及什么时候需要再次访问。
+
+遗忘则不同。遗忘意味着未来恢复能力降低：
+\begin{equation}
+P_{\mathrm{recover}}(C,t)
+\downarrow.
+\end{equation}
+它可能来自索引衰减、内容损坏、长期不用、结构合并或主动清除。删除则更强：
+\begin{equation}
+P_{\mathrm{recover}}(C,t)
+\approx 0.
+\end{equation}
+
+因此我们可以使用一个简单的二维判定：
+
+\begin{equation}
+\mathrm{Offloading}
+:
+\quad
+Residence_h\downarrow,
+\qquad
+Recoverability\approx const.
+\end{equation}
+
+\begin{equation}
+\mathrm{Forgetting}
+:
+\quad
+Recoverability\downarrow.
+\end{equation}
+
+\begin{equation}
+\mathrm{Deletion}
+:
+\quad
+Recoverability\rightarrow0.
+\end{equation}
+
+这一区分非常重要，因为如果一个所谓卸载系统只是不断把内容写到外部，却没有可靠索引，最终仍然会产生功能性遗忘。反过来，即使某个结构已经完全不在当前内部模型中，只要它通过稳定的外部索引和协议可以恢复，就仍属于广义认知系统的一部分。
+
+因此每一个重要卸载对象都应该保留一个最小内部引用：
+\begin{equation}
+I_C
+=
+(
+Existence,
+Location,
+Semantics,
+Trigger,
+Authority,
+Freshness
+).
+\end{equation}
+这里的内部引用不是结构本体，而是“关于结构可以在哪里重新获得”的元结构。于是：
+\begin{equation}
+\boxed{
+ExternalizeContent,
+RetainAccessStructure.
+}
+\end{equation}
+
+但也不能把“保留索引”绝对化。如果系统永久保存所有旧结构的索引，索引本身最终也会形成新的认知负担。因此长期 Agent 还需要对索引进行分层：
+\begin{equation}
+ActiveIndex
+\rightarrow
+CompressedIndex
+\rightarrow
+ArchiveIndex
+\rightarrow
+Forget.
+\end{equation}
+这说明认知卸载并没有消灭有限性，而是在更长的时间尺度上重新组织有限性。
+
+从这个意义上，遗忘本身不是智能缺陷，而是生命周期治理的一部分。Offloading 解决的是“这个结构现在不应占用我”，遗忘解决的是“这个结构以后是否仍值得让我找回来”。二者分别管理当前认知负载和长期结构存续价值，不能混为一个过程。
+
+\section{认知卸载的统一数学形式：承载迁移与最优放置}
+
+前面的不同卸载方式看起来差异很大：$h\rightarrow E$ 是记忆写入，$h\rightarrow Skill$ 是能力程序化，$h\rightarrow File$ 是外部持久化，$h\rightarrow DB$ 是查询型记忆，$h\rightarrow Program$ 是计算过程外化，$h\rightarrow Tool$ 是能力外接，$h\rightarrow Environment$ 是现实结构改造，$h\rightarrow OtherAgent$ 则是社会性委派。但从更一般的 CSO 理论看，它们其实都可以被统一为\textbf{认知结构的承载放置问题}。
+
+定义 Agent 可使用的承载集合
+\begin{equation}
+\mathcal K
+=
+\{
+h,E,\Theta,Skill,File,DB,Program,Tool,Environment,OtherAgent
+\}.
+\end{equation}
+对于每一个 Agent-CSO $C_i^A$，定义承载分配变量
+\begin{equation}
+p_{ik}(t)
+\in[0,1],
+\end{equation}
+表示结构 $C_i^A$ 在载体 $k$ 上的有效承载比例，并满足
+\begin{equation}
+\sum_{k\in\mathcal K}p_{ik}(t)\geq1.
+\end{equation}
+这里允许大于 $1$，因为同一结构可以同时存在于多个载体，例如某个技能既存在于 $\Theta$ 的结构模型中，也存在于外部程序中，同时保留一份情景来源。
+
+于是整个 Agent 的认知状态不应只写成某个“内存内容集合”，而可以表示成结构—载体矩阵：
+\begin{equation}
+P(t)
+=
+[p_{ik}(t)].
+\end{equation}
+Offloading 就对应：
+\begin{equation}
+P(t)
+\rightarrow
+P(t+\Delta t)
+\end{equation}
+时，某些结构在高成本显式载体 $h$ 上的权重下降，而在其他载体上的权重上升。
+
+我们进一步为每种承载定义总代价：
+\begin{equation}
+J_{ik}
+=
+\alpha C^{\mathrm{run}}_{ik}
++
+\beta C^{\mathrm{retrieve}}_{ik}
++
+\gamma C^{\mathrm{modify}}_{ik}
++
+\delta C^{\mathrm{latency}}_{ik}
++
+\eta C^{\mathrm{risk}}_{ik}
++
+\zeta C^{\mathrm{stale}}_{ik}.
+\end{equation}
+
+其中：
+
+$C^{\mathrm{run}}$ 表示当前维持代价；
+
+$C^{\mathrm{retrieve}}$ 表示未来恢复代价；
+
+$C^{\mathrm{modify}}$ 表示修改结构的代价；
+
+$C^{\mathrm{latency}}$ 表示使用该载体产生的延迟；
+
+$C^{\mathrm{risk}}$ 表示可靠性、权限和安全风险；
+
+$C^{\mathrm{stale}}$ 表示外部结构失效或过时风险。
+
+于是卸载问题可以近似写成：
+\begin{equation}
+\min_{P(t)}
+\sum_i
+\sum_{k\in\mathcal K}
+p_{ik}(t)J_{ik},
+\end{equation}
+并满足若干约束：
+\begin{equation}
+C_{\mathrm{run}}(t)
+\leq
+C_{\max}(W),
+\end{equation}
+\begin{equation}
+P_{\mathrm{recover}}(C_i)
+\geq
+\rho_i,
+\end{equation}
+\begin{equation}
+Latency(C_i)
+\leq
+L_i^{\max},
+\end{equation}
+以及安全和权限约束
+\begin{equation}
+B(C_i,k)=1.
+\end{equation}
+
+这一形式化给出了一个非常重要的结果：\textbf{不存在一种普遍最好的记忆位置。}同一个 CSO 应该放在哪里，取决于它未来使用频率、实时性、修改频率、可靠性要求和恢复成本。
+
+频繁修改、实时使用的结构更适合靠近当前认知；
+
+低频但重要的结构适合长期存储；
+
+稳定重复过程适合 Skill 或 Program；
+
+大型事实空间适合 DB；
+
+外部可观测结构可以直接留在 Environment；
+
+某些专业问题则更适合委派给 Other Agent。
+
+因此成熟智能并不是无限增强一个内部载体，而是形成：
+\begin{equation}
+\boxed{
+AdaptiveCognitivePlacement.
+}
+\end{equation}
+也就是一种持续决定“这个认知结构现在最适合由谁、在哪里、以什么形式承担”的能力。
+
+\section{认知卸载的边界：可恢复性、现实验证与主体连续性}
+
+认知卸载最终必须回答一个比“怎样降低工作记忆负担”更深的问题：一个智能体在不断把结构移到文件、程序、工具、环境和他者以后，什么东西仍然使它保持为同一个主体？如果所有知识都可以外部化、所有技能都可以工具化、所有任务都可以委派，那么 Agent 的内部是否最终可以缩减成一个空壳？
+
+答案是否定的。Offloading 的目标从来不是最大化外部化比例，而是最小化\textbf{不必要的显式认知负担}。一个持续主体至少必须保留维持自身闭环所必需的结构，包括当前目标、关键自我约束、对外部载体的索引、权限关系、现实验证机制以及必要的恢复逻辑。换言之，Agent 可以把大量内容放到边界之外，却不能把“谁在使用这些结构、为什么使用以及如何判断结果是否属于自己的行为后果”一并卸载掉。
+
+我们可以定义一个最小主体连续结构
+\begin{equation}
+\mathcal C_{\mathrm{core}}
+=
+\{
+SelfReference,
+GoalContinuity,
+Authority,
+ExternalIndex,
+RealityVerification,
+Recovery
+\}.
+\end{equation}
+有效卸载要求：
+\begin{equation}
+\mathcal C_{\mathrm{core}}
+\nsubseteq
+\mathcal C_{\mathrm{offloaded}}.
+\end{equation}
+
+这并不意味着这些核心结构永远不能变化，而是说它们的变化必须处于比普通任务结构更慢、更受治理的时间尺度。
+
+第二个边界是现实验证。File 可能过时，Database 可能更新，Program 可能存在 bug，Tool 可能失效，Environment 可能被改变，Other Agent 可能误解任务。因此：
+\begin{equation}
+\boxed{
+OffloadedResult
+\neq
+Reality.
+}
+\end{equation}
+外部结构重新进入 $h(t)$ 时必须带着认识论状态：
+\begin{equation}
+EpistemicState
+=
+(
+Source,
+Timestamp,
+Confidence,
+Authority,
+VerificationStatus
+).
+\end{equation}
+越是影响高价值、高风险决策的结构，就越需要重新经过现实闭环验证。
+
+第三个边界是可恢复性。一个结构虽然已经卸载，但如果恢复路径依赖某个已经失效的工具、未知密码、丢失文件或者不存在的主体，那么它在功能上已经等价于遗忘。因此 AgentOS 对认知卸载的质量评价不能只看“释放了多少工作记忆”，还必须同时考虑：
+\begin{equation}
+Q_{\mathrm{offload}}
+=
+f(
+LoadReduction,
+Recoverability,
+Reliability,
+Latency,
+Freshness,
+Control
+).
+\end{equation}
+
+一个好的卸载操作应使：
+\begin{equation}
+LoadReduction\uparrow,
+\qquad
+Recoverability\uparrow,
+\qquad
+ControlLoss\downarrow.
+\end{equation}
+
+最后，我们可以把本章全部讨论浓缩成一个基本原则：
+\begin{equation}
+\boxed{
+\text{智能不是把世界全部装进自己，而是知道哪些结构应该由自己当前承担，哪些结构应该由过去、工具、环境和他者替自己承担。}
+}
+\end{equation}
+
+从早期复杂度迁移语言看，这意味着：
+\begin{equation}
+\boxed{
+CognitiveComplexity
+\rightarrow
+ProperCarrier.
+}
+\end{equation}
+而在更精确的 Agent-CSO 本体中，它意味着：
+\begin{equation}
+\boxed{
+AgentCSO
+\rightarrow
+OptimalCarrierPlacement.
+}
+\end{equation}
+
+因此 Offloading 不是智能的附属能力，而是工作记忆有限性与世界复杂性之间的基本调和机制。有限智能之所以能够处理远超自身当前容量的问题，不是因为它消除了有限性，而是因为它学会了把结构沉积在时间中、写入环境中、固化在程序中、封装在工具中、分布在社会中，并在真正需要的时候重新把其中极少的一部分提升到 $h(t)$。
+
+这也给出了本章最终的理论盖章：
+
+\begin{equation}
+\boxed{
+\begin{aligned}
+\mathrm{Offloading}
+&=
+\mathrm{CarrierMigration}
++
+\mathrm{ResponsibilityMigration}
+\\
+&\quad+
+\mathrm{RecoverableIndex}
++
+\mathrm{RealityVerification}.
+\end{aligned}
+}
+\end{equation}
+
+缺少 Carrier Migration，结构没有真正离开当前认知负担；缺少 Responsibility Migration，Agent 仍然需要持续监督所有细节；缺少 Recoverable Index，卸载退化为遗忘；缺少 Reality Verification，外部结构则可能逐渐脱离现实。只有四者同时成立，认知卸载才真正成为一个持续智能体扩展有限认知能力的稳定机制。
