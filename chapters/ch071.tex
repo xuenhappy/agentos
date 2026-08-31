@@ -1,278 +1,1251 @@
-\chapter{Agent Kernel—KRA—Body Runtime 完整数据流}
-\chaptervoice{这一章，我们围绕“Agent Kernel—KRA—Body Runtime 完整数据流”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明认知内核通过身体进入现实。}
-
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文第 353614—368709 行的 KRA 与双轴多尺度 AgentOS 收束稿。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是具身认知、分层控制、MPC、状态估计与安全包络（模型预测控制、Kalman 状态估计与具身认知）。
-
-本章使用上一章“AgentOS Kernel 的系统结构”已经得到的对象与边界；本章产出将供下一章“AgentOS 的 3+1+1 研发战略”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在具身认知、分层控制、MPC、状态估计与安全包络上。
-\section{World $\rightarrow$ Body}
-\begin{narration}
-现在把镜头移到“World $\rightarrow$ Body”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“World $\rightarrow$ Body”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel—KRA—Body Runtime 完整数据流”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对World $\rightarrow$ Body的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“World $\rightarrow$ Body”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Body $\rightarrow$ SGC/FCS}
-\begin{narration}
-现在把镜头移到“Body $\rightarrow$ SGC/FCS”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Body $\rightarrow$ SGC/FCS”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel—KRA—Body Runtime 完整数据流”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Body $\rightarrow$ SGC/FCS的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Body $\rightarrow$ SGC/FCS”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{SGC/FCS $\rightarrow$ KRA}
-\begin{narration}
-现在把镜头移到“SGC/FCS $\rightarrow$ KRA”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“SGC/FCS $\rightarrow$ KRA”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel—KRA—Body Runtime 完整数据流”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对SGC/FCS $\rightarrow$ KRA的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“SGC/FCS $\rightarrow$ KRA”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{KRA $\rightarrow$ Kernel}
-\begin{narration}
-现在把镜头移到“KRA $\rightarrow$ Kernel”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“KRA $\rightarrow$ Kernel”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel—KRA—Body Runtime 完整数据流”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对KRA $\rightarrow$ Kernel的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“KRA $\rightarrow$ Kernel”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Kernel $\rightarrow$ Goal/Prediction}
-\begin{narration}
-现在把镜头移到“Kernel $\rightarrow$ Goal/Prediction”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Kernel $\rightarrow$ Goal/Prediction”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel—KRA—Body Runtime 完整数据流”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Kernel $\rightarrow$ Goal/Prediction的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Kernel $\rightarrow$ Goal/Prediction”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Kernel $\rightarrow$ Control Reference}
-\begin{narration}
-现在把镜头移到“Kernel $\rightarrow$ Control Reference”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Kernel $\rightarrow$ Control Reference”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel—KRA—Body Runtime 完整数据流”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Kernel $\rightarrow$ Control Reference的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Kernel $\rightarrow$ Control Reference”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{KRA $\rightarrow$ BPCC}
-\begin{narration}
-现在把镜头移到“KRA $\rightarrow$ BPCC”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“KRA $\rightarrow$ BPCC”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel—KRA—Body Runtime 完整数据流”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对KRA $\rightarrow$ BPCC的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“KRA $\rightarrow$ BPCC”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{BPCC $\rightarrow$ Actuator/API}
-\begin{narration}
-现在把镜头移到“BPCC $\rightarrow$ Actuator/API”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“BPCC $\rightarrow$ Actuator/API”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel—KRA—Body Runtime 完整数据流”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对BPCC $\rightarrow$ Actuator/API的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“BPCC $\rightarrow$ Actuator/API”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Reality $\rightarrow$ New Observation}
-\begin{narration}
-现在把镜头移到“Reality $\rightarrow$ New Observation”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Reality $\rightarrow$ New Observation”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel—KRA—Body Runtime 完整数据流”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Reality $\rightarrow$ New Observation的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Reality $\rightarrow$ New Observation”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Residual $\rightarrow$ BPCC/KRA/Kernel}
-\begin{narration}
-现在把镜头移到“Residual $\rightarrow$ BPCC/KRA/Kernel”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Residual $\rightarrow$ BPCC/KRA/Kernel”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel—KRA—Body Runtime 完整数据流”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Residual $\rightarrow$ BPCC/KRA/Kernel的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Residual $\rightarrow$ BPCC/KRA/Kernel”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Safety Bypass}
-\begin{narration}
-现在把镜头移到“Safety Bypass”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Safety Bypass”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel—KRA—Body Runtime 完整数据流”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Safety Bypass的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Safety Bypass”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{World—Agent—World 的工程闭合}
-\begin{narration}
-现在把镜头移到“World—Agent—World 的工程闭合”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“World—Agent—World 的工程闭合”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel—KRA—Body Runtime 完整数据流”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对World—Agent—World 的工程闭合的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“World—Agent—World 的工程闭合”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“Agent Kernel—KRA—Body Runtime 完整数据流”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“AgentOS 的 3+1+1 研发战略”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\chapter{Agent Kernel--KRA--Body Runtime完整数据流}
+\label{chap:kernel-kra-bodyruntime-dataflow}
+
+\begin{quote}
+\textbf{【本章总体说明】}
+
+至此，我们已经分别建立了 Agent Kernel、Body Runtime、SGC、FCS、BPCC、Safety Boundary 与 KRA 的局部理论，但一个能够长期存在于现实世界中的 Agent，并不是这些组件的机械拼装。真正决定系统能否成立的，是\textbf{信息、语义、预测、控制、残差与现实验证如何跨越这些层次形成闭合因果链}。本章因此不再孤立讨论任何单一组件，而是从一次完整的 ``World--Agent--World'' 循环出发，建立 AgentOS 的标准跨层数据流。
+
+本章坚持三个核心原则。第一，Agent Kernel 不直接拥有现实，Kernel 所拥有的永远是通过 Body Runtime 与 KRA 形成的、带认识论状态的现实表示；第二，Body Runtime 并非 Kernel 的被动驱动层，而是具有高速预测、局部控制、残差检测和在线适应能力的快速闭环系统；第三，任何预测、计划和内部状态最终都不能冒充现实，行动是否成功必须重新通过现实进入感知链。因此，本章所建立的不是普通软件意义上的 API 调用图，而是一条具有明确时间尺度、因果方向、写权限、认识论状态和安全权威关系的\textbf{智能体生命闭环}。
+
+在形式上，我们把完整系统写为
+\[
+\boxed{
+\mathcal A
+=
+\mathcal K
+\bowtie
+\mathcal R_B
+\bowtie
+\mathcal W
+}
+\]
+其中 $\mathcal K$ 为 Agent Kernel，$\mathcal R_B$ 为 Body Runtime，$\mathcal W$ 为现实世界。KRA 位于认知核心与 Body Runtime 公共语义接口之间，承担跨表示、跨时间尺度和跨控制语义的适配：
+\[
+\boxed{
+\mathcal K
+=
+\mathcal C_K
+\bowtie
+\mathcal A_{KRA}
+}
+\]
+而 Body Runtime 可表示为
+\[
+\boxed{
+\mathcal R_B
+=
+FBI
+\bowtie
+BPCC
+\mid
+SafetyBoundary .
+}
+\]
+因此，本章真正需要回答的是：现实如何成为 Agent 可以理解的结构，Agent 的意图如何重新成为现实中的作用，以及整个过程中哪些结构允许被预测、哪些允许被修改、哪些只能只读观察、哪些必须拥有最高优先级。
+\end{quote}
+
+
+\section{从World进入Body：现实作用首先发生于身体边界}
+
+一个持续智能体与现实世界的关系，并不是从 ``输入一个 prompt'' 开始的。对于真正运行于物理世界或数字世界中的 Agent，第一层事实永远是：现实首先作用于其身体边界，然后才可能被认知系统解释。因此我们将最外层输入写为
+\[
+\mathcal W_t
+\xrightarrow{\;\mathcal I_B\;}
+X^B_t ,
+\]
+其中 $\mathcal W_t$ 表示时刻 $t$ 的外部现实状态，$\mathcal I_B$ 表示现实与身体之间的实际作用关系，$X^B_t$ 则表示 Body Runtime 可以接触到的身体侧状态。这里必须特别注意，$\mathcal I_B$ 不是单纯的 ``传感器采样函数''。现实不仅可以通过视觉、听觉、触觉或网络数据作用于 Agent，也可以通过能量消耗、机械冲击、温度变化、权限变化、网络延迟、系统负载甚至其他主体的社会行为改变 Agent 的内部可行动状态。因此，一个完整的 Body 输入至少应该区分
+\[
+\boxed{
+I_B
+=
+P^{ext}
+\oplus
+P^{int}
+\oplus
+F^{ext}
+\oplus
+F^{int}
+}
+\]
+其中 $P^{ext}$ 表示外部世界的可感知状态，$P^{int}$ 表示身体自身可观测状态，$F^{ext}$ 表示外界对身体造成的功能影响，$F^{int}$ 表示身体内部资源、完整性和运行条件对 Agent 的功能影响。
+
+这里的 ``Body'' 必须采用本书前面给出的广义定义：
+\[
+\boxed{
+Body
+=
+ControlledAndSensedCarrierOfAgency .
+}
+\]
+因此，对机器人而言，Body 可以包括摄像机、关节、电机、电池、力传感器和机械结构；对数字 Agent 而言，Body 则可以包括显示界面、浏览器、鼠标光标、键盘、文件系统、Shell、网络连接、操作系统权限和可调用应用程序。二者在物质形态上完全不同，但在 AgentOS 看来都承担同一种功能：它们定义 Agent \emph{能够感知什么、能够作用什么、作用需要多少时间、失败会产生什么后果}。
+
+由此必须建立一个非常重要的认识论约束：
+\[
+\boxed{
+WorldState(t)
+\neq
+BodyObservedState(t)
+}
+\]
+现实状态永远比 Agent 可观察的身体状态丰富。传感器带宽、视野、权限、采样频率、遮挡、噪声和身体能力共同决定一个投影算子
+\[
+\Pi_B:\mathcal W\rightarrow\mathcal O_B ,
+\]
+而 Agent 得到的只是
+\[
+O^B_t=\Pi_B(\mathcal W_t)+\eta_t .
+\]
+因此，Body Runtime 从一开始就不是 ``现实的透明管道''，而是一个具有有限带宽、有限空间范围、有限时间分辨率和有限作用能力的现实边界。
+
+这一点也解释了为什么 Body Scale 原理必须先于具体的认知模块设计。一个 Agent 能够迁移到多少种身体，不取决于 Kernel 是否认识某种电机型号，而取决于不同身体能否把各自特殊的现实作用转换成相对稳定的功能语义。换言之，Kernel 不应该认识 ``CAN 总线帧 0x321''，它应认识 ``右臂关节存在控制裕度下降''；Kernel 不应该认识浏览器 DOM 的所有底层细节，而应该认识 ``某个可操作语义对象当前不可访问''。Body Runtime 因此承担了整个 Agent 系统的第一层现实粗粒化：
+\[
+\boxed{
+RawReality
+\rightarrow
+EmbodiedState
+\rightarrow
+ActionableReality .
+}
+\]
+
+这一设计还具有重要的稳定性意义。若所有现实扰动都直接进入 Kernel，则毫秒级扰动、传感噪声、设备状态和高频控制误差都会竞争有限的工作记忆 $h(t)$。成熟 Agent 必须遵循
+\[
+\boxed{
+NormalDynamicsStayLocal
+}
+\]
+即正常、高频、可局部闭合的现实变化首先留在 Body Runtime 内部；只有形成语义事件、持续残差、能力下降或安全风险的变化，才应沿层级向上进入认知系统。这样，现实第一次进入 Agent 时就已经受到时间尺度分离原则的约束，而不是等待 Kernel 过载以后再补救。
+
+
+\section{从Body到SGC/FCS：把原始现实转换为可认知现实}
+
+Body Runtime 接收到的原始状态并不能直接成为 Agent Kernel 的世界。传感器张量、机械状态、网络事件和系统计数器本身只有实现语义，而不必然具有认知语义。因此 FBI 的首要职责，是把异构身体状态转换成两个相互正交但共同构成 ``Agent 所经历的现实'' 的公开表示：
+\[
+\boxed{
+PublicEmbodiedState_t
+=
+SGC_t
+\oplus
+FCS_t .
+}
+\]
+SGC（Semantic Graph Coordinate Space）回答的是
+\[
+\text{What is there?}
+\]
+而 FCS 回答的是
+\[
+\text{How is reality affecting me?}
+\]
+二者分别构成现实的\textbf{内容结构}和\textbf{功能作用结构}。
+
+SGC 的形成可以抽象为
+\[
+SGC_t
+=
+\Phi_{SGC}
+\left(
+P^{ext}_{\leq t},
+P^{int}_{\leq t},
+M^{body}_{t-1}
+\right),
+\]
+其中 $\Phi_{SGC}$ 并非简单分类器，而需要完成对象持续性、空间配准、关系绑定、身体定位、属性融合和认识论标注。因此一个 SGC 实体更接近
+\[
+e_i=
+\left(
+id_i,
+g_i,
+a_i,
+r_i,
+s_i,
+q_i
+\right),
+\]
+其中 $id_i$ 是持续身份，$g_i$ 是几何状态，$a_i$ 是固定属性，$r_i$ 是关系集合，$s_i$ 是语义标签，$q_i$ 则表示该信息究竟是 Observed、Derived、Predicted、Counterfactual 还是 Pending。SGC 的关键不是 ``检测到了什么''，而是把不同时间、不同传感器和不同身体视角下的数据绑定为一个相对持续的\textbf{可行动现实图}。
+
+与之不同，FCS 不是对象列表，而是类型固定、可进行连续动力学传播的功能影响场：
+\[
+FCS_t
+\in
+\mathbb R^{K\times H\times W\times C}.
+\]
+它可以包含 Energy Pressure、Threat、Integrity Pressure、Thermal Pressure、Sensory Load、Control Instability、Urgency 等通道。其一般元素可以写为
+\[
+f_{k}(x,t)
+=
+\left(
+I_k,
+\dot I_k,
+Conf_k
+\right),
+\]
+即某种功能影响的强度、变化率和置信度。SGC 中 ``前方存在一辆高速接近的汽车'' 是内容；FCS 中随距离迅速升高的 Threat 场则是这种现实对当前主体产生的作用。二者不能互相替代。
+
+这里尤其要坚持：
+\[
+\boxed{
+Feeling\neq Exception .
+}
+\]
+威胁、疲劳、控制不稳定等 FCS 通道可以连续变化，而真正的 Emergency 是一个具有离散治理权限的安全事件。把二者混合，会导致所有高威胁状态都升级成安全中断，或者反过来让真正危险事件仍然等待普通认知分析。
+
+SGC/FCS 还承担 AgentOS 中非常重要的\textbf{语义防火墙}作用。Body Runtime 可以在内部使用高度优化、不可解释的 latent：
+\[
+z_t^{BPCC}\in\mathbb R^d ,
+\]
+但 Kernel 的公共接口不能被这些私有 latent 占据。其原则是
+\[
+\boxed{
+PrivateFastState=z^{BPCC},
+\qquad
+PublicEmbodiedState=SGC+FCS .
+}
+\]
+这并不是为了强迫所有内部计算可解释，而是为了保持 Kernel--Body 之间的长期协议稳定：身体内部模型可以不断更换，Kernel 的认知世界却不应随着底层模型版本不断漂移。
+
+因此，Body$\rightarrow$SGC/FCS 不是普通 ``编码''，而是整个 AgentOS 中第一次完成从物理/数字实现空间到认知语义空间的结构跃迁：
+\[
+\boxed{
+ImplementationState
+\rightarrow
+EmbodiedSemanticState .
+}
+\]
+只有经过这一步，后续的 Agent-CSO、目标、计划、自我和记忆才拥有稳定的现实锚点。
+
+
+\section{SGC/FCS进入KRA：语义骨架与动态适配的第一次耦合}
+
+SGC 和 FCS 已经提供了相对稳定的身体公共语义，但这仍然不意味着 Cognitive Core 可以直接无条件使用它们。原因在于：Body Runtime 的语义空间与 Kernel 内部的认知表示空间即使表达同一个现实，也不必拥有相同的结构、维度、时间分辨率和统计分布。因此我们引入 KRA（Kernel--Runtime Adaptation），将其定义为
+\[
+\boxed{
+KRA
+=
+AdaptiveSemanticAndDynamicalCouplingLayer .
+}
+\]
+它不是 ``格式转换器''，而是维持两个独立学习系统长期可耦合的适配层。
+
+可将 KRA 的输入写为
+\[
+Y^B_t
+=
+\left(
+SGC_t,
+FCS_t,
+C^B_t,
+R^B_t,
+E^B_t
+\right),
+\]
+其中 $C^B_t$ 表示能力状态，$R^B_t$ 表示普通残差摘要，$E^B_t$ 表示异常或需要升级的事件。KRA 不应把整个 $SGC_t$ 和 $FCS_t$ 原样注入 Kernel，而应该依据当前目标、当前工作记忆状态、身体能力以及 Kernel 提供的关注窗口形成
+\[
+\tilde Y_t
+=
+\mathcal A_{KRA}
+\left(
+Y^B_t,
+Q^K_t,
+\chi_t
+\right),
+\]
+其中 $Q^K_t$ 表示 Kernel 当前需求，$\chi_t$ 表示历史适配状态。
+
+这一机制体现我们早先提出的
+\[
+\boxed{
+Interface=SemanticSkeleton+LatentMuscle .
+}
+\]
+所谓 Semantic Skeleton，是 SGC、FCS、ControlReference、PredictiveEnvelope、Residual、Exception 等相对稳定的公开语义合同；所谓 Latent Muscle，则允许 KRA 和 BPCC 内部使用更加高效的连续表示完成跨身体适配。这样既避免 Kernel 完全绑定某一身体，又避免把所有身体差异压缩成过于贫乏的固定枚举。
+
+KRA 的第一个任务是\textbf{语义匹配}。例如 Body Runtime 中某对象的 ``reachable'' 可能由真实几何距离、关节姿态和碰撞约束共同决定；Kernel 内部则可能把它表示成 ``当前可用于完成目标的行动对象''。两者语义有关但并不同一，因此 KRA 必须学习
+\[
+\phi_{BK}:S_B\rightarrow S_K
+\]
+与必要时的
+\[
+\phi_{KB}:S_K\rightarrow S_B ,
+\]
+而不是要求两端共享同一个 latent space。
+
+KRA 的第二个任务是\textbf{时间尺度匹配}。Body Runtime 可能以 $100\sim1000\,Hz$ 更新局部状态，而 Kernel 的认知循环可能以秒级乃至更慢速度更新。于是必须存在
+\[
+\mathcal T_{agg}:
+\{Y^B_{t-\Delta:t}\}
+\rightarrow
+\tilde Y_t ,
+\]
+把高频状态转换为趋势、事件、稳定对象和结构变化，而不是简单取最后一帧。
+
+第三个任务是\textbf{认识论保护}。Observed SGC、Predicted SGC 和 Counterfactual SGC 在进入 Kernel 时必须保持来源区分。KRA 可以压缩信息，但不能把
+\[
+Predicted
+\]
+重新标记为
+\[
+Observed .
+\]
+否则 Kernel 会把自身或 BPCC 的预测当作现实证据，最终形成封闭自证循环。
+
+因此我们可以定义一个基本不变量：
+\[
+\boxed{
+EpistemicType
+\left(
+\mathcal A_{KRA}(x)
+\right)
+\succeq
+EpistemicUncertainty(x) ,
+}
+\]
+即适配过程可以增加不确定性，但不能在没有现实证据时无条件提升认识论确定性。
+
+从系统工程角度看，KRA 是整个架构中最容易被误解但最关键的一层：它保护 Kernel 不被身体实现细节污染，同时保护 Body Runtime 不被高层认知表示强行侵入。它真正维持的是一种\textbf{关系稳定性}，而不仅仅是单个模型的准确率。
+
+
+\section{KRA进入Agent Kernel：把身体现实转化为当前认知结构}
+
+经过 KRA 的结构选择、时间聚合、语义对齐和认识论保护之后，身体状态才真正进入 Agent Kernel。这里我们必须再次强调：
+\[
+\boxed{
+BodyState(t)\neq h(t).
+}
+\]
+Kernel 不应把整个身体世界镜像进工作记忆。真正进入 $h(t)$ 的，只应该是当前需要跨功能、跨记忆或跨时间尺度进行显式处理的 Agent-CSO。
+
+因此可以把 Kernel 的准入过程表示为
+\[
+\mathcal C_t^{in}
+=
+\Gamma_{admit}
+\left(
+\tilde Y_t,
+G_t,
+h_t,
+\Psi_t,
+\Omega_t,
+C_{run}(t)
+\right),
+\]
+其中 $\Gamma_{admit}$ 综合 Boundary、Scheduler、CCM、SPC 和当前 Goal 决定哪些结构被提升为显式认知对象。随后
+\[
+h_{t+1}
+=
+\mathcal U_h
+\left(
+h_t,
+\mathcal C_t^{in}
+\right).
+\]
+
+这一过程体现 AgentOS 的核心原则：
+\[
+\boxed{
+RealityDoesNotContinuouslyBecomeThought;
+\quad
+RelevantDeviationBecomesThought .
+}
+\]
+现实始终存在，但不应始终占据工作记忆。一个移动机器人正常维持姿态时，每个关节误差都不需要进入 $h$；一个数字 Agent 正常等待网页加载时，每一个网络包也不应进入 $h$。只有当局部闭环无法解释残差，或者某个现实事件与 Goal、Self、Risk 或长期结构相关时，它才获得进入认知全局面的资格。
+
+这种进入不是简单 ``把信息发送给 LLM''。KRA 输出经过 Kernel 后，应形成明确的 Agent-CSO，例如
+\[
+C_t^{agent}
+=
+\left(
+C,
+R_K,
+F_K,
+\tau_K,
+B_K,
+S_K
+\right).
+\]
+此时某个身体世界结构已经不再只是 ``一个被检测到的对象''，而成为与当前目标、过去经验、自我状态和行动可能性发生关系的认知结构。例如 SGC 中的 ``门'' 在 Kernel 中可以同时被解释为障碍、出口、目标路径组成部分、权限边界或历史事件的语义锚点。Agent-CSO 因此不是 SGC 的复制，而是现实语义与当前认知状态之间的关系化结果。
+
+这里还要区分三类输入路径。第一类是\textbf{语义内容路径}：
+\[
+SGC
+\rightarrow
+KRA
+\rightarrow
+h ,
+\]
+它回答 ``发生了什么''。第二类是\textbf{调制路径}：
+\[
+FCS
+\rightarrow
+AHC
+\rightarrow
+SPC/TCE ,
+\]
+它改变认知系统如何处理当前问题。第三类是\textbf{紧急路径}，它甚至可以绕过普通 Kernel 决策。这三类信号之所以不能混合，是因为内容、作用和安全权威属于不同的动力学变量。
+
+因此 KRA$\rightarrow$Kernel 的真正作用，是把身体对现实的表示进一步转化成\textbf{与主体当前生命周期状态相关的认知现实}：
+\[
+\boxed{
+EmbodiedSemanticReality
+\rightarrow
+AgentRelevantReality .
+}
+\]
+这也是从 SGC 世界表示进入 Agent-CSO 的正式工程通道。
+
+
+\section{Kernel内部从现实结构形成Goal与多时间尺度Prediction}
+
+当现实通过 KRA 进入 Kernel 后，Kernel 并不立即输出动作。AgentOS 与简单 reactive controller 的主要区别，恰恰在于 Kernel 可以利用 h、E、$\Theta$、$\Psi$ 和 $\Omega$ 建立跨时间尺度的未来结构。当前状态首先被放入已有生命周期上下文：
+\[
+X^K_t
+=
+\left(
+h_t,
+E_t,
+\Theta_t,
+\Psi_t,
+\Omega_t
+\right).
+\]
+然后依据现实输入形成可能状态集合
+\[
+\mathcal F_t
+=
+\mathcal P_K
+\left(
+X^K_t,
+SGC_t,
+FCS_t
+\right).
+\]
+因此 Kernel 所构造的不是单一 ``下一动作预测''，而是一个从短期行动结果到较长期目标后果的分层未来空间。
+
+Goal 在本体系中必须理解为\textbf{未来约束结构}，而不是普通文本指令。可以写成
+\[
+G_t
+=
+\left(
+\mathcal X^{desired},
+\mathcal X^{forbidden},
+U,
+\tau_G,
+\mathcal C_G
+\right),
+\]
+其中 $\mathcal X^{desired}$ 表示期望状态区域，$\mathcal X^{forbidden}$ 表示禁止区域，$U$ 表示相对效用/价值评价，$\tau_G$ 表示目标时间尺度，$\mathcal C_G$ 表示必须保持的约束。
+
+因此 Goal 的生成或激活不是单独由 h 决定，而受到慢变量约束：
+\[
+G_t
+\sim
+p\left(
+G\mid
+h_t,E_t,\Theta_t,\Psi_t,\Omega_t
+\right).
+\]
+$\Psi$ 主要保证 ``这个 Goal 是否仍然符合我是谁''，而 $\Omega$ 则更慢地影响 ``这样的目标是否把我带向我正在成为的结构''。这使短期任务与身份连续性发生联系，而不是形成彼此独立的 Task 列表。
+
+Kernel 的预测应至少分为两种尺度。高层预测
+\[
+\hat X^K_{t:t+\Delta}
+\]
+覆盖较长时间和较广状态空间，但空间、控制和动力细节较粗；Body Runtime 的预测
+\[
+\hat X^B_{t:t+\delta},
+\qquad
+\delta\ll\Delta ,
+\]
+覆盖更短未来，却拥有更高局部精度。因此不存在 ``Kernel 与 BPCC 谁负责预测'' 的二选一问题。正确结构是：
+\[
+\boxed{
+BroadSlowPrediction
+\bowtie
+NarrowFastPrediction .
+}
+\]
+
+Kernel 通过 E 检索类似轨迹，通过 $\Theta$ 调用长期生成结构，通过 h 保持当前关键变量，再由 $\Psi/\Omega$ 对未来路径施加身份与生命周期约束。由此得到的不是机械动作序列，而应首先形成一个\textbf{可行未来区域}。这个区域随后才会被压缩成 Body Runtime 可以执行的 Predictive Envelope 和 Control Reference。
+
+由此我们获得一个关键原则：
+\[
+\boxed{
+HigherLevelPredictsMeaning;
+LowerLevelPredictsDynamics .
+}
+\]
+高层预测关心 ``如果我继续这样做，这件事情意味着什么''；低层预测关心 ``接下来 $200\,ms$ 机械臂会到哪里''。两者共同构成真正跨尺度的预测智能。
+
+
+\section{Kernel到Control Reference：高层不发送动作，而发送可行域约束}
+
+Agent Kernel 与 Body Runtime 之间最危险的设计错误之一，是让 Kernel 直接输出底层执行命令。例如让语言模型直接产生电机力矩、鼠标每个像素位移或车辆每个控制周期的转角，会把认知时间尺度与身体时间尺度强行绑定，并破坏 Body Runtime 的局部稳定性。因此本书明确采用：
+\[
+\boxed{
+Kernel
+\rightarrow
+ControlReference
+\rightarrow
+LocalController
+\rightarrow
+Reality
+}
+\]
+而不是
+\[
+Kernel
+\rightarrow
+RawActuatorCommand .
+\]
+
+Control Reference 应表示 Kernel 对未来身体状态施加的\textbf{目标、约束和偏好}。一般可以写成
+\[
+\mathcal R^C_t
+=
+\left(
+X^{target}_t,
+\mathcal E_t,
+C_t,
+W_t,
+\tau_t,
+Priority_t,
+Authority_t
+\right),
+\]
+其中 $X^{target}$ 是目标状态，$\mathcal E_t$ 是允许的预测包络，$C_t$ 是硬/软约束，$W_t$ 是代价权重，$\tau_t$ 是有效时间范围，Priority 表示任务优先级，Authority 则规定该 Reference 允许控制哪些资源。
+
+因此 Kernel 给 BPCC 的不是 ``把机械臂关节3转到 32.184 度并立即输出 0.74 牛米''，而更可能是 ``在未来两秒内，使末端执行器进入区域 $\mathcal R$，保持抓取姿态稳定，碰撞风险不得超过阈值，同时将身体负担控制在 FCS envelope 以内''。对于数字 Agent，则可以是 ``使浏览器达到包含目标提交确认语义的状态，同时禁止离开当前授权域''。
+
+可以把这一关系表达为约束优化问题：
+\[
+u^*_{t:t+\delta}
+=
+\arg\min_u
+J_B
+\left(
+u,
+\hat X^B,
+\mathcal R^C_t
+\right)
+\]
+满足
+\[
+\hat X^B_{\tau}
+\in
+\mathcal E_t,
+\qquad
+g_{safe}(\hat X^B_\tau)\leq0.
+\]
+Kernel 决定 $\mathcal E_t$ 和目标含义，BPCC 决定在当前身体动力学下如何实现它。
+
+这种架构具有三个优势。首先是\textbf{时间尺度解耦}：Kernel 可以数百毫秒甚至数秒更新一次 Control Reference，而 BPCC 可以以高频率执行。其次是\textbf{身体解耦}：同样的 ``到达目标区域'' 在轮式机器人、人形机器人和数字鼠标中可以具有完全不同的局部控制策略。第三是\textbf{异常可升级}：当 Body Runtime 无法在给定 envelope 内实现 Reference 时，它不需要猜测 Kernel 的真正意图，而只需要报告能力缺口或持续 residual。
+
+因此 Control Reference 是 AgentOS 从 ``认知意图'' 转换成 ``身体可执行约束'' 的关键中间结构。它避免高层微观管理，同时保留高层对身体行为的真正控制权。这也正是
+\[
+\boxed{
+SlowGovernance\neq FastMicromanagement
+}
+\]
+在身体控制层的工程化实现。
+
+
+\section{KRA到BPCC：从认知控制语义转化为身体局部动力目标}
+
+Control Reference 虽然已经比自然语言目标更接近控制语义，但不同身体的状态空间、能力边界和动力学仍然不同，因此 KRA 还必须完成从 Kernel 控制语义到 BPCC 局部状态空间的最后一层适配。可以写成
+\[
+\mathcal R^{B}_t
+=
+\Phi^{ctrl}_{KRA}
+\left(
+\mathcal R^C_t,
+X^B_t,
+\mathcal M_B,
+\chi_{KRA}
+\right),
+\]
+其中 $\mathcal M_B$ 表示当前身体能力模型，$\chi_{KRA}$ 表示 KRA 对 Kernel--Body 对应关系的适配状态。
+
+这里尤其需要补充一个在后期设计中非常重要的权限原则：\textbf{BPCC 对 SGC 的某些使用必须是只读性的。}BPCC 为实现高频预测和控制，当然需要读取当前 SGC 的局部几何、对象、可行动区域和障碍信息。但这不意味着 BPCC 可以随意修改 ``现实是什么''。因此我们把 BPCC 对 SGC 的接口划分为
+\[
+\boxed{
+SGC^{obs}
+\overset{read}{\longrightarrow}
+BPCC
+}
+\]
+以及
+\[
+\boxed{
+BPCC
+\longrightarrow
+SGC^{pred}
+}
+\]
+而禁止
+\[
+\boxed{
+BPCC
+\nrightarrow
+overwrite(SGC^{obs}).
+}
+\]
+
+BPCC 可以提出 selector、ROI、read-view 或局部工作集请求，例如
+\[
+\Sigma^{BPCC}_t
+=
+Select
+\left(
+SGC^{obs}_t,
+ROI_t,
+RelationFilter_t,
+Horizon_t
+\right),
+\]
+使高频控制器只读取完成当前闭环所需的 SGC 子集。它也可以根据私有状态生成预测性 SGC：
+\[
+\hat{SGC}^{pred}_{t+\delta},
+\]
+但该结构必须以 Predicted 类型存在，不能覆盖真实传感链形成的 Observed SGC。
+
+这种设计实际上把 ``选区''、``局部关注'' 与 ``修改现实表示'' 严格区分。前者是读权限上的投影：
+\[
+Projection:
+SGC\rightarrow SGC|_{\Omega_{ROI}},
+\]
+后者则涉及认识论写权限。BPCC 通常拥有前者，但不拥有后者。
+
+FCS 也存在类似结构。BPCC 可以读取当前 Control Instability、Threat、Integrity Pressure 等局部通道，也可以预测
+\[
+\hat FCS^{pred}_{t+\delta},
+\]
+用于评价候选控制轨迹，但实际 FCS 状态仍然必须由真实身体状态重新计算。
+
+因此 KRA$\rightarrow$BPCC 不只是 ``把目标翻译成动作参数''，而要同时规定三个契约：
+
+\[
+\boxed{
+SemanticContract
+}
+\]
+确定每个状态意味着什么；
+
+\[
+\boxed{
+ControlContract
+}
+\]
+确定 BPCC 能控制什么；
+
+\[
+\boxed{
+EpistemicContract
+}
+\]
+确定哪些内容只能读取、哪些允许生成预测、哪些绝不能覆盖真实观测。
+
+这三个合同共同保证高速局部控制不会逐渐演化成一个不受 Kernel 管理的第二认知主体。
+
+
+\section{BPCC到Actuator/API：局部预测闭环把意图变成现实作用}
+
+经过 KRA 转换后的局部 Control Reference 最终进入 BPCC。此时问题已经从 ``我为什么要这样做'' 转换成 ``这个身体怎样在当前局部动力学中做到''。因此 BPCC 可以被形式化为
+\[
+\boxed{
+BPCC
+=
+Predictor
++
+Controller
++
+ResidualEstimator
++
+AdaptiveLearner .
+}
+\]
+
+设身体局部状态为 $x^B_t$，控制量为 $u_t$，局部环境状态为 $w_t$，则 BPCC 内部模型可以写为
+\[
+\hat x^B_{t+1}
+=
+f_{\theta_B}
+\left(
+x^B_t,
+u_t,
+w_t
+\right).
+\]
+控制器依据 Reference 求解
+\[
+u_t^*
+=
+\arg\min_{u}
+\left[
+J_{target}
++
+\lambda_sJ_{safety}
++
+\lambda_fJ_{FCS}
++
+\lambda_eJ_{energy}
+\right].
+\]
+随后控制输出进入实际执行器：
+\[
+u_t^*
+\rightarrow
+Actuator/API
+\rightarrow
+\mathcal W .
+\]
+
+在物理机器人中，Actuator 可以是电机、夹爪、轮子或执行机构；在数字身体中，则可以是鼠标事件、键盘事件、浏览器操作、Shell Command、Filesystem Operation 或 API Call。AgentOS 不在这一层区分 ``真实'' 和 ``虚拟'' 身体，因为二者在功能上都满足：
+\[
+Action
+\rightarrow
+ExternalStateChange .
+\]
+
+然而，为了维持系统因果结构，必须实施 Single Writer Principle：
+\[
+\boxed{
+\forall r_i,\qquad
+|\operatorname{ActiveWriter}(r_i)|=1 .
+}
+\]
+对于任一现实资源 $r_i$，在同一控制时间窗口中只能存在一个拥有最终写权限的控制器。Kernel、KRA、BPCC、Safety Controller 可以形成层级控制，但不能同时对同一执行资源直接写入互相冲突的命令。高层改变的是 Reference，BPCC 写普通控制，Safety Controller 在满足安全条件时可以接管或裁剪 BPCC 输出。
+
+成熟 Body Runtime 还必须允许已学习 Skill 在 BPCC 附近形成局部闭环。一个 Body Skill 可以表示为
+\[
+\mathcal S_B
+=
+(Predictor,Controller,ResidualModel),
+\]
+使原本需要 Kernel 持续参与的动作逐渐变成局部自动能力。这就是本书此前提出的
+\[
+ExplicitCognitiveControl
+\rightarrow
+RepeatedTrajectory
+\rightarrow
+StablePolicy
+\rightarrow
+CompiledBodyController .
+\]
+但即使技能已经高度自动化，它仍不能脱离现实残差和安全边界。真正成熟的自动化不是 ``永远不再思考''，而是：
+\[
+\boxed{
+Normal\Rightarrow LocalClosure,
+\qquad
+Unexpected\Rightarrow Escalation .
+}
+\]
+
+因此 BPCC$\rightarrow$Actuator/API 是内部认知真正穿过智能体边界、重新进入宇宙 CSO 的位置。直到这一刻，Agent-CSO 才从内部未来结构转化为现实中的因果作用。
+
+
+\section{Reality重新进入Observation：行动成功必须由世界重新证明}
+
+一个非常容易被传统 Agent 软件忽略的事实是：``命令已经发出'' 与 ``现实已经按照命令改变'' 完全不是一回事。因此本书建立
+\[
+\boxed{
+ActionIssued\neq ActionSucceeded .
+}
+\]
+这一不等式不是工程上的异常情况，而是所有开放世界智能体必须默认成立的认识论条件。
+
+设 Agent 发出控制 $u_t$，真正的世界转移应写成
+\[
+W_{t+1}
+=
+F_W
+\left(
+W_t,
+u_t,
+d_t
+\right),
+\]
+其中 $d_t$ 包含 Agent 无法完全预测的环境扰动、其他 Agent 行为、机械误差、网络状态和未知因素。Agent 内部可以产生
+\[
+\hat W_{t+1},
+\]
+但
+\[
+\hat W_{t+1}\neq W_{t+1}
+\]
+除非新的现实观测给出足够证据。
+
+因此每一次行动以后必须重新经过：
+\[
+\boxed{
+Control
+\rightarrow
+Reality
+\rightarrow
+Body
+\rightarrow
+SGC^{obs}/FCS^{obs}
+}
+\]
+而不能采用：
+\[
+Control
+\rightarrow
+Prediction
+\rightarrow
+``Observation'' .
+\]
+
+这就是 Reality Re-entry Principle。它保证智能体的内部闭环始终与真正的外部闭环相交。
+
+例如机器人内部预测 ``手已经抓住杯子''，不能直接把杯子的 SGC 属性设置成 \texttt{held=true}。BPCC 可以生成
+\[
+SGC^{pred}_{t+\delta}:
+\quad held(cup)=true ,
+\]
+但只有视觉、力反馈、触觉和其他身体证据重新经过 FBI 后，才能生成
+\[
+SGC^{obs}_{t+\delta} .
+\]
+数字 Agent 同样如此：发出 ``点击提交'' 并不意味着订单已经提交；必须再次观察页面、网络结果或系统状态。
+
+这个原则实际上构成 AgentOS 的认识论地基：
+\[
+\boxed{
+LearnedDynamics\neq RealityAuthority .
+}
+\]
+无论 Kernel 的模型多强、BPCC 的预测多准、$\Theta$ 的世界模型多成熟，都只能拥有 Prediction Authority，而不能拥有 Reality Authority。
+
+进一步说，Reality Re-entry 也是学习真正发生的来源。若内部预测与现实完全没有重新比较，则 Agent 无法获得可校准 residual：
+\[
+\varepsilon_{t+1}
+=
+D
+\left(
+Y^{obs}_{t+1},
+\hat Y_{t+1}
+\right).
+\]
+没有 residual，BPCC 无法修正局部动力模型，KRA 无法知道身体语义映射是否漂移，Kernel 也无法知道自己的世界模型是否正在失真。因此现实重新进入 Observation，不只是 ``感知下一帧''，而是所有层级学习都共享的最终校准事件。
+
+从更高层看，这正是本书认识论中
+\[
+World
+\rightarrow
+Agent
+\rightarrow
+World'
+\]
+闭环的工程版本。智能体不能用自己的内部世界替换世界，而必须不断让世界对内部世界进行裁决。
+
+
+\section{Residual的跨层传播：BPCC、KRA与Kernel如何共享错误而不共享噪声}
+
+当新的现实观测重新进入系统后，AgentOS 不应只产生一个统一 ``error''。不同层级拥有不同的预测对象、不同时间尺度和不同控制责任，因此 residual 也必须进行结构化分解。Body 层可以首先定义
+\[
+\boxed{
+\varepsilon_B
+=
+\left(
+\varepsilon_{ctrl},
+\varepsilon_{SGC},
+\varepsilon_{FCS}
+\right)
+}
+\]
+分别表示控制结果偏差、现实语义状态偏差以及功能作用状态偏差。
+
+但绝大多数 $\varepsilon_B$ 不应进入 Kernel。BPCC 的基本职责正是吸收高频、小幅、可建模的误差：
+\[
+\varepsilon_B
+\xrightarrow{BPCC}
+\Delta\theta_B .
+\]
+如果误差可以通过局部在线学习、增益调整或轨迹修正解决，那么遵守
+\[
+\boxed{
+NormalDynamicsStayLocal .
+}
+\]
+否则 Agent 的工作记忆将不断被执行细节污染。
+
+当 residual 具有持续性、跨语义性或者表明 Kernel--Body 映射本身出了问题时，则需要进入 KRA。可以定义
+\[
+\Gamma_{KRA}
+=
+f
+\left(
+|\varepsilon_B|,
+Persistence,
+SemanticMismatch,
+TransferFailure
+\right).
+\]
+若
+\[
+\Gamma_{KRA}>\theta_{KRA},
+\]
+KRA 可以更新
+\[
+\chi_{KRA}
+\]
+以重新校准 Body semantic state 与 Kernel representation 之间的关系。
+
+只有当 residual 超出 KRA 的适配能力，或者直接影响 Goal、风险、自我、能力边界和长期世界模型时，才应升级到 Kernel：
+\[
+\Gamma_K
+=
+f
+\left(
+Novelty,
+Risk,
+Persistence,
+GoalRelevance,
+ModelViolation
+\right).
+\]
+若
+\[
+\Gamma_K\geq\theta_K,
+\]
+则 residual 对应的 Agent-CSO 被提升进入 $h(t)$。
+
+由此形成
+\[
+\boxed{
+PredictLocally,
+AdaptRelationally,
+EscalateStructurally .
+}
+\]
+BPCC 处理局部动力误差；KRA 处理关系映射误差；Kernel 处理意义和结构误差。
+
+这一分层尤其能够解释 ``错误累计'' 问题。成熟 Agent 并不是让所有误差不断向上累加，而是在每个尺度都建立自身闭环。可写成：
+\[
+\varepsilon^{(i)}_t
+=
+\varepsilon^{local}_t
++
+\varepsilon^{persistent}_t .
+\]
+局部项由当前层吸收，只有持续结构项进入更慢层。因此高层接收到的并不是底层误差的简单积分，而是经过时间平均、语义压缩和相关性筛选后的 residual structure。
+
+这一机制与本书此前建立的慢—快动力学完全一致：
+\[
+\boxed{
+FastNoise\nrightarrow SlowGlobalStructure
+}
+\]
+而
+\[
+\boxed{
+PersistentFastResidual
+\rightarrow
+SlowStructuralUpdate .
+}
+\]
+它同时保护了 Kernel 的有限工作记忆、$\Theta/\Psi/\Omega$ 的慢变量稳定性，以及 Body Runtime 对快速扰动的自主处理能力。
+
+
+\section{Safety Bypass：安全路径为什么必须绕过普通认知闭环}
+
+在正常运行情况下，完整数据链遵循 Body$\rightarrow$KRA$\rightarrow$Kernel$\rightarrow$KRA$\rightarrow$BPCC 的层级关系。但任何具有真实身体或重要数字权限的 Agent 都不能假定普通认知循环始终足够快。因此我们必须在 Body Runtime 中保留一条具有更高权威的安全通道：
+\[
+\boxed{
+CriticalSafety
+\nrightarrow
+CognitiveDependency .
+}
+\]
+
+设 Body Runtime 检测到安全事件
+\[
+E^{RT}_B .
+\]
+若其严重度
+\[
+R(E^{RT}_B)
+>
+\theta_{safe},
+\]
+则安全控制器应直接执行
+\[
+u^{safe}
+=
+\pi_{safe}
+\left(
+X^B_t,
+E^{RT}_B
+\right),
+\]
+不等待 Kernel 完成推理。这形成
+\[
+World
+\rightarrow
+Body
+\rightarrow
+SafetyController
+\rightarrow
+Actuator
+\rightarrow
+World .
+\]
+
+对于机器人，这可以是碰撞停止、关节极限保护、姿态恢复、电池过热降载；对于数字 Agent，则可以是权限越界阻断、危险系统调用拒绝、凭据保护和事务终止。
+
+这里 Safety Bypass 并不意味着安全控制器拥有对 Agent 目标的最终解释权。它拥有的是\textbf{局部负约束权威}：它可以说 ``此动作不能执行''、``必须立即退出当前状态''，但通常不应该替代 Kernel 决定长期 Goal。因此安全层与 Kernel 之间是
+\[
+\boxed{
+ConstraintAuthority
+>
+OrdinaryControlAuthority
+}
+\]
+而不是 ``Safety 成为第二个 Agent''。
+
+更准确地说：
+\[
+\boxed{
+SafetyAuthority
+>
+BPCCAuthority
+}
+\]
+在安全约束范围内成立；Kernel 的长期治理仍然决定任务、身份和战略。
+
+安全事件结束以后，系统还必须把事件语义重新上传，而不能仅在底层悄然处理。否则 Kernel 会继续使用已经过期的现实模型。于是完整安全机制是：
+\[
+E_B^{RT}
+\rightarrow
+SafetyAction
+\rightarrow
+World'
+\rightarrow
+Observation
+\rightarrow
+SafetyEventSummary
+\rightarrow
+Kernel .
+\]
+这一点非常重要：安全路径可以绕过\textbf{认知决策延迟}，但不能绕过\textbf{认知事后知情}。
+
+由此还可以看出三信号通道的真正意义。语义通道告诉 Kernel ``世界是什么''；FCS/AHC 调制通道告诉系统 ``世界如何影响我''；Safety Channel 则在必要时直接回答 ``现在必须停止什么''。三者分别对应认识、调节和约束，不应被压缩成一个统一消息队列优先级。
+
+最终，Safety Bypass 使整个 AgentOS 形成一种类似受约束的层级自治结构：低层拥有足够快的生存性保护，高层拥有足够广的目标与意义处理，而二者通过现实重新进入和事件升级保持因果一致。
+
+
+\section{World--Agent--World的工程闭合：从组件架构上升为持续智能体}
+
+现在我们可以把本章所有路径重新压缩成一个完整闭环：
+\[
+\boxed{
+World
+\rightarrow
+Body
+\rightarrow
+SGC/FCS
+\rightarrow
+KRA
+\rightarrow
+Kernel
+\rightarrow
+Goal/Prediction
+\rightarrow
+ControlReference
+\rightarrow
+KRA
+\rightarrow
+BPCC
+\rightarrow
+Actuator
+\rightarrow
+World'
+}
+\]
+随后
+\[
+World'
+\rightarrow
+NewObservation
+\]
+重新开始下一周期。
+
+这条链表面上像一个线性 pipeline，但真实系统实际上由多个时间尺度不同的闭环嵌套而成。可以定义完整系统状态：
+\[
+\mathfrak X_t
+=
+\left[
+W_t,
+X^B_t,
+SGC_t,
+FCS_t,
+z^{BPCC}_t,
+\chi^{KRA}_t,
+h_t,
+E_t,
+\Theta_t,
+\Psi_t,
+\Omega_t
+\right].
+\]
+整个 Agent 的演化可以抽象为
+\[
+\mathfrak X_{t+1}
+=
+\mathcal F
+\left(
+\mathfrak X_t,
+D_t
+\right),
+\]
+其中 $\mathcal F$ 并不是单一神经网络，而是由现实动力学、Body 快闭环、KRA 适配、Kernel 认知动力学、记忆更新和安全治理共同构成的混合多尺度动力系统。
+
+在这一系统中至少存在如下时间尺度关系：
+\[
+\boxed{
+\tau_{servo}
+<
+\tau_{BPCC}
+<
+\tau_{SGC/FCS}
+<
+\tau_{KRA}^{fast}
+\lesssim
+\tau_h
+<
+\tau_E
+<
+\tau_\Theta
+<
+\tau_\Psi
+<
+\tau_\Omega .
+}
+\]
+不同层级不需要同步，但必须通过事件、预测包络和 residual 建立因果连接。
+
+我们尤其应注意，完整工程闭环绝不是 ``Kernel 控制世界''。更准确的是：
+\[
+\boxed{
+KernelConstrainsBody,
+BodyActsOnWorld,
+WorldCorrectsBoth .
+}
+\]
+Kernel 提供目标和可行域；Body Runtime 在自身时间尺度上寻找可执行轨迹；现实决定结果；残差重新塑造 Body、KRA 和 Kernel。于是不存在任何一个绝对全知的中央控制器。
+
+这也使本章和前面的 CSO 理论完成统一。现实世界中的结构可以表示为 Universe-CSO：
+\[
+C^U_t .
+\]
+通过感知、SGC/FCS 和 KRA，形成
+\[
+C^U_t
+\rightarrow
+AgentCSO_t .
+\]
+Agent-CSO 经 Kernel 内部计算形成关于未来的目标和预测结构：
+\[
+AgentCSO_t
+\rightarrow
+AgentCSO^{future}_t .
+\]
+这些结构通过 Control Reference、BPCC 和身体重新作用于现实：
+\[
+AgentCSO^{future}_t
+\rightarrow
+Action
+\rightarrow
+C^U_{t+1}.
+\]
+因此工程架构最终实现的正是本书认识论最核心的结构：
+\[
+\boxed{
+UniverseCSO
+\rightarrow
+AgentCSO
+\rightarrow
+UniverseCSO' .
+}
+\]
+
+更进一步，这一闭环解释了持续学习为何不等同于参数训练。一次真实行动可能同时造成三个层级的学习：
+\[
+\Delta\theta_{BPCC}
+\]
+修正局部动力模型；
+\[
+\Delta\chi_{KRA}
+\]
+修正 Kernel--Body 的适配关系；
+\[
+\Delta(E,\Theta,\Psi,\Omega)
+\]
+则在更长时间尺度上改变经验、世界模型、自我和生命周期结构。于是同一个现实反馈在不同尺度上具有不同沉降方式。
+
+为防止这些学习互相破坏，我们最终需要满足：
+\[
+\boxed{
+FastAdaptation
+\neq
+SlowIdentityRewrite .
+}
+\]
+短时控制误差可以快速修改 BPCC；持续身体变化可以调整 KRA；真正涉及 $\Theta$、$\Psi$ 和 $\Omega$ 的更新则必须经过更长时间证据积累。这就是本书不断强调的 Slow Variable Protection。
+
+因此，AgentOS 的完整工程结构可以浓缩成以下不变量：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{第一：Reality Is Ultimate Constraint;}\\
+&\text{第二：Normal Dynamics Stay Local;}\\
+&\text{第三：Persistent Residual Escalates Upward;}\\
+&\text{第四：Stable Ability Compiles Downward;}\\
+&\text{第五：Slow Structures Constrain Fast Dynamics;}\\
+&\text{第六：Prediction Never Overwrites Observation;}\\
+&\text{第七：Safety Authority Overrides Ordinary Fast Control;}\\
+&\text{第八：Relationship Stability Precedes Parameter Co-Adaptation.}
+\end{aligned}
+}
+\]
+
+由此，我们得到的不再是一张由 LLM、记忆库、机器人控制器和若干 API 拼接起来的组件图，而是一种真正意义上的\textbf{跨尺度智能运行体}。它具有一个长期持续的认知主体，但又不要求这个主体亲自处理所有微观变化；它能够形成关于现实的内部结构，但又始终承认内部结构不是现实本身；它能够通过预测主动改变世界，却必须让世界重新进入系统验证预测；它能够让技能逐渐自动化，却保留异常重新进入认知的路径；它允许各层独立学习，却通过时间尺度分离保护身份连续。
+
+因此，本章最终可以用一个公式概括 Agent Kernel--KRA--Body Runtime 的全部意义：
+\[
+\boxed{
+\textbf{
+PersistentIntelligence
+=
+RealityCoupling
+\bowtie
+EmbodiedLocalClosure
+\bowtie
+AdaptiveSemanticCoupling
+\bowtie
+MultiscaleCognition
+\bowtie
+RealityVerification .
+}
+}
+\]
+
+从工程角度看，AgentOS 真正成立的判据并不是 ``Kernel 能否调用 Body''，而是整个系统是否能够稳定维持如下循环：
+\[
+\boxed{
+\textbf{
+看见真实世界
+\rightarrow
+形成自己的世界
+\rightarrow
+依据内部世界决定行动
+\rightarrow
+通过身体改变真实世界
+\rightarrow
+让真实世界重新纠正自己的内部世界。
+}
+}
+\]
+当这条闭环能够跨越毫秒级身体控制、秒级工作记忆、小时级经验、长期结构记忆以及生命周期尺度的自我与生成先验持续运行时，一个 Agent 才真正从一次性的模型调用转变为具有长期结构连续性的人工智能生命体。

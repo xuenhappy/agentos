@@ -1,194 +1,1282 @@
 \chapter{KRA 的功能对齐理论}
-\chaptervoice{这一章，我们围绕“KRA 的功能对齐理论”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明认知内核通过身体进入现实。}
-
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文第 353614—368709 行的 KRA 与双轴多尺度 AgentOS 收束稿。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是具身认知、分层控制、MPC、状态估计与安全包络（模型预测控制、Kalman 状态估计与具身认知）。
-
-本章使用上一章“KRA：Kernel—Runtime Adaptation”已经得到的对象与边界；本章产出将供下一章“Kernel—KRA—BPCC 的共同学习稳定性”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在具身认知、分层控制、MPC、状态估计与安全包络上。
-\section{Train Separately}
-\begin{narration}
-现在把镜头移到“Train Separately”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Train Separately”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“KRA 的功能对齐理论”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Train Separately的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Train Separately”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Connect Semantically}
-\begin{narration}
-现在把镜头移到“Connect Semantically”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Connect Semantically”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“KRA 的功能对齐理论”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Connect Semantically的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Connect Semantically”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Calibrate Functionally}
-\begin{narration}
-现在把镜头移到“Calibrate Functionally”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Calibrate Functionally”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“KRA 的功能对齐理论”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Calibrate Functionally的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Calibrate Functionally”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Adapt Continuously}
-\begin{narration}
-现在把镜头移到“Adapt Continuously”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Adapt Continuously”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“KRA 的功能对齐理论”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Adapt Continuously的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Adapt Continuously”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Functional Alignment > Representation Alignment}
-\begin{narration}
-现在把镜头移到“Functional Alignment > Representation Alignment”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Functional Alignment > Representation Alignment”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“KRA 的功能对齐理论”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Functional Alignment > Representation Alignment的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Functional Alignment > Representation Alignment”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Reality as Anchor}
-\begin{narration}
-现在把镜头移到“Reality as Anchor”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Reality as Anchor”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“KRA 的功能对齐理论”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Reality as Anchor的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Reality as Anchor”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Contract Envelope}
-\begin{narration}
-现在把镜头移到“Contract Envelope”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Contract Envelope”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“KRA 的功能对齐理论”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Contract Envelope的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Contract Envelope”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Functional Anchors}
-\begin{narration}
-现在把镜头移到“Functional Anchors”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Functional Anchors”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“KRA 的功能对齐理论”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Functional Anchors的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Functional Anchors”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“KRA 的功能对齐理论”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“Kernel—KRA—BPCC 的共同学习稳定性”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\label{chap:kra-functional-alignment}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.92\textwidth}
+\textbf{本章总体说明}
+
+本章确立 KRA（Kernel--Runtime Adaptation）最核心的理论原则：\textbf{Agent Kernel 与 Body Runtime 之间不应以内部表示的一致性作为耦合目标，而应以现实闭环中的功能一致性、语义契约一致性与控制后果一致性作为最终对齐标准。} Kernel 与 BPCC 可以具有完全不同的内部表征空间、模型结构、训练目标乃至时间尺度，只要二者能够通过稳定的公共语义接口，在真实世界反馈下保持预测、控制、残差解释和安全约束的一致，就可以构成稳定的统一智能体。
+
+因此，本章提出 KRA 的四阶段原则：
+\[
+\boxed{
+\text{Train Separately}
+\rightarrow
+\text{Connect Semantically}
+\rightarrow
+\text{Calibrate Functionally}
+\rightarrow
+\text{Adapt Continuously}
+}
+\]
+并进一步建立：
+\[
+\boxed{
+FunctionalAlignment
+>
+RepresentationAlignment
+}
+\]
+这一基本准则。所谓 ``$>$'' 并非表示表示对齐没有价值，而是表示在 Kernel--Body Runtime 的跨模型长期耦合中，\textbf{功能正确性具有比内部坐标一致性更高的系统优先级。}
+
+KRA 的最终锚点不是 Kernel，也不是 BPCC，更不是任何一个学习模型，而是现实：
+\[
+\boxed{
+RealityIsTheUltimateAlignmentAnchor
+}
+\]
+只有能够持续通过真实观测重新闭合的功能关系，才能被认为是有效的 Kernel--Body 耦合关系。本章由此建立 Semantic Contract、Contract Envelope 与 Functional Anchor 三个工程对象，为异构认知内核、异构身体运行时以及未来跨身体迁移提供统一的功能对齐理论基础。
+\end{minipage}
+}
+\end{center}
+
+\section{Train Separately：为什么 Kernel 与 Body Runtime 不应被迫共享一种内部表示}
+
+在建立 KRA 之前，我们首先需要纠正一种非常自然、但在长期智能系统中可能十分危险的工程直觉：既然 Agent Kernel 与 Body Runtime 最终属于同一个 Agent，那么是否应当让二者共享同一套 latent space，甚至使用统一模型端到端训练？在一个规模有限、任务固定、身体恒定的系统中，这种方案具有明显吸引力。统一 latent 可以降低接口设计难度，也可以利用端到端梯度直接优化最终任务。然而，当我们的研究对象从一次性任务系统转向持续运行、可换身体、可长期成长的 AgentOS 时，这种做法反而可能破坏系统最重要的结构性质：\textbf{认知内核与身体动力学之间必须保持一定程度的可分离性。}
+
+设 Agent Kernel 的内部状态空间为
+\[
+\mathcal X_K,
+\]
+Body Runtime，特别是 BPCC 的快速内部状态空间为
+\[
+\mathcal X_B,
+\]
+则通常有
+\[
+\dim(\mathcal X_K)\neq \dim(\mathcal X_B),
+\]
+并且更重要的是，两者所优化的问题并不相同。Kernel 关注的是较慢时间尺度上的目标、意义、计划、自我连续性、经验结构与未来预测：
+\[
+J_K
+=
+J_{\text{goal}}
++
+\lambda_1J_{\text{semantic}}
++
+\lambda_2J_{\text{long-horizon}}
++
+\lambda_3J_{\text{self-consistency}},
+\]
+而 BPCC 关注的是更快速的局部预测、姿态、执行误差、能量、稳定性与安全余量：
+\[
+J_B
+=
+J_{\text{tracking}}
++
+\mu_1J_{\text{stability}}
++
+\mu_2J_{\text{energy}}
++
+\mu_3J_{\text{residual}}.
+\]
+如果人为要求存在一个严格同构映射
+\[
+\phi:\mathcal X_B\rightarrow \mathcal X_K
+\]
+使得内部 representation 在每个时刻都能够一一对应，那么事实上等于要求两个解决不同问题、工作于不同频率和不同状态空间的系统使用同一种坐标语言。这种要求在理论上没有必要，在工程上还会造成大量约束。
+
+一个最简单的例子是机器人抓取。Kernel 可能只需要表达：
+\[
+C_K=
+\{\text{抓住杯子},\text{杯子易碎},\text{保持竖直}\},
+\]
+而 BPCC 内部可能需要表示数百维关节状态、接触估计、摩擦锥、微分运动趋势与局部控制 latent：
+\[
+z_B
+=
+[q,\dot q,\hat f_c,\hat \mu,z_{\text{dyn}},\ldots].
+\]
+要求 Kernel 理解这些变量不仅没有意义，还会让有限的工作记忆 $h(t)$ 被身体微观动力学占据；反过来，要求 BPCC 直接拥有 ``杯子属于某人的纪念品，因此应更加谨慎'' 这样的高层语义，也会让快速控制器承担它不应该承担的认知结构。
+
+因此，KRA 的第一原则是：
+\[
+\boxed{
+TrainKernelSeparately
+}
+\]
+与
+\[
+\boxed{
+TrainBodyRuntimeSeparately.
+}
+\]
+
+所谓 ``Separately'' 并不意味着两个系统永远独立，而是指\textbf{允许它们分别形成适合自身功能空间与时间尺度的内部表示}。Kernel 可以形成适合长期语义推理的 Agent-CSO 表示，BPCC 可以形成适合快速动力预测的私有 latent。KRA 不试图取消这种差异，而是负责建立二者之间稳定、可解释、可适应的作用关系。
+
+从更一般的 Agent-CSO 理论来看，这一原则实际上意味着我们接受：
+\[
+\pi_K(C)\neq\pi_B(C),
+\]
+即同一个现实结构 $C$ 可以在 Kernel 与 Body Runtime 中产生完全不同的具体表示。例如 ``前方台阶'' 在 Kernel 中可能是一个具有目标相关性的空间关系 CSO，而在 BPCC 中可能表现为一组地形高度、接触概率和足端轨迹约束。我们真正要求保持的不是：
+\[
+\pi_K(C)=\pi_B(C),
+\]
+而是二者最终应当在行动意义上满足：
+\[
+\mathcal F_K(C)
+\simeq
+\mathcal F_B(C),
+\]
+即它们产生的功能后果应相互兼容。
+
+这个原则还直接支持 Body Scale。假设未来同一个 Agent Kernel 从轮式机器人迁移到机械臂，再迁移到人形机器人。如果 Kernel 必须与每一种身体共享同一个内部 latent，那么换身体将几乎等价于重新训练整个主体；而如果 Kernel 主要依赖稳定语义接口：
+\[
+SGC,\quad FCS,\quad ControlReference,\quad PredictiveEnvelope,
+\]
+那么新的身体只需要学习如何把自身动力学投影到这些公共接口。于是：
+\[
+\boxed{
+KernelIdentity
+\quad\text{可以稳定，}\quad
+BodyImplementation
+\quad\text{可以变化。}
+}
+\]
+
+这正是持续智能体与普通端到端模型之间的重要差异。持续主体不应把自身身份绑定在某一组特定执行 latent 上，而应建立在跨身体仍然保持连续的慢速认知结构、语义关系和世界交互历史之上。KRA 的任务，正是在允许内部表征差异的前提下，维持这种跨模型、跨身体、跨时间尺度的功能统一。
+
+\section{Connect Semantically：以公共语义骨架连接两个异构动力系统}
+
+允许 Kernel 与 Body Runtime 分别训练之后，第二个问题立即出现：如果内部 latent 不必一致，两者究竟通过什么语言协同？一个极端方案是完全暴露 Body Runtime 的内部 latent，让 Kernel 自行学习解释；另一个极端则是将所有身体状态翻译成自然语言。前者过于不稳定，后者又会造成严重的信息损失和运行延迟。因此 KRA 需要建立一种介于二者之间的公共层：\textbf{稳定的语义骨架加上有限的可学习软耦合。}
+
+我们把 Body Runtime 对 Agent Kernel 的公开状态抽象为
+\[
+Y_B(t)
+=
+\left[
+SGC_t,
+FCS_t,
+R_t,
+Q_t,
+E_t
+\right],
+\]
+其中 $SGC_t$ 表示当前可行动现实的空间--语义结构，$FCS_t$ 表示现实及身体对主体的功能影响场，$R_t$ 表示 residual 与异常信息，$Q_t$ 表示置信度、能力余量和执行质量，$E_t$ 表示安全或运行事件。这些变量构成 KRA 的 \textbf{Hard Semantic Channel}。它们的核心含义不能因为 Body Runtime 内部模型升级而随意变化。
+
+反向方向上，Kernel 不应直接输出具体 actuator torque，而是输出较稳定的高层控制结构：
+\[
+U_K(t)
+=
+\left[
+ControlReference_t,
+PredictiveEnvelope_t,
+Constraint_t,
+Priority_t
+\right].
+\]
+其中 ControlReference 表示 ``希望身体实现什么''，PredictiveEnvelope 表示允许的未来状态区域，Constraint 表示安全、价值与任务约束，Priority 表示多目标竞争时的控制优先级。KRA 再将这些结构映射到当前身体能够执行的局部控制空间。
+
+因此 KRA 可以表示为两个方向的动态映射：
+\[
+\mathcal A_{BK}:
+Y_B
+\rightarrow
+X_K^{embodied},
+\]
+以及
+\[
+\mathcal A_{KB}:
+U_K
+\rightarrow
+U_B.
+\]
+
+这里最关键的一点在于：$X_K^{embodied}$ 并不是复制 Body Runtime 的状态，而是把身体状态转换成 Kernel 能够用于认知推理的 Agent-CSO。例如 BPCC 内部检测到：
+\[
+\hat \mu\downarrow,\qquad
+e_{\text{slip}}\uparrow,
+\]
+KRA 不一定需要向 Kernel 暴露具体摩擦估计值，而可以生成：
+\[
+C_{\text{surface}}
+=
+\text{``当前支撑面抓地能力低，快速运动风险升高''}.
+\]
+这个结构进入 SGC/FCS 和 Kernel 后，才能参与 Goal、Plan、风险判断以及未来经验写入。
+
+反方向也是如此。Kernel 中存在：
+\[
+C_{\text{goal}}
+=
+\text{``拿起杯子但不能洒出液体''},
+\]
+KRA 需要将其展开成当前 Body Runtime 可以理解的约束：
+\[
+\begin{aligned}
+&\theta_{\text{cup}}\in[-\epsilon,\epsilon],\\
+&\|\mathbf a_{\text{cup}}\|\le a_{\max},\\
+&P(\text{grasp failure})<p_{\max}.
+\end{aligned}
+\]
+这里发生的是：
+\[
+\boxed{
+SemanticGoal
+\rightarrow
+DynamicalConstraint
+}
+\]
+而不是自然语言到关节命令的直接翻译。
+
+因此，我们可以把 KRA 的公共界面写成一个语义契约：
+\[
+\mathcal C_{\text{sem}}
+=
+(
+\Sigma,
+\mathcal R,
+\mathcal U,
+\mathcal Q
+),
+\]
+其中 $\Sigma$ 定义公共语义对象，$\mathcal R$ 定义它们之间允许的关系，$\mathcal U$ 定义控制语义，$\mathcal Q$ 定义置信度和认识论状态。
+
+这一层必须比具体神经模型慢得多地变化：
+\[
+\tau_{\mathcal C}
+\gg
+\tau_{z_B},
+\]
+否则 Kernel 每一次 Body Runtime 升级都会面对不同的 ``语言''，长期经验无法复用。
+
+但是纯硬语义接口也会限制带宽。因此在 Hard Semantic Channel 之外，可以保留：
+\[
+z^{soft}_{BK}
+\]
+这样的 Soft Latent Channel，用于表达难以完全离散化、但对跨模块协同有价值的细粒度动力学特征。于是形成我们此前概括的设计：
+
+\[
+\boxed{
+Interface
+=
+SemanticSkeleton
++
+LatentMuscle
+}
+\]
+
+语义骨架保证身份连续、可检查、版本兼容和跨身体迁移；latent muscle 提供高性能、低损失的细粒度适应能力。KRA 的真正作用不是从 ``语义'' 与 ``latent'' 二选一，而是建立一种层级契约：越接近 Agent 身份、Goal、Reality Authority 和 Safety 的结构越需要稳定语义化；越接近快速身体细节的变量越可以保留私有或软 latent 表示。
+
+因此，Connect Semantically 并不是 ``所有东西都转换成符号''，而是要求智能体在不同动力系统之间建立一个\textbf{长期稳定、可解释、可校准的公共意义层}。只有这样，一个 Agent 才可能在身体不断变化的情况下保持 ``我仍然知道这个世界中的杯子是什么、身体现在受到了什么影响、我要完成什么，以及行动产生了什么结果'' 的连续性。
+
+\section{Calibrate Functionally：不比较内部向量，而比较真实闭环中的功能后果}
+
+当 Kernel 与 Body Runtime 已经通过公共语义接口连接以后，我们仍然不能认为二者已经 ``对齐''。一个字段名称相同，并不意味着两个系统对其拥有相同功能理解。例如 Kernel 将 ``可达'' 理解为成功概率高于 $0.9$，而某一新 Body Runtime 只要运动学上存在轨迹就标记为 reachable，那么接口虽然语义名称一致，Agent 在现实中仍会不断做出错误决策。因此 KRA 的第三原则不是 Semantic Matching，而是：
+\[
+\boxed{
+CalibrateFunctionally.
+}
+\]
+
+功能校准的对象不是内部 representation，而是由输入、预测、行动和真实反馈共同构成的闭环行为关系。设 Kernel 通过 KRA 产生控制意图 $u_K$，Body Runtime 执行后产生实际状态转移：
+\[
+x_{t+1}^{real}
+=
+F_{world}(x_t,u_B),
+\]
+而 Kernel 对这一过程存在预期：
+\[
+\hat x_{t+1}^{K}
+=
+F_K(x_t,u_K).
+\]
+Body Runtime 同样存在局部预测：
+\[
+\hat x_{t+1}^{B}
+=
+F_B(x_t,u_B).
+\]
+KRA 的目标之一就是使：
+\[
+D(
+\hat x_{t+1}^{K},
+x_{t+1}^{real}
+)
+\]
+和
+\[
+D(
+\hat x_{t+1}^{B},
+x_{t+1}^{real}
+)
+\]
+都保持在可治理范围内，同时保证 Kernel 的高层预测与 Body Runtime 的局部预测在共同可观察变量上保持兼容。
+
+我们可以定义 KRA 的功能校准损失：
+\[
+\mathcal L_{KRA}
+=
+\lambda_s\mathcal L_{sem}
++
+\lambda_d\mathcal L_{dyn}
++
+\lambda_c\mathcal L_{ctrl}
++
+\lambda_r\mathcal L_{res}
++
+\lambda_e\mathcal L_{epi}
++
+\lambda_{safe}\mathcal L_{safe}.
+\]
+
+其中，语义一致损失
+\[
+\mathcal L_{sem}
+\]
+衡量同一个公共语义对象在上下行转换中是否保持其核心含义；动力一致损失
+\[
+\mathcal L_{dyn}
+\]
+衡量 Kernel 的高层预测与 Body Runtime 的实际状态变化是否具有一致的动态方向；控制一致损失
+\[
+\mathcal L_{ctrl}
+\]
+衡量 Kernel 的 ControlReference 是否被正确转换成身体行为；残差一致损失
+\[
+\mathcal L_{res}
+\]
+衡量 Body Runtime 报告的 residual 是否真实对应现实中的控制失败或预测失配；认识论一致损失
+\[
+\mathcal L_{epi}
+\]
+则保证 Observed、Predicted、Derived 等状态没有被错误混用；安全损失
+\[
+\mathcal L_{safe}
+\]
+保证任何功能校准都不能通过突破 Safety Envelope 获得更高任务性能。
+
+在实践中，我们尤其应关注 \textbf{intervention-based calibration}。如果我们只比较静态状态，两个模型很容易在数据集上看似一致，而在行动之后发生严重偏差。因此需要主动施加一组校准动作：
+\[
+\mathcal U_{cal}
+=
+\{u_1,u_2,\ldots,u_m\},
+\]
+观察：
+\[
+x_t
+\xrightarrow{u_i}
+x_{t+1},
+\]
+并验证 Kernel、KRA 与 Body Runtime 对该变化的预测关系。
+
+由此可以定义一个功能一致度：
+\[
+A_F
+=
+1-
+\mathbb E_{(x,u)\sim\mathcal D_{cal}}
+\left[
+d_F(
+\Delta x^{pred},
+\Delta x^{real}
+)
+\right].
+\]
+当：
+\[
+A_F\ge\theta_F
+\]
+时，我们才认为某一 Kernel--Body 关系已经获得足够的功能校准。
+
+这一思想和传统 representation matching 有本质区别。representation matching 问：
+\[
+z_K\stackrel{?}{\approx}z_B,
+\]
+而 functional calibration 问：
+\[
+\boxed{
+\text{当 Kernel 认为某个动作会造成某种结果时，现实是否真的如此？}
+}
+\]
+
+例如轮式机器人和人形机器人对 ``向前移动一米'' 的内部动态完全不同：
+\[
+z_{wheel}\neq z_{humanoid}.
+\]
+但只要：
+\[
+Result_{wheel}
+\simeq
+Result_{humanoid}
+\simeq
+\Delta p=(1\,m,0,0),
+\]
+且相关风险、能力余量和时间成本都被正确报告，那么从 Kernel 的功能角度，它们就是可对齐的。
+
+这也是 Body Scale 能够成立的直接条件。Body Scale 不是要求不同身体产生同样的内部表示，而是要求 Agent Kernel 能够在不同身体上复用：
+\[
+GoalMeaning,
+\quad
+PerceptionMeaning,
+\quad
+ControlMeaning,
+\quad
+OutcomeMeaning.
+\]
+
+功能校准由此成为 KRA 最重要的工程过程之一。每当新身体接入、BPCC 升级、传感器改变、动力模型更新或 Kernel 的认知结构发生较大调整，都必须重新检查公共语义在真实闭环中的功能含义。一个持续智能体不能仅依赖 ``接口类型检查''，而需要一种持续存在的 ``现实功能类型检查''。
+
+\section{Adapt Continuously：长期智能中的关系适应而非一次性接口适配}
+
+Kernel 与 Body Runtime 的关系不是系统安装完成后就永远固定。真实身体会磨损，传感器会漂移，软件会更新，Agent 会学习新的技能，Kernel 的结构记忆 $\Theta$ 会变化，甚至 Agent 对同一个身体的熟练程度也会在生命周期中发生显著变化。因此 KRA 如果只是一个离线训练完成的静态 adapter，最终仍然会因为两端模型的演化而失去有效性。
+
+我们将时刻 $t$ 的完整耦合状态写成：
+\[
+\Xi_t
+=
+(K_t,A_t,B_t),
+\]
+其中 $K_t$ 表示 Kernel 的当前认知结构，$A_t$ 表示 KRA 的适配状态，$B_t$ 表示 Body Runtime 状态。一个可运行 Agent 并不要求：
+\[
+K_t=K_0,\qquad
+A_t=A_0,\qquad
+B_t=B_0,
+\]
+而要求整个三元组始终保持在一个兼容区域：
+\[
+\boxed{
+(K_t,A_t,B_t)
+\in
+\mathcal M_{compatible}.
+}
+\]
+
+$\mathcal M_{compatible}$ 可以理解为 Kernel、KRA 与 Body Runtime 之间所有能够维持语义解释、预测一致、控制稳定和安全闭环的关系集合。Continuous Adaptation 的任务不是让三个系统保持静止，而是：
+\[
+\boxed{
+\Xi_t
+\in
+\mathcal M_{compatible}
+\quad
+\forall t.
+}
+\]
+
+KRA 的适配因此应当是 error-driven 而不是 unrestricted learning。定义关系残差：
+\[
+\varepsilon_A(t)
+=
+[
+\varepsilon_{sem},
+\varepsilon_{dyn},
+\varepsilon_{ctrl},
+\varepsilon_{res},
+\varepsilon_{epi}
+],
+\]
+则 KRA 更新可以抽象为：
+\[
+A_{t+\Delta t}
+=
+A_t
++
+\eta_A
+G_A(
+\varepsilon_A,
+C_t,
+R_t
+),
+\]
+其中 $C_t$ 是上下文，$R_t$ 是现实验证信号。
+
+这里有一个极为重要的限制：
+\[
+\eta_A
+\]
+不能由单次误差无限放大。现实世界存在噪声、异常冲击和偶发故障，如果 KRA 对每次 residual 都立即重写映射，就会把短时噪声误认为长期身体变化。因此我们应使用：
+\[
+\bar\varepsilon_A(t)
+=
+\frac{1}{T}
+\int_{t-T}^{t}
+w(t-\tau)\varepsilon_A(\tau)d\tau
+\]
+作为部分慢变量依据，仅当：
+\[
+\|\bar\varepsilon_A\|>\theta_A
+\]
+并具有足够 persistence 时，才允许执行结构性 KRA 更新。
+
+这实际上重新体现了全书反复出现的原则：
+\[
+\boxed{
+FastNoise
+\nrightarrow
+SlowStructure.
+}
+\]
+
+连续适应还必须区分至少三种变化来源。第一种是 Body Drift，例如电机磨损、传感器偏移、API 变化。这时 KRA 应优先修改 Body$\rightarrow$Kernel 或 Kernel$\rightarrow$Body 的局部映射。第二种是 Kernel Semantic Drift，例如 Agent 在长期经验中重新定义某些 Goal、风险或 Self 相关结构。这时 KRA 需要确认新的意义是否仍然满足公共契约。第三种是 Task/Environment Shift，此时两端可能都没有发生内部漂移，只是现实分布改变，此时不应错误地把环境变化归因于接口失配。
+
+因此可以建立漂移归因变量：
+\[
+P(
+Cause
+\mid
+\varepsilon_A
+),
+\]
+其中：
+\[
+Cause
+\in
+\{
+Body,
+KRA,
+Kernel,
+World,
+Sensor,
+Task
+\}.
+\]
+只有达到充分置信度后，系统才决定由哪一层承担学习。
+
+这一点十分重要，因为长期智能最危险的问题之一并不是 ``不会学习''，而是 ``所有东西都同时学习''。如果 Kernel、KRA、BPCC 在同一个异常发生后同时高速修改自己，那么下一时刻系统可能已经无法判断性能恢复来自哪一个模块，甚至会形成相互追逐的 adaptive oscillation。因而 Continuous Adaptation 的含义不是：
+\[
+EverythingChangesAllTheTime,
+\]
+而是：
+\[
+\boxed{
+AdaptWhenNeeded,
+AtTheAppropriateLayer,
+AtTheAppropriateTimescale.
+}
+\]
+
+由此，KRA 更像一个长期关系维护系统。它维护的不是固定参数，而是：
+\[
+\boxed{
+RelationshipContinuity.
+}
+\]
+参数可以换，身体可以换，Kernel 可以成长，但只要语义契约、功能后果和现实校验关系持续存在，Agent 对身体的 ``熟悉'' 与 ``拥有'' 就可以保持连续。这也为后续跨身体学习、技能迁移和长期共同适应建立了必要基础。
+
+\section{Functional Alignment $>$ Representation Alignment：跨实现智能的核心原则}
+
+本章最核心的理论判断可以正式写成：
+\[
+\boxed{
+FunctionalAlignment
+>
+RepresentationAlignment.
+}
+\]
+为了避免误解，我们首先需要说明这里的 ``$>$'' 表示系统设计优先级，而不是数学上的数值大小关系。它意味着：当内部表示的一致性和现实功能的一致性无法同时满足时，AgentOS 应首先保证后者。
+
+设 Kernel 存在表示：
+\[
+z_K
+=
+\phi_K(C),
+\]
+Body Runtime 存在表示：
+\[
+z_B
+=
+\phi_B(C).
+\]
+传统 representation alignment 希望找到变换：
+\[
+T
+\]
+满足：
+\[
+T(z_B)\approx z_K.
+\]
+这种方法对于模型蒸馏、跨模态表示或特征共享具有明显价值，但对于 Kernel--Body Runtime 问题而言，它并不是必要条件。
+
+真正必要的是存在一组功能映射：
+\[
+F_K,\quad F_B
+\]
+使得对于公共任务语义 $C$ 和允许控制 $u$：
+\[
+\Pi_O
+F_K(C,u)
+\simeq
+\Pi_O
+F_B(C,u),
+\]
+其中 $\Pi_O$ 表示投影到公共可观察结果空间，例如 SGC 状态变化、FCS 变化、Goal 完成度和安全状态。
+
+因此可以定义功能等价关系：
+\[
+K
+\sim_F
+B
+\]
+当且仅当，在规定的契约域 $\mathcal D_C$ 内：
+\[
+\forall (c,u)\in\mathcal D_C,
+\qquad
+d_O(
+O_K(c,u),
+O_B(c,u)
+)
+<\epsilon_F.
+\]
+
+注意，这一条件完全允许：
+\[
+d_R(z_K,z_B)\gg 0.
+\]
+也就是说，representation 可以非常不同，但 functional outcome 仍然接近。
+
+一个直观例子是 ``避开障碍物''。机械臂可能通过 joint-space trajectory optimization 实现，轮式机器人通过 local planner 实现，人形机器人通过全身 MPC 实现，数字 Agent 则可能通过修改鼠标路径避开 UI 中的禁止区域。这些系统内部不存在天然统一的 latent 表示，但它们可能共享：
+\[
+\boxed{
+Obstacle,
+ForbiddenRegion,
+SafePath,
+GoalState
+}
+\]
+这些 Agent-CSO，并在其各自 Body Runtime 中实现相同功能关系。
+
+因此真正实现 Body Scale 的不是：
+\[
+SharedLatent,
+\]
+而是：
+\[
+\boxed{
+SharedFunctionalSemantics.
+}
+\]
+
+这一原则进一步具有非常重要的认识论意义。它说明 Agent-CSO 的统一性不应该由底层载体决定。同一个 CSO：
+\[
+C
+\]
+在不同实现中可以满足：
+\[
+\pi_A(C)\neq\pi_B(C),
+\]
+但如果二者保持相应因果关系与行动意义：
+\[
+\Phi_F(
+\pi_A(C)
+)
+\simeq
+\pi_B(C),
+\]
+那么它们仍然属于相同的功能语义类。
+
+这和我们此前关于异构智能同类性所提出的 Multiscale Cognitive Dynamical Isomorphism 是一致的：判断两个智能结构是否 ``相同''，不应要求神经元、Transformer token、BPCC latent 或某个软件对象逐一相等，而应考察其关键 CSO 关系、闭环结构和现实作用是否保持。
+
+但是 Functional Alignment 并不意味着内部 representation 完全无关。一个极端不可解释、持续漂移的 latent 会提高 KRA 映射成本，也可能使 functional alignment 非常脆弱。因此更准确的工程原则是：
+
+\[
+\boxed{
+RepresentationAlignment
+\quad
+\text{is useful when it reduces alignment cost,}
+}
+\]
+但：
+\[
+\boxed{
+FunctionalAlignment
+\quad
+\text{is the acceptance criterion.}
+}
+\]
+
+我们可以定义：
+\[
+J=
+J_F+\lambda J_R,
+\]
+其中：
+\[
+J_F
+\]
+是功能误差，
+\[
+J_R
+\]
+是 representation mismatch。系统设计应满足：
+\[
+\lambda J_R
+\ll
+J_F
+\]
+在安全关键功能上尤其如此。
+
+最终，我们不是问 ``Kernel 与 BPCC 是否用同一种内部语言思考''，而是问：
+\[
+\boxed{
+\text{它们是否共同组成了一个能够正确感知、预测、行动和验证的 Agent？}
+}
+\]
+这正是功能对齐理论从模型内部相似度转向系统闭环正确性的根本变化。
+
+\section{Reality as Anchor：为什么现实必须成为 KRA 的最终校准基准}
+
+如果 Kernel 与 Body Runtime 都是学习系统，就会出现一个非常深刻的问题：假如它们相互适配得越来越好，但二者共同偏离了现实，会发生什么？例如 Kernel 错误地预测 ``杯子已经被抓起''，BPCC 又恰好学会根据 Kernel 的预期输出一个 ``抓取成功'' 的高置信度状态，那么两个模型之间可能具有极高的一致性：
+\[
+Agreement(K,B)\rightarrow1,
+\]
+但真实杯子仍然放在桌面上。
+
+这揭示了纯模型间 alignment 的根本缺陷：
+\[
+\boxed{
+MutualConsistency
+\neq
+RealityConsistency.
+}
+\]
+
+因此 KRA 必须遵循全书最重要的现实原则：
+\[
+\boxed{
+RealityIsUltimateConstraint.
+}
+\]
+
+行动路径必须形成：
+\[
+Kernel
+\rightarrow
+KRA
+\rightarrow
+BPCC
+\rightarrow
+Action
+\rightarrow
+Reality,
+\]
+而状态确认路径必须重新经过：
+\[
+Reality
+\rightarrow
+Sensor
+\rightarrow
+BodyRuntime
+\rightarrow
+SGC^{obs},FCS^{obs}
+\rightarrow
+KRA
+\rightarrow
+Kernel.
+\]
+
+尤其必须保持：
+\[
+\boxed{
+PredictedState
+\neq
+ObservedState.
+}
+\]
+
+可以让 BPCC 产生：
+\[
+SGC^{pred}_{t+\Delta},
+\]
+但它不能直接写入：
+\[
+SGC^{obs}_{t+\Delta}.
+\]
+后者必须具有真实感知来源和 epistemic metadata。这样才能保证：
+\[
+ActionIssued
+\neq
+ActionSucceeded
+\]
+这一基本事实不会被系统内部模型掩盖。
+
+我们可以形式化 Reality Anchor。设 Kernel--Body 对某一事件的内部判断为：
+\[
+y^{int},
+\]
+现实传感形成：
+\[
+y^{real}.
+\]
+定义现实残差：
+\[
+\varepsilon_R
+=
+d(
+y^{int},
+y^{real}
+).
+\]
+KRA 更新不能仅最小化：
+\[
+d(
+y_K,
+y_B
+),
+\]
+而必须首先使：
+\[
+\boxed{
+d(
+y_K,
+y^{real}
+)
+\rightarrow0
+}
+\]
+以及：
+\[
+\boxed{
+d(
+y_B,
+y^{real}
+)
+\rightarrow0.
+}
+\]
+
+因此更合理的联合目标是：
+\[
+\mathcal L_{align}
+=
+\lambda_R
+\left[
+d(y_K,y^{real})
++
+d(y_B,y^{real})
+\right]
++
+\lambda_{KB}d(y_K,y_B),
+\]
+并满足：
+\[
+\boxed{
+\lambda_R>\lambda_{KB}.
+}
+\]
+
+这意味着现实对齐权重大于模型之间的彼此同意。
+
+这一原则还可以进一步推广到 Agent 的 Self。SPC 对内部状态进行估计，$\Psi$ 对经验进行身份解释，$\Theta$ 形成世界模型，所有这些结构都有可能形成自我强化：
+\[
+Prediction
+\rightarrow
+SelectiveObservation
+\rightarrow
+Confirmation
+\rightarrow
+Prediction'.
+\]
+如果 Reality Anchor 缺失，系统可能形成高度一致但完全封闭的内部世界。因此 Kernel--Body Runtime 的现实闭环不只是控制工程需要，也是整个 AgentOS 防止认知自证的重要基础设施。
+
+从 KRA 角度看，Reality Anchor 还意味着一个重要的权力结构：
+\[
+Reality
+>
+ObservationInterpretation
+>
+Prediction.
+\]
+预测可以修改下一步观察策略，却不能直接修改已经发生的观察；Kernel 可以重新解释事件，却不能直接宣告行动已经成功；Body Runtime 可以估计未来状态，却必须允许真实 residual 推翻自身模型。
+
+这也是为什么 SGC 必须具有 Observed、Derived、Predicted、Counterfactual 等认识论标签。它们不是附加 metadata，而是保证 KRA 功能校准不会把模型内部可能世界与现实世界混为一谈的结构性安全条件。
+
+最终，KRA 的目标不是制造两个彼此越来越相信对方的模型，而是维持：
+\[
+\boxed{
+Kernel
+\leftrightarrow
+Body
+\leftrightarrow
+Reality
+}
+\]
+这一三元结构中的长期可信关系。只要 Reality 保持在闭环中，Kernel 与 Body 都可以犯错，因为 residual 会继续存在；一旦 Reality 被模型间自洽性替代，整个系统即使 ``内部完全对齐''，也可能失去真正的智能意义。
+
+\section{Contract Envelope：允许适应，但不允许公共意义无限漂移}
+
+Continuous Adaptation 带来的直接风险是语义漂移。如果每一个接口变量都可以在长期学习中自由改变，那么最终 KRA 虽然仍然存在，但 ``reachable''、``danger''、``contact''、``body''、``observed'' 等公共概念的实际含义可能已经发生不可追踪的变化。为了在适应性和稳定性之间建立明确边界，我们引入：
+\[
+\boxed{
+ContractEnvelope.
+}
+\]
+
+设 KRA 的公共契约参数为：
+\[
+\theta_C.
+\]
+系统不要求：
+\[
+\theta_C(t)=\theta_C(0),
+\]
+而要求：
+\[
+\theta_C(t)\in\mathcal E_C,
+\]
+其中：
+\[
+\mathcal E_C
+\]
+就是 Contract Envelope，即某个公共语义接口允许变化的可接受区域。
+
+例如 ``可达性'' 可以根据不同身体具有不同数值定义。对于轮式机器人：
+\[
+Reachable(p)
+\]
+主要由路径连通性、坡度、电量等确定；对于机械臂，则由 workspace、关节限位和碰撞决定。因此 ``reachable'' 的底层计算可以变化：
+\[
+f_{\text{reach}}^{wheel}
+\neq
+f_{\text{reach}}^{arm}.
+\]
+但其公共功能语义必须保持：
+\[
+\boxed{
+Reachable(x)
+\Rightarrow
+\text{Agent possesses a feasible body-mediated trajectory to }x
+}
+\]
+并具有明确的 confidence 和 constraints。
+
+因此 Contract Envelope 的核心不是锁定计算方法，而是锁定\textbf{功能不变量}。
+
+可以把一个契约写成：
+\[
+C_i
+=
+(
+Name_i,
+Domain_i,
+Meaning_i,
+Invariant_i,
+Confidence_i,
+Authority_i,
+Tolerance_i
+).
+\]
+其中 Meaning 描述公共语义，Invariant 描述无论内部模型怎样变化都必须满足的关系，Confidence 表示认识论可靠度，Authority 表示哪个组件具有最终写权限，Tolerance 则描述允许的校准误差。
+
+例如 Observed SGC Entity 的一个关键 invariant 是：
+\[
+\boxed{
+Observed(x)
+\Rightarrow
+\exists SensorEvidence(x).
+}
+\]
+因此任何学习过程都不能把纯预测对象直接升级成 observed entity。
+
+Safety Constraint 的 invariant 可以是：
+\[
+\boxed{
+u\notin\mathcal U_{safe}
+\Rightarrow
+ExecutionDenied.
+}
+\]
+即便 Kernel 极度确信任务价值，也不能让 KRA 通过重新解释安全语义绕过 Safety Boundary。
+
+Contract Envelope 还需要规定变化速率：
+\[
+\left\|
+\frac{d\theta_C}{dt}
+\right\|
+\le
+v_C^{max}.
+\]
+对于越接近 Agent 身份、安全和 Reality Authority 的接口：
+\[
+v_C^{max}\rightarrow0,
+\]
+而对于普通动作映射或性能参数，则可以允许更高适应速度。
+
+这样形成一个梯度：
+\[
+\boxed{
+CoreSemantics
+\rightarrow
+SlowlyPlastic,
+}
+\]
+\[
+\boxed{
+BodyCalibration
+\rightarrow
+ModeratelyPlastic,
+}
+\]
+\[
+\boxed{
+FastControlLatent
+\rightarrow
+HighlyPlastic.
+}
+\]
+
+这一分层与 AgentOS 整体多尺度原则完全一致：慢变量定义长期连续性，快变量负责局部适应。Contract Envelope 本质上就是把这一原则应用到 Kernel--Body 接口。
+
+进一步，可以定义契约偏离量：
+\[
+D_C(t)
+=
+d(
+\theta_C(t),
+\mathcal E_C
+).
+\]
+正常情况下：
+\[
+D_C(t)=0.
+\]
+一旦：
+\[
+D_C(t)>0,
+\]
+KRA 不应继续普通 adaptation，而应触发：
+\[
+ContractViolationEvent.
+\]
+
+这样，长期适应就不再是一种无边界参数漂移，而成为：
+\[
+\boxed{
+AdaptationInsideStableMeaning.
+}
+\]
+
+这个思想对于长期 Agent 尤其重要。一个持续主体可以越来越熟练地使用身体，却不能因为 ``学习'' 而让 ``现实观察'' 逐渐变成 ``模型猜测''；可以重新学习不同身体的控制方式，却不能让 ``安全'' 在接口层慢慢被重新解释成 ``高价值任务允许忽略''。因此 Contract Envelope 是 KRA 中连接适应性、身份连续性和系统治理的核心结构。
+
+\section{Functional Anchors：用少量稳定功能关系维持长期 Kernel--Body 连续性}
+
+Contract Envelope 给出了 ``允许变化的区域''，但一个长期学习系统还需要更积极的参照物：当 Kernel、KRA 和 Body Runtime 都发生变化之后，我们如何判断它们之间的基本关系仍然是同一个关系？为此，本章进一步引入：
+\[
+\boxed{
+FunctionalAnchor.
+}
+\]
+
+Functional Anchor 并不是固定参数，也不是某一组 latent vector，而是一组在长期演化中应保持稳定的\textbf{可验证功能关系}。它们充当 Kernel--Body 联合学习中的参照坐标。
+
+设第 $i$ 个 anchor 为：
+\[
+\mathcal A_i
+=
+(
+S_i,
+U_i,
+O_i,
+\Gamma_i,
+\epsilon_i
+),
+\]
+其中 $S_i$ 是给定初始语义状态，$U_i$ 是测试动作或控制引用，$O_i$ 是预期功能后果，$\Gamma_i$ 是允许的现实条件，$\epsilon_i$ 是容差。
+
+如果：
+\[
+(S_i,U_i,\Gamma_i)
+\]
+成立，则应满足：
+\[
+d(
+O_i^{real},
+O_i^{expected}
+)
+<
+\epsilon_i.
+\]
+
+例如对于数字 Body，一个 anchor 可以是：
+\[
+\text{``点击当前可交互按钮''}
+\]
+应导致相应 UI state transition；对于机械臂，一个 anchor 可以是：
+\[
+\text{``保持静止''}
+\]
+应使末端位姿变化保持在指定容差以内；对于人形机器人，一个 anchor 可以是：
+\[
+\text{``无外部扰动时维持站立''}.
+\]
+这些任务的内部实现可以长期改变，但功能后果不能无原因漂移。
+
+更重要的 anchor 是认识论类型。例如：
+\[
+Observed
+\neq
+Predicted
+\]
+本身就是一个 Functional Anchor。只要这个关系被破坏，整个 Agent 的 Reality Authority 就会失去可靠基础。
+
+因此 Functional Anchor 可以分成至少四类。
+
+第一类是 \textbf{Reality Anchor}，保证实际观测能够纠正模型。
+
+第二类是 \textbf{Body Identity Anchor}，保证当前身体状态、能力边界和执行资源不会在接口层被错误归属。
+
+第三类是 \textbf{Control Anchor}，保证核心 ControlReference 在不同模型版本下具有稳定的行动意义。
+
+第四类是 \textbf{Safety Anchor}，保证关键约束始终具有不可被普通学习过程绕过的优先级。
+
+我们可以定义总体 anchor loss：
+\[
+\mathcal L_{anchor}
+=
+\sum_i
+w_i
+d_i(
+O_i^{real},
+O_i^{expected}
+).
+\]
+长期学习必须满足：
+\[
+\boxed{
+\mathcal L_{anchor}
+<
+\epsilon_A.
+}
+\]
+
+这意味着，一个系统即使普通 benchmark 性能不断提高，只要 Functional Anchor 持续退化，就不能认为它正在健康学习。
+
+进一步，如果我们把 Kernel、KRA 与 Body Runtime 的参数统记为：
+\[
+\Theta_{sys}
+=
+(\theta_K,\theta_A,\theta_B),
+\]
+普通优化可能试图最小化：
+\[
+J_{task}(\Theta_{sys}),
+\]
+但真正的 AgentOS 优化应当写成带约束问题：
+\[
+\begin{aligned}
+\min_{\Theta_{sys}}\quad
+&J_{task}
++
+\lambda_RJ_{residual}
++
+\lambda_EJ_{efficiency}\\
+\text{s.t.}\quad
+&\mathcal L_{anchor}\le\epsilon_A,\\
+&\theta_C\in\mathcal E_C,\\
+&u_t\in\mathcal U_{safe},\\
+&Observed_t\leftarrow Reality_t.
+\end{aligned}
+\]
+
+由此我们得到 KRA 功能对齐理论最完整的数学形式：
+
+\[
+\boxed{
+\begin{aligned}
+\text{允许：}\quad
+&
+\theta_K(t),\theta_A(t),\theta_B(t)
+\text{持续变化};\\
+\text{要求：}\quad
+&
+(K_t,A_t,B_t)\in\mathcal M_{compatible};\\
+&
+\theta_C(t)\in\mathcal E_C;\\
+&
+\mathcal L_{anchor}(t)<\epsilon_A;\\
+&
+\mathcal L_{reality}(t)<\epsilon_R.
+\end{aligned}
+}
+\]
+
+这实际上给出了 ``持续智能体中的稳定'' 一个比参数不变更深刻的定义：
+
+\[
+\boxed{
+RelationshipStability
+>
+ParameterStability.
+}
+\]
+
+一个 Agent 在生命周期中完全可以更换模型版本、更换身体、重新学习控制策略，甚至重新组织部分内部 representation；真正需要保持的是：世界中的对象仍然能够被它可靠认识，身体状态仍然能够被正确解释，目标仍然能够被身体落实，行动后果仍然重新接受现实验证，而安全边界仍然保持有效。
+
+因此，KRA 的终极任务并不是找到一个永久不变的 translation matrix。它要维护的是一组跨时间、跨模型和跨身体仍然成立的\textbf{功能关系不变量}。
+
+至此，我们可以把本章全部原则压缩为：
+
+\[
+\boxed{
+\text{Train Separately}
+}
+\]
+
+允许每一个动力层发展适合自己的表示；
+
+\[
+\boxed{
+\text{Connect Semantically}
+}
+\]
+
+使用稳定公共语义骨架建立跨层可理解关系；
+
+\[
+\boxed{
+\text{Calibrate Functionally}
+}
+\]
+
+以行动结果而非 latent 相似性判断是否真正对齐；
+
+\[
+\boxed{
+\text{Adapt Continuously}
+}
+\]
+
+允许关系在生命周期中跟随身体和主体共同成长；
+
+同时始终满足：
+
+\[
+\boxed{
+FunctionalAlignment
+>
+RepresentationAlignment
+}
+\]
+
+以及最根本的：
+
+\[
+\boxed{
+Reality
+>
+ModelAgreement.
+}
+\]
+
+因此，本章最终确立的并不是一种普通模型对齐算法，而是一条持续人工智能体的架构原则：
+
+\[
+\boxed{
+\textbf{
+只要公共意义、现实闭环、控制后果和核心功能不变量保持连续，
+Kernel 与 Body Runtime 的内部实现就可以持续变化；
+真正构成同一个智能体的，不是内部参数的静止，
+而是跨时间保持稳定并接受现实检验的功能关系。
+}
+}
+\]

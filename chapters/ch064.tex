@@ -1,173 +1,1473 @@
-\chapter{Body Safety Boundary}
-\chaptervoice{这一章，我们围绕“Body Safety Boundary”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明认知内核通过身体进入现实。}
+\chapter{Body Safety Boundary：具身智能的实时安全边界}
+\label{chap:body_safety_boundary}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 Body Runtime、FBI、SGC/FCS、三信号通道、BPCC 与 Reality Authority 的具身讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是具身认知、分层控制、MPC、状态估计与安全包络（模型预测控制、Kalman 状态估计与具身认知）。
+\noindent
+\fbox{
+\parbox{0.94\textwidth}{
+\textbf{【本章总体说明】}
+本章讨论 AgentOS 具身体系中一个不能由认知智能替代、也不能被认知智能覆盖的基础问题：当智能体已经通过 Body Runtime 进入物理世界或具有现实作用能力的数字世界以后，谁拥有对不可逆危险的最终即时处置权？前文已经建立了 Agent Kernel、SGC、FCS、BPCC 以及 ``Predict Locally, Escalate Residual Globally'' 的多时间尺度体系，但这些机制解决的是\emph{智能如何高效行动}，而不是\emph{当高层认知来不及反应、判断错误、发生阻塞甚至自身失稳时，系统如何仍然保持最低安全性}。因此，本章引入独立于普通认知闭环的 Body Safety Boundary，并确立
+\[
+\boxed{
+CriticalSafety\nrightarrow CognitiveDependency
+}
+\]
+以及
+\[
+\boxed{
+SafetyAuthority > BPCCAuthority > CognitiveExecutionAuthority
+}
+\]
+两条核心原则。这里的 ``Safety'' 不是 Agent 的价值判断，也不是 $\Psi$、AHC 或 TCE 中的风险偏好，而是对身体、环境及受保护对象所施加的\emph{不可被普通认知绕过的实时可行域约束}。我们将依次建立实时危险为什么不能等待认知、Realtime Safety Controller 的动力学位置、安全事件如何向认知层升级、Safety Authority 的优先级体系、Single Writer Principle、多层控制引用以及 Safety Envelope，并最终把安全边界形式化为一个包围 BPCC 与 Agent Kernel 的最外层可执行约束结构。
+}
+}
 
-本章使用上一章“Reality Authority”已经得到的对象与边界；本章产出将供下一章“KRA：Kernel—Runtime Adaptation”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+\section{实时危险为何不能依赖认知闭环}
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+在前面的 AgentOS 结构中，我们始终坚持一个多时间尺度原则：不同层级应当关闭属于自己的快速闭环，而不应把所有变化都升级到工作记忆 $h(t)$ 中显式处理。Body Runtime 的意义正是在于，将毫秒至百毫秒尺度上的身体状态、局部预测和控制活动留在身体侧，而由 Agent Kernel 在更慢的时间尺度上处理目标、语义、规划、长期预测和认知结构。安全问题把这一原则推到了最严格的极限：某些现实变化的时间常数短于任何可靠的认知决策时间，因此，若安全动作必须等待 Kernel 完成观察、语义化、工作记忆准入、SPC 状态评估、TCE 调节、规划以及控制引用生成，则系统在结构上已经失去了对这类危险进行实时保护的能力。
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在具身认知、分层控制、MPC、状态估计与安全包络上。
-\section{实时危险为何不能依赖 Cognition}
-\begin{narration}
-现在把镜头移到“实时危险为何不能依赖 Cognition”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+我们先以时间尺度描述这一问题。设现实中的危险过程具有特征时间
+\[
+\tau_{\mathrm{hazard}},
+\]
+Body Runtime 的局部状态估计时间为
+\[
+\tau_{\mathrm{body}},
+\]
+BPCC 的预测与控制周期为
+\[
+\tau_{\mathrm{BPCC}},
+\]
+Kernel 完成一次有效认知闭环所需要的时间为
+\[
+\tau_{\mathrm{cog}}.
+\]
+通常有
+\[
+\tau_{\mathrm{body}}
+\lesssim
+\tau_{\mathrm{BPCC}}
+\ll
+\tau_{\mathrm{cog}}.
+\]
+当某一危险满足
+\[
+\tau_{\mathrm{hazard}}
+<
+\tau_{\mathrm{cog}},
+\]
+则让 Agent Kernel 成为安全动作的必要前置条件，意味着
+\[
+T_{\mathrm{response}}
+\geq
+\tau_{\mathrm{cog}}
+>
+\tau_{\mathrm{hazard}},
+\]
+系统在控制论意义上已经错过了安全控制窗口。因此，对关键安全事件必须满足
+\[
+\boxed{
+T_{\mathrm{safety-response}}
+<
+T_{\mathrm{hazard-critical}}
+}
+\]
+而不能要求
+\[
+T_{\mathrm{safety-response}}
+=
+T_{\mathrm{cognitive-decision}}.
+\]
 
-本节把“实时危险为何不能依赖 Cognition”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Safety Boundary”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+这一点在具身系统中特别直观。一个机械臂即将撞击人体时，危险可能在几十毫秒内从 ``可恢复'' 进入 ``不可逆碰撞''；高速车辆的轮胎侧滑也不可能等待语言模型重新构造情境、推理因果关系再决定是否修正姿态；服务器型数字 Agent 如果获得操作系统权限，则某些异常写盘、资源耗尽、网络级放大行为同样可能在认知层完成解释之前造成不可逆后果。由此我们应当把 ``安全'' 与普通 ``风险决策'' 区分开来。Kernel 可以判断是否值得承担某种战略风险，例如是否进入狭窄空间、是否执行一个可能失败的任务，这属于
+\[
+RiskReasoning.
+\]
+而 Body Safety Boundary 处理的是已经接近硬物理、硬资源或硬权限边界的状态，例如
+\[
+Collision,\quad
+OverTemperature,\quad
+OverCurrent,\quad
+LossOfBalance,\quad
+UnsafeVelocity,\quad
+ForbiddenWrite,\quad
+ResourceRunaway.
+\]
+前者需要语义判断，后者首先需要约束执行。
 
-把这一关系写成最小数学骨架，可得
+因此，本理论把安全事件划分为至少两个时间尺度集合：
+\[
+\mathcal E_{\mathrm{safety}}
+=
+\mathcal E_{\mathrm{RT}}
+\cup
+\mathcal E_{\mathrm{Cog}},
+\]
+其中
+\[
+\mathcal E_{\mathrm{RT}}
+\]
+是必须在 Body Runtime 层立即处理的实时安全事件，而
+\[
+\mathcal E_{\mathrm{Cog}}
+\]
+是可以提交 Kernel 进行解释、权衡和长期处理的认知安全事件。一个事件是否属于实时集合，不由其语义 ``严重程度'' 单独决定，而由
+\[
+\Gamma_{\mathrm{safety}}
+=
+F(
+T_{\mathrm{impact}},
+P_{\mathrm{irreversible}},
+M_{\mathrm{recovery}},
+C_{\mathrm{damage}},
+U_{\mathrm{model}}
+)
+\]
+共同决定，其中 $T_{\mathrm{impact}}$ 为预计进入危险状态的剩余时间，$P_{\mathrm{irreversible}}$ 为不可逆风险，$M_{\mathrm{recovery}}$ 为可恢复余量，$C_{\mathrm{damage}}$ 为可能损害，$U_{\mathrm{model}}$ 为模型不确定性。当
+\[
+\Gamma_{\mathrm{safety}}
+\geq
+\theta_{\mathrm{RT}},
+\]
+事件必须越过普通认知调度，直接进入实时安全通道。
 
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
+由此形成本章第一条工程定律：
+\[
+\boxed{
+CriticalSafety\nrightarrow CognitiveDependency.
+}
+\]
+它并不意味着安全系统不需要认知信息，而意味着\emph{关键安全动作不得把认知层成功工作作为前提条件}。Kernel 可以提前修改安全包络，可以根据任务语义降低允许速度，可以解释危险原因，可以在危险结束后修改 $\Theta$、$\Psi$ 或策略；但在真正接近边界的瞬间，是否停止、制动、隔离、降级或切断执行权，必须由更快、更局部、更确定的机制保证。这正是多尺度智能体系中 ``每一个尺度关闭自己的快速闭环'' 在安全问题上的最严格表现。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对实时危险为何不能依赖 Cognition的命名和组合仍是需要实验验证的建模提案。
+从外部理论看，这一思想与实时控制、functional safety、runtime assurance、fail-safe system 以及 control barrier function 所解决的问题具有明显亲缘关系。然而我们在 AgentOS 中进一步强调：安全边界不仅包围传统执行器，还包围一个能够自主学习、预测、改变策略并长期形成 Self 的认知主体，因此安全设计的对象不再只是单个控制器是否稳定，而是\emph{整个多尺度智能系统是否始终被约束在一个现实允许的可行域中}。这也是为什么安全边界必须成为 Body Runtime 与 Agent Kernel 共同服从的上位约束，而不能仅仅作为某个任务规划器中的一个 penalty term。
 
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{Realtime Safety Controller：现实边界上的最快闭环}
 
-\begin{thought}
-对“实时危险为何不能依赖 Cognition”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+在明确关键安全不能依赖认知之后，我们需要给出承担该职责的具体动力学对象。本文将其称为
+\[
+\boxed{
+Realtime\ Safety\ Controller,\qquad RSC
+}
+\]
+并把它置于 Body Runtime 的安全边界之内。RSC 不应被理解为另一个智能体，也不拥有自己的 Goal、Self 或生命周期记忆。它的职责非常狭窄：持续读取能够支持安全判定的最小现实状态，对即将违反硬约束的状态进行快速预测，并在必要时修改、抑制或替代普通控制信号，使身体状态始终尽可能留在安全可行集合之内。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+设 Body Runtime 的真实有效状态为
+\[
+x_B(t)\in\mathcal X_B,
+\]
+普通控制输入为
+\[
+u_N(t),
+\]
+其中 $u_N$ 可以来自 BPCC，也可以来自更直接的低层控制器。系统动力学可表示为
+\[
+\dot x_B
+=
+f_B(x_B,w)
++
+g_B(x_B)u,
+\]
+其中 $w$ 为外部扰动。定义安全集合
+\[
+\mathcal S_{\mathrm{safe}}
+=
+\left\{
+x_B\in\mathcal X_B
+\mid
+h_i(x_B)\geq 0,\;
+i=1,\ldots,m
+\right\}.
+\]
+这里的 $h_i$ 可以对应距离边界、温度、电流、速度、姿态、资源剩余量、禁止访问区域等不同约束。RSC 的目标不是求解 Agent 的总体任务，而是确保
+\[
+x_B(t)\in\mathcal S_{\mathrm{safe}}
+\]
+尽可能保持正向不变性，即若初始状态位于安全集合，则系统在允许的扰动范围内不会因为普通控制命令而轻易离开该集合。
 
-\section{Realtime Safety Controller}
-\begin{narration}
-现在把镜头移到“Realtime Safety Controller”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+因此，正常情况下
+\[
+u_{\mathrm{exec}}
+=
+u_N.
+\]
+只有当普通控制开始威胁安全集合时，RSC 才进入控制路径：
+\[
+u_{\mathrm{exec}}
+=
+\Pi_{\mathcal U_{\mathrm{safe}}(x_B)}
+\left(
+u_N
+\right),
+\]
+其中
+\[
+\Pi_{\mathcal U_{\mathrm{safe}}}
+\]
+表示把普通控制投影到当前状态允许的安全控制集合。于是可以定义
+\[
+\mathcal U_{\mathrm{safe}}(x_B)
+=
+\left\{
+u:
+\dot h_i(x_B,u)
++
+\alpha_i(h_i(x_B))
+\geq0
+\right\}.
+\]
+这一形式与控制障碍函数的思想兼容：正常动作只要不破坏可行性便原样通过；只有接近边界时，安全控制器才对它进行最小必要修正。由此我们得到一个重要原则：
+\[
+\boxed{
+SafetyIntervention
+=
+MinimumNecessaryConstraintCorrection
+}
+\]
+而不是 ``安全控制器持续接管身体''。
 
-本节把“Realtime Safety Controller”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Safety Boundary”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+这一点极为重要。如果安全机制被设计成永远比 BPCC 更积极地主导行为，那么系统虽然可能变得非常保守，却会丧失真正的智能行动能力。RSC 的角色不是另一个高层控制者，而类似于现实动力学的硬护栏：
+\[
+NormalRegion
+\Rightarrow
+PassThrough,
+\]
+\[
+BoundaryRegion
+\Rightarrow
+Constrain,
+\]
+\[
+CriticalRegion
+\Rightarrow
+Override.
+\]
+可以定义安全干预系数
+\[
+\lambda_s(x_B)\in[0,1],
+\]
+并写成
+\[
+u_{\mathrm{exec}}
+=
+(1-\lambda_s)u_N
++
+\lambda_su_S,
+\]
+其中 $u_S$ 为安全控制。当状态远离危险边界时
+\[
+\lambda_s\approx0,
+\]
+在临界区逐渐增大，而在不可接受风险即将出现时
+\[
+\lambda_s\rightarrow1.
+\]
+如此，安全不是一个简单二值 ``允许/禁止'' 开关，而可以构造为连续可调的约束场。
 
-把这一关系写成最小数学骨架，可得
+从 AgentOS 的信息结构看，RSC 的输入也不应完全依赖高层 SGC。SGC 是语义化、可解释的世界结构，其更新速度和结构丰富度适合 Kernel 理解现实，但安全控制往往需要更直接的状态，例如编码器角度、碰撞距离、温度、硬件电流、制动压力、资源锁状态等。因此 RSC 可以同时读取
+\[
+x_B^{raw}
+\]
+和
+\[
+x_B^{semantic},
+\]
+形成
+\[
+x_B^{safe}
+=
+\phi_{\mathrm{safe}}
+(
+x_B^{raw},
+SGC,
+FCS
+).
+\]
+其中 Raw State 提供低延迟真实性，SGC/FCS 提供一定的语义与功能上下文。例如，同一个碰撞距离在 ``无人区域'' 和 ``人体附近'' 可以对应不同的安全余量；同一温升在任务紧急状态和正常状态下可以具有不同降级曲线。但无论语义怎样变化，某些真正硬约束
+\[
+h_i^{hard}
+\]
+必须保持不可越界。
 
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
+这意味着安全集合进一步可分为
+\[
+\mathcal S_{\mathrm{safe}}
+=
+\mathcal S_{\mathrm{hard}}
+\cap
+\mathcal S_{\mathrm{adaptive}},
+\]
+其中
+\[
+\mathcal S_{\mathrm{hard}}
+\]
+由硬件、物理、安全认证和治理规则确定，普通 Agent 不可修改；
+\[
+\mathcal S_{\mathrm{adaptive}}
+\]
+则可以在允许范围内根据任务、环境、Body Capability 和 Kernel 的高层目标改变。这种分离避免了两个极端：一方面不能把一切安全规则锁死，使 Agent 无法适应环境；另一方面也不能允许认知主体把所有安全边界解释成 ``为了任务成功可以暂时放宽''。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Realtime Safety Controller的命名和组合仍是需要实验验证的建模提案。
+因此，RSC 的真正工程地位可以概括为：
+\[
+\boxed{
+RSC
+=
+RealityAnchored
++
+LowLatency
++
+Deterministic
++
+MinimallyIntervening
+}
+\]
+它把本书一直强调的 ``Reality Is Ultimate Constraint'' 从认识论原则变成了可以运行的控制结构。在这个意义上，Body Safety Boundary 不是为智能额外添加一个 ``恐惧模块''，而是承认：只要 Agent 已经获得了改变现实的能力，它的所有自由都必须存在于某个现实可行域之中。
 
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{从实时安全事件到认知安全事件：局部处理与全局学习}
 
-\begin{thought}
-对“Realtime Safety Controller”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+实时安全机制如果只会 ``刹车''，还不足以形成成熟的 AgentOS。一个真正持续运行的智能体不仅要在危险瞬间保持安全，还必须知道\emph{为什么危险发生、这个危险是否意味着任务理解存在错误、身体模型是否失准、是否需要形成新的经验与长期结构}。因此，安全体系必须同时具有两个方向：向下提供即时保护，向上把具有长期认知价值的安全事件转化为 Agent 能够学习的结构。这里再次体现前面建立的多尺度原则：
+\[
+\boxed{
+NormalDynamicsStayLocal,
+\qquad
+RelevantResidualEscalatesGlobally.
+}
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+我们定义实时安全事件
+\[
+e_s^{RT}
+=
+(
+t,
+x_B,
+u_N,
+u_S,
+c,
+r,
+q
+),
+\]
+其中 $c$ 表示触发的约束集合，$r$ 表示风险等级，$q$ 表示状态估计可信度。RSC 在危险发生时首先完成控制，不要求 Kernel 参与。待状态重新进入安全区域后，再由事件抽象器形成认知安全事件
+\[
+e_s^{Cog}
+=
+\Phi_s
+(
+e_s^{RT},
+SGC_{[t-\Delta,t]},
+FCS_{[t-\Delta,t]},
+Goal_t,
+Context_t
+).
+\]
+此时，一个毫秒级的硬件约束触发，被压缩成 Kernel 可以理解的 Agent-CSO，例如：
+\[
+\text{``机械臂在执行抓取动作时，因为目标物体滑移而出现人体方向的异常加速度''}.
+\]
+这已经不是原始传感器流，而是一种具有实体、关系、因果候选、目标相关性和安全含义的结构。
 
-\section{Cognitive Safety Event}
-\begin{narration}
-现在把镜头移到“Cognitive Safety Event”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+是否需要把安全事件提升到 $h(t)$，仍然必须服从有限工作记忆原则。并非每一次轻微 RSC 修正都值得中断 Agent 的显式认知。定义安全升级函数
+\[
+\Gamma_s
+=
+F(
+R,
+N,
+P,
+G,
+M,
+C
+),
+\]
+其中 $R$ 为风险强度，$N$ 为新颖性，$P$ 为重复持续性，$G$ 为当前目标相关度，$M$ 为模型失配程度，$C$ 为潜在因果结构重要度。当
+\[
+\Gamma_s<\theta_s,
+\]
+事件可以留在 Body Runtime 形成局部统计与 BPCC 适应；当
+\[
+\Gamma_s\geq\theta_s,
+\]
+才生成认知事件并进入
+\[
+BodyRuntime
+\rightarrow
+KRA
+\rightarrow
+h.
+\]
+这里虽然 KRA 的完整机制将在相邻工程章节进一步展开，但本章只需要把它视为 Body Runtime 与 Kernel 之间的语义—动力适配边界即可。
 
-本节把“Cognitive Safety Event”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Safety Boundary”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+这一结构解决了一个经常被忽略的问题：\emph{安全系统的每次动作是否都应该打断智能体？}答案是否定的。成熟系统应该具备
+\[
+\boxed{
+SafetyWithoutContinuousCognitiveInterruption.
+}
+\]
+例如机器人在崎岖地面行走时，低层控制器可能每秒进行大量姿态修正。如果每一次纠偏都进入工作记忆，那么 Agent 的 $h$ 将完全被身体细节占满，无法继续完成高层任务。只有当低层残差出现异常模式，例如
+\[
+\mathbb E_T[\varepsilon_B]
+>
+\theta_\varepsilon,
+\]
+或者
+\[
+Var_T(\varepsilon_B)
+>
+\theta_V,
+\]
+或者重复安全干预频率
+\[
+f_{\mathrm{safety}}
+>
+\theta_f,
+\]
+才说明 ``局部正常调整'' 可能已经转变成 ``当前模型或环境出现结构失配''，需要上浮。
 
-把这一关系写成最小数学骨架，可得
+上浮后的安全事件可以分别影响不同时间尺度的认知结构。若只是一次孤立事件，它可以进入
+\[
+E
+\]
+成为情景经验；若大量类似事件反复出现，则可能推动
+\[
+E\rightarrow\Theta
+\]
+形成新的身体模型、环境规则或技能边界；若这些事件长期改变 Agent 对自身能力的认识，则进一步可能影响
+\[
+\Psi
+\]
+中的能力边界与自我解释。但这里必须遵循慢变量保护原则：
+\[
+FastSafetyEvent
+\nrightarrow
+ImmediateIdentityRewrite.
+\]
+一个瞬时碰撞不能直接改变 Agent 的长期身份结构，只有经过统计稳定、跨情景重复和现实验证后，才允许进入更慢层级。
 
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
+同样，安全事件也可以反向改变 Body Runtime。例如 Kernel 经长期经验发现 ``某类工具在湿滑状态下控制置信度系统性偏低''，则可以更新新的预测包络：
+\[
+\mathcal E_H'
+=
+\mathcal E_H
+\cap
+\mathcal C_{\mathrm{wet}},
+\]
+或者把某些安全余量从
+\[
+d_{\min}
+\]
+提高到
+\[
+d_{\min}'.
+\]
+这说明 AgentOS 的安全不是完全固定不变的，而是形成：
+\[
+\boxed{
+HardSafetyInvariant
++
+LearnedSafetyAdaptation.
+}
+\]
+前者保证底线，后者允许成长。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Cognitive Safety Event的命名和组合仍是需要实验验证的建模提案。
+在这一过程中，我们还需要区分三种残差。第一种是普通控制残差
+\[
+\varepsilon_{\mathrm{ctrl}},
+\]
+表示目标运动与实际运动差异；第二种是状态表示残差
+\[
+\varepsilon_{\mathrm{SGC/FCS}},
+\]
+表示预测世界与实际观察之间的差异；第三种是安全残差
+\[
+\varepsilon_{\mathrm{safety}},
+\]
+表示当前行为距离安全边界的趋势误差。可以统一写成
+\[
+\varepsilon_B
+=
+(
+\varepsilon_{\mathrm{ctrl}},
+\varepsilon_{\mathrm{SGC}},
+\varepsilon_{\mathrm{FCS}},
+\varepsilon_{\mathrm{safety}}
+).
+\]
+安全事件向上升级，本质上就是把局部残差中的\emph{结构性异常}转换成新的 Agent-CSO。
 
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+因此，Body Safety Boundary 并不是一个封闭的紧急停车器，而是一种具有双向意义的边界结构：
+\[
+\boxed{
+Cognition
+\rightarrow
+SafeActionConstraint
+}
+\]
+以及
+\[
+\boxed{
+SafetyResidual
+\rightarrow
+CognitiveLearning.
+}
+\]
+前者让高层目标不能突破现实安全边界，后者又让现实危险能够重新塑造 Agent 的内部世界。这与本书一贯坚持的 World--Agent--World 闭环完全一致：安全不是阻止智能与世界互动，而是保证互动能够长期持续，并把失败转化为可以继续成长的经验。
 
-\begin{thought}
-对“Cognitive Safety Event”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\section{Safety Authority：为什么安全权限必须高于 BPCC 权限}
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+BPCC 被设计成 Body Runtime 中非常强大的快速预测—控制—学习系统。它可以建立私有 latent state，可以完成局部模型预测，可以自主修正控制策略，也可以把已经成熟的身体技能留在低层运行。如果没有清晰的权限边界，一个自然的问题立即出现：当 BPCC 预测 ``继续执行当前动作最有利于目标完成''，而安全控制器判断 ``继续动作已经越过允许边界'' 时，谁拥有最终执行权？本章给出的答案必须是确定的：
+\[
+\boxed{
+SafetyAuthority
+>
+BPCCAuthority.
+}
+\]
 
-\section{Safety Authority > BPCC Authority}
-\begin{narration}
-现在把镜头移到“Safety Authority > BPCC Authority”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这里的 ``$>$'' 不是信息更加丰富，也不是模型更加聪明，而是一个严格的\emph{控制优先级关系}。可以定义执行权限偏序
+\[
+\mathcal A
+=
+\{
+A_{\mathrm{Kernel}},
+A_{\mathrm{BPCC}},
+A_{\mathrm{Safety}}
+\},
+\]
+并规定
+\[
+A_{\mathrm{Kernel}}
+\preceq
+A_{\mathrm{BPCC}}
+\preceq
+A_{\mathrm{Safety}}
+\]
+仅在它们同时争夺同一受保护执行资源的情况下成立。Kernel 决定目标和高层控制引用；BPCC 在局部动态中实现这些引用；Safety Boundary 则判断所有控制是否仍然位于安全可行集合中。换言之，这三层不是三个相互竞争的 ``大脑''，而是三个不同语义层的约束：
+\[
+GoalConstraint,
+\quad
+DynamicsConstraint,
+\quad
+SafetyConstraint.
+\]
 
-本节把“Safety Authority > BPCC Authority”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Safety Boundary”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+对于普通控制，我们可以写
+\[
+u_K
+\rightarrow
+u_B
+\rightarrow
+u_{\mathrm{exec}},
+\]
+其中 $u_K$ 是 Kernel 给出的控制引用，$u_B$ 是 BPCC 根据局部状态生成的具体控制。当加入 Safety Boundary 后，真正执行的是
+\[
+\boxed{
+u_{\mathrm{exec}}
+=
+\mathcal S
+\left(
+x_B,
+\mathcal B
+(
+u_K,x_B,z^{BPCC}
+)
+\right)
+}
+\]
+其中 $\mathcal B$ 表示 BPCC 控制映射，$\mathcal S$ 表示安全过滤/覆盖映射。因此即使
+\[
+u_B
+=
+\arg\min_u
+J_{\mathrm{task}}(u)
+\]
+是局部任务意义上的最优动作，只要
+\[
+u_B\notin
+\mathcal U_{\mathrm{safe}},
+\]
+它就不能获得执行权。
 
-把这一关系写成最小数学骨架，可得
+这可以进一步形式化为约束优化：
+\[
+u_{\mathrm{exec}}
+=
+\arg\min_u
+\|u-u_B\|_R^2
+\]
+subject to
+\[
+x_B^{+}
+=
+F_B(x_B,u,w),
+\]
+\[
+x_B^{+}
+\in
+\mathcal S_{\mathrm{safe}}.
+\]
+这说明 Safety Boundary 的合理目标不是 ``自己寻找新的任务最优动作''，而是寻找\emph{距离 Agent 原意最近的安全动作}。由此保持：
+\[
+\boxed{
+SafetyOverridesExecution,
+NotIntention.
+}
+\]
+安全层可以阻止动作，却不应该偷偷把 Agent 的长期 Goal 改写成另一个 Goal。动作为什么被阻止、后续是否重新规划，仍然交给认知层处理。
 
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
+这一权限关系还要求一个重要性质：
+\[
+\boxed{
+SafetyNonBypassability.
+}
+\]
+如果 Agent Kernel 或 BPCC 能够在运行时直接调用低层驱动绕过 RSC，那么所谓 Safety Boundary 只是一个软件建议，而不是安全边界。因此执行路径必须满足：
+\[
+\forall u_{\mathrm{act}},
+\qquad
+u_{\mathrm{act}}
+\in
+Image(\mathcal S),
+\]
+即所有真正能够作用于受保护资源的控制命令，都必须经过安全授权路径。对于数字 Body，这可能意味着所有危险系统调用经过 Capability Gate；对于机器人，这可能意味着驱动层只接受 Safety Arbiter 签名/授权后的命令；对于车辆，它意味着制动、转向等关键资源不能存在绕过安全监督的第二条普通写入路径。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Safety Authority > BPCC Authority的命名和组合仍是需要实验验证的建模提案。
+同时，我们也不能把 Safety Authority 误解成 ``安全层永远不能被改变''。更准确的结构是把安全变量划分为：
+\[
+\Theta_{\mathrm{safety}}
+=
+\Theta_{\mathrm{immutable}}
+\cup
+\Theta_{\mathrm{governed}}
+\cup
+\Theta_{\mathrm{adaptive}}.
+\]
+其中 $\Theta_{\mathrm{immutable}}$ 是运行过程中不可由 Agent 修改的硬安全参数；$\Theta_{\mathrm{governed}}$ 可以由外部治理或经过授权的维护流程改变；$\Theta_{\mathrm{adaptive}}$ 则允许系统在给定区间内根据环境进行在线调整。例如机器人可以根据载荷改变制动模型，却不能自主取消人体碰撞保护；数字 Agent 可以根据系统负载动态修改资源预算，却不能自己取消 ``禁止写入某个安全区域'' 的权限规则。
 
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+从更一般的 AgentOS 理论看，Safety Authority 其实体现了一个十分重要的治理规律：
+\[
+\boxed{
+Capability
+\neq
+Authority.
+}
+\]
+BPCC 可能比 Safety Controller 更精细地理解身体局部动力学；Kernel 可能比 BPCC 更理解任务目的；但``谁知道得更多''与``谁在发生硬冲突时拥有最终执行权''是不同问题。长期智能体如果没有 Capability--Authority 分离，就很容易把模型置信度误当成控制合法性。正因为 AgentOS 是一个能够持续成长的系统，权限结构必须独立于能力增长而明确存在。
 
-\begin{thought}
-对“Safety Authority > BPCC Authority”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此，安全优先级的本质不是削弱智能，而是给智能自由建立边界：
+\[
+\boxed{
+IntelligenceActsFreelyInsideFeasibleSafetyRegion.
+}
+\]
+在边界内部，Kernel 与 BPCC 应获得尽可能充分的自治；在边界上，则由 Safety Authority 保护不可逆条件。真正成熟的 AgentOS 不是所有动作都需要安全模块批准，而是绝大多数情况下安全层处于透明状态，只有当现实约束与目标行为发生真正冲突时，才利用更高权限进行最小必要干预。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\section{Single Writer Principle：同一现实资源只能有一个即时写入者}
 
-\section{Single Writer Principle}
-\begin{narration}
-现在把镜头移到“Single Writer Principle”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+多尺度 AgentOS 中同时存在 Kernel、BPCC、技能控制器、设备驱动以及安全控制器。如果这些组件都能够向同一个执行资源直接写入命令，那么即使每一个控制器单独都稳定，组合系统仍然可能出现竞态、冲突和不可分析行为。典型情况是：Kernel 要求 ``向左''，BPCC 为补偿扰动产生 ``稍向右''，安全控制器又要求 ``制动并保持中立''。如果三组命令同时作用于同一 actuator，那么最终现实动作不再对应任何一个控制器所分析的闭环模型。因此本章引入：
+\[
+\boxed{
+SingleWriterPrinciple.
+}
+\]
 
-本节把“Single Writer Principle”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Safety Boundary”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+形式上，对每个受保护现实资源 $r_i$，定义时刻 $t$ 的活动写入集合
+\[
+\mathcal W_i(t)
+=
+\{
+c_j
+\mid
+c_j
+\text{ possesses direct write authority on }r_i
+\}.
+\]
+系统必须保证
+\[
+\boxed{
+|\mathcal W_i(t)|=1.
+}
+\]
+这里的 ``writer'' 是指最终能够把控制值提交到现实执行层的组件，而不是说只能有一个模块参与决策。Kernel、Planner、BPCC、Skill、Safety 都可以生成自己的 proposal：
+\[
+p_K,\quad
+p_B,\quad
+p_{\mathrm{skill}},\quad
+p_S,
+\]
+但只有一个 Arbitration/Execution Path 最终产生
+\[
+u_i^{exec}.
+\]
 
-把这一关系写成最小数学骨架，可得
+因此，更完整的控制链不是多个控制器平行写 actuator：
+\[
+\{K,B,S\}\rightarrow Actuator,
+\]
+而应写成：
+\[
+K
+\rightarrow
+Reference,
+\]
+\[
+Reference
+\rightarrow
+BPCC,
+\]
+\[
+BPCC
+\rightarrow
+CandidateControl,
+\]
+\[
+CandidateControl
+\rightarrow
+SafetyArbiter,
+\]
+\[
+SafetyArbiter
+\rightarrow
+Driver,
+\]
+\[
+Driver
+\rightarrow
+Reality.
+\]
+真正拥有物理写权限的可能是 Driver，但 Driver 只执行 Safety Arbiter 已授权的唯一值。从软件权限角度，因而应满足
+\[
+WriteCapability(K,r_i)=0,
+\]
+\[
+WriteCapability(BPCC,r_i)=0,
+\]
+\[
+WriteCapability(SafetyArbiter,r_i)=1.
+\]
+Kernel 和 BPCC 产生的是引用与候选，而不是直接硬件写入。
 
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
+为什么这一原则对具身智能尤其重要？因为传统智能软件经常把 ``action'' 理解为一个离散函数调用。例如语言模型产生
+\[
+Action=\texttt{move\_left()}
+\]
+似乎已经完成控制。但真实身体是连续动力学系统，多个层级的动作具有不同解释。Kernel 所谓 ``向左移动'' 可能是任务意图；BPCC 产生的关节力矩则是运动实现；Safety Controller 对这些力矩做的 clipping 或替换又是约束实现。如果没有严格区分
+\[
+Intent,
+Reference,
+Control,
+Execution,
+\]
+就会把不同抽象层的信号错误地当作同一种 action。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Single Writer Principle的命名和组合仍是需要实验验证的建模提案。
+因此我们可以建立层级动作映射：
+\[
+a^K
+\overset{\phi_{KB}}{\longrightarrow}
+r^B
+\overset{\pi_B}{\longrightarrow}
+u^B
+\overset{\Pi_S}{\longrightarrow}
+u^{exec}.
+\]
+每一个箭头都有不同语义。$a^K$ 是高层意图，$r^B$ 是身体目标引用，$u^B$ 是 BPCC 给出的局部控制，$u^{exec}$ 才是真正作用于现实的控制量。Single Writer Principle 正是确保：
+\[
+Reality
+\]
+只接收最后一种，而不会同时遭到多个层级的不同抽象命令。
 
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这一原则同样适用于数字 Body。考虑一个拥有文件系统与网络权限的 Agent。高层可能生成 ``更新部署配置'' 的意图，脚本 Skill 生成文件修改候选，而安全层根据权限和不可逆性约束决定是否允许写入。对某个敏感文件
+\[
+r_{\mathrm{config}},
+\]
+不能既允许 Kernel 直接写，又允许 Tool 绕过控制层写，还允许恢复模块并发修改，否则 ``安全检查'' 无法形成封闭控制边界。正确方式依然是建立一个唯一受治理的写通道：
+\[
+Intent
+\rightarrow
+CapabilityCheck
+\rightarrow
+Transaction
+\rightarrow
+Commit.
+\]
 
-\begin{thought}
-对“Single Writer Principle”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+Single Writer 并不意味着系统失去并行性。多个读者可以并行：
+\[
+|\mathrm{Readers}(r_i)|\gg1,
+\]
+多个控制器也可以并行提出 proposal：
+\[
+|\mathrm{Proposers}(r_i)|\gg1,
+\]
+但最终提交必须满足：
+\[
+|\mathrm{Committer}(r_i,t)|=1.
+\]
+由此得到一个更完整的并发原则：
+\[
+\boxed{
+MultipleReaders+
+MultipleProposers+
+SingleCommitter.
+}
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这一点还有助于故障诊断。若现实出现异常动作，可以沿唯一提交链追踪：
+\[
+u^{exec}
+\leftarrow
+SafetyDecision
+\leftarrow
+BPCCCandidate
+\leftarrow
+ControlReference
+\leftarrow
+KernelGoal.
+\]
+这形成天然的因果审计路径。一个具有长期生命周期的 Agent 必须能够回答 ``刚才是谁最终改变了世界''，否则既无法学习，也无法承担安全治理。因此，Single Writer Principle 不只是并发控制技术，也是 AgentOS 建立行为因果责任链的基础结构。
 
-\section{多级控制引用}
-\begin{narration}
-现在把镜头移到“多级控制引用”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\section{多级 Control Reference：高层约束低层，而不是跨尺度微操}
 
-本节把“多级控制引用”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Safety Boundary”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+建立 Single Writer 后，一个新的问题出现：如果 Kernel 不能直接写 actuator，那么它究竟如何控制身体？答案是通过分层的
+\[
+\boxed{
+ControlReference
+}
+\]
+而不是直接动作值。这里再次回到本书关于多尺度智能的基本原则：
+\[
+\boxed{
+HigherLevelSetsFeasibleRegion,
+\qquad
+LowerLevelOptimizesInsideIt.
+}
+\]
+高层真正应该传递给低层的是目标、边界、优先级、预测包络和可接受偏差，而不是每一个高频控制变量。
 
-把这一关系写成最小数学骨架，可得
+设 Kernel 在时间 $t$ 给出的高层意图为
+\[
+g_t,
+\]
+其经过 Body Runtime/KRA 适配形成控制引用：
+\[
+r_t
+=
+\mathcal R(
+g_t,
+SGC_t,
+FCS_t,
+Capability_t
+).
+\]
+一个完整的 $r_t$ 不应只是
+\[
+TargetPose,
+\]
+而可以表示为：
+\[
+r_t
+=
+(
+x^{target},
+\mathcal E^{target},
+v^{pref},
+\mathcal C,
+q,
+T,
+P
+),
+\]
+其中 $x^{target}$ 是目标状态，$\mathcal E^{target}$ 是目标允许包络，$v^{pref}$ 是偏好动作趋势，$\mathcal C$ 是约束集合，$q$ 是执行质量要求，$T$ 是时间预算，$P$ 是优先级。BPCC 根据局部状态求解：
+\[
+u_B
+=
+\pi_B(
+x_B,
+z^{BPCC},
+r_t
+).
+\]
+因此 Kernel 决定的是
+\[
+Where/What,
+\]
+而 BPCC 决定：
+\[
+HowNow.
+\]
 
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
+在更复杂身体中，可以存在多级引用：
+\[
+r^{(0)}
+\rightarrow
+r^{(1)}
+\rightarrow
+\cdots
+\rightarrow
+r^{(n)}
+\rightarrow
+u.
+\]
+例如人形机器人建房时，高层 Goal 可以是 ``把墙板放置到指定结构位置''；任务层产生 ``移动到抓取位置—抓取—运输—装配''；身体层将其翻译为端执行器轨迹；局部控制进一步产生关节运动和力矩。不同尺度之间满足：
+\[
+\tau_{r^{(0)}}
+\gg
+\tau_{r^{(1)}}
+\gg
+\cdots
+\gg
+\tau_u.
+\]
+如果高层试图以
+\[
+\tau_u
+\]
+的频率重写低层状态，系统便退化成跨尺度微操作，不仅计算成本巨大，还会破坏局部闭环稳定性。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对多级控制引用的命名和组合仍是需要实验验证的建模提案。
+因此，高层控制应更接近约束流形：
+\[
+\mathcal M_H
+=
+\{
+x_B:
+C_H(x_B,g)\leq0
+\},
+\]
+BPCC 在这个流形内部寻找局部最优轨迹：
+\[
+u_B^*
+=
+\arg\min
+J_B(x_B,u;r_H)
+\]
+subject to
+\[
+x_B\in\mathcal M_H.
+\]
+而 Safety Boundary 再进一步建立比高层任务约束更硬的集合：
+\[
+\mathcal M_{\mathrm{safe}}.
+\]
+所以真正允许的状态区域是
+\[
+\boxed{
+\mathcal M_{\mathrm{exec}}
+=
+\mathcal M_{\mathrm{physical}}
+\cap
+\mathcal M_{\mathrm{safe}}
+\cap
+\mathcal M_{\mathrm{task}}.
+}
+\]
+这里
+\[
+\mathcal M_{\mathrm{physical}}
+\]
+由现实动力学决定，
+\[
+\mathcal M_{\mathrm{safe}}
+\]
+由安全边界决定，
+\[
+\mathcal M_{\mathrm{task}}
+\]
+由 Kernel 目标决定。其优先级自然表现为：
+\[
+\mathcal M_{\mathrm{exec}}
+\subseteq
+\mathcal M_{\mathrm{safe}}
+\subseteq
+\mathcal M_{\mathrm{physical}}.
+\]
 
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这也说明为什么 Body Runtime 不能只是 ``LLM 的执行器 API''。真正的 Body Runtime 是一个自主关闭快速环、接受高层引用、进行局部预测、实施安全约束并向上返回残差的动力系统。它与 Kernel 的正确接口不是：
+\[
+\texttt{set\_motor(0.73)},
+\]
+而更像：
+\[
+\texttt{achieve(target, envelope, constraints, preference)}.
+\]
+这样，一个身体发生变化时，Kernel 不需要重新学习所有底层控制，只需要新的 Body Runtime 学会如何把相同高层语义引用映射到新的动力学实现。这正是 Body Scale 原理在控制侧的具体体现。
 
-\begin{thought}
-对“多级控制引用”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+多级 Control Reference 同样承担了安全信息下沉的作用。Kernel 可以根据语义风险把某个高层安全偏好写入引用：
+\[
+r_t^{safe}
+=
+r_t
+\oplus
+C_{\mathrm{semantic}},
+\]
+例如 ``附近存在儿童，降低速度与加速度上限''。BPCC 接收到这一约束后主动在更保守区域运行，而无需等到 RSC 真正触发。于是形成三个安全层次：
+\[
+\boxed{
+SemanticPrecaution
+\rightarrow
+PredictiveConstraint
+\rightarrow
+RealtimeOverride.
+}
+\]
+第一层来自认知语义，第二层由 BPCC 在局部预测中提前实施，第三层由 RSC 在边界处强制保证。这种层次结构比 ``危险发生才急停'' 更接近成熟智能体的安全行为。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+因此，本节最重要的结论是：安全并不要求高层拥有更细粒度控制，反而要求各尺度保持正确的控制抽象。真正稳定的 AgentOS 应使高层越来越擅长定义合理的可行区域，使低层越来越擅长在区域内部自主解决问题，而 Safety Boundary 则确保无论两者怎样学习，它们都不能把现实系统推入不可接受区域。这种
+\[
+Constraint\rightarrow LocalAutonomy
+\]
+关系，是多尺度智能兼顾能力与安全的关键。
 
-\section{Safety Envelope}
-\begin{narration}
-现在把镜头移到“Safety Envelope”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\section{Safety Envelope：把安全定义为动态可行域}
 
-本节把“Safety Envelope”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Safety Boundary”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+到目前为止，我们已经得到实时安全控制、权限优先级、单写者和多级控制引用。最后还需要一个统一对象，把这些机制聚合起来。这个对象就是
+\[
+\boxed{
+SafetyEnvelope.
+}
+\]
+Safety Envelope 不是一组互不关联的 if--else 规则，而是 Agent 在当前身体、环境、任务和不确定性条件下允许进入的状态—动作区域。其核心思想是：安全首先不是判断 ``某个动作是否叫做危险动作''，而是判断\emph{当前状态下，这个动作是否仍然使未来轨迹保持在可恢复区域内}。
 
-把这一关系写成最小数学骨架，可得
+定义扩展状态
+\[
+\xi_t
+=
+(
+x_B,
+SGC,
+FCS,
+z^{BPCC},
+c_{\mathrm{env}},
+c_{\mathrm{cap}}
+),
+\]
+其中 $c_{\mathrm{env}}$ 为环境约束，$c_{\mathrm{cap}}$ 为当前身体能力边界。Safety Envelope 可定义成
+\[
+\boxed{
+\mathcal E_S(t)
+=
+\{
+(\xi,u)
+\mid
+\Pr[
+\Gamma(\xi,u)
+\subseteq
+\mathcal S_{\mathrm{recoverable}}
+]
+\geq
+1-\delta
+\}.
+}
+\]
+这里
+\[
+\Gamma(\xi,u)
+\]
+表示在当前状态和控制下未来一段预测轨迹，而
+\[
+\delta
+\]
+是容许的安全失效概率上界。这样，安全从瞬时边界条件扩展成了\emph{对未来可恢复性的预测约束}。
 
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
+安全包络至少应该包含四类边界。第一类是物理硬约束
+\[
+\mathcal C_{\mathrm{physical}},
+\]
+例如速度、电流、温度、结构强度和机械行程。第二类是环境关系约束
+\[
+\mathcal C_{\mathrm{environment}},
+\]
+例如人体安全距离、禁入区域、道路边界。第三类是资源与系统约束
+\[
+\mathcal C_{\mathrm{system}},
+\]
+例如 CPU、内存、文件权限、网络速率和安全域。第四类是当前能力约束
+\[
+\mathcal C_{\mathrm{capability}},
+\]
+即智能体在当前损耗、载荷、控制置信度和身体状态下真实能够稳定完成什么。于是：
+\[
+\mathcal E_S
+=
+\mathcal C_{\mathrm{physical}}
+\cap
+\mathcal C_{\mathrm{environment}}
+\cap
+\mathcal C_{\mathrm{system}}
+\cap
+\mathcal C_{\mathrm{capability}}.
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Safety Envelope的命名和组合仍是需要实验验证的建模提案。
+值得特别强调的是，Safety Envelope 必须是动态的。机器人电量下降、轮胎抓地力降低、机械臂抓取重物、环境湿滑、网络延迟增加，都应导致：
+\[
+\mathcal E_S(t+\Delta t)
+\neq
+\mathcal E_S(t).
+\]
+例如正常情况下允许速度为
+\[
+v_{\max},
+\]
+当控制置信度降低为 $c_t$ 时，可以写：
+\[
+v_{\max}^{safe}(t)
+=
+v_{\max}
+\phi(c_t),
+\qquad
+0\leq\phi(c_t)\leq1.
+\]
+当
+\[
+c_t\downarrow,
+\]
+安全包络自动收缩。于是 Agent 不需要等真正出现危险才采取行动，而会随着能力余量下降逐渐保守。
 
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+我们可以进一步定义安全裕度：
+\[
+m_S(\xi)
+=
+d(
+\xi,
+\partial\mathcal E_S
+),
+\]
+其中 $\partial\mathcal E_S$ 是安全边界。如果
+\[
+m_S\gg0,
+\]
+说明系统远离边界，可以允许较强局部自治；如果
+\[
+m_S\rightarrow0,
+\]
+BPCC 应提前降低探索和动态激进度；若
+\[
+m_S<0,
+\]
+表示状态已经进入安全包络之外，RSC 必须立即进入 Recovery Mode。由此安全控制不再是二值系统，而形成：
+\[
+\boxed{
+FreeRegion
+\rightarrow
+CautionRegion
+\rightarrow
+ConstraintRegion
+\rightarrow
+RecoveryRegion.
+}
+\]
 
-\begin{thought}
-对“Safety Envelope”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+这与 FCS 之间存在非常自然的关系。FCS 可以把安全余量压缩成对 Agent 有功能意义的连续影响状态，例如
+\[
+Threat,
+\quad
+ControlInstability,
+\quad
+IntegrityPressure,
+\quad
+Urgency.
+\]
+因此可以建立：
+\[
+\mathcal E_S
+\rightarrow
+FCS
+\rightarrow
+AHC
+\rightarrow
+SPC/TCE.
+\]
+此链负责让认知系统 ``感受到'' 安全边界正在收缩，而 RSC 则负责即使认知尚未完成解释，也能够直接保护现实。由此形成两条并行路径：
+\[
+\boxed{
+SafetyEnvelope
+\rightarrow
+FCS
+\rightarrow
+Cognition
+}
+\]
+与
+\[
+\boxed{
+SafetyEnvelope
+\rightarrow
+RSC
+\rightarrow
+Execution.
+}
+\]
+前者慢而语义丰富，后者快而确定。它们共同体现了此前建立的 ``内容—作用—安全'' 三通道思想。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+Safety Envelope 还必须处理模型不确定性。如果系统对环境预测非常不确定，就不应仍然使用与高置信状态相同的安全边界。因此可以定义风险膨胀项：
+\[
+\mathcal E_S^{robust}
+=
+\mathcal E_S
+\ominus
+\mathcal B(
+\kappa U_t
+),
+\]
+其中 $U_t$ 是状态/模型不确定性，$\mathcal B$ 是不确定性缓冲集合，$\ominus$ 表示收缩操作。直觉上：
+\[
+Uncertainty\uparrow
+\Rightarrow
+FreedomRadius\downarrow.
+\]
+这使 Agent 在 ``不知道'' 时自动保守，而不需要把未知错误地解释成安全。
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“Body Safety Boundary”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“KRA：Kernel—Runtime Adaptation”只使用这里已经给出的结果，不反过来为本章提供前提。
+从整个 AgentOS 的认识论来看，Safety Envelope 具有一个更深层含义。Agent 的自由从来不是无限状态空间中的自由，而是：
+\[
+\boxed{
+Freedom
+=
+ReachableChoice
+\cap
+RealityConstraint
+\cap
+SafetyConstraint.
+}
+\]
+也就是说，智能并不是越能够突破约束越高级；真正成熟的智能，是能够在理解约束的基础上扩大自己的有效可行域。例如技能成熟可以降低控制误差，从而扩大安全操作空间；新的工具可以扩大可达范围；更准确的世界模型可以减少不确定性缓冲；更好的 Body 可以提高 Capability Margin。于是能力成长可以形式化成：
+\[
+\mathcal E_{\mathrm{effective}}^{(t+\Delta)}
+\supset
+\mathcal E_{\mathrm{effective}}^{(t)}
+\]
+但硬安全约束依然存在。这给 ``成长'' 和 ``安全'' 提供了一个统一的几何解释：成熟不是取消边界，而是在现实允许的范围内通过能力增长扩大可安全行动的区域。
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+\section{Body Safety Boundary 的统一动力学与本章结论}
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+现在我们可以把本章各部分重新压缩为一个完整的安全闭环。设 Kernel 当前状态为
+\[
+x_C,
+\]
+Body Runtime 状态为
+\[
+x_B,
+\]
+高层目标为
+\[
+g,
+\]
+控制引用为
+\[
+r,
+\]
+BPCC 私有快速状态为
+\[
+z_B,
+\]
+普通候选控制为
+\[
+u_B,
+\]
+最终执行控制为
+\[
+u_E.
+\]
+整个过程可以表示为：
+\[
+g_t
+\overset{\mathcal R}{\longrightarrow}
+r_t,
+\]
+\[
+(r_t,x_B,z_B)
+\overset{\pi_B}{\longrightarrow}
+u_B,
+\]
+\[
+(x_B,u_B,\mathcal E_S)
+\overset{RSC}{\longrightarrow}
+u_E,
+\]
+\[
+(x_B,u_E,W)
+\overset{Reality}{\longrightarrow}
+x_{B,t+1},
+\]
+再由现实观察形成：
+\[
+x_{B,t+1}
+\rightarrow
+SGC_{t+1},FCS_{t+1},
+\]
+并生成残差：
+\[
+\varepsilon_B
+=
+(
+\varepsilon_{\mathrm{ctrl}},
+\varepsilon_{\mathrm{SGC}},
+\varepsilon_{\mathrm{FCS}},
+\varepsilon_{\mathrm{safety}}
+).
+\]
+其中普通残差首先由 BPCC 局部处理，而具有持久性、新颖性、重要性或模型失配意义的残差再向 Kernel 提升。这最终形成：
+\[
+\boxed{
+Kernel
+\rightarrow
+ControlReference
+\rightarrow
+BPCC
+\rightarrow
+SafetyBoundary
+\rightarrow
+Reality
+\rightarrow
+Residual
+\rightarrow
+Body/Kernel.
+}
+\]
+
+在这个结构中，安全并不是串在系统末尾的 ``保险丝''，而是一种贯穿执行过程的现实可行域约束。它既决定什么控制能够真正写入现实，又通过安全余量和异常残差反向进入 Agent 的认知体系。因此可以把 Body Safety Boundary 更完整地定义为：
+\[
+\boxed{
+\mathcal B_S
+=
+(
+\mathcal E_S,
+RSC,
+A_S,
+W_S,
+\Phi_S
+)
+}
+\]
+其中 $\mathcal E_S$ 是 Safety Envelope，$RSC$ 是实时安全控制器，$A_S$ 是安全权限结构，$W_S$ 是唯一写入/仲裁结构，$\Phi_S$ 是从实时安全事件向认知安全事件的抽象映射。这样，Safety Boundary 不再是单一模块，而成为一个具有几何约束、快速控制、权限治理、并发纪律以及跨尺度学习接口的完整系统。
+
+从稳定性角度，我们最终希望保证至少三类性质。第一是安全性：
+\[
+x_B(0)\in\mathcal S_{\mathrm{safe}}
+\Rightarrow
+x_B(t)\in\mathcal S_{\mathrm{safe}}
+\quad
+\forall t
+\]
+在允许扰动和模型误差范围内近似成立。第二是非阻塞性，即安全机制不能把系统永久锁死：
+\[
+SafeIntervention
+\rightarrow
+RecoverableState
+\rightarrow
+NormalOperation,
+\]
+只要现实条件重新允许。第三是最小侵入性：
+\[
+\min
+\int
+\|u_E-u_B\|_R^2dt,
+\]
+即在满足安全约束的前提下尽量保留 Agent 原本的控制意图。安全体系只有同时满足
+\[
+Safety,\quad Recoverability,\quad MinimalIntervention
+\]
+才不会从 ``保护智能'' 退化成 ``阻止智能行动''。
+
+这一点也帮助我们重新理解 AgentOS 的自治。自治并不是：
+\[
+AgentCanDoAnything.
+\]
+真正的自治应表示：
+\[
+\boxed{
+AgentCanChooseFreelyInsideItsAuthorizedAndSafeReachableSet.
+}
+\]
+随着能力提高，Agent 的安全可达集合可以扩大；随着环境恶化或不确定性上升，它也应主动收缩。于是：
+\[
+Autonomy
+=
+DynamicFeasibleFreedom,
+\]
+而不是没有边界的控制权。
+
+本章因此确立了七条可以直接进入 AgentOS 工程规范的原则：
+
+\[
+\boxed{
+\textbf{Principle 1:}\quad
+CriticalSafety\nrightarrow CognitiveDependency
+}
+\]
+
+关键实时安全不能依赖 Kernel 正常运行。
+
+\[
+\boxed{
+\textbf{Principle 2:}\quad
+SafetyAuthority>BPCCAuthority
+}
+\]
+
+安全冲突发生时，RSC 拥有最终即时执行优先级。
+
+\[
+\boxed{
+\textbf{Principle 3:}\quad
+NormalDynamicsStayLocal
+}
+\]
+
+正常身体修正不能持续占用高层工作记忆。
+
+\[
+\boxed{
+\textbf{Principle 4:}\quad
+RelevantSafetyResidualEscalates
+}
+\]
+
+具有长期意义的安全异常必须能够进入认知学习。
+
+\[
+\boxed{
+\textbf{Principle 5:}\quad
+|\operatorname{ActiveWriter}(r_i,t)|=1
+}
+\]
+
+任何受保护现实资源在任一时刻只有一个最终写入者。
+
+\[
+\boxed{
+\textbf{Principle 6:}\quad
+HigherLevelSetsReference,\;
+LowerLevelClosesFastLoop
+}
+\]
+
+高层提供目标与包络，低层完成局部动力控制。
+
+\[
+\boxed{
+\textbf{Principle 7:}\quad
+RealityIsUltimateConstraint
+}
+\]
+
+模型、预测、Goal、自我以及任何内部表示都不能获得高于现实反馈与硬安全约束的最终权威。
+
+由此，我们也能够给出 Body Safety Boundary 的最终定义：
+
+\[
+\boxed{
+\textbf{
+Body Safety Boundary 是包围具身智能行动链的实时可行域治理结构。它通过不可绕过的安全包络、快速状态预测与控制仲裁，使 Agent Kernel 和 BPCC 的自由行动始终发生在可接受的现实区域内；同时又把具有长期意义的危险残差重新转化为认知经验，使安全不是智能之外的静态限制，而成为智能与现实长期共同适应过程中不可缺少的边界条件。
+}
+}
+\]
+
+如果把这一结论放回整部《智能动力学与 AgentOS》的多尺度理论中，我们会发现一个非常重要的结构关系：
+\[
+\boxed{
+SlowGoal
+\rightarrow
+FastControl
+\rightarrow
+FasterSafetyConstraint
+\rightarrow
+Reality.
+}
+\]
+智能越向现实深入，越不能让最慢、最抽象的认知层直接承担最快、最不可逆的控制责任。真正成熟的系统恰恰相反：它让每一个时间尺度拥有自己的闭环，让高层定义意义与方向，让低层承担熟练执行，让安全边界守住现实不可逆条件，再让异常通过残差重新回到高层学习。于是安全不再与智能相对立，而成为持续智能能够长期存在的动力学前提。

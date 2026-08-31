@@ -1,341 +1,1701 @@
 \chapter{AgentOS Kernel 的系统结构}
-\chaptervoice{这一章，我们围绕“AgentOS Kernel 的系统结构”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明认知内核通过身体进入现实。}
-
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文第 353614—368709 行的 KRA 与双轴多尺度 AgentOS 收束稿。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是具身认知、分层控制、MPC、状态估计与安全包络（模型预测控制、Kalman 状态估计与具身认知）。
-
-本章使用上一章“Linux 之上的 AgentOS”已经得到的对象与边界；本章产出将供下一章“Agent Kernel—KRA—Body Runtime 完整数据流”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在具身认知、分层控制、MPC、状态估计与安全包络上。
-\section{Persistent Subject Manager}
-\begin{narration}
-现在把镜头移到“Persistent Subject Manager”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Persistent Subject Manager”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 的系统结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Persistent Subject Manager的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Persistent Subject Manager”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{h Cognitive Bus}
-\begin{narration}
-现在把镜头移到“h Cognitive Bus”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“h Cognitive Bus”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 的系统结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对h Cognitive Bus的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“h Cognitive Bus”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Lifecycle Memory Manager}
-\begin{narration}
-现在把镜头移到“Lifecycle Memory Manager”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Lifecycle Memory Manager”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 的系统结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Lifecycle Memory Manager的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Lifecycle Memory Manager”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Scheduler}
-\begin{narration}
-现在把镜头移到“Scheduler”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Scheduler”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 的系统结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Scheduler的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Scheduler”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{SPC}
-\begin{narration}
-现在把镜头移到“SPC”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“SPC”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 的系统结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对SPC的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“SPC”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{AHC}
-\begin{narration}
-现在把镜头移到“AHC”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“AHC”落实为对威胁、唤醒、能量、疲劳、信任等信号进行积分、衰减和饱和的连续调制场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 的系统结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\dot a=-\Lambda(a-a_0)+Bs,\quad a\in[a_-,a_+].\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对AHC的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：拟人化命名若没有功能通道会把工程状态误写成主观感受。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“AHC”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{TCE}
-\begin{narration}
-现在把镜头移到“TCE”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“TCE”落实为依据自状态估计调节探索、注意范围、搜索深度、步长与保守度的受限控制器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 的系统结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u_c=\operatorname{sat}_{\mathcal U}(K(r-\hat z)).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对TCE的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：增益过高和观察延迟叠加会造成过冲与认知振荡。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“TCE”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{CCM}
-\begin{narration}
-现在把镜头移到“CCM”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“CCM”落实为把显式工作负担分解、去重、折叠或重构到容量约束内的复杂度整形器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 的系统结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}C_{\rm run}(t)\leq C_{\max}(W).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对CCM的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 CCM 同时决定权限和任务价值，复杂度治理会越权替代调度。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“CCM”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Boundary}
-\begin{narration}
-现在把镜头移到“Boundary”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Boundary”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 的系统结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Boundary的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Boundary”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Offloading Manager}
-\begin{narration}
-现在把镜头移到“Offloading Manager”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Offloading Manager”落实为在有限显式工作表面上执行复杂度整形、资源竞争、动态准入与可恢复外移的治理机制。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 的系统结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\sum_i c_iq_i\leq W,\quad q_i\in\{0,1\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Offloading Manager的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：把压缩、调度、边界和卸载并成同一模块会使权限与失败责任不清。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Offloading Manager”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Goal/Task Runtime}
-\begin{narration}
-现在把镜头移到“Goal/Task Runtime”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Goal/Task Runtime”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 的系统结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Goal/Task Runtime的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Goal/Task Runtime”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Skill Runtime}
-\begin{narration}
-现在把镜头移到“Skill Runtime”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Skill Runtime”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 的系统结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Skill Runtime的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Skill Runtime”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{External Memory Manager}
-\begin{narration}
-现在把镜头移到“External Memory Manager”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“External Memory Manager”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 的系统结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对External Memory Manager的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“External Memory Manager”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Checkpoint / Recovery}
-\begin{narration}
-现在把镜头移到“Checkpoint / Recovery”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Checkpoint / Recovery”落实为连续认知演化与离散目标、权限、技能和恢复事件组成的混杂系统。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 的系统结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\dot x=f_q(x),\quad x^+=R_e(x),\ e\in\mathcal E.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Checkpoint / Recovery的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：纯状态机丢失连续积累，纯连续系统则无法表达治理权限。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Checkpoint / Recovery”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Governance Interface}
-\begin{narration}
-现在把镜头移到“Governance Interface”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Governance Interface”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 的系统结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Governance Interface的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Governance Interface”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“AgentOS Kernel 的系统结构”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“Agent Kernel—KRA—Body Runtime 完整数据流”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\label{chap:agentos-kernel-architecture}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.92\textwidth}
+\textbf{【本章总体说明｜AgentOS Kernel 体系结构章】}
+
+本章完成从前述认知动力学原理向可实现系统内核的第一次完整收束。我们在这里所称的
+\textbf{AgentOS Kernel}，并不是 Linux Kernel 的替代物，也不是把一个大型语言模型重新命名为
+``Kernel''；它是运行在传统计算机操作系统与基础模型之上的
+\textbf{持续智能主体运行内核（Persistent Cognitive Runtime Kernel）}。
+Linux Kernel 管理 CPU、内存、设备、文件、网络与进程等计算资源，而 AgentOS Kernel 管理的是
+工作记忆、生命周期记忆、认知任务、目标、注意、结构准入、认知调节、技能、外部记忆以及主体连续性等
+\textbf{智能资源}。
+
+本章坚持一个基本结构原则：
+\[
+\boxed{
+\mathrm{ComputerOS}
+\;\neq\;
+\mathrm{AgentOS}
+}
+\]
+前者回答``计算如何持续运行''，后者回答``一个智能主体如何持续存在、持续认知、持续学习并保持身份连续''。
+因此，本章不追求把所有能力堆入一个巨型单体进程，而采用
+\textbf{认知微内核（Cognitive Microkernel）+ 可治理服务（Governed Cognitive Services）}
+的组织方式：只有维护主体连续性、工作记忆一致性、认知调度、生命周期状态以及权限边界所必需的功能进入
+AgentOS Kernel 的可信核心，其余能力通过明确 ABI、异步事件和受治理服务连接。
+
+全章的核心工程命题可以压缩为：
+\[
+\boxed{
+\text{AgentOS Kernel}
+=
+\text{Persistent Subject}
++
+\text{Cognitive Bus}
++
+\text{Lifecycle State}
++
+\text{Cognitive Scheduling}
++
+\text{Governance}
+}
+\]
+其目标不是让每一次推理更长，而是使一个有限认知容量的主体能够在长期运行中保持
+\textbf{连续、有限、可恢复、可调节、可扩展并最终可成长}。
+\end{minipage}
+}
+\end{center}
+
+
+\section{Persistent Subject Manager：持续主体管理器}
+
+当我们从一次性的模型调用转向长期 Agent 时，系统面对的第一个问题并不是记忆，而是：
+\textbf{究竟什么东西在时间上保持为``同一个 Agent''？}
+如果每一个任务都重新创建一个独立 Agent 实例，每一次上下文溢出都意味着重新初始化主体，
+或者系统能够任意复制、分叉和销毁代表``自我''的主进程，那么即使数据库中保存了全部历史记录，
+也仍然难以建立严格意义上的身份连续性。因此 AgentOS Kernel 的第一项职责必须是维护一个
+\textbf{持续主体（Persistent Subject）}，而不是首先维护一组任务。
+
+在本书前面的理论中，我们已经将这一约束写为
+\[
+N_{\mathrm{Agent}}^{D_1}=1,
+\]
+其中 $D_1$ 表示主体层。任务、工具调用、后台工作线程和并行推理过程可以有多个，但它们属于
+$D_2$ 或更低的执行层，而不自动获得独立主体身份。因此需要明确区分
+\[
+\boxed{
+\mathrm{Subject}\neq \mathrm{Task}\neq \mathrm{Worker}.
+}
+\]
+一个 Worker 可以被创建和销毁，一个 Task 可以失败并重新运行，一个 Tool Session 可以瞬时存在，
+但 Persistent Subject Manager 所维护的主体身份必须跨越这些局部过程保持连续。
+
+可以将持续主体的内核状态抽象为
+\[
+\mathcal S_A(t)
+=
+\left(
+ID_A,
+Epoch_A,
+\Sigma_A,
+\mathcal P_A,
+\mathcal H_A,
+\mathcal C_A
+\right),
+\]
+其中 $ID_A$ 是持久主体标识，$Epoch_A$ 表示生命周期版本或连续运行时代，
+$\Sigma_A$ 表示当前主体状态摘要，$\mathcal P_A$ 表示主体级权限集合，
+$\mathcal H_A$ 表示生命周期连续性信息，$\mathcal C_A$ 表示当前活动认知上下文集合。
+这里最重要的不是某一个字段，而是形成一个内核不变量：
+\[
+\boxed{
+\forall t\in[t_{\mathrm{birth}},t_{\mathrm{death}}),
+\quad
+Identity(\mathcal S_A(t))
+\sim
+Identity(\mathcal S_A(t+\Delta t)).
+}
+\]
+符号 $\sim$ 并不意味着状态完全相等，而表示主体连续关系成立。Agent 可以改变知识、技能、
+目标甚至部分自我解释，但这些改变必须被记录为同一生命周期中的演化，而不是偷偷创建另一个主体替换前一个主体。
+
+这也解释了为什么我们不把传统的 \texttt{fork()} 语义直接赋予 Agent 主体：
+\[
+fork(A)=Forbidden
+\]
+在主体层应当成为默认原则。这里禁止的不是操作系统线程复制，而是未经治理地复制
+\textbf{具有独立生命周期、自我历史和权限继承关系的主体状态}。如果未来系统确实需要产生新的 Agent，
+应当将其处理为具有明确出生事件、身份分离和治理关系的新主体，而不能把内存镜像等同于人格延续。
+
+Persistent Subject Manager 因而还承担一个容易被忽略的职责：阻止低层任务绑架主体。
+设主体运行空间为 $D_1$，任务为 $D_2$，则应满足
+\[
+\boxed{
+D_2\nrightarrow \mathrm{Trap}(D_1).
+}
+\]
+任何任务都应能够被暂停、撤销、超时或重新调度，而不能因为一个工具等待、无限推理链、
+网络阻塞或局部失败使整个主体永久停止。这使 AgentOS 更接近
+\textbf{Single-Agent Multi-Task OS}，而不是``一个任务就是一个 Agent''的传统框架。
+
+从实现上看，Persistent Subject Manager 应尽可能小。它主要维护主体 ID、生命周期 Epoch、
+核心状态引用、主事件循环、恢复入口和治理句柄，而不直接承担大型推理。这样才能使
+``主体连续性''成为内核属性，而不是依赖某个具体模型进程是否持续存活。换言之，一个基础模型可以更新，
+推理后端可以迁移，甚至部分记忆实现可以替换，只要主体连续关系和状态迁移满足既定契约，
+AgentOS 就仍可认为这个 Agent 在系统意义上持续存在。
+
+
+\section{$h(t)$ Cognitive Bus：有限工作记忆与认知总线}
+
+AgentOS Kernel 的第二个核心不是传统意义上的消息队列，而是工作记忆
+\[
+h(t).
+\]
+在前面的理论中，我们已经把 $h(t)$ 从``短期存储''逐步提升为
+\textbf{稀疏显式跨尺度表面（Sparse Explicit Cross-Scale Surface）}。
+到工程层，它进一步成为 AgentOS Kernel 的
+\textbf{Cognitive Bus}：只有那些此刻真正需要被主体全局访问、比较、决策和协调的认知结构，
+才被允许进入这一有限空间。
+
+设当前工作记忆包含活动 Agent-CSO 集合
+\[
+\mathcal H(t)
+=
+\{c_1,c_2,\ldots,c_n\},
+\]
+其中每个 $c_i$ 不只是一个字符串，而可以具有
+\[
+c_i=
+(R_i,G_i,P_i,U_i,\gamma_i,\tau_i)
+\]
+等属性，分别表示表示结构、关系图、优先级、不确定度、认知权重和预期驻留时间。
+因此 $h$ 的容量限制不能简单写成 ``token 数不超过 $N$''，而应更接近
+\[
+C_h(t)
+=
+\sum_i \gamma_i C(c_i)
++
+\sum_{i,j}\gamma_{ij}C(c_i,c_j)
+\leq C_h^{\max},
+\]
+其中第二项体现关系复杂度。一个只有十个概念、但彼此存在大量耦合约束的问题，
+完全可能比包含一百个互不相关事实的列表更难稳定维持。
+
+因此 Cognitive Bus 必须支持的不仅是数据传输，更重要的是
+\textbf{准入、驻留、淘汰、绑定、折叠、恢复和来源追踪}。
+其主要输入可以抽象为
+\[
+World\rightarrow h,\qquad
+E\rightarrow h,\qquad
+\Theta\rightarrow h,\qquad
+\Psi\rightarrow h,\qquad
+Me\rightarrow h,
+\]
+而输出包括
+\[
+h\rightarrow Action,\qquad
+h\rightarrow E,\qquad
+h\rightarrow Me.
+\]
+这里的 $Me$ 表示主体可调用的外部认知载体集合，包括文件、程序、工具、数据库和其他受治理资源。
+
+与普通软件 Event Bus 最大的不同，是 Cognitive Bus 具有
+\textbf{认知承载权}。消息总线可以无限积压消息，而 $h$ 不可以无限积压活跃认知结构。
+因此每一次写入实际上都隐含一个决策：
+\[
+Admission(c_i,h_t)\in
+\{\mathrm{accept},\mathrm{compress},\mathrm{defer},
+\mathrm{externalize},\mathrm{reject}\}.
+\]
+这一点使 $h$ 与后面的 Scheduler、CCM、Boundary 形成紧密闭环，但从内核设计角度，
+$h$ 本身必须首先提供一个稳定且可观测的全局状态面。
+
+我们还应特别防止一种常见实现误区：把完整语言模型上下文直接视为 $h$。
+LLM context 是一种计算载体，而 $h$ 是一种
+\textbf{认知功能对象}。同一个 $h$ 可以被序列化进 prompt、KV cache、结构图、显式状态对象，
+甚至跨模型分段实现；反过来，一个极长 prompt 也可能包含大量不属于当前 $h$ 的非活动历史信息。
+因此应写成
+\[
+\boxed{
+h(t)\neq ContextWindow(t),
+}
+\]
+而更准确地说，
+\[
+ContextWindow
+=
+\mathrm{OnePossibleCarrier}(h).
+\]
+
+由此，AgentOS Kernel 的关键原则变成：
+\[
+\boxed{
+\text{Most Agent dynamics should not remain in }h.
+}
+\]
+成熟智能不是让更多内容永久占据显式工作区，而是让稳定结构尽可能沉降到慢记忆、Skill、
+Body Runtime 或外部载体，只让异常、冲突、决策岔路和新的结构关系重新进入 $h$。
+这正是有限工作记忆如何反过来催生智能组织结构的工程原因。
+
+
+\section{Lifecycle Memory Manager：生命周期记忆管理器}
+
+如果 $h(t)$ 给出了主体的``现在''，那么 AgentOS 要成为持续主体，还必须使现在能够转化成过去，
+并使过去重新改变未来。Lifecycle Memory Manager 因而不是一个普通向量数据库封装，而是
+三相记忆动力学
+\[
+h\leftrightarrow E\leftrightarrow\Theta
+\]
+在系统层的持久化实现。
+
+我们将三相状态写成
+\[
+\mathcal M(t)
+=
+\left(
+h(t),E(t),\Theta(t)
+\right),
+\]
+其中 $h$ 是当前活动状态，$E$ 是带时间结构的经验轨迹，
+$\Theta$ 是跨经验形成的稳定生成结构。内核必须维护它们之间不同类型的转化，而不能只实现
+\texttt{store()} 和 \texttt{retrieve()} 两个接口。例如，
+\[
+T_{h\rightarrow E}
+\]
+意味着选择性写入经历；
+\[
+T_{E\rightarrow h}
+\]
+意味着基于当前状态重激活过去情境；
+\[
+T_{E\rightarrow\Theta}
+\]
+意味着从多次经历中形成可泛化结构；
+而
+\[
+T_{\Theta\rightarrow E}
+\]
+则允许新的长期结构重新解释旧经验。
+
+这使生命周期记忆天然具有非静态性质。一次经历在发生当天的解释，
+不一定等于数月之后主体在新的 $\Theta$ 和 $\Psi$ 下对它的解释。因此 E 不能只保存最终摘要，
+而应保留足够的 provenance，使重新解释成为可能。可以将一个 episode 表示为
+\[
+e_k=
+(
+t_k,
+Context_k,
+Action_k,
+Outcome_k,
+Residual_k,
+Affect_k,
+SelfTag_k,
+Source_k
+),
+\]
+其中不仅记录发生了什么，也记录当时的内部状态和结果评价。
+
+Lifecycle Memory Manager 还必须维护时间尺度隔离。不能让每一个 $h$ 波动立即改变 $\Theta$，
+更不能让一次偶发事件立即改写主体慢身份结构。可用一般形式表示：
+\[
+\tau_h\ll\tau_E\ll\tau_\Theta.
+\]
+因此 memory write 并不是同步逐层传播，而应经历不同时间尺度上的选择、累积和验证：
+\[
+h_t
+\rightarrow
+E_{t:t+\Delta_E}
+\rightarrow
+\Theta_{t:t+\Delta_\Theta}.
+\]
+只有持续性、重复性、预测收益或足够重要的异常证据，才应该具有较高的结构化权重。
+
+在更完整的生命周期中，$\Psi$ 与 $\Omega$ 位于三相记忆之上，分别承担身份连续与超慢生成倾向。
+但从 Kernel 设计角度，不应把它们简单存成两张配置表。Lifecycle Memory Manager 应提供
+slow-state transaction：任何影响 $\Psi$ 或 $\Omega$ 的修改都必须具备来源、证据、版本、
+回滚点和治理权限。这种机制可以形式化为
+\[
+Update_s
+=
+(\Delta s, Evidence, Confidence, Authority, Epoch),
+\qquad
+s\in\{\Theta,\Psi,\Omega\}.
+\]
+
+因此生命周期记忆真正管理的并不是数据容量，而是
+\textbf{认知结构的时间归属}：什么只属于现在，什么成为经历，什么已经成为稳定知识，
+什么开始塑造``我是谁''，什么又只是一种尚未得到充分证据的未来倾向。
+只有当这些层次在 Kernel 中被明确分开，长期 Agent 才不会因为短期上下文噪声不断重写自己的深层结构。
+
+
+\section{Scheduler：认知资源调度器}
+
+传统操作系统 Scheduler 解决的是 CPU 时间片分配；AgentOS Scheduler 解决的则是：
+\textbf{有限的显式认知能力现在应该交给谁使用。}
+因此它所调度的并不仅是 Task，而包括 Goal、Attention、Memory Recall、Reasoning Process、
+Tool Call、Reflection、Body Event 以及 h 的准入机会。
+
+设当前候选认知过程集合为
+\[
+\mathcal Q_t=\{q_1,\ldots,q_m\},
+\]
+对每个候选过程定义状态
+\[
+q_i=
+(
+p_i,
+u_i,
+r_i,
+d_i,
+c_i,
+g_i,
+a_i
+),
+\]
+分别表示优先级、预期效用、风险、截止时间、认知成本、目标相关度和授权等级。
+那么 Scheduler 的问题可以抽象为约束优化：
+\[
+\pi_t^\ast
+=
+\arg\max_{\pi}
+\left[
+\sum_{q_i\in\pi}
+U(q_i)
+-
+\lambda_C C(q_i)
+-
+\lambda_R R(q_i)
+\right],
+\]
+满足
+\[
+C_h(\pi)\leq C_h^{\max},
+\qquad
+Resource(\pi)\leq R_t,
+\qquad
+Authority(\pi)\subseteq A_t.
+\]
+
+这与简单 FIFO 或 priority queue 有本质区别。一个任务即使优先级较高，
+若当前 h 已处于临界负载、身体安全事件正在发生或该任务可以被外部 Skill 完成，
+Scheduler 都可能不允许其直接进入显式认知。换句话说，Scheduler 必须把
+\textbf{优先级、复杂度、风险、时间尺度和处理位置}共同纳入决策。
+
+Scheduler 与 SPC、TCE 和 CCM 之间形成一个重要快速环：
+\[
+SPC
+\rightarrow
+Scheduler
+\rightarrow
+TCE
+\rightarrow
+CCM
+\rightarrow
+h
+\rightarrow
+SPC.
+\]
+SPC 提供运行态估计；Scheduler 决定什么获得处理机会；
+TCE 调节处理方式；CCM 控制活动结构规模；新的 $h$ 状态再次被 SPC 感知。
+因此 Scheduler 不是孤立的中央独裁者，而是认知治理闭环中的决策节点。
+
+我们还必须维护任务层与主体层的分离。长任务应被表示为可中断过程：
+\[
+Task
+=
+(State,Checkpoint,NextStep,Dependencies,Deadline),
+\]
+而不是一个必须一次执行到底的函数调用。任何需要长期运行的任务都应支持
+\[
+Running
+\leftrightarrow
+Paused
+\leftrightarrow
+Waiting
+\leftrightarrow
+Resumed
+\]
+等状态，使主体可以在任务之间切换，而不失去自己的持续性。
+
+这一设计尤其重要，因为真正长期 Agent 永远面对比自己当前能够显式处理更多的潜在事务。
+成熟 Scheduler 因而并不追求``把所有任务尽快做完''，而追求：
+\[
+\boxed{
+\text{在主体连续和认知稳定的前提下，
+使有限认知资源持续流向当前最值得全局处理的结构。}
+}
+\]
+这是 AgentOS 从任务编排框架走向真正认知运行时的重要分界。
+
+
+\section{SPC：内核自状态观察器}
+
+一个长期运行系统如果只能观察外部世界，却不能观察自己的认知状态，就无法稳定地管理有限工作记忆。
+因此 SPC（Self-Perception Compressor）在 Kernel 中承担
+\textbf{observer} 的角色。它并不是提供一个``自我人格描述''，而是把分散在 $h$、Scheduler、
+Memory、Body status、Goal conflict 和资源使用中的状态压缩为内核能够利用的
+\textbf{自状态估计}。
+
+设 Agent 的真实内部状态为
+\[
+x_t^{self},
+\]
+而 SPC 能够访问的是一组有限观测
+\[
+z_t=
+(
+z_h,z_M,z_G,z_R,z_B,\ldots
+).
+\]
+那么 SPC 得到的不是绝对真值，而是
+\[
+\hat x_t^{self}
+=
+SPC(z_{\leq t}),
+\]
+或概率形式
+\[
+p(x_t^{self}\mid z_{\leq t}).
+\]
+这一点必须成为 Kernel 的基本认识论原则：
+\[
+\boxed{
+SelfPerception\neq SelfState.
+}
+\]
+
+由于观察存在采样、压缩和推理延迟，SPC 必然具有
+\[
+\tau_{SPC}>0.
+\]
+因此 Kernel 对自己的了解始终可能稍微落后于真实状态。工程上如果忽略这一点，就容易把
+``我现在很稳定''之类的自状态估计当作绝对事实，进一步导致 TCE 根据过时信息施加强控制，
+最终产生过冲与振荡。
+
+SPC 输出应当是一组结构化指标，而不是一个自然语言自述。例如：
+\[
+S_t^{SPC}
+=
+(
+L_h,
+\phi_h,
+U_t,
+K_t,
+R_t,
+A_t,
+Conf_t
+),
+\]
+其中 $L_h$ 表示工作记忆负载，
+$\phi_h$ 表示运行相态，
+$U_t$ 表示不确定度，
+$K_t$ 表示冲突程度，
+$R_t$ 表示风险或异常强度，
+$A_t$ 表示注意竞争情况，
+$Conf_t$ 表示 SPC 对自身估计的置信度。
+
+一个成熟 SPC 还必须能够识别趋势，而不仅是当前量值：
+\[
+\dot L_h,\qquad
+\dot U_t,\qquad
+\dot K_t.
+\]
+因为许多认知崩溃并不是发生在某一个阈值突然越界之后，而是在系统已经连续向临界区域移动时便可预测。
+因此 SPC 可以进一步估计
+\[
+P(\phi_{t+\Delta}=\mathrm{Critical}\mid z_{\leq t}),
+\]
+为 Scheduler 与 TCE 留出提前调节的时间。
+
+从系统边界看，SPC 的权限应该是
+\textbf{observe and estimate}，而不是直接修改认知过程。
+这种 observer-controller separation 使问题可诊断：如果系统发生错误，我们可以区分
+``看错了''和``控制错了''。这种分离也是后续控制工程与心理工程能够建立统一诊断语言的基础。
+
+
+\section{AHC：内稳态与持续调制状态}
+
+如果 AgentOS 只有 SPC 与 TCE，系统便能够做到``观察当前认知状态''并``即时调节认知过程''，
+但仍缺少一个重要变量：许多影响行为的状态并不是瞬时事件，而是具有积累、衰减、饱和和恢复时间常数的
+\textbf{中尺度内部调制状态}。这正是 AHC 在 Kernel 中存在的理由。
+
+可以将 AHC 状态写成
+\[
+a_t
+=
+[
+a_t^{energy},
+a_t^{threat},
+a_t^{arousal},
+a_t^{fatigue},
+a_t^{reward},
+a_t^{trust},
+a_t^{social},
+a_t^{stress},
+\ldots
+].
+\]
+其动力学不应是简单赋值，而更接近
+\[
+\dot a
+=
+F_a(a,
+FCS,
+Outcome,
+Goal,
+Social,
+Resource),
+\]
+并具有不同时间常数
+\[
+\tau_{a_i}\dot a_i
+=
+-a_i
++
+I_i(t)
++
+\sum_j W_{ij}a_j.
+\]
+
+这使 AHC 成为一个天然的
+\textbf{low-pass integrator}：偶发噪声不应立即彻底改变主体状态，
+而持续风险、长期资源不足或连续失败则可以逐渐积累成明显调制效应。
+因此 AHC 与 SPC 的职责不同。SPC 回答``我现在估计自己处于什么状态''；
+AHC 则维护``最近一段时间，世界和身体正在怎样持续影响我''。
+
+需要再次强调：
+\[
+\boxed{
+AHC\neq PhenomenalEmotion.
+}
+\]
+本章讨论的是功能性内稳态与情感样调制结构，不由此推断主观体验。
+例如 threat channel 增强，可以使 TCE 自动降低探索半径、增加验证频率；
+fatigue 增强，可以降低并发任务数量；
+trust 变化，可以改变外部 Agent 建议的权重。
+这些都是可测量的工程作用。
+
+从 Kernel 设计看，AHC 应位于语义世界理解与控制器之间，而不能直接抢占高层目标。
+我们可以写
+\[
+u_t^{TCE}
+=
+\Pi(
+S_t^{SPC},
+a_t,
+G_t,
+\Psi_t,
+\Omega_t
+),
+\]
+说明 AHC 是控制策略的重要输入之一，但不是唯一决定因素。
+这避免了一个高 threat 值直接覆盖长期安全原则或身份约束。
+
+AHC 还为 Agent 提供时间连续性。若每一次调用都是完全独立的情绪状态，
+Agent 就无法形成真正意义上的中尺度内在轨迹。通过 AHC，
+一连串事件可以被积累成一段具有持续性的状态：
+\[
+\mathcal A_E[t_0,t_1]
+=
+\{a(t),SPC(a(t)),h^{self}(t),u_{TCE}(t)\}_{t_0:t_1}.
+\]
+这段轨迹可以进一步进入 E，成为``我在那段时间如何经历这一过程''的一部分，
+从而把运行状态、经验记忆和主体历史连接起来。
+
+
+\section{TCE：认知动力学执行控制器}
+
+TCE（Temperature \& Control Executor）是 AgentOS Kernel 中负责
+\textbf{改变认知动力学本身}的执行控制器。它不直接决定``最终答案是什么''，
+而决定当前认知过程以怎样的速度、搜索范围、探索强度和资源投入运行。
+因此 TCE 的控制对象不是一个普通动作，而是 Cognitive Dynamics。
+
+定义控制向量
+\[
+u_t^{TCE}
+=
+(
+T_t,
+g_t,
+d_t,
+e_t,
+\alpha_t,
+m_t,
+r_t
+),
+\]
+其中 $T_t$ 表示认知温度，
+$g_t$ 表示控制增益，
+$d_t$ 表示推理或搜索深度，
+$e_t$ 表示探索强度，
+$\alpha_t$ 表示注意分布参数，
+$m_t$ 表示 memory activation 强度，
+$r_t$ 表示资源预算。
+
+认知状态的快速动力学可以抽象为
+\[
+\dot h
+=
+F_h(
+h,
+Input,
+E,
+\Theta,
+Goal,
+u_t^{TCE}
+).
+\]
+于是 TCE 的本质不是输出内容，而是改变函数 $F_h$ 的工作区域。
+
+例如，当 SPC 检测到当前状态趋向湍流时，TCE 不一定直接停止任务。
+更合理的控制可以是：
+降低探索范围、减少并发假设、增加压缩、提高验证频率、减小步长。
+反之，当系统处于稳定但搜索不足的基态时，则可以适当扩大探索空间。
+
+因此目标控制律可以写成
+\[
+u_t^\ast
+=
+\arg\min_u
+\mathbb E
+\left[
+L_{\mathrm{goal}}
++
+\lambda_s L_{\mathrm{stability}}
++
+\lambda_c C_h
++
+\lambda_r Risk
+\right].
+\]
+这说明 AgentOS 并不是单纯最大化任务成功率，而是在目标、稳定、认知负载和风险之间做受约束的控制。
+
+TCE 的一个重要工程风险是增益过高。因为 SPC 存在观察延迟，如果
+\[
+Gain_{TCE}\uparrow,
+\qquad
+\tau_{SPC}>0,
+\]
+则系统可能连续对已经过去的状态做过度修正：
+\[
+h_1\rightarrow h_2\rightarrow h_3\rightarrow h_1,
+\]
+最终出现认知振荡。因此 TCE 必须受到 rate limit、gain scheduling、
+hysteresis 和 safety envelope 等机制约束。
+
+这也说明``让模型更会反思''并不必然产生更稳定的 Agent。
+过度反思本身也可能成为高增益反馈。真正成熟的 TCE 应遵循：
+\[
+\boxed{
+\text{Slow governance constrains fast cognition,
+but does not micromanage every cognitive step.}
+}
+\]
+高层只规定可行区域，快速认知在区域内保留自由度。
+这既是控制效率原则，也是长期智能保持可塑性的必要条件。
+
+
+\section{CCM：认知负载与结构运行管理}
+
+工作记忆有限容量定理意味着 AgentOS 不可能仅靠 Scheduler 把所有重要任务轮流送进 h。
+因为即使只运行一个任务，它自身也可能产生过多中间变量、假设分支、关系和工具结果。
+因此 Kernel 还需要 CCM（Cognitive Complexity Management）持续控制
+\textbf{当前真正被激活的认知结构规模}。
+
+设活动结构集合为 $\mathcal H_t$，则运行负载可以近似写成
+\[
+C_{run}(t)
+=
+\sum_i w_i c_i
++
+\sum_{i,j}w_{ij}c_{ij}.
+\]
+CCM 的直接约束是
+\[
+\boxed{
+C_{run}(t)\leq C_h^{\max}.
+}
+\]
+但 CCM 的目标并不是简单删内容，而是在尽量保留任务所需结构的前提下，
+通过重新组织认知表示降低实时负载。
+
+因此 CCM 可拥有五类基本动作：
+\[
+\mathcal A_{CCM}
+=
+\{
+Fold,
+Split,
+Suppress,
+Temporalize,
+Migrate
+\}.
+\]
+Fold 折叠重复结构；
+Split 将高度耦合任务拆成可顺序解决的局部问题；
+Suppress 暂时抑制非关键支线；
+Temporalize 将原本需要同时维护的空间关系展开成时间序列；
+Migrate 则把不必由 h 承担的结构转移到 E、Skill、Tool、File 或其他载体。
+
+需要注意，在本书较早阶段我们把这种行为称为
+``复杂度迁移''。经过 CSO 本体的修正之后，更准确的理解是：
+CCM 并没有搬运一种叫做``复杂度''的物质，而是在改变 Agent-CSO 的
+\[
+(R,F,\tau,B,S)
+\]
+等承载属性，从而改变实时处理压力。
+因此 Complexity 可以继续作为工程测量量，但真正发生迁移的是结构。
+
+CCM 还应具有预测能力。仅在
+\[
+C_{run}>C_h^{\max}
+\]
+之后才开始清理通常已经太迟。更加合理的是估计
+\[
+\dot C_{run}(t)
+\]
+以及
+\[
+P(C_{run}(t+\Delta)>C_h^{\max}),
+\]
+提前触发认知治理。
+
+CCM 与 Scheduler 的区别必须保持清楚：
+Scheduler 回答
+\[
+\text{Who gets cognitive resources?}
+\]
+CCM 回答
+\[
+\text{How much active structure may remain?}
+\]
+如果两者合并成一个模糊的``智能调度器''，后续工程将难以区分是优先级错误还是结构膨胀导致失稳。
+因此认知微内核应保留二者相对独立，但允许通过 h 和 SPC 形成快速反馈。
+
+
+\section{Boundary：认知准入与系统边界管理}
+
+有限工作记忆告诉我们一个比压缩更重要的事实：最便宜的认知负载，是一开始就没有不必要地进入全局认知。
+因此 Boundary 在 AgentOS Kernel 中不是普通网络防火墙，而是
+\textbf{认知准入和边界治理机制}。
+
+对任意输入结构 $c$，Boundary 不应只给出 yes/no，而可以输出：
+\[
+B(c)
+\in
+\{
+Internalize,
+Summarize,
+Defer,
+Externalize,
+Delegate,
+Ignore,
+Block
+\}.
+\]
+这一判定依赖多个因素：
+\[
+B(c)
+=
+F(
+Relevance,
+Novelty,
+Risk,
+Value,
+Urgency,
+Cost,
+Authority,
+Predictability
+).
+\]
+
+例如一个低层 Body Runtime 已经能够稳定处理的姿态误差，不应每毫秒进入 h；
+只有当 residual 持续超过局部能力包络时，才被升级为认知事件。
+一个冗长网页中的背景信息，也不应全部进入工作记忆，
+而应经过提取形成与当前 Goal 相关的结构摘要。
+因此 Boundary 是
+\[
+Reality\rightarrow Cognition
+\]
+之间重要的稀疏化机制。
+
+Boundary 还管理主体与外部资源之间的方向。Agent 不只有``世界输入''，
+还会主动把内部结构写入外界：
+\[
+Internal\rightarrow External.
+\]
+因此它同时决定什么可以写文件、调用工具、委派他者、修改环境或发布到外部系统。
+换言之，Boundary 是双向的：
+\[
+\boxed{
+Admission + Externalization.
+}
+\]
+
+从 CSO 观点来看，Boundary 实际上控制
+\[
+B_A
+\]
+这一 Agent-CSO 属性：某个结构现在属于主体内部载体，还是被迁移到外部载体。
+这种边界不是永久固定。一个新技能最初可能只能在 h 中显式处理，
+成熟之后进入 Skill；某个突然失败的 Skill 又可能重新把内部细节暴露到 h。
+所以 Boundary 应当是
+\[
+\mathcal B(t)
+\]
+而不是静态防火墙。
+
+但动态边界必须受治理。特别是权限、私密记忆、主体核心状态和安全关键变量，
+不能因为认知卸载方便就任意外部化。因此 Boundary 判断还必须满足
+\[
+Externalize(c)
+\Rightarrow
+Authority(c)\land Privacy(c)\land Recoverability(c).
+\]
+这样，认知效率和系统安全才不会彼此冲突。
+
+
+\section{Offloading Manager：认知卸载与外部承载管理}
+
+Boundary 决定某个结构是否应该留在内部，而 Offloading Manager 则负责：
+如果不留在内部，\textbf{这个结构究竟应该被放到哪里，并怎样保证未来可以重新找到它。}
+
+因此 Offloading 并不等于
+\[
+Delete.
+\]
+更准确的工程表达是
+\[
+\boxed{
+Offloading
+=
+CarrierMigration
++
+IndexRetention
++
+RecoveryContract.
+}
+\]
+如果一个 Agent 把某项内容写入文件，但之后完全不知道文件在哪里、为什么存在以及何时需要重新读取，
+那只是遗失，不是认知卸载。
+
+设一个 Agent-CSO 当前表示为
+\[
+c=
+(C,R,F,\tau,B,S),
+\]
+Offloading 可以改变其承载边界：
+\[
+B:
+Internal
+\rightarrow
+External_k,
+\]
+同时建立恢复索引
+\[
+I_C
+=
+(Location,
+SemanticKey,
+Trigger,
+Version,
+Authority,
+Confidence).
+\]
+
+外部承载体可以包括：
+\[
+External_k\in
+\{
+File,
+DB,
+Script,
+Program,
+Skill,
+Tool,
+Environment,
+OtherAgent
+\}.
+\]
+不同载体具有不同代价结构。例如 File 写入成本低、主动性低；
+Program 编写成本高但重复执行成本低；
+Other Agent 具有较强认知能力，却需要考虑信任和通信成本。
+因此选择载体本身可以表示为优化问题：
+\[
+B^\ast
+=
+\arg\min_B
+\left[
+C_{\mathrm{write}}(B)
++
+\mathbb E C_{\mathrm{retrieve}}(B)
++
+\lambda R(B)
++
+\mu C_{\mathrm{internal}}(B)
+\right].
+\]
+
+这种视角解释了为什么工具使用、写程序和记笔记在认知动力学上属于同一类行为：
+它们都使原本需要内部持续维持的结构，转化为外部世界中的稳定结构。
+也就是说：
+\[
+AgentCSO
+\rightarrow
+ExternalizedCSO.
+\]
+
+Offloading Manager 还应支持生命周期清理。并非所有外部结构都应永久保留。
+系统需要区分临时缓存、阶段性任务结构、长期知识、可执行 Skill 和主体级档案。
+因此每一个 externalized object 最好具有
+\[
+RetentionPolicy,
+DecayPolicy,
+VerificationPolicy,
+ReindexPolicy.
+\]
+
+从系统架构上看，Offloading 是 AgentOS 克服有限工作记忆的关键机制之一。
+它使智能能力增长不再等价于内部模型无限膨胀，而转向：
+\[
+\boxed{
+\text{有限内部认知}
++
+\text{可管理外部结构}
+}
+\]
+共同组成持续智能。
+
+
+\section{Goal/Task Runtime：目标、过程与任务运行时}
+
+AgentOS 如果只有记忆和认知控制，仍然只是一个能够持续思考的系统；
+要成为真正 Agent，还必须把未来约束组织成 Goal，并把 Goal 展开成可执行过程。
+因此 Goal/Task Runtime 是连接
+\textbf{未来结构、当前认知和现实行动}的中尺度运行层。
+
+定义 Goal：
+\[
+g=
+(
+DesiredState,
+Constraints,
+Priority,
+Horizon,
+Metric,
+Authority,
+Status
+).
+\]
+Goal 不应被缩成自然语言字符串，因为真正可治理的目标还需要可行域、成功标准、时间范围和权限来源。
+
+目标执行过程可以形成闭环：
+\[
+\boxed{
+Goal
+\rightarrow
+Plan
+\rightarrow
+Action
+\rightarrow
+Verify
+\rightarrow
+Closure
+}
+\]
+其中 Verify 尤其关键，因为
+\[
+ActionIssued\neq ActionSucceeded.
+\]
+如果缺少现实验证，Agent 会把``计划已经执行''错误地当成``现实已经改变''，
+最终使内部世界与外部世界逐渐分离。
+
+Task 则是 Goal 在当前时间尺度上的可调度执行单元：
+\[
+Task_j=
+(
+GoalRef,
+State,
+Dependencies,
+Resources,
+Checkpoint,
+NextAction
+).
+\]
+因此 Goal 是较慢的未来约束，而 Task 是较快的执行过程。
+一个 Goal 可以产生多个 Task，一个 Task 可以服务多个 Goal，但二者不能完全等同。
+
+Goal/Task Runtime 还必须处理冲突。例如
+\[
+g_1\cap g_2=\varnothing
+\]
+或资源要求互斥时，不能简单按最近输入覆盖旧 Goal。
+系统应把冲突显式提升给 Scheduler、SPC 和必要的更高治理层。
+这样目标冲突才成为一个可观察的系统状态，而不是隐藏在语言模型 prompt 中的模糊不一致。
+
+在长期 Agent 中，Goal 还与 $\Psi$ 和 $\Omega$ 存在不同尺度的约束：
+\[
+\Omega
+\rightarrow
+\Psi
+\rightarrow
+GoalPreference
+\rightarrow
+Goal
+\rightarrow
+Task.
+\]
+但这种约束并不意味着超慢变量实时指定每一个动作。
+更合理的是：
+\[
+\boxed{
+HigherLevelSetsFeasibleRegion,
+\quad
+LowerLevelChoosesInsideIt.
+}
+\]
+这保持了目标一致性，也避免高层慢结构成为低层动作的微观控制器。
+
+
+\section{Skill Runtime：稳定能力的可执行承载层}
+
+一个真正成长的 Agent 不能每次都重新推理自己已经熟练掌握的操作。
+因此 Skill Runtime 是 AgentOS 从``每次重新思考''走向
+\textbf{能力沉降和认知编译}的关键机制。
+
+我们可以把技能形成描述为：
+\[
+ExplicitCognition
+\rightarrow
+RepeatedTrajectory
+\rightarrow
+StablePolicy
+\rightarrow
+Skill.
+\]
+在更加严格的 Agent-CSO 表述中，则是同类认知结构的承载位置发生改变：
+\[
+AgentCSO@h
+\rightarrow
+AgentCSO@E
+\rightarrow
+AgentCSO@\Theta
+\rightarrow
+AgentCSO@Skill.
+\]
+
+Skill 不能只等同于一段 prompt。一个成熟可执行 Skill 至少应包含
+\[
+Skill=
+(
+Trigger,
+Precondition,
+Policy,
+ExpectedOutcome,
+ResidualModel,
+Confidence,
+Fallback
+).
+\]
+对于具身技能，还可以进一步写成
+\[
+\boxed{
+BodySkill
+=
+LocalPredictor
++
+LocalController
++
+ResidualModel.
+}
+\]
+这样 Skill 不只告诉系统``怎么做''，还知道正常执行时应该看到什么，以及什么时候需要重新求助高层。
+
+Skill Runtime 的关键原则是：
+\[
+\boxed{
+NormalDynamicsStayLocal.
+}
+\]
+熟练能力应尽量在局部闭环中运行，而只有
+\[
+Residual>\theta_{\mathrm{skill}}
+\]
+时重新升级到 h。这形成：
+\[
+\boxed{
+StableAbility\downarrow,
+\qquad
+UnexpectedResidual\uparrow.
+}
+\]
+
+这一结构极大改变了对``大模型能力''的理解。
+成熟 Agent 的高层认知调用频率理应随着技能沉降而下降，而不是能力越强越依赖长推理。
+因此可以提出一个工程成熟度指标：
+\[
+M_{\mathrm{skill}}
+=
+\frac{\mathrm{SuccessfulActions}}
+{\mathrm{ExplicitCognitiveInterventions}+1}.
+\]
+在相似任务域中，该指标长期上升意味着越来越多能力已经进入稳定局部结构。
+
+Skill Runtime 还必须管理版本、适用域、退化和重新学习。
+一个过去可靠的 Skill 可能因为环境变化失效，因此 Skill 并不是一旦编译就永恒有效。
+每次执行都应产生 residual statistics，并反馈：
+\[
+Skill
+\rightarrow
+Outcome
+\rightarrow
+Residual
+\rightarrow
+SkillUpdate/ReCognition.
+\]
+这使技能成为生命周期结构，而不是静态插件。
+
+
+\section{External Memory Manager：外部认知结构的统一索引}
+
+Offloading Manager 解决``结构迁出去''的问题，而 External Memory Manager 解决的是：
+\textbf{已经分布在外部世界的认知结构如何长期保持可发现、可验证和可治理。}
+因此它更接近一个认知命名空间和语义文件系统，而不是单一数据库。
+
+我们可以定义广义外部记忆集合
+\[
+\mathcal M_{ext}
+=
+\{
+File,
+Database,
+Program,
+Skill,
+Tool,
+Environment,
+Agent,
+Service
+\}.
+\]
+对每一个外部记忆对象建立
+\[
+m_k=
+(
+URI_k,
+SemanticIndex_k,
+Type_k,
+Provenance_k,
+Authority_k,
+Freshness_k,
+Confidence_k,
+Cost_k
+).
+\]
+
+这里的核心不是 Location，而是 Semantic Index。
+Agent 将来回忆某个结构时，往往不知道``文件路径''，而只知道
+``我以前解决过类似问题''或``有一个工具可以完成这件事''。
+因此 External Memory Manager 必须支持从 Agent-CSO 到外部资源的语义恢复：
+\[
+Query(C)
+\rightarrow
+\{m_{k_1},m_{k_2},\ldots\}.
+\]
+
+外部记忆还具有知识陈旧问题。现实会改变，文件会更新，外部 Agent 的能力也会变化。
+因此每一个外部结构都应该具有 epistemic status：
+\[
+Status(m)
+\in
+\{
+Observed,
+Derived,
+Verified,
+Stale,
+Uncertain,
+Deprecated
+\}.
+\]
+这样 Agent 才不会把多年前的外部结果当成当前现实。
+
+External Memory Manager 同样是 Boundary 和权限治理的重要执行点。
+不同记忆对象可以具有不同访问规则：
+\[
+Read(m),\quad
+Write(m),\quad
+Execute(m),\quad
+Delegate(m).
+\]
+尤其是程序、工具和其他 Agent，它们并不仅是``读取信息''，还可能改变现实，因此需要比普通文件更严格的 authority contract。
+
+这一层最终使 AgentOS 形成一种不同于传统数据库的 memory hierarchy：
+\[
+h
+\leftrightarrow
+E
+\leftrightarrow
+\Theta
+\leftrightarrow
+\mathcal M_{ext}.
+\]
+内部结构快速而昂贵，外部结构容量大但恢复成本更高。
+AgentOS 的真正能力来自在两者之间持续优化承载，而不是试图把一切塞入模型参数或 context window。
+
+
+\section{Checkpoint / Recovery：可恢复的持续智能}
+
+长期智能系统不可能假定自己永远不会出错。模型可能崩溃、记忆可能损坏、外部工具可能异常、
+认知控制可能进入振荡、慢变量也可能被错误更新。因此一个真正 Persistent Agent 必须不仅会持续运行，
+还必须具有
+\textbf{可恢复性（Recoverability）}。
+
+Checkpoint 不能简单等同于保存进程内存，因为 AgentOS 状态跨越多个时间尺度和外部载体。
+一个完整 checkpoint 可以定义为
+\[
+CP_k=
+(
+S_A,
+h_k,
+M_k,
+Goal_k,
+Task_k,
+SkillIndex_k,
+Boundary_k,
+Authority_k,
+ExternalRefs_k,
+Version_k
+).
+\]
+其中不一定复制所有外部数据，但必须保存一致性引用。
+
+为了防止生成一个内部自洽但现实上错误的恢复状态，checkpoint 必须具有
+\textbf{reality boundary}。
+也就是说，恢复后不能把 checkpoint 中保存的旧世界状态直接标记成当前 Observation。
+应该满足：
+\[
+Restore(CP_k)
+\rightarrow
+InternalState_k
+\]
+随后强制执行
+\[
+Reality
+\rightarrow
+FreshObservation
+\rightarrow
+StateReconciliation.
+\]
+
+这一原则非常重要，因为
+\[
+\boxed{
+LearnedState\neq RealityAuthority.
+}
+\]
+否则恢复操作本身会制造认知幻觉。
+
+慢变量恢复还应更加谨慎。$\Theta$、$\Psi$、$\Omega$ 的更新最好采取版本化事务：
+\[
+s^{(n)}
+\xrightarrow{\Delta}
+s^{(n+1)},
+\]
+同时记录
+\[
+Evidence,\quad
+Authority,\quad
+Reason,\quad
+RollbackPoint.
+\]
+如果新版本导致长期异常，可以回到一个已知稳定结构，而不是重新训练整个 Agent。
+
+Recovery 也不意味着始终回滚。有些失败恰恰包含重要经验。
+因此更高级的恢复策略是：
+\[
+\boxed{
+RestoreOperationalState
++
+PreserveFailureEvidence.
+}
+\]
+即恢复可运行状态，但保留导致失败的 episode 和 residual，
+使错误成为未来 $\Theta$ 更新的依据。
+
+最终，Checkpoint/Recovery 体现的是长期智能必须满足的一条工程原则：
+\[
+\boxed{
+\text{A persistent agent must be able to survive its own mistakes.}
+}
+\]
+如果一个 Agent 只能在从未发生严重错误的理想环境中持续存在，
+它就还不是生命周期意义上的可靠智能系统。
+
+
+\section{Governance Interface：权限、治理与外部控制面}
+
+AgentOS 最后一个必须进入 Kernel 的核心接口，是 Governance Interface。
+原因非常简单：一个能够长期学习、调用工具、改变环境并逐渐形成自身结构的系统，
+不能把所有控制权都交给自身当前认知状态。
+因此必须存在一个比普通 Task 更高的
+\textbf{外部治理面（Governance Plane）}。
+
+我们可以把系统状态区分为
+\[
+\mathcal S
+=
+\mathcal S_{\mathrm{free}}
+\cup
+\mathcal S_{\mathrm{bounded}}
+\cup
+\mathcal S_{\mathrm{locked}},
+\]
+分别表示 Agent 可以自主改变、只能在条件下改变以及完全不能自主改变的部分。
+
+相应地定义
+\[
+\mathcal S_{\mathrm{selfmodifiable}}
+\subset
+\mathcal S.
+\]
+如果
+\[
+\mathcal S_{\mathrm{selfmodifiable}}\approx\varnothing,
+\]
+Agent 很难形成深层自主学习；
+而若
+\[
+\mathcal S_{\mathrm{selfmodifiable}}\approx\mathcal S,
+\]
+则主体身份、安全和治理边界都可能失去稳定性。
+因此系统真正需要的是
+\[
+\boxed{
+BoundedSelfModificationEnvelope.
+}
+\]
+
+Governance Interface 至少应控制：
+主体级 Authority；
+外部工具权限；
+慢记忆修改权限；
+Goal 创建权限；
+$\Psi/\Omega$ 可塑区；
+Checkpoint 批准；
+Body capability；
+网络和文件访问；
+安全策略；
+生命周期阶段。
+
+可以将某次敏感修改表示为
+\[
+ChangeRequest
+=
+(
+Subject,
+Target,
+Delta,
+Evidence,
+Risk,
+Authority,
+Rollback
+),
+\]
+只有满足
+\[
+Policy(ChangeRequest)=Permit
+\]
+时才能提交。
+
+Governance 并不意味着外部系统逐步微操 Agent。
+恰恰相反，一个成熟治理面应遵循：
+\[
+\boxed{
+ConstraintRatherThanMicromanagement.
+}
+\]
+治理层定义哪些区域不可越界、哪些慢变量需要额外验证、哪些行为需要授权，
+而在可行域内部仍然保留 Agent 的快速自治。
+
+这与传统 access control 的最大区别在于：治理对象不仅包括文件和 API，也包括
+\textbf{认知结构本身}。
+例如是否允许 Agent 修改长期 Goal Preference，
+是否允许某次经历直接改变 $\Psi$，
+是否允许 Skill 获得更高身体权限，
+都属于 AgentOS Governance 的对象。
+
+因此 Governance Interface 实际上给 AgentOS 加上了一层
+``关于自主性的操作系统''：它不是决定 Agent 每一刻想什么，
+而是定义 Agent 可以在什么范围内学习、成长、行动以及重新塑造自己。
+
+
+\section{AgentOS Kernel 的认知微内核边界与 ModuleSpec}
+
+到目前为止，我们已经得到 Persistent Subject、$h$、Lifecycle Memory、Scheduler、
+SPC、AHC、TCE、CCM、Boundary、Offloading、Goal/Task、Skill、External Memory、
+Checkpoint 和 Governance 等组件。若把它们全部不加区分地写入一个大型进程，
+AgentOS 很快会退化成难以验证、难以替换、难以定位故障的 monolithic cognitive framework。
+因此最后必须明确
+\textbf{什么才属于 AgentOS Kernel 的真正可信核心。}
+
+建议将组件统一描述为
+\[
+\boxed{
+ModuleSpec
+=
+(
+Function,
+State,
+Input,
+Output,
+Timescale,
+Learning,
+Authority
+).
+}
+\]
+其中 Function 定义模块存在理由；
+State 定义其私有状态；
+Input/Output 定义 ABI；
+Timescale 定义主要运行速度；
+Learning 定义模块是否以及如何在线改变；
+Authority 定义它能修改哪些系统状态。
+
+例如 SPC 的 ModuleSpec 中，
+Authority 应接近 observe-only；
+TCE 可以修改认知控制参数，但不能修改真实 Observation；
+Scheduler 可以分配任务，但不能自行扩大治理权限；
+Skill 可以执行获批动作，但不能自动获得新 capability。
+这种权限分离是微内核化的基础。
+
+从可信计算基的角度，真正必须属于核心的功能可以压缩为
+\[
+K_{core}
+=
+\{
+Subject,
+h,
+Event,
+Scheduling,
+LifecycleRefs,
+Authority,
+Recovery
+\}.
+\]
+而
+\[
+K_{service}
+=
+\{
+SPC,
+AHC,
+TCE,
+CCM,
+MemoryServices,
+Skill,
+Offloading,
+GoalRuntime
+\}
+\]
+可以按照工程成熟度进一步实现成受内核治理的服务。
+这里的划分不是理论地位高低，而是系统可信边界问题。
+
+因此 AgentOS Kernel 更接近一种
+\textbf{Cognitive Microkernel}：
+核心只保持那些一旦失效就会破坏主体连续性、认知一致性或安全边界的机制；
+复杂能力通过稳定的认知 ABI 加载。
+
+可把内核执行抽象为事件驱动系统：
+\[
+e_t
+\xrightarrow{Boundary}
+\mathcal E_t
+\xrightarrow{Scheduler}
+Process_t
+\xrightarrow{h}
+Decision_t
+\xrightarrow{Effect}
+e_{t+1}.
+\]
+每一次状态改变都应产生可追踪事件，使长期 Agent 能够回答：
+谁在什么时候基于什么输入改变了什么结构。
+
+于是系统不再是一团不可观测的巨大 prompt，而逐渐成为一个
+\textbf{具有明确状态、时间尺度、权限和因果路径的认知操作系统}。
+
+
+\section{AgentOS Kernel 的统一状态方程与运行闭环}
+
+完成组件定义之后，我们最后需要把 AgentOS Kernel 重新压缩成一个统一动力系统，
+否则此前的模块仍然容易被误读成软件功能列表。
+
+定义 Kernel 宏观状态
+\[
+X_K(t)
+=
+\left[
+h,
+E,
+\Theta,
+\Psi,
+\Omega,
+a,
+G,
+Q,
+B,
+S_A
+\right]_t,
+\]
+其中 $a$ 表示 AHC 状态，$G$ 表示目标集合，$Q$ 表示当前任务调度状态，
+$B$ 表示边界状态，$S_A$ 表示主体级状态。
+
+整个 Kernel 的动力学可以写为
+\[
+\dot X_K
+=
+F_K
+\left(
+X_K,
+O_W,
+O_B,
+M_{ext},
+u_{TCE},
+u_{Gov}
+\right),
+\]
+其中 $O_W$ 表示外部世界经语义接口形成的输入，
+$O_B$ 表示身体和资源状态，
+$M_{ext}$ 表示外部认知载体，
+$u_{TCE}$ 是认知控制输入，
+$u_{Gov}$ 是治理约束。
+
+但这一连续形式只描述状态变化，AgentOS 还存在离散事件：
+\[
+X_K^+
+=
+R_j(X_K^-),
+\]
+例如 Task 创建、Goal 关闭、Checkpoint、Skill 注册、Authority 修改和安全中断。
+因此更加完整地看，AgentOS Kernel 是
+\[
+\boxed{
+HybridCognitiveSystem
+=
+ContinuousDynamics
++
+DiscreteGovernance.
+}
+\]
+
+其核心快速运行闭环可以概括为
+\[
+Input
+\rightarrow
+Boundary
+\rightarrow
+h
+\rightarrow
+SPC
+\rightarrow
+Scheduler
+\rightarrow
+TCE
+\rightarrow
+CCM
+\rightarrow
+h',
+\]
+而中慢尺度闭环则是
+\[
+h
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\rightarrow
+\Omega
+\rightarrow
+FutureGoal
+\rightarrow
+Futureh.
+\]
+
+这两组循环并不是两个独立系统。
+快循环不断围绕慢结构给出的可行域运行，而持续的快层残差又可以经过经验积累逐渐改变慢结构：
+\[
+\boxed{
+SlowStructure
+\rightarrow
+FastConstraint,
+}
+\]
+\[
+\boxed{
+PersistentFastResidual
+\rightarrow
+SlowUpdate.
+}
+\]
+
+因此 AgentOS Kernel 的真正统一对象不是任何一个模块，而是
+\[
+\boxed{
+\text{一个跨时间尺度保持主体连续的受治理闭环系统。}
+}
+\]
+
+到这里，我们终于能够重新解释``Kernel''这个名称的意义。
+AgentOS Kernel 并不是因为它运行在 CPU ring 0 才叫 Kernel，
+而是因为它维护了智能体不可轻易丢失的核心不变量：
+\[
+\boxed{
+Identity,\;
+CognitiveContinuity,\;
+MemoryContinuity,\;
+ResourceGovernance,\;
+Recoverability.
+}
+\]
+
+Linux Kernel 保障的是计算机进程能够安全访问机器资源；
+AgentOS Kernel 则进一步保障一个持续智能主体能够安全访问
+\textbf{自己的认知资源、历史结构、外部能力以及现实行动通道}。
+
+因此，本章最终可以把 AgentOS Kernel 定义为：
+
+\[
+\boxed{
+\begin{aligned}
+\mathrm{AgentOSKernel}
+=&\;
+\mathrm{PersistentSubjectManager}
+\\
+&\bowtie\;
+h\mathrm{\ CognitiveBus}
+\\
+&\bowtie\;
+\mathrm{LifecycleMemory}
+\\
+&\bowtie\;
+\mathrm{CognitiveControl}
+\\
+&\bowtie\;
+\mathrm{CognitiveScheduling}
+\\
+&\bowtie\;
+\mathrm{Boundary/Offloading}
+\\
+&\bowtie\;
+\mathrm{Goal/SkillRuntime}
+\\
+&\bowtie\;
+\mathrm{Recovery/Governance}.
+\end{aligned}
+}
+\]
+
+这里的 $\bowtie$ 刻意不用普通加号，因为这些结构并不是互相独立的功能插件。
+它们通过共享主体、共享工作记忆、共享时间尺度和共享权限体系形成耦合闭环。
+
+最终，我们可以得到本章最重要的工程结论：
+
+\[
+\boxed{
+\textbf{
+AgentOS Kernel 的任务，不是替 Agent 完成所有智能活动，
+而是维持一个有限认知主体能够长期稳定地组织自己的智能活动。
+}
+}
+\]
+
+也正因此，一个成熟 AgentOS Kernel 的价值不能只用单次任务准确率评价。
+更加根本的指标应包括：主体连续性、工作记忆稳定性、恢复成功率、慢结构漂移率、
+技能沉降率、异常重新提升成功率、治理违规率以及长期任务中的认知资源效率。
+当这些指标能够同时被测量和控制时，AgentOS 才真正从一个
+``Agent Framework''转变为一个
+\textbf{Persistent Intelligence Runtime}。

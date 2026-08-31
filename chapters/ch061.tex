@@ -1,194 +1,897 @@
-\chapter{异常向上与能力向下}
-\chaptervoice{这一章，我们围绕“异常向上与能力向下”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明认知内核通过身体进入现实。}
-
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 Body Runtime、FBI、SGC/FCS、三信号通道、BPCC 与 Reality Authority 的具身讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是具身认知、分层控制、MPC、状态估计与安全包络（模型预测控制、Kalman 状态估计与具身认知）。
-
-本章使用上一章“双预测系统：Kernel 与 BPCC”已经得到的对象与边界；本章产出将供下一章“技能编译与认知沉降”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在具身认知、分层控制、MPC、状态估计与安全包络上。
-\section{Predict Locally}
-\begin{narration}
-现在把镜头移到“Predict Locally”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Predict Locally”落实为认知结构改变表示、责任位置、时间尺度或系统边界的过程。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“异常向上与能力向下”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}m_C=(\Delta R,\Delta F,\Delta\log\tau,\Delta B).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Predict Locally的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：没有可恢复路径的下沉会把新情境下的失败隐藏在局部层。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Predict Locally”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Escalate Residual Globally}
-\begin{narration}
-现在把镜头移到“Escalate Residual Globally”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Escalate Residual Globally”落实为认知结构改变表示、责任位置、时间尺度或系统边界的过程。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“异常向上与能力向下”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}m_C=(\Delta R,\Delta F,\Delta\log\tau,\Delta B).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Escalate Residual Globally的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：没有可恢复路径的下沉会把新情境下的失败隐藏在局部层。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Escalate Residual Globally”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Normal Dynamics Stay Local}
-\begin{narration}
-现在把镜头移到“Normal Dynamics Stay Local”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Normal Dynamics Stay Local”落实为认知结构改变表示、责任位置、时间尺度或系统边界的过程。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“异常向上与能力向下”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}m_C=(\Delta R,\Delta F,\Delta\log\tau,\Delta B).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Normal Dynamics Stay Local的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：没有可恢复路径的下沉会把新情境下的失败隐藏在局部层。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Normal Dynamics Stay Local”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Local Closure}
-\begin{narration}
-现在把镜头移到“Local Closure”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Local Closure”落实为认知结构改变表示、责任位置、时间尺度或系统边界的过程。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“异常向上与能力向下”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}m_C=(\Delta R,\Delta F,\Delta\log\tau,\Delta B).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Local Closure的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：没有可恢复路径的下沉会把新情境下的失败隐藏在局部层。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Local Closure”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Stable Ability Moves Downward}
-\begin{narration}
-现在把镜头移到“Stable Ability Moves Downward”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Stable Ability Moves Downward”落实为认知结构改变表示、责任位置、时间尺度或系统边界的过程。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“异常向上与能力向下”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}m_C=(\Delta R,\Delta F,\Delta\log\tau,\Delta B).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Stable Ability Moves Downward的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：没有可恢复路径的下沉会把新情境下的失败隐藏在局部层。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Stable Ability Moves Downward”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Unexpected Residual Moves Upward}
-\begin{narration}
-现在把镜头移到“Unexpected Residual Moves Upward”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Unexpected Residual Moves Upward”落实为认知结构改变表示、责任位置、时间尺度或系统边界的过程。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“异常向上与能力向下”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}m_C=(\Delta R,\Delta F,\Delta\log\tau,\Delta B).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Unexpected Residual Moves Upward的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：没有可恢复路径的下沉会把新情境下的失败隐藏在局部层。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Unexpected Residual Moves Upward”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Adjacent Scale Coupling}
-\begin{narration}
-现在把镜头移到“Adjacent Scale Coupling”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Adjacent Scale Coupling”落实为承载范围、有效信息率与反馈周期之间的约束关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“异常向上与能力向下”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}T_{\min}\geq L/v+I/B+T_{\rm act}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Adjacent Scale Coupling的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：忽略传播和排队成本会制造虚假的实时性。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Adjacent Scale Coupling”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Higher Level Sets Feasible Region}
-\begin{narration}
-现在把镜头移到“Higher Level Sets Feasible Region”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Higher Level Sets Feasible Region”落实为认知结构改变表示、责任位置、时间尺度或系统边界的过程。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“异常向上与能力向下”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}m_C=(\Delta R,\Delta F,\Delta\log\tau,\Delta B).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Higher Level Sets Feasible Region的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：没有可恢复路径的下沉会把新情境下的失败隐藏在局部层。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Higher Level Sets Feasible Region”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“异常向上与能力向下”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“技能编译与认知沉降”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\chapter{异常向上与能力向下：多尺度智能中的残差升级与结构沉降}
+\label{chap:residual-escalation-and-capability-downward}
+
+\begin{center}
+\fbox{
+\parbox{0.92\textwidth}{
+\textbf{本章总体说明：}
+在上一章建立 Kernel--BPCC 双预测结构之后，我们已经获得了一个基本事实：一个持续运行的智能体不应由单一认知层以同一时间尺度处理全部现实变化。高层认知擅长目标理解、长程预测、语义推理与跨域重构，低层身体运行时擅长高频状态估计、局部预测与快速控制。由此产生一个更基本的问题：\textbf{哪些信息应该停留在局部，哪些信息必须向上进入更高尺度认知？反过来，哪些原本需要显式认知的能力，在成熟以后又应从高层向低层沉降？}
+
+本章给出的回答可以浓缩为两条互补原则：
+\[
+\boxed{\text{Predict Locally,\ Escalate Residual Globally}}
+\]
+以及
+\[
+\boxed{\text{Stable Ability Moves Downward,\ Unexpected Residual Moves Upward}}
+\]
+
+这两条原则共同构成 AgentOS 多尺度认知体系中的垂直结构流。向上的不是全部底层状态，而是经过局部闭环后仍不能消解、并且具有足够风险、新颖性、持续性或目标相关性的残差；向下的也不是简单的命令，而是经过长期学习后已经能够稳定闭合的预测、约束、策略和控制结构。于是，高层并不持续微操低层，低层也不把全部原始现实上传给高层，而是在相邻尺度之间形成一种``正常局部闭合、异常逐级提升、成熟能力逐级沉降''的动力学组织。
+
+本章的目标，是把这一原则从工程直觉形式化为一个可用于 AgentOS、Body Runtime、具身控制以及一般多尺度智能系统的动力学原理。这里讨论的``向上''和``向下''首先指功能与时间尺度上的迁移，而非固定软件调用栈或物理空间方向。
+}
+}
+\end{center}
+
+\section{局部预测原则：Predict Locally}
+
+一个多尺度智能体面对现实环境时，首先需要避免一种看似强大、实际上不可持续的设计：把所有状态变化都提升到最高认知层进行解释和决策。假设一个机器人身体具有关节位置、速度、接触、姿态、温度、电流、局部视觉变化和控制误差等大量状态变量，如果这些变量每一个采样周期都进入工作记忆 $h(t)$，那么高层认知将迅速被毫秒级扰动淹没。对于数字身体同样如此：鼠标微小位移、网络包重传、窗口重绘、文件系统缓存变化以及页面局部布局漂移，都没有必要逐项进入显式认知。成熟智能必须允许大量现实动力学在低层自行完成预测和闭合。
+
+因此，本书提出局部预测原则。设智能系统具有按时间尺度排列的层级
+\[
+L_0,L_1,\ldots,L_n,
+\]
+其中 $L_0$ 更靠近现实快速动力学，$L_n$ 更靠近长期认知和抽象目标，并满足
+\[
+\tau_0 \ll \tau_1 \ll \cdots \ll \tau_n .
+\]
+每一层 $L_i$ 都不应仅仅作为上一级的传感器，而应拥有自己的局部状态 $x_i$、局部预测模型 $\hat{F}_i$、局部控制变量 $u_i$ 和局部残差 $\varepsilon_i$。其基本形式可以写成
+\begin{equation}
+\hat{x}_i(t+\Delta_i)
+=
+\hat{F}_i
+\left(
+x_i(t),
+u_i(t),
+c_{i+1}(t)
+\right),
+\end{equation}
+其中 $c_{i+1}$ 是来自相邻高层的慢尺度约束，而不是逐时刻的精细动作命令。现实返回
+\begin{equation}
+x_i^{\mathrm{obs}}(t+\Delta_i),
+\end{equation}
+由此形成局部预测残差
+\begin{equation}
+\varepsilon_i(t+\Delta_i)
+=
+d_i
+\left(
+x_i^{\mathrm{obs}}(t+\Delta_i),
+\hat{x}_i(t+\Delta_i)
+\right).
+\end{equation}
+
+这里的 $d_i(\cdot,\cdot)$ 不必是简单欧氏距离。对于不同层级，它可以是控制轨迹偏差、SGC 实体关系误差、FCS 压力场变化、目标违反程度、约束侵入量或者语义预测失配。真正重要的并不是采用何种单一误差度量，而是每个尺度都能判断：\textbf{当前变化是否仍处于本层可以解释和控制的正常区域之内。}
+
+因此，局部预测意味着每一层都拥有一个自己的局部可解释域
+\begin{equation}
+\mathcal{D}_i^{\mathrm{local}}
+=
+\left\{
+x_i:
+R_i(x_i,\hat{x}_i,u_i)
+\leq
+\theta_i
+\right\},
+\end{equation}
+只要系统状态仍然位于该区域中，低层就没有理由持续请求高层认知介入。以 BPCC 为例，高层 Kernel 可以给出一个较慢的身体预测包络，而 BPCC 在该包络内对几十甚至几百个快速控制周期进行状态预测和动作修正。Kernel 不需要知道每一次关节控制误差，只需要知道低层是否仍然能够在规定范围中保持稳定。
+
+这一原则背后的关键并不是``低层更简单''，而是\textbf{不同尺度具有不同的充分状态表示}。一个毫秒级控制环所需要的状态可能非常高维，却不需要丰富语义；一个秒级认知环的数据维数可能较少，却包含目标、因果、计划与风险。因此不能把层级简单等同于计算复杂程度，而应把它理解成不同时间尺度和不同功能语义上的闭环分工。
+
+从认知结构的角度来看，这意味着许多 Agent-CSO 根本不需要持续进入显式工作记忆。只要某种结构已经能够由局部功能稳定承载，就可以保持为
+\[
+AgentCSO@L_i,
+\]
+而不必不断迁移至
+\[
+AgentCSO@L_{i+1}.
+\]
+因此成熟智能与幼稚智能之间一个极重要的区别，不是前者``思考更多''，而是前者拥有更多能够独立闭合的局部结构。我们由此得到本章第一条基本原则：
+\begin{equation}
+\boxed{
+\text{Each Scale Should Predict and Close What It Can Locally.}
+}
+\end{equation}
+
+这也是多尺度智能能够扩展的前提。如果每增加一个身体自由度、工具或环境变量都要求中央认知层同步处理，那么系统规模增加最终必然导致中央认知过载。只有把预测和闭合能力分布到适当尺度，有限的工作记忆和高层推理能力才能保留给那些真正需要跨域、跨时间尺度和跨功能协调的问题。
+
+\section{残差全局升级原则：Escalate Residual Globally}
+
+局部预测解决了``什么不应该进入高层''的问题，但一个智能体如果只是不断把问题留在局部，就会产生另一种危险：低层可能在已经失去控制能力的情况下仍继续运行。因此，多尺度智能必须同时具备一种与局部自治相互补充的机制，即当局部模型已经不能充分解释现实、局部控制已经无法可靠闭合或者局部结构出现异常时，将这些异常以压缩后的形式逐级提升到更高层。
+
+需要强调的是，向上提升的对象不是全部原始状态，而是\textbf{残差以及残差的结构解释}。设第 $i$ 层局部残差为 $\varepsilon_i(t)$，我们并不简单规定
+\[
+\varepsilon_i>\theta_i
+\Rightarrow
+Escalate,
+\]
+因为瞬时噪声、传感器抖动和短暂扰动可能产生很大误差。如果任何瞬时偏差都触发上层，系统就会出现认知中断风暴。因此更合理的是构造一个残差升级函数
+\begin{equation}
+\Gamma_i(t)
+=
+G_i
+\left(
+R_i(t),
+\dot{R}_i(t),
+P_i(t),
+N_i(t),
+K_i(t),
+G_i^{\mathrm{rel}}(t),
+U_i(t)
+\right),
+\end{equation}
+其中 $R_i$ 表示残差幅度，$\dot{R}_i$ 表示恶化趋势，$P_i$ 表示持续时间，$N_i$ 表示新颖性，$K_i$ 表示风险，$G_i^{\mathrm{rel}}$ 表示与当前 Goal 的关联度，$U_i$ 表示本层模型的不确定性。
+
+于是升级条件可以写为
+\begin{equation}
+\Gamma_i(t)\geq \theta_i^{\uparrow}.
+\end{equation}
+只有当异常综合强度超过本层的升级阈值时，才形成向上一层发送的事件：
+\begin{equation}
+e_i^{\uparrow}
+=
+\mathcal{C}_i
+\left(
+\varepsilon_i,
+x_i,
+\hat{x}_i,
+u_i,
+\Gamma_i
+\right),
+\end{equation}
+其中 $\mathcal{C}_i$ 是残差压缩器。它的作用非常重要：上层需要接收到的不是原始高速数据流，而是``发生了什么、为什么本层无法继续可靠闭合、风险多大、需要何种帮助''的结构化摘要。
+
+例如，一个具身 Agent 在正常行走时，BPCC 可以局部消解微小地面起伏；如果突然遇到此前没有见过的柔软地面，最初可能只表现为局部控制误差。如果 BPCC 仍能够通过快速在线适应恢复稳定，那么没有必要提升到 Kernel。只有当控制残差持续扩大、身体稳定裕度下降或者局部模型置信度急剧降低时，才形成类似：
+\[
+\text{``当前地面动力学与已知模型显著不符，继续沿原计划行动具有跌倒风险''}
+\]
+这样的高层事件。这才是真正有认知价值的上行信息。
+
+对于数字 Agent 亦然。浏览器页面的按钮移动几个像素不值得进入高层认知；如果页面原有操作路径消失、权限状态改变或者当前工具返回了与目标约束矛盾的结果，那么局部执行器应生成结构残差，将问题提升为需要重新规划的 Agent-CSO。
+
+所以这里的``Globally''并不是说任何残差直接跳到最高层，而是意味着残差具有\textbf{跨尺度传播的可能性}。如果 $L_i$ 不能解决，先提升到 $L_{i+1}$：
+\begin{equation}
+L_i
+\xrightarrow{\varepsilon_i}
+L_{i+1}.
+\end{equation}
+如果 $L_{i+1}$ 通过更大的上下文、更丰富的模型或更宽的动作空间能够重新解释并闭合问题，升级就在这里停止；只有问题继续无法闭合时才进一步向上：
+\begin{equation}
+L_i
+\to
+L_{i+1}
+\to
+\cdots
+\to
+L_k.
+\end{equation}
+
+这实际上建立了一种多尺度异常传播机制。它避免两个极端：一方面避免``所有事情都交给中央智能''，另一方面也避免``底层自治到无法被高层纠正''。因此本节的核心不是传统意义上的异常抛出，而是一条智能动力学原则：
+\begin{equation}
+\boxed{
+\text{Reality Does Not Continuously Become Thought;}
+\quad
+\text{Relevant Unresolved Residual Becomes Thought.}
+}
+\end{equation}
+
+在这个意义上，注意力也可以获得一个更加一般的定义：注意力并不只是 Transformer 中某个矩阵运算，而可以理解成某些局部结构被允许跨尺度提升、进入更大认知闭环的策略。残差升级因此成为具身感知、注意、异常处理和认知形成之间的重要统一机制。
+
+\section{正常动力学应停留在局部：Normal Dynamics Stay Local}
+
+``Normal Dynamics Stay Local'' 是上一节残差升级原则的另一面。只有明确什么叫``正常''，局部闭环才不会沦为粗暴屏蔽。这里所说的正常，不等于状态静止，也不等于一切误差为零，而是指：\textbf{当前层已经拥有足够的模型、控制权和资源，可以在不请求更高层重新组织问题的情况下，把状态维持在上层允许的可行域中。}
+
+设高层 $L_{i+1}$ 对低层 $L_i$ 给出的约束区域为
+\begin{equation}
+\mathcal{E}_{i+1\to i}
+=
+\left\{
+x_i:
+g_{i,k}(x_i)\leq 0,\quad
+k=1,\ldots,m
+\right\},
+\end{equation}
+低层的局部控制律为
+\begin{equation}
+u_i
+=
+\pi_i
+\left(
+x_i,
+\hat{x}_i,
+\mathcal{E}_{i+1\to i}
+\right).
+\end{equation}
+如果在给定时间窗口 $[t,t+T_i]$ 内满足
+\begin{equation}
+x_i(\tau)\in \mathcal{E}_{i+1\to i},
+\qquad
+\forall \tau\in[t,t+T_i],
+\end{equation}
+并且局部残差、风险与控制裕度均保持可接受，则这一动力学就可以被定义成对高层而言的正常动力学。
+
+这一定义具有一个重要结果：正常并不是一个固定状态集合，而是一个由目标和上下文决定的\textbf{动态可行区域}。例如，同样的身体倾斜角度，在缓慢站立时可能是异常，在快速跑步时却可能完全正常；同样的 CPU 使用率，在低负载待机状态可能表示异常，而在执行大规模视觉推理时却是合理状态。因此判断 Normal/Abnormal 不能只根据单个传感值，而要结合当前任务、预测模型、控制计划和环境上下文。
+
+更进一步，正常动力学之所以应该局部化，是因为把已经能够稳定处理的结构反复送入高层认知，会产生严重的认知机会成本。设高层工作记忆容量为 $W_h$，当前共有 $n$ 类结构竞争显式认知资源，其负载可近似表示为
+\begin{equation}
+C_h(t)
+=
+\sum_{j=1}^{n}
+w_j(t)c_j(t).
+\end{equation}
+如果大量局部正常状态持续占据 $w_j$，则真正具有新颖性、风险和跨域关联性的结构可能无法进入有限的显式表面。因此
+\[
+NormalDynamicsStayLocal
+\]
+实际上与前文的工作记忆有限容量定理紧密一致：\textbf{有限全局认知容量要求已经可以局部闭合的结构退出全局显式竞争。}
+
+在人类经验中，这一原则非常容易观察。我们熟练走路时不会持续显式计算每块肌肉的张力，熟练打字时也不会逐个选择每根手指。意识能够同时讨论另一件事情，恰恰是因为大量正常运动动力学被保留在局部功能闭环中。这里我们并不是把人类神经机制直接等同于 AgentOS，而是说明这种功能组织具有很强的一般工程合理性。
+
+对于 AgentOS，我们因此可以定义局部安静条件
+\begin{equation}
+Q_i(t)=1
+\quad\Longleftrightarrow\quad
+\Gamma_i(t)<\theta_i^{\uparrow}
+\ \land\
+M_i(t)>M_i^{\min}
+\ \land\
+Conf_i(t)>Conf_i^{\min},
+\end{equation}
+其中 $M_i$ 表示控制裕度，$Conf_i$ 表示局部模型可信度。当 $Q_i=1$ 时，层级 $L_i$ 不需要产生认知中断，只需要维持压缩后的周期状态报告。这种设计意味着系统的信息流并不是高频地``向上广播一切''，而是呈现稀疏事件驱动形式：
+\begin{equation}
+\boxed{
+\text{Dense Local Dynamics}
+\rightarrow
+\text{Sparse Global Events}.
+}
+\end{equation}
+
+这一结构对于真正长期运行的 Agent 至关重要。一个生活在现实世界中的智能体每天会经历海量变化，如果它把每一个微小变化都解释成值得思考的事件，那么工作记忆永远处于湍流状态，也就不可能形成稳定的长期目标、反思和自我。因此，真正成熟的认知系统并不是更加敏感地显式处理一切，而是拥有越来越准确的能力判断：\textbf{什么仍然属于正常世界，什么才真正值得成为思想。}
+
+\section{局部闭合原则：Local Closure}
+
+正常动力学停留在局部，还不足以说明一个层级是否真正具有自治能力。一个模块可能不上传数据，但它实际上仍需要高层持续给出细粒度命令。这种结构只是通信减少，而不是局部智能。所谓 Local Closure，要求某一尺度真正形成一个可重复的完整闭环：
+\begin{equation}
+\boxed{
+Perception
+\rightarrow
+Prediction
+\rightarrow
+Action
+\rightarrow
+Observation
+\rightarrow
+Residual
+\rightarrow
+LocalUpdate.
+}
+\end{equation}
+只有当这个闭环能够在自己的时间尺度上完成，低层才具有真正的功能自治。
+
+设第 $i$ 层的局部动力学为
+\begin{equation}
+\dot{x}_i
+=
+F_i
+\left(
+x_i,
+u_i,
+w_i;
+c_{i+1}
+\right),
+\end{equation}
+其中 $w_i$ 表示外部扰动，$c_{i+1}$ 表示高层慢约束。局部控制器需要在一个约束集合 $\mathcal C_i$ 中寻找
+\begin{equation}
+u_i^\ast
+=
+\arg\min_{u_i}
+\int_{t}^{t+T_i}
+\left[
+\ell_i(x_i,u_i)
++
+\lambda_i R_i
+\right]
+d\tau ,
+\end{equation}
+并满足
+\begin{equation}
+x_i(\tau)\in\mathcal C_i.
+\end{equation}
+如果低层能够在 $T_i$ 的时间尺度内利用自己的观测和模型完成这个优化，而不需要上一级介入每一个控制步，那么可以认为该层实现了局部闭合。
+
+这里的重要思想是：
+\[
+\boxed{
+\text{Higher intelligence should govern local intelligence,
+not replace it.}
+}
+\]
+高层智能的职责不是成为低层动作的远程操纵杆，而是规定低层应该在哪个可行域工作、什么时候必须停止、何种风险不可接受、当前目标优先级是什么。低层则在这一约束之内拥有自己的动作自由度。
+
+如果令高层控制周期为 $\Delta_{i+1}$，低层控制周期为 $\Delta_i$，合理的层级体系通常满足
+\begin{equation}
+\Delta_i
+\ll
+\Delta_{i+1}.
+\end{equation}
+这意味着在一次高层更新期间，低层可能已经进行了
+\begin{equation}
+N_i
+=
+\frac{\Delta_{i+1}}{\Delta_i}
+\gg 1
+\end{equation}
+次局部闭环。如果高层必须参与这 $N_i$ 次中的每一步，那么所谓多尺度结构实际上并没有成立。
+
+局部闭合还有一个经常被忽略的价值：它形成了真正的能力边界。一个低层系统如果只有执行器而没有局部预测和残差估计，那么高层无法知道这个技能是否正在接近失效区域；反过来，如果低层具备预测、执行、观测和残差闭合，它就可以同时产生一个重要的元信息：
+\[
+\text{``我还能不能继续自己处理这个问题？''}
+\]
+这正是局部闭环能够支持残差升级的原因。
+
+从 Agent-CSO 的角度，Local Closure 可以被理解成某一类认知结构在局部功能区形成了稳定的因果闭环。设结构 $C$ 最初需要多个上层功能联合处理：
+\begin{equation}
+C@
+(F_a\leftrightarrow F_b\leftrightarrow F_c).
+\end{equation}
+随着学习，其关键预测、动作和误差反馈逐渐在 $F_i$ 中被封装，于是形成
+\begin{equation}
+C@F_i^{closed}.
+\end{equation}
+此时该 Agent-CSO 已经从``需要跨功能显式协调的结构''变成``能够被一个局部功能闭合的结构''。
+
+因此 Local Closure 不是单纯的代码封装，而是学习成熟度的重要判据。我们可以定义局部闭合指数
+\begin{equation}
+\Lambda_i
+=
+1-
+\frac{
+N_i^{\mathrm{external\ intervention}}
+}{
+N_i^{\mathrm{total\ episodes}}
+},
+\end{equation}
+并结合任务成功率 $P_i^{succ}$、残差 $R_i$ 和恢复能力 $Rec_i$：
+\begin{equation}
+L_i^{closure}
+=
+F
+\left(
+\Lambda_i,
+P_i^{succ},
+-R_i,
+Rec_i
+\right).
+\end{equation}
+当这一指标持续升高，说明能力已经具备进一步向低层沉降的条件。这也为下一节的``Stable Ability Moves Downward''提供了直接动力学基础，而不需要假设某个外部工程师人为决定何时把技能下放。
+
+\section{稳定能力向下迁移：Stable Ability Moves Downward}
+
+多尺度智能体系中存在一个重要但常被忽略的方向：知识和能力并不总是向``更高层''发展。恰恰相反，一个智能体真正成熟的标志之一，是越来越多已经掌握的能力从昂贵、缓慢、显式的高层认知迁移到快速、局部、低成本的闭环之中。因此我们提出：
+\begin{equation}
+\boxed{
+\text{Stable Ability Moves Downward.}
+}
+\end{equation}
+这里的``向下''不是能力退化，而是\textbf{认知结构承载位置的成熟迁移}。
+
+设某项能力 $C$ 在学习早期需要工作记忆中的显式处理：
+\begin{equation}
+C@h.
+\end{equation}
+其执行过程可能需要规划、环境解释、步骤保持、错误检查和多次决策，因此每次执行都会消耗显著的认知容量：
+\begin{equation}
+Cost_h(C)
+=
+C_{\mathrm{reason}}
++
+C_{\mathrm{attention}}
++
+C_{\mathrm{coordination}}.
+\end{equation}
+随着经验增加，相关 Episode 写入 $E$，反复成功模式逐渐被 $\Theta$ 提炼，预测路径与控制规律趋于稳定。此时如果该能力仍然每次重新进入 $h$ 进行完整推理，就意味着系统无法把历史计算转化为结构。
+
+因此成熟过程应出现：
+\begin{equation}
+C@h
+\rightarrow
+C@E
+\rightarrow
+C@\Theta
+\rightarrow
+C@F_{\mathrm{local}},
+\end{equation}
+或者更一般地写成 Agent-CSO 的功能迁移：
+\begin{equation}
+AgentCSO(C,F_h,\tau_h)
+\rightarrow
+AgentCSO(C,F_l,\tau_l),
+\end{equation}
+其中
+\[
+\tau_l<\tau_h,
+\]
+表示能力进入更快速、更局部的功能承载层。
+
+但``稳定''必须具有可检验条件，而不能仅凭重复次数判断。设一项能力在观察窗口 $T$ 内的表现为
+\begin{equation}
+\mathcal S_C(T)
+=
+\left(
+P_{\mathrm{success}},
+Var(R),
+N_{\mathrm{high-level}},
+Robustness,
+Recoverability
+\right).
+\end{equation}
+只有当成功率高、残差方差低、高层干预次数持续下降、面对有限扰动仍然稳健、并且失败后仍可恢复时，才能认为该结构具备向下迁移的资格。
+
+因此可以定义沉降判据
+\begin{equation}
+\Sigma_C
+=
+\alpha P_{\mathrm{success}}
+-\beta \overline{R}
+-\gamma Var(R)
+-\delta I_{\mathrm{high}}
++\eta Rec,
+\end{equation}
+当
+\begin{equation}
+\Sigma_C>\theta_{\downarrow}
+\end{equation}
+并持续足够时间以后，系统才开始把该能力从显式认知路径中剥离。
+
+这一理论解释了一个看似矛盾的现象：
+\[
+\boxed{
+ThinkingLess\neq KnowingLess.
+}
+\]
+专家在熟悉领域常常比新手进行更少的显式思考，但行为质量反而更高。原因并不是专家内部结构减少，而是大量结构已经转移到更稳定、更快速、更低成本的承载层。换句话说：
+\begin{equation}
+\boxed{
+\text{Maturity}
+\approx
+\text{Less Necessary Explicit Cognition}
++
+\text{More Stable Distributed Structure}.
+}
+\end{equation}
+
+这也是 AgentOS 与仅靠 Context 累积的 Agent 架构之间的重要区别。如果一个 Agent 使用某项工具数千次以后，每一次仍然需要大模型重新阅读完整说明书、重新推理每一步操作，那么它虽然``记住了很多历史''，却没有真正发生结构成熟。真正的持续学习必须让过去反复发生的显式认知逐渐转化为未来低成本的可执行结构。
+
+从系统角度看，这一沉降过程还能释放宝贵的工作记忆容量。设显式处理一项能力的平均负载为 $c_C$，在单位时间内调用频率为 $\nu_C$，则长期显式成本约为
+\begin{equation}
+J_C^{explicit}
+\approx
+\nu_C c_C.
+\end{equation}
+如果该能力下沉为局部闭环，其高层只处理少量异常事件，事件率为 $\nu_C^{err}$，则
+\begin{equation}
+J_C^{mature}
+\approx
+\nu_C^{err}c_C^{err},
+\qquad
+\nu_C^{err}\ll\nu_C.
+\end{equation}
+因此技能成熟不是简单优化，而是改变了系统认知资源的长期分配方式。
+
+不过，能力向下迁移并不等于不可逆固化。一个成熟能力必须保留异常重新上浮通道。这一点将在下一节立即体现：稳定结构向下，而当现实超出它的适用域时，相关残差又必须重新向上。由此，能力沉降与异常升级不是两个独立机制，而是同一认知结构在不同环境状态下的双向动力学。
+
+\section{意外残差向上迁移：Unexpected Residual Moves Upward}
+
+如果稳定能力只能向下沉降而不能重新上浮，那么 AgentOS 最终会变成一个由大量固化技能组成、却越来越难以适应新环境的系统。因此与
+\[
+StableAbility\downarrow
+\]
+相对应的必须是
+\[
+\boxed{
+UnexpectedResidual\uparrow.
+}
+\]
+这并不是普通软件意义上的``报错''，而是一个更加一般的认知结构恢复机制：当现实偏离某个已经沉降结构的适用范围时，系统必须重新把与该残差相关的 Agent-CSO 提升到更大、更慢、更具表达能力的功能空间中。
+
+设能力 $C$ 已经在低层形成局部闭环
+\begin{equation}
+C@F_i^{closed}.
+\end{equation}
+这个闭环必然具有一个有效域
+\begin{equation}
+\mathcal D_C
+=
+\left\{
+x:
+P_C^{succ}(x)\geq p_{\min}
+\right\}.
+\end{equation}
+只要现实状态 $x_t\in\mathcal D_C$，能力可以继续自动运行。但当
+\begin{equation}
+x_t\notin\mathcal D_C,
+\end{equation}
+或者系统本身无法确定
+\[
+x_t\in\mathcal D_C
+\]
+是否成立时，继续依赖原技能就会产生危险。
+
+因此低层必须同时维护一种结构性``适用性估计''：
+\begin{equation}
+q_C(t)
+=
+P
+\left(
+x_t\in\mathcal D_C
+\mid
+z_{\leq t}
+\right).
+\end{equation}
+当
+\[
+q_C(t)<q_{\min},
+\]
+即使当前误差尚未严重爆发，也可能需要提前升级。这一点十分重要，因为成熟控制系统不能等到彻底失败后才承认局部模型失效。
+
+向上迁移的对象也不应只是一个 ``error=true'' 标志，而应携带导致失效的结构上下文：
+\begin{equation}
+E_C^\uparrow
+=
+\left[
+C,
+Context,
+Predicted,
+Observed,
+Residual,
+Confidence,
+Risk,
+LocalAttempts
+\right].
+\end{equation}
+更高层接收到这一事件以后，可以重新激活相关的 $\Theta$、$E$ 与当前 $h$ 中的关系结构，从而使原来程序化的能力重新成为显式问题：
+\begin{equation}
+ProceduralAgentCSO
+\rightarrow
+ExplicitAgentCSO.
+\end{equation}
+
+这实际上给出了一个十分重要的双向学习结构：
+\begin{equation}
+\boxed{
+Explicit
+\rightleftarrows
+Automatic.
+}
+\end{equation}
+向右代表熟练化和沉降，向左代表在异常情况下重新认知。成熟能力不是永远不再被思考，而是在绝大多数正常情况下无需被思考，同时保留现实迫使其重新成为认知对象的路径。
+
+例如，一个机器人已经熟练掌握使用电钻。正常情况下，握持力、姿态修正、转速适配和局部振动补偿都可以由身体层闭合。但如果钻头突然进入未知高硬度材料，BPCC 发现实际反作用力与局部预测长期不一致，同时 FCS 中的负载压力快速升高，那么真正应该提升到 Kernel 的不是每一个电流样本，而是：
+\[
+\text{``当前材料动力学超出既有钻孔技能适用域；继续执行可能损坏工具，需要重新判断材料和策略。''}
+\]
+于是一个此前已程序化的动作重新被恢复为问题。
+
+同样，数字 Agent 熟练填写网页表单以后可以自动完成大部分字段输入，但如果网页突然要求一种此前没有出现的法律授权，局部 Computer-Use Skill 不应猜测，而应把这一语义残差提升为高层 Goal/Constraint 问题。可见，``意外''并不是单纯低概率，而是指\textbf{当前局部结构无法在自身语义和权限范围中可靠吸收的现实变化}。
+
+我们可以把升级倾向形式化为
+\begin{equation}
+U_C
+=
+F
+\left(
+Novelty,
+Residual,
+Risk,
+Persistence,
+GoalRelevance,
+Uncertainty,
+AuthorityGap
+\right),
+\end{equation}
+其中 AuthorityGap 表示``本层即使知道问题是什么，也没有权限解决''。因此异常升级不仅处理知识不足，也处理权限边界。例如低层控制器可能完全知道某个动作能够继续完成任务，但如果继续执行会突破安全约束，它仍必须向上升级。
+
+由此可见：
+\[
+\boxed{
+\text{Attention is partly a policy for promoting unresolved structure across scales.}
+}
+\]
+注意的深层作用之一，就是把已经不能在局部自动结构中消解的现实重新带回显式认知。这样，AgentOS 才能同时获得自动化与开放性，而不是在两者之间二选一。
+
+\section{相邻尺度耦合原则：Adjacent Scale Coupling}
+
+一个自然问题随之出现：既然残差可以向上，约束和技能可以向下，是否应该允许任意两个层级直接通信？例如毫秒级 servo 是否可以直接向生命周期 $\Psi$ 层发送事件，或者 DGA 是否可以直接修改某个电机 PWM 值？从理论上这些跨越式路径并非绝对不可构造，但如果把它们作为常规机制，多尺度结构就会迅速失去可解释性、稳定性与时间尺度隔离。因此本书提出：
+\begin{equation}
+\boxed{
+\text{Adjacent Scale Coupling Principle}
+}
+\end{equation}
+即正常情况下，不同尺度的结构迁移和控制应优先通过相邻或近邻尺度逐级完成。
+
+设系统具有层级链
+\[
+L_0\leftrightarrow L_1\leftrightarrow \cdots\leftrightarrow L_n.
+\]
+正常耦合图应主要满足
+\begin{equation}
+A_{ij}\neq 0
+\quad\Longrightarrow\quad
+|i-j|\leq 1
+\end{equation}
+或者至少令远距离耦合满足
+\begin{equation}
+|A_{ij}|
+\ll
+|A_{i,i+1}|.
+\end{equation}
+这并不禁止安全中断等特殊旁路，而是规定普通认知和控制信息应该主要逐层转换。
+
+为什么这一原则如此重要？首先，每个层级使用的状态表示不同。BPCC 的状态可能是连续控制 latent、关节状态和局部预测；Kernel 的状态则可能是 SGC/FCS、目标、计划和 Agent-CSO。如果直接跨越中间层，就容易把一个层级的原始变量错误地解释成另一层级具有语义意义的状态。逐层耦合允许每一层完成自己的粗粒化和语义转换。
+
+其次，时间尺度差异要求信息在传播过程中被重新采样。设
+\[
+\tau_i\ll\tau_{i+2}.
+\]
+如果 $L_i$ 的每一次变化都直接进入 $L_{i+2}$，则慢层将接收到远超自身闭环带宽的事件流。通过 $L_{i+1}$，高速变化可以先被积分、滤波和事件化：
+\begin{equation}
+z_{i+1}(t)
+=
+\mathcal A_i
+\left(
+x_i(t-T:t)
+\right),
+\end{equation}
+再将真正重要的慢变量变化传递给更高层。
+
+第三，相邻尺度耦合可以形成更加清晰的因果责任。如果某个行为失效，我们能够依次追踪：
+\[
+Reality
+\rightarrow
+L_0
+\rightarrow
+L_1
+\rightarrow
+\cdots
+\rightarrow
+L_k,
+\]
+判断残差在哪一层首次超过局部闭合能力。如果存在大量任意跳跃连接，这种责任归因会极其困难。
+
+从控制稳定性来看，相邻尺度耦合也减少了快速回路与超慢变量直接形成高增益反馈的风险。设快速层状态 $x_f$ 和慢层结构 $z_s$：
+\begin{equation}
+\dot{x}_f
+=
+F(x_f,z_s),
+\end{equation}
+\begin{equation}
+\dot{z}_s
+=
+\epsilon G(z_s,\langle r_f\rangle_T),
+\qquad
+0<\epsilon\ll 1.
+\end{equation}
+这里慢结构只根据快速残差的长期统计量变化，而不是跟随每个瞬时噪声。这正是
+\[
+\boxed{
+FastNoise\nrightarrow SlowGlobalStructure
+}
+\]
+的数学表达。
+
+因此合理的向上流不是：
+\[
+raw\ sensor
+\rightarrow
+\Psi,
+\]
+而是类似：
+\[
+RawReality
+\rightarrow
+BPCCResidual
+\rightarrow
+BodyEvent
+\rightarrow
+h
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi.
+\]
+同样，合理的向下约束也不是：
+\[
+\Psi
+\rightarrow
+MotorCommand,
+\]
+而更接近：
+\[
+\Psi
+\rightarrow
+GoalPreference
+\rightarrow
+Goal
+\rightarrow
+Plan
+\rightarrow
+ControlReference
+\rightarrow
+LocalController.
+\]
+
+这里每经过一层，信息都发生一次表示变化和时间尺度转换。因此所谓层级并不是简单管理组织图，而是不同抽象层之间的\textbf{语义变换器和动力学低通滤波器}。
+
+当然，Adjacent Scale Coupling 并非要求绝对不存在旁路。例如紧急安全机制可能允许实时危险信号绕过普通认知链直接进入保护控制；某些高层硬约束也可能通过预配置的安全包络直接作用于低层。但这些应该被视为具有明确权限和有限语义的特殊通道，而不是普通认知过程。正常学习、规划、预测和技能迁移仍然应该尊重相邻尺度原则。
+
+由此，一个复杂智能系统就能够同时保持局部自治和整体可治理性：局部层不会被超慢结构逐步微操，超慢结构也不会被高速噪声持续扰动，而真正具有持续性的异常和结构变化则能够经过相邻尺度逐级汇聚。这样的结构，为长期智能提供了比单纯``层级化模块''更加严格的动力学依据。
+
+\section{高层定义可行域，低层在域内优化：Higher Level Sets Feasible Region}
+
+在解释了局部闭合、残差升级、能力沉降和相邻尺度耦合以后，我们终于可以回答多尺度控制中最核心的权力分配问题：\textbf{高层究竟应该控制低层到什么程度？}
+
+如果高层完全不约束低层，局部自治可能偏离整体目标；如果高层直接决定低层每一步动作，多尺度体系又会退化成中央集权式控制。因此更加合理的关系是：
+\begin{equation}
+\boxed{
+\text{Higher Level Sets Feasible Region,}
+\qquad
+\text{Lower Level Optimizes Inside It.}
+}
+\end{equation}
+
+设第 $i+1$ 层拥有较长时间尺度的目标 $g_{i+1}$、价值约束 $v_{i+1}$、安全边界 $s_{i+1}$ 和资源约束 $r_{i+1}$。高层并不直接产生每一个 $u_i(t)$，而是构造一个低层可行集合：
+\begin{equation}
+\mathcal F_i(t)
+=
+\left\{
+(x_i,u_i):
+\begin{array}{l}
+g_k(x_i,u_i)\leq 0,\\
+h_j(x_i,u_i)=0,\\
+R(x_i,u_i)\leq R_{\max},\\
+Resource(x_i,u_i)\leq B_i
+\end{array}
+\right\}.
+\end{equation}
+低层在这一集合内部求解自己的快速优化：
+\begin{equation}
+u_i^\ast
+=
+\arg\min_{u_i\in\mathcal F_i}
+J_i(x_i,u_i).
+\end{equation}
+
+这个结构把``意图''与``实现''分离。高层表达的是：我要达到哪里、哪些边界不能突破、哪些结果更重要；低层决定的是：在当前真实动力学、局部扰动和执行器状态下，怎样以最高效率实现这些要求。
+
+例如 Kernel 的目标不是``左膝关节在未来 $5$ ms 增加 $0.37$ Nm 力矩''，而可能是``在保持身体稳定和负载安全的前提下跨过前方障碍物''。这一目标经过逐层展开形成姿态包络、轨迹约束和控制参考，最终由快速 Body Runtime 决定具体动作。这样，如果地面发生细微变化，低层可以在不改变高层 Goal 的情况下立即调整步态。
+
+在数字身体中同样如此。高层可能要求：
+\[
+\text{``在不发送信息、不改变账户权限的条件下读取并总结页面内容''}.
+\]
+这定义了可行域。低层 Browser/Computer-Use Runtime 可以自由决定滚动、点击、等待、解析 DOM 或调整窗口，但只要某一步操作可能产生提交、发送或权限改变，就已经接近或越过高层给出的边界，需要重新请求更高层授权。
+
+因此高层约束应具有三种重要性质。第一是\textbf{低维性}：高层不应把所有低层状态复制进去，否则无法形成尺度分离。第二是\textbf{持续性}：约束变化通常应慢于低层动作周期。第三是\textbf{可验证性}：低层必须能够判断自己的预测轨迹是否仍位于高层允许区域。
+
+可以定义可行裕度
+\begin{equation}
+M_i(t)
+=
+\min_{k}
+\left[
+-b_k(x_i(t),u_i(t))
+\right],
+\end{equation}
+其中 $b_k\leq 0$ 表示不同边界条件。如果
+\[
+M_i(t)>0,
+\]
+则低层仍有局部自治空间；当
+\[
+M_i(t)\rightarrow 0,
+\]
+意味着状态接近高层边界；如果
+\[
+M_i(t)<0,
+\]
+则说明预测或实际状态已经越界，应立即触发局部修正甚至残差升级。
+
+由此，高层与低层的关系可以进一步写成：
+\begin{equation}
+\boxed{
+SlowConstraint
+\neq
+FastMicromanagement.
+}
+\end{equation}
+这是整套多尺度智能理论极其重要的原则。高层真正成熟的控制不是``做更多决定''，而是设计一个能够让低层安全自治的结构空间。
+
+更进一步，高层自身也处于更高层给出的可行域之中。例如任务规划受到 Self $\Psi$、长期价值以及安全治理的约束；而这些更慢结构同样不应该决定任务规划中的每一步。于是形成递归关系：
+\begin{equation}
+\mathcal F_0
+\subseteq
+\mathcal F_1
+\subseteq
+\cdots
+\subseteq
+\mathcal F_n,
+\end{equation}
+更准确地说，是每一层通过投影算子把更高层约束映射到自身可操作空间：
+\begin{equation}
+\mathcal F_i
+=
+\Pi_{i+1\to i}
+\left(
+\mathcal F_{i+1},
+x_i
+\right).
+\end{equation}
+这使得``价值---目标---计划---动作''不再是一条简单命令链，而成为逐层展开的约束变换过程。
+
+至此，我们可以把本章全部内容统一成一个双向多尺度动力系统。设第 $i$ 层具有状态 $x_i$、局部残差 $\varepsilon_i$ 和高层约束 $c_{i+1}$，则其基本运行可以写成：
+\begin{equation}
+\dot{x}_i
+=
+F_i(x_i,u_i;c_{i+1}),
+\end{equation}
+\begin{equation}
+u_i
+=
+\pi_i(x_i,\hat{x}_i;c_{i+1}),
+\end{equation}
+\begin{equation}
+\varepsilon_i
+=
+d_i(x_i^{obs},\hat{x}_i),
+\end{equation}
+\begin{equation}
+e_i^\uparrow
+=
+\begin{cases}
+0,
+&
+\Gamma_i<\theta_i^\uparrow,\\
+\mathcal C_i(\varepsilon_i,\text{context}),
+&
+\Gamma_i\geq\theta_i^\uparrow.
+\end{cases}
+\end{equation}
+
+而长期稳定结构则满足向下沉降：
+\begin{equation}
+AgentCSO(C)@L_{i+1}
+\xrightarrow[\text{stable experience}]{}
+AgentCSO(C)@L_i,
+\end{equation}
+当环境重新超出其有效域时：
+\begin{equation}
+AgentCSO(C)@L_i
+\xrightarrow[\text{unexpected residual}]{}
+AgentCSO(C)@L_{i+1}.
+\end{equation}
+
+因此，多尺度智能的垂直方向不是简单的信息上传和命令下发，而是两种完全不同的结构流：
+\begin{equation}
+\boxed{
+\begin{array}{rcl}
+\text{向下} &:&
+Constraint,\ Prediction,\ StableStructure,\ Capability,\\[4pt]
+\text{向上} &:&
+Residual,\ Novelty,\ Risk,\ Uncertainty,\ UnresolvedStructure.
+\end{array}
+}
+\end{equation}
+
+最终我们得到本章最核心的统一命题：
+\begin{equation}
+\boxed{
+\textbf{
+成熟智能通过局部闭环消化正常世界，通过残差升级重新认识异常世界；
+通过结构沉降把反复思考变成能力，通过高层约束而非高层微操维持整体方向。
+}
+}
+\end{equation}
+
+这使 AgentOS 不再是一座所有信息都汇入中央认知的金字塔，而成为一个由不同时间尺度闭环共同构成的动力系统：\textbf{每一层尽可能完成自己能够完成的世界，只有尚未被这一层理解和控制的部分才继续成为更高层的认知对象。}与此同时，一旦高层认知通过经验把某类问题真正解决，它又应逐渐离开显式工作记忆，沉降为新的局部能力。正是在这两股方向相反但相互依赖的结构流之间，有限认知容量才能获得近乎无限扩展的长期能力。

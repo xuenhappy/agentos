@@ -1,237 +1,1499 @@
-\chapter{Kernel—KRA—BPCC 的共同学习稳定性}
-\chaptervoice{这一章，我们围绕“Kernel—KRA—BPCC 的共同学习稳定性”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明认知内核通过身体进入现实。}
-
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文第 353614—368709 行的 KRA 与双轴多尺度 AgentOS 收束稿。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是具身认知、分层控制、MPC、状态估计与安全包络（模型预测控制、Kalman 状态估计与具身认知）。
-
-本章使用上一章“KRA 的功能对齐理论”已经得到的对象与边界；本章产出将供下一章“AgentOS 双轴多尺度总体架构”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在具身认知、分层控制、MPC、状态估计与安全包络上。
-\conceptfigure{images/fig-kra-bpcc.png}{Kernel—KRA—BPCC 联合稳定关系（概念图占位）}
-\section{三个学习体同时漂移的问题}
-\begin{narration}
-现在把镜头移到“三个学习体同时漂移的问题”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“三个学习体同时漂移的问题”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Kernel—KRA—BPCC 的共同学习稳定性”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对三个学习体同时漂移的问题的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“三个学习体同时漂移的问题”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Relationship Stability}
-\begin{narration}
-现在把镜头移到“Relationship Stability”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Relationship Stability”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Kernel—KRA—BPCC 的共同学习稳定性”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Relationship Stability的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Relationship Stability”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Parameter Stability}
-\begin{narration}
-现在把镜头移到“Parameter Stability”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Parameter Stability”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Kernel—KRA—BPCC 的共同学习稳定性”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Parameter Stability的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Parameter Stability”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{时间尺度分离}
-\begin{narration}
-现在把镜头移到“时间尺度分离”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“时间尺度分离”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Kernel—KRA—BPCC 的共同学习稳定性”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对时间尺度分离的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“时间尺度分离”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Primary Learner}
-\begin{narration}
-现在把镜头移到“Primary Learner”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Primary Learner”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Kernel—KRA—BPCC 的共同学习稳定性”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Primary Learner的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Primary Learner”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Alternating Adaptation}
-\begin{narration}
-现在把镜头移到“Alternating Adaptation”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Alternating Adaptation”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Kernel—KRA—BPCC 的共同学习稳定性”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Alternating Adaptation的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Alternating Adaptation”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Drift Attribution}
-\begin{narration}
-现在把镜头移到“Drift Attribution”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Drift Attribution”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Kernel—KRA—BPCC 的共同学习稳定性”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Drift Attribution的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Drift Attribution”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Adaptation Budget}
-\begin{narration}
-现在把镜头移到“Adaptation Budget”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Adaptation Budget”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Kernel—KRA—BPCC 的共同学习稳定性”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Adaptation Budget的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Adaptation Budget”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Operational Mode}
-\begin{narration}
-现在把镜头移到“Operational Mode”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Operational Mode”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Kernel—KRA—BPCC 的共同学习稳定性”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Operational Mode的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Operational Mode”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Consolidation Mode}
-\begin{narration}
-现在把镜头移到“Consolidation Mode”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Consolidation Mode”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Kernel—KRA—BPCC 的共同学习稳定性”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Consolidation Mode的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Consolidation Mode”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“Kernel—KRA—BPCC 的共同学习稳定性”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“AgentOS 双轴多尺度总体架构”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\chapter{Kernel--KRA--BPCC 的共同学习稳定性}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.93\textwidth}
+\textbf{本章总体说明}
+
+在前述 Agent Kernel、KRA 与 BPCC 的分层设计中，我们已经建立了一个基本事实：长期智能体并不是由一个统一模型独立承担认知、适配与控制，而是由不同时间尺度、不同状态空间以及不同学习目标的动力系统共同组成。Agent Kernel 负责较慢尺度上的认知结构、世界模型、目标、自我以及长期生成结构；BPCC 负责身体侧的快速预测、局部控制、残差估计和在线适配；KRA 则承担两者之间的语义、动力学与控制关系适配。由此，一个比单模型持续学习更困难的问题自然出现：\textbf{当 Kernel、KRA 和 BPCC 都具有学习能力时，如何避免三个系统相互追逐、相互补偿和共同漂移，最终使整体闭环失去真实参照？}
+
+本章将这一问题定义为\textbf{多时间尺度共同学习稳定性问题}。我们的基本判断是：长期智能系统真正需要维持的并不是每一个模型参数的静止，而是 Kernel、KRA、BPCC 与现实之间的\textbf{功能关系稳定性}。因此本章提出
+\[
+\boxed{
+Relationship\ Stability > Parameter\ Stability
+}
+\]
+作为共同学习的首要原则，并进一步建立时间尺度分离、Primary Learner、交替适配、漂移归因、适配预算、运行态--巩固态分离以及现实锚定等机制。最终目标不是阻止各组件学习，而是在允许组件持续改变的同时，使整个
+\[
+World\rightarrow BodyRuntime\rightarrow KRA\rightarrow Kernel
+\rightarrow KRA\rightarrow BPCC\rightarrow World
+\]
+闭环始终停留在一个可解释、可验证、可恢复的兼容域内。
+
+本章讨论的是一个固定宏观功能拓扑内部的联合学习稳定性问题。这里的 ``Kernel--KRA--BPCC 三体'' 是工程动力系统意义上的三个耦合学习子系统，而非物理学中的三体问题；本章也不预设后续更强的功能拓扑自重构能力。
+\end{minipage}
+}
+\end{center}
+
+\section{三个学习动力系统同时存在时，问题从参数学习转化为关系学习}
+
+当我们只考虑一个固定模型时，持续学习通常被表述为参数更新问题。设模型参数为 $\theta$，经验流为 $\mathcal{D}_t$，则最简单的学习动力学可以写成
+\[
+\theta_{t+1}
+=
+\theta_t
+-
+\eta \nabla_{\theta}\mathcal{L}
+\left(
+\theta_t;\mathcal{D}_t
+\right).
+\]
+在这种描述中，系统的 ``外部环境'' 可以近似视为学习过程之外的给定对象；只要损失函数下降，通常便可以认为模型朝着期望方向发生了更新。然而在 AgentOS 的 Kernel--KRA--BPCC 架构中，这种单体学习假设已经不再成立。Kernel 的输入空间部分由 KRA 生成，KRA 所适配的 Body Runtime 又因为 BPCC 的在线学习而持续变化；反过来，Kernel 输出的控制语义、预测结构与目标约束又会成为 KRA 和 BPCC 下一轮学习所面对的数据分布。因此三个组件并不是分别面对静止环境进行学习，而是在\textbf{互相构成彼此学习环境}。
+
+我们用
+\[
+K_t,\qquad A_t,\qquad B_t
+\]
+分别表示时刻 $t$ 的 Kernel、KRA adaptation state 与 BPCC 状态。这里 $A$ 使用 ``Adaptation'' 的首字母表示 KRA 的适配状态，以避免与 Agent 本身混淆。三者的连续近似动力学可写成
+\[
+\dot K
+=
+F_K
+\left(
+K,A,B,\mathcal{R}
+\right),
+\]
+\[
+\dot A
+=
+F_A
+\left(
+A,K,B,\mathcal{R}
+\right),
+\]
+\[
+\dot B
+=
+F_B
+\left(
+B,A,K,\mathcal{R}
+\right),
+\]
+其中 $\mathcal{R}$ 表示来自 Reality 的实际观测、执行结果与残差。因此真正的系统并不是三个独立梯度下降器，而是
+\[
+\boxed{
+D_K
+\overset{D_A}{\longleftrightarrow}
+D_B
+\quad\bowtie\quad
+Reality
+}
+\]
+构成的非平稳耦合学习系统。
+
+这一变化带来一个非常重要的理论后果。如果 BPCC 改变了身体控制方式，那么相同的高层 Control Reference 可能产生不同的底层轨迹；KRA 为了维持 Kernel 所期待的控制语义，就可能修改映射；Kernel 随后观察到已经被 KRA ``修正'' 后的世界，又可能据此更新自身世界模型。若三个学习过程没有进一步约束，即使每个局部损失都在下降，整体系统仍然可能逐步离开原来的真实语义关系。例如 Kernel 对 ``向前移动一米'' 的内部表征逐渐变化，KRA 同时改变这一表征到身体控制空间的映射，而 BPCC 又重新学习新的运动动力学。三者完全可能在内部继续互相适配，使训练误差保持很低，却使实际行为逐渐偏离最初的任务语义。
+
+因此，本章首先必须放弃一个过于简单的目标：
+\[
+\boxed{
+\theta_K,\theta_A,\theta_B\rightarrow Constant
+}
+\]
+长期智能不可能要求三个组件参数保持不变。真正需要保持的是某些跨模块关系。例如，对于一类语义状态 $s$、控制意图 $u$ 与现实结果 $y$，我们希望
+\[
+\mathcal{F}
+\left(
+K_t,A_t,B_t;s,u
+\right)
+\approx
+y^{expected}
+\]
+长期保持在允许误差范围内。也就是说，稳定对象从 ``参数点'' 转向了 ``功能关系''。
+
+因此可定义系统兼容集合
+\[
+\boxed{
+\mathcal{M}_{compatible}
+=
+\left\{
+(K,A,B):
+E_{sem}\leq\epsilon_{sem},
+\;
+E_{ctrl}\leq\epsilon_{ctrl},
+\;
+E_{pred}\leq\epsilon_{pred},
+\;
+E_{safe}\leq\epsilon_{safe}
+\right\},
+}
+\]
+其中 $E_{sem}$ 表示语义接口误差，$E_{ctrl}$ 表示控制关系误差，$E_{pred}$ 表示预测关系误差，而 $E_{safe}$ 表示安全约束违反程度。共同学习真正要求的是
+\[
+\boxed{
+(K_t,A_t,B_t)\in\mathcal{M}_{compatible},
+\qquad
+\forall t
+}
+\]
+或者在存在短暂扰动时至少保证系统能够重新回到这一兼容集合。
+
+由此我们得到本章第一条基本原则：
+\[
+\boxed{
+Relationship\ Stability
+>
+Parameter\ Stability.
+}
+\]
+Kernel 可以变，KRA 可以变，BPCC 也可以变；真正不可失去的是它们对现实、对语义以及对控制结果之间的稳定关系。这个转变使共同学习问题从传统的 ``三个模型怎样一起训练'' 上升为一个多时间尺度自适应系统的稳定性问题。
+
+\section{共同学习的第一原则是时间尺度分离，而不是同时快速更新}
+
+三个学习子系统最危险的状态不是 ``都不会学习''，而是 ``都以相近速度持续学习''。若 Kernel、KRA 与 BPCC 都根据最近残差快速更新，则每个系统在完成一次参数适配之前，其所面对的另外两个系统已经发生明显变化。此时任何一个学习器看到的目标函数都不是近似静态的，而是在更新过程中持续移动。传统优化中常见的
+\[
+\nabla_{\theta}\mathcal{L}
+\]
+因此不再是对一个相对固定目标的局部方向，而更接近一个随其他学习器同步漂移的移动向量场。
+
+为了避免这种现象，本体系建立如下适配时间尺度关系：
+\[
+\boxed{
+\tau_{BPCC}^{adapt}
+<
+\tau_{KRA}^{adapt}
+<
+\tau_{Kernel}^{struct}.
+}
+\]
+这里 $\tau$ 表示发生具有结构意义的更新所需的特征时间，而不是单次前向计算延迟。BPCC 面向身体动力学中的局部变化，例如负载变化、摩擦变化、执行器磨损或短期环境扰动，因此允许较快速适配；KRA 需要判断 BPCC 的变化究竟属于局部身体适配还是语义关系变化，因此应当比 BPCC 更慢；Kernel 则包含世界模型、长期策略甚至部分 $\Theta$ 结构，其结构更新应比前两者更慢。
+
+用无量纲小参数表示，可以令
+\[
+\epsilon_B
+=
+\frac{\tau_{fast}}{\tau_{BPCC}^{adapt}},
+\qquad
+\epsilon_A
+=
+\frac{\tau_{fast}}{\tau_{KRA}^{adapt}},
+\qquad
+\epsilon_K
+=
+\frac{\tau_{fast}}{\tau_{Kernel}^{struct}},
+\]
+并要求
+\[
+\epsilon_B
+>
+\epsilon_A
+>
+\epsilon_K.
+\]
+于是三层学习动力学可以写为
+\[
+\dot B
+=
+\epsilon_B
+G_B(B;A,K,\mathcal R),
+\]
+\[
+\dot A
+=
+\epsilon_A
+G_A(A;B,K,\mathcal R),
+\]
+\[
+\dot K
+=
+\epsilon_K
+G_K(K;A,B,\mathcal R).
+\]
+在理想情况下，对于 Kernel 的短时间观察窗口，$K$ 可以近似视为常量；对于 KRA 的适配窗口，Kernel 也是准静态变量，而 BPCC 的快速变化可以通过局部平均被吸收。这样的结构正是快--慢动力系统和奇异摄动理论所提供的基本分析直觉。
+
+时间尺度分离并不意味着 ``低层永远比高层学习快''。例如遭遇全新身体、重大身体损伤或环境突变时，BPCC 的高频控制律仍然可能需要受到冻结；相反，在离线巩固阶段，Kernel 可能集中进行结构更新。因此这里真正要求的是：
+\[
+\boxed{
+Simultaneous\ Unconstrained\ Fast\ Adaptation
+\quad
+\text{is forbidden}.
+}
+\]
+也就是说，任意时刻必须有明确的主导适配层，并保持其他层在一个可作为参考的准稳定区间。
+
+我们可以进一步定义相对漂移率
+\[
+v_B=\|\dot B\|,
+\qquad
+v_A=\|\dot A\|,
+\qquad
+v_K=\|\dot K\|.
+\]
+若三者同时满足
+\[
+v_B>\delta_B,
+\qquad
+v_A>\delta_A,
+\qquad
+v_K>\delta_K,
+\]
+则系统进入 ``多层同时漂移区''。此时即使不存在明显任务失败，也应触发适配降速、局部冻结或者转入巩固模式，因为低损失并不能证明三者仍具有正确的现实语义关系。
+
+时间尺度分离的深层意义在于，它为系统建立了临时因果参照。BPCC 学习时，KRA 与 Kernel 应尽量稳定，从而能够判断新 BPCC 是否真正改善现实控制；KRA 学习时，应保持至少一端相对稳定，从而判断接口调整是否有效；Kernel 学习时，Body Runtime 的基本行为能力和 KRA 语义合同应尽量稳定，否则 Kernel 无法区分 ``世界规律发生了变化'' 与 ``自己的身体接口正在变化''。
+
+因此时间尺度分离不仅是数值优化技巧，而是认识论条件：
+\[
+\boxed{
+\text{若所有参照系同时快速变化，系统就无法可靠判断究竟是谁发生了变化。}
+}
+\]
+这也是为什么一个长期 Agent 必须保护慢变量。慢，不是落后；慢结构的价值恰恰在于为快速适配提供可以信赖的参考坐标。
+
+\section{Primary Learner 原则：每一次明显漂移都应尽量只有一个主要学习者}
+
+仅有平均意义上的时间尺度分离仍然不够，因为现实系统中的学习不是均匀连续发生的。例如机器人换上新的末端执行器后，KRA 和 BPCC 都可能检测到巨大误差；又如 Kernel 更新了高层动作语义以后，KRA 也会立即感受到接口残差。如果所有收到残差的模块都自行解释并更新，就容易形成 ``多方同时纠错''。因此我们进一步引入
+\[
+\boxed{
+PrimaryLearner
+}
+\]
+原则：对于一个确定的适配事件，在一个有限时间窗口内，应尽量指定一个主要承担结构性更新的学习层，其余层保持冻结、弱适配或仅进行低风险局部补偿。
+
+设整体残差向量为
+\[
+\varepsilon_t
+=
+\left[
+\varepsilon_B,
+\varepsilon_A,
+\varepsilon_K
+\right]^{\top}.
+\]
+调度器或 KRA 的适配治理逻辑首先根据残差来源、时间尺度和可解释性估计一个责任概率：
+\[
+p_i
+=
+P
+\left(
+Cause=i
+\mid
+\varepsilon_{0:t},
+\Delta SGC,
+\Delta FCS,
+Action,
+Context
+\right),
+\]
+其中
+\[
+i\in\{B,A,K,W\},
+\]
+$W$ 表示真实世界变化。当
+\[
+p_B
+=
+\max_i p_i
+\]
+并超过阈值 $\theta_{cause}$ 时，可以指定 BPCC 为当前 Primary Learner：
+\[
+PL_t=B.
+\]
+此时允许
+\[
+\eta_B=\eta_B^{normal},
+\]
+而
+\[
+\eta_A\ll\eta_B,
+\qquad
+\eta_K\approx 0.
+\]
+若残差主要表现为高层语义和身体能力之间长期映射不匹配，而身体局部执行已经稳定，则可以令
+\[
+PL_t=A.
+\]
+只有在跨场景、跨身体和跨时间都持续存在无法被 KRA 或 BPCC 消除的系统性预测残差时，才逐渐提高 Kernel 成为 Primary Learner 的概率。
+
+Primary Learner 并不意味着其他组件完全停止运行。BPCC 仍然必须执行实时控制，Kernel 仍然进行认知推理，KRA 仍然承担接口转换；受到限制的是\textbf{结构性学习权限}。因此应区分
+\[
+OperationalDynamics
+\]
+与
+\[
+LearningDynamics.
+\]
+组件可以继续运行，却不一定拥有同时修改自身核心参数的权限。
+
+这一原则还能避免一种很隐蔽的失败：\textbf{误差吞噬}。假设 BPCC 出现系统性控制偏差，而 KRA 具有很强适配能力。如果 KRA 每次都迅速改变映射来补偿 BPCC，则 Kernel 可能仍然看到正常的身体行为，因此
+\[
+\varepsilon_K\approx 0.
+\]
+从任务表现看，系统似乎没有问题；但 KRA 已经逐渐承担了本应由 BPCC 修正的身体动力误差。如果这种趋势持续，KRA 将越来越身体特定，Body Scale 降低，跨身体迁移能力也会下降。这种情况说明局部成功不等于系统结构正确。
+
+为此可以为每个适配层定义 ``责任范围''：
+\[
+\mathcal{E}_B:
+\text{local dynamics/control residual},
+\]
+\[
+\mathcal{E}_A:
+\text{cross-interface semantic/dynamical residual},
+\]
+\[
+\mathcal{E}_K:
+\text{high-level predictive/structural residual}.
+\]
+只有当
+\[
+\varepsilon\in\mathcal E_i
+\]
+时，组件 $i$ 才应获得较大的学习预算。
+
+Primary Learner 原则的本质并不是人为限制系统智能，而是维护学习的可归因性。如果三个学习器永远同步修改参数，我们事后几乎无法回答：
+\[
+\text{这次能力改善究竟来自哪里？}
+\]
+而长期 Agent 必须拥有这种因果可解释性，否则系统既无法稳定巩固正确能力，也无法在异常发生后回滚真正的问题来源。
+
+因此可以把本节原则概括为：
+\[
+\boxed{
+One\ dominant\ structural\ learner
+\quad
++\quad
+multiple\ operational\ participants.
+}
+\]
+这使 AgentOS 的共同学习从 ``所有组件一起训练'' 转变为 ``在统一闭环中有治理地轮流学习''。
+
+\section{交替适配将联合学习从同步追逐转化为分阶段坐标下降}
+
+Primary Learner 原则在算法上可以进一步实现为交替适配。其基本思想与块坐标下降、两时间尺度随机逼近和交替优化存在形式相似性：与其让
+\[
+(K,A,B)
+\]
+同时更新，不如保持两个变量相对固定，只允许第三个变量在受约束区间内下降自己的局部目标函数，然后重新验证整体闭环。
+
+设整体功能目标为
+\[
+\mathcal L_{sys}
+=
+\lambda_R\mathcal L_{reality}
++
+\lambda_S\mathcal L_{semantic}
++
+\lambda_C\mathcal L_{control}
++
+\lambda_P\mathcal L_{prediction}
++
+\lambda_{safe}\mathcal L_{safety}.
+\]
+我们并不要求每个组件直接优化完整 $\mathcal L_{sys}$，而是分别定义局部目标：
+\[
+\mathcal L_B
+=
+\mathcal L_{fast-pred}
++
+\alpha_B\mathcal L_{control}
++
+\beta_B\mathcal L_{residual},
+\]
+\[
+\mathcal L_A
+=
+\mathcal L_{semantic-contract}
++
+\alpha_A\mathcal L_{cross-model}
++
+\beta_A\mathcal L_{transfer},
+\]
+\[
+\mathcal L_K
+=
+\mathcal L_{world-model}
++
+\alpha_K\mathcal L_{goal}
++
+\beta_K\mathcal L_{long-horizon}.
+\]
+在 BPCC 适配阶段：
+\[
+B^{n+1}
+=
+B^n
+-
+\eta_B
+\nabla_B
+\mathcal L_B
+(B^n;A^n,K^n),
+\]
+同时保持
+\[
+A^{n+1}\approx A^n,
+\qquad
+K^{n+1}\approx K^n.
+\]
+在 KRA 适配阶段：
+\[
+A^{n+1}
+=
+A^n
+-
+\eta_A
+\nabla_A
+\mathcal L_A
+(A^n;B^{n+1},K^n),
+\]
+此时 BPCC 只允许局部微调，Kernel 继续作为语义锚。只有经过多轮现实验证后仍存在高层持续残差，才进入 Kernel 巩固更新：
+\[
+K^{n+1}
+=
+K^n
+-
+\eta_K
+\nabla_K
+\mathcal L_K
+(K^n;A^{n+1},B^{n+1}).
+\]
+
+这里的关键不是数学形式本身，而是每个阶段结束后都必须执行：
+\[
+\boxed{
+RealityValidation
+}
+\]
+而不是直接进入下一阶段。因为如果一个错误的 BPCC 更新被 KRA 继续适配，它可能被后者掩盖；如果 KRA 又被 Kernel 继续吸收，则错误最终可能被写入长期结构。于是短期身体误差会沿着：
+\[
+B\rightarrow A\rightarrow K
+\]
+逐层 ``合法化''。这正是长期 Agent 最需要避免的错误固化路径。
+
+为此，每次适配都应满足一个接受条件：
+\[
+\Delta \mathcal L_{sys}<0,
+\]
+并且
+\[
+E_{anchor}^{new}
+\leq
+E_{anchor}^{old}
++
+\delta_{allowed}.
+\]
+其中 $E_{anchor}$ 是固定功能锚上的误差。如果局部训练损失下降，但 anchor error 显著增加，则更新应被拒绝或者回滚。
+
+更严格地，可以将一次适配写成信赖域问题：
+\[
+\min_{\Delta\theta_i}
+\quad
+\mathcal L_i(\theta_i+\Delta\theta_i)
+\]
+subject to
+\[
+D_{func}
+\left(
+F_i^{new},
+F_i^{old}
+\right)
+\leq
+\rho_i,
+\]
+\[
+(K,A,B)_{new}
+\in
+\mathcal M_{compatible}.
+\]
+这里 $D_{func}$ 衡量的不是参数距离，而是功能行为差异。这一点非常重要：一个巨大的参数变化可能保持几乎完全相同的行为，而一个很小的关键权重变化却可能改变重要功能。因而：
+\[
+\|\Delta\theta\|
+\]
+不能单独作为长期学习安全性的评价指标。
+
+交替适配还使我们能够把 ``持续学习'' 重新解释成一种周期性结构：
+\[
+Operate
+\rightarrow
+CollectResidual
+\rightarrow
+Attribute
+\rightarrow
+AdaptOneLayer
+\rightarrow
+Validate
+\rightarrow
+Consolidate.
+\]
+长期 Agent 不是每收到一个误差就立刻修改所有结构，而是首先积累证据，判断误差属于哪一个尺度，再在合适时间窗对相应层级进行有限更新。
+
+因此交替适配并不是降低系统学习能力，而是在不同尺度之间建立学习秩序。成熟智能并非所有部分时刻可塑，而是知道：
+\[
+\boxed{
+\text{什么时候应该让哪一部分保持稳定，什么时候才允许哪一部分改变。}
+}
+\]
+
+\section{漂移归因决定系统是否能够区分“世界变了”与“自己变了”}
+
+共同学习稳定性的真正困难之一，是任何残差本身都不携带原因标签。假设 Kernel 预测身体下一秒将出现在位置 $\hat x_{t+1}$，现实观测却得到 $x_{t+1}$，于是产生
+\[
+\varepsilon_t
+=
+x_{t+1}-\hat x_{t+1}.
+\]
+这个误差至少可能来自五类原因：现实环境发生变化、传感器观测发生偏差、BPCC 局部模型失准、KRA 映射漂移，或者 Kernel 本身的高层模型错误。如果系统简单地把同一个 $\varepsilon_t$ 同时反向传播到所有可学习组件，就会失去任何因果区分能力。
+
+因此共同学习需要一个独立的
+\[
+\boxed{
+DriftAttribution
+}
+\]
+过程。我们可以把观测到的总残差近似分解为
+\[
+\varepsilon^{obs}
+=
+\varepsilon_W
++
+J_B\Delta B
++
+J_A\Delta A
++
+J_K\Delta K
++
+\nu,
+\]
+其中 $\varepsilon_W$ 是真实世界变化造成的偏差，$J_B,J_A,J_K$ 表示各组件局部变化对可观测结果的敏感度，$\nu$ 表示不可解释噪声。实际系统当然难以精确获得这些 Jacobian，但这种分解告诉我们：\textbf{残差应首先被解释，而不是立即被学习。}
+
+一种基本方法是建立多层预测。BPCC 给出
+\[
+\hat y_B,
+\]
+KRA 在跨接口层给出
+\[
+\hat y_A,
+\]
+Kernel 给出较长尺度预测
+\[
+\hat y_K.
+\]
+现实得到
+\[
+y^{obs}.
+\]
+于是可以构造：
+\[
+r_B
+=
+y^{obs}-\hat y_B,
+\]
+\[
+r_A
+=
+\hat y_B-\hat y_A,
+\]
+\[
+r_K
+=
+\hat y_A-\hat y_K.
+\]
+这不是严格意义上的正交分解，却能够提供残差出现在哪一层接口附近的诊断信息。例如若 $r_B$ 急剧增加而 $r_A$、$r_K$ 在过去长期稳定，则更可能发生身体局部动力变化；若 BPCC 对现实预测仍然准确，但 Kernel 经 KRA 投射的意图与 BPCC 可实现能力之间持续失配，则问题更可能位于 KRA 或高层动作语义。
+
+时间尺度也是归因的重要信息。短暂、高频、与局部身体状态高度相关的误差应优先归入
+\[
+\mathcal E_B;
+\]
+跨多个动作重复、与特定身体配置稳定相关的映射误差更接近
+\[
+\mathcal E_A;
+\]
+跨任务、跨身体、跨环境持续存在的系统性误差才逐步具有成为
+\[
+\mathcal E_K
+\]
+的资格。
+
+因此可以定义归因函数
+\[
+\Gamma_t
+=
+\Gamma
+\left(
+ResidualMagnitude,
+Persistence,
+Frequency,
+Context,
+CrossBodyConsistency,
+CrossTaskConsistency,
+RealityEvidence
+\right)
+\]
+并得到：
+\[
+\Gamma_t
+\rightarrow
+\left(
+p_W,p_B,p_A,p_K
+\right),
+\]
+其中
+\[
+\sum_i p_i=1.
+\]
+只有当某一来源置信度达到足够水平时，系统才允许相应层级进行结构性学习。
+
+这一机制还能解决一个特别重要的问题：\textbf{KRA 不应成为万能误差吸收层。} 由于 KRA 位于 Kernel 与 Body Runtime 之间，它天然拥有调整两边映射的能力。如果不给它明确的学习边界，几乎所有误差都可以通过 KRA 局部拟合得到暂时改善。长期结果将是：
+\[
+KRAComplexity\uparrow,
+\]
+\[
+BodyTransferability\downarrow,
+\]
+\[
+SemanticTransparency\downarrow.
+\]
+最终 KRA 变成历史补丁的累积层，而不是稳定耦合层。
+
+因此 KRA 的学习必须满足一个额外条件：
+\[
+\boxed{
+InterfaceError
+\ \text{rather than}\ 
+ArbitrarySystemError
+}
+\]
+才是其主要学习对象。
+
+漂移归因的更深意义在于，它使 AgentOS 对自己具有一种类似科学实验的认识论纪律：系统不能看到预测失败就立刻修改理论，而必须首先判断是测量变了、身体变了、接口变了，还是理论本身确实错误。只有这样，持续学习才不会退化成持续自我解释。
+
+\section{适配预算使可塑性成为受治理资源，而不是无限开放的能力}
+
+只要一个长期系统允许在线学习，就存在一个容易被忽视的问题：学习能力本身也会消耗系统稳定性。参数可塑性越强，系统适应新情况越快，但同时已有功能关系被破坏的风险越大。因此对于长期 Agent，学习不应被视为免费动作，而应该像计算、内存和能量一样具有明确的
+\[
+\boxed{
+AdaptationBudget.
+}
+\]
+
+我们可以为三个组件分别定义单位时间适配预算：
+\[
+\mathcal B_B(t),
+\qquad
+\mathcal B_A(t),
+\qquad
+\mathcal B_K(t).
+\]
+预算可以约束参数更新幅值：
+\[
+\|\Delta B\|
+\leq
+\mathcal B_B,
+\]
+也可以更合理地约束功能改变：
+\[
+D_B^{func}
+\left(
+B_{new},B_{old}
+\right)
+\leq
+\mathcal B_B^{func}.
+\]
+同理，
+\[
+D_A^{func}\leq\mathcal B_A,
+\qquad
+D_K^{func}\leq\mathcal B_K.
+\]
+通常应满足
+\[
+\mathcal B_B
+>
+\mathcal B_A
+>
+\mathcal B_K
+\]
+在常规在线运行阶段成立，因为越慢、越全局的结构具有越高的修改代价。
+
+适配预算并不只由时间尺度确定。我们可以令
+\[
+\mathcal B_i(t)
+=
+B_i^0
+\cdot
+g
+\left(
+Novelty,
+Residual,
+Risk,
+Confidence,
+Reversibility,
+Evidence
+\right).
+\]
+当新颖性和持续残差增加，且现实证据充分时，预算可以提高；当风险高、归因置信度低或修改不可逆时，预算应降低。例如对于一个新安装的机械手，BPCC 可以获得较高适配预算，而 Kernel 的世界模型和自我结构仍保持基本冻结。反之，如果长期跨身体经验都显示某个高层动作概念本身存在问题，则 Kernel 可以在巩固阶段获得更高预算。
+
+特别需要区分：
+\[
+ParameterBudget
+\]
+与
+\[
+SemanticBudget.
+\]
+一个内部 latent 网络可能需要较大参数更新才能适应传感器噪声，而只要公开 SGC/FCS 和控制语义保持稳定，这种变化并不危险。相反，一个参数量极少的接口标签变化可能改变 Kernel 对身体能力的理解，因此即使参数改动很小，也应消耗较大的语义预算。
+
+于是我们可以定义总适配成本：
+\[
+C_{adapt}
+=
+\alpha_P C_{param}
++
+\alpha_F C_{functional}
++
+\alpha_S C_{semantic}
++
+\alpha_R C_{risk}
++
+\alpha_I C_{irreversible}.
+\]
+一次更新只有满足
+\[
+C_{adapt}\leq \mathcal B_i(t)
+\]
+才允许进入实际运行。
+
+适配预算还应与 Checkpoint 机制结合。较大预算的修改必须对应更强的可恢复保障。可以定义：
+\[
+RecoveryRequirement
+=
+h(C_{adapt}),
+\qquad
+h'(\cdot)>0.
+\]
+也就是说，修改越深，就越必须保存清晰的前状态、验证集、接口合同和回滚路径。
+
+这种思想与传统机器学习中的 regularization 并不完全相同。正则化主要约束优化解，而适配预算约束的是\textbf{长期运行系统什么时候、在哪一层、允许改变多少以及改变以后是否能够恢复}。它具有明显的运行时治理属性。
+
+在 AgentOS 的整体理论中，适配预算还承担另一层作用：保护慢变量不被快噪声污染。假设 BPCC 连续遭遇若干随机扰动，如果每一次扰动都能够间接消耗 KRA 和 Kernel 的大量适配预算，就会出现：
+\[
+FastNoise
+\rightarrow
+SlowStructure.
+\]
+而我们要求的是：
+\[
+\boxed{
+FastNoise\nrightarrow SlowGlobalStructure.
+}
+\]
+只有经过时间积分、跨情境重复和现实验证以后，持续残差才能逐步获得修改更慢结构的预算。
+
+因此，长期智能的可塑性不是 ``尽可能多地学习''，而是：
+\[
+\boxed{
+\text{把有限的结构修改权限分配给最有证据、最有必要、最可恢复的变化。}
+}
+\]
+这正是适配预算从一个工程参数上升为生命周期稳定性原则的原因。
+
+\section{兼容流形与功能锚点定义了“允许变化而不失去自己”的区域}
+
+如果参数稳定不是我们的最终目标，那么必须回答一个新的问题：当 Kernel、KRA、BPCC 都在改变时，我们凭什么判断系统仍然是 ``同一个可工作的系统''？为此，本体系引入
+\[
+\boxed{
+CompatibilityManifold
+}
+\]
+与
+\[
+\boxed{
+FunctionalAnchor
+}
+\]
+两个互补概念。
+
+兼容流形表示所有能够维持当前系统基本语义、控制、安全和现实关系的参数组合集合：
+\[
+\mathcal M_{compatible}
+=
+\left\{
+(K,A,B)
+\mid
+\Phi_j(K,A,B)\leq \epsilon_j,
+\quad
+j=1,\ldots,m
+\right\}.
+\]
+这里 $\Phi_j$ 并不是参数相似度，而可以包括：相同 Body Capability 是否仍被 Kernel 理解为相同可行动意义；相同 Control Reference 是否仍产生相近可验证结果；SGC/FCS 的关键语义是否保持；安全控制权限是否未被改变；常用技能是否仍具备原有成功概率等。
+
+因此，两组参数
+\[
+(K_1,A_1,B_1)
+\]
+与
+\[
+(K_2,A_2,B_2)
+\]
+即使欧氏距离非常大：
+\[
+\left\|
+(K_1,A_1,B_1)
+-
+(K_2,A_2,B_2)
+\right\|
+\gg 0,
+\]
+只要它们仍位于同一个兼容区域，就可以被认为保持了功能连续性。
+
+Functional Anchor 则是在这一流形中选择一组相对稳定、可重复验证的约束点。设 anchor 集合为
+\[
+\mathcal H
+=
+\{h_1,h_2,\ldots,h_N\}.
+\]
+每一个 $h_i$ 可以包含
+\[
+h_i
+=
+(s_i,u_i,y_i^{ref},c_i),
+\]
+其中 $s_i$ 是标准状态，$u_i$ 是高层控制意图，$y_i^{ref}$ 是期望现实结果，而 $c_i$ 是允许的约束范围。则 anchor error 为
+\[
+E_{anchor}
+=
+\frac{1}{N}
+\sum_{i=1}^{N}
+d
+\left(
+F(K,A,B;s_i,u_i),
+y_i^{ref}
+\right).
+\]
+
+更重要的是，Functional Anchor 不应全部来自历史静态数据，因为长期系统面临真实环境漂移。如果所有 anchor 都冻结在旧世界中，系统会为了保持旧指标而拒绝必要适配。因此 anchor 应分成至少三类：
+\[
+\mathcal H
+=
+\mathcal H_{invariant}
+\cup
+\mathcal H_{adaptive}
+\cup
+\mathcal H_{reality}.
+\]
+$\mathcal H_{invariant}$ 保存真正不能轻易改变的接口和安全语义；$\mathcal H_{adaptive}$ 允许随着身体或环境缓慢更新；$\mathcal H_{reality}$ 则持续来自现实实验，用来防止前两类 anchor 形成封闭自证。
+
+由此可以构造系统关系稳定度：
+\[
+S_R
+=
+\exp
+\left(
+-
+\alpha E_{anchor}
+-
+\beta E_{semantic}
+-
+\gamma E_{control}
+-
+\delta E_{reality}
+\right).
+\]
+如果
+\[
+S_R\geq S_{min},
+\]
+则当前联合状态仍位于可接受兼容域；若低于阈值，则无论局部训练损失如何，都应停止进一步联合学习。
+
+兼容流形概念尤其适合解释 KRA 的存在。KRA 并不是追求 Kernel 与 BPCC 内部表示完全相同，而是让两者共同维持：
+\[
+(K,A,B)\in\mathcal M_{compatible}.
+\]
+换言之：
+\[
+\boxed{
+Interface=SemanticSkeleton+LatentMuscle.
+}
+\]
+Semantic Skeleton 提供长期稳定的公共结构，而 latent muscle 允许不同组件在内部继续优化。
+
+这也解释了为什么我们一直强调
+\[
+\boxed{
+FunctionalAlignment
+>
+RepresentationAlignment.
+}
+\]
+长期智能不需要所有内部神经表示逐元素一致，而需要不同内部实现继续保持可预测的功能对应关系。
+
+从生命周期角度看，Compatibility Manifold 可以理解为 Agent 在某一发展阶段允许的 ``结构自由区域''。成熟不是停止变化，而是在不失去核心功能连续性的前提下扩展可行结构空间。因此本节实际上给出了一个重要答案：
+\[
+\boxed{
+\text{长期智能可以持续改变参数，只要这种变化仍位于现实验证过的关系兼容流形之中。}
+}
+\]
+
+\section{现实必须成为共同学习的外部锚，否则三个模型可能共同“学会彼此”而不是学会世界}
+
+当三个模型相互提供训练信号时，会出现一个极其危险的闭环退化：Kernel 适应 KRA，KRA 适应 BPCC，BPCC 又适应 Kernel 给出的控制分布。只要三者能够彼此补偿，它们完全可能形成越来越一致的内部系统，却同时与现实越来越不一致。我们把这种情况称为
+\[
+\boxed{
+ClosedLoopCoAdaptationDrift.
+}
+\]
+
+一个极端例子是：Kernel 逐渐把某种动作理解为 $u_K'$，KRA 将 $u_K'$ 映射成新的身体表示 $u_B'$，BPCC 又学会执行 $u_B'$。只要内部评估主要基于彼此的预测一致性，就可能得到：
+\[
+E_{K-A}\downarrow,
+\qquad
+E_{A-B}\downarrow,
+\]
+同时现实任务误差却：
+\[
+E_R\uparrow.
+\]
+因此：
+\[
+\boxed{
+InternalAgreement
+\neq
+RealityCorrectness.
+}
+\]
+
+这使前面确立的 Reality Authority 原则在共同学习中获得更强形式。我们要求整体损失始终含有不可被其他模型代理替代的现实项：
+\[
+\mathcal L_{joint}
+=
+\lambda_R\mathcal L_R
++
+\lambda_I\mathcal L_{internal}
++
+\lambda_S\mathcal L_{semantic},
+\]
+且
+\[
+\lambda_R
+\]
+不能在长期学习中趋近于零。$\mathcal L_R$ 必须由真实动作结果、真实传感器回流、真实工具执行结果或者至少由具有独立现实来源的验证数据决定，而不能仅仅来自 Kernel、KRA 或 BPCC 自身生成的数据。
+
+因此我们建立：
+\[
+\boxed{
+Control
+\rightarrow
+Reality
+\rightarrow
+Observation
+\rightarrow
+Learning
+}
+\]
+而禁止：
+\[
+\boxed{
+Control
+\rightarrow
+Prediction
+\rightarrow
+PredictionAsObservation.
+}
+\]
+BPCC 可以产生
+\[
+SGC^{pred},
+FCS^{pred},
+\]
+但它们必须带有预测认识论标记，不能直接成为
+\[
+SGC^{obs},
+FCS^{obs}.
+\]
+KRA 同样不能为了接口连续而篡改 Reality Evidence 的来源等级。
+
+为了防止联合系统共同过拟合，还可以引入冻结探针：
+\[
+\mathcal P^{frozen}
+=
+\{P_1,\ldots,P_m\}.
+\]
+这些 probe 不参与当前学习，而只用于周期性检测关键能力。如果在线表现改善而 frozen probe 显著恶化，则说明系统可能通过局部共适应牺牲了原有稳定能力。类似地，可以保留跨身体 probe、跨任务 probe 和反事实 probe，以判断 KRA 是否过度身体特化、BPCC 是否过度当前环境特化、Kernel 是否吸收了错误局部规律。
+
+现实锚定还要求 ``失败必须能够向上穿透''。如果 BPCC 和 KRA 具有过强局部补偿能力，那么真实问题可能永远到不了 Kernel。为此对于高持续性残差，应保留一个不可被中间层完全截断的摘要：
+\[
+\bar\varepsilon_R^{global}
+=
+\mathcal A
+\left(
+\varepsilon_R(t_0:t_1)
+\right),
+\]
+并在
+\[
+\|\bar\varepsilon_R^{global}\|>\theta_R
+\]
+时进入上层认知。这样才能维持
+\[
+\boxed{
+PredictLocally,\ EscalateResidualGlobally.
+}
+\]
+
+这与本书更一般的认识论完全一致：智能体的内部模型永远只是现实结构的有限表示，任何内部一致性最终都必须接受外部世界检验。因此对于 Kernel--KRA--BPCC 的共同学习而言，现实不是第四个普通学习器，而是整个学习系统的最终边界条件：
+\[
+\boxed{
+Reality
+>
+Kernel,
+\qquad
+Reality
+>
+KRA,
+\qquad
+Reality
+>
+BPCC.
+}
+\]
+三个系统都可以修改自己对现实的解释，却不能通过互相适应来修改 ``什么算作现实证据''。
+
+\section{运行态与巩固态分离，使实时智能与深层学习不必同时承担全部风险}
+
+共同学习稳定性还要求区分两个根本不同的运行模式：
+\[
+\boxed{
+OperationalMode
+}
+\]
+与
+\[
+\boxed{
+ConsolidationMode.
+}
+\]
+许多 AI 系统默认推理和学习可以连续混合进行，但对于一个具有身体、长期记忆和身份连续性的 Agent，这种设计会使运行时行为与结构修改无法清晰区分。尤其当 Agent 正执行安全敏感任务时，深层 KRA 或 Kernel 更新可能改变尚未被验证的功能关系，从而把学习实验直接暴露给现实。
+
+在 Operational Mode 中，系统目标优先级为：
+\[
+Safety
+>
+Stability
+>
+TaskCompletion
+>
+Learning.
+\]
+因此可以设置：
+\[
+\eta_K^{op}\approx0,
+\]
+\[
+\eta_A^{op}\ll\eta_A^{cons},
+\]
+而 BPCC 只允许进行局部、可逆、受安全包络约束的快速适配：
+\[
+\|\Delta B\|
+\leq
+\mathcal B_B^{op}.
+\]
+大量经验、残差和候选更新首先进入缓冲区：
+\[
+\mathcal D_{adapt}
+=
+\{e_1,e_2,\ldots,e_n\}.
+\]
+运行态主要执行的是
+\[
+ExperienceCollection
++
+ResidualEstimation
++
+TemporaryCompensation,
+\]
+而不是无条件的深层结构写入。
+
+Consolidation Mode 则允许系统在低风险时段执行更完整的学习过程：
+\[
+Replay
+\rightarrow
+Attribution
+\rightarrow
+CandidateUpdate
+\rightarrow
+CrossValidation
+\rightarrow
+RealityProbe
+\rightarrow
+Commit.
+\]
+这个过程与三相记忆中的
+\[
+E\rightarrow\Theta
+\]
+具有很强的一致性：运行经验首先积累为 trajectory，而不是每一个瞬间直接改变慢结构。只有经过重复、压缩和验证以后，才允许沉降为更稳定的模型关系。
+
+我们可以定义一个模式切换条件：
+\[
+M_t
+=
+\begin{cases}
+Operational,
+&
+Risk_t>\theta_R
+\;\lor\;
+TaskCritical_t=1,
+\\[4pt]
+Consolidation,
+&
+Risk_t\leq\theta_R
+\land
+Evidence_t\geq\theta_E
+\land
+Resource_t\geq\theta_C.
+\end{cases}
+\]
+实际系统当然可以存在更多中间模式，但这种二分已经抓住核心原则：\textbf{实时执行和深层自我修改不应默认拥有相同权限。}
+
+巩固态还适合执行跨层因果分析。对于运行期间积累的残差序列：
+\[
+\mathcal E
+=
+\{\varepsilon_1,\ldots,\varepsilon_T\},
+\]
+系统可以比较三种候选模型：
+\[
+H_B:
+\text{BPCC drift},
+\]
+\[
+H_A:
+\text{KRA mismatch},
+\]
+\[
+H_K:
+\text{Kernel structural error},
+\]
+再依据跨情境 evidence 更新：
+\[
+P(H_i\mid\mathcal E).
+\]
+只有在证据明确时才提高相应层级的适配预算。这样便将 ``看到错误立即改参数'' 转变为 ``积累经验以后改变最合适的结构''。
+
+Operational/Consolidation 分离还自然连接 AgentOS 的生命周期稳定性。长期系统不应在所有时间尺度上同时可塑；快结构负责在线应变，慢结构负责总结经验。于是：
+\[
+\boxed{
+OnlineAdaptation
+\neq
+LongTermConsolidation.
+}
+\]
+前者追求即时恢复，后者追求结构正确。
+
+这也是为什么 BPCC、KRA 与 Kernel 三者虽然都能学习，却不应该成为三个永远高速更新的在线学习器。真正成熟的共同学习系统应该表现出一种节律：
+\[
+\boxed{
+Run
+\rightarrow
+Observe
+\rightarrow
+Accumulate
+\rightarrow
+Consolidate
+\rightarrow
+Validate
+\rightarrow
+Run.
+}
+\]
+这种节律本身，就是长期 Agent 保持可塑性而不失稳定性的关键。
+
+\section{共同学习稳定性的形式化条件与可验证指标}
+
+为了使前述原则不止停留在架构直觉上，我们需要给 Kernel--KRA--BPCC 联合系统建立一个最低限度的稳定性形式。设整体联合状态为
+\[
+X
+=
+(K,A,B),
+\]
+现实相关误差向量为
+\[
+e
+=
+\begin{bmatrix}
+e_R\\
+e_{sem}\\
+e_{pred}\\
+e_{ctrl}\\
+e_{safe}
+\end{bmatrix}.
+\]
+定义候选稳定函数
+\[
+V(X,e)
+=
+e^\top Q e
++
+\lambda_A D_A
++
+\lambda_B D_B
++
+\lambda_K D_K
++
+\lambda_C C_{compat},
+\]
+其中 $Q$ 为半正定权重矩阵，$D_i$ 表示各层相对其可信功能区域的漂移程度，而 $C_{compat}$ 表示离开兼容流形的代价。
+
+我们并不要求
+\[
+\dot V<0
+\]
+在任何瞬间严格成立，因为现实环境本身会持续扰动，学习也可能暂时提高局部误差。更合理的是要求在适当平均窗口 $T$ 上：
+\[
+\boxed{
+\mathbb E
+\left[
+V(t+T)-V(t)
+\right]
+\leq
+-\alpha
+\mathbb E
+\left[
+\|e\|^2
+\right]
++
+\beta
+\mathbb E
+\left[
+\|w\|^2
+\right],
+}
+\]
+其中 $w$ 表示外部环境扰动。如果在有界扰动下能够保证 $V$ 最终进入一个有界区域，就可以把系统理解为一种 practical stability，而非要求完全收敛到固定点。
+
+在时间尺度充分分离且每个子系统在其他变量准静态条件下均具有局部稳定性的假设下，可以提出一个本章层面的稳定性命题：
+
+\[
+\boxed{
+\begin{minipage}{0.85\textwidth}
+若 BPCC 的快速适配在固定 $(K,A)$ 下存在有界稳定域，KRA 的适配在 BPCC 已进入其稳定域后保持接口误差有界，Kernel 的结构更新仅在跨窗口持续残差条件下发生；同时联合更新始终受兼容流形、适配预算和现实锚定约束，则当时间尺度满足充分分离条件时，三层共同学习可以保持在一个有界兼容区域，而不必要求各层参数收敛到固定常数。
+\end{minipage}
+}
+\]
+
+这不是现成数学定理的直接引用，而是 AgentOS 架构下需要进一步严格证明的稳定性命题。其数学分析可以借助奇异摄动、两时间尺度随机逼近、小增益理论、切换系统与输入到状态稳定性等已有工具。
+
+工程上则需要一组直接可测指标。第一类是\textbf{关系稳定指标}：
+\[
+E_{semantic},
+\quad
+E_{control},
+\quad
+E_{prediction},
+\quad
+E_{anchor}.
+\]
+第二类是\textbf{漂移指标}：
+\[
+v_K=\|\dot K\|,
+\quad
+v_A=\|\dot A\|,
+\quad
+v_B=\|\dot B\|.
+\]
+第三类是\textbf{跨层补偿指标}。例如若 KRA 的适配量长期增长，而 BPCC 的原始 residual 不下降，则说明 KRA 可能正在替 BPCC 承担错误：
+\[
+C_{comp}^{A\leftarrow B}
+=
+\frac{
+\|\Delta A\|
+}{
+\Delta E_B+\epsilon
+}.
+\]
+这一比值长期异常升高应触发结构诊断。
+
+第四类是\textbf{现实闭合指标}：
+\[
+R_{closure}
+=
+P
+\left(
+ObservedOutcome
+\approx
+PredictedOutcome
+\mid
+Action
+\right).
+\]
+第五类是\textbf{恢复能力指标}：
+\[
+T_{recover},
+\qquad
+P_{rollback-success},
+\qquad
+D_{post-recovery}.
+\]
+一个长期系统即使偶尔离开兼容区域，只要能够快速识别并恢复，也可能比一个僵化但不可适应的系统更加稳定。
+
+第六类是\textbf{迁移保持指标}。KRA 的价值之一是支持 Body Scale，因此需要检测：
+\[
+TransferScore
+=
+F
+\left(
+CrossBodySemanticConsistency,
+CrossBodySkillReuse,
+CalibrationCost
+\right).
+\]
+如果当前身体上性能不断提高，但 TransferScore 持续下降，则说明系统很可能通过过拟合当前 Body 破坏了更一般的 Kernel--Body 关系。
+
+最终，共同学习稳定性并不能用单一 Accuracy 指标评价。更合理的是：
+\[
+\boxed{
+Stability
+=
+Performance
++
+Compatibility
++
+RealityClosure
++
+Recoverability
++
+Transferability.
+}
+\]
+只有这些维度共同保持，才能说一个持续改变自身参数的 Agent 仍然具有长期可治理性。
+
+\section{从“共同训练三个模型”到“维持一个可成长的关系系统”}
+
+经过本章分析，我们现在可以重新理解 Kernel、KRA 与 BPCC 的关系。它们不是三个通过端到端损失函数简单连接起来的网络，而是三个具有不同职责、不同时间尺度、不同认识论位置和不同修改权限的学习动力系统。BPCC 最接近真实身体的快速动力变化；Kernel 最接近长期认知结构和跨场景意义；KRA 位于两者之间，维持一种不断重新校准却不能失去语义骨架的适配关系。
+
+因此，整个共同学习问题可以压缩成：
+\[
+\boxed{
+(K_t,A_t,B_t)\in
+\mathcal M_{compatible}
+\quad
+\text{while}
+\quad
+K_t,A_t,B_t
+\ \text{continue to evolve}.
+}
+\]
+这句话表达了长期智能与普通静态软件之间一个根本差异：我们并不追求系统永远停留在初始结构，而是要求系统在成长过程中仍具有连续性、可解释性和现实约束。
+
+本章由此得到七条基本原则。
+
+第一，
+\[
+\boxed{
+RelationshipStability>ParameterStability.
+}
+\]
+真正需要保护的是功能和语义关系，而不是具体权重值。
+
+第二，
+\[
+\boxed{
+\tau_{BPCC}^{adapt}
+<
+\tau_{KRA}^{adapt}
+<
+\tau_{Kernel}^{struct}.
+}
+\]
+不同层级必须具有可区分的适配时间尺度，慢结构为快学习提供参考。
+
+第三，
+\[
+\boxed{
+PrimaryLearner.
+}
+\]
+一次显著结构性适配应尽量只有一个主要学习层，其余组件保持运行但限制深层更新。
+
+第四，
+\[
+\boxed{
+AlternateAdaptation.
+}
+\]
+联合学习应被组织成 ``学习--验证--巩固'' 的交替过程，而不是三个模块同时追逐移动目标。
+
+第五，
+\[
+\boxed{
+DriftAttributionBeforeAdaptation.
+}
+\]
+系统必须首先判断是世界、身体、接口还是认知结构发生变化，再决定修改哪里。
+
+第六，
+\[
+\boxed{
+AdaptationIsBudgeted.
+}
+\]
+可塑性是一种受治理资源。越慢、越全局、越不可逆的结构，其修改预算越小，证据要求越高。
+
+第七，
+\[
+\boxed{
+RealityIsTheUltimateAnchor.
+}
+\]
+Kernel、KRA 与 BPCC 可以彼此学习，但三者不能以彼此的一致性替代现实验证。
+
+从更一般的智能动力学角度，本章揭示了一个值得特别强调的规律：\textbf{当一个智能系统由多个可学习子系统组成以后，长期稳定性不再意味着组件不变化，而意味着各个变化中的子系统仍能维持一组稳定的跨尺度关系。} 因而真正需要被工程化的不是一个最终模型，而是一种
+\[
+\boxed{
+StableRelationshipAmongChangingModels.
+}
+\]
+
+这正是 KRA 在整个 AgentOS 中最深层的理论意义。它不仅是 Kernel 与 Body Runtime 之间的表示适配器，更是长期认知结构和长期身体结构能够在彼此持续成长的条件下仍保持相互可理解性的关系层。BPCC 可以因为新的身体经验而成长，Kernel 可以因为新的世界经验而成长，KRA 也可以因为双方关系变化而成长；但这种成长必须具有节律、归因、预算、锚点和恢复路径。
+
+因此，我们可以用本章最后一个公式概括三者共同学习的目标：
+\[
+\boxed{
+\begin{aligned}
+\min_{\pi_{adapt}}
+\quad&
+\int_{0}^{T}
+\Big[
+L_{reality}
++
+\lambda_s L_{semantic}
++
+\lambda_c L_{control}
++
+\lambda_d L_{drift}
++
+\lambda_a C_{adapt}
+\Big]dt
+\\
+\text{s.t.}\quad&
+(K_t,A_t,B_t)\in\mathcal M_{compatible},
+\\
+&
+Safety_t\in\mathcal S_{safe},
+\\
+&
+\mathcal B_i(t)\ \text{bounded},
+\\
+&
+\tau_{BPCC}^{adapt}
+<
+\tau_{KRA}^{adapt}
+<
+\tau_{Kernel}^{struct},
+\\
+&
+ObservedReality
+\neq
+PredictedReality.
+\end{aligned}
+}
+\]
+
+这里 $\pi_{adapt}$ 不只是某个神经网络的学习率，而是整个 AgentOS 对 ``谁在什么时候可以学习多少'' 的高层适配策略。至此，Kernel--KRA--BPCC 的共同学习问题便从一个朴素的联合训练问题，被提升为一个具有时间尺度分离、关系稳定性、现实锚定和可恢复性约束的多尺度自适应控制问题。
+
+换言之，一个真正能够持续存在的 Agent 不应追求 ``所有部分永远同步学习''，而应学会一件更加困难的事情：
+
+\[
+\boxed{
+\textbf{
+在自身不断变化的同时，维持各个变化部分之间以及自身与现实之间那些不能失去的关系。
+}
+}
+\]

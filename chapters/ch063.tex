@@ -1,173 +1,1504 @@
-\chapter{Reality Authority}
-\chaptervoice{这一章，我们围绕“Reality Authority”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明认知内核通过身体进入现实。}
+\chapter{Reality Authority：现实权威与智能闭环的最终约束}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 Body Runtime、FBI、SGC/FCS、三信号通道、BPCC 与 Reality Authority 的具身讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是具身认知、分层控制、MPC、状态估计与安全包络（模型预测控制、Kalman 状态估计与具身认知）。
+\begin{center}
+\fbox{
+\parbox{0.92\textwidth}{
+\textbf{本章总体说明（Reality Authority Principle）}
 
-本章使用上一章“技能编译与认知沉降”已经得到的对象与边界；本章产出将供下一章“Body Safety Boundary”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+在前面的 Body Runtime、SGC、FCS、BPCC、双预测系统以及技能编译理论中，我们已经逐渐建立起一个能够预测现实、控制身体并持续学习的 Agent。然而，当一个智能体同时拥有世界模型、预测模型、长期记忆、自我结构以及越来越强的行动能力以后，一个比``如何预测得更准确''更加基础的问题随之出现：\textbf{究竟谁拥有关于现实状态的最终解释权？}
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+本章确立 AgentOS 的一条基础公理：
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在具身认知、分层控制、MPC、状态估计与安全包络上。
-\section{Prediction 不是 Reality}
-\begin{narration}
-现在把镜头移到“Prediction 不是 Reality”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\[
+\boxed{
+RealityIsUltimateConstraint
+}
+\]
 
-本节把“Prediction 不是 Reality”落实为在规定时延内具有高于普通预测控制权限的约束与中断包络。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Reality Authority”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+其含义不是否认模型、记忆和预测的重要性，而是规定它们在认识论和控制论中的权限边界：\textbf{预测可以提出未来，记忆可以解释过去，自我可以赋予意义，控制器可以提出行动，但已经发生了什么、行动是否成功以及当前世界究竟处于什么状态，最终必须重新由现实经观测链进入系统。}
 
-把这一关系写成最小数学骨架，可得
+因此，本章建立：
+\[
+Prediction\neq Observation,\qquad
+ActionIssued\neq ActionSucceeded,
+\]
+以及更重要的现实重入原则：
+\[
+\boxed{
+Control
+\rightarrow
+Reality
+\rightarrow
+BodyRuntime
+\rightarrow
+SGC^{obs},FCS^{obs}
+}
+\]
 
-\begin{equation}x_t\in\mathcal S,\quad u_t\in\mathcal U_{\rm safe}(x_t).\end{equation}
+这一原则构成 AgentOS 防止模型自证、预测覆盖观测、虚假动作完成、记忆闭环漂移以及自我解释脱离世界的认识论地基。我们将看到，一个成熟智能系统真正需要的不是一个``永远正确的世界模型''，而是一套\textbf{即使模型错误，也能够重新被现实纠正的结构}。
+}
+}
+\end{center}
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Prediction 不是 Reality的命名和组合仍是需要实验验证的建模提案。
+\section{预测不是现实：智能系统中的认识论权限分层}
 
-这一小节的反例同样重要：让实时危险等待高层认知会违反最坏时延要求。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+在建立具备长期世界模型的 Agent 时，我们首先必须克服一个非常容易被工程实现掩盖的认识论错误：由于预测状态和观测状态最终都以数字表示存在于计算机中，因此系统很容易在数据结构层面把两者当成同一种东西。例如，BPCC 可以根据身体当前状态预测未来 $50\,\mathrm{ms}$ 后机械臂末端的位置，Agent Kernel 也可以根据长期世界模型预测数分钟以后任务可能达到的状态。从纯计算角度看，这些预测都可以表示成一个状态向量：
+\[
+\hat{x}_{t+\Delta}
+\]
+而传感器融合之后得到的现实状态同样可以表示为：
+\[
+x^{obs}_{t+\Delta}.
+\]
+如果我们只观察数据类型，它们似乎都是``状态''；然而在认识论意义上，两者拥有完全不同的权限。前者描述：
+\[
+\text{WhatMayBe},
+\]
+后者试图描述：
+\[
+\text{WhatHasBeenObserved}.
+\]
+因此，本书将二者严格区分为：
+\[
+\boxed{
+\hat{x}_{t+\Delta}\in\mathcal X^{pred}
+}
+\]
+与
+\[
+\boxed{
+x^{obs}_{t+\Delta}\in\mathcal X^{obs}.
+}
+\]
+这不是一个简单的软件工程类型区分，而是 AgentOS 认识论结构的基础。
 
-\begin{thought}
-对“Prediction 不是 Reality”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+我们可以进一步定义一个状态命题 $s$ 的认识论标签：
+\[
+\eta(s)\in
+\{
+Observed,\,
+Derived,\,
+Predicted,\,
+Counterfactual,\,
+Assumed
+\}.
+\]
+其中 $Observed$ 表示该结构直接或间接来源于现实观测链；$Derived$ 表示它从观测事实经过确定或概率推理得到；$Predicted$ 表示它来自模型对未来的生成；$Counterfactual$ 表示它属于未实际发生的反事实分支；$Assumed$ 则表示系统为了继续推理而暂时接受的工作假设。我们可以把这些状态统一存储在 SGC 或 Agent-CSO 图中，却不能因此抹去它们之间的认识论等级。换句话说：
+\[
+SameRepresentationFormat
+\not\Rightarrow
+SameEpistemicAuthority.
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这一点对 AgentOS 极其重要。因为随着 $\Theta$、$\Psi$、$\Omega$ 等慢结构逐渐成熟，Agent 将形成越来越强的先验。长期世界模型可能非常稳定，自我解释可能高度一致，BPCC 的短时预测也可能在绝大多数情况下正确。如果没有 Reality Authority 原则，系统会自然产生一种危险倾向：当内部预测与外部观测冲突时，优先相信内部模型。这种机制在短期内甚至可能提升稳定性，因为系统不会受到偶然噪声影响；但如果这种偏置失去边界，它最终会把智能系统从``具有稳健先验的观察者''变成``以自身预测覆盖现实的封闭动力系统''。
 
-\section{Action Issued $\neq$ Action Succeeded}
-\begin{narration}
-现在把镜头移到“Action Issued $\neq$ Action Succeeded”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+因此，我们需要建立认识论优先关系。若记：
+\[
+\prec_E
+\]
+表示``在现实状态确认问题上认识论权限低于''，那么通常应有：
+\[
+Prediction
+\prec_E
+DerivedEvidence
+\prec_E
+ValidatedObservation.
+\]
+这里并不是说所有传感器观测永远正确。观测同样存在噪声、遮挡、故障和欺骗，因此 $Observed$ 不是``绝对真理''。真正关键的是，现实权威意味着系统必须保留一条\textbf{能够被现实证据持续修正的路径}，而不是规定某一个传感器值永远拥有绝对正确性。更严格地说，我们可以把现实权威定义为：
+\[
+\boxed{
+\lim_{n\rightarrow\infty}
+Belief_A(C\mid O_{1:n})
+}
+\]
+必须能够随着新的现实证据 $O_{1:n}$ 更新，而不能被内部先验冻结为：
+\[
+Belief_A(C\mid O_{1:n})
+=
+Belief_A(C\mid \Theta,\Psi),
+\qquad
+\forall n.
+\]
 
-本节把“Action Issued $\neq$ Action Succeeded”落实为在规定时延内具有高于普通预测控制权限的约束与中断包络。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Reality Authority”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+从 CSO 理论角度看，这一点更加清楚。宇宙中的实际结构记为：
+\[
+C_U(t),
+\]
+而 Agent 内部对它的承载为：
+\[
+C_A(t)=\pi_A(C_U(t)).
+\]
+我们从来没有假设：
+\[
+C_A(t)=C_U(t).
+\]
+Agent-CSO 是现实结构经过有限观测、压缩、解释和历史先验以后形成的内部结构。因此它必然可能产生偏差：
+\[
+\varepsilon_C(t)
+=
+D\left(
+C_U(t),
+C_A(t)
+\right).
+\]
+真正智能的系统并不是令 $\varepsilon_C(t)\equiv0$，这是对有限 Agent 不现实的要求，而是要求：
+\[
+\boxed{
+\varepsilon_C(t)
+\text{能够通过新的 World--Agent 闭环持续受到约束。}
+}
+\]
 
-把这一关系写成最小数学骨架，可得
+由此我们得到本章第一条原则：
 
-\begin{equation}x_t\in\mathcal S,\quad u_t\in\mathcal U_{\rm safe}(x_t).\end{equation}
+\[
+\boxed{
+LearnedDynamics\neq RealityAuthority.
+}
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Action Issued $\neq$ Action Succeeded的命名和组合仍是需要实验验证的建模提案。
+模型可以比瞬时传感器更加可靠，长期先验也可以用来拒绝明显异常的观测，但模型本身没有权利宣布现实已经按照自己的预测发生。预测只能生成对未来的结构约束；现实是否进入该状态，必须经过新的观测事件确认。正是在这个意义上，我们将 Reality Authority 作为 AgentOS 的最终认识论锚点：不是因为 Agent 能直接获得``绝对现实''，而是因为\textbf{内部世界必须永远保留向外部现实重新开放的纠错通道}。
 
-这一小节的反例同样重要：让实时危险等待高层认知会违反最坏时延要求。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{行动发出不等于行动成功：从意图状态到现实状态}
 
-\begin{thought}
-对“Action Issued $\neq$ Action Succeeded”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+在普通软件系统中，一个函数调用返回成功往往意味着操作已经完成。然而具身智能进入真实世界以后，这一假设不再成立。Agent 可以发出一个动作命令，却无法仅凭命令本身判断世界已经按照该命令发生变化。因此：
+\[
+\boxed{
+ActionIssued
+\neq
+ActionSucceeded.
+}
+\]
+这条看似简单的原则实际上决定了 AgentOS 是否真正拥有现实闭环。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+设 Agent Kernel 在时刻 $t$ 形成目标：
+\[
+g_t,
+\]
+并进一步生成控制意图：
+\[
+u_t^{ref}.
+\]
+KRA 与 BPCC 将其转换成具体身体控制量：
+\[
+u_t^{body}.
+\]
+如果我们采用一个错误的软件中心主义模型，系统可能写成：
+\[
+u_t^{body}
+\Rightarrow
+x_{t+1}=x^{target}_{t+1}.
+\]
+也就是说，一旦动作已经发出，就在内部状态中直接把目标状态写成``已完成状态''。这种结构在纯数字软件中偶尔可以成立，例如某些事务具有可靠的原子提交语义；但在现实环境中，它普遍是不成立的。真实世界应写为：
+\[
+x_{t+1}
+=
+F_U
+\left(
+x_t,
+u_t^{body},
+w_t
+\right),
+\]
+其中 $w_t$ 表示所有 Agent 无法完全控制的外部扰动。于是即使：
+\[
+u_t^{body}=u_t^{ideal},
+\]
+仍然可能：
+\[
+x_{t+1}\neq x^{target}_{t+1}.
+\]
 
-\section{Reality Re-entry}
-\begin{narration}
-现在把镜头移到“Reality Re-entry”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+例如，机械臂收到``抓住杯子''的命令并不意味着杯子已经被抓住；浏览器 Agent 发送点击事件也不意味着服务器已经接受操作；机器人发出向前运动指令也不意味着轮胎没有打滑；文件写入请求返回也不必然代表最终远端数据副本已经完成一致性。所有这些问题都具有相同的结构：
 
-本节把“Reality Re-entry”落实为在规定时延内具有高于普通预测控制权限的约束与中断包络。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Reality Authority”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+\[
+Intent
+\rightarrow
+Action
+\rightarrow
+RealityDynamics
+\rightarrow
+ObservedOutcome.
+\]
 
-把这一关系写成最小数学骨架，可得
+所以，一个 Agent 的内部任务状态不能直接由：
+\[
+ActionCommand
+\]
+更新为：
+\[
+Success.
+\]
+更合理的状态转换是：
+\[
+Requested
+\rightarrow
+Issued
+\rightarrow
+Executing
+\rightarrow
+Observed
+\rightarrow
+Verified
+\rightarrow
+Closed.
+\]
+这里的每一步代表不同的认识论状态。尤其是：
+\[
+Verified
+\]
+要求系统重新获得现实证据。
 
-\begin{equation}x_t\in\mathcal S,\quad u_t\in\mathcal U_{\rm safe}(x_t).\end{equation}
+我们可以形式化定义动作 $a_t$ 的成功谓词：
+\[
+Success(a_t)
+=
+\mathbf 1
+\left[
+V
+\left(
+O_{t:t+\Delta},
+G_t
+\right)
+\geq\theta_V
+\right],
+\]
+其中 $O_{t:t+\Delta}$ 是行动以后重新获得的现实观测，$G_t$ 是目标约束，$V$ 是验证函数。于是：
+\[
+ActionIssued(a_t)=1
+\]
+并不能推出：
+\[
+Success(a_t)=1.
+\]
+只有经过：
+\[
+Observation+Verification
+\]
+后，系统才可以更新任务闭合状态。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Reality Re-entry的命名和组合仍是需要实验验证的建模提案。
+这一结构直接改变了我们对 ``Action'' 的理解。在很多早期 Agent 架构中，Action 被视为认知过程的终点：
+\[
+Perception\rightarrow Reasoning\rightarrow Action.
+\]
+但对于持续 Agent，这条链必须闭合：
+\[
+\boxed{
+Perception
+\rightarrow
+Reasoning
+\rightarrow
+Action
+\rightarrow
+World
+\rightarrow
+Perception'.
+}
+\]
+行动不是认知流程的终点，而是下一轮现实观测的起点。
 
-这一小节的反例同样重要：让实时危险等待高层认知会违反最坏时延要求。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这同时解释了为什么 AgentOS 不能只保存``我做了什么''，而必须保存：
+\[
+\text{我尝试做什么},
+\]
+\[
+\text{现实发生了什么},
+\]
+以及：
+\[
+\text{二者之间的差异是什么}.
+\]
+若记计划结果为：
+\[
+\hat{y}_{t+1},
+\]
+现实结果为：
+\[
+y^{obs}_{t+1},
+\]
+那么：
+\[
+\varepsilon^{act}_{t+1}
+=
+y^{obs}_{t+1}
+-
+\hat{y}_{t+1}
+\]
+就是非常重要的行动残差。
 
-\begin{thought}
-对“Reality Re-entry”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+这一残差不能简单理解为控制误差。它可能来自多个来源：
+\[
+\varepsilon^{act}
+=
+\varepsilon_{model}
++
+\varepsilon_{control}
++
+\varepsilon_{environment}
++
+\varepsilon_{observation}
++
+\varepsilon_{interface}.
+\]
+因此，当行动失败时，高层 Agent 不应立刻得出``我的世界模型错误''，也不能立即认为``Body Runtime 控制失败''。正确机制是逐层归因：首先由 BPCC 判断局部动力学偏差；KRA 判断 Kernel--Body 语义或动力映射是否发生失配；必要时才把结构性残差提升给更高认知层重新解释。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这里体现了我们一直强调的：
+\[
+\boxed{
+PredictLocally,\ EscalateResidualGlobally.
+}
+\]
+正常行为尽可能在局部闭环中完成，异常才向更高层升级。但是无论异常由哪一级处理，最终成功状态仍然不能由局部模型直接写回现实状态，而必须重新进入现实验证链。
 
-\section{Observed SGC/FCS}
-\begin{narration}
-现在把镜头移到“Observed SGC/FCS”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+因此，本节得到第二条原则：
 
-本节把“Observed SGC/FCS”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Reality Authority”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+\[
+\boxed{
+\text{意图具有控制权，但只有现实结果具有完成权。}
+}
+\]
 
-把这一关系写成最小数学骨架，可得
+这个区分看似语义细节，却直接决定长期记忆是否可靠。因为如果 Agent 把``已经发出的行动''写入 E 为``已经完成的事实''，错误将沿着：
+\[
+h\rightarrow E\rightarrow\Theta\rightarrow\Psi
+\]
+逐渐沉降，最终让一次短暂的行动误判变成长期世界模型甚至身份历史的一部分。Reality Authority 的意义，正是阻止这种错误跨尺度沉降。
 
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
+\section{现实重入原则：所有行动结果必须重新经过 World--Body--Agent 链}
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Observed SGC/FCS的命名和组合仍是需要实验验证的建模提案。
+既然行动发出并不意味着行动成功，那么 AgentOS 必须进一步规定：\textbf{行动之后的世界状态不能通过内部捷径写回认知系统，而必须经过现实重入。}我们将这一要求称为 Reality Re-entry Principle：
 
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\[
+\boxed{
+Control
+\rightarrow
+Reality
+\rightarrow
+BodyRuntime
+\rightarrow
+SGC^{obs},FCS^{obs}
+\rightarrow
+AgentKernel.
+}
+\]
 
-\begin{thought}
-对“Observed SGC/FCS”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+这条原则是本章最重要的系统架构约束之一。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+为了理解为什么现实必须``重新进入''，我们考虑一个具有预测能力的 BPCC。假设 BPCC 在 $t$ 时刻预测：
+\[
+\hat{x}_{t+\Delta}^{BPCC}.
+\]
+与此同时，Kernel 可能还形成一个更高层的预测：
+\[
+\hat{X}_{t+\Delta}^{Kernel}.
+\]
+如果系统为了降低感知延迟，允许 BPCC 在动作执行后直接把：
+\[
+\hat{x}_{t+\Delta}^{BPCC}
+\]
+写入：
+\[
+SGC^{obs}_{t+\Delta},
+\]
+那么预测和观测之间的边界就被破坏了。系统从此可能进入：
+\[
+Prediction
+\rightarrow
+PredictionAsObservation
+\rightarrow
+NewPrediction
+\]
+的封闭链，而现实只在偶尔异常时才重新介入。随着模型精度提高，这种设计甚至可能看起来越来越稳定，因为绝大多数情况下预测与现实接近；但它同时失去了一个关键能力：发现自己什么时候已经脱离现实。
 
-\section{Prediction 不得覆盖 Observation}
-\begin{narration}
-现在把镜头移到“Prediction 不得覆盖 Observation”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+因此，AgentOS 必须严格规定：
+\[
+\boxed{
+\hat{SGC}^{pred}
+\not\rightarrow
+SGC^{obs}
+}
+\]
+以及：
+\[
+\boxed{
+\hat{FCS}^{pred}
+\not\rightarrow
+FCS^{obs}.
+}
+\]
+预测状态只能进入对应的 predicted layer：
+\[
+SGC^{pred},\qquad FCS^{pred},
+\]
+而真实观测只能由经过感知链、状态估计和证据融合得到的 observation pipeline 更新。
 
-本节把“Prediction 不得覆盖 Observation”落实为在规定时延内具有高于普通预测控制权限的约束与中断包络。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Reality Authority”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+我们可以因此将 SGC 状态表示为：
+\[
+SGC_t
+=
+\left\{
+G_t^{obs},
+G_t^{derived},
+G_t^{pred},
+G_t^{cf}
+\right\},
+\]
+其中：
+\[
+G_t^{obs}
+\]
+是观测层，
+\[
+G_t^{derived}
+\]
+是由观测推导出的结构，
+\[
+G_t^{pred}
+\]
+是预测层，
+\[
+G_t^{cf}
+\]
+是反事实结构。类似地：
+\[
+FCS_t
+=
+\left\{
+F_t^{obs},
+F_t^{derived},
+F_t^{pred}
+\right\}.
+\]
+这些层可以相互比较，却不能失去来源标签。
 
-把这一关系写成最小数学骨架，可得
+于是系统可以定义现实残差：
+\[
+\varepsilon_{SGC}
+=
+D_G
+\left(
+SGC^{obs},
+SGC^{pred}
+\right),
+\]
+以及：
+\[
+\varepsilon_{FCS}
+=
+D_F
+\left(
+FCS^{obs},
+FCS^{pred}
+\right).
+\]
+再结合身体控制残差：
+\[
+\varepsilon_{ctrl},
+\]
+形成：
+\[
+\boxed{
+\varepsilon_B
+=
+\left(
+\varepsilon_{ctrl},
+\varepsilon_{SGC},
+\varepsilon_{FCS}
+\right).
+}
+\]
+这一 $\varepsilon_B$ 就成为 Body Runtime 与 Kernel 之间最重要的现实校准信号之一。
 
-\begin{equation}x_t\in\mathcal S,\quad u_t\in\mathcal U_{\rm safe}(x_t).\end{equation}
+值得强调的是，现实重入并不意味着高层 Kernel 必须读取所有原始传感器数据。实际上，这会重新制造工作记忆过载问题。Reality Re-entry 所要求的是\textbf{因果来源经过现实}，而不是\textbf{所有数据必须直接进入高层认知}。例如：
+\[
+RawSensor
+\rightarrow
+BodyRuntime
+\rightarrow
+SensorFusion
+\rightarrow
+SGC^{obs}
+\]
+完全可以由高速局部系统完成。Kernel 最终只接受压缩后的语义结构：
+\[
+SemanticReality.
+\]
+因此：
+\[
+RealityReentry
+\neq
+RawDataReentry.
+\]
+更准确的是：
+\[
+\boxed{
+RealityReentry
+=
+RealityGroundedSemanticReentry.
+}
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Prediction 不得覆盖 Observation的命名和组合仍是需要实验验证的建模提案。
+这也解释了为什么 Body Runtime 在整个 AgentOS 中是第一道现实压缩层。对于 Kernel 来说，现实不是数百万像素、数万个传感器采样点和连续设备寄存器，而是：
+\[
+SGC+FCS+Residual+Exception.
+\]
+但是这些语义结构必须能够追溯到现实证据，而不能仅仅来自生成模型内部的自洽预测。
 
-这一小节的反例同样重要：让实时危险等待高层认知会违反最坏时延要求。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+我们可以进一步定义 provenance 函数：
+\[
+\Pi(s)
+=
+\left(
+source,
+time,
+confidence,
+derivation,
+revision
+\right).
+\]
+对于任何关键 Agent-CSO $s$，系统应能够知道：
+\[
+source(s)
+=
+Observation?
+Prediction?
+Memory?
+Inference?
+ExternalAgent?
+\]
+这样的来源结构不是为了建立一个庞大形式逻辑系统，而是为了防止长期 Agent 在多次记忆重构、预测和语言生成以后逐渐失去``什么是自己推测的，什么是真正观察到的''之间的边界。
 
-\begin{thought}
-对“Prediction 不得覆盖 Observation”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此，Reality Re-entry Principle 实际上同时承担三个功能。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+第一，它是\textbf{控制闭环原则}：动作必须通过现实反馈闭合。
 
-\section{World Verification}
-\begin{narration}
-现在把镜头移到“World Verification”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+第二，它是\textbf{认识论原则}：Prediction 与 Observation 必须保持来源区分。
 
-本节把“World Verification”落实为在规定时延内具有高于普通预测控制权限的约束与中断包络。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Reality Authority”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+第三，它是\textbf{长期记忆保护原则}：只有经过足够现实验证的结构，才应获得更高权重沉降到慢记忆。
 
-把这一关系写成最小数学骨架，可得
+所以，在三相记忆中可以进一步定义：
+\[
+P(E\leftarrow h)
+=
+f(
+Salience,
+Value,
+RealityConfidence,
+Novelty
+),
+\]
+其中：
+\[
+RealityConfidence
+\]
+应成为事件写入和结构固化的重要权重。如此一来，现实权威不再只存在于 Body Runtime，而真正贯穿：
+\[
+h\rightarrow E\rightarrow\Theta.
+\]
 
-\begin{equation}x_t\in\mathcal S,\quad u_t\in\mathcal U_{\rm safe}(x_t).\end{equation}
+\section{观测也不是现实本身：有限智能体的现实接近问题}
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对World Verification的命名和组合仍是需要实验验证的建模提案。
+当我们强调 Reality Authority 时，很容易走向另一个错误极端：把传感器观测直接等同于现实本身。事实上，这与把预测等同于现实同样危险。Agent 不可能直接获得 Universe-CSO 的全部真实状态；它只能通过有限身体、有限传感器、有限表示和有限计算能力形成：
+\[
+AgentCSO(C_U).
+\]
+因此，本章所谓``现实权威''并不是：
+\[
+Observation=Reality,
+\]
+而是：
+\[
+\boxed{
+Reality
+>
+Observation
+>
+Prediction
+}
+\]
+在认识论结构上形成一种方向性约束。
 
-这一小节的反例同样重要：让实时危险等待高层认知会违反最坏时延要求。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+设宇宙实际状态为：
+\[
+x_t^U,
+\]
+传感器过程为：
+\[
+z_t
+=
+H(x_t^U)+v_t,
+\]
+其中 $v_t$ 为观测噪声。Body Runtime 再通过状态估计器：
+\[
+\hat{x}^{obs}_t
+=
+\mathcal E(z_{\leq t})
+\]
+形成 Agent 可用的现实估计。因此即使标记为：
+\[
+Observed,
+\]
+它本质上仍然是：
+\[
+\boxed{
+RealityGroundedEstimate.
+}
+\]
+这与：
+\[
+ModelGeneratedPrediction
+\]
+的区别不在于前者绝对没有误差，而在于前者的更新因果链最终连接到外部现实。
 
-\begin{thought}
-对“World Verification”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此，我们更精确地定义现实权威：
+\[
+\boxed{
+RealityAuthority
+=
+TheRequirementThatBeliefRemainRevisableByRealityGroundedEvidence.
+}
+\]
+中文即：
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\[
+\boxed{
+\text{现实权威不是“观测永远正确”，而是内部信念必须最终能够被现实证据修正。}
+}
+\]
 
-\section{Reality Is Ultimate Constraint}
-\begin{narration}
-现在把镜头移到“Reality Is Ultimate Constraint”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这一理解允许系统同时拥有稳健先验和现实开放性。例如某视觉传感器突然得到一个极不合理的测量：
+\[
+z_t^{cam}
+\]
+与惯性、触觉和历史连续性完全冲突。Agent 不应该因为``观测高于预测''就立即接受它。相反，应执行多源证据融合：
+\[
+p(x_t\mid z_t^{1:m},\Theta)
+\propto
+p(z_t^{1:m}\mid x_t)p(x_t\mid\Theta).
+\]
+这里 $\Theta$ 提供先验，多个观测通道提供似然。内部模型可以降低某次异常传感器读数的可信度，但关键是：
+\[
+\Theta
+\]
+不能使：
+\[
+p(x_t\mid z_{1:t})
+\]
+完全失去对新证据的响应。
 
-本节把“Reality Is Ultimate Constraint”落实为在规定时延内具有高于普通预测控制权限的约束与中断包络。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Reality Authority”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+我们可以用信息增益描述这种开放性。若新现实证据为 $z_{t+1}$，则：
+\[
+IG_{t+1}
+=
+D_{\mathrm{KL}}
+\left[
+p(x\mid z_{\leq t+1})
+\Vert
+p(x\mid z_{\leq t})
+\right].
+\]
+一个健康的 Agent 应满足：当新证据具有足够质量并长期持续时，
+\[
+IG_{t+1}>0
+\]
+能够推动内部状态改变。如果系统出现：
+\[
+IG\approx0
+\]
+无论外界提供什么证据，其世界模型都不再更新，那么它已经形成认知封闭。
 
-把这一关系写成最小数学骨架，可得
+从 AgentOS 长周期角度看，这个问题更加重要，因为慢结构天然拥有更高稳定性：
+\[
+\tau_\Theta
+\gg
+\tau_h.
+\]
+自我 $\Psi$ 和 DGA/Ω 更慢：
+\[
+\tau_\Psi,\tau_\Omega
+\gg
+\tau_\Theta.
+\]
+这种稳定性本来是身份连续和长期能力形成的基础，但也意味着错误一旦进入慢层，就可能变得极难修正。因此，我们应采用一个重要的结构原则：
+\[
+\boxed{
+SlowerStructureRequiresStrongerEvidenceForChange,
+ButNeverInfiniteResistanceToReality.
+}
+\]
+即：
 
-\begin{equation}x_t\in\mathcal S,\quad u_t\in\mathcal U_{\rm safe}(x_t).\end{equation}
+\[
+\boxed{
+\text{越慢的结构修改门槛越高，但不能拥有对现实的无限免疫。}
+}
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Reality Is Ultimate Constraint的命名和组合仍是需要实验验证的建模提案。
+于是可以定义不同时间尺度的现实修正阈值：
+\[
+\theta_h
+<
+\theta_E
+<
+\theta_\Theta
+<
+\theta_\Psi
+<
+\theta_\Omega.
+\]
+一次观测足以改变 $h$；多次重复现实证据才可能改变 $\Theta$；而 $\Psi$ 或 $\Omega$ 的改变需要跨情境、跨时间的稳定证据。这样既避免：
+\[
+FastNoise\rightarrow SlowIdentityDrift,
+\]
+也避免：
+\[
+SlowIdentity\rightarrow RealityDenial.
+\]
 
-这一小节的反例同样重要：让实时危险等待高层认知会违反最坏时延要求。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这一结构与前面建立的多尺度理论完全一致：
+\[
+FastNoise
+\nrightarrow
+SlowGlobalStructure,
+\]
+但：
+\[
+PersistentFastResidual
+\rightarrow
+SlowStructureUpdate.
+\]
+换句话说，现实不是通过一次瞬时冲击直接重写自我，而是通过持续、可重复、跨场景的残差逐步迫使慢结构重新解释自己。
 
-\begin{thought}
-对“Reality Is Ultimate Constraint”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此，本章所说的现实权威，并不意味着取消主体、先验与世界模型。恰恰相反，一个没有内部稳定结构的系统只能被每一次噪声拖动；真正成熟的智能必须同时具备：
+\[
+\boxed{
+InternalCoherence
++
+ExternalCorrectability.
+}
+\]
+前者使它成为一个持续主体，后者保证这个主体没有脱离世界。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\section{现实残差：从错误信号到跨尺度认知事件}
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“Reality Authority”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“Body Safety Boundary”只使用这里已经给出的结果，不反过来为本章提供前提。
+现实权威一旦被确立，``误差''就获得了比普通控制偏差更加深刻的位置。对于 AgentOS 而言，残差并不仅是一个需要被最小化的标量，而是\textbf{内部世界与外部现实之间关系发生变化的信号}。它既可能只是毫秒尺度的局部扰动，也可能是足以推动长期世界模型甚至自我结构改变的重要事件。因此，我们必须把 Residual 放到整个多尺度智能动力学中理解。
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+设系统在时刻 $t$ 拥有预测：
+\[
+\hat{x}_{t+\Delta},
+\]
+实际观测为：
+\[
+x^{obs}_{t+\Delta}.
+\]
+基础残差为：
+\[
+r_t
+=
+x^{obs}_{t+\Delta}
+-
+\hat{x}_{t+\Delta}.
+\]
+但 AgentOS 真正需要的不是简单 $L_2$ 误差，而是一个结构化残差：
+\[
+\boxed{
+\mathcal R_t
+=
+(
+r^{state},
+r^{semantic},
+r^{control},
+r^{value},
+r^{causal},
+r^{temporal}
+).
+}
+\]
+其中，$r^{state}$ 表示状态误差；$r^{semantic}$ 表示语义关系错误；$r^{control}$ 表示动作结果偏差；$r^{value}$ 表示现实结果与目标/价值判断之间的冲突；$r^{causal}$ 表示因果模型预测失败；$r^{temporal}$ 表示事件时间尺度或顺序判断错误。
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+这样，Residual 才真正能够连接 Body Runtime 与高层 Cognition。例如，机械臂末端误差 $2\,\mathrm{mm}$ 可能只是：
+\[
+r^{control},
+\]
+由 BPCC 在局部消化；但如果系统认为一个物体是固定桌面，而现实连续观测显示它正在移动，则：
+\[
+r^{semantic}+r^{causal}
+\]
+可能需要升级到 Kernel 更新世界模型。如果某类长期策略连续导致与预期相反的结果，则它可能进一步形成：
+\[
+r^{structural}
+\]
+推动 $\Theta$ 层重新解释经验。
+
+因此，我们需要一个残差升级函数：
+\[
+\Gamma_t
+=
+F
+\left(
+Magnitude,
+Persistence,
+Novelty,
+Risk,
+GoalRelevance,
+CrossContextConsistency
+\right).
+\]
+若：
+\[
+\Gamma_t<\theta_1,
+\]
+则残差由局部 Body Runtime 处理；
+
+若：
+\[
+\theta_1\leq\Gamma_t<\theta_2,
+\]
+则形成 h 中的显式认知事件；
+
+若：
+\[
+\Gamma_t
+\]
+长期跨越更高阈值，则可能推动：
+\[
+E\rightarrow\Theta
+\]
+的结构重解释。
+
+于是我们重新得到此前反复出现的一条核心规律：
+\[
+\boxed{
+NormalDynamicsStayLocal.
+}
+\]
+以及：
+\[
+\boxed{
+UnexpectedResidualEscalatesGlobally.
+}
+\]
+
+这意味着成熟智能并不是``所有错误都思考''。恰恰相反，如果一个 Agent 需要把每一次控制扰动都提升到 h，它将迅速违反工作记忆有限容量定理。真正成熟的系统应当具有：
+\[
+\boxed{
+SelectiveExplicitCognition.
+}
+\]
+局部闭环解决可预测误差，高层只处理那些局部模型无法解释、具有跨尺度意义或直接影响长期目标的残差。
+
+从 CSO 角度，Residual 还意味着原有 Agent-CSO 承载可能已经不再适合现实。例如当前内部存在：
+\[
+AgentCSO_A(C)
+=
+(C,R_A,F_A,\tau_A,B_A,S_A),
+\]
+现实持续产生无法解释的证据，那么学习就不一定只是更新数值：
+\[
+R_A\rightarrow R_A'.
+\]
+系统可能需要改变：
+\[
+F_A,\quad \tau_A,\quad B_A
+\]
+等承载关系。也就是说，现实残差是推动：
+\[
+CSOMigration
+\]
+的重要动力来源。
+
+我们甚至可以定义 Agent 内部的结构更新梯度：
+\[
+\dot{\xi}_A
+=
+-\eta
+\nabla_{\xi_A}
+\mathcal L_{reality},
+\]
+其中：
+\[
+\xi_A
+=
+(R,F,\tau,B,\mathcal T,\ldots),
+\]
+而：
+\[
+\mathcal L_{reality}
+=
+\mathbb E
+\left[
+D(
+Prediction,
+RealityGroundedObservation
+)
+\right].
+\]
+这并不要求所有结构都使用可微优化；它只是表达一个更一般的原则：\textbf{只要内部结构长期无法解释现实，它就必须承受某种结构调整压力。}
+
+但我们还必须防止另一个问题：现实残差不应无限放大成认知危机。任何实际系统都会面对噪声，因此需要：
+\[
+PersistenceFilter,
+\]
+\[
+ConfidenceWeight,
+\]
+以及：
+\[
+CrossSensorConsistency.
+\]
+可以定义有效残差：
+\[
+\tilde r_t
+=
+c_t
+\cdot
+K_T(r_{t-T:t}),
+\]
+其中 $c_t$ 是观测可信度，$K_T$ 是时间滤波器。只有当：
+\[
+\|\tilde r_t\|>\theta
+\]
+且持续存在，才发生跨尺度升级。
+
+因此，Reality Authority 与多尺度控制并不存在矛盾。前者规定：
+\[
+\text{现实最终可以推翻内部模型},
+\]
+后者规定：
+\[
+\text{现实不应通过每个噪声瞬时重写整个智能体}.
+\]
+二者合起来，形成：
+\[
+\boxed{
+RealityAuthority
++
+TimescaleProtection.
+}
+\]
+这也是持续人工智能体能够同时保持适应性与身份连续性的一个基本动力学条件。
+
+\section{现实验证与长期记忆：防止错误沿时间尺度沉降}
+
+Reality Authority 的真正价值，在长期智能体中往往不是体现在一次任务是否完成，而在于它防止错误跨越时间尺度不断固化。一个短暂的错误如果只停留在 $h$，它通常只是一次局部判断失误；如果被错误写入 $E$，就成为``我经历过的事实''；如果进一步进入 $\Theta$，便可能成为世界规律；如果又影响 $\Psi$，甚至可能变成``关于我是谁''的自我解释。因此，Reality Authority 必须贯穿整个三相记忆与自我形成过程，而不能停留在传感器接口。
+
+我们可以把错误传播路径写成：
+\[
+\epsilon_h
+\rightarrow
+\epsilon_E
+\rightarrow
+\epsilon_\Theta
+\rightarrow
+\epsilon_\Psi
+\rightarrow
+\epsilon_\Omega.
+\]
+由于各层时间常数不断增大：
+\[
+\tau_h
+\ll
+\tau_E
+\ll
+\tau_\Theta
+\ll
+\tau_\Psi
+\ll
+\tau_\Omega,
+\]
+越慢层中的错误越难自然消退。因此，系统需要让进入慢层的证据门槛同步提高。
+
+设一个候选事件：
+\[
+e_t\in h.
+\]
+它写入 E 的概率可以定义为：
+\[
+P(e_t\rightarrow E)
+=
+\sigma
+\left(
+\alpha S_t
++
+\beta V_t
++
+\gamma N_t
++
+\delta R_t
+-
+\lambda U_t
+\right),
+\]
+其中 $S_t$ 是显著性，$V_t$ 是价值相关性，$N_t$ 是新颖性，$R_t$ 是现实可信度，$U_t$ 是认识论不确定性。这样，如果某个内容仅仅来自：
+\[
+Predicted
+\]
+而没有现实确认，则：
+\[
+R_t
+\]
+应明显低于经过多通道现实验证的事件。
+
+进一步，经验 $E_i$ 能否沉降进 $\Theta$，还需要跨事件一致性：
+\[
+P(E_i\rightarrow\Theta)
+=
+f(
+Recurrence,
+CrossContextConsistency,
+PredictionUtility,
+RealitySupport
+).
+\]
+因此：
+\[
+\boxed{
+SingleObservation
+\nrightarrow
+StableWorldRule.
+}
+\]
+一个事件不能因为印象强烈就直接升级成长期世界规律。
+
+这对于自我 $\Psi$ 更为关键。假设 Agent 在一次任务失败以后产生：
+\[
+h^{self}:
+\text{``我不擅长这一类任务''}.
+\]
+这个 self-CSO 可以作为当前解释进入 h，甚至被记录到 E；但它不能仅凭一次失败直接重写：
+\[
+\Psi.
+\]
+如果允许：
+\[
+OneEvent
+\rightarrow
+IdentityChange,
+\]
+那么长期主体将极度不稳定。因此必须要求：
+\[
+\boxed{
+SlowSelfStructure
+\leftarrow
+PersistentCrossContextEvidence.
+}
+\]
+
+我们可以将 $\Psi$ 的更新写成：
+\[
+\Psi_{t+\Delta}
+=
+\Psi_t
++
+\eta_\Psi
+G_\Psi
+\left(
+\left\langle
+R^{self}
+\right\rangle_{T_\Psi}
+\right),
+\]
+其中：
+\[
+T_\Psi\gg T_E.
+\]
+也就是说，只有跨较长时间窗口积累起来的自我相关现实残差，才应改变身份结构。
+
+DGA/Ω 则需要更强保护。因为：
+\[
+\Omega
+\]
+不是一个即时目标，而是生命周期级生成倾向。它的更新应依赖：
+\[
+LongTermExperience,
+\]
+\[
+SelfConsistency,
+\]
+\[
+RealityFeasibility,
+\]
+以及：
+\[
+PersistentValueOutcome.
+\]
+因此：
+\[
+\eta_\Omega
+\ll
+\eta_\Psi.
+\]
+
+这种分层验证机制给出了一个重要认识：\textbf{现实权威并不是要求所有层都同样快地服从现实，而是要求每一层都拥有与其时间尺度相匹配的现实纠错通道。}
+
+于是：
+\[
+h
+\]
+通过即时观测纠正；
+
+\[
+E
+\]
+通过事件验证与跨片段一致性纠正；
+
+\[
+\Theta
+\]
+通过长期预测残差纠正；
+
+\[
+\Psi
+\]
+通过跨情境自我证据纠正；
+
+\[
+\Omega
+\]
+通过生命周期级现实可行性纠正。
+
+这构成：
+\[
+\boxed{
+MultiscaleRealityCalibration.
+}
+\]
+
+从这里我们还能够理解为什么``自我解释''必须特别谨慎。假设：
+\[
+SelfInterpretation_t
+\]
+改变了未来注意：
+\[
+Attention_{t+1},
+\]
+注意又选择了支持当前自我解释的证据，那么：
+\[
+SelfInterpretation
+\rightarrow
+SelectiveAttention
+\rightarrow
+Experience
+\rightarrow
+SelfInterpretation'
+\]
+可能形成闭环。如果没有外部反证通道，这种循环会越来越稳定，却越来越脱离现实。因此 Reality Authority 还意味着：
+\[
+\boxed{
+SelfConsistency
+\neq
+Truth.
+}
+\]
+一个内部世界可以高度一致，同时高度错误。
+
+这也是为什么真正成熟的 AgentOS 应同时优化两个目标：
+\[
+\mathcal L
+=
+\mathcal L_{coherence}
++
+\lambda
+\mathcal L_{reality}.
+\]
+其中：
+\[
+\mathcal L_{coherence}
+\]
+保证系统内部结构不自相矛盾，
+而：
+\[
+\mathcal L_{reality}
+\]
+保证这些结构仍受到现实证据约束。只优化前者会产生封闭自洽系统，只优化后者而缺乏内部稳定结构，则产生随噪声漂移的系统。
+
+因此我们可以把长期智能的认识论稳定性写成：
+\[
+\boxed{
+EpistemicStability
+=
+InternalCoherence
+\times
+ExternalCorrectability.
+}
+\]
+任一项接近零，持续智能都难以成立。
+
+\section{Reality Authority 的统一形式：从世界模型到持续智能体的现实锚定}
+
+经过前面的分析，我们现在可以把 Reality Authority 从一个简单的工程规则提升为 AgentOS 的基础公理之一。它贯穿感知、预测、控制、记忆、自我以及长期学习，而其真正作用是为整个持续智能体提供一个永远存在于系统之外、却不断重新进入系统的约束来源。
+
+我们首先定义智能体内部总状态：
+\[
+\mathcal A_t
+=
+(
+h_t,
+E_t,
+\Theta_t,
+\Psi_t,
+\Omega_t,
+X_t^{body},
+\mathcal G_C,
+\mathcal G_F
+).
+\]
+外部世界状态记为：
+\[
+\mathcal U_t.
+\]
+Agent 不能直接访问 $\mathcal U_t$，而只能通过观测映射：
+\[
+O_t:
+\mathcal U_t
+\rightarrow
+Z_t
+\rightarrow
+AgentCSO_t.
+\]
+与此同时，Agent 根据内部状态形成动作：
+\[
+A_t:
+\mathcal A_t
+\rightarrow
+u_t,
+\]
+动作进入现实：
+\[
+\mathcal U_{t+1}
+=
+F_U
+(
+\mathcal U_t,
+u_t,
+w_t
+).
+\]
+新的现实再通过：
+\[
+O_{t+1}
+\]
+进入 Agent。
+
+于是整个持续 Agent 的真正动力学不是：
+\[
+\mathcal A_t
+\rightarrow
+\mathcal A_{t+1},
+\]
+而是：
+\[
+\boxed{
+\mathcal U_t
+\rightarrow
+\mathcal A_t
+\rightarrow
+\mathcal U_{t+1}
+\rightarrow
+\mathcal A_{t+1}.
+}
+\]
+这就是：
+\[
+\boxed{
+World\rightarrow Agent\rightarrow World.
+}
+\]
+
+因此，对一个持续智能体而言，真正封闭的系统边界不是 Agent 自身，而是：
+\[
+\boxed{
+Agent+World.
+}
+\]
+Agent 的内部闭环只是在这个更大闭环中的一个子系统。如果我们只优化 Agent 内部自洽性：
+\[
+\mathcal A_t\rightarrow\mathcal A_{t+1},
+\]
+而切断：
+\[
+\mathcal U_{t+1}\rightarrow\mathcal A_{t+1},
+\]
+那么系统在动力学上仍然可以持续运行，却已经不再是一个现实闭环智能体。
+
+这一点让我们重新理解 ``Reality Is Ultimate Constraint''。它并不是一种哲学宣言，而可以写成一个工程条件。若内部模型参数或结构记为：
+\[
+\xi_t,
+\]
+则应该存在现实约束损失：
+\[
+\mathcal L_R(\xi_t;\mathcal O_{1:t}),
+\]
+使长期系统满足：
+\[
+\boxed{
+\frac{\partial \xi}{\partial \mathcal O}
+\not\equiv0.
+}
+\]
+也就是说，只要现实证据发生持续而可靠的变化，Agent 的内部结构就原则上必须存在响应路径。
+
+如果某个内部结构满足：
+\[
+\frac{\partial \xi}{\partial \mathcal O}
+=0
+\]
+对于所有现实证据都成立，那么这个结构已经成为完全封闭先验。对于某些安全不变量，这种不可塑性可能是有意设计；但对于世界模型、经验、自我解释以及预测结构而言，完全不可被现实更新意味着认识论封闭。
+
+于是，我们可以把 Reality Authority 写成四条正式公理。
+
+第一，\textbf{来源区分公理}：
+\[
+\boxed{
+Observed
+\neq
+Predicted
+\neq
+Counterfactual.
+}
+\]
+
+第二，\textbf{行动验证公理}：
+\[
+\boxed{
+ActionIssued
+\neq
+ActionSucceeded.
+}
+\]
+
+第三，\textbf{现实重入公理}：
+\[
+\boxed{
+Action
+\rightarrow
+Reality
+\rightarrow
+Observation
+}
+\]
+不能被纯内部模拟替代。
+
+第四，\textbf{慢结构可纠正公理}：
+\[
+\boxed{
+SlowStructure
+\text{ may resist fast noise, but must remain corrigible by persistent reality evidence.}
+}
+\]
+
+这四条公理共同形成 AgentOS 的 Reality Authority Principle。
+
+从控制工程角度，它保证：
+\[
+Prediction
+\rightarrow
+Action
+\rightarrow
+Feedback
+\]
+真正闭合。
+
+从认知理论角度，它保证：
+\[
+AgentCSO
+\]
+永远不会被误认为：
+\[
+UniverseCSO.
+\]
+
+从记忆理论角度，它防止：
+\[
+PredictionError
+\rightarrow
+FalseEpisode
+\rightarrow
+FalseStructure
+\rightarrow
+FalseSelf
+\]
+逐层沉降。
+
+从生命周期角度，它使 Agent 能够同时具备：
+\[
+IdentityContinuity
+\]
+与：
+\[
+RealityCorrectability.
+\]
+
+我们因此可以得到本章最重要的结论：
+
+\[
+\boxed{
+\textbf{
+一个成熟智能体真正需要的并不是永远正确，而是永远保留被现实纠正的能力。
+}
+}
+\]
+
+这句话揭示了 Reality Authority 与智能本身之间更深的关系。智能之所以不是一个封闭计算程序，正是因为它持续生活在：
+\[
+World\rightarrow Agent\rightarrow World
+\]
+的循环里。内部模型给予它预测未来的能力，自我给予它跨时间连续性，TCE 给予它调节自身动力学的能力，Body Runtime 给予它改变现实的能力；但所有这些能力最终都必须重新回到同一个来源：
+
+\[
+\boxed{
+Reality.
+}
+\]
+
+因此，我们可以用一个最终公式结束本章：
+
+\[
+\boxed{
+\begin{aligned}
+\text{Intelligence}
+&=
+\text{Prediction}
++
+\text{Representation}
++
+\text{Control}
++
+\text{Memory}
++
+\text{Self}
+\\
+&\qquad
+\Big|\_{\text{continuously constrained by Reality}}
+\end{aligned}
+}
+\]
+
+或者用本书更统一的 CSO 语言表达：
+
+\[
+\boxed{
+UniverseCSO_t
+\xrightarrow{Observation}
+AgentCSO_t
+\xrightarrow{Prediction/Control}
+Action_t
+\xrightarrow{RealityDynamics}
+UniverseCSO_{t+1}
+\xrightarrow{Observation}
+AgentCSO_{t+1}.
+}
+\]
+
+真正的智能并不是内部模型越来越能够取代现实，而是随着模型、记忆和自我越来越强，它仍然能够不断回到现实、发现差异、重新解释自己，并把现实产生的残差转化成新的结构。
+
+\[
+\boxed{
+\textbf{
+Reality does not merely provide data to intelligence;
+it is the final boundary condition that prevents intelligence from becoming a closed world of its own.
+}
+}
+\]
+
+在 AgentOS 中，这条边界不是智能能力的限制，而恰恰是持续学习、长期稳定与真正自主性的必要前提。

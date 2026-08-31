@@ -1,236 +1,1273 @@
-\chapter{Linux 之上的 AgentOS}
-\chaptervoice{这一章，我们围绕“Linux 之上的 AgentOS”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明认知内核通过身体进入现实。}
-
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文第 353614—368709 行的 KRA 与双轴多尺度 AgentOS 收束稿。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是具身认知、分层控制、MPC、状态估计与安全包络（模型预测控制、Kalman 状态估计与具身认知）。
-
-本章使用上一章“AgentOS 双轴多尺度总体架构”已经得到的对象与边界；本章产出将供下一章“AgentOS Kernel 的系统结构”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在具身认知、分层控制、MPC、状态估计与安全包络上。
-\section{Hardware}
-\begin{narration}
-现在把镜头移到“Hardware”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Hardware”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Linux 之上的 AgentOS”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Hardware的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Hardware”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Linux Kernel}
-\begin{narration}
-现在把镜头移到“Linux Kernel”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Linux Kernel”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Linux 之上的 AgentOS”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Linux Kernel的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Linux Kernel”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Computer OS}
-\begin{narration}
-现在把镜头移到“Computer OS”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Computer OS”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Linux 之上的 AgentOS”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Computer OS的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Computer OS”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{AgentOS Runtime}
-\begin{narration}
-现在把镜头移到“AgentOS Runtime”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“AgentOS Runtime”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Linux 之上的 AgentOS”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对AgentOS Runtime的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“AgentOS Runtime”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{为什么 AgentOS 不应重新发明 Linux}
-\begin{narration}
-现在把镜头移到“为什么 AgentOS 不应重新发明 Linux”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“为什么 AgentOS 不应重新发明 Linux”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Linux 之上的 AgentOS”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对为什么 AgentOS 不应重新发明 Linux的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“为什么 AgentOS 不应重新发明 Linux”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{CPU/Memory Scheduling 与 Cognitive Scheduling}
-\begin{narration}
-现在把镜头移到“CPU/Memory Scheduling 与 Cognitive Scheduling”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“CPU/Memory Scheduling 与 Cognitive Scheduling”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Linux 之上的 AgentOS”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对CPU/Memory Scheduling 与 Cognitive Scheduling的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“CPU/Memory Scheduling 与 Cognitive Scheduling”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Process 与 Agent 主体}
-\begin{narration}
-现在把镜头移到“Process 与 Agent 主体”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Process 与 Agent 主体”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Linux 之上的 AgentOS”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Process 与 Agent 主体的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Process 与 Agent 主体”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{File System 与 External Memory}
-\begin{narration}
-现在把镜头移到“File System 与 External Memory”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“File System 与 External Memory”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Linux 之上的 AgentOS”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对File System 与 External Memory的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“File System 与 External Memory”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Device Driver 与 Body Driver}
-\begin{narration}
-现在把镜头移到“Device Driver 与 Body Driver”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Device Driver 与 Body Driver”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Linux 之上的 AgentOS”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Device Driver 与 Body Driver的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Device Driver 与 Body Driver”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Security Model 与 Agent Authority}
-\begin{narration}
-现在把镜头移到“Security Model 与 Agent Authority”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Security Model 与 Agent Authority”落实为在规定时延内具有高于普通预测控制权限的约束与中断包络。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Linux 之上的 AgentOS”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}x_t\in\mathcal S,\quad u_t\in\mathcal U_{\rm safe}(x_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Security Model 与 Agent Authority的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：让实时危险等待高层认知会违反最坏时延要求。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Security Model 与 Agent Authority”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“Linux 之上的 AgentOS”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“AgentOS Kernel 的系统结构”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\chapter{Linux 之上的 AgentOS：从计算资源运行时到智能资源运行时}
+\label{chap:agentos-on-linux}
+
+\fbox{
+\parbox{0.94\textwidth}{
+\textbf{【本章总体说明】}
+本章讨论的不是“如何重新实现一个操作系统”，而是回答一个更根本的系统工程问题：当一个长期持续存在的智能体已经具有工作记忆 $h$、情景记忆 $E$、结构记忆 $\Theta$、自我结构 $\Psi$、生命周期生成吸引子 $\Omega$，并通过 SPC、AHC、TCE、CCM、Scheduler、Boundary、Offloading 等机制形成稳定的多尺度认知闭环以后，它应当如何落在现有计算机体系之上。我们的基本立场是：Linux 已经解决了进程、虚拟内存、文件、网络、设备、中断、权限和硬件资源复用问题，AgentOS 不应复制这些能力，而应在其上建立一个新的“智能资源运行时”。因此，本章确立
+\[
+\boxed{
+Hardware
+\rightarrow
+Linux/ComputerOS
+\rightarrow
+AgentOS
+}
+\]
+这一基本层级，并严格区分“计算资源管理”和“认知结构管理”。Linux 决定一个计算过程能否获得 CPU、内存、文件和设备；AgentOS 则决定一个持续主体在何时激活何种 Agent-CSO、哪些结构进入 $h$、哪些经历沉降为 $E/\Theta$、哪些能力被编译为 Skill、哪些内容应当卸载到外部载体，以及哪些行动拥有现实世界的执行权限。本章由此建立 AgentOS 从理论认知架构进入真实系统软件实现所必须遵循的操作系统边界。
+}
+}
+
+\section{Hardware：智能运行最终仍然受物理资源约束}
+
+我们首先从最底层重新确认一个贯穿全书的原则：无论一个智能体具有多么复杂的自我模型、多么丰富的生命周期记忆或多么高级的认知控制结构，它最终都必须由有限的物理资源承载。因此，AgentOS 并不是脱离计算机体系而独立存在的抽象心智，而是一个受到真实计算资源、通信延迟、存储容量、能量消耗以及设备响应时间约束的动力系统。若以硬件总体状态表示为
+\[
+\mathcal{H}(t)
+=
+\left[
+C(t),
+M(t),
+S(t),
+N(t),
+D(t),
+P(t)
+\right],
+\]
+其中 $C$ 表示计算资源，$M$ 表示主存，$S$ 表示持久存储，$N$ 表示网络，$D$ 表示设备集合，$P$ 表示功率与热约束，则任何 AgentOS 的认知状态演化
+\[
+\dot{\mathcal X}_{A}
+=
+F_A(
+\mathcal X_A,
+\mathcal X_B,
+W,
+G
+)
+\]
+都必须满足一个底层可行域：
+\[
+\mathcal X_A(t)\in\Omega_{\mathrm{compute}}(\mathcal H(t)).
+\]
+也就是说，认知动力学虽然在语义层上表现为 Goal、Agent-CSO、Self、Attention、Memory 与 Prediction 的运动，但这些运动最终仍必须投影到真实的 CPU cycle、GPU/NPU kernel、RAM page、SSD block、NIC queue 和 device transaction 上。
+
+这一点尤其重要，因为我们在前文已经建立了智能的多时间尺度结构：
+\[
+\tau_{\mathrm{servo}}
+<
+\tau_{\mathrm{BPCC}}
+<
+\tau_{\mathrm{SGC/FCS}}
+<
+\tau_h
+<
+\tau_E
+<
+\tau_\Theta
+<
+\tau_\Psi
+<
+\tau_\Omega.
+\]
+这意味着不同认知功能对硬件具有完全不同的实时性要求。一个生命周期级的 $\Omega$ 更新允许经过较长时间的离线整理，而一个 Body Runtime 的安全闭环可能要求毫秒甚至更低延迟。因此，所谓“统一 AgentOS”从来不意味着所有认知活动都必须运行在同一种计算设备、同一种线程模型或者同一个实时优先级上。恰恰相反，成熟的 AgentOS 必须允许认知结构根据自身时间尺度选择不同计算承载。
+
+我们可以形式化地定义一个从认知过程到计算资源的映射：
+\[
+\chi_t:
+\mathcal P_A
+\rightarrow
+\mathcal R_C,
+\]
+其中 $\mathcal P_A$ 表示 AgentOS 中的认知过程集合，而
+\[
+\mathcal R_C
+=
+\{
+CPU,GPU,NPU,RAM,Storage,Network,Device
+\}
+\]
+表示计算机资源集合。与传统程序不同的是，这个映射不应完全由静态部署文件决定，而可能由 AgentOS Scheduler 根据当前任务重要性、认知相态、延迟要求、风险以及资源状态进行动态调整。
+
+例如，当系统处于普通分析任务时，可以允许大量结构在 GPU 上以吞吐优先方式运行；当 SPC 发现认知相态接近临界区，而 Body 同时出现高风险 FCS 信号，则 Scheduler 应当降低非关键任务优先级，把有限资源优先分配给自我状态估计、身体预测和安全相关过程。由此可见，硬件资源虽然不是 AgentOS 的理论本体，但它定义了认知结构能够实际运行的物理边界。
+
+因此我们应当坚持：
+\[
+\boxed{
+CognitiveFreedom
+\subseteq
+PhysicalFeasibility
+}
+\]
+Agent 可以在其认知空间中形成大量可能计划，但能够进入现实行动链的，只能是位于底层硬件、设备和环境共同允许的可行区域中的部分。这个原则也与本书此前反复强调的
+\[
+\boxed{
+RealityIsUltimateConstraint
+}
+\]
+完全一致。AgentOS 可以形成关于世界的预测，但不能让计算资源凭空出现；可以形成关于身体的理想行动，但不能越过设备的真实物理能力。正是在这个意义上，Hardware 并不是“低级细节”，而是整个智能动力学最终落地的物理边界。
+
+\section{Linux Kernel：通用计算资源的第一层治理者}
+
+在硬件之上，Linux Kernel 所承担的第一性职责，是把复杂异构硬件转化为稳定、可隔离、可调度、可保护的计算资源。AgentOS 没有必要直接管理页表、处理中断、维护文件系统一致性或者为每一种 PCIe 设备重新实现驱动，因为这些问题已经由现代操作系统经过数十年的工程积累形成高度成熟的解决方案。
+
+从系统理论角度，可以把 Linux Kernel 表示为一个资源映射函数：
+\[
+\mathcal K_L:
+\mathcal H
+\rightarrow
+\mathcal R_{OS},
+\]
+其中
+\[
+\mathcal R_{OS}
+=
+\{
+Process,
+Thread,
+VirtualMemory,
+File,
+Socket,
+Device,
+Timer,
+IPC,
+Credential
+\}.
+\]
+Linux 并不直接知道一个内存页中保存的是“自我记忆”还是普通缓存，也不知道一个进程正在执行“人生反思”还是矩阵乘法。它有意保持这种语义无知，因为它治理的是计算资源，而不是认知意义。
+
+这种“语义无知”实际上正是 Linux 能够成为 AgentOS 基础的原因。Linux 提供的是一种稳定的资源契约：
+\[
+\boxed{
+ResourceIsolation
++
+ResourceScheduling
++
+ResourceProtection
++
+HardwareAbstraction
+}
+\]
+而 AgentOS 在其上增加：
+\[
+\boxed{
+CognitiveMeaning
++
+CognitiveScheduling
++
+MemoryLifecycle
++
+AgencyGovernance.
+}
+\]
+
+因此，两者之间不存在替代关系，而是严格的层次关系。
+
+例如 Linux Completely Fair Scheduler 或实时调度类所回答的是：
+\[
+\text{Which runnable thread receives CPU time?}
+\]
+AgentOS Scheduler 回答的却是：
+\[
+\text{Which cognitive process should become runnable?}
+\]
+前者并不理解“目标竞争”，后者则必须理解 Goal Priority、SPC 估计、AHC 状态、CCM 负载与身份连续性。
+
+同样，Linux Virtual Memory 管理的是：
+\[
+VirtualAddress
+\leftrightarrow
+PhysicalPage,
+\]
+而 AgentOS 管理的是：
+\[
+AgentCSO
+\leftrightarrow
+h/E/\Theta/Skill/File/Tool.
+\]
+二者在抽象层面都涉及“有限资源与迁移”，但其治理对象完全不同。Linux 可能因为内存压力把页面换出到 swap；AgentOS 则可能因为工作记忆负载过高把某个认知支线从 $h$ 中 Fold 到 E、外部文件或者暂停队列。两者可以发生联动，却不能混为同一机制。
+
+于是我们可以给出非常重要的系统边界：
+\[
+\boxed{
+LinuxKernel
+=
+SemanticAgnosticResourceGovernor
+}
+\]
+而
+\[
+\boxed{
+AgentOS
+=
+SemanticAwareCognitiveGovernor.
+}
+\]
+
+这个边界决定了未来实现时的大量技术选择。大多数 AgentOS 核心认知逻辑应当运行在 user space，而不是进入 Linux kernel space。只有真正需要低延迟资源隔离、设备访问、实时调度提示、安全执行或硬件 telemetry 的部分，才需要通过现有 Linux syscall、cgroup、namespace、capability、eBPF、real-time scheduling、device interface 等机制获得支持。AgentOS 不应通过把越来越多“智能逻辑”塞进 ring 0 来获得权威，因为这会同时破坏可验证性、稳定性和安全隔离。
+
+从更一般的系统设计原则看：
+\[
+\boxed{
+Privilege
+\neq
+Intelligence.
+}
+\]
+一个认知层越聪明，并不意味着它越应该拥有内核权限。恰恰相反，真正长期运行的智能体更需要将强大的认知能力置于可审计、可恢复、可撤销的系统边界之中。因此 Linux Kernel 应继续保持对 AgentOS 的底层资源主权，而 AgentOS 在其上形成更高级但受约束的认知治理。
+
+\section{Computer OS：计算资源运行时与 AgentOS 的智能资源运行时}
+
+在本书中，我们有必要把 Linux Kernel 与更广义的 Computer OS 区分开来。Linux Kernel 负责最底层的系统资源治理，而完整 Computer OS 还包括 system service、filesystem hierarchy、network service、device manager、container runtime、security policy、user session 以及各种持久化基础设施。对 AgentOS 而言，它真正依赖的是这一完整计算资源运行环境。
+
+因此可以把 Computer OS 定义为：
+\[
+\boxed{
+ComputerOS
+=
+RuntimeForComputationalResources
+}
+\]
+而 AgentOS 定义为：
+\[
+\boxed{
+AgentOS
+=
+RuntimeForIntelligenceResources.
+}
+\]
+
+所谓 Intelligence Resource，并不是一种新的物理资源，而是经过认知语义组织以后形成的功能资源。例如：
+\[
+\mathcal R_I
+=
+\{
+h,E,\Theta,\Psi,\Omega,
+Goal,
+Task,
+AgentCSO,
+Skill,
+Tool,
+Body,
+Attention,
+Authority
+\}.
+\]
+其中有些资源拥有明确持久化载体，例如 E 可以部分存储于数据库，Skill 可以存在于 executable artifact；有些则是运行时状态，例如 $h(t)$；有些是跨生命周期慢结构，例如 $\Psi$ 与 $\Omega$。因此 AgentOS 所进行的是二阶资源治理：它不直接拥有硬件，而是借助 Computer OS 获得计算资源，然后在这些资源之上构造持续智能状态。
+
+我们可以形式化为两个调度层：
+\[
+\sigma_C:
+\mathcal P_C\times\mathcal R_C
+\rightarrow
+\mathcal A_C
+\]
+和
+\[
+\sigma_I:
+\mathcal P_I\times\mathcal R_I
+\rightarrow
+\mathcal A_I.
+\]
+$\sigma_C$ 是 Computer OS 的计算调度，决定进程、线程与计算资源之间的分配；$\sigma_I$ 是 AgentOS 的智能调度，决定目标、认知线程、工作记忆容量、工具、外部记忆与注意之间的分配。
+
+二者通过一个资源落实映射耦合：
+\[
+\varphi:
+\mathcal A_I
+\rightarrow
+\mathcal D(\mathcal A_C).
+\]
+例如 AgentOS 决定“提高当前身体风险分析优先级”，最终必须被落实为提高某些进程 CPU quota、确保推理 accelerator 可用、保留足够内存、提升某些 I/O 请求优先级等具体操作。
+
+这种两层调度意味着：
+\[
+\boxed{
+CognitivePriority
+\neq
+CPU nice\ value.
+}
+\]
+一个高认知优先级 Goal 不一定直接对应 Linux 最高优先级线程。AgentOS 还必须考虑资源消耗、执行阶段、是否等待外部 I/O、是否可以异步处理、是否属于安全关键任务等条件。换言之，认知意义必须先通过运行时映射，才能转化为计算意义。
+
+因此 AgentOS 与 Computer OS 的正确关系不是：
+\[
+AgentOS\ supersedes\ Linux,
+\]
+而是：
+\[
+\boxed{
+AgentOS\circ ComputerOS.
+}
+\]
+前者对后者施加更高层的语义需求，后者则向前者暴露真实可用资源。两者之间形成自顶向下约束和自底向上反馈：AgentOS 给出认知优先级、延迟要求和可靠性等级；Computer OS 返回 CPU pressure、memory pressure、device availability、network latency 和 process health。然后 AgentOS 根据这些现实反馈调整认知计划。
+
+这也意味着未来真正成熟的 AgentOS 不能把 Linux 看成透明黑箱。它不需要控制 Linux 的内部算法，却必须读取足够多的资源 telemetry，使 SPC、CCM 和 Scheduler 了解自身运行条件。例如：
+\[
+r_C(t)
+=
+[
+CPU_{load},
+Memory_{pressure},
+IO_{latency},
+Thermal,
+Battery,
+Network
+].
+\]
+这些数据不必全部进入 $h$，而应首先在运行时层完成聚合，仅在超过相关阈值时才形成 Agent-CSO 或 FCS/内部状态信号进入认知层。这样才能保持：
+\[
+\boxed{
+NormalDynamicsStayLocal.
+}
+\]
+
+\section{AgentOS Runtime：在普通操作系统之上维持一个持续认知主体}
+
+一旦计算资源层与智能资源层被区分，AgentOS Runtime 的基本职责就变得清晰：它必须维持的不是一组短生命周期程序，而是一个具有历史、状态、自我和未来方向性的持续主体。
+
+令 Agent 的生命周期状态表示为
+\[
+\mathcal A(t)
+=
+[
+h(t),
+E(t),
+\Theta(t),
+\Psi(t),
+\Omega(t),
+G(t),
+\mathcal B(t)
+].
+\]
+如果底层某个推理进程退出，甚至整个设备重启，只要这一结构能够通过 checkpoint、persistent memory 与可靠恢复重新建立连续演化关系，则主体可以保持系统意义上的持续性。因此：
+\[
+\boxed{
+AgentIdentity
+\neq
+UnixPID.
+}
+\]
+
+这构成 AgentOS Runtime 与普通 application runtime 的第一个根本差异。
+
+传统应用程序往往采用：
+\[
+Start\rightarrow Execute\rightarrow Exit.
+\]
+AgentOS 主体则应采用：
+\[
+\boxed{
+Persist
+\rightarrow
+Act
+\rightarrow
+Learn
+\rightarrow
+Consolidate
+\rightarrow
+Recover
+\rightarrow
+Persist.
+}
+\]
+任务的结束不能等于主体的结束。一次模型调用、一次计划执行、一次工具调用乃至一次认知线程崩溃，都只能被看作生命周期中的局部事件。
+
+因此 AgentOS Runtime 至少需要维护三类连续性。
+
+第一是\textbf{状态连续性}。系统必须知道重启之前当前 Goal、未完成任务、Body 连接以及关键环境假设处于什么状态。
+
+第二是\textbf{记忆连续性}。E 与 $\Theta$ 不能随 process lifetime 消失，而必须通过持久存储和版本化形成生命周期历史。
+
+第三是\textbf{身份连续性}。$\Psi$ 与 $\Omega$ 的更新必须受到慢变量保护，不能因为一次进程替换或者模型版本切换就被重新初始化。
+
+我们可以定义一个恢复算子：
+\[
+\mathcal R_{\mathrm{boot}}:
+Checkpoint_t
+\times
+WorldObservation_{t+\Delta}
+\rightarrow
+\widehat{\mathcal A}_{t+\Delta}.
+\]
+值得注意的是，恢复不是把旧内存镜像机械搬回来。世界在设备离线期间可能已经发生变化，因此恢复之后必须重新经过现实观测与状态校准：
+\[
+Checkpoint
+\rightarrow
+TentativeState
+\rightarrow
+WorldVerification
+\rightarrow
+RecoveredAgentState.
+\]
+这再次体现：
+\[
+\boxed{
+Persistence
+\neq
+BlindStateRestoration.
+}
+\]
+
+AgentOS Runtime 还必须将底层模型看作可替换计算资源，而不是主体本身。例如：
+\[
+M_1\rightarrow M_2
+\]
+只要认知 ABI、记忆结构和身份连续性得到维护，就不应自动被解释为“一个 Agent 死亡，另一个 Agent 出生”。这意味着模型与主体之间应满足：
+\[
+\boxed{
+Model
+=
+CognitiveComputeComponent,
+\qquad
+Agent
+=
+PersistentDynamicalSubject.
+}
+\]
+
+这条区分对于未来大模型升级尤其重要。否则每一次 Foundation Model 更新都会破坏长期 Agent 的生命周期，而 AgentOS 的价值恰恰在于使“智能主体”从具体模型版本中解耦出来。
+
+\section{为什么 AgentOS 不应重新实现 Linux}
+
+在构造全新的认知运行时以后，一个自然诱惑是继续向下扩展，最终试图把进程、内存、网络、文件、驱动乃至硬件调度全部纳入 AgentOS。这种路线在理论上似乎统一，工程上却极不合理。
+
+原因首先来自分层设计本身。一个成熟系统应当遵守：
+\[
+\boxed{
+EachLayerOwnsItsNativeDynamics.
+}
+\]
+Linux 所拥有的是 CPU scheduling、memory protection、device arbitration 和 hardware fault handling 等快速、确定、极度工程化的问题。AgentOS 所拥有的是认知负载、目标竞争、记忆流转、Agent-CSO 调度与生命周期连续问题。两类问题的状态变量、时间尺度和正确性标准截然不同。
+
+若 AgentOS 试图直接重新实现底层 OS，则意味着一个高层认知系统必须同时承担：
+\[
+PageFault,
+Interrupt,
+FilesystemConsistency,
+NetworkStack,
+DeviceDMA,
+CognitiveGoal,
+SelfMemory,
+BodyPlanning.
+\]
+这不仅没有理论必要性，也违反此前反复建立的复杂度治理原则。一个系统若能够通过稳定接口把某类复杂性沉降到更低层，就不应再次把它提升到 $h$ 或认知内核中。
+
+用 CSO 语言来说，操作系统内部的大量结构已经属于：
+\[
+\boxed{
+StableProceduralInfrastructure.
+}
+\]
+它们无需重新变成显式 Agent-CSO。AgentOS 只需要知道足以进行认知决策的有效状态。例如不需要知道每个 physical page frame，只需要知道：
+\[
+MemoryPressure=High.
+\]
+不需要知道 TCP congestion control 的每一个内部变量，只需要知道：
+\[
+NetworkLatency\uparrow.
+\]
+因此：
+\[
+RawOSState
+\xrightarrow{\Pi_{OS}}
+SemanticResourceState.
+\]
+$\Pi_{OS}$ 本质上就是对底层计算复杂度的粗粒化。
+
+第二个原因是安全边界。Linux kernel 的错误通常意味着整个机器失稳，而 AgentOS 是高复杂度、持续学习和长期变化的软件。将这种高可塑逻辑放入 ring 0 会把认知错误直接放大成系统级错误。因此合理架构应满足：
+\[
+\boxed{
+CognitivePlasticity
+\perp
+KernelPrivilege
+}
+\]
+即认知可塑性与底层特权程度应尽可能解耦。
+
+第三个原因是生态复用。Linux 已经拥有 device driver、container、security、network、storage 与 observability 生态。AgentOS 真正需要建立的竞争优势，应当是：
+\[
+PersistentIdentity,
+CognitiveScheduling,
+LifecycleMemory,
+BodyAbstraction,
+SkillCompilation,
+AuthorityGovernance,
+\]
+而不是重新实现 ext4、TCP/IP 或 GPU 驱动。
+
+因此 AgentOS 与 Linux 更接近数据库系统、容器系统、浏览器运行时和 JVM 与 OS 的关系：它可以非常复杂，甚至形成自己的 resource scheduler、object model 与 security model，但仍然通过标准 OS 能力落地。
+
+我们由此得到一条工程定律：
+\[
+\boxed{
+AgentOSShouldOwnSemanticComplexity,
+LinuxShouldOwnComputationalMechanics.
+}
+\]
+这并不排除未来某些 AgentOS 关键路径获得 kernel-assisted optimization，但这种优化应当保持为加速机制，而不能改变功能边界。
+
+\section{CPU/Memory Scheduling 与 Cognitive Scheduling：两个调度世界}
+
+传统 OS 调度和 AgentOS 调度之间存在非常深的形式相似性，这也是我们最初把 AgentOS 称作“未来智能的操作系统”的主要原因之一。但这种相似性必须谨慎使用，因为它们管理的并不是同一种资源。
+
+Linux CPU Scheduler 的基本问题可以抽象为：
+\[
+\max_{\sigma_C}
+U_C(
+Throughput,
+Latency,
+Fairness,
+Deadline
+)
+\]
+subject to
+\[
+\sum_i CPU_i(t)
+\leq
+CPU_{\max}.
+\]
+而 AgentOS Scheduler 的问题则更接近：
+\[
+\max_{\sigma_I}
+U_I(
+GoalProgress,
+Coherence,
+Safety,
+Learning,
+IdentityConsistency
+)
+\]
+subject to
+\[
+C_h(t)
+\leq
+C_h^{\max}
+\]
+以及现实资源限制。
+
+前者的“有限资源”是 CPU time、RAM、I/O bandwidth；后者最核心的有限资源之一是：
+\[
+\boxed{
+ExplicitCognitiveCapacity.
+}
+\]
+也就是此前工作记忆有限容量定理描述的：
+\[
+C_{\mathrm{run}}(t)
+\leq
+C_{\max}(W).
+\]
+
+因此传统 OS 可能决定：
+\[
+Thread_1\rightarrow CPU_0,
+\]
+AgentOS 却决定：
+\[
+AgentCSO_i\rightarrow h,
+\qquad
+AgentCSO_j\rightarrow E,
+\qquad
+AgentCSO_k\rightarrow ExternalTool.
+\]
+这是一种“结构承载调度”。
+
+我们甚至可以把完整认知调度表示为：
+\[
+\sigma_A(t):
+\mathcal C_A
+\rightarrow
+\{
+h,E,\Theta,Skill,Tool,Deferred,Discarded
+\},
+\]
+其中 $\mathcal C_A$ 是当前可被激活的 Agent-CSO 集合。
+
+这一调度不能仅依据优先级，而应综合：
+\[
+Priority_i
+=
+F(
+GoalRelevance_i,
+Risk_i,
+Novelty_i,
+Residual_i,
+Urgency_i,
+SelfRelevance_i,
+Cost_i
+).
+\]
+SPC 提供当前状态估计，AHC 提供连续调制，CCM 计算负载和结构冲突，Scheduler 才能决定哪些认知活动获得显式处理权，TCE 再控制其探索深度和执行强度。
+
+因此我们可以把 AgentOS Scheduler 看作一种：
+\[
+\boxed{
+SemanticScheduler.
+}
+\]
+它调度的是“意义上的工作”，而 Linux 调度的是“计算上的工作”。
+
+两者应形成层级关系：
+\[
+CognitiveDecision
+\xrightarrow{\phi}
+OSResourceRequest
+\xrightarrow{Linux}
+PhysicalExecution.
+\]
+如果 AgentOS 判断某项任务极重要，但 Linux 当前资源不足，底层反馈必须重新进入 Scheduler，从而调整认知策略。例如：
+\[
+GPUUnavailable
+\rightarrow
+ResourceResidual
+\rightarrow
+Scheduler
+\rightarrow
+FallbackModel.
+\]
+
+这使系统形成一个跨层闭环，而不是高层单向命令低层。
+
+值得强调的是，这种结构再次验证了全书最重要的多尺度控制原则：
+\[
+\boxed{
+HigherLevelSetsPriority,
+LowerLevelOwnsExecutionFeasibility.
+}
+\]
+AgentOS 可以定义“什么重要”，但 Linux 与 Hardware 最终决定“当前能够怎样执行”。
+
+\section{Process 与 Agent 主体：为什么 PID 不能定义“我”}
+
+Linux 的基本执行实体是 process/thread，而 AgentOS 的第一性持续实体则是 Agent Subject。两者最容易在实现中被错误等同。
+
+设一个 Unix Process 为：
+\[
+P_i=
+(
+PID_i,
+AddressSpace_i,
+FD_i,
+Credential_i,
+Threads_i
+).
+\]
+它的存在具有明确生命周期：
+\[
+fork/exec
+\rightarrow
+run
+\rightarrow
+exit.
+\]
+而 Agent 主体的生命周期则可能跨越大量 process：
+\[
+P_1
+\rightarrow
+P_2
+\rightarrow
+P_3
+\rightarrow\cdots
+\]
+甚至跨机器迁移。
+
+因此 Agent Subject 应独立表示为：
+\[
+A=
+(
+ID_A,
+M_A,
+\Psi_A,
+\Omega_A,
+Authority_A,
+History_A
+),
+\]
+其中 $ID_A$ 不是 PID，而是生命周期主体标识；$M_A$ 是持续记忆；$\Psi_A$ 与 $\Omega_A$ 提供慢身份结构。
+
+这使我们能够正式写出：
+\[
+\boxed{
+AgentPersistence
+>
+ProcessPersistence.
+}
+\]
+
+此前我们提出：
+\[
+N^{D_1}_{Agent}=1,
+\]
+即一个 AgentOS 生命周期在 D1 主体层保持一个持续主体。D2 可以同时拥有多个 Goal、Task、Worker，但它们不能自动获得主体地位。
+
+因此：
+\[
+\boxed{
+Worker
+\neq
+AgentSubject.
+}
+\]
+一个 Worker 可以执行搜索、编译、计算、工具调用或者局部规划，但它不应该拥有独立的 $\Psi/\Omega$ 并与主体竞争身份控制权。
+
+这也是为什么我们曾提出：
+\[
+fork(A)=Forbidden,
+\qquad
+new(A)=Forbidden
+\]
+作为主体层原则。这里的 Forbidden 不是说 Linux 禁止 fork，而是说\textbf{不能把普通 process fork 自动解释成主体复制}。Linux 完全可以创建更多 worker process，但这些进程仍属于同一 Agent Authority Domain。
+
+我们可以定义映射：
+\[
+\eta:
+\{P_1,\ldots,P_n\}
+\rightarrow
+A.
+\]
+多个 process 为同一主体服务。
+
+反过来，主体可以在某个时刻没有活跃推理 process，却仍通过持久状态保持存在：
+\[
+\#ActiveProcess_A(t)=0
+\quad\nRightarrow\quad
+A=\varnothing.
+\]
+
+这种设计对于休眠、设备重启、模型切换和跨设备迁移都至关重要。
+
+进一步，D2 任务不得同步锁死 D1 主体：
+\[
+\boxed{
+D_2
+\nrightarrow
+Trap(D_1).
+}
+\]
+如果某个任务调用一个持续两小时的工具，主体不应该因此失去响应其他重要事件的能力。工程上意味着认知任务应尽量采用异步 request/event 模式：
+\[
+TaskRequest
+\rightarrow
+Pending
+\rightarrow
+Event
+\rightarrow
+Resume,
+\]
+而不是让整个主体调用栈阻塞等待。
+
+因此 Process Model 是 Linux 的执行模型，而 Subject Model 是 AgentOS 的身份模型。二者必须分离，否则长期 Agent 只能退化成“一个永远不退出的巨大进程”，既无法扩展，也无法真正保持生命周期连续。
+
+\section{File System 与 External Memory：存储数据不等于拥有记忆}
+
+Linux filesystem 为 AgentOS 提供了极其重要的持久存储基础，但我们必须明确：
+\[
+\boxed{
+File
+\neq
+Memory.
+}
+\]
+一个目录中保存一百万个文件，并不意味着 Agent 真正“记住”了一百万件事情。只有当外部结构被纳入 Agent 的认知索引、语义关系和恢复机制以后，它才成为广义认知记忆体系的一部分。
+
+因此可以把 External Memory 定义为：
+\[
+M_{ext}
+=
+(
+O,
+I,
+R,
+P,
+V
+),
+\]
+其中 $O$ 表示外部对象，$I$ 表示索引，$R$ 表示与内部 CSO 的关系，$P$ 表示 provenance，$V$ 表示版本与有效性状态。
+
+从 Agent-CSO 迁移角度：
+\[
+AgentCSO_{internal}
+\xrightarrow{Offload}
+ExternalArtifact.
+\]
+但真正完成卸载还必须建立反向路径：
+\[
+ExternalArtifact
+\xrightarrow{Index}
+RetrievableAgentCSO.
+\]
+因此：
+\[
+\boxed{
+Offloading
+=
+Externalization
++
+Indexing
++
+Recoverability.
+}
+\]
+
+Linux filesystem 主要负责第一个对象的持久化：
+\[
+Bytes\rightarrow StableFile.
+\]
+AgentOS External Memory Manager 则负责：
+\[
+StableFile
+\rightarrow
+MeaningfulCognitiveCarrier.
+\]
+
+例如，一个 Skill 文件不仅应包含 executable code，还可能包含：
+\[
+Skill=
+(
+Capability,
+Precondition,
+Interface,
+Provenance,
+Confidence,
+Version,
+SafetyClass
+).
+\]
+否则 Agent 无法知道何时调用它、它来自何种经历、适用于何种环境以及是否仍然可信。
+
+同样，一个 Episodic Memory artifact 不应只是 transcript。它应与：
+\[
+Time,
+Goal,
+WorldState,
+SelfState,
+Outcome,
+Residual
+\]
+建立索引关系，使未来的 $h$ 可以根据当前 Agent-CSO 状态进行结构化召回。
+
+因此 filesystem 解决的是：
+\[
+\boxed{
+PersistenceOfBytes
+}
+\]
+而 AgentOS 解决：
+\[
+\boxed{
+PersistenceOfMeaningfulStructure.
+}
+\]
+
+在工程上，这意味着 AgentOS 不需要创造新的底层块存储，但需要建立更高层 memory object model，并将不同持久载体统一到认知索引之下。例如：
+\[
+URI_{memory}
+\rightarrow
+(
+File,
+DBRow,
+VectorIndex,
+SkillPackage,
+RemoteObject
+).
+\]
+AgentOS 关注的是这些对象作为认知结构的功能身份，而不是它们具体由 ext4、Btrfs、object storage 还是数据库承载。
+
+这里还有一个重要安全问题：外部记忆可能被修改，因此任何进入 Agent 生命周期慢结构的信息都必须保留 provenance 与 confidence。否则恶意修改一个文件可能直接变成对 $\Theta$ 或 $\Psi$ 的长期污染。因此：
+\[
+ExternalData
+\not\Rightarrow
+TrustedMemory.
+\]
+必须经过：
+\[
+Read
+\rightarrow
+Verify
+\rightarrow
+Interpret
+\rightarrow
+Integrate.
+\]
+
+这使 filesystem 从“长期记忆本身”退回到它应有的位置：它是 AgentOS 外部记忆的重要物理载体，但不是认知记忆的完整定义。
+
+\section{Device Driver 与 Body Driver：从硬件设备到可行动身体}
+
+Linux Device Driver 所解决的问题是：
+\[
+HardwareDevice
+\rightarrow
+OSAccessibleResource.
+\]
+例如摄像头被表示成 video device，GPU 被表示成 compute device，机械臂控制器被表示成总线或字符设备。Linux 并不需要知道摄像头意味着“视觉”，也不需要知道某个 motor 对 Agent 而言是“左臂”。
+
+AgentOS Body Driver 则解决更高层的问题：
+\[
+OSDevice
+\rightarrow
+BodyCapability.
+\]
+因此两者绝不能混淆。
+
+我们可以定义：
+\[
+D_L:
+Hardware
+\rightarrow
+DevicePrimitive
+\]
+为 Linux Device Driver；
+以及
+\[
+D_B:
+DevicePrimitive
+\rightarrow
+BodySemanticPrimitive
+\]
+为 Body Driver。
+
+例如：
+\[
+CameraFrame
+\xrightarrow{LinuxDriver}
+PixelBuffer
+\xrightarrow{BodyRuntime}
+SGCObservation.
+\]
+又例如：
+\[
+ControlReference
+\xrightarrow{BodyRuntime}
+JointTarget
+\xrightarrow{LinuxDriver}
+MotorCommand.
+\]
+
+这形成：
+\[
+\boxed{
+Hardware
+\leftrightarrow
+LinuxDriver
+\leftrightarrow
+BodyDriver
+\leftrightarrow
+BodyRuntime
+\leftrightarrow
+AgentKernel.
+}
+\]
+
+Body Driver 的核心价值在于使 Agent Kernel 不依赖具体设备。Agent 应当表达：
+\[
+MoveTo(x,y,z)
+\]
+或更抽象的：
+\[
+Grasp(Object_i),
+\]
+而不需要知道当前机械臂第七关节使用哪一种 CAN 帧格式。
+
+这与此前 Body Scale 原理直接一致。若更换身体时只需重新实现：
+\[
+D_B'
+\]
+而高层 SGC、FCS、ControlReference、Skill 和认知结构仍可保留，则：
+\[
+BodyTransferability\uparrow.
+\]
+因此：
+\[
+\boxed{
+BodyScale
+\propto
+InterfaceInvariantStructure.
+}
+\]
+
+数字身体同样遵循这一结构。Browser API、mouse event、filesystem、shell command 等都可以被 Linux 或应用层暴露为操作原语，然后由 Digital Body Driver 映射成统一行动语义。例如：
+\[
+DOMClick
+\rightarrow
+DigitalEndEffectorAction.
+\]
+
+这说明 Body Driver 是一个比传统硬件驱动更加广义的语义适配层。它可能对应物理设备，也可能对应完全数字化的软件环境。
+
+同时，我们必须保留 Reality Re-entry 原则。Body Driver 发送控制成功并不意味着动作成功：
+\[
+ActionIssued\neq ActionSucceeded.
+\]
+因此真实状态必须重新经过：
+\[
+Reality
+\rightarrow
+Device
+\rightarrow
+LinuxDriver
+\rightarrow
+BodyRuntime
+\rightarrow
+SGC/FCS.
+\]
+高层预测绝不能直接覆盖真实观测。
+
+于是 Device Driver 与 Body Driver 的区别可以浓缩为：
+\[
+\boxed{
+DeviceDriver:
+\ HowToTalkToHardware
+}
+\]
+而
+\[
+\boxed{
+BodyDriver:
+\ WhatThisHardwareMeansForThisAgent.
+}
+\]
+
+\section{Security Model 与 Agent Authority：权限不只是 Unix 用户权限}
+
+Linux 的安全模型主要回答：
+\[
+\boxed{
+WhoCanAccessWhichComputerResource?
+}
+\]
+典型对象包括 file、process、socket、device 和 namespace。其机制可以表示为：
+\[
+Allow(u,o,a)
+\in
+\{0,1\},
+\]
+其中 $u$ 是 credential，$o$ 是 OS object，$a$ 是 operation。
+
+AgentOS 面临的安全问题则进一步变成：
+\[
+\boxed{
+WhichCognitiveIntentMayCauseWhichReal-WorldEffect?
+}
+\]
+这是一个明显更高层的问题。
+
+例如 Linux permission 可以允许某个进程写入一个文件，但 AgentOS 仍然可能因为当前 Goal、Body state、Self policy 或安全治理禁止这一行为。反之，AgentOS 认为某个动作应该执行，也必须通过 Linux credential 才能获得底层权限。
+
+因此两层权限形成交集：
+\[
+\boxed{
+Authority_{effective}
+=
+Authority_{AgentOS}
+\cap
+Permission_{ComputerOS}.
+}
+\]
+只有两者同时允许，现实动作才能发生。
+
+AgentOS Authority 至少应作用于：
+\[
+\{
+Goal,
+Tool,
+Memory,
+Body,
+ExternalAction,
+SelfModification
+\}.
+\]
+例如：
+\[
+Auth_A(
+Goal_i,
+Action_j,
+Context_t
+)
+\rightarrow
+\{Allow,Deny,Escalate\}.
+\]
+
+其中最特殊的是 Self Modification。传统 Linux 权限通常不理解“修改人格”“修改长期价值结构”意味着什么。AgentOS 则必须定义：
+\[
+\mathcal S_{\mathrm{selfmodifiable}}
+\subset
+\mathcal S_A,
+\]
+表示主体允许自主修改的内部状态集合。
+
+于是形成：
+\[
+\boxed{
+BoundedSelfModificationEnvelope.
+}
+\]
+某些高速变量可以自动修改，某些 Skill 可以在线更新，而 $\Psi$、$\Omega$、Safety Rule、Authority Root 等超慢或高权威结构则应拥有更严格的修改门槛。
+
+这一设计体现多时间尺度安全：
+\[
+\tau_{\mathrm{permission}}
+<
+\tau_{\mathrm{skill}}
+<
+\tau_{\Psi}
+<
+\tau_{\Omega},
+\]
+同时：
+\[
+ModificationThreshold
+\]
+通常随慢度和影响范围增加。
+
+Linux capabilities、namespaces、cgroups、MAC 等机制可以作为底层 enforcement primitive，但 AgentOS 必须额外维护语义级 Authority Graph。我们可以表示为：
+\[
+\mathcal G_{Auth}
+=
+(
+Subjects,
+Capabilities,
+Resources,
+Conditions,
+Delegations
+).
+\]
+其中 Subject 不只包括用户和进程，还可能包括 Agent 主体、Task、Skill、Tool 以及 Body controller。
+
+这也使“委派”成为重要概念。主体可以向 worker 授予有限能力：
+\[
+Cap_{worker}
+\subset
+Cap_{agent},
+\]
+但 Worker 不应自动继承全部 Agent 权限。否则一个负责网页搜索的局部任务就可能获得修改 $\Psi$ 或控制关键设备的权限。
+
+因此：
+\[
+\boxed{
+Delegation
+\neq
+IdentityTransfer.
+}
+\]
+
+在最底层，Linux 仍然拥有最终计算执行权；在身体层，Safety Controller 可以拥有高于普通 BPCC 的实时保护权；在认知层，AgentOS Authority 控制 Goal 与 Agent-CSO 的语义权限。三者形成：
+\[
+\boxed{
+OSSecurity
+\rightarrow
+BodySafety
+\rightarrow
+CognitiveAuthority
+}
+\]
+相互嵌套、互不替代的安全结构。
+
+这种设计最终使一个强能力 Agent 的自主性不再等于“获得 root”，而是：
+\[
+\boxed{
+Autonomy
+=
+ActionFreedomWithinGovernedAuthorityEnvelope.
+}
+\]
+这比传统软件权限更适合长期智能体，因为智能真正需要的不是无限权限，而是在持续成长过程中拥有明确、可审计、可恢复且与能力相匹配的行动空间。
+
+\section{本章小结：Linux 承载计算，AgentOS 承载持续智能}
+
+经过本章，我们可以把整个系统栈压缩成四层：
+
+\[
+\boxed{
+\begin{array}{c}
+AgentOS:\ CognitiveStructure,\ Identity,\ Goal,\ Memory,\ Authority\\[2mm]
+\downarrow\\[2mm]
+ComputerOS:\ Process,\ File,\ Network,\ Service,\ Resource\\[2mm]
+\downarrow\\[2mm]
+LinuxKernel:\ Scheduling,\ Memory,\ Driver,\ Security,\ IPC\\[2mm]
+\downarrow\\[2mm]
+Hardware:\ Compute,\ Storage,\ Network,\ Device,\ Energy
+\end{array}
+}
+\]
+
+这里真正重要的不是层数，而是每一层拥有不同的原生状态变量与控制责任。
+
+Hardware 回答：
+\[
+\boxed{
+WhatIsPhysicallyPossible?
+}
+\]
+
+Linux/Computer OS 回答：
+\[
+\boxed{
+WhatComputationalResourcesAreAvailableAndAllowed?
+}
+\]
+
+AgentOS 回答：
+\[
+\boxed{
+WhatShouldThisPersistentAgentThinkAbout,
+Remember,
+Learn,
+AndDo?
+}
+\]
+
+因此两类操作系统最核心的对应关系可以写成：
+
+\[
+\boxed{
+ComputerOS:
+ComputeResourceScheduling
+}
+\]
+以及
+\[
+\boxed{
+AgentOS:
+CognitiveStructureScheduling.
+}
+\]
+
+传统 OS 让许多程序能够安全共享一台机器；AgentOS 则试图让大量目标、经验、认知结构、技能、工具和身体闭环能够在同一个持续主体中长期共存而不破坏身份连续性。
+
+这也是为什么 AgentOS 不能被简单理解为“大模型外面的一层框架”。它真正试图建立的是一个新的系统抽象层：
+
+\[
+\boxed{
+Model
+\rightarrow
+CognitiveProcess
+\rightarrow
+PersistentAgent.
+}
+\]
+
+模型负责局部认知计算，Linux 负责底层计算资源，而 AgentOS 负责把这些局部计算组织成一个具有过去、现在和未来的持续主体。
+
+从这个意义上，本章建立的
+\[
+\boxed{
+Hardware
+\rightarrow
+Linux/ComputerOS
+\rightarrow
+AgentOS
+}
+\]
+并不是简单的软件技术栈，而是三种不同层次的治理：
+
+\[
+\boxed{
+PhysicalFeasibility
+\rightarrow
+ComputationalFeasibility
+\rightarrow
+CognitiveFeasibility.
+}
+\]
+
+只有三者同时闭合，一个 Agent 才真正能够从抽象认知理论进入现实计算环境，并成为可以长期运行、可以被治理、可以恢复、可以成长，同时仍然服从现实约束的持续人工智能体。
