@@ -1,8 +1,6 @@
 \chapter{FBI：Functional Body Interface——从具体身体到统一智能体身体语义}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.92\textwidth}
+\begin{chapteroverviewbox}
 \textbf{本章总体说明}
 
 在前述 AgentOS 体系中，我们已经把一个完整智能体区分为认知内核与身体运行时两个彼此耦合但时间尺度不同的动力系统。认知内核处理目标、记忆、自我、推理与长期结构变化；身体运行时则直接面对现实世界中的传感器、执行器、设备状态、数字接口和高频局部动力学。问题由此变得十分具体：如果不同身体拥有完全不同的传感器、执行器、坐标系、控制协议和内部状态，一个持续存在的 Agent Kernel 如何在不随每一种身体重新设计自身的情况下获得统一的“身体经验”并发出统一意义上的行动意图？
@@ -22,9 +20,7 @@ AgentInvariantBodySemantics
 }
 \]
 其目标是在保持具体身体高效、局部、实时和可适应的同时，使上层 Agent Kernel 尽可能保持身体无关性。FBI 因而是 Body Scale 原理真正落入系统工程的第一道接口，也是后续 SGC、FCS、BPCC、KRA 以及多身体迁移能够成立的基础。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 
 \section{为什么智能体需要一个功能身体接口}
@@ -696,11 +692,9 @@ NewCapability.
 \]
 
 这种结构与我们此前提出的 Body Scale 直接相关。Body Scale 越高，并不是两个身体越相似，而是：
-\[
-\boxed{
-\text{已有高层认知结构在新的 Capability Descriptor 下可复用的比例越高。}
-}
-\]
+\begin{statementbox}
+已有高层认知结构在新的 Capability Descriptor 下可复用的比例越高。
+\end{statementbox}
 因此未来可以定义概念性的身体迁移率：
 \[
 T_{B_i\rightarrow B_j}
@@ -876,12 +870,8 @@ E_{cap}\downarrow.
 
 因此，FBI 的最终定义可以写成：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 FBI 是具体身体动力学与持续智能主体之间的稳定功能语义边界。它把身体特有的感知、内部状态、执行能力和约束投影为 Agent 可长期理解的公共身体结构，同时把高层控制意图限制性地映射回具体身体，使“同一个 Agent 使用不同身体”成为可以工程实现而不仅是哲学假设的问题。
-}
-}
-\]
+\end{statementbox}
 
 这也是为什么在 AgentOS 的工程结构中，FBI 必须先于更复杂的身体预测、技能编译和跨身体适应机制被稳定定义：如果身体与认知之间不存在一个长期稳定的公共语义契约，那么任何后续的身体学习都会不断反向污染认知内核，所谓 Body Scale 与持续身份也就失去了真正的工程基础。

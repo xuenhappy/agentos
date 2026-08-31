@@ -158,11 +158,9 @@ Scheduler\nrightarrow UltimateValueDefinition.
 在纯数字 Agent 中，$\tau_{\mathrm{sched}}$ 可以明显缩短，但逻辑关系仍然成立：Scheduler 面向“当前认知周期”，而不是底层伺服环或生命周期级价值演化。
 
 因此，Scheduler 在 AgentOS 中最准确的位置并不是“中央决策器”，而是
-\[
-\boxed{
-\text{有限认知资源的时序治理层}
-}
-\]
+\begin{statementbox}
+有限认知资源的时序治理层
+\end{statementbox}
 它决定什么在当前时刻成为显式认知事件，什么保持后台，什么暂停，什么等待，什么被重新提升，以及什么必须让出资源。
 
 \section{Scheduler、SPC、TCE 与 CCM 的职责分离}
@@ -184,11 +182,9 @@ x_t^{body},
 ).
 \]
 它回答的是：
-\[
-\boxed{
-\text{系统现在可能处于什么状态？}
-}
-\]
+\begin{statementbox}
+系统现在可能处于什么状态？
+\end{statementbox}
 SPC 的输出包含负载、冲突、不确定性、相态、目标竞争、循环风险和身体资源等估计，但它原则上不直接决定哪个任务必须运行。
 
 TCE 则产生连续认知控制信号：
@@ -203,11 +199,9 @@ G_t
 ),
 \]
 它调节认知温度、探索强度、搜索深度、注意范围、控制增益、节奏和保守程度。它回答的是：
-\[
-\boxed{
-\text{当前认知过程应该以怎样的动力学方式运行？}
-}
-\]
+\begin{statementbox}
+当前认知过程应该以怎样的动力学方式运行？
+\end{statementbox}
 
 CCM 面向结构负载治理。设一个待执行任务当前表现为结构
 \[
@@ -220,11 +214,9 @@ CCM 可以产生
 \mathcal T_{\mathrm{CCM}}(\mathcal C_i),
 \]
 其中 $\mathcal T_{\mathrm{CCM}}$ 可以是压缩、折叠、分解、支线抑制、表示重构、暂停或者微卸载。它回答的是：
-\[
-\boxed{
-\text{怎样让当前认知结构变得可处理？}
-}
-\]
+\begin{statementbox}
+怎样让当前认知结构变得可处理？
+\end{statementbox}
 
 Scheduler 最后根据前三者的结果决定
 \[
@@ -238,11 +230,9 @@ u_t,
 ),
 \]
 回答：
-\[
-\boxed{
-\text{有限资源现在应该分给谁？}
-}
-\]
+\begin{statementbox}
+有限资源现在应该分给谁？
+\end{statementbox}
 
 于是四者形成非常清晰的运行时闭环：
 \[
@@ -651,11 +641,9 @@ E\rightarrow\Theta
 的批量整理。这体现出一种重要的多时间尺度原则：\textbf{执行和巩固不必同步发生}。AgentOS 可以先保持生存和任务连续，再在适当时刻将经历转化为长期结构。
 
 所以“记忆能力强”不能简单用存储数量或检索召回率衡量。对于持续 Agent，更重要的问题是：
-\[
-\boxed{
-\text{能否在正确的时间，以正确的粒度，召回正确的结构。}
-}
-\]
+\begin{statementbox}
+能否在正确的时间，以正确的粒度，召回正确的结构。
+\end{statementbox}
 Scheduler 在这里承担了记忆系统与当前认知之间的时间边界管理，使记忆从被动数据库真正成为生命周期认知系统的一部分。
 
 \section{工具与外部进程的异步调度}
@@ -1167,11 +1155,9 @@ TopologicalRewriting.
 \text{WhichProcessUsesCPUNow?}
 \]
 而 AgentOS Scheduler 更接近在回答
-\[
-\boxed{
-\text{WhichPartOfTheAgent'sWorldBecomesExplicitNow?}
-}
-\]
+\begin{statementbox}
+WhichPartOfTheAgent'sWorldBecomesExplicitNow?
+\end{statementbox}
 它决定哪个目标成为当前目标，哪个记忆成为当前记忆，哪个异常值得打断思考，哪个工具结果现在值得读取，以及哪个后台过程应该继续保持沉默。
 
 因此 Scheduler 实际治理的是智能体的“现在性”。对于一个持续主体，世界中任何时刻都有远多于其能够显式处理的事实、需求和可能行动。$h(t)$ 是一条不断前进的有限认知切面，而 Scheduler 决定哪些结构穿过这一切面。可以把它形式化为
@@ -1272,17 +1258,13 @@ Dispatch
 \]
 
 本章得到的主要理论原则可以归纳为：
-\[
-\boxed{
-\text{有限工作记忆必然产生调度。}
-}
-\]
+\begin{statementbox}
+有限工作记忆必然产生调度。
+\end{statementbox}
 
-\[
-\boxed{
-\text{存在不等于激活，激活不等于获得执行权。}
-}
-\]
+\begin{statementbox}
+存在不等于激活，激活不等于获得执行权。
+\end{statementbox}
 
 \begin{center}
 \bfseries SPC 负责观察，TCE 负责调制，CCM 负责负载治理，Scheduler 负责资源分配。
@@ -1313,13 +1295,9 @@ SlowGovernance\neq FastMicromanagement.
 \]
 
 以及最重要的一条：
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 成熟智能并不是同时思考更多事情，而是越来越准确地决定什么值得在此刻成为思考。
-}
-}
-\]
+\end{statementbox}
 
 因此，Scheduler 的真正作用并不是提高一个算法的并行度，而是为持续主体建立时间秩序。它使有限的 $h(t)$ 不再被世界无差别占据，使过去、现在、未来目标以及外部事件能够在同一个认知切面上形成受治理的竞争关系。正是这种选择性的时间组织，使 AgentOS 有可能在不复制主体、不无限扩张工作记忆的情况下，同时维持多任务运行、长期计划、记忆整合、现实响应和身份连续。
 

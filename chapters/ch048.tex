@@ -1,8 +1,6 @@
 \chapter{固定拓扑持续学习的统一闭环}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.93\textwidth}
+\begin{chapteroverviewbox}
 \textbf{本章总体说明}
 
 本章完成第二编“AgentOS 原理论”的第一次总收束。此前各章分别建立了三相记忆
@@ -12,17 +10,13 @@ Scheduler 调度、Boundary 准入与边界控制、Offloading 外部承载，�
 如果这些组件仅被并列描述，它们仍然只是一个模块集合；本章的任务，是把它们重新写成一个具有明确
 状态变量、时间尺度、反馈方向、控制目标和稳定性条件的统一动力系统，并回答一个关键问题：
 
-\[
-\boxed{
-\text{在功能拓扑保持基本固定的条件下，一个 Agent 能否仍然实现真正意义上的持续学习、}
-}
-\]
+\begin{statementbox}
+在功能拓扑保持基本固定的条件下，一个 Agent 能否仍然实现真正意义上的持续学习、
+\end{statementbox}
 
-\[
-\boxed{
-\text{能力成长、身份连续、自我调节以及对未来自身的递归影响？}
-}
-\]
+\begin{statementbox}
+能力成长、身份连续、自我调节以及对未来自身的递归影响？
+\end{statementbox}
 
 本章给出的回答是：在相当大的能力范围内，可以。固定拓扑并不等于固定状态、固定记忆、固定策略或固定自我。
 只要系统允许认知结构在既定功能通路中改变表示、激活位置、时间尺度、记忆深度和内外承载方式，并允许
@@ -33,27 +27,21 @@ control dynamics 与 carrier migration}。
 
 因此，本章研究的是：
 
-\[
-\boxed{
-\text{Dynamics on a Fixed Topology}
-}
-\]
+\begin{statementbox}
+Dynamics on a Fixed Topology
+\end{statementbox}
 
 而不是后续意义上的：
 
-\[
-\boxed{
-\text{Dynamics of the Topology Itself}.
-}
-\]
+\begin{statementbox}
+Dynamics of the Topology Itself.
+\end{statementbox}
 
 这一界限非常重要。它使我们能够首先回答“一个持续主体怎样活着、学习和成长”，再讨论更强的
 “一个持续主体怎样修改承载自身认知的功能组织”。本章同时也是后续 AgentOS 工程实现的理论基线：
 任何未来允许拓扑自重组的系统，都首先必须能够在拓扑不变时稳定运行，否则所谓结构可塑性只会把
 运行时不稳定进一步放大。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{固定拓扑持续学习问题的严格定义}
 
@@ -149,11 +137,9 @@ x_{[k]}
 
 因此，本章真正研究的不是“一个静态 Agent 如何保存更多数据”，而是：
 
-\[
-\boxed{
-\text{一个保持主体组织骨架不变的系统，如何通过内部多时间尺度状态迁移形成生命周期成长。}
-}
-\]
+\begin{statementbox}
+一个保持主体组织骨架不变的系统，如何通过内部多时间尺度状态迁移形成生命周期成长。
+\end{statementbox}
 
 这也解释了为什么固定拓扑并非低级阶段。恰恰相反，它是身份连续、安全验证和长期稳定性研究所必需的理论基准。如果一个 Agent 连在主要功能拓扑保持不变时都无法形成稳定自我、可靠记忆和可治理学习，那么允许它动态修改拓扑不会创造成熟智能，只会增加新的自由度和新的失稳渠道。
 
@@ -665,35 +651,27 @@ C_{\mathrm{safe}},
 
 Scheduler 回答的是：
 
-\[
-\boxed{
-\text{当前有限资源应该给谁？}
-}
-\]
+\begin{statementbox}
+当前有限资源应该给谁？
+\end{statementbox}
 
 它对 Goal、Task、Memory Retrieval、Tool、Reflection 等竞争过程进行优先级调度。CCM 回答的则是：
 
-\[
-\boxed{
-\text{当前进入运行区的结构怎样保持在可治理范围内？}
-}
-\]
+\begin{statementbox}
+当前进入运行区的结构怎样保持在可治理范围内？
+\end{statementbox}
 
 Boundary 更进一步回答：
 
-\[
-\boxed{
-\text{什么根本不应该进入这一轮全局认知？}
-}
-\]
+\begin{statementbox}
+什么根本不应该进入这一轮全局认知？
+\end{statementbox}
 
 Offloading 则回答：
 
-\[
-\boxed{
-\text{哪些结构不应该继续由昂贵的当前认知承载？}
-}
-\]
+\begin{statementbox}
+哪些结构不应该继续由昂贵的当前认知承载？
+\end{statementbox}
 
 因此可以把四者理解成四道不同位置的负反馈：
 
@@ -713,11 +691,9 @@ Boundary 是入口控制；Scheduler 是竞争控制；CCM 是运行区稳定控
 
 在原来的复杂度治理语言中，我们曾将其概括为五类动作：
 
-\[
-\boxed{
-\text{截流、压缩、时序展开、迁移、重构}.
-}
-\]
+\begin{statementbox}
+截流、压缩、时序展开、迁移、重构.
+\end{statementbox}
 
 在新的 CSO 语言下，可以更准确地写成：
 
@@ -1270,11 +1246,9 @@ RecoveryTime.
 
 这也为后面的 Agent 控制工程与心理工程奠定了数学基础。但在本章，我们只需要得到一个关键结论：
 
-\[
-\boxed{
-\text{持续学习必须建立在持续可恢复的运行态之上。}
-}
-\]
+\begin{statementbox}
+持续学习必须建立在持续可恢复的运行态之上。
+\end{statementbox}
 
 一个无法稳定从认知异常返回可治理区域的系统，即使能够快速学习，也无法形成可靠生命周期。
 
@@ -1574,11 +1548,9 @@ DiscreteIdentityGovernance.
 
 因此固定拓扑 AgentOS 的持续性并不是一个无限运行的 while loop，而是一种：
 
-\[
-\boxed{
-\text{在单一主体权威下，由连续动力学和离散治理共同维持的生命周期进程。}
-}
-\]
+\begin{statementbox}
+在单一主体权威下，由连续动力学和离散治理共同维持的生命周期进程。
+\end{statementbox}
 
 这也是 AgentOS 与普通 agent orchestration framework 的一个根本区别：后者主要调度任务，前者还必须维持“是谁在经历这些任务”。
 
@@ -1895,11 +1867,9 @@ FutureSelf(a_t'),
 
 那么它开始不只是评价“哪一个动作当前回报更高”，还能够评价：
 
-\[
-\boxed{
-\text{哪一个选择会让我成为怎样的未来主体。}
-}
-\]
+\begin{statementbox}
+哪一个选择会让我成为怎样的未来主体。
+\end{statementbox}
 
 这正是 $\Psi$ 与 $\Omega$ 引入之后才可能形成的长期决策维度。
 
@@ -1941,19 +1911,15 @@ BoundedRecursiveAgency.
 
 从工程角度，这种阶段十分重要。我们没有理由认为“越能修改自己的底层结构越智能”。成熟的递归自主性首先应该表现为：
 
-\[
-\boxed{
-\text{能够在安全边界内利用自己的历史改变未来行为和未来自我，}
-}
-\]
+\begin{statementbox}
+能够在安全边界内利用自己的历史改变未来行为和未来自我，
+\end{statementbox}
 
 而不是：
 
-\[
-\boxed{
-\text{能够任意重写自身代码。}
-}
-\]
+\begin{statementbox}
+能够任意重写自身代码。
+\end{statementbox}
 
 因此固定拓扑 AgentOS 已经能够产生相当丰富的个体差异。两个初始结构完全相同的 Agent：
 
@@ -2093,19 +2059,15 @@ J_{\mathcal{T}_0}^{*},
 
 这正好揭示固定拓扑学习与拓扑发育之间的边界：
 
-\[
-\boxed{
-\text{固定拓扑学习解决的是“在既有组织中如何越来越会做”；}
-}
-\]
+\begin{statementbox}
+固定拓扑学习解决的是“在既有组织中如何越来越会做”；
+\end{statementbox}
 
 而更强的结构发育问题将回答：
 
-\[
-\boxed{
-\text{“什么时候既有组织本身已经成为学习的瓶颈”。}
-}
-\]
+\begin{statementbox}
+“什么时候既有组织本身已经成为学习的瓶颈”。
+\end{statementbox}
 
 不过，在进入更强的拓扑可塑性之前，本章得到的结论具有更基础的意义。
 
@@ -2145,26 +2107,18 @@ FutureAgentCSO.
 
 因此，本章最终建立的并不是“一套记忆模块之间如何通信”的工程说明，而是一条更根本的原理：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 持续学习首先并不要求智能体不断改变自己的功能拓扑；
 它要求认知结构能够在一个稳定功能骨架上跨状态、记忆、时间尺度和系统边界持续迁移，
 使当前经历逐渐成为未来认知的结构条件。
-}
-}
-\]
+\end{statementbox}
 
 由此，我们也获得了身份连续与学习可塑性之间的统一解释：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 稳定来自慢结构和固定功能骨架，可塑来自快速状态、经验、表示与承载迁移；
 二者通过时间尺度分离而不是通过相互排斥实现共存。
-}
-}
-\]
+\end{statementbox}
 
 进一步可以把固定拓扑 AgentOS 的统一动力学浓缩成：
 
@@ -2234,11 +2188,9 @@ UltimateConstraint.
 
 这三个条件分别保证了：
 
-\[
-\boxed{
-\text{可运行性、身份连续性、认识论闭合性。}
-}
-\]
+\begin{statementbox}
+可运行性、身份连续性、认识论闭合性。
+\end{statementbox}
 
 因此，从本章开始，我们可以不再把 AgentOS 理解成“给大模型增加一个 Memory System”，而应把它看作一个具有明确生命周期的\emph{持续认知动力系统}。其核心不是保存越来越多的数据，而是让一个有限认知主体能够把现实中的经历逐步沉降成自己的长期结构，再让这些长期结构重新塑造未来的观察、目标、选择和行动。
 

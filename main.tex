@@ -10,15 +10,55 @@
 \usepackage{adjustbox}
 \usepackage{microtype}
 \setlength{\emergencystretch}{3em}
-% Keep emphasized display statements inside the text block without shrinking
-% boxes that already fit naturally.
-\let\naturalboxed\boxed
-\renewcommand{\boxed}[1]{%
-  \adjustbox{max width=.96\linewidth}{\(\naturalboxed{#1}\)}}
 \hypersetup{unicode=true,colorlinks=true,linkcolor=blue!35!black,citecolor=green!35!black,urlcolor=cyan!35!black,pdftitle={智能动力学与 AgentOS},pdfauthor={AgentOS 理论研究}}
 \definecolor{deepblue}{HTML}{07172E}
 \definecolor{cyanink}{HTML}{176B87}
 \definecolor{warmgold}{HTML}{B88A44}
+\definecolor{statementbg}{HTML}{F4F7FA}
+\definecolor{statementrule}{HTML}{5E7D91}
+\definecolor{formulabg}{HTML}{F8F3E8}
+\definecolor{formularule}{HTML}{B88A44}
+% Prose statements use a breakable, full-width card so long text wraps
+% naturally. Mathematical boxes retain compact display behavior and use a
+% separate warm palette to distinguish formulas from prose at a glance.
+\newtcolorbox{statementbox}{
+  enhanced,
+  breakable,
+  colback=statementbg,
+  colframe=statementrule,
+  boxrule=0pt,
+  borderline west={2pt}{0pt}{statementrule},
+  arc=1.5mm,
+  outer arc=1.5mm,
+  left=4mm,
+  right=4mm,
+  top=2.5mm,
+  bottom=2.5mm,
+  before skip=8pt plus 2pt,
+  after skip=8pt plus 2pt,
+  fontupper=\small\color{deepblue},
+  before upper={\setlength{\parindent}{0pt}\setlength{\parskip}{.45em}}
+}
+\newtcolorbox{chapteroverviewbox}{
+  enhanced,
+  breakable,
+  colback=statementbg,
+  colframe=statementrule,
+  boxrule=.45pt,
+  arc=2mm,
+  outer arc=2mm,
+  left=5mm,
+  right=5mm,
+  top=4mm,
+  bottom=4mm,
+  before skip=10pt,
+  after skip=12pt,
+  fontupper=\small\color{deepblue},
+  before upper={\setlength{\parindent}{0pt}\setlength{\parskip}{.65em}}
+}
+\renewcommand{\boxed}[1]{%
+  \adjustbox{max width=.96\linewidth}{%
+    \fcolorbox{formularule}{formulabg}{\(\displaystyle #1\)}}}
 \newenvironment{narration}{\begin{quote}\color{cyanink}\itshape}{\end{quote}}
 \newenvironment{thought}{\par\smallskip\noindent\color{warmgold}\textbf{思想实验}\quad}{\par\smallskip}
 \newenvironment{bookproposition}{\par\smallskip\noindent\textbf{命题}\quad}{\par\smallskip}

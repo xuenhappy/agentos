@@ -1,8 +1,6 @@
 \chapter{BPCC：身体预测控制小脑}
 
-\begin{center}
-\fbox{
-\parbox{0.92\textwidth}{
+\begin{chapteroverviewbox}
 \textbf{本章总体说明——BPCC 的理论定位。}
 本章讨论 Body Runtime 中最核心的快速动力学组件：BPCC（Body Predictive Control Core，身体预测控制核心）。在本书的总体架构中，BPCC 不是第二个 Agent，也不是缩小版的认知内核，更不是一个简单的运动控制器。它承担的是介于原始身体动力学与高层认知之间的一组高速、局部、连续、可适应的闭环功能：预测身体在短时间尺度上的状态变化，在给定高层控制参考与安全约束的条件下选择局部动作，估计预测与现实之间的残差，并在不破坏整体语义接口的前提下持续校准自身内部动力模型。
 
@@ -23,9 +21,7 @@ AdaptiveLearning
 这一基本结构。
 
 本章特别坚持三个边界。第一，BPCC 可以拥有复杂的内部潜在状态，但它不拥有独立的长期身份、生命周期记忆与主体自治，因此不能被视为第二主体。第二，BPCC 的预测永远不能取得现实权威；真正的身体状态必须重新经过现实、传感和 Body Runtime 的观测链路确认。第三，BPCC 的学习主要发生在快速局部动力学与控制映射上，它不得未经治理地修改 Agent 的长期目标、自我结构和价值结构。由此，BPCC 成为本书多尺度原则在身体层的一个具体实现：\textbf{正常快速动力学留在局部闭环中解决，只有持续、重要而无法局部消解的残差才应向更高认知尺度升级。}
-}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{为什么 Body Runtime 需要自己的智能}
 
@@ -1239,11 +1235,9 @@ u^{obs}
 
 其中 $\Delta I_{task}$ 表示该观测动作预计带来的任务相关信息增益，$C_{obs}$ 表示观测成本，而 $R_{sideeffect}$ 表示该所谓 ``只读'' 操作实际上对现实产生副作用的风险。后一项尤其重要，因为现实中的很多感知动作并不存在绝对的只读性。例如摄像头转动改变了机器人姿态；鼠标 Hover 可能触发菜单展开；选择文本可能改变网页的 selection state；读取某些远程资源甚至可能触发服务器日志或访问计数。因此 ``Read-Only'' 在 AgentOS 中应定义成：
 
-\[
-\boxed{
-\text{不以改变目标世界语义状态为主要目的，并受到副作用约束的观测型动作。}
-}
-\]
+\begin{statementbox}
+不以改变目标世界语义状态为主要目的，并受到副作用约束的观测型动作。
+\end{statementbox}
 
 而不是声称它在物理意义上绝对不改变任何状态。
 
@@ -1442,25 +1436,19 @@ LocalSafetyResponse.
 
 三者分别解决：
 
-\[
-\boxed{
-\text{我下一步应该看哪里？}
-}
-\]
+\begin{statementbox}
+我下一步应该看哪里？
+\end{statementbox}
 
-\[
-\boxed{
-\text{我下一步应该怎样作用于世界？}
-}
-\]
+\begin{statementbox}
+我下一步应该怎样作用于世界？
+\end{statementbox}
 
 以及：
 
-\[
-\boxed{
-\text{发生危险时身体必须立即做什么？}
-}
-\]
+\begin{statementbox}
+发生危险时身体必须立即做什么？
+\end{statementbox}
 
 这三种身体能力与 Fast Prediction、Residual Estimation 和 Adaptive Learning 共同构成一个真正完整的 Body Predictive Control Core。
 

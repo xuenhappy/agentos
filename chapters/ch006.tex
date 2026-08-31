@@ -9,17 +9,13 @@
 本章提出“智能频谱”（Intelligence Spectrum）作为回答这一问题的理论工具。我们不把智能频谱理解为经典信号处理中某个固定信号的傅里叶功率谱，而把它定义为：\textbf{一个智能系统中，在不同特征时间尺度上闭合的状态变化、预测、控制、记忆与结构更新过程所形成的多尺度动力学分布。}换言之，所谓频率首先不是某个神经元、Token 或模块的物理振荡频率，而是某种功能闭环完成一次有效状态更新所对应的特征速率。不同频率的智能过程并非彼此独立，它们通过自顶向下的慢约束、自底向上的残差积累、跨尺度状态压缩以及结构更新形成一个整体。
 
 因此，本章的核心不是证明“智能等于若干正弦波之和”，恰恰相反，我们将逐步说明：真正的智能更接近一个由多个非线性、状态依赖、相互调制的快--慢动力系统共同构成的嵌套闭环体系。一个快速局部环并不是独自在固定平衡点附近运行，而是在慢层不断移动的结构中心、可行域与先验约束之内活动；慢层也不是凌驾于快速层之上的中央指挥器，而是通过整合长期残差、趋势与统计结构逐渐改变自身。最终我们得到一个贯穿全书的重要动力学原则：
-\[
-\boxed{
-\text{Slow Structure Shapes Fast Dynamics}
-}
-\]
+\begin{statementbox}
+Slow Structure Shapes Fast Dynamics
+\end{statementbox}
 以及其反向关系：
-\[
-\boxed{
-\text{Persistent Fast Residual Shapes Slow Structure}.
-}
-\]
+\begin{statementbox}
+Persistent Fast Residual Shapes Slow Structure.
+\end{statementbox}
 
 这两个方向共同构成多尺度智能能够既保持稳定、又保持学习能力的基本机制。后续三相记忆、工作记忆、SPC--TCE 调节、AHC、CCM、Body Runtime、BPCC 以及更高层的生命周期结构，都可以被重新放置在这一频谱坐标中理解。因此，本章不是一个独立的数学插曲，而是后续 AgentOS 多时间尺度设计的动力学基础。
 \end{chapterintro}
@@ -1143,19 +1139,15 @@ x_f
 从智能意义上看，这对应“旧经验突然失效”“熟练技能遇到异常”“原世界观无法解释持续证据”等情况。于是系统需要从通常的局部绝热运行切换成结构更新甚至拓扑重构。
 
 因此绝热近似并不是告诉我们“慢层永远不变”，而是告诉我们：
-\[
-\boxed{
-\text{在局部时间窗口内慢层应足够稳定；在更长时间窗口内慢层又必须能够学习。}
-}
-\]
+\begin{statementbox}
+在局部时间窗口内慢层应足够稳定；在更长时间窗口内慢层又必须能够学习。
+\end{statementbox}
 这正是稳定--可塑性问题的一个多时间尺度表达。
 
 进一步，我们可以将智能体的生命周期理解为：
-\[
-\boxed{
-\text{Fast fluctuations around evolving slow manifolds}.
-}
-\]
+\begin{statementbox}
+Fast fluctuations around evolving slow manifolds.
+\end{statementbox}
 如果存在多个时间尺度，则不是单一慢流形，而可能形成：
 \[
 \mathcal{M}_1
@@ -1523,40 +1515,29 @@ Environment
 
 我们由此得到本章的四条基础规律：
 
-\[
-\boxed{
-\parbox{.86\linewidth}{\centering\bfseries 第一，智能具有频谱而非单一认知速度。}
-}
-\]
+\begin{statementbox}
+\bfseries 第一，智能具有频谱而非单一认知速度。
+\end{statementbox}
 
-\[
-\boxed{
-\parbox{.86\linewidth}{\centering\bfseries 第二，每个尺度应尽可能闭合自己的快速局部循环。}
-}
-\]
+\begin{statementbox}
+\bfseries 第二，每个尺度应尽可能闭合自己的快速局部循环。
+\end{statementbox}
 
-\[
-\boxed{
-\parbox{.86\linewidth}{\centering\bfseries 第三，慢结构通过中心、边界、先验和增益塑造快速活动，而不是持续微操快速活动。}
-}
-\]
+\begin{statementbox}
+\bfseries 第三，慢结构通过中心、边界、先验和增益塑造快速活动，而不是持续微操快速活动。
+\end{statementbox}
 
-\[
-\boxed{
-\parbox{.86\linewidth}{\centering\bfseries 第四，只有持续而有结构的快速残差，才应推动更慢结构发生改变。}
-}
-\]
+\begin{statementbox}
+\bfseries 第四，只有持续而有结构的快速残差，才应推动更慢结构发生改变。
+\end{statementbox}
 
 这四条规律将在后续章节中逐步获得具体载体。工作记忆 $h$、情景记忆 $E$、结构记忆 $\Theta$ 会形成不同时间尺度的记忆频谱；$\Psi$ 与 DGA/$\Omega$ 将成为更加缓慢的结构中心；SPC 与 TCE 将承担对快速认知状态的观测和调节；Body Runtime 与 BPCC 则把同样的快--慢结构延伸到真实身体。
 
 因此，本章最终并不是告诉读者“智能像频率”，而是建立一个更严格的判断：
 
-\[
-\boxed{
-\parbox{.86\linewidth}{\centering\bfseries
+\begin{statementbox}
+\bfseries
 智能的整体能力来源于多个不同时间尺度闭环之间的合理分工、相互约束和长期耦合，而不是来自任何单一尺度上的无限计算。
-}
-}
-\]
+\end{statementbox}
 
 从这一点开始，我们已经从“思考速度”的讨论真正进入了“智能动力学”的讨论。

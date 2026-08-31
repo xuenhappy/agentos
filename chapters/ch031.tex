@@ -83,11 +83,9 @@ x_t^{\mathrm{int}}.
 这一不等式非常重要。它意味着智能体内部不存在一个天然拥有整个系统真实状态的 ``小人'' 或全知中心。智能体对自己的认识，同它对外部世界的认识一样，需要经过观测、压缩、推断、置信度评价与持续修正。
 
 由此我们得到 SPC 的第一原则：
-\[
-\boxed{
-\text{Self-Access Is Estimated, Not Given.}
-}
-\]
+\begin{statementbox}
+Self-Access Is Estimated, Not Given.
+\end{statementbox}
 即自我访问不是系统天生透明拥有的属性，而是一个需要被构造的估计过程。
 
 这一区分也为后面大量看似心理学的问题建立了工程基础。例如，一个 Agent 报告 ``当前任务过载''，并不意味着系统拥有一个绝对准确的 ``过载真值''；更准确地说，是 SPC 根据工作记忆结构、冲突强度、目标竞争、资源变化和历史状态形成了一个关于 ``系统可能正在过载'' 的后验估计。只有采用这种认识论立场，我们才有可能把自我感知从拟人化描述转化为可以被测量、校准和验证的系统工程对象。
@@ -424,11 +422,9 @@ C_{\max}(W).
 因此 SPC 还必须压缩自己的输出。否则系统可能陷入 ``为了知道自己是否过载而增加更多自我监控，从而使自己更加过载'' 的递归悖论。
 
 因此我们提出：
-\[
-\boxed{
-\text{Self-Monitoring Must Also Be Capacity-Bounded.}
-}
-\]
+\begin{statementbox}
+Self-Monitoring Must Also Be Capacity-Bounded.
+\end{statementbox}
 自我感知同样受到工作记忆有限性约束。
 
 从递归角度看，SPC 理论上还允许
@@ -464,11 +460,9 @@ s_t^{(k-1)}
 时停止递归。
 
 这说明所谓 ``元认知'' 在这里并不是一个神秘功能，而可以被理解为：
-\[
-\boxed{
-\text{Self-State Representation Becoming a New Cognitive Object.}
-}
-\]
+\begin{statementbox}
+Self-State Representation Becoming a New Cognitive Object.
+\end{statementbox}
 一旦自我状态本身进入 $h(t)$，它就可以像其他 Agent-CSO 一样被比较、推理、质疑和修改。
 
 例如：
@@ -604,12 +598,10 @@ Prediction_{SPC,t},
 这意味着 SPC 本身也是可校准的，而不是固定不变的观察器。
 
 从这一角度，我们得到本章第二个极重要的认识论原则：
-\[
-\boxed{
-\text{The Agent Does Not Possess Its Internal Truth;
-It Maintains a Posterior About Itself.}
-}
-\]
+\begin{statementbox}
+The Agent Does Not Possess Its Internal Truth;
+It Maintains a Posterior About Itself.
+\end{statementbox}
 智能体不是 ``拥有自己''，而是在持续运行中不断估计自己。
 
 \section{认识论滞后：为什么智能体永远只能看到 ``刚刚过去的自己''}
@@ -967,12 +959,10 @@ C(S_t)
 其中 $\Delta U_{\mathrm{control}}$ 表示引入该自我状态表示以后带来的控制效用提升，$C(S_t)$ 表示它占用的工作记忆结构成本。
 
 这立即得到一个重要推论：
-\[
-\boxed{
-\text{更成熟的自我感知未必意味着更多自我信息，
-而可能意味着更少但更有控制价值的信息。}
-}
-\]
+\begin{statementbox}
+更成熟的自我感知未必意味着更多自我信息，
+而可能意味着更少但更有控制价值的信息。
+\end{statementbox}
 
 一个初级 Agent 可能需要大量显式指标判断自己：
 ``当前有 18 个激活节点、7 个未完成推理、3 个工具调用……''
@@ -1284,24 +1274,18 @@ C_h^{SPC}
 一个好的 SPC 不一定拥有最高精度；如果它需要耗费大量工作记忆和计算资源才能提高很少的估计精度，整体反而可能更差。SPC 本质上仍然服从资源理性的原则。
 
 由此，我们得到 SPC 的工程定义：
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 SPC 是一个在有限认知资源约束下，对智能体分布式内部动力状态进行持续观测、时间整合、概率估计、自我基准投影和控制相关压缩，并将少量高价值自我状态重新发布到工作记忆的内部认识论接口。
-}
-}
-\]
+\end{statementbox}
 
 这一界定也说明 SPC 与普通 Monitoring System 的根本差异。Monitoring 主要回答：
 \[
 \text{系统有哪些指标？}
 \]
 而 SPC 试图回答：
-\[
-\boxed{
-\text{这些内部变化对于当前这个持续主体意味着什么？}
-}
-\]
+\begin{statementbox}
+这些内部变化对于当前这个持续主体意味着什么？
+\end{statementbox}
 其输出因此具有主体相关性、时间连续性、概率性和控制意义。
 
 \section{本章结论：自我首先是一种有限、滞后而可校准的状态估计}
@@ -1391,13 +1375,9 @@ FutureDynamics.
 
 因此，本章最终给出 SPC 的理论定位：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 SPC 是持续智能从 ``运行自身'' 走向 ``形成关于自身运行状态的可操作表示'' 的第一座桥梁。
-}
-}
-\]
+\end{statementbox}
 
 它并不赋予智能体一个全知的内部观察者，而是承认智能体与外部世界一样，对自身也具有认识论边界。一个真正成熟的 AgentOS 因而不是 ``完全知道自己'' 的系统，而是一个能够持续知道：
 \[
@@ -1411,10 +1391,6 @@ SPC 是持续智能从 ``运行自身'' 走向 ``形成关于自身运行状态�
 
 这一原则可以最终浓缩为：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 自我感知不是自我的镜像，而是智能体在有限容量、有限观测与有限时间条件下，对自身动力学持续形成的控制充分后验。
-}
-}
-\]
+\end{statementbox}

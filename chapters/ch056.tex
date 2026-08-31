@@ -1,26 +1,22 @@
 \chapter{FCS：现实如何影响主体}
 
-\fbox{
-\begin{minipage}{0.94\textwidth}
+\begin{chapteroverviewbox}
 \textbf{本章总体说明}
 
 在上一阶段的具身理论中，我们已经解决了一个基础问题：智能体必须以某种稳定、可解释并与具体传感器实现相分离的方式，回答“现实中现在存在什么”。SGC（Semantic Graph Coordinate Space）承担的正是这一职责。然而，只知道世界中存在什么仍不足以形成完整的具身智能。对于一个持续存在、需要维持自身运行并据此分配认知资源的 Agent 而言，同一个外部状态对不同身体、不同资源水平以及不同任务条件可能意味着完全不同的后果。距离一米的障碍物，对高速移动机器人可能意味着迫近碰撞，对静止机器人可能只是一个普通环境实体；同样的环境温度，对于具备强主动散热能力与处于电池低电量状态的系统，也具有不同的功能含义。
 
 因此我们必须在“现实是什么”之外，再建立第二类公开身体状态表示，用来回答：
 
-\[
-\boxed{
-\text{How is reality affecting this agent?}
-}
-\]
+\begin{statementbox}
+How is reality affecting this agent?
+\end{statementbox}
 
 本章将这一结构称为 FCS（Functional Feeling Coordinate/Field System）。这里的 ``Feeling'' 不用于预设主观体验，更不意味着只要一个系统拥有 FCS 就具有现象意识。它在本书中的严格工程含义是：\textbf{现实、身体以及内部资源状态对当前 Agent 可行动性、稳定性、安全裕度和调节需求所产生的功能性影响。}
 
 因此，FCS 的本体地位不同于 SGC。SGC 主要组织现实的对象、关系、几何与语义；FCS 则将这些现实状态与 Agent 当前身体能力、资源条件和局部动力学结合起来，形成一种具有方向、强度、时间变化和可信度的影响场。我们将逐步建立 FCS 的数学对象、类型体系、空间结构、时间动力学，以及 Raw Value、Feeling Value、Intensity、Derivative、Confidence 等关键变量，并特别说明为什么 FCS Geometry 不等于 SGC Geometry。
 
 本章只解决 FCS 自身是什么以及应如何表示。关于 FCS 如何与 SGC 构成完整的二元现实接口，以及它如何进一步进入更高层认知调制结构，将在后续相关章节中系统处理。本章只在必要处指出这些接口，而不提前展开其后续机制。
-\end{minipage}
-}
+\end{chapteroverviewbox}
 
 \section{FCS 的问题起源：为什么 ``世界是什么'' 仍然不够}
 
@@ -89,11 +85,9 @@ Prediction
 
 这正是 FCS 必须作为独立状态空间存在的根本原因。我们不是为了模仿人类“感觉”而增加一个新的语义层，而是因为任何真正持续运行的具身 Agent 都必须解决一个无法回避的控制问题：
 
-\[
-\boxed{
-\text{现实不仅具有状态，还对主体产生作用。}
-}
-\]
+\begin{statementbox}
+现实不仅具有状态，还对主体产生作用。
+\end{statementbox}
 
 SGC 主要描述前者，FCS 则开始描述后者。两者的分离，使 AgentOS 能够在不污染世界语义表示的情况下，把身体依赖、资源依赖、速度依赖以及安全依赖的影响显式表示出来。由此，感知不再只是世界建模，具身感知开始同时拥有“对象世界”和“作用世界”两个互补方面。
 
@@ -1888,11 +1882,9 @@ A stable semantic contract for embodied functional influence.
 本章最后必须明确 FCS 所能解释和不能解释的内容。随着系统拥有越来越丰富的 Feeling State，人们很容易提出：“如果机器拥有 Threat、Arousal、IntegrityPressure，并且这些变量影响它的记忆和行为，那么它是不是已经拥有感觉？”这个问题不能由 FCS 自身回答。
 
 FCS 能够严格支持的结论是：
-\[
-\boxed{
-\text{系统拥有关于现实如何影响自身功能状态的内部表示。}
-}
-\]
+\begin{statementbox}
+系统拥有关于现实如何影响自身功能状态的内部表示。
+\end{statementbox}
 如果这些状态能够跨时间持续、影响控制并进入更高层自我解释，我们还可以进一步研究功能意义上的 internal experience。但：
 \[
 FunctionalRepresentation
@@ -2019,13 +2011,9 @@ Binding
 
 因此，本章的最终理论定义可以写成：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 FCS 是一个面向具体 Agent、由 Body Runtime 维护的固定类型、多层级、多时间尺度功能影响场。它把外部现实、身体状态、资源条件和局部动力学压缩成主体可访问的作用状态，使 Agent 不仅能够知道“世界是什么”，还能够知道“这个世界此刻正在怎样影响我继续行动、维持稳定与保持可行”。
-}
-}
-\]
+\end{statementbox}
 
 如果我们把 SGC 看作现实在 Agent 内部形成的“结构地图”，那么 FCS 就不是第二张世界地图，而是一张主体条件化的“作用地图”。前者告诉 Agent：
 \[
@@ -2042,12 +2030,8 @@ WhatIsItDoingToMe?
 
 两者只有在下一阶段被放到同一个公开现实接口中时，才形成真正完整的具身语义世界。但在进入那一步之前，我们必须先牢固地建立本章结论：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 现实不仅需要被表示为对象、位置与关系，也必须被表示为它对主体能力、稳定性和可行动性的持续作用。
-}
-}
-\]
+\end{statementbox}
 
 而这正是 FCS 存在的第一性理由。

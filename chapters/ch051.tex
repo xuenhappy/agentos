@@ -1,8 +1,6 @@
 \chapter{Agent Kernel 与 Body Runtime 的职责分离}
 
-\begin{center}
-\fbox{
-\parbox{0.92\textwidth}{
+\begin{chapteroverviewbox}
 \textbf{本章总体说明}
 
 本章确立 AgentOS 具身架构中一条不可动摇的系统边界：\textbf{认知主体的持续状态与身体的快速运行状态必须分离，Agent Kernel 负责决定“为何行动、做什么以及长期如何改变”，Body Runtime 负责决定“在当前具体身体上如何可靠、实时地把这种意图落实为现实过程”。}二者不是传统意义上的“上位机--下位机”简单分层，也不是“大模型--控制器”的工程拼接，而是同一持续智能体内部两个具有不同状态空间、不同时间尺度、不同学习目标、不同现实责任和不同安全权限的动力系统。
@@ -33,9 +31,7 @@ BodyRuntime:\ How\ this\ body\ does\ it
 \]
 
 这一分离是后续身体语义接口、SGC、FCS、快速预测控制以及 Kernel--Body 自适应耦合能够成立的前提。本章只建立职责边界及其动力学原因，不提前展开后续具体接口的数据结构与算法。
-}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{认知状态空间：Agent Kernel 所维护的不是身体状态，而是主体状态}
 
@@ -836,11 +832,9 @@ SlowGlobalAdaptation.
 这一结构与 singular perturbation theory、averaging theory、hierarchical control、real-time systems 等成熟理论具有很强的数学兼容性。特别是快--慢动力系统提供了后续严格证明系统稳定性的自然工具。但需要注意，本书借用这些数学理论，是为了描述 AgentOS 的跨尺度结构，而不是宣称整个认知系统天然满足某一个标准奇异摄动模型。真实 Agent 包含离散事件、模型切换、工具调用和记忆更新，因此最终更接近 hybrid multiscale dynamical system。
 
 由此，本节给出 AgentOS 的一个基本架构定理式原则：
-\[
-\boxed{
-\text{凡是其必要控制周期显著短于主体认知周期的过程，都不应以持续同步方式依赖 Kernel 闭环。}
-}
-\]
+\begin{statementbox}
+凡是其必要控制周期显著短于主体认知周期的过程，都不应以持续同步方式依赖 Kernel 闭环。
+\end{statementbox}
 
 这条原则将在所有物理 Body 和高频数字 Body 中成立。
 

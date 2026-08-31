@@ -1,9 +1,7 @@
 \chapter{具身输入的四象限结构：从原始作用到认知可用状态}
 \label{chap:embodied-input-four-quadrants}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.92\textwidth}
+\begin{chapteroverviewbox}
 \textbf{本章总纲}
 
 本章讨论 AgentOS 从抽象认知内核迈向具身系统以后必须首先解决的一个基础问题：\textbf{现实世界作用于身体之后，究竟以什么基本结构进入智能体？}我们将证明，把身体输入简单理解为 ``sensor data''、``multimodal tokens'' 或 ``observation'' 都是不充分的。对于持续存在并需要长期自我调节的智能体而言，身体输入至少包含两个相互正交的分类轴：第一轴描述作用来自身体外部还是身体内部，即 \emph{Origin Axis}；第二轴描述该信息主要用于形成``世界是什么''的状态表示，还是用于表达``世界或身体正在如何作用于我''的功能影响，即 \emph{Functional Form Axis}。两个二元轴的直积产生四类基本具身输入：
@@ -25,9 +23,7 @@ F^{\mathrm{int}}
 本章的核心结论是：\textbf{Perception 与 Feeling 并不是由传感器种类决定的，而是由信息在 Agent 整体闭环中的功能角色决定的；同一个底层物理信号可以同时产生状态表示与功能影响。}因此 ``Camera = Perception''、``Temperature Sensor = Feeling'' 这样的分类在系统论上并不成立。我们将进一步区分 Raw Signal、Perception、Semantic Representation、Functional Influence、Modulation 与 Exception，建立 Body Runtime 面向认知内核时最基本的输入本体。这里所称 ``Feeling'' 始终是可测量、可计算、可用于控制的\textbf{功能影响状态}，不对现象意识或主观感受作任何本体论断言。
 
 本章只建立具身输入的原始分类和数学结构，不提前展开后续章节中的 SGC、FCS 与 BPCC 具体实现；但这一四象限结构将成为这些组件得以正确分工的共同基础。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{为什么不能把具身输入简单定义为 ``多模态传感器数据''}
 \label{sec:why-not-multimodal-sensor-data}
@@ -98,18 +94,14 @@ F^{\mathrm{int}}
 所以同一物理量既可以成为对身体的描述，也可以成为对身体当前受作用程度的功能评价。
 
 这促使我们从 Hardware Ontology 转向 Functional Embodiment Ontology。我们不再首先问 ``信号从哪个设备来''，而是沿两个更加基础的轴进行分类。第一个轴回答：
-\[
-\boxed{
-\text{Where does the relevant causal condition originate?}
-}
-\]
+\begin{statementbox}
+Where does the relevant causal condition originate?
+\end{statementbox}
 即作用主要来自身体外部还是内部；第二个轴回答：
-\[
-\boxed{
-\text{Does the information primarily represent a state,
-or represent its functional influence on the Agent?}
-}
-\]
+\begin{statementbox}
+Does the information primarily represent a state,
+or represent its functional influence on the Agent?
+\end{statementbox}
 两个轴彼此独立，因此形成一个笛卡尔积：
 \[
 \mathcal I_B
@@ -259,11 +251,9 @@ F_B(x_B,u_B,x_W),
 两者在像素层可能相似，但对控制策略完全不同。前者要求改变外部世界模型，后者要求改变身体状态模型。
 
 Origin Axis 因而也是因果归因的一部分。一个具身智能体必须不断解决：
-\[
-\boxed{
-\text{Did the world change, did I change, or did our relation change?}
-}
-\]
+\begin{statementbox}
+Did the world change, did I change, or did our relation change?
+\end{statementbox}
 这比传统 ``input classification'' 更接近智能体真实需要解决的问题。它也是后续建立身体自我、故障诊断、动作归因和 World Verification 的基础。
 
 从外部理论上，本节可以与 embodied cognition、interoception/exteroception、causal inference、state-space decomposition 以及控制系统中的 plant/environment decomposition 相联系。但我们采取更工程化的立场：Origin Axis 的目的不是重建某种生物感觉分类，而是为 AgentOS 建立一个\textbf{可被运行时使用的因果边界坐标}。只有明确外部世界和身体状态分别在发生什么，Agent 才可能进一步判断这些状态意味着什么。
@@ -544,11 +534,9 @@ P^{\mathrm{int}}
 }
 \]
 即 Internal Perception-oriented Representation。它回答的并不是外部世界发生了什么，而是：
-\[
-\boxed{
-\text{What state is my body/runtime currently in?}
-}
-\]
+\begin{statementbox}
+What state is my body/runtime currently in?
+\end{statementbox}
 对于长期运行的 Agent，这一象限与外部感知同样重要，甚至构成主体能够保持稳定性的基础。一个能够理解外部世界却无法形成自身身体状态表示的系统，很难真正拥有持续的 agency，因为它无法准确判断自己的行动能力、资源余量、故障状态和控制边界。
 
 设身体状态空间为：
@@ -936,11 +924,9 @@ F^{int}_{energy}\uparrow,
 就可能持续推进任务直到身体进入故障。因此 Internal Functional Influence 是 Body Runtime 与 Cognitive Kernel 之间的重要调制桥梁。
 
 从理论位置上看，$F^{int}$ 也是我们以后理解 AHC 的重要前置条件，但本章不需要提前展开 AHC 内部结构。这里我们只需要建立清楚的接口原则：Body Runtime 必须能够把复杂内部状态压缩成一组具有可解释功能意义的连续变量，使认知系统能够在不读取全部底层遥测数据的情况下知道：
-\[
-\boxed{
-\text{How hard is my current body/runtime being pushed?}
-}
-\]
+\begin{statementbox}
+How hard is my current body/runtime being pushed?
+\end{statementbox}
 
 从外部理论看，这种思想可以与 physiology 中的 homeostasis/allostasis、control saturation、resource-aware computing、interoceptive processing 等比较。但 AgentOS 的目标不是模拟人类生理系统，而是抽象出一个跨身体类型均成立的工程原则：\textbf{任何持续主体都需要一个从内部状态到内部功能压力的映射，否则它就无法把身体有限性纳入认知决策。}
 
@@ -1086,11 +1072,9 @@ S_t^{(2)}
 的 ``re-interpretation'' 思想：新的长期结构可以重新解释旧经历，但不应伪造旧现实证据。具身输入层的 Perception/Semantic 分离正是这一原则在最靠近现实一侧的体现。
 
 从外部理论看，这与 classical perception pipeline、symbol grounding、epistemic logic、world model 和 interpretable state estimation 都有对应。但 AgentOS 的重点是把它提升成一个系统原则：
-\[
-\boxed{
-\text{语义可以改变，现实锚点不能被语义无条件覆盖。}
-}
-\]
+\begin{statementbox}
+语义可以改变，现实锚点不能被语义无条件覆盖。
+\end{statementbox}
 这使 Agent 能够同时拥有持续学习能力和现实纠错能力。
 
 \section{Feeling 不等于 Modulation：功能影响状态与控制信号必须分离}
@@ -1624,14 +1608,10 @@ AgentRelativeEmbodiedStructure.
 也就是说，它是 Universe-CSO 进入 Agent-CSO 世界之前最靠近现实的一次功能性重编码。
 
 我们因此可以把本章最终原则写成：
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 具身智能的第一步不是理解世界，而是把现实作用分解成：
 世界是什么、身体是什么、世界如何作用于我、身体状态如何约束我。
-}
-}
-\]
+\end{statementbox}
 
 形式上：
 \[

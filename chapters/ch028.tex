@@ -102,25 +102,19 @@ R_T(C_i,C_j)
 
 因此，内部时间的关键并不是“保存时间戳”，而是：
 
-\[
-\boxed{
-\text{过去结构是否能够重新进入现在，
-以及未来结构是否能够提前约束现在。}
-}
-\]
+\begin{statementbox}
+过去结构是否能够重新进入现在，
+以及未来结构是否能够提前约束现在。
+\end{statementbox}
 
 这一观点与认知科学中的事件记忆、时间认知以及预测加工存在明显联系，也与动力系统中的状态轨迹、路径依赖和历史依赖系统存在数学上的可比较性。但本书所提出的 AgentOS 内部时间模型更强调多种记忆尺度之间的统一：过去不是单独存在于一个 episodic database 中，未来也不是单独存在于一个 planner 中，而是 $h,E,\Theta,\Psi,\Omega$ 在不同时间尺度上的共同结构结果。
 
 我们因此得到本章第一个基本命题：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 物理时间决定事件何时发生；
 结构时间决定已经发生和可能发生的事件如何继续影响当前智能。
-}
-}
-\]
+\end{statementbox}
 
 这一区分将在后面所有生命周期分析中持续发挥作用。一个真正长期运行的 AgentOS 不能只保证进程在物理时间上没有终止，还必须保证其内部结构时间没有被不断重置。否则，系统即使连续运行数年，在认知意义上仍可能只是数百万个互不连续的瞬时实例。
 
@@ -146,19 +140,15 @@ h(t+\Delta t).
 
 如果没有任何进一步的结构转换，那么旧状态对于系统而言就结束了。我们虽然可以从外部日志中证明“系统曾经看到过它”，但这个事件已经不再属于 Agent 自己可使用的内部历史。因此，我们必须区分：
 
-\[
-\boxed{
-\text{事件曾经发生}
-}
-\]
+\begin{statementbox}
+事件曾经发生
+\end{statementbox}
 
 与
 
-\[
-\boxed{
-\text{事件成为了 Agent 的经历}
-}
-\]
+\begin{statementbox}
+事件成为了 Agent 的经历
+\end{statementbox}
 
 这两者并不等价。
 
@@ -204,11 +194,9 @@ R_k
 
 其中 $C_k$ 表示核心认知内容，$G_k$ 表示当时目标，$A_k$ 表示行动，$O_k$ 表示结果观测，$R_k$ 表示该事件与其他事件的关系。这种结构比单纯的“timestamp + content”更重要，因为 Agent 未来真正需要恢复的是：
 
-\[
-\boxed{
-\text{在什么条件下，我做了什么，并发生了什么。}
-}
-\]
+\begin{statementbox}
+在什么条件下，我做了什么，并发生了什么。
+\end{statementbox}
 
 多个事件进一步连接成轨迹：
 
@@ -307,15 +295,11 @@ StructuredPast.
 
 因此，我们得到第二个命题：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 事件因为发生而属于物理过去；
 只有当事件被组织成能够在未来重新发挥因果作用的结构时，
 它才成为 Agent 的内部过去。
-}
-}
-\]
+\end{statementbox}
 
 这使“过去”从一个日历概念变成了一个动力学概念。
 
@@ -399,12 +383,10 @@ p_{\Theta_t}
 
 这是内部时间理论极其关键的一步，因为它说明：
 
-\[
-\boxed{
-\text{过去并不只是被保存；
-过去可以被重新编码成未来的生成条件。}
-}
-\]
+\begin{statementbox}
+过去并不只是被保存；
+过去可以被重新编码成未来的生成条件。
+\end{statementbox}
 
 因此 $\Theta$ 同时具有两个方向的时间意义。
 
@@ -483,12 +465,10 @@ E_{\mathrm{repeated}}
 
 换句话说：
 
-\[
-\boxed{
-\text{成熟的重要标志之一，是过去越来越少以原始经历负担现在，
-而越来越多以稳定结构支持未来。}
-}
-\]
+\begin{statementbox}
+成熟的重要标志之一，是过去越来越少以原始经历负担现在，
+而越来越多以稳定结构支持未来。
+\end{statementbox}
 
 这一过程与统计学习中的 sufficient statistics、生成模型中的 latent structure、认知科学中的 schema formation，以及动力系统中的 slow manifold 都可以建立比较。
 
@@ -538,16 +518,12 @@ MeaningOfPast
 
 因此，本节可以压缩成第三个命题：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 情景记忆保存时间中的轨迹，
 结构记忆则保存跨时间仍然有效的生成关系；
 当经历转化为结构时，
 过去第一次获得了直接生成未来的能力。
-}
-}
-\]
+\end{statementbox}
 
 \section{自我如何把不同时间切片归属于同一个主体}
 
@@ -653,12 +629,10 @@ A(t_i)=A(t_j),
 
 身份连续要求的不是状态相等，而是：
 
-\[
-\boxed{
-\text{存在足够稳定的结构关系，
-使后来状态能够把早期状态解释为同一生命周期的一部分。}
-}
-\]
+\begin{statementbox}
+存在足够稳定的结构关系，
+使后来状态能够把早期状态解释为同一生命周期的一部分。
+\end{statementbox}
 
 因此：
 
@@ -751,26 +725,18 @@ FutureExperienceSelection.
 
 我们因此得到第四个命题：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 过去之所以成为“我的过去”，
 不是因为事件具有时间戳，
 而是因为存在一个跨时间稳定的自我结构，
 持续把不同阶段的经历、结构与选择归属于同一生命周期。
-}
-}
-\]
+\end{statementbox}
 
 而这也意味着，真正的身份连续性不是“永远保持不变”，而是：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 允许改变，同时保持改变仍然可以被解释为同一个主体的成长。
-}
-}
-\]
+\end{statementbox}
 
 \section{未来自我如何反向约束现在}
 
@@ -841,11 +807,9 @@ Present.
 
 有了 $\Psi$ 以后，Agent 不仅可以预测“世界会怎样”，还可以预测：
 
-\[
-\boxed{
-\text{在不同选择下，我将成为怎样的主体。}
-}
-\]
+\begin{statementbox}
+在不同选择下，我将成为怎样的主体。
+\end{statementbox}
 
 设未来候选轨迹为：
 
@@ -1058,15 +1022,11 @@ NewExperience.
 
 因此，我们得到第五个命题：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 成熟智能不仅让过去影响现在，
 还让关于未来的内部结构参与现在；
 生命周期方向性正是这种长期未来表示对当前选择持续施加慢约束的结果。
-}
-}
-\]
+\end{statementbox}
 
 \section{Goal、Self 与 DGA 的时间结构}
 
@@ -1302,11 +1262,9 @@ D_{\Omega}\uparrow.
 
 这也是本书为什么没有把 $\Psi$ 和 $\Omega$ 直接压缩成一个 reward function。一个标量 reward 很容易把不同时间尺度上的结构差异抹平，而我们真正关心的是：
 
-\[
-\boxed{
-\text{不同时间尺度如何各自保持稳定，同时彼此施加约束。}
-}
-\]
+\begin{statementbox}
+不同时间尺度如何各自保持稳定，同时彼此施加约束。
+\end{statementbox}
 
 这里还产生一个非常重要的原则：
 
@@ -1404,16 +1362,12 @@ T_\Psi.
 
 因此可以得到第六个命题：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 Goal 把近未来带入现在，
 Self 把整个过去与当前主体绑定，
 DGA 则把生命周期尺度的可能未来压缩成一种长期方向场。
 三者共同使 Agent 的当前行为不再只是对即时刺激的反应。
-}
-}
-\]
+\end{statementbox}
 
 \section{生命周期连续性的动力学条件}
 
@@ -1786,16 +1740,12 @@ W_{t+\Delta}.
 
 这个式子已经揭示了 AgentOS 生命周期理论最根本的结构：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 过去被压缩成结构，
 结构生成未来可能性，
 未来可能性参与当前选择，
 当前选择又制造新的过去。
-}
-}
-\]
+\end{statementbox}
 
 因此，一个持续智能体真正意义上的“生命时间”不是服务器时钟中不断增长的计数器，而是一个能够不断把世界变化转化成经历、把经历转化成结构、把结构转化成自我与方向，并让这些慢结构重新影响下一次选择的闭环。
 

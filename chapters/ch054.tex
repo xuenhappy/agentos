@@ -1,8 +1,6 @@
 \chapter{SGC：语义图坐标空间}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.92\textwidth}
+\begin{chapteroverviewbox}
 \textbf{【本章总体说明｜SGC 定义盖章】}
 
 本章正式定义 AgentOS Body Runtime 向认知内核公开的核心现实表示之一：
@@ -56,9 +54,7 @@ SGC_t
 \textbf{现实结构在当前身体可感知、可理解、可作用坐标系中的显式语义落地}。
 
 本章只讨论 SGC 本身。FCS、BPCC、KRA 以及更高层认知结构虽然与 SGC 存在接口关系，但除必要的边界说明外，不在本章展开，以避免后文概念提前侵入。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{Semantic Graph Coordinate Space：为什么需要一种新的现实表示}
 
@@ -93,12 +89,10 @@ E_t,
 “Semantic Graph Coordinate Space”这个名称的三个词都不可删去。首先，它是 \emph{Semantic} 的，因为系统保存的不只是几何，还保存对象类别、身份、功能、关系以及对 Agent 有行动意义的语义；其次，它是 \emph{Graph} 的，因为现实的意义往往存在于对象之间，而不是孤立对象属性中，例如“钥匙在桌子上”“人正在接近门”“机械臂握住工具”本质上都是关系；最后，它是 \emph{Coordinate Space}，因为所有这些语义不能悬浮在抽象语言空间中，而必须最终绑定到 Agent 当前可以观察和行动的现实坐标中。
 
 因此，本书中的 SGC 与普通视觉模型、知识图谱以及传统 Scene Graph 都有所不同。视觉模型往往回答“图像中有什么”，知识图谱回答“哪些概念之间有什么抽象关系”，而 SGC 必须进一步回答：
-\[
-\boxed{
-\text{What exists, where it exists, how it relates, what I know about it,
-and what I can do with it now.}
-}
-\]
+\begin{statementbox}
+What exists, where it exists, how it relates, what I know about it,
+and what I can do with it now.
+\end{statementbox}
 换句话说，SGC 是认知结构与现实行动空间之间的显式接地层。它使上层 Agent-CSO 不再只是语言或 latent representation 中的概念，而可以与当前现实中的具体对象、位置、关系和行动可能性发生绑定。
 
 在外部理论上，SGC 与 SLAM、object-centric perception、scene graph、knowledge graph、world model、affordance theory 都存在明显联系，但它并不是这些技术的简单组合。SLAM 更关心几何定位与地图一致性，Scene Graph 更强调图像或场景中的实体关系，Knowledge Graph 更强调抽象语义关系，而 SGC 试图建立一个长期 Agent 所需要的统一现实 ABI：它既必须足够显式以支持检查、调试和安全验证，又必须足够丰富以支撑认知和行动。
@@ -263,12 +257,10 @@ GeometryLayer
 的候选机制，而不是 SGC 本身。
 
 我们由此可以把物理 SGC 的空间底座压缩成一句话：
-\[
-\boxed{
-\text{Geometry is not the world model itself; it is the coordinate skeleton on which
-semantic reality becomes actionable.}
-}
-\]
+\begin{statementbox}
+Geometry is not the world model itself; it is the coordinate skeleton on which
+semantic reality becomes actionable.
+\end{statementbox}
 
 \section{Fixed Attribute Schema：稳定语义接口必须具有固定骨架}
 
@@ -938,11 +930,9 @@ ExplicitInferencePath
 至少在概念上成立。若一个模型只是根据语义关联“猜测”某个现实属性，但缺乏足够当前证据，则更适合标记为 Pending 或 Predicted，而非高可信 Derived。
 
 这一机制使 Agent 能够保持一种重要的自我认识：
-\[
-\boxed{
-\text{“这是我推出来的，不是我直接看到的。”}
-}
-\]
+\begin{statementbox}
+“这是我推出来的，不是我直接看到的。”
+\end{statementbox}
 从认知科学角度，这近似于 source monitoring；从工程角度，则是 reality grounding 与 model inference 的分层。
 
 因此 Derived 并不是低于 Observed 的“二等信息”，而是现实理解中不可缺少的一层。真正成熟的 Agent 必须拥有大量 Derived 结构，只是它必须始终能够区分：
@@ -1463,12 +1453,10 @@ Actionable
 
 因此，SGC 可以被视为整个 AgentOS 具身工程中的一条关键分界线：
 
-\[
-\boxed{
-\text{SGC 之下，系统主要处理“现实如何被感知”；
-SGC 之上，系统才开始处理“这个现实意味着什么，以及接下来应该做什么”。}
-}
-\]
+\begin{statementbox}
+SGC 之下，系统主要处理“现实如何被感知”；
+SGC 之上，系统才开始处理“这个现实意味着什么，以及接下来应该做什么”。
+\end{statementbox}
 
 \paragraph{本章结论}
 
@@ -1507,14 +1495,10 @@ Observed\neq Derived\neq Predicted\neq Counterfactual\neq Pending .
 前者保证 Agent 永远不是一个脱离现实的上帝视角观察者，后者保证其内部生成能力不会逐渐侵蚀现实边界。
 
 于是，从本书更大的认知结构理论来看，SGC 的地位可以被压缩为：
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 SGC 是 Universe-CSO 经由具体 Body 的观测能力进入 Agent 内部以后，
 形成 Agent-CSO 之前的现实语义接地空间。
-}
-}
-\]
+\end{statementbox}
 它使一个 Agent 不只是“拥有传感器”，而是真正开始拥有一个
 \textbf{关于自己身处何种现实、现实中存在什么、这些结构如何相互关联以及自己能够对它们做什么}
 的持续、可验证、可更新世界。

@@ -1,7 +1,6 @@
 \chapter{单一主体原则与 Agent 进程模型}
 
-\fbox{
-\parbox{0.94\textwidth}{
+\begin{chapteroverviewbox}
 \textbf{本章总体说明}
 
 本章确立 AgentOS 关于“谁在持续存在”这一问题的系统级原则。我们将区分持续认知主体、任务、工作进程、工具调用与外部智能体，并明确提出：在一个连续 AgentOS 生命周期中，身份连续性的一级主体原则上保持唯一；任务、Worker、Skill、Tool 以及并发执行单元均属于主体所调度的功能过程，而不能因为具有局部推理、局部记忆或独立执行能力便自动取得主体地位。由此，本章将 AgentOS 从普通的多进程 Agent Framework 中区分出来，并建立 Single-Agent Multi-Task OS 的主体模型。
@@ -21,8 +20,7 @@ D_2\nrightarrow \mathrm{Trap}(D_1)
 其中 $D_1$ 表示持续主体动力学域，$D_2$ 表示任务与执行过程域。主体可以调度任意数量的任务和局部执行过程，但任务不能同步占有主体、复制主体或将主体的生命周期锁死在一个局部过程之中。主体的连续性不是一个语言模型在文本中声称“我是同一个我”，而是由记忆连续、状态连续、控制权连续、历史因果连续和唯一主体句柄共同维持的系统性质。
 
 因此，本章讨论的不是哲学意义上人格是否可以复制，而是一个持续人工智能操作系统必须怎样定义其运行主体，才能避免在并发、恢复、任务分解和外部协作过程中发生身份分裂、主体漂移与控制权歧义。
-}
-}
+\end{chapteroverviewbox}
 
 \section{什么是 AgentOS 中的主体}
 
@@ -73,19 +71,15 @@ A
 
 我们还应进一步区分“主体唯一”与“计算集中”。单一主体原则并不意味着所有计算都必须集中在一个线程、一个模型、一个 GPU 或一个物理机器上。一个 Agent 完全可以拥有分布式推理器、并发 Worker、多模型协作和不同速度的 Body 控制环。主体唯一性约束的是：
 
-\[
-\boxed{
-\text{Lifecycle Causal Ownership}
-}
-\]
+\begin{statementbox}
+Lifecycle Causal Ownership
+\end{statementbox}
 
 而不是：
 
-\[
-\boxed{
-\text{Computational Location}
-}
-\]
+\begin{statementbox}
+Computational Location
+\end{statementbox}
 
 换言之，计算可以分布，主体的生命周期归属必须唯一。这是理解本章后续所有进程模型的第一原则。
 
@@ -93,11 +87,9 @@ A
 
 在确立持续主体之后，我们可以重新定义 AgentOS 的运行模型。AgentOS 并不是传统意义上的 Multi-Agent System，它首先应被理解为一个
 
-\[
-\boxed{
-\text{Single-Agent Multi-Task Operating System}
-}
-\]
+\begin{statementbox}
+Single-Agent Multi-Task Operating System
+\end{statementbox}
 
 也就是：一个持续主体同时维持多个目标、任务、执行过程和局部闭环，而不是通过不断产生新的主体来完成任务分解。
 
@@ -224,11 +216,9 @@ ParallelSelf
 
 因此 Single-Agent Multi-Task OS 的本质不是“只能有一个线程”，而是：
 
-\[
-\boxed{
-\text{Many Processes,\ One Lifecycle Subject}
-}
-\]
+\begin{statementbox}
+Many Processes,\ One Lifecycle Subject
+\end{statementbox}
 
 这一结构还意味着，Agent 的“自我”不应存放在某个 Task 中。如果主体状态被错误地依赖某个局部任务上下文，那么任务终止以后主体就可能出现身份缺失。更合理的实现方式是：主体状态属于长期 Agent Kernel，而任务只获得经过授权的投影。
 
@@ -395,11 +385,9 @@ D_2\nrightarrow\mathrm{Trap}(D_1)
 
 从这个角度看，$D_1/D_2$ 分层实际解决的是一个比任务调度更深的问题：
 
-\[
-\boxed{
-\text{谁拥有“继续成为自己”的执行权？}
-}
-\]
+\begin{statementbox}
+谁拥有“继续成为自己”的执行权？
+\end{statementbox}
 
 答案必须始终是 $D_1$，而不是任何局部 $D_2$。
 
@@ -559,12 +547,10 @@ GlobalCognition
 
 因此，异步认知 ABI 并不只是软件性能优化，而是对认知层次的一种结构表达：
 
-\[
-\boxed{
-\text{局部过程可以复杂，
-但主体级显式状态必须保持稀疏。}
-}
-\]
+\begin{statementbox}
+局部过程可以复杂，
+但主体级显式状态必须保持稀疏。
+\end{statementbox}
 
 这也是未来 AgentOS 能否同时保持深度推理能力与长期响应性的关键条件之一。
 
@@ -733,11 +719,9 @@ Integration_A(C)
 
 因此，“是否产生另一个 Agent”不能通过进程数量判断，而应该通过：
 
-\[
-\boxed{
-\text{是否建立了独立生命周期因果链}
-}
-\]
+\begin{statementbox}
+是否建立了独立生命周期因果链
+\end{statementbox}
 
 来判断。
 
@@ -751,11 +735,9 @@ fork(Process),
 
 甚至通过复制整个内存状态产生一个几乎完全相同的新进程。从信息状态角度看，我们似乎也可以对一个 Agent 做同样的事情：复制模型参数、工作记忆、情景记忆、结构记忆、自我状态和权限，然后得到两个相同实例。但是，只要 Agent 已经具有长期生命周期结构，这种操作会产生一个无法通过普通进程语义处理的问题：
 
-\[
-\boxed{
-\text{复制之后，哪一个仍然是原来的持续主体？}
-}
-\]
+\begin{statementbox}
+复制之后，哪一个仍然是原来的持续主体？
+\end{statementbox}
 
 假设在 $t_0$ 时刻存在：
 
@@ -898,12 +880,10 @@ t_0\rightarrow t_1
 
 这体现出一个更深的原则：
 
-\[
-\boxed{
-\text{身份连续性依赖可解释的因果连续，
-而不是状态向量的逐比特一致。}
-}
-\]
+\begin{statementbox}
+身份连续性依赖可解释的因果连续，
+而不是状态向量的逐比特一致。
+\end{statementbox}
 
 因此，本章禁止普通主体 fork，真正保护的并不是某一块内存，而是生命周期因果关系的唯一性。
 
@@ -1161,13 +1141,9 @@ DistributedFunctionalProcesses
 
 因此可以给出本章最终定义：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 持续主体不是一个计算位置，而是一条在多尺度认知过程之间保持唯一因果归属、记忆归属和控制归属的生命周期动力学轨迹。
-}
-}
-\]
+\end{statementbox}
 
 由此，AgentOS 的进程模型应当明确区分：
 
@@ -1229,12 +1205,8 @@ WhoContinuesToBecome?
 
 本章由此确立：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 Many Tasks,\ Many Processes,\ Many Loops,\ One Persistent Subject.
-}
-}
-\]
+\end{statementbox}
 
 这就是 AgentOS 第一代持续主体进程模型的基本形式。

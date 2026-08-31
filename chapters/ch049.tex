@@ -1,9 +1,7 @@
 \chapter{从认知内核到完整 Agent}
 \label{chap:from-cognitive-kernel-to-complete-agent}
 
-\begin{center}
-\fbox{
-\parbox{0.91\textwidth}{
+\begin{chapteroverviewbox}
 \textbf{本章总体说明：}
 在前述 AgentOS 原理论中，我们已经建立了一个能够在固定功能拓扑上维持工作记忆、三相记忆、自我、生命周期生成倾向以及认知调节的持续主体。然而，到目前为止，这一主体仍主要被描述为一个“内部认知动力系统”。本章完成一个决定性的理论跃迁：我们不再把智能理解为封闭在认知内核中的计算过程，而把完整 Agent 定义为一个通过稳定的观测--行动边界持续嵌入现实的闭环系统。
 
@@ -22,8 +20,7 @@ BodyRuntime
 由此，Body 不再被限定为机器人机械身体。任何能够稳定地承载感知、行动、状态反馈并构成 Agent 与某一现实环境之间持续因果边界的系统，都可以成为 Agent 的 Body。机器人、汽车、浏览器、桌面操作系统、Shell、文件系统乃至由多个数字服务构成的操作环境，都可以在这一统一定义下成为不同形式的身体。
 
 本章只建立这一跃迁所需的基础本体、边界和动力学关系。后续有关 Body Scale、统一身体接口、SGC、FCS、BPCC 与 Kernel--Body 适配机制的具体设计，将建立在本章给出的完整 Agent 定义之上。
-}}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{无身体认知系统的理论边界}
 
@@ -187,11 +184,9 @@ ControlledAndSensedCarrierOfAgency.
 }
 \]
 即：
-\[
-\boxed{
-\text{身体是主体能够持续感知、持续控制，并借此对某一现实环境施加因果影响的承载结构。}
-}
-\]
+\begin{statementbox}
+身体是主体能够持续感知、持续控制，并借此对某一现实环境施加因果影响的承载结构。
+\end{statementbox}
 
 这个定义包含三个不可缺少的条件。第一是 \emph{sensed}，即 Agent 必须能够获得关于 Body 及其环境的状态反馈；第二是 \emph{controlled}，即 Agent 的内部决策能够通过该结构影响现实；第三是 \emph{persistent carrier of agency}，即这种感知与控制关系在时间上足够稳定，使主体可以建立连续的“我能够通过什么方式影响世界”的结构模型。
 
@@ -752,11 +747,9 @@ B_{\mathrm{network}}
 这一关系与人类也具有结构上的相似性：眼、手、语言、工具并不是“主体本身”，但它们共同决定主体可以怎样观察和改变世界。数字 Agent 的 Browser、Shell 和 Filesystem 虽然材料完全不同，却可以在功能层实现相似的因果结构。
 
 因此，本章在数字环境中的一个重要结论是：
-\[
-\boxed{
-\text{数字具身不是比物理具身低一级的模拟；它是另一种真实的 Agent--World 因果嵌入。}
-}
-\]
+\begin{statementbox}
+数字具身不是比物理具身低一级的模拟；它是另一种真实的 Agent--World 因果嵌入。
+\end{statementbox}
 其现实约束不是重力和惯性，而更多表现为协议、权限、事务、网络状态和软件逻辑。但只要行动具有真实后果、状态具有持续性、反馈能够重新约束 Agent，数字世界就足以构成完整的具身环境。
 
 \section{Cursor 作为数字末端执行器}

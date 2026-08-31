@@ -1,23 +1,17 @@
 \chapter{双预测系统：Kernel 与 BPCC}
 \label{chap:dual_prediction_kernel_bpcc}
 
-\begin{center}
-\fbox{
-\parbox{0.92\textwidth}{
+\begin{chapteroverviewbox}
 \textbf{本章总体说明：}
 本章讨论 AgentOS 具身架构中的一个核心动力学问题：为什么持续智能体不能依赖单一预测器，而必须同时存在面向较长时间尺度、较大状态空间和较高语义层级的 Agent Kernel 预测，以及面向较短时间尺度、局部身体动力学和实时闭环的 BPCC 预测。二者并不是两个彼此竞争的“世界模型”，而是同一智能主体在不同时间尺度、不同状态空间和不同控制责任上的预测分工。Kernel 不应替代身体层高速控制，BPCC 也不得越权成为目标和意义的决定者。两者通过预测包络、控制参考、约束向量、能力裕度、置信度以及残差反馈形成跨尺度闭环，使 Agent 能够同时获得长期方向性与短时现实适应能力。
 
 本章的中心命题是：
-\[
-\boxed{
-\text{Higher Level Predicts the Feasible Future;
-Lower Level Predicts the Executable Future.}
-}
-\]
+\begin{statementbox}
+Higher Level Predicts the Feasible Future;
+Lower Level Predicts the Executable Future.
+\end{statementbox}
 即高层预测未来的可行结构，低层预测未来的可执行轨迹。两者共同服务于同一个 World--Agent--World 闭环，而现实世界始终保有最终验证权。
-}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{Global Prediction：Agent Kernel 的长时间尺度预测}
 

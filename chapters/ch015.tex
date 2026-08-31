@@ -134,11 +134,9 @@ CSO@F_j
 从理论方法上看，这种分离类似于计算机科学中“程序语义”与“运行实现”的区分，也类似于控制理论中“任务空间”和“状态实现空间”的区分，还可以与多层网络理论中的不同关系层进行比较。但这些外部理论只能提供形式上的帮助。本书中的根本对象仍然是CSO及其动态承载，而不是传统的数据节点或静态网络实体。
 
 因此，本章建立的第一条原则是：
-\[
-\boxed{
-\parbox{.86\linewidth}{\centering\bfseries 认知关系结构与实现这些关系的功能结构必须分层描述。}
-}
-\]
+\begin{statementbox}
+\bfseries 认知关系结构与实现这些关系的功能结构必须分层描述。
+\end{statementbox}
 
 只有完成这一分离，我们才能进一步讨论为什么一个智能体能够在保持“知道同一件事”的同时，逐渐改变自己“怎样知道、在哪里知道以及需要多少显式认知才能知道”。
 
@@ -299,13 +297,10 @@ M_t
 从外部理论来看，知识图谱、语义网络、frame semantics、schema theory、causal graph以及world model都提供了与$\mathcal G_C$相关的研究工具。但本书并不把$\mathcal G_C$限制为“显式知识图谱”。其节点既可以具有符号接口，也可以由分布式潜变量实现；真正重要的是这些不同实现是否能够保持相同的主要结构关系和功能作用。
 
 因此，本节的核心结论是：
-\[
-\boxed{
-\parbox{.86\linewidth}{\centering\bfseries
+\begin{statementbox}
+\bfseries
 $\mathcal G_C$描述的是智能体认知世界中的结构关系，而不是承载这些结构的处理器位置。
-}
-}
-\]
+\end{statementbox}
 
 它回答的是“什么结构存在、这些结构之间如何关联”。至于“谁在处理它们”，必须交给第二张图。
 
@@ -428,11 +423,9 @@ F_i:
 其中$\Gamma$表示当前目标、身体、资源、自我等背景约束。
 
 因此，功能拓扑并不是“存储认知内容的地方”，而是：
-\[
-\boxed{
-\text{改变、激活、抑制、迁移和稳定Agent-CSO的动力学结构。}
-}
-\]
+\begin{statementbox}
+改变、激活、抑制、迁移和稳定Agent-CSO的动力学结构。
+\end{statementbox}
 
 为了刻画功能之间的耦合，我们可为每条边$e_{ij}$定义：
 \[
@@ -518,11 +511,9 @@ FunctionalTopology.
 有了认知结构图$\mathcal G_C$和功能拓扑图$\mathcal G_F$以后，我们仍然缺少真正连接二者的核心对象。这个对象就是动态承载关系$\mu_t$。
 
 直觉上，$\mu_t$回答：
-\[
-\boxed{
-\text{这个Agent-CSO此刻由什么功能结构承载、激活、转换或控制？}
-}
-\]
+\begin{statementbox}
+这个Agent-CSO此刻由什么功能结构承载、激活、转换或控制？
+\end{statementbox}
 
 最简单的写法是：
 \[
@@ -610,11 +601,9 @@ m_{i,BodySkill}\uparrow.
 \]
 
 也就是说：
-\[
-\boxed{
-\text{学习可以表现为承载分布在功能拓扑上的重新配置。}
-}
-\]
+\begin{statementbox}
+学习可以表现为承载分布在功能拓扑上的重新配置。
+\end{statementbox}
 
 这比“知识被存进长期记忆”更加一般。
 
@@ -1329,11 +1318,9 @@ R_{ij}
 \]
 
 也就是说：
-\[
-\boxed{
-\text{状态变化最快，承载迁移其次，拓扑变化最慢。}
-}
-\]
+\begin{statementbox}
+状态变化最快，承载迁移其次，拓扑变化最慢。
+\end{statementbox}
 
 否则短期噪声就可能导致整个功能结构频繁重写。
 
@@ -1493,13 +1480,10 @@ PersistentCSOFlow.
 \]
 
 因此我们得到本书后续发育理论最重要的命题之一：
-\[
-\boxed{
-\parbox{.86\linewidth}{\centering\bfseries
+\begin{statementbox}
+\bfseries
 功能拓扑是长期认知结构流的慢速历史沉积。
-}
-}
-\]
+\end{statementbox}
 
 \section{双图共同演化：智能生命周期的统一状态描述}
 
@@ -1836,13 +1820,10 @@ AgentOSHypothesis.
 
 在这一边界之内，我们现在可以给双图理论一个正式定义：
 
-\[
-\boxed{
-\parbox{.86\linewidth}{\centering\bfseries
+\begin{statementbox}
+\bfseries
 双图理论认为，一个智能体应同时由认知结构图$\mathcal G_C$与功能拓扑图$\mathcal G_F$描述：前者表示智能体所承载的对象、关系、目标、约束、自我与可能性结构，后者表示这些结构被感知、变换、记忆、调节、执行与外化时所依赖的功能组织。二者通过动态承载映射$\mu_t$耦合，并在不同时间尺度上发生共同演化。
-}
-}
-\]
+\end{statementbox}
 
 由此，智能活动可以进一步写成：
 \[
@@ -1915,13 +1896,10 @@ Development
 
 因此，本章最终得到一条将贯穿后续所有章节的核心关系：
 
-\[
-\boxed{
-\parbox{.86\linewidth}{\centering\bfseries
+\begin{statementbox}
+\bfseries
 CSO流塑造功能拓扑，功能拓扑又塑造未来CSO流。
-}
-}
-\]
+\end{statementbox}
 
 即：
 \[
@@ -1942,12 +1920,9 @@ FutureCSOFlow.
 
 也正是在这个意义上，我们才能理解本书后面将反复使用的一句话：
 
-\[
-\boxed{
-\parbox{.86\linewidth}{\centering\bfseries
+\begin{statementbox}
+\bfseries
 成熟智能会把自己的历史变成结构。
-}
-}
-\]
+\end{statementbox}
 
 而双图理论，就是描述这一过程所需要的最小结构语言。
