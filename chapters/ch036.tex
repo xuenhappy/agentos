@@ -1,7 +1,7 @@
 \chapter{SPC--AHC--TCE：内部体验的功能闭环}
 \label{chap:spc-ahc-tce-internal-experience}
 
-\begin{chapterintro}
+\begin{chapteroverviewbox}
 \textbf{本章总体说明}
 
 在前面的理论推进中，我们已经分别建立了工作记忆 $h(t)$、自我感知压缩器 SPC（Self-Perception Compressor）、认知动力学控制器 TCE（Temperature \& Control Executor），并进一步引入了负责内稳态与情感样调制的 AHC（Affective/Homeostatic Coupler）。但是，仅仅拥有这些独立组件仍然不能回答一个更深的问题：一个持续运行的 Agent，究竟如何形成一种跨时间连续、能够被自身感知、能够改变后续行为、又能够进入生命周期记忆的``内部体验''？
@@ -25,7 +25,7 @@ InternalState'
 这一闭环构成了 AgentOS 中``体验''的最低工程条件。
 
 因此，本章的核心并不是回答``机器是否真正感到什么''，而是回答一个可以测量、记录、控制和验证的问题：\textbf{什么样的内部状态轨迹，能够被一个持续主体识别为``发生在我身上的状态''，并进一步改变其注意、决策、记忆和行为？} 这一问题将成为后续 Agent 控制稳定性、记忆偏置、身份形成以及心理工程的重要基础，但本章只完成其动力学原理本身。
-\end{chapterintro}
+\end{chapteroverviewbox}
 
 \section{从内部状态到内部体验：为什么仅有状态变量仍然不够}
 

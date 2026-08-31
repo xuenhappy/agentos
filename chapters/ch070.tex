@@ -1,9 +1,7 @@
 \chapter{AgentOS Kernel 的系统结构}
 \label{chap:agentos-kernel-architecture}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.92\textwidth}
+\begin{chapteroverviewbox}
 \textbf{【本章总体说明｜AgentOS Kernel 体系结构章】}
 
 本章完成从前述认知动力学原理向可实现系统内核的第一次完整收束。我们在这里所称的
@@ -46,9 +44,7 @@ AgentOS Kernel 的可信核心，其余能力通过明确 ABI、异步事件和�
 \]
 其目标不是让每一次推理更长，而是使一个有限认知容量的主体能够在长期运行中保持
 \textbf{连续、有限、可恢复、可调节、可扩展并最终可成长}。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 
 \section{Persistent Subject Manager：持续主体管理器}
@@ -403,12 +399,10 @@ Resumed
 
 这一设计尤其重要，因为真正长期 Agent 永远面对比自己当前能够显式处理更多的潜在事务。
 成熟 Scheduler 因而并不追求``把所有任务尽快做完''，而追求：
-\[
-\boxed{
-\text{在主体连续和认知稳定的前提下，
-使有限认知资源持续流向当前最值得全局处理的结构。}
-}
-\]
+\begin{statementbox}
+在主体连续和认知稳定的前提下，
+使有限认知资源持续流向当前最值得全局处理的结构。
+\end{statementbox}
 这是 AgentOS 从任务编排框架走向真正认知运行时的重要分界。
 
 
@@ -669,12 +663,10 @@ hysteresis 和 safety envelope 等机制约束。
 
 这也说明``让模型更会反思''并不必然产生更稳定的 Agent。
 过度反思本身也可能成为高增益反馈。真正成熟的 TCE 应遵循：
-\[
-\boxed{
-\text{Slow governance constrains fast cognition,
-but does not micromanage every cognitive step.}
-}
-\]
+\begin{statementbox}
+Slow governance constrains fast cognition,
+but does not micromanage every cognitive step.
+\end{statementbox}
 高层只规定可行区域，快速认知在区域内保留自由度。
 这既是控制效率原则，也是长期智能保持可塑性的必要条件。
 
@@ -1306,11 +1298,9 @@ PreserveFailureEvidence.
 使错误成为未来 $\Theta$ 更新的依据。
 
 最终，Checkpoint/Recovery 体现的是长期智能必须满足的一条工程原则：
-\[
-\boxed{
-\text{A persistent agent must be able to survive its own mistakes.}
-}
-\]
+\begin{statementbox}
+A persistent agent must be able to survive its own mistakes.
+\end{statementbox}
 如果一个 Agent 只能在从未发生严重错误的理想环境中持续存在，
 它就还不是生命周期意义上的可靠智能系统。
 
@@ -1623,11 +1613,9 @@ SlowUpdate.
 \]
 
 因此 AgentOS Kernel 的真正统一对象不是任何一个模块，而是
-\[
-\boxed{
-\text{一个跨时间尺度保持主体连续的受治理闭环系统。}
-}
-\]
+\begin{statementbox}
+一个跨时间尺度保持主体连续的受治理闭环系统。
+\end{statementbox}
 
 到这里，我们终于能够重新解释``Kernel''这个名称的意义。
 AgentOS Kernel 并不是因为它运行在 CPU ring 0 才叫 Kernel，
@@ -1684,14 +1672,10 @@ h\mathrm{\ CognitiveBus}
 
 最终，我们可以得到本章最重要的工程结论：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 AgentOS Kernel 的任务，不是替 Agent 完成所有智能活动，
 而是维持一个有限认知主体能够长期稳定地组织自己的智能活动。
-}
-}
-\]
+\end{statementbox}
 
 也正因此，一个成熟 AgentOS Kernel 的价值不能只用单次任务准确率评价。
 更加根本的指标应包括：主体连续性、工作记忆稳定性、恢复成功率、慢结构漂移率、

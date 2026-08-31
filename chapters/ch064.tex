@@ -1,9 +1,7 @@
 \chapter{Body Safety Boundary：具身智能的实时安全边界}
 \label{chap:body_safety_boundary}
 
-\noindent
-\fbox{
-\parbox{0.94\textwidth}{
+\begin{chapteroverviewbox}
 \textbf{【本章总体说明】}
 本章讨论 AgentOS 具身体系中一个不能由认知智能替代、也不能被认知智能覆盖的基础问题：当智能体已经通过 Body Runtime 进入物理世界或具有现实作用能力的数字世界以后，谁拥有对不可逆危险的最终即时处置权？前文已经建立了 Agent Kernel、SGC、FCS、BPCC 以及 ``Predict Locally, Escalate Residual Globally'' 的多时间尺度体系，但这些机制解决的是\emph{智能如何高效行动}，而不是\emph{当高层认知来不及反应、判断错误、发生阻塞甚至自身失稳时，系统如何仍然保持最低安全性}。因此，本章引入独立于普通认知闭环的 Body Safety Boundary，并确立
 \[
@@ -18,8 +16,7 @@ SafetyAuthority > BPCCAuthority > CognitiveExecutionAuthority
 }
 \]
 两条核心原则。这里的 ``Safety'' 不是 Agent 的价值判断，也不是 $\Psi$、AHC 或 TCE 中的风险偏好，而是对身体、环境及受保护对象所施加的\emph{不可被普通认知绕过的实时可行域约束}。我们将依次建立实时危险为什么不能等待认知、Realtime Safety Controller 的动力学位置、安全事件如何向认知层升级、Safety Authority 的优先级体系、Single Writer Principle、多层控制引用以及 Safety Envelope，并最终把安全边界形式化为一个包围 BPCC 与 Agent Kernel 的最外层可执行约束结构。
-}
-}
+\end{chapteroverviewbox}
 
 \section{实时危险为何不能依赖认知闭环}
 
@@ -1450,13 +1447,9 @@ RealityIsUltimateConstraint
 
 由此，我们也能够给出 Body Safety Boundary 的最终定义：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 Body Safety Boundary 是包围具身智能行动链的实时可行域治理结构。它通过不可绕过的安全包络、快速状态预测与控制仲裁，使 Agent Kernel 和 BPCC 的自由行动始终发生在可接受的现实区域内；同时又把具有长期意义的危险残差重新转化为认知经验，使安全不是智能之外的静态限制，而成为智能与现实长期共同适应过程中不可缺少的边界条件。
-}
-}
-\]
+\end{statementbox}
 
 如果把这一结论放回整部《智能动力学与 AgentOS》的多尺度理论中，我们会发现一个非常重要的结构关系：
 \[

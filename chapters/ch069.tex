@@ -1,8 +1,7 @@
 \chapter{Linux 之上的 AgentOS：从计算资源运行时到智能资源运行时}
 \label{chap:agentos-on-linux}
 
-\fbox{
-\parbox{0.94\textwidth}{
+\begin{chapteroverviewbox}
 \textbf{【本章总体说明】}
 本章讨论的不是“如何重新实现一个操作系统”，而是回答一个更根本的系统工程问题：当一个长期持续存在的智能体已经具有工作记忆 $h$、情景记忆 $E$、结构记忆 $\Theta$、自我结构 $\Psi$、生命周期生成吸引子 $\Omega$，并通过 SPC、AHC、TCE、CCM、Scheduler、Boundary、Offloading 等机制形成稳定的多尺度认知闭环以后，它应当如何落在现有计算机体系之上。我们的基本立场是：Linux 已经解决了进程、虚拟内存、文件、网络、设备、中断、权限和硬件资源复用问题，AgentOS 不应复制这些能力，而应在其上建立一个新的“智能资源运行时”。因此，本章确立
 \[
@@ -15,8 +14,7 @@ AgentOS
 }
 \]
 这一基本层级，并严格区分“计算资源管理”和“认知结构管理”。Linux 决定一个计算过程能否获得 CPU、内存、文件和设备；AgentOS 则决定一个持续主体在何时激活何种 Agent-CSO、哪些结构进入 $h$、哪些经历沉降为 $E/\Theta$、哪些能力被编译为 Skill、哪些内容应当卸载到外部载体，以及哪些行动拥有现实世界的执行权限。本章由此建立 AgentOS 从理论认知架构进入真实系统软件实现所必须遵循的操作系统边界。
-}
-}
+\end{chapteroverviewbox}
 
 \section{Hardware：智能运行最终仍然受物理资源约束}
 

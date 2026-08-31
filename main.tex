@@ -16,11 +16,11 @@
 \definecolor{warmgold}{HTML}{B88A44}
 \definecolor{statementbg}{HTML}{F4F7FA}
 \definecolor{statementrule}{HTML}{5E7D91}
-\definecolor{formulabg}{HTML}{F8F3E8}
-\definecolor{formularule}{HTML}{B88A44}
+\definecolor{formulabg}{HTML}{FFF4D6}
+\definecolor{formularule}{HTML}{A87418}
+\definecolor{formulaink}{HTML}{3B2A0A}
 % Prose statements use a breakable, full-width card so long text wraps
-% naturally. Mathematical boxes retain compact display behavior and use a
-% separate warm palette to distinguish formulas from prose at a glance.
+% naturally. Mathematical \boxed expressions use a distinct warm palette.
 \newtcolorbox{statementbox}{
   enhanced,
   breakable,
@@ -58,19 +58,14 @@
 }
 \renewcommand{\boxed}[1]{%
   \adjustbox{max width=.96\linewidth}{%
-    \fcolorbox{formularule}{formulabg}{\(\displaystyle #1\)}}}
+    \fcolorbox{formularule}{formulabg}{%
+      \color{formulaink}\(\displaystyle #1\)}}}
 \newenvironment{narration}{\begin{quote}\color{cyanink}\itshape}{\end{quote}}
 \newenvironment{thought}{\par\smallskip\noindent\color{warmgold}\textbf{思想实验}\quad}{\par\smallskip}
 \newenvironment{bookproposition}{\par\smallskip\noindent\textbf{命题}\quad}{\par\smallskip}
 \newenvironment{proofidea}{\par\noindent\textit{论证思路}\quad}{\par\smallskip}
 \newenvironment{readercheck}{\par\smallskip\noindent\color{cyanink}\textbf{读者检验}\quad}{\par\smallskip}
-\newenvironment{chapterintro}
-  {\begin{quote}\small\color{deepblue}\setlength{\parskip}{.65em}\noindent}
-  {\end{quote}\medskip}
 \input{chapter-art}
-\newcommand{\chaptervoice}[1]{%
-  \begin{chapterintro}#1\end{chapterintro}%
-  \ChapterArt{\number\value{chapter}}}
 \newcommand{\conceptfigure}[2]{\begin{figure}[htbp]\centering\includegraphics[width=.86\textwidth]{#1}\caption{#2}\end{figure}}
 \newcommand{\partvoice}[1]{\clearpage\thispagestyle{empty}\vspace*{.28\textheight}\begin{center}\begin{minipage}{.72\textwidth}\Large\color{cyanink}\itshape #1\end{minipage}\end{center}\clearpage}
 \title{智能动力学与 AgentOS}

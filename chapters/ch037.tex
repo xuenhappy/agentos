@@ -1,10 +1,10 @@
 \chapter{认知控制的稳定性}
 \label{chap:cognitive-control-stability}
 
-\begin{chapterintro}
+\begin{chapteroverviewbox}
 \textbf{【本章总体说明】}
 本章研究 AgentOS 从“能够调节自身认知状态”走向“能够长期稳定地调节自身认知状态”时所必须解决的控制论问题。前文已经建立了 SPC--AHC--TCE 闭环：SPC 对分布式认知状态进行压缩和估计，AHC 对身体、资源、风险与内稳态信号进行连续积分，TCE 则依据这些估计调节认知温度、探索强度、注意范围、推理深度、激活增益以及资源分配。然而，只要自我感知、内稳态积分和控制执行具有非零时间常数，这一闭环就不可能等价于理想瞬时控制器。状态估计滞后、控制增益过高、目标流形快速切换、慢变量受到高速噪声污染，都可能产生过冲、振荡、迟滞甚至长期身份漂移。因此，本章不再把“稳定”理解为某一时刻的认知状态保持不变，而将其定义为：在现实扰动、任务切换、模型误差和内部延迟共同存在时，Agent 的认知轨迹仍能被限制在可治理区域内，并能够在扰动后重新回到与目标、自我和现实约束一致的可行轨迹族。我们将依次讨论 observer delay、controller delay、TCE gain、overshoot、oscillation、delay margin、gain margin、settling time 与 recovery time，并进一步证明 AgentOS 的控制对象并非直接操纵某一个瞬时认知状态，而是通过改变趋势、结构、允许区域和未来轨迹分布来实现稳定控制。
-\end{chapterintro}
+\end{chapteroverviewbox}
 
 \section{稳定性问题的重新定义：控制的不是一个状态，而是一族未来轨迹}
 

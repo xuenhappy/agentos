@@ -1,9 +1,7 @@
 \chapter{KRA 的功能对齐理论}
 \label{chap:kra-functional-alignment}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.92\textwidth}
+\begin{chapteroverviewbox}
 \textbf{本章总体说明}
 
 本章确立 KRA（Kernel--Runtime Adaptation）最核心的理论原则：\textbf{Agent Kernel 与 Body Runtime 之间不应以内部表示的一致性作为耦合目标，而应以现实闭环中的功能一致性、语义契约一致性与控制后果一致性作为最终对齐标准。} Kernel 与 BPCC 可以具有完全不同的内部表征空间、模型结构、训练目标乃至时间尺度，只要二者能够通过稳定的公共语义接口，在真实世界反馈下保持预测、控制、残差解释和安全约束的一致，就可以构成稳定的统一智能体。
@@ -37,9 +35,7 @@ RealityIsTheUltimateAlignmentAnchor
 }
 \]
 只有能够持续通过真实观测重新闭合的功能关系，才能被认为是有效的 Kernel--Body 耦合关系。本章由此建立 Semantic Contract、Contract Envelope 与 Functional Anchor 三个工程对象，为异构认知内核、异构身体运行时以及未来跨身体迁移提供统一的功能对齐理论基础。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{Train Separately：为什么 Kernel 与 Body Runtime 不应被迫共享一种内部表示}
 
@@ -395,11 +391,9 @@ A_F\ge\theta_F
 z_K\stackrel{?}{\approx}z_B,
 \]
 而 functional calibration 问：
-\[
-\boxed{
-\text{当 Kernel 认为某个动作会造成某种结果时，现实是否真的如此？}
-}
-\]
+\begin{statementbox}
+当 Kernel 认为某个动作会造成某种结果时，现实是否真的如此？
+\end{statementbox}
 
 例如轮式机器人和人形机器人对 ``向前移动一米'' 的内部动态完全不同：
 \[
@@ -717,11 +711,9 @@ J_F
 在安全关键功能上尤其如此。
 
 最终，我们不是问 ``Kernel 与 BPCC 是否用同一种内部语言思考''，而是问：
-\[
-\boxed{
-\text{它们是否共同组成了一个能够正确感知、预测、行动和验证的 Agent？}
-}
-\]
+\begin{statementbox}
+它们是否共同组成了一个能够正确感知、预测、行动和验证的 Agent？
+\end{statementbox}
 这正是功能对齐理论从模型内部相似度转向系统闭环正确性的根本变化。
 
 \section{Reality as Anchor：为什么现实必须成为 KRA 的最终校准基准}
@@ -1216,35 +1208,27 @@ ParameterStability.
 
 至此，我们可以把本章全部原则压缩为：
 
-\[
-\boxed{
-\text{Train Separately}
-}
-\]
+\begin{statementbox}
+Train Separately
+\end{statementbox}
 
 允许每一个动力层发展适合自己的表示；
 
-\[
-\boxed{
-\text{Connect Semantically}
-}
-\]
+\begin{statementbox}
+Connect Semantically
+\end{statementbox}
 
 使用稳定公共语义骨架建立跨层可理解关系；
 
-\[
-\boxed{
-\text{Calibrate Functionally}
-}
-\]
+\begin{statementbox}
+Calibrate Functionally
+\end{statementbox}
 
 以行动结果而非 latent 相似性判断是否真正对齐；
 
-\[
-\boxed{
-\text{Adapt Continuously}
-}
-\]
+\begin{statementbox}
+Adapt Continuously
+\end{statementbox}
 
 允许关系在生命周期中跟随身体和主体共同成长；
 
@@ -1270,13 +1254,9 @@ ModelAgreement.
 
 因此，本章最终确立的并不是一种普通模型对齐算法，而是一条持续人工智能体的架构原则：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 只要公共意义、现实闭环、控制后果和核心功能不变量保持连续，
 Kernel 与 Body Runtime 的内部实现就可以持续变化；
 真正构成同一个智能体的，不是内部参数的静止，
 而是跨时间保持稳定并接受现实检验的功能关系。
-}
-}
-\]
+\end{statementbox}

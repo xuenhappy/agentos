@@ -1,27 +1,23 @@
 \chapter{异常向上与能力向下：多尺度智能中的残差升级与结构沉降}
 \label{chap:residual-escalation-and-capability-downward}
 
-\begin{center}
-\fbox{
-\parbox{0.92\textwidth}{
+\begin{chapteroverviewbox}
 \textbf{本章总体说明：}
 在上一章建立 Kernel--BPCC 双预测结构之后，我们已经获得了一个基本事实：一个持续运行的智能体不应由单一认知层以同一时间尺度处理全部现实变化。高层认知擅长目标理解、长程预测、语义推理与跨域重构，低层身体运行时擅长高频状态估计、局部预测与快速控制。由此产生一个更基本的问题：\textbf{哪些信息应该停留在局部，哪些信息必须向上进入更高尺度认知？反过来，哪些原本需要显式认知的能力，在成熟以后又应从高层向低层沉降？}
 
 本章给出的回答可以浓缩为两条互补原则：
-\[
-\boxed{\text{Predict Locally,\ Escalate Residual Globally}}
-\]
+\begin{statementbox}
+Predict Locally,\ Escalate Residual Globally
+\end{statementbox}
 以及
-\[
-\boxed{\text{Stable Ability Moves Downward,\ Unexpected Residual Moves Upward}}
-\]
+\begin{statementbox}
+Stable Ability Moves Downward,\ Unexpected Residual Moves Upward
+\end{statementbox}
 
 这两条原则共同构成 AgentOS 多尺度认知体系中的垂直结构流。向上的不是全部底层状态，而是经过局部闭环后仍不能消解、并且具有足够风险、新颖性、持续性或目标相关性的残差；向下的也不是简单的命令，而是经过长期学习后已经能够稳定闭合的预测、约束、策略和控制结构。于是，高层并不持续微操低层，低层也不把全部原始现实上传给高层，而是在相邻尺度之间形成一种``正常局部闭合、异常逐级提升、成熟能力逐级沉降''的动力学组织。
 
 本章的目标，是把这一原则从工程直觉形式化为一个可用于 AgentOS、Body Runtime、具身控制以及一般多尺度智能系统的动力学原理。这里讨论的``向上''和``向下''首先指功能与时间尺度上的迁移，而非固定软件调用栈或物理空间方向。
-}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{局部预测原则：Predict Locally}
 
@@ -300,12 +296,10 @@ x_i(\tau)\in\mathcal C_i.
 如果低层能够在 $T_i$ 的时间尺度内利用自己的观测和模型完成这个优化，而不需要上一级介入每一个控制步，那么可以认为该层实现了局部闭合。
 
 这里的重要思想是：
-\[
-\boxed{
-\text{Higher intelligence should govern local intelligence,
-not replace it.}
-}
-\]
+\begin{statementbox}
+Higher intelligence should govern local intelligence,
+not replace it.
+\end{statementbox}
 高层智能的职责不是成为低层动作的远程操纵杆，而是规定低层应该在哪个可行域工作、什么时候必须停止、何种风险不可接受、当前目标优先级是什么。低层则在这一约束之内拥有自己的动作自由度。
 
 如果令高层控制周期为 $\Delta_{i+1}$，低层控制周期为 $\Delta_i$，合理的层级体系通常满足
@@ -592,11 +586,9 @@ AuthorityGap
 其中 AuthorityGap 表示``本层即使知道问题是什么，也没有权限解决''。因此异常升级不仅处理知识不足，也处理权限边界。例如低层控制器可能完全知道某个动作能够继续完成任务，但如果继续执行会突破安全约束，它仍必须向上升级。
 
 由此可见：
-\[
-\boxed{
-\text{Attention is partly a policy for promoting unresolved structure across scales.}
-}
-\]
+\begin{statementbox}
+Attention is partly a policy for promoting unresolved structure across scales.
+\end{statementbox}
 注意的深层作用之一，就是把已经不能在局部自动结构中消解的现实重新带回显式认知。这样，AgentOS 才能同时获得自动化与开放性，而不是在两者之间二选一。
 
 \section{相邻尺度耦合原则：Adjacent Scale Coupling}

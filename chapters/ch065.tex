@@ -1,8 +1,7 @@
 \chapter{KRA：Kernel--Runtime Adaptation}
 \label{chap:kra}
 
-\fbox{
-\begin{minipage}{0.94\textwidth}
+\begin{chapteroverviewbox}
 \textbf{【本章总体说明】}
 
 在前面的 AgentOS 工程结构中，我们已经完成了一次关键的体系分离：认知核心不再直接面对摄像头、机械臂、浏览器、文件系统或车辆执行机构，而是通过 Body Runtime 接收经过身体语义化之后的世界状态，并向下输出较高层的控制意图。由此形成了一个看似已经充分稳定的接口：
@@ -24,14 +23,11 @@
 即\textbf{自适应语义与动力学耦合层}。KRA 的任务，是在保持 Agent Kernel 身体独立性的同时，使一个已经具有稳定内部认知结构的持续主体能够逐渐理解新的身体、校准新的控制关系、解释新的局部动力学，并在长期运行过程中保持 Kernel--Body 关系的连续性。
 
 因此，本章讨论的核心问题不是``如何把两种向量映射到同一维度''，而是：
-\[
-\boxed{
-\text{一个持续认知主体，如何与不断变化、甚至可替换的身体建立稳定而可学习的关系？}
-}
-\]
+\begin{statementbox}
+一个持续认知主体，如何与不断变化、甚至可替换的身体建立稳定而可学习的关系？
+\end{statementbox}
 KRA 正是 AgentOS 对这一问题给出的系统级回答。
-\end{minipage}
-}
+\end{chapteroverviewbox}
 
 \section{为什么统一的 Body ABI 仍然不足}
 \label{sec:kra-why-abi-insufficient}
@@ -116,11 +112,9 @@ M_{t+\Delta t}^{*}.
 因此，Kernel--Body 的兼容性不是一个静态性质，而是一个随时间演化的动力学约束。我们需要维护的不只是某一组参数，而是一个长期存在的\textbf{关系稳定性}。
 
 这正是我们引入 KRA 的真正原因。KRA 不应被理解为``多加一层神经网络''，而应被理解为 AgentOS 中专门负责维护
-\[
-\boxed{
-\text{主体内部认知动力学与具体身体动力学之间长期兼容关系}
-}
-\]
+\begin{statementbox}
+主体内部认知动力学与具体身体动力学之间长期兼容关系
+\end{statementbox}
 的系统层。换句话说，Body ABI 解决``双方说什么语言''，而 KRA 解决``双方如何逐渐真正理解彼此''。
 
 \section{KRA 的系统位置与第一性定义}
@@ -908,11 +902,9 @@ Kernel 应自动降低对该 Body capability 的依赖，增加显式观测、�
 \dots ,
 \]
 并且从一个兼容区域迁移到另一个区域所需要的 KRA 更新代价较低，那么该 Kernel 就具有较高的 Body Scale。换句话说，Body Scale 不只是接口数量，而可以进一步理解为：
-\[
-\boxed{
-\text{主体认知结构在不同身体兼容流形之间的低成本迁移能力。}
-}
-\]
+\begin{statementbox}
+主体认知结构在不同身体兼容流形之间的低成本迁移能力。
+\end{statementbox}
 
 \section{KRA 的失配类型、诊断结构与故障边界}
 \label{sec:kra-failure-diagnostics}
@@ -1231,12 +1223,8 @@ ParameterStability.
 如果没有 KRA，Agent Kernel 与 Body Runtime 只是两个通过接口交换数据的系统；有了 KRA，它们才开始形成一个能够共同学习的长期关系。
 
 最终我们可以将其概括为：
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 KRA 不是连接 Kernel 与 Body 的线，而是 Kernel 与 Body 之间那段会学习、会校准、会保持连续性的关系本身。
-}
-}
-\]
+\end{statementbox}
 
 也正是在这一意义上，KRA 使 ``更换身体而主体仍然是同一个主体'' 从一个直觉愿望，第一次转化成了可以被建模、测量和工程实现的 AgentOS 问题。
