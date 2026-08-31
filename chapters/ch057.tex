@@ -1,195 +1,1526 @@
-\chapter{SGC—FCS 二元现实模型}
-\chaptervoice{这一章，我们围绕“SGC—FCS 二元现实模型”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明认知内核通过身体进入现实。}
-
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 Body Runtime、FBI、SGC/FCS、三信号通道、BPCC 与 Reality Authority 的具身讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是具身认知、分层控制、MPC、状态估计与安全包络（模型预测控制、Kalman 状态估计与具身认知）。
-
-本章使用上一章“FCS：现实如何影响主体”已经得到的对象与边界；本章产出将供下一章“三信号通道”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在具身认知、分层控制、MPC、状态估计与安全包络上。
-\conceptfigure{images/fig-sgc-fcs.png}{SGC 内容几何与 FCS 作用几何（概念图占位）}
-\section{SGC：Reality Geometry}
-\begin{narration}
-现在把镜头移到“SGC：Reality Geometry”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“SGC：Reality Geometry”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC—FCS 二元现实模型”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对SGC：Reality Geometry的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“SGC：Reality Geometry”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{FCS：Influence Geometry}
-\begin{narration}
-现在把镜头移到“FCS：Influence Geometry”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“FCS：Influence Geometry”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC—FCS 二元现实模型”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对FCS：Influence Geometry的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“FCS：Influence Geometry”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{内容与作用}
-\begin{narration}
-现在把镜头移到“内容与作用”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“内容与作用”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC—FCS 二元现实模型”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对内容与作用的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“内容与作用”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{稀疏开放关系结构}
-\begin{narration}
-现在把镜头移到“稀疏开放关系结构”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“稀疏开放关系结构”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC—FCS 二元现实模型”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对稀疏开放关系结构的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“稀疏开放关系结构”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{稠密固定类型场}
-\begin{narration}
-现在把镜头移到“稠密固定类型场”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“稠密固定类型场”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC—FCS 二元现实模型”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对稠密固定类型场的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“稠密固定类型场”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{FCS$\rightarrow$AHC}
-\begin{narration}
-现在把镜头移到“FCS$\rightarrow$AHC”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“FCS$\rightarrow$AHC”落实为对威胁、唤醒、能量、疲劳、信任等信号进行积分、衰减和饱和的连续调制场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC—FCS 二元现实模型”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\dot a=-\Lambda(a-a_0)+Bs,\quad a\in[a_-,a_+].\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对FCS$\rightarrow$AHC的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：拟人化命名若没有功能通道会把工程状态误写成主观感受。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“FCS$\rightarrow$AHC”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{FCS$\rightarrow$Semantic Mirror$\rightarrow$h}
-\begin{narration}
-现在把镜头移到“FCS$\rightarrow$Semantic Mirror$\rightarrow$h”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“FCS$\rightarrow$Semantic Mirror$\rightarrow$h”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC—FCS 二元现实模型”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对FCS$\rightarrow$Semantic Mirror$\rightarrow$h的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“FCS$\rightarrow$Semantic Mirror$\rightarrow$h”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Feeling $\neq$ Awareness of Feeling}
-\begin{narration}
-现在把镜头移到“Feeling $\neq$ Awareness of Feeling”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Feeling $\neq$ Awareness of Feeling”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC—FCS 二元现实模型”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Feeling $\neq$ Awareness of Feeling的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Feeling $\neq$ Awareness of Feeling”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“SGC—FCS 二元现实模型”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“三信号通道”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\chapter{SGC--FCS 二元现实模型：经验内容与功能作用的双重表示}
+
+\begin{center}
+\fbox{
+\parbox{0.92\textwidth}{
+\textbf{【本章总体说明】}
+
+本章建立 AgentOS 身体--认知接口中的一个基础性表示原理：对于一个处于现实闭环中的持续智能体，仅仅回答“外部世界中存在什么”是不充分的，仅仅回答“当前现实正在怎样影响主体”同样是不充分的。完整的具身现实必须同时具有两个相互关联而不可相互替代的投影：一是以实体、关系、空间、语义和认识论状态为核心的 \textbf{SGC（Semantic Graph Coordinate Space）}；二是以能量、威胁、完整性、负载、紧迫度以及控制稳定性等主体相关作用量为核心的 \textbf{FCS（Functional Feeling Coordinate/Field System）}。
+
+因此，本章将前两章分别建立的 SGC 与 FCS 进一步统一为一个二元现实表示：
+\[
+\boxed{
+\mathcal R_A(t)
+=
+\left(
+\mathcal S_A(t),
+\mathcal F_A(t)
+\right)
+}
+\]
+其中 $\mathcal S_A$ 表示主体当前所能形成的“现实内容结构”，$\mathcal F_A$ 表示这些现实结构对该主体当前运行状态所产生的“功能作用结构”。前者回答 \emph{What is there?}，后者回答 \emph{What is it doing to me?}。
+
+本章的核心并不是为智能体额外增加一种“情绪表示”，而是解决一个更基础的认识论与工程问题：一个真实智能体必须同时知道世界的结构以及自身处于这些结构作用下的状态。只有二者同时存在，所谓“世界中的我”才从一个抽象坐标关系转化为一个能够指导预测、行动和自我调节的具身现实。
+}
+}
+\end{center}
+
+
+\section{SGC：现实的结构内容}
+
+我们首先回到 SGC 的本体位置。前文已经将 SGC 定义为智能体面向当前可行动现实所建立的身体中心语义图坐标空间。这里需要进一步强调：SGC 的根本作用并不是简单地将视觉、听觉或其他传感输入重新编码成一种更漂亮的数据结构，而是在原始物理信号与认知结构之间建立一个具有持续对象性、关系性和认识论可追踪性的中间世界。
+
+如果记智能体 $A$ 所处外部世界的真实状态为
+\[
+W(t),
+\]
+传感器集合为
+\[
+Y_A(t)=\{y_1(t),y_2(t),\ldots,y_n(t)\},
+\]
+那么智能体并不能直接拥有 $W(t)$。它能够形成的只是经过观测、融合、跟踪、语义解释与结构重建之后的一个主体相关世界表示：
+\[
+\mathcal S_A(t)
+=
+\Phi_{\mathrm{SGC}}
+\left(
+Y_A(\leq t),
+B_A(t),
+M_A(t)
+\right),
+\]
+其中 $B_A(t)$ 表示身体状态与身体坐标系，$M_A(t)$ 表示已有模型、历史轨迹与语义先验。这里的 $\Phi_{\mathrm{SGC}}$ 不是单纯的感知网络，而是一个从多模态观测历史到持续结构世界的映射过程。
+
+从数据结构上，一个最小 SGC 可以写成
+\[
+\mathcal S_A(t)
+=
+\left(
+V_t,
+E_t,
+X_t,
+\Sigma_t,
+\Xi_t
+\right),
+\]
+其中 $V_t$ 为实体集合，$E_t$ 为关系集合，$X_t$ 为几何和空间坐标，$\Sigma_t$ 为语义属性，$\Xi_t$ 为认识论元数据。对于任一实体 $v_i\in V_t$，可以进一步表示为
+\[
+v_i=
+\left(
+id_i,
+x_i,
+a_i,
+s_i,
+\xi_i
+\right),
+\]
+其中 $id_i$ 是跨时间持续身份，$x_i$ 是空间状态，$a_i$ 是相对稳定属性，$s_i$ 是当前语义标签，而 $\xi_i$ 则记录该结构究竟来自直接观察、推断、预测还是反事实构造。
+
+这一区分具有重要认识论意义。一个真正可持续运行的 Agent 不应把“我看见那里有一个人”“根据轨迹推断那里可能有人”“模型预测五秒后那里会有人”存储为完全等价的结构。如果三者全部压缩为同一个布尔事实
+\[
+PersonAt(x)=True,
+\]
+那么系统会丢失最重要的知识来源信息。因此 SGC 的基本对象不是裸事实，而应是带来源和置信结构的事实。可以写成
+\[
+\chi_i=
+\left(
+c_i,
+q_i,
+e_i
+\right),
+\]
+其中 $c_i$ 为内容，$q_i$ 为置信度，$e_i$ 为 epistemic state。典型的 $e_i$ 可以取
+\[
+e_i\in
+\{
+Observed,
+Derived,
+Predicted,
+Counterfactual
+\}.
+\]
+
+由此我们可以看到，SGC 实际上承担了三个彼此重叠但不可混淆的功能。
+
+第一，它是现实的\textbf{持续对象化层}。原始传感器得到的是不断变化的像素、点云、声音和设备状态，而 Agent 需要的是“同一个门”“同一个人”“同一辆汽车”“同一个网页窗口”跨时间持续存在的结构。因此 SGC 必须实现从 frame-centered perception 向 world-centered persistence 的转变。
+
+第二，它是现实的\textbf{关系结构层}。对象本身并不能构成完整的可行动世界。真正决定行为的往往是
+\[
+on(A,B),\qquad
+inside(A,R),\qquad
+owns(P,O),\qquad
+approaching(X,A),
+\]
+这类关系。关系一旦进入图结构，Agent 才能把当前现实映射成 Agent-CSO 可以直接利用的认知对象。
+
+第三，它是现实的\textbf{主体坐标层}。我们坚持
+\[
+\boxed{
+Body_A\in \mathcal S_A
+}
+\]
+而不是把身体置于 SGC 之外。原因在于一个具身世界从来不是纯粹的第三人称地图。所谓“距离”“可达”“遮挡”“危险”“抓取”“通过”等概念，都只有相对于某个具体身体的结构与能力才具有操作意义。
+
+因此，对同一个客观台阶 $C$，两个 Agent 的几何观测可能基本相同：
+\[
+Geometry_A(C)
+\approx
+Geometry_B(C),
+\]
+但其 affordance 却可能完全不同：
+\[
+Affordance_A(C)
+\neq
+Affordance_B(C).
+\]
+对于人形机器人，它可能是 ``walkable''；对于轮式机器人，它可能是 ``blocked''。这说明 SGC 虽然以世界结构为主要对象，却从一开始就是
+\[
+\boxed{
+Reality\ Relative\ To\ This\ Body
+}
+\]
+而不是脱离主体能力的纯客观数据库。
+
+从整个 AgentOS 理论来看，SGC 因而可以进一步理解为 Agent-CSO 与当前外部现实之间的第一层 grounding：
+\[
+UniverseCSO
+\longrightarrow
+Observation
+\longrightarrow
+SGC
+\longrightarrow
+AgentCSO.
+\]
+世界中的物理结构经过观测形成可检查的空间--语义结构，而这些结构随后才能进入更高层认知过程。在这一意义上，SGC 所回答的是一个最基础的问题：
+
+\[
+\boxed{
+\text{当前现实中，有什么结构存在于我的可行动世界之内？}
+}
+\]
+
+
+\section{FCS：现实对主体的功能作用}
+
+如果 SGC 已经能够描述对象、空间、关系、状态和语义，一个自然的问题随之出现：为什么还需要 FCS？
+
+原因在于，现实的“存在结构”与现实对主体的“作用结构”并不是同一个东西。一个距离身体两米的热源，在 SGC 中可以被表示为一个具有空间位置、类别、温度估计和边界的对象；但同一个热源对耐高温机器人、普通服务机器人以及正在过热的电池系统产生的功能意义完全不同。世界结构可以相同，而主体受到的作用可以不同。
+
+我们因此定义
+\[
+\mathcal F_A(t)
+\]
+为 Agent $A$ 在时刻 $t$ 面对当前身体、环境和运行条件时形成的功能作用场。它不首先描述“是什么”，而描述：
+\[
+\boxed{
+\text{当前现实正在以什么方式、什么强度改变我的可运行状态？}
+}
+\]
+
+一个一般形式可以写成
+\[
+\mathcal F_A(t)
+=
+\Phi_{\mathrm{FCS}}
+\left(
+W_A^{obs}(t),
+B_A(t),
+D_A(t),
+C_A(t)
+\right),
+\]
+其中 $W_A^{obs}$ 为可观测现实，$B_A$ 是身体当前状态，$D_A$ 是身体动力学特性，而 $C_A$ 是当前能力与安全约束。FCS 因而不是单纯由外部世界决定，它天然是一个
+\[
+World\times Body
+\]
+的关系函数。
+
+若以固定类型通道表示，可令
+\[
+\mathcal F_A(t)
+=
+\left[
+F_1(t),
+F_2(t),
+\ldots,
+F_K(t)
+\right],
+\]
+其中每一个 $F_k$ 表示一种预先定义的功能影响维度，例如
+\[
+EnergyPressure,\quad
+ThermalPressure,\quad
+IntegrityPressure,
+\]
+\[
+Threat,\quad
+Arousal,\quad
+SensoryLoad,\quad
+ControlInstability,\quad
+Urgency.
+\]
+
+在具有空间结构的身体中，可以进一步写为
+\[
+\mathcal F_A
+\in
+\mathbb R^{K\times H\times W\times C},
+\]
+或者更一般地写成定义在身体拓扑 $\mathcal B_A$ 上的场：
+\[
+F_k:
+\mathcal B_A\times T
+\rightarrow
+\mathbb R.
+\]
+
+这里必须特别说明，“Feeling”一词在本理论中采用的是\textbf{功能性定义}。FCS 并不声明机器具有与人类相同的主观疼痛、焦虑或舒适体验。它所表达的是某种现实变量已经被转换成了对主体行为和认知资源具有调制意义的内部量。因而：
+\[
+\boxed{
+Feeling_{functional}
+\neq
+PhenomenalFeeling.
+}
+\]
+
+例如，电池温度 $T_b$ 是一个原始物理变量。它本身仍然属于 perception/state measurement：
+\[
+T_b=76^\circ C.
+\]
+只有当系统结合正常温度区间、材料耐受能力、剩余功率和当前负载，把这个数值转换成
+\[
+ThermalPressure=0.83
+\]
+以后，它才进入 FCS。也就是说，
+\[
+RawPhysicalValue
+\longrightarrow
+BodyRelativeEvaluation
+\longrightarrow
+FunctionalFeeling.
+\]
+
+这种转换可以表示为
+\[
+F_k(t)
+=
+g_k
+\left(
+z_k(t),
+z_k^{safe},
+\dot z_k(t),
+u_A(t),
+\theta_A
+\right),
+\]
+其中 $z_k$ 是相关物理状态，$z_k^{safe}$ 是安全参考区间，$\dot z_k$ 表示变化趋势，$u_A$ 表示当前动作或负载，而 $\theta_A$ 表示该身体的动力学和耐受参数。
+
+因此 FCS 与传统“状态向量”之间也存在本质区别。状态向量告诉系统：
+\[
+Battery=18\%.
+\]
+FCS 则告诉系统：
+\[
+EnergyPressure=High.
+\]
+前者是描述性的，后者具有直接的调制意义。
+
+更进一步，FCS 不应只有当前强度，还应包含趋势和可信度。一个可操作的通道状态可以写成
+\[
+f_k(t)
+=
+\left(
+I_k(t),
+D_k(t),
+Q_k(t)
+\right),
+\]
+其中
+\[
+I_k(t)
+\]
+为 intensity，
+\[
+D_k(t)=\frac{dI_k}{dt}
+\]
+为变化趋势，
+\[
+Q_k(t)
+\]
+为该估计的 confidence。这样的表示可以区分“当前威胁很高但正在快速下降”和“当前威胁中等但正在高速增加”。对控制系统而言，这两种情况完全不同。
+
+FCS 由此建立了 SGC 无法单独提供的一种主体相关现实：不是世界中存在什么，而是这些存在正在怎样推动、限制、损伤、激活或压迫当前主体。换句话说，SGC 将现实转化为可理解的结构，FCS 则将现实转化为可调节的作用。
+
+因此本章采用如下基本定义：
+\[
+\boxed{
+SGC:\ What\ Reality\ Is
+}
+\]
+而
+\[
+\boxed{
+FCS:\ What\ Reality\ Is\ Doing\ To\ Me.
+}
+\]
+
+这两个问题只有同时得到回答，具身智能体才真正拥有完整的当前现实。
+
+
+\section{内容与作用：两个不可约化的现实投影}
+
+我们现在可以进一步说明为什么 SGC 和 FCS 不能被合并成一个巨大的状态向量。从纯粹的数据工程角度看，当然可以把一切编码为某个向量
+\[
+z\in\mathbb R^d,
+\]
+然后希望下游网络自己学习所有关系。但 AgentOS 追求的并不是任意可拟合的 latent，而是一个可以跨身体、跨模型、跨生命周期维护稳定语义契约的智能运行时。为此，我们必须主动保留现实中的两个不同关系。
+
+第一种关系是：
+\[
+\boxed{
+World\rightarrow Representation.
+}
+\]
+它关心现实结构如何被 Agent 描述。
+
+第二种关系是：
+\[
+\boxed{
+World\times Agent\rightarrow FunctionalInfluence.
+}
+\]
+它关心同一现实相对于当前主体意味着什么。
+
+这两者具有不同的数学类型。
+
+可以把 SGC 近似写成
+\[
+\mathcal S_A
+=
+\Phi_S(W,O_A),
+\]
+其中 $O_A$ 是 Agent 的观察条件。它主要试图保持世界结构的对象关系和几何连续性。
+
+FCS 则更像
+\[
+\mathcal F_A
+=
+\Phi_F(W,B_A,C_A),
+\]
+其中主体身体状态和能力结构直接参与定义结果。
+
+因此，即使
+\[
+\mathcal S_A(W_1)
+\approx
+\mathcal S_A(W_2),
+\]
+也完全可能有
+\[
+\mathcal F_A(W_1)
+\neq
+\mathcal F_A(W_2),
+\]
+因为 Agent 自身状态发生了变化。
+
+例如同一房间、同一温度、同一障碍布局，在机器人电量充足时与电量临界时，其 SGC 可以近似不变，而其
+\[
+EnergyPressure,\quad Urgency,\quad ControlMargin
+\]
+却完全不同。
+
+反过来也成立。两个空间环境可能完全不同：
+\[
+\mathcal S_A(W_1)
+\neq
+\mathcal S_A(W_2),
+\]
+但对主体产生的 FCS 结构却高度相似。例如一个位于左侧的热源和一个位于右侧的过载电机，都可能产生近似相等的
+\[
+ThermalPressure
+\]
+与
+\[
+Urgency.
+\]
+
+因此不存在一般意义上的单射关系：
+\[
+\mathcal S_A
+\not\leftrightarrow
+\mathcal F_A.
+\]
+更准确地说，二者之间存在一种受身体和上下文调节的多对多映射：
+\[
+\mathcal F_A
+=
+\Gamma_A
+\left(
+\mathcal S_A,
+B_A,
+C_A
+\right).
+\]
+
+这一点极其重要，因为它揭示了一个经常被传统 AI 表示体系忽略的问题：\textbf{世界的语义结构与世界对主体的控制意义属于不同层次。}
+
+设 SGC 中存在对象
+\[
+o_i,
+\]
+其基本结构是
+\[
+o_i=(x_i,s_i,r_i,\xi_i).
+\]
+它对 Agent 的某个 FCS 通道的贡献可以写为
+\[
+\Delta F_k^{(i)}
+=
+\gamma_k
+\left(
+o_i,
+B_A,
+C_A
+\right).
+\]
+总的 FCS 则可以是若干对象、背景场和内部身体状态共同作用的结果：
+\[
+F_k
+=
+\mathcal A_k
+\left(
+\{\Delta F_k^{(i)}\}_{i=1}^{N},
+F_k^{body},
+F_k^{background}
+\right).
+\]
+
+这里 $\mathcal A_k$ 不一定是简单求和。威胁可能具有最大值效应，热负荷可能具有空间积分效应，控制失稳可能具有非线性阈值效应。因此更一般地：
+\[
+F_k
+=
+\mathcal G_k
+\left(
+\mathcal S_A,
+B_A
+\right).
+\]
+
+从认识论上看，这种双表示也解决了“客观事实”与“主体相关意义”之间长期存在的张力。AgentOS 不需要把两者混成一个概念。一个结构可以在 SGC 中保持相对客观和可检查的描述，同时在 FCS 中形成主体相关、身体相关、时间相关的作用值。
+
+例如：
+\[
+SGC:
+\quad
+\text{Door is 1.8 m away and closing.}
+\]
+对应：
+\[
+FCS:
+\quad
+ControlUrgency=0.72.
+\]
+
+这里“门正在关闭”不等于“紧迫”，紧迫是门的运动、Agent 距离、当前任务、身体速度和可行动窗口共同产生的结果。通过把二者分离，我们避免了把所有世界事实都提前染上主体偏好，同时也避免了让认知核心自己从原始状态中重复计算每一个身体相关后果。
+
+因此，全书采用一个极为重要的表达：
+\[
+\boxed{
+SGC=\text{经验的内容}
+}
+\]
+\[
+\boxed{
+FCS=\text{经验的作用}.
+}
+\]
+
+这里的“经验”仍然是工程意义上的主体--世界交互经验，并不自动包含现象意识。它指的是：对一个真实存在于世界中的 Agent 来说，当前现实不仅具有可识别的结构，还具有作用于其运行状态的方向和强度。
+
+
+\section{稀疏开放图与稠密固定场：两种表示几何}
+
+SGC 与 FCS 的区别不仅体现在语义功能上，也体现在它们天然适合采用不同的数据几何。理解这一点对于后续工程实现非常重要，因为如果强行让两者共享完全相同的数据结构，就会同时损害世界表示的开放性和运行调制的稳定性。
+
+SGC 更适合被表达为一种\textbf{稀疏、开放、动态扩展的关系图}。可以写成
+\[
+\mathcal S_A(t)
+=
+G_t
+=
+(V_t,E_t),
+\]
+其中实体数
+\[
+|V_t|
+\]
+和关系数
+\[
+|E_t|
+\]
+都可以随环境变化。智能体进入一个从未见过的实验室，可以在 SGC 中增加新的仪器实体；进入网页，可以增加新的按钮、窗口、文档和用户对象；进入社会场景，可以增加人与人之间新的角色关系。
+
+因此 SGC 的类型空间具有开放性：
+\[
+\mathcal C_{SGC}(t+1)
+\supseteq
+\mathcal C_{SGC}(t)
+\]
+在长期学习过程中完全是允许的。
+
+FCS 则相反。它的主要任务不是无限增加“新的感觉类型”，而是向认知和控制系统提供一个\textbf{低维、稳定、可比较的功能调制接口}。因此我们倾向于使用固定通道：
+\[
+K=\mathrm{const}
+\]
+或者至少在一个 Body Runtime 版本内保持稳定。
+
+令
+\[
+\mathbf f_A(t)
+=
+[
+f_1(t),\ldots,f_K(t)]^\top,
+\]
+那么不同身体只需要把其具体传感器和身体状态映射到这组公共功能通道，就可以让上层认知得到稳定的身体影响接口。
+
+例如，无论 Agent 的身体使用锂电池、燃料电池还是虚拟计算额度，其底层资源变量完全不同，但都可以映射成：
+\[
+EnergyPressure.
+\]
+同样，无论威胁来自高速车辆、网络攻击还是机械夹具接近，只要它们对身体可运行性形成类似的紧迫约束，都可能在某一层被映射为：
+\[
+Threat,
+\quad
+Urgency.
+\]
+
+因此 FCS 更类似一个固定类型场：
+\[
+\mathcal F_A
+=
+\left\{
+F_k(x,t)
+\right\}_{k=1}^{K},
+\]
+而 SGC 更类似开放语义图：
+\[
+\mathcal S_A
+=
+\left\{
+V_t,E_t
+\right\}.
+\]
+
+我们可以把这一差别浓缩为：
+\[
+\boxed{
+SGC:
+Sparse\ Open\ Relational\ Geometry
+}
+\]
+以及
+\[
+\boxed{
+FCS:
+Dense\ Fixed\ Functional\ Geometry.
+}
+\]
+
+为什么 SGC 需要开放，而 FCS 需要相对固定？
+
+因为世界具有开放对象性。Agent 无法预先枚举一生中所有会遇到的对象、社会角色、软件界面和语义关系。如果 SGC 的对象类型是封闭的，它就无法真正支持开放世界智能。
+
+但认知调节接口需要稳定。若系统今天有
+\[
+Threat
+\]
+通道，明天模型自己把它拆成十五种新的 latent，后天又重新合并，那么 SPC、AHC、TCE 以及整个认知调节层都无法形成长期稳定的语义契约。因此 FCS 的价值恰恰在于把高度异构的身体信号压缩成低维且相对稳定的功能影响坐标。
+
+这种设计事实上体现了 AgentOS 一个更一般的原则：
+\[
+\boxed{
+OpenWorldSemantics
++
+StableRuntimeContract.
+}
+\]
+
+我们允许 Agent 对“世界有什么”不断增长认知，但不希望其基础身体调制接口每天改变定义。
+
+这里还需要澄清“稠密”一词。FCS 的稠密并不意味着所有通道在所有空间位置都必须存在非零值，而是意味着它更适合采用固定维度、规则采样或连续场式的表示。SGC 的节点和边则天然呈现事件驱动和对象驱动的稀疏性。
+
+例如一个视觉空间可以定义
+\[
+F_{\mathrm{threat}}(x,y,t),
+\]
+其在大部分区域接近零，而在危险区域形成高值场。与此同时，SGC 中只需存在有限对象：
+\[
+Vehicle_1,\quad Wall_3,\quad Human_2.
+\]
+因此两套表示具有不同的计算优势：SGC 适合关系推理、对象跟踪和语义查询；FCS 适合快速聚合、阈值检测、梯度控制以及运行时调制。
+
+这种几何差异不是实现细节，而是由两个表示所回答的问题不同自然推导出来的。
+
+
+\section{FCS 对认知的调制：从身体作用到认知状态}
+
+当 FCS 已经形成以后，下一个问题是：这些功能作用值如何进入 Agent 的认知系统？
+
+在本章我们只建立必要的接口关系，而不提前展开后续控制结构。原则上，FCS 不应该简单地把全部数值直接塞入工作记忆 $h(t)$。如果每一个温度、电压、压力、资源波动和低层控制误差都被转换成文本并送进显式认知，那么工作记忆很快就会被身体底层动态淹没，这与前文已经建立的工作记忆有限容量原理直接冲突。
+
+因此 FCS 首先承担的是一种\textbf{压缩后的调制接口}。
+
+可以把从身体原始状态到认知的链条写成：
+\[
+z_B(t)
+\longrightarrow
+\mathcal F_A(t)
+\longrightarrow
+m_A(t),
+\]
+其中 $z_B$ 是高维身体状态，$\mathcal F_A$ 是固定功能作用表示，而 $m_A$ 是供认知系统利用的低维调制状态。
+
+例如：
+\[
+\mathcal F_A=
+[
+EnergyPressure,
+Threat,
+Arousal,
+SensoryLoad,
+ControlInstability
+]
+\]
+可以进一步形成认知调制：
+\[
+m_A=
+[
+ExplorationBias,
+AttentionGain,
+RiskSensitivity,
+ActionUrgency
+].
+\]
+
+形式上可以写成
+\[
+m_A(t)
+=
+H_F
+\left(
+\mathcal F_A(t),
+h(t),
+G(t)
+\right),
+\]
+其中 $G(t)$ 表示当前目标结构。之所以还需要 $h(t)$ 与 $G(t)$，是因为相同的身体压力在不同任务上下文中不一定产生相同认知调节。例如 20\% 的剩余能源在返回充电站任务中可能是正常状态，而在远距离救援任务中则可能成为强约束。
+
+因此：
+\[
+\boxed{
+FunctionalInfluence
+\neq
+FixedBehavior.
+}
+\]
+FCS 表达的是影响，不是动作命令。
+
+这一点尤其重要。若
+\[
+Threat=0.9,
+\]
+并不意味着 Agent 必须立即执行某个固定逃避动作。它意味着“当前现实已经对主体形成强威胁作用”，至于高层系统如何利用这一信息，还必须结合任务、身体能力和安全约束。
+
+因此可以把 FCS 对认知的影响理解成对可行认知动力学的变形：
+\[
+\mathcal D_C
+\longrightarrow
+\mathcal D_C'
+=
+\mathcal M
+\left(
+\mathcal D_C,
+\mathcal F_A
+\right).
+\]
+
+从几何角度看，FCS 不是往认知空间中增加一个新的事实，而是在改变某些状态迁移的权重、增益和优先级。高 Threat 可能缩小探索空间，高 EnergyPressure 可能提高资源成本，高 Urgency 可能压缩规划时间窗口，而 ControlInstability 可能提高对身体反馈的关注优先级。
+
+因此 FCS 更接近：
+\[
+\boxed{
+ModulationOfCognitiveDynamics
+}
+\]
+而不是：
+\[
+\boxed{
+ContentOfReasoning.
+}
+\]
+
+当然，一部分 FCS 状态仍然可能进入显式认知。例如，当某一功能作用超过重要阈值：
+\[
+F_k(t)>\theta_k,
+\]
+系统可以生成一个语义化事件：
+\[
+e_k=
+\text{``Energy reserve critically low''}
+\]
+并把这个事件作为 Agent-CSO 送入 h。但这里发生了一次明确的转换：
+\[
+FCS
+\longrightarrow
+SemanticEvent
+\longrightarrow
+h.
+\]
+
+我们必须避免把这两个层次混为一谈。FCS 中的
+\[
+EnergyPressure=0.92
+\]
+是连续调制量，而工作记忆中的“我的能源状态已经限制当前任务”是一个经过解释的认知结构。
+
+这种分层能够保证大量连续身体信息保持在低成本的调制层，而只有真正需要跨尺度协调的问题才进入显式工作记忆。这也与整部理论中反复强调的原则保持一致：
+\[
+\boxed{
+NormalDynamicsStayLocal.
+}
+\]
+
+在正常情况下，身体的连续作用只调整认知环境；当变化足以改变全局目标、风险判断或计划时，它才被提升为显式 Agent-CSO。
+
+
+\section{FCS 的语义镜像：从“受到影响”到“知道自己受到影响”}
+
+上一节建立了 FCS 对认知动力学的调制作用，但这仍然不能等同于 Agent “知道自己正在受到影响”。这一点是本章极重要的认识论区分。
+
+假设：
+\[
+ThermalPressure=0.8.
+\]
+这一状态可以直接改变 Body Runtime 或认知系统的调节参数，却不意味着工作记忆中已经存在一个结构：
+\[
+\text{``我现在正在过热''}.
+\]
+
+换句话说：
+\[
+\boxed{
+Feeling
+\neq
+AwarenessOfFeeling.
+}
+\]
+
+在本理论中，这一区分不是为了讨论人类意识哲学，而是为了保证智能系统的分层结构清晰。一个系统完全可以在没有显式推理的情况下受到某种功能状态影响。例如能源不足可以自动降低搜索资源，控制不稳定可以自动提高局部反馈频率。这些都属于功能调制。
+
+只有当 FCS 的某些状态被重新编码为语义结构并进入 Agent-CSO 层以后，才形成“对自身受到何种影响的认知”。
+
+我们称这一过程为 FCS 的\textbf{语义镜像}：
+\[
+\mathcal M_F:
+\mathcal F_A
+\rightarrow
+\mathcal C_{self},
+\]
+其中 $\mathcal C_{self}$ 表示与主体自身有关的 Agent-CSO 集合。
+
+例如：
+\[
+F_{\mathrm{energy}}=0.81
+\]
+可以经过：
+\[
+\mathcal M_F
+\]
+形成：
+\[
+C_{\mathrm{self}}
+=
+\text{EnergyResourceLimited}.
+\]
+
+再进一步，如果它进入当前工作记忆：
+\[
+C_{\mathrm{self}}\rightarrow h,
+\]
+系统才显式获得：
+\[
+\boxed{
+\text{``当前我的资源状态已经成为任务约束。''}
+}
+\]
+
+因此至少存在三个不同层次：
+
+\[
+\boxed{
+PhysicalState
+}
+\]
+例如：
+\[
+Battery=12\%.
+\]
+
+然后是：
+\[
+\boxed{
+FunctionalFeeling
+}
+\]
+例如：
+\[
+EnergyPressure=0.85.
+\]
+
+最后是：
+\[
+\boxed{
+SelfSemanticAwareness
+}
+\]
+例如：
+\[
+\text{``我必须重新规划能源使用。''}
+\]
+
+这三个层次绝不能用同一个变量替代。
+
+这种设计与人类和动物系统中的许多功能分层具有启发性的相似之处：大量身体调节发生在显式认知之外，而部分内部状态可以被提升到可报告和可推理层。但本书不依赖这一生物类比来证明 AgentOS 设计，它仅说明类似的分层在复杂闭环系统中具有明确工程合理性。
+
+更一般地，我们可以定义一个“显式化概率”：
+\[
+P_{exp}
+=
+P
+\left(
+C_{\mathrm{self}}\rightarrow h
+\mid
+I_k,D_k,Q_k,G,h
+\right).
+\]
+它取决于作用强度、变化率、置信度、当前目标和工作记忆状态，而不是单纯取决于某个 FCS 数值。
+
+因此当
+\[
+I_k
+\]
+较低、变化缓慢且任务无关时：
+\[
+P_{exp}\approx 0.
+\]
+这类影响继续留在后台。
+
+当
+\[
+I_k
+\]
+持续升高并且与目标强相关时：
+\[
+P_{exp}\uparrow,
+\]
+相关结构才被提升到显式层。
+
+这一机制解决了一个非常现实的问题：如果 Agent 每时每刻都“意识到”自己的 CPU 温度、电池电压、每个关节误差、网络延迟和所有风险变量，那么工作记忆将成为内部监控日志，而不是认知空间。真正成熟的智能应该能够让绝大多数身体状态在后台自动调节，仅在需要全局协调时才形成显式自我表征。
+
+所以本章坚持：
+\[
+\boxed{
+FunctionalFeeling
+\rightarrow
+PossibleSelfAwareness,
+}
+\]
+而不是：
+\[
+\boxed{
+FunctionalFeeling
+=
+SelfAwareness.
+}
+\]
+
+这一区分以后也将成为理解 Agent 内部体验、自我感知以及认知控制层级的重要基础，但在本章我们只确立其表示关系，不进一步展开后续机制。
+
+
+\section{SGC 与 FCS 的耦合：同一现实的两张互补地图}
+
+SGC 和 FCS 虽然必须保持区分，却绝不是相互独立的两个系统。真实世界中的同一对象、同一事件往往同时在两套表示中产生不同形式的投影。我们因此需要建立两者之间明确的耦合关系。
+
+设 SGC 中存在对象集合
+\[
+V_t=\{v_1,\ldots,v_n\}.
+\]
+对于每一个对象 $v_i$，我们可以定义它对 FCS 通道 $k$ 的作用函数：
+\[
+\phi_k(v_i,B_A,t).
+\]
+于是局部作用可以写成
+\[
+f_{ik}
+=
+\phi_k(v_i,B_A,t).
+\]
+
+如果考虑多个对象与背景条件的组合，则：
+\[
+F_k(t)
+=
+\mathcal G_k
+\left(
+f_{1k},f_{2k},\ldots,f_{nk},
+B_A(t)
+\right).
+\]
+
+因此可以把二者关系写成：
+\[
+\boxed{
+\mathcal F_A
+=
+\Gamma_A
+(
+\mathcal S_A,
+B_A
+).
+}
+\]
+
+然而这一表达仍然只是一个方向。FCS 也可以反向影响 SGC 的感知和更新优先级。
+
+例如当：
+\[
+Threat\gg 0,
+\]
+系统可能提高对威胁来源附近实体的观测频率；当
+\[
+SensoryLoad
+\]
+过高时，系统可能降低对非关键对象的追踪精度；当
+\[
+ControlInstability
+\]
+增加时，系统可能提高身体附近空间区域的几何更新频率。
+
+因此：
+\[
+\mathcal F_A
+\rightarrow
+AttentionWeight(\mathcal S_A).
+\]
+
+设 SGC 中节点 $v_i$ 的更新优先级为
+\[
+\alpha_i,
+\]
+则可以定义：
+\[
+\alpha_i(t)
+=
+H
+\left(
+Relevance_i,
+Uncertainty_i,
+\mathcal F_A(t),
+Goal(t)
+\right).
+\]
+
+这样形成真正的双向耦合：
+\[
+\boxed{
+SGC
+\rightleftarrows
+FCS.
+}
+\]
+
+SGC 告诉系统：
+\[
+\text{什么正在产生作用？}
+\]
+
+FCS 告诉系统：
+\[
+\text{哪些作用现在最重要？}
+\]
+
+举一个典型具身场景。机器人前方存在一辆快速接近的车辆。SGC 表示可能包括：
+\[
+ObjectType=Vehicle,
+\]
+\[
+RelativeVelocity=-12\,m/s,
+\]
+\[
+Distance=18\,m,
+\]
+\[
+Trajectory=Approaching.
+\]
+
+FCS 则可能形成：
+\[
+Threat=0.91,
+\]
+\[
+Urgency=0.88,
+\]
+\[
+ControlMargin=0.32.
+\]
+
+SGC 中的车辆对象仍然保持一个世界结构，而 FCS 将这个结构相对于当前身体和可行动窗口转化成主体作用。随后高 Threat 又会提高该车辆在 SGC 中的观测优先级。这便形成：
+\[
+Object
+\rightarrow
+FunctionalInfluence
+\rightarrow
+PerceptualPriority
+\rightarrow
+BetterObjectEstimate.
+\]
+
+因此二元现实模型不是两个并列数据库，而是：
+\[
+\boxed{
+WorldStructure
+\rightleftarrows
+BodyRelativeInfluence.
+}
+\]
+
+我们可以把整个双表示系统写成一个耦合状态：
+\[
+\mathcal R_A(t)
+=
+\begin{bmatrix}
+\mathcal S_A(t)\\
+\mathcal F_A(t)
+\end{bmatrix},
+\]
+其动力学为：
+\[
+\frac{d}{dt}
+\begin{bmatrix}
+\mathcal S_A\\
+\mathcal F_A
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathcal H_S(\mathcal S_A,\mathcal F_A,Y_A)\\
+\mathcal H_F(\mathcal F_A,\mathcal S_A,B_A)
+\end{bmatrix}.
+\]
+
+这个形式表达了一个很重要的思想：现实内容和主体作用在运行中相互塑造。它们不是静态 snapshot，而是一个持续演化的联合状态。
+
+进一步地，可以定义联合置信状态：
+\[
+Q_R(t)
+=
+Q_S(t)\otimes Q_F(t),
+\]
+即系统不仅需要知道“我是否确定那里存在某对象”，也需要知道“我是否确定该对象当前对我构成某种作用”。例如视觉上不确定的远处物体可能带来：
+\[
+Q_S=0.45,\qquad Threat=0.70,\qquad Q_F=0.40.
+\]
+系统因而可以保持“高潜在影响、低认识确定性”的状态，而不是被迫提前选择“安全”或“危险”二元标签。
+
+这种 epistemic separation 对开放世界 Agent 尤其关键，因为实际环境中最危险的情况往往并不是已经确定的威胁，而是：
+\[
+HighImpactPotential
++
+HighUncertainty.
+\]
+
+因此 SGC--FCS 的耦合不仅统一了感知和主体状态，也为智能体表达“我看到什么”“它可能意味着什么”“我对此有多确定”提供了一套可组合结构。
+
+
+\section{二元现实模型与 Agent-CSO：从现实接口到认知结构}
+
+到目前为止，我们仍然主要把 SGC 与 FCS 放在 Body Runtime 与现实接口的层级讨论。现在需要将它们重新放回整部理论更一般的 CSO 框架中。
+
+本书前面已经区分：
+\[
+CSO
+\]
+与
+\[
+AgentCSO.
+\]
+真实世界中的对象、关系和事件可以被视为 Universe-CSO，而具体 Agent 对这些结构的内部承载则形成 Agent-CSO。
+
+因此 SGC 的重要作用，可以进一步理解为给 Agent-CSO 提供一个可检查的现实 grounding：
+\[
+C_U
+\longrightarrow
+SGC
+\longrightarrow
+C_A.
+\]
+
+例如现实中存在一扇门 $C_{door}$。感知系统并不是直接把 Universe-CSO 完整复制到智能体内部，而是形成：
+\[
+SGC(C_{door})
+=
+\{
+position,
+geometry,
+state,
+semantic\ tag,
+confidence
+\}.
+\]
+随后高层认知可以建立：
+\[
+AgentCSO_A(C_{door}).
+\]
+
+FCS 则加入第二个投影：
+\[
+C_U
+\times
+Body_A
+\longrightarrow
+FCS_A(C_U).
+\]
+于是同一个 Universe-CSO 同时形成：
+\[
+\boxed{
+DescriptiveGrounding
++
+FunctionalGrounding.
+}
+\]
+
+换句话说，一个现实结构在 Agent 内部真正具有完整操作意义，需要同时回答：
+\[
+\text{它是什么？}
+\]
+以及
+\[
+\text{它对当前的我意味着什么？}
+\]
+
+因此可以定义一个最小的具身 Agent-CSO：
+\[
+C_A^{emb}
+=
+\left(
+C_A^{semantic},
+C_A^{functional}
+\right).
+\]
+
+这里
+\[
+C_A^{semantic}
+\]
+主要由 SGC 提供 grounding，而
+\[
+C_A^{functional}
+\]
+主要由 FCS 提供主体作用信息。
+
+例如一个火源在 Agent 内部不只是：
+\[
+Fire(x,y,z).
+\]
+完整具身结构更接近：
+\[
+\left[
+Fire(x,y,z),
+Distance,
+TemperatureEstimate,
+Reachability,
+ThermalPressure,
+Threat,
+Urgency
+\right].
+\]
+
+但是我们仍然不主张把上述全部内容永久融合成一个不可分解对象。恰恰相反，我们希望保持：
+\[
+SemanticStructure
+\]
+与
+\[
+FunctionalInfluence
+\]
+之间可追溯的关系，这样智能体才能回答：
+\[
+\text{“我为什么认为它危险？”}
+\]
+
+设某个 Agent-CSO 的当前行动价值为
+\[
+V_A(C_i,t),
+\]
+则它可以由语义、目标和 FCS 共同决定：
+\[
+V_A(C_i,t)
+=
+\mathcal V
+\left(
+Semantic(C_i),
+Relation(C_i),
+Goal(t),
+FCS(C_i,t)
+\right).
+\]
+
+这说明 FCS 并不取代价值系统，也不等于 Value。它只是给价值与决策提供身体相关现实约束。例如高 ThermalPressure 本身并不必然意味着负价值；对于消防机器人而言，接近高温区域可能恰恰符合任务目标。最终决策仍然需要：
+\[
+Goal
++
+WorldStructure
++
+FunctionalInfluence.
+\]
+
+因此必须保持：
+\[
+\boxed{
+FCS\neq ValueFunction.
+}
+\]
+
+同样：
+\[
+\boxed{
+SGC\neq WorldTruth.
+}
+\]
+它只是 Agent 当前拥有的可检查世界模型。
+
+由此，SGC--FCS 二元结构在整个 CSO 理论中的地位便清晰起来：它是 Universe-CSO 进入 Agent-CSO 之前最重要的具身 grounding 层之一。
+
+可以把这一过程浓缩成：
+\[
+UniverseCSO
+\overset{Observation}{\longrightarrow}
+\left[
+SGC,
+FCS
+\right]
+\longrightarrow
+AgentCSO.
+\]
+
+而 Agent 后续行动又会改变 Universe-CSO：
+\[
+AgentCSO
+\longrightarrow
+Action
+\longrightarrow
+UniverseCSO'.
+\]
+
+因此本章建立的双现实表示实际上是整部理论中：
+\[
+World
+\rightarrow
+Agent
+\rightarrow
+World
+\]
+闭环的关键中介。
+
+
+\section{二元现实模型的统一形式与设计原则}
+
+至此，我们可以把本章建立的全部内容压缩成一个形式化模型。
+
+设 Agent $A$ 的当前具身现实状态为
+\[
+\boxed{
+\mathcal R_A(t)
+=
+\left(
+\mathcal S_A(t),
+\mathcal F_A(t)
+\right).
+}
+\]
+
+其中：
+\[
+\mathcal S_A(t)
+=
+\left(
+V_t,E_t,X_t,\Sigma_t,\Xi_t
+\right)
+\]
+表示 SGC，而：
+\[
+\mathcal F_A(t)
+=
+\left[
+F_1(t),F_2(t),\ldots,F_K(t)
+\right]
+\]
+表示 FCS。
+
+SGC 主要由世界观测生成：
+\[
+\mathcal S_A(t+1)
+=
+\Phi_S
+\left(
+\mathcal S_A(t),
+Y_A(t+1),
+M_A(t)
+\right),
+\]
+FCS 则由 SGC、身体状态及能力关系共同生成：
+\[
+\mathcal F_A(t+1)
+=
+\Phi_F
+\left(
+\mathcal F_A(t),
+\mathcal S_A(t+1),
+B_A(t+1),
+C_A(t)
+\right).
+\]
+
+同时 FCS 会反向改变 SGC 的资源分配和更新策略：
+\[
+\alpha_i(t+1)
+=
+H
+\left(
+v_i,
+\mathcal F_A,
+Goal_A
+\right),
+\]
+使：
+\[
+UpdateRate(v_i)
+\propto
+\alpha_i.
+\]
+
+于是最终形成：
+\[
+\boxed{
+World
+\rightarrow
+SGC
+\rightleftarrows
+FCS
+\rightarrow
+Agent.
+}
+\]
+
+如果进一步从认识论角度整理，这个结构包含四个严格不同的层次：
+
+第一层是\textbf{Reality}：
+\[
+W(t),
+\]
+即无论 Agent 如何表示都实际存在并按照自身动力学变化的现实。
+
+第二层是\textbf{Descriptive Reality}：
+\[
+\mathcal S_A(t),
+\]
+即 Agent 关于现实结构的当前可检查表示。
+
+第三层是\textbf{Functional Reality}：
+\[
+\mathcal F_A(t),
+\]
+即同一现实相对于当前身体和运行状态产生的作用。
+
+第四层才是进一步进入认知系统的：
+\[
+AgentCSO.
+\]
+
+因此：
+\[
+\boxed{
+Reality
+\neq
+SGC
+\neq
+FCS
+\neq
+AgentCSO.
+}
+\]
+
+它们之间不是谁比谁“更真实”的关系，而是同一现实闭环中的不同功能层。
+
+本章由此得到若干基础设计原则。
+
+第一，\textbf{内容--作用分离原则}。现实中“是什么”与“怎样影响主体”必须具有独立表示通道。否则世界模型会过度主体化，或者身体影响会被淹没在语义结构中。
+
+第二，\textbf{身体中心原则}。SGC 与 FCS 都最终与具体 Body 绑定。同一 Universe-CSO 对不同身体应允许产生不同 affordance 和不同 functional influence。
+
+第三，\textbf{开放语义--稳定作用原则}。SGC 的对象和关系类型允许随世界开放扩展，而 FCS 的主要功能通道应尽可能保持稳定，以形成长期认知 ABI。
+
+第四，\textbf{调制不等于显式认知原则}。FCS 可以直接调节系统而无需进入 $h$：
+\[
+FCS
+\not\Rightarrow
+h.
+\]
+只有重要作用经过语义镜像以后才形成显式 Agent-CSO。
+
+第五，\textbf{影响不等于价值原则}：
+\[
+FCS\neq Value.
+\]
+FCS 提供“世界对我的作用”，价值和目标则决定“我如何评价并回应这种作用”。
+
+第六，\textbf{表示不等于现实原则}：
+\[
+SGC\neq Reality.
+\]
+SGC 必须保留置信度和认识论状态，允许错误、延迟与修正。
+
+第七，\textbf{现实重新进入原则}。任何动作之后，Agent 都不能直接把预测状态当作新的 SGC/FCS。新的现实状态必须重新通过观测闭环形成：
+\[
+Action
+\rightarrow
+Reality
+\rightarrow
+Observation
+\rightarrow
+SGC/FCS.
+\]
+
+这一原则确保 Agent 的内部模型不会因长期自预测而逐渐脱离现实。
+
+如果将整章压缩为最核心的一个公式，可以写为：
+\[
+\boxed{
+\mathcal R_A(t)
+=
+\underbrace{\mathcal S_A(t)}_{\text{现实的内容}}
+\oplus
+\underbrace{\mathcal F_A(t)}_{\text{现实的作用}}
+}
+\]
+其中 $\oplus$ 并不表示普通向量相加，而表示两种不可相互约化、却必须联合存在的现实表示。
+
+从作者的视角，我们现在可以更加准确地描述一个具身 Agent 所谓的“当前经验”。它既不是传感器原始数据，也不是一个纯粹语义世界模型，更不是若干内部感受数值。它是：
+
+\[
+\boxed{
+\textbf{
+世界结构如何呈现于我，
+以及这些结构正在怎样作用于我。
+}
+}
+\]
+
+因此，本章最终得到 AgentOS 身体表示理论中的基础命题：
+
+\[
+\boxed{
+\textbf{
+SGC 统一经验的内容，FCS 统一经验的作用；
+前者建立“世界与我在世界中的位置”，
+后者建立“这个世界此刻如何改变我的可运行状态”。
+只有二者联合，Agent 才拥有真正面向行动的具身现实。
+}
+}
+\]
+
+更进一步，从整部《智能动力学与 AgentOS》的理论主线来看，SGC--FCS 二元模型标志着我们已经从“机器如何感知世界”进入了一个更严格的问题：
+
+\[
+\boxed{
+\textbf{
+一个持续智能体究竟需要怎样表示现实，
+才能既保持对世界结构的理解，
+又保持对自身处境的感知，
+并使二者共同成为未来行动的基础。
+}
+}
+\]
+
+答案不是一个更大的 latent，而是一个具有明确语义分工的双现实表示：
+
+\[
+\boxed{
+RealityForAgent
+=
+WorldAsStructured
++
+WorldAsAffectingTheAgent.
+}
+\]
+
+这就是 SGC--FCS 二元现实模型的理论位置。

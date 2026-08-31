@@ -1,194 +1,1149 @@
 \chapter{Agent Kernel 与 Body Runtime 的职责分离}
-\chaptervoice{这一章，我们围绕“Agent Kernel 与 Body Runtime 的职责分离”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明认知内核通过身体进入现实。}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 Body Runtime、FBI、SGC/FCS、三信号通道、BPCC 与 Reality Authority 的具身讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是具身认知、分层控制、MPC、状态估计与安全包络（模型预测控制、Kalman 状态估计与具身认知）。
-
-本章使用上一章“Body Scale 原理”已经得到的对象与边界；本章产出将供下一章“FBI：Functional Body Interface”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在具身认知、分层控制、MPC、状态估计与安全包络上。
-\section{Cognitive State Space}
-\begin{narration}
-现在把镜头移到“Cognitive State Space”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Cognitive State Space”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel 与 Body Runtime 的职责分离”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Cognitive State Space的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Cognitive State Space”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Body State Space}
-\begin{narration}
-现在把镜头移到“Body State Space”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Body State Space”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel 与 Body Runtime 的职责分离”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Body State Space的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Body State Space”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{BodyState $\neq$ h}
-\begin{narration}
-现在把镜头移到“BodyState $\neq$ h”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“BodyState $\neq$ h”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel 与 Body Runtime 的职责分离”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对BodyState $\neq$ h的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“BodyState $\neq$ h”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Kernel：What To Do}
-\begin{narration}
-现在把镜头移到“Kernel：What To Do”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Kernel：What To Do”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel 与 Body Runtime 的职责分离”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Kernel：What To Do的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Kernel：What To Do”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Body Runtime：How This Body Does It}
-\begin{narration}
-现在把镜头移到“Body Runtime：How This Body Does It”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Body Runtime：How This Body Does It”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel 与 Body Runtime 的职责分离”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Body Runtime：How This Body Does It的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Body Runtime：How This Body Does It”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{全局预测与局部预测}
-\begin{narration}
-现在把镜头移到“全局预测与局部预测”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“全局预测与局部预测”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel 与 Body Runtime 的职责分离”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对全局预测与局部预测的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“全局预测与局部预测”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{认知时间尺度与身体时间尺度}
-\begin{narration}
-现在把镜头移到“认知时间尺度与身体时间尺度”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“认知时间尺度与身体时间尺度”落实为承载范围、有效信息率与反馈周期之间的约束关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel 与 Body Runtime 的职责分离”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}T_{\min}\geq L/v+I/B+T_{\rm act}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对认知时间尺度与身体时间尺度的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：忽略传播和排队成本会制造虚假的实时性。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“认知时间尺度与身体时间尺度”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Kernel Body Independence}
-\begin{narration}
-现在把镜头移到“Kernel Body Independence”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Kernel Body Independence”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent Kernel 与 Body Runtime 的职责分离”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Kernel Body Independence的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Kernel Body Independence”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“Agent Kernel 与 Body Runtime 的职责分离”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“FBI：Functional Body Interface”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\begin{center}
+\fbox{
+\parbox{0.92\textwidth}{
+\textbf{本章总体说明}
+
+本章确立 AgentOS 具身架构中一条不可动摇的系统边界：\textbf{认知主体的持续状态与身体的快速运行状态必须分离，Agent Kernel 负责决定“为何行动、做什么以及长期如何改变”，Body Runtime 负责决定“在当前具体身体上如何可靠、实时地把这种意图落实为现实过程”。}二者不是传统意义上的“上位机--下位机”简单分层，也不是“大模型--控制器”的工程拼接，而是同一持续智能体内部两个具有不同状态空间、不同时间尺度、不同学习目标、不同现实责任和不同安全权限的动力系统。
+
+本章的核心命题是：
+\[
+\boxed{
+AgentSystem
+=
+AgentKernel
+\bowtie
+BodyRuntime
+}
+\]
+其中符号 $\bowtie$ 表示二者不是简单串联，而是在稳定语义契约和多时间尺度反馈下形成持续耦合。Kernel 的主要职责是维护认知、记忆、自我、目标、意义和跨时间预测；Body Runtime 的主要职责是维护身体状态、局部环境状态、高频预测、局部控制和现实反馈。由此进一步确立：
+\[
+\boxed{
+BodyState(t)\neq h(t)
+}
+\]
+以及：
+\[
+\boxed{
+Kernel:\ What\ to\ do,
+\qquad
+BodyRuntime:\ How\ this\ body\ does\ it
+}
+\]
+
+这一分离是后续身体语义接口、SGC、FCS、快速预测控制以及 Kernel--Body 自适应耦合能够成立的前提。本章只建立职责边界及其动力学原因，不提前展开后续具体接口的数据结构与算法。
+}
+}
+\end{center}
+
+\section{认知状态空间：Agent Kernel 所维护的不是身体状态，而是主体状态}
+
+如果我们希望构造的不是一次性完成任务的模型，而是一个在长期运行过程中保持身份、记忆、目标和行为连续性的智能体，那么首先必须明确：Agent Kernel 所维护的状态，不应被理解为外部世界状态的简单副本，更不应被理解为机器人关节、屏幕坐标或 API 返回值的集合。Kernel 所维护的是\textbf{对主体未来认知与行为具有跨任务、跨身体和跨时间影响的认知状态空间}。
+
+我们可以将 Kernel 的认知状态记为
+\[
+\mathcal X_C(t).
+\]
+在本书此前已经建立的固定拓扑 AgentOS 中，它至少包含
+\[
+\mathcal X_C
+=
+\left[
+h,
+E,
+\Theta,
+\Psi,
+\Omega,
+G,
+S_{\mathrm{self}},
+A,
+R_C
+\right],
+\]
+其中 $h$ 表示当前有限工作记忆状态，$E$ 表示经历轨迹，$\Theta$ 表示长期结构与生成器，$\Psi$ 表示相对稳定的身份与价值约束，$\Omega$ 表示更加缓慢的生命周期生成吸引子，$G$ 表示当前及中长期目标结构，$S_{\mathrm{self}}$ 表示由自我感知过程形成的主体状态估计，$A$ 表示影响认知动力学的内稳态调制状态，而 $R_C$ 则概括当前可用于认知调度的资源和控制状态。
+
+这里最重要的不是上述变量是否最终采用完全相同的数据结构，而是这些变量具有一个共同特征：它们所描述的不是某一块具体身体此刻的全部微观状态，而是\textbf{能够跨越具体身体细节，对主体未来选择产生持续因果影响的状态}。例如，“右机械臂第七关节当前角度为 $34.7^\circ$”通常不是 Kernel 的核心持续状态；但“当前正在执行搬运任务”“右侧操作空间暂时不可用”“当前策略需要降低行动风险”“该身体最近在狭窄空间中的操作可靠性较低”则可能成为 Kernel 需要显式利用的认知状态。
+
+因此，Kernel 中的状态不是现实的最大分辨率表示，而是经过选择、压缩和主体化之后的\textbf{认知有效状态}。如果外部世界真实状态为 $W_t$，身体内部状态为 $B_t$，那么 Kernel 获得的并不是
+\[
+\mathcal X_C(t)=W_t\oplus B_t,
+\]
+而更接近
+\[
+\mathcal X_C(t)
+=
+\Phi_C
+\left(
+\mathcal X_C(t^-),
+\mathcal O_B(t),
+E,
+\Theta,
+\Psi,
+\Omega,
+G
+\right),
+\]
+其中 $\mathcal O_B(t)$ 是 Body Runtime 向 Kernel 暴露的经过语义化和压缩后的身体--世界观测，$\Phi_C$ 是认知状态更新过程。这一关系意味着：同一个现实输入，在不同历史、不同自我结构、不同目标和不同长期知识下，会形成不同的 Kernel 状态更新。Kernel 所维护的是一个\textbf{带历史的主体世界}，而不是一个没有主体的传感器镜像。
+
+这一点也解释了为什么 AgentOS 不能简单把大模型的 context window 当成完整认知状态。Context 只是 $h(t)$ 的一种可能实现载体，而 $h(t)$ 自身又只是 $\mathcal X_C$ 中最快、最显式的一部分。大量认知结构处于更慢的 $E$、$\Theta$、$\Psi$ 和 $\Omega$ 中。成熟的持续智能体恰恰不应把所有状态同时展开到 $h$，因为工作记忆有限容量定理已经说明，全局显式空间必须保持稀疏。换言之：
+\[
+\boxed{
+Most\ Agent\ State\notin h(t)
+}
+\]
+而：
+\[
+\boxed{
+h(t)
+=
+Sparse\ Explicit\ Projection
+\left(
+\mathcal X_C(t)
+\right).
+}
+\]
+
+从已有理论看，这一设计与认知科学中的工作记忆、全局工作空间和长期记忆分层存在可比较关系，也与控制理论中的高层状态估计、部分可观测系统中的 belief state 具有形式上的相似性。但本书并不把 Kernel 直接等同于任何一种现有认知模型。我们借鉴的是一个更一般的原则：\textbf{高层控制系统不需要拥有低层现实的全部微观状态，而需要拥有对高层决策充分的有效状态。}
+
+因此，本节最终确立的不是一个具体的软件对象，而是一条本体边界：
+\[
+\boxed{
+\mathcal X_C
+=
+\text{Subject-Relevant Cognitive State Space}.
+}
+\]
+它是“这个 Agent 此刻如何理解世界、理解自己、准备去哪里以及过去如何塑造现在”的状态空间，而不是“这具身体此刻每一个物理变量是多少”的状态空间。
+
+\section{身体状态空间：Body Runtime 是现实边界上的快速动力系统}
+
+与认知状态空间不同，Body Runtime 面对的是一个更加严格、更高速、更接近现实约束的状态空间。我们将其记为
+\[
+\mathcal X_B(t).
+\]
+如果 Agent 使用的是物理机器人身体，那么 $\mathcal X_B$ 可以包含关节、力矩、速度、姿态、电池、温度、驱动器健康、传感器置信度、局部障碍物状态和控制误差；如果 Agent 使用的是数字身体，那么它同样可以包含窗口状态、光标位置、页面结构、进程状态、网络连接、文件锁、接口可用性、权限、延迟和正在执行的操作进度。
+
+因此，“身体”在这里不是生物学意义上的肉身，而是
+\[
+\boxed{
+Body
+=
+ControlledAndSensedCarrierOfAgency.
+}
+\]
+凡是一个持续主体能够通过它接收现实反馈并向现实施加动作的载体，都属于 Body 范畴。由此，Body Runtime 的状态可以抽象为
+\[
+\mathcal X_B
+=
+[
+x_{\mathrm{body}},
+x_{\mathrm{localworld}},
+x_{\mathrm{device}},
+x_{\mathrm{control}},
+x_{\mathrm{health}},
+x_{\mathrm{pred}},
+x_{\mathrm{res}}
+],
+\]
+其中 $x_{\mathrm{body}}$ 描述载体本体，$x_{\mathrm{localworld}}$ 描述与当前行动直接相关的局部世界，$x_{\mathrm{device}}$ 表示传感器、执行器或数字接口状态，$x_{\mathrm{control}}$ 表示正在执行的控制状态，$x_{\mathrm{health}}$ 表示身体可用性和安全状态，$x_{\mathrm{pred}}$ 表示局部预测，而 $x_{\mathrm{res}}$ 表示预测与现实之间的残差。
+
+Body Runtime 的首要特点是其时间尺度明显快于 Kernel 的主要认知闭环。一个机器人维持平衡可能需要毫秒级到几十毫秒级响应，一个鼠标拖动动作可能需要几十毫秒内连续纠正轨迹，而一次完整的语义规划可能需要数秒甚至更长。如果把这些不同尺度全部放入同一高层推理循环，那么系统会遇到两个直接问题：第一，高层计算无法满足实时控制所要求的确定性延迟；第二，高层工作记忆会被大量低价值微观变化淹没。
+
+因此需要满足：
+\[
+\boxed{
+\tau_{BodyFastLoop}
+\ll
+\tau_{CognitiveLoop}.
+}
+\]
+
+更一般地，可写为
+\[
+\tau_{\mathrm{servo}}
+<
+\tau_{\mathrm{localcontrol}}
+\lesssim
+\tau_{\mathrm{localprediction}}
+<
+\tau_{\mathrm{semanticupdate}}
+<
+\tau_h.
+\]
+这里的绝对数值取决于具体身体，因此本书不把毫秒、秒或分钟作为普适常数；真正重要的是\textbf{时间尺度的偏序关系}。
+
+Body Runtime 的第二个特点，是它不能只做“执行”。一个纯执行器架构会形成
+\[
+Kernel
+\rightarrow
+Command
+\rightarrow
+Motor,
+\]
+这种结构隐含高层需要不断产生低层操作细节。成熟架构应改成
+\[
+Kernel
+\rightarrow
+Reference/Envelope
+\rightarrow
+BodyRuntime
+\rightarrow
+LocalClosedLoop.
+\]
+也就是说，Kernel 提供意图、目标、约束与允许区域，Body Runtime 自己完成局部状态估计、预测、控制和误差修正。换言之，高层并不规定每一个微动作，而是规定低层动力学必须维持在哪一个可接受区域。
+
+设 Body Runtime 获得高层控制参考 $r_C(t)$，则其快速动力学可以写成
+\[
+\dot x_B
+=
+F_B
+\left(
+x_B,
+u_B,
+w
+\right),
+\]
+其中 $w$ 为外部扰动，而局部控制器满足
+\[
+u_B
+=
+\pi_B
+\left(
+x_B,
+\hat x_{B}^{future},
+r_C,
+\mathcal C_B
+\right),
+\]
+$\mathcal C_B$ 表示当前身体约束。Body Runtime 的目标不是最大化一个抽象全局价值函数，而是在高层给定的可行域内，使局部动作可靠闭合。
+
+这一设计与机器人中的 hierarchical control、model predictive control、real-time operating systems、subsumption architecture 等已有工程思想存在明显关联。但 AgentOS 在此基础上增加了一个关键要求：Body Runtime 不只是机器人控制层，它必须同时服务于\textbf{数字身体、物理身体以及未来任意行动载体}。因此它承担的是一种更一般的“主体--现实运行时”角色。
+
+这使得 Body Runtime 成为 AgentOS 的第一道现实复杂度屏障。现实产生的大量快速扰动如果可以在局部闭合，就不应该全部升级到 Kernel。其基本原则是：
+\[
+\boxed{
+NormalDynamicsStayLocal.
+}
+\]
+只有那些无法由当前身体闭环解释、预测或解决的残差，才有理由成为更高层认知问题。
+
+\section{为什么 BodyState 不等于工作记忆状态}
+
+AgentOS 具身架构中一个极容易犯的错误，是把“系统当前拥有的全部可观测状态”直接塞入工作记忆 $h(t)$，并称之为 Agent 的“当前状态”。这种设计在简单 Demo 中看似自然，因为大模型需要通过文字或结构化输入了解环境，但它在长期运行系统中会造成严重的理论和工程混乱。
+
+必须明确：
+\[
+\boxed{
+BodyState(t)\neq h(t).
+}
+\]
+
+BodyState 属于现实交互动力学，而 $h(t)$ 属于认知显式动力学。二者可以存在映射，却不能在本体上等同。
+
+首先，两者的信息密度不同。假设一个机器人有 $n$ 个连续身体变量：
+\[
+x_B(t)\in\mathbb R^n.
+\]
+高频传感器每秒产生 $f_s$ 次更新，则在时间 $\Delta T$ 中潜在状态样本数量约为
+\[
+N_B
+=
+n f_s\Delta T.
+\]
+如果这些变量全部进入 $h$，则 $h$ 的有效认知负载会随底层传感规模和采样率直接增长。但工作记忆有限容量理论要求：
+\[
+C_{run}(h_t)
+\leq
+C_{\max}.
+\]
+因此只要身体复杂度继续扩张，“全部身体状态进入 h”这一架构迟早失败。
+
+第二，两者的语义粒度不同。一个控制器可能需要知道：
+\[
+\dot q_4=0.37,\qquad
+\tau_4=1.82,
+\]
+但 Kernel 真正需要知道的往往只是：
+\[
+\text{``右臂抓取稳定，控制裕量正常''}.
+\]
+这意味着从 BodyState 到 h 存在一个压缩映射：
+\[
+\Gamma_B:
+\mathcal X_B
+\rightarrow
+\mathcal Z_B,
+\]
+而真正进入认知显式面的是
+\[
+z_B^{cog}
+=
+\Gamma_B(x_B),
+\]
+并且通常满足
+\[
+\dim(z_B^{cog})
+\ll
+\dim(x_B).
+\]
+
+这种压缩不是简单的信息丢失，而是\textbf{根据当前认知目标保留行动相关自由度}。不同任务下，同一身体状态可能产生不同高层摘要。如果 Agent 当前只在进行语言交互，那么腿部每个关节的瞬时误差通常无需进入 $h$；但如果平衡控制连续失败，则“身体稳定性异常”会迅速获得认知相关性，并上浮为工作记忆中的显式 CSO。
+
+第三，两者具有不同的责任关系。$h$ 中可以存在假设、预测、计划和反事实。例如：
+\[
+h
+\ni
+\text{``如果向左转可能避开障碍物''}.
+\]
+但 BodyState 不能把这种预测直接当成真实状态。于是必须坚持：
+\[
+\boxed{
+PredictedBodyState
+\neq
+ObservedBodyState.
+}
+\]
+否则模型的预期可能覆盖现实反馈，产生所谓“自我实现式状态估计”：系统以为动作已经成功，于是停止读取实际执行结果。这一点对于物理机器人和数字 Agent 同样危险。一个软件 Agent 发出了“文件已删除”的命令，并不意味着文件真的已经删除；浏览器执行了点击，也不意味着目标窗口真的完成了状态转换。
+
+因此，真实状态必须通过：
+\[
+Action
+\rightarrow
+Reality
+\rightarrow
+Observation
+\rightarrow
+BodyRuntime
+\]
+重新进入系统，而不能由高层 prediction 直接写回 observation。
+
+第四，两者具有不同的持久性。$h(t)$ 是一个稀疏的当前认知表面，其内容会随着任务和注意而快速更替，而许多身体状态必须持续存在，即使 Kernel 当前完全不关注。例如温度、电池、网络连接、关节限制和安全状态并不会因为没有进入工作记忆而消失。Body Runtime 必须独立维护这些状态，并在达到相应触发条件时主动将异常提升给 Kernel。
+
+由此得到一个非常重要的多尺度准入原则：
+\[
+\boxed{
+BodyState
+\xrightarrow{\text{relevance/residual}}
+h,
+}
+\]
+而不是
+\[
+BodyState
+\rightarrow h
+\quad
+\text{continuously and completely}.
+\]
+
+在理论上，这与控制系统中的状态估计与 supervisory control 分层、认知科学中的注意瓶颈以及计算机系统中的 interrupt/event abstraction 都存在一定形式对应。但 AgentOS 将其统一成更强的原则：\textbf{现实状态必须始终存在于某个可靠的局部承载层，而显式认知只接收那些跨过当前认知边界的结构。}
+
+因此我们可以把 $h$ 看成 Body Runtime 上方的一张“稀疏认知切面”：
+\[
+\boxed{
+h(t)
+=
+\Pi_{\mathrm{cog}}
+\left(
+\mathcal X_B,
+\mathcal X_C,
+G
+\right),
+}
+\]
+其中 $\Pi_{\mathrm{cog}}$ 是目标相关、残差相关和自我相关的动态投影。正是这种分离，使得 Agent 能够拥有极其复杂的身体，却仍然保持有限、清晰和可治理的工作记忆。
+
+\section{Kernel 的职责：决定 What To Do，而不是直接操纵每一个自由度}
+
+当我们说
+\[
+\boxed{
+Kernel:\ WhatToDo
+}
+\]
+时，“What”不能被狭义理解为只输出一句高层自然语言目标。Kernel 真正负责的是建立\textbf{行动的认知意义、目标约束、未来方向和跨时间一致性}。也就是说，它决定的不只是“向前走”，而是“为什么现在应该向前走、这个行动属于什么目标、允许承受多大风险、失败后是否继续、这次经历应如何影响未来”。
+
+设 Kernel 在时刻 $t$ 的认知状态为 $x_C(t)$，可行动候选集合为
+\[
+\mathcal A_C(t),
+\]
+则 Kernel 的决策过程可以抽象为
+\[
+a_C^\star
+=
+\arg\min_{a\in\mathcal A_C}
+J_C
+\left(
+a;
+h,E,\Theta,\Psi,\Omega,G,
+\hat W_{t:t+H}
+\right),
+\]
+其中 $J_C$ 是一个综合的认知决策泛函，$\hat W_{t:t+H}$ 是较长时间尺度上的未来预测。这里不应把 $J_C$ 理解成一个固定单标量 reward，它可以由多目标、硬约束、身份一致性、资源预算、长期方向和当前任务共同构成。
+
+因此，更准确地说，Kernel 输出的是一种\textbf{行动意图结构}：
+\[
+\mathcal I_C
+=
+(
+Goal,
+Target,
+Constraint,
+Priority,
+Tolerance,
+Prediction,
+StopCondition
+).
+\]
+它告诉 Body Runtime：
+当前希望现实向哪个方向变化；
+哪些状态不可越界；
+哪些变量优先；
+什么误差可以接受；
+什么时候必须停止；
+什么异常需要升级。
+
+这比输出具体 actuator command 更符合高层智能的职责。
+
+例如，对于“把杯子放到桌面”这个动作，Kernel 关心的是：
+\[
+Goal=\text{cup-on-table},
+\]
+同时可能附带：
+\[
+Constraint=
+\{\text{不打翻液体},\text{不碰撞人},\text{保持杯口向上}\}.
+\]
+Kernel 并不应该每 $5$ 毫秒计算一次肩部电机的控制电流。后者属于身体动力学问题。
+
+如果高层直接控制所有底层自由度，那么 Kernel 的状态空间和决策空间将随身体复杂度爆炸。设具体身体具有 $m$ 个可控自由度，每个自由度允许 $k$ 个离散控制选择，则朴素直接控制空间规模近似为
+\[
+|\mathcal U_B|
+\sim
+k^m.
+\]
+对于连续自由度，这一问题更加严重。真正成熟的智能架构必须通过低层闭环把大量微观自由度折叠成少量高层可行动结构。也就是说：
+\[
+\boxed{
+LowLevelControl
+\rightarrow
+HighLevelAffordance.
+}
+\]
+
+于是 Kernel 所面对的不再是“第几个电机应该输出多少电流”，而是“抓取”“移动”“查看”“打开”“输入”“等待”“退出”等已经由 Body Runtime 可实现的行动空间。这本质上就是复杂度从高层显式控制向低层稳定闭环沉降的一种形式，也是前文 CSO 承载迁移理论在具身系统中的体现。
+
+Kernel 还承担另一个 Body Runtime 无法替代的职责：\textbf{跨时间尺度一致性}。Body Runtime 的局部最优可能与主体的长期目标冲突。例如，在瞬时控制上最快的路径可能增加长期风险；执行当前命令最直接的方式可能违反 Agent 的权限边界；局部最稳定的动作可能与当前社会语境不一致。这些冲突只有在 Kernel 更广阔的认知状态中才能判断。
+
+因此可以把 Kernel 的作用概括为：
+\[
+\boxed{
+Kernel
+=
+Meaning
++
+Goal
++
+GlobalConstraint
++
+LongHorizonPrediction
++
+CrossTemporalConsistency.
+}
+\]
+
+它与经典 hierarchical planning、model-based decision making、executive control 等理论存在明显交集，但 AgentOS 更强调：Kernel 不是一个单独的 planner，而是包含 $h/E/\Theta/\Psi/\Omega$ 等多时间尺度状态的持续认知主体。Planner 可以是 Kernel 中的一项功能，但不能代表 Kernel 本身。
+
+我们由此得到一条贯穿整个具身架构的原则：
+\[
+\boxed{
+HigherLevelSetsFeasibleRegion,
+\qquad
+LowerLevelActsInsideIt.
+}
+\]
+Kernel 最重要的控制能力，不是每时每刻告诉低层“具体怎么动”，而是不断定义\textbf{什么样的未来仍然属于这个主体愿意接受的可行未来}。
+
+\section{Body Runtime 的职责：决定 How This Body Does It，并在局部闭合现实}
+
+与 Kernel 的 WhatToDo 相对应，Body Runtime 的职责可以表达为：
+\[
+\boxed{
+BodyRuntime:\ HowThisBodyDoesIt.
+}
+\]
+这里的“How”包含远多于传统 actuator control 的内容。它至少包括具体身体状态估计、局部世界建模、高频预测、控制求解、动作执行、执行进度、身体健康、局部异常判定和现实反馈。
+
+设 Kernel 给出的行动参考为
+\[
+r_C(t),
+\]
+当前身体状态为
+\[
+x_B(t),
+\]
+局部环境观测为
+\[
+o_B(t),
+\]
+那么 Body Runtime 要解决的基本问题是：
+\[
+u_B^\star(t)
+=
+\arg\min_{u}
+J_B
+\left(
+x_B,
+o_B,
+u,
+r_C
+\right),
+\]
+满足
+\[
+x_B(t+\Delta t)
+=
+F_B
+\left(
+x_B(t),
+u_B(t),
+w(t)
+\right)
+\]
+以及身体安全约束
+\[
+x_B(t)\in\mathcal X_B^{safe}.
+\]
+
+这里 $J_B$ 与 Kernel 的 $J_C$ 具有不同的优化范围。Kernel 关心跨任务和较长时间尺度的目标一致性，而 Body Runtime 更关注：
+跟踪误差；
+能耗；
+平滑性；
+碰撞风险；
+执行稳定性；
+局部动作成功率；
+身体资源裕度。
+
+因此：
+\[
+J_B
+\neq
+J_C.
+\]
+但 Body Runtime 必须在 Kernel 给定的高层约束内优化，即
+\[
+u_B^\star
+\in
+\mathcal U_B(r_C).
+\]
+
+这可以理解为一种嵌套优化：
+\[
+\boxed{
+\min_{r_C}
+J_C
+\left(
+r_C,
+\min_{u_B\in \mathcal U_B(r_C)}
+J_B(u_B)
+\right).
+}
+\]
+高层选择“值得进入哪个未来区域”，低层选择“如何以当前身体最可靠地进入该区域”。
+
+这种设计的重要优势是允许同一 Kernel 使用不同身体。如果 Kernel 的 Goal 是“取得桌面上的目标对象”，物理人形机器人可能通过手臂抓取；轮式机械臂可能先移动底盘再操作夹爪；数字 Agent 中对应的目标甚至可能是“获取远程文件”，其 Body Runtime 可能通过 API 或文件系统实现。高层认知结构保持相对稳定，而“How”完全不同。
+
+这就是 Body Runtime 对身体差异进行吸收的意义。
+
+进一步说，Body Runtime 不只是把动作从高层翻译到低层，还承担\textbf{局部认知复杂度沉降}。一个尚未熟练的新动作可能最初需要 Kernel 显式参与：
+\[
+h
+\rightarrow
+Plan
+\rightarrow
+Action
+\rightarrow
+Feedback.
+\]
+随着经验积累，某些重复结构逐渐形成稳定局部闭环：
+\[
+ExplicitCognitiveControl
+\rightarrow
+RepeatedTrajectory
+\rightarrow
+StableLocalPolicy.
+\]
+这时同样的动作可以在更低层完成，Kernel 只需要监视结果和异常。
+
+因此：
+\[
+\boxed{
+MatureAbility
+\Rightarrow
+ReducedHighLevelIntervention.
+}
+\]
+熟练不是“系统知道得更少”，而是过去需要显式展开的结构已经被更稳定的载体承载。
+
+Body Runtime 还必须承担局部异常判断。如果每一个极小残差都上传到 Kernel，则 Agent 会处于持续认知惊扰状态。因此设局部残差为
+\[
+\varepsilon_B
+=
+y_B^{obs}
+-
+y_B^{pred},
+\]
+只有当某个异常函数
+\[
+\Gamma_B
+=
+f
+\left(
+|\varepsilon_B|,
+Persistence,
+Risk,
+Novelty,
+GoalRelevance
+\right)
+\]
+超过阈值时，才进入更高认知层：
+\[
+\Gamma_B>\theta_B
+\Rightarrow
+Escalate.
+\]
+
+这形成后续整个 AgentOS 非常重要的原则：
+\[
+\boxed{
+PredictLocally,\ EscalateResidualGlobally.
+}
+\]
+
+它与控制工程中的 local feedback、异常检测、event-triggered control 以及操作系统中的 interrupt 存在形式对应。不过这里的重要扩展在于，升级的不是简单硬件中断，而是\textbf{某个现实 CSO 从低层身体承载重新迁移到高层显式认知承载}。
+
+因此，Body Runtime 并不是认知主体之外的“机械附件”，而是主体在现实边界上的快速动力学层。它承担了大量“无需思考但必须持续正确发生”的智能工作。
+
+\section{全局预测与局部预测：为什么一个 Agent 必须拥有两个预测尺度}
+
+一个真正进入现实的智能体，如果只有 Kernel 的世界模型而没有身体级局部预测，会变成“会想但动作迟钝”的系统；如果只有局部预测而没有 Kernel 的长期预测，则会变成“能稳定行动但不知道为什么行动”的系统。因此 AgentOS 必须明确区分至少两个预测尺度。
+
+Kernel 的预测可以写为
+\[
+\hat W^{C}_{t:t+H_C}
+=
+P_C
+\left(
+\mathcal X_C(t),
+G,
+\Theta,
+\Psi,
+\Omega
+\right),
+\]
+其中
+\[
+H_C
+\]
+通常较长。它关心的不是每一毫秒的关节轨迹，而是任务进展、环境趋势、行为后果、资源变化、社会影响以及未来自我状态。
+
+Body Runtime 的预测则更接近
+\[
+\hat x_B(t+\delta)
+=
+P_B
+\left(
+x_B(t),
+o_B(t),
+u_B(t)
+\right),
+\]
+其中
+\[
+\delta\ll H_C.
+\]
+它预测在执行某个具体动作之后，身体和局部现实下一瞬间会发生什么。
+
+因此可写为：
+\[
+\boxed{
+P_C:
+LongHorizon,\ BroadStateSpace
+}
+\]
+和
+\[
+\boxed{
+P_B:
+ShortHorizon,\ LocalStateSpace.
+}
+\]
+
+两者不是竞争关系，而是不同频率上的嵌套预测。
+
+以“端起一杯水并送到用户手中”为例。Kernel 的预测可能包括：用户是否真的需要水，应该选择哪一个杯子，路径是否会打扰其他人，动作成功后下一步应该做什么；Body Runtime 的预测则包括：当前夹爪闭合程度是否足以产生稳定摩擦，杯子惯性是否会导致液体晃动，手臂下一步轨迹是否接近碰撞边界。两者对同一个现实过程观察的是不同时间尺度和不同状态空间。
+
+这里自然引出一个重要结构：高层不需要输出完整的低层未来，而可以输出一个\textbf{预测包络}。设 Kernel 允许的未来状态集合为
+\[
+\mathcal E_C(t)
+=
+\left\{
+x_B:
+g_i(x_B)\leq 0,
+\quad i=1,\ldots,m
+\right\},
+\]
+那么 Body Runtime 可以在
+\[
+x_B(t+\tau)\in\mathcal E_C(t)
+\]
+的约束内自由优化。
+
+这样，高层预测不是一条确定的单轨迹，而可以是一个：
+目标区域；
+约束区域；
+风险包络；
+容差区间；
+动作阶段。
+
+这比让 Kernel 预测每一个微观运动更加符合现实不确定性。
+
+当 Body Runtime 发现实际局部动力学持续偏离高层假设时，会产生残差：
+\[
+\varepsilon_{pred}
+=
+d
+\left(
+\hat x_B,
+x_B^{obs}
+\right).
+\]
+若这种残差短暂且可恢复，应由局部调整解决；若残差长期存在，则意味着 Kernel 对世界、身体或任务的高层假设可能已经错误，于是必须上浮。
+
+因此：
+\[
+\boxed{
+FastResidual
+\xrightarrow{\text{persistence}}
+SlowModelUpdate.
+}
+\]
+
+这与本书第一编建立的：
+\[
+PersistentFastResidualShapesSlowStructure
+\]
+完全一致。具身系统只是把这一一般智能动力学规律具体落实在 Kernel--Body 两层上。
+
+这种结构与 hierarchical predictive control、model predictive control、predictive processing 等已有理论存在一定相似性，但我们需要特别避免把 AgentOS 简化成“预测编码的工程实现”。AgentOS 所谓预测具有更广泛含义：Kernel 的长期预测可能来自语言模型、世界模型、符号结构、经验记忆、工具模拟甚至社会知识，而 Body Runtime 的局部预测则可以由完全不同的模型实现。二者不要求同构，只要求在功能上保持可校准的一致关系。
+
+因此，本章所建立的原则是：
+\[
+\boxed{
+OneAgent
+\neq
+OnePredictor.
+}
+\]
+一个成熟 Agent 可以包含多个时间尺度和多个状态空间上的预测器，但这些预测器必须服从同一主体的目标和现实反馈闭环。
+
+\section{时间尺度分离：为什么高层认知不能直接承担身体实时控制}
+
+Kernel 与 Body Runtime 的职责分离，最终不是软件工程审美问题，而是由智能的物理时间尺度所强制产生的架构结果。我们在第一编已经讨论过：任何真实智能都受到传播、计算、协调和反馈延迟的约束。因此，只要身体闭环与认知闭环具有显著不同的特征时间尺度，二者就不应该被迫使用同一种控制周期。
+
+可以把 Agent 的局部动力学近似写成一个快--慢系统：
+\[
+\epsilon \dot x_B
+=
+F_B(x_B,x_C,u_B,w),
+\]
+\[
+\dot x_C
+=
+F_C(x_C,z_B,G),
+\]
+其中
+\[
+0<\epsilon\ll1.
+\]
+$x_B$ 是快速身体状态，$x_C$ 是较慢认知状态。$\epsilon$ 表示两种时间尺度的比值。
+
+当时间尺度分离充分明显时，在 Kernel 的一个认知更新周期内，可以近似认为某些高层变量保持不变：
+\[
+x_C(t+\delta)
+\approx
+x_C(t),
+\qquad
+\delta\ll\tau_C.
+\]
+Body Runtime 则围绕这一近似固定的高层约束快速调整：
+\[
+x_B
+\rightarrow
+\mathcal M_B(x_C),
+\]
+其中 $\mathcal M_B$ 可理解为给定认知约束下的局部稳定流形。
+
+反过来，在较长时间尺度上，Kernel 不需要看到 Body Runtime 每一次高频振荡，而只需要看到它们的平均结果、持续残差、异常趋势和任务相关事件：
+\[
+z_B(t)
+=
+\mathcal A_T
+\left[
+x_B(\tau)
+\right]_{\tau=t-T}^{t},
+\]
+其中 $\mathcal A_T$ 表示某种时间聚合或结构摘要。
+
+这就是多尺度智能中非常关键的“邻近尺度耦合原则”：信息不应无条件跨越大量时间尺度直接传播，而应逐级压缩和升级。Servo 首先和局部控制交互，局部控制和 Body Runtime 交互，Body Runtime 再与 Kernel 认知层交互。只有极端异常或安全事件才可能跨越正常层级直接升级。
+
+如果没有这种分离，会产生典型的认知微操：
+\[
+HighLevel
+\rightarrow
+EveryMicroAction.
+\]
+它的结果是 Kernel 被大量底层状态占用，认知延迟不断增加，而 Body 又因为等待高层推理而失去实时稳定性。
+
+因此：
+\[
+\boxed{
+SlowGovernance
+\neq
+FastMicromanagement.
+}
+\]
+
+慢层的职责是定义中心、边界、目标和约束，不是直接取代快层。
+
+另一方面，时间尺度分离也不能被误解为“高层永远不干预低层”。当底层长期无法维持高层约束时，跨尺度反馈必须发生。例如：
+\[
+\langle\varepsilon_B\rangle_T
+>
+\theta
+\]
+可能意味着当前身体技能已经不足，Kernel 需要重新规划、重新学习甚至改变目标。
+
+所以真实关系是：
+\[
+\boxed{
+FastLocalClosure
++
+SlowGlobalAdaptation.
+}
+\]
+
+这一结构与 singular perturbation theory、averaging theory、hierarchical control、real-time systems 等成熟理论具有很强的数学兼容性。特别是快--慢动力系统提供了后续严格证明系统稳定性的自然工具。但需要注意，本书借用这些数学理论，是为了描述 AgentOS 的跨尺度结构，而不是宣称整个认知系统天然满足某一个标准奇异摄动模型。真实 Agent 包含离散事件、模型切换、工具调用和记忆更新，因此最终更接近 hybrid multiscale dynamical system。
+
+由此，本节给出 AgentOS 的一个基本架构定理式原则：
+\[
+\boxed{
+\text{凡是其必要控制周期显著短于主体认知周期的过程，都不应以持续同步方式依赖 Kernel 闭环。}
+}
+\]
+
+这条原则将在所有物理 Body 和高频数字 Body 中成立。
+
+\section{Kernel 的身体无关性：持续主体不能被某一具体身体锁死}
+
+如果 AgentOS 的长期目标是支持一个持续主体跨越数字环境、机器人、车辆以及未来不同身体形式存在，那么 Kernel 必须具备一定程度的身体无关性。这里的“身体无关”不是指 Kernel 完全不知道身体，也不是否认具身经验对认知结构的长期影响，而是要求\textbf{Kernel 的核心组织原则不能随着每一种 Body 的具体硬件细节重新设计。}
+
+可以把第 $i$ 个身体的运行时记为
+\[
+B_i,
+\]
+Kernel 记为
+\[
+K.
+\]
+理想情况下，希望存在一个稳定的接口层，使：
+\[
+K
+\bowtie
+B_1,
+\quad
+K
+\bowtie
+B_2,
+\quad
+\ldots,
+\quad
+K
+\bowtie
+B_n
+\]
+均可成立，而不要求
+\[
+K_i
+=
+\text{Rewrite}(K,B_i)
+\]
+对每一种身体完全重构认知架构。
+
+因此可提出一个方向性设计目标：
+\[
+\boxed{
+\frac{\partial Architecture_K}
+{\partial Implementation_{B_i}}
+\rightarrow 0.
+}
+\]
+这里当然不是严格可微的数学对象，而是表达一个工程极限：随着 Body Interface 的标准化，Kernel 对具体电机型号、传感器品牌、浏览器 DOM 结构或车辆底盘细节的直接依赖应持续下降。
+
+但我们必须避免另一个极端。Kernel 的身体无关性并不意味着：
+\[
+Kernel
+\perp
+BodyExperience.
+\]
+真实持续 Agent 的 $\Theta$、$\Psi$ 甚至长期目标都可能因为身体而变化。例如长期使用轮式身体的 Agent 会形成不同于人形身体的可行动世界结构；长期视野受限的身体会形成不同的空间经验；高能耗身体可能让资源约束更深地进入行为策略。因此更准确的表述是：
+\[
+\boxed{
+ArchitectureIndependence
+\neq
+ExperientialIndependence.
+}
+\]
+
+我们希望保持的是\textbf{架构层身体可迁移性}，同时允许\textbf{经验层身体塑造性}。
+
+可以把一个 CSO $C$ 在不同身体中的落地写成
+\[
+C
+\rightarrow
+AgentCSO(C)
+\rightarrow
+Grounding_{B_i}(C).
+\]
+其中 Agent 对“抓取”“接近”“查看”“危险”“可达”等高层意义可以具有某种跨身体连续性，但其具体身体落地方式由 $B_i$ 决定。
+
+例如，“接近目标对象”这个高层 CSO 对轮式机器人可能对应导航，对人形机器人可能对应步行，对数字 Agent 可能对应打开页面或建立连接。意义可以部分保持，而身体实现重新学习。
+
+这实际上与此前 Body Scale 原理直接相关。一个架构能够跨多少身体迁移，不只取决于模型参数，而取决于：
+\[
+PerceptualTransfer,
+\quad
+FeelingTransfer,
+\quad
+PredictiveTransfer,
+\quad
+ControlTransfer.
+\]
+Kernel--Body 分离正是这些迁移能够发生的基础条件。
+
+从软件工程角度，这一思想与 Hardware Abstraction Layer、device driver、ROS middleware、microkernel 等存在类比；但 AgentOS 处理的不是单纯设备调用，而是\textbf{语义与主体经验的跨身体连续性}。所以传统 HAL 只能解决“同一个程序怎样访问不同设备”，而 AgentOS 进一步要解决“同一个持续主体怎样在不同身体上重新建立可行动世界”。
+
+这意味着 Body Runtime 必须承担一个重要职责：把身体特异性尽可能吸收到局部层，让 Kernel 面对的是更加稳定的行动语义空间。同时，Kernel 又必须保留学习能力，使其能够逐渐理解当前身体的能力边界，而不是假设所有 Body 都等价。
+
+于是我们得到：
+\[
+\boxed{
+Kernel
+=
+BodyIndependentArchitecture
++
+BodyDependentLearning.
+}
+\]
+
+前半部分保证跨身体连续性，后半部分保证真正的具身适应。
+
+这一原则也是未来 AgentOS 区别于“为某个机器人专门训练一个控制模型”的关键。如果每换一种身体，就必须从头重新训练整个认知主体，那么我们得到的是一组不同机器人，而不是一个具有持续身份、能够学习新身体的长期 Agent。
+
+\section{职责边界的统一形式：一个主体、两个状态空间、多个时间尺度}
+
+完成前述分析以后，我们可以把 Agent Kernel 与 Body Runtime 的关系写成一个更统一的动力系统。
+
+令完整 Agent 状态为
+\[
+\mathcal X_A
+=
+\mathcal X_C
+\oplus
+\mathcal X_B.
+\]
+其中
+\[
+\mathcal X_C
+\]
+表示认知状态空间，
+\[
+\mathcal X_B
+\]
+表示身体--局部现实状态空间。
+
+二者分别演化：
+\[
+\dot x_C
+=
+F_C
+\left(
+x_C,
+z_{B\rightarrow C},
+G,
+E,
+\Theta,
+\Psi,
+\Omega
+\right),
+\]
+\[
+\dot x_B
+=
+F_B
+\left(
+x_B,
+r_{C\rightarrow B},
+w
+\right).
+\]
+
+这里
+\[
+z_{B\rightarrow C}
+\]
+不是完整 BodyState，而是 Body Runtime 向 Kernel 提供的认知有效反馈；
+\[
+r_{C\rightarrow B}
+\]
+也不是完整 actuator command，而是 Kernel 向 Body Runtime 提供的行动参考、目标和约束。
+
+于是形成：
+\[
+\boxed{
+\mathcal X_C
+\xrightarrow{r_{C\rightarrow B}}
+\mathcal X_B
+\xrightarrow{z_{B\rightarrow C}}
+\mathcal X_C.
+}
+\]
+
+这一闭环必须满足四条基本原则。
+
+第一是\textbf{现实闭合原则}。任何行动成功与否，必须通过现实重新观测：
+\[
+Control
+\rightarrow
+Reality
+\rightarrow
+Observation.
+\]
+内部 prediction 不能直接代替实际 observation。
+
+第二是\textbf{局部闭合原则}：
+\[
+\boxed{
+NormalDynamicsStayLocal.
+}
+\]
+能够由 Body Runtime 稳定解决的问题，不应持续占据 Kernel。
+
+第三是\textbf{残差升级原则}：
+\[
+\boxed{
+PersistentRelevantResidual
+\rightarrow
+HigherLevelCognition.
+}
+\]
+只有无法在当前尺度解释或解决的结构才逐渐向上提升。
+
+第四是\textbf{慢结构约束原则}：
+\[
+\boxed{
+HigherLevelSetsFeasibleRegion,
+\quad
+LowerLevelOptimizesInsideIt.
+}
+\]
+Kernel 不进行快速微操，而是维持行动的意义、目标、边界与长期一致性。
+
+因此，完整 Agent 不是两个并列系统：
+\[
+Kernel+BodyRuntime,
+\]
+而更准确地是：
+\[
+\boxed{
+Agent
+=
+SlowCognitiveSubject
+\bowtie
+FastRealityCouplingSystem.
+}
+\]
+
+这里的“Slow”与“Fast”是相对的。Kernel 内部本身存在从 $h$ 到 $\Omega$ 的多级时间尺度，Body Runtime 内部也存在从 servo 到语义身体状态的多级尺度。因此严格地说，我们面对的是：
+\[
+\boxed{
+NestedMultiscaleCoupling.
+}
+\]
+Kernel--Body 划分只是这个多频智能系统中最重要的一条功能边界。
+
+从外部理论上看，这一结构可以同时吸收 hierarchical control、singular perturbation、model predictive control、robotics middleware、global workspace 和 operating-system abstraction 的若干思想。但 AgentOS 的理论贡献不应被描述成这些理论的简单拼装。本章提出的更一般问题是：
+
+\begin{quote}
+当一个具有长期记忆、自我和生命周期方向性的主体必须通过多种高速身体与现实交互时，哪些状态应属于主体，哪些状态应留在身体；哪些动力学应该进入显式认知，哪些应该保持局部自治；以及如何在不破坏主体连续性的前提下，使身体能够高速变化而认知结构保持跨身体连续。
+\end{quote}
+
+我们的答案是：
+
+\[
+\boxed{
+BodyState\neq CognitiveState
+}
+\]
+
+\[
+\boxed{
+Kernel\neq LowLevelController
+}
+\]
+
+\[
+\boxed{
+BodyRuntime\neq PassiveActuator
+}
+\]
+
+而：
+
+\[
+\boxed{
+Kernel
+=
+Meaning+
+Goal+
+LongHorizonConstraint+
+IdentityContinuity
+}
+\]
+
+\[
+\boxed{
+BodyRuntime
+=
+LocalState+
+FastPrediction+
+FastControl+
+RealityFeedback.
+}
+\]
+
+从更深的 CSO 角度，这种职责分离实际上是在确定认知结构的承载位置。当某一结构需要跨任务、跨身体、跨生命周期保持意义时，它倾向于由 Kernel 更慢的结构承载；当某一结构主要负责某个具体身体上的高速局部闭环时，它倾向于沉降到 Body Runtime。于是 Kernel--Body 分离并不是人为的软件边界，而可以被理解为多尺度 CSO 迁移在工程架构中的自然结果。
+
+最终，本章可以浓缩为一条 AgentOS 的身体分离原理：
+
+\[
+\boxed{
+\begin{aligned}
+&\textbf{持续主体保存意义，具体身体承担动力学；}\\
+&\textbf{高层决定可接受的未来，低层负责把现实稳定地推入其中；}\\
+&\textbf{正常过程留在局部，不能解释的残差重新成为认知。}
+\end{aligned}
+}
+\]
+
+也正因为这一边界被确立，后续才能进一步讨论：不同 Body 如何通过统一的功能身体接口向 Kernel 暴露现实、现实如何被转换成身体中心的语义结构，以及 Body Runtime 如何获得自己的快速预测控制能力。这里我们暂时停在职责边界本身，不提前展开这些接口的具体表示。

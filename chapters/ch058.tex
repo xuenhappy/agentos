@@ -1,152 +1,882 @@
-\chapter{三信号通道}
-\chaptervoice{这一章，我们围绕“三信号通道”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明认知内核通过身体进入现实。}
+\chapter{三信号通道：从身体状态到认知内核的分层路由}
+\label{chap:three-signal-channels}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 Body Runtime、FBI、SGC/FCS、三信号通道、BPCC 与 Reality Authority 的具身讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是具身认知、分层控制、MPC、状态估计与安全包络（模型预测控制、Kalman 状态估计与具身认知）。
+\begin{center}
+\fbox{
+\parbox{0.94\textwidth}{
+\textbf{【本章总纲】}
+前两章已经建立了智能体面对现实世界的两个公共表示面：SGC 描述“现实是什么”，FCS 描述“现实正在怎样作用于我”。然而，从身体运行时进入 Agent Kernel 的信息并不能因此被简单地汇合成一个统一输入流。如果语义事实、内稳态压力与即时危险被编码成同一种消息，并经过同一套推理、调度和注意机制，系统将同时面对三个问题：语义信息会淹没调制信息，连续调制会污染显式认知，而真正的安全事件又可能因为认知拥塞而无法及时到达执行端。
 
-本章使用上一章“SGC—FCS 二元现实模型”已经得到的对象与边界；本章产出将供下一章“BPCC：身体预测控制小脑”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+因此，本章提出 AgentOS 身体--认知边界上的\textbf{三信号通道原理}：将由现实产生并经 Body Runtime 处理的公共信号，在进入认知内核前按其\textbf{功能因果角色}而非单纯按传感器来源，分解为语义通道（Semantic Channel）、调制通道（Modulation/AHC Channel）和紧急安全通道（Emergency/Safety Channel）。三者分别回答：“发生了什么”“这对当前主体意味着怎样的状态调制”“是否存在不能等待认知处理的即时约束”。
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+三通道并不是把同一个世界切成三个互不联系的世界，而是在同一现实事件之上建立三个不同时间尺度、不同表达形式、不同调度权限和不同失效后果的投影。它们共同构成 Body Runtime 与 Agent Kernel 之间最基本的路由层，并保证 AgentOS 同时具备可理解性、连续内稳态调节能力以及不依赖高层推理的实时安全性。
+}
+}
+\end{center}
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在具身认知、分层控制、MPC、状态估计与安全包络上。
-\section{Semantic Channel}
-\begin{narration}
-现在把镜头移到“Semantic Channel”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\section{语义通道：将现实转换为可认知的结构内容}
+\label{sec:semantic-channel}
 
-本节把“Semantic Channel”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“三信号通道”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+我们首先从最直观的一条通道开始。一个智能体若要形成目标、推理、记忆、预测和行动计划，就必须能够回答一个最基础的问题：\emph{当前世界中发生了什么？} 这个问题对应的不是原始摄像头像素、麦克风波形、关节编码器读数或者系统调用日志，而是已经经过身体侧感知、融合、跟踪和结构化之后，可以进入认知系统的现实内容。我们将承担这一功能的路径定义为语义通道（Semantic Channel）。
 
-把这一关系写成最小数学骨架，可得
+设身体运行时在时刻 $t$ 获得原始观测
+\[
+y_t^{raw}
+=
+\left[
+y_t^{vision},
+y_t^{audio},
+y_t^{proprio},
+y_t^{system},
+\ldots
+\right],
+\]
+经过设备驱动、时空配准、对象持续性维护以及语义绑定后，形成前文定义的 SGC 状态
+\[
+\mathcal{S}_t^{SGC}.
+\]
+语义通道并不直接把完整的 $\mathcal{S}_t^{SGC}$ 复制进入工作记忆，而是执行一次面向认知使用的结构路由：
+\[
+z_t^{sem}
+=
+\Pi_{sem}
+\left(
+\mathcal{S}_t^{SGC},
+G_t,
+h_t,
+\Theta_t,
+\mathcal{B}_t
+\right),
+\]
+其中 $G_t$ 表示当前目标结构，$h_t$ 表示当前工作记忆状态，$\Theta_t$ 表示长期生成结构，$\mathcal{B}_t$ 表示当前认知边界策略，而 $\Pi_{sem}$ 则表示语义选择与编码算子。这个表达式的意义十分重要：现实中的某个结构是否进入 Agent 的显式认知，并不只取决于它是否“被传感器看见”，还取决于它是否与当前目标、已有认知结构以及认知资源状态具有足够关系。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+因此语义通道的第一性功能不是传输数据，而是传输\textbf{可被认知操作的 Agent-CSO}。如果现实中存在一个结构 $C\in\mathcal{C}_{U}$，身体侧观察首先建立其局部表示
+\[
+\pi_A(C)=AgentCSO_A(C),
+\]
+随后 SGC 将这个结构与具体空间、对象、关系和认识论状态绑定。语义通道进一步决定该结构是否需要进入当前认知过程：
+\[
+AgentCSO_A(C)
+\xrightarrow{\Pi_{sem}}
+\begin{cases}
+h_t, & \text{需要全局显式处理},\\
+E/\Theta, & \text{可直接形成记忆或结构更新候选},\\
+LocalRuntime, & \text{保持身体侧局部处理},\\
+External/Deferred, & \text{外化或延迟处理}.
+\end{cases}
+\]
+由此我们可以看到，Semantic Channel 并不是一根通向 LLM prompt 的“数据管道”，而是现实结构进入 Agent 认知拓扑时的一道语义路由层。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Semantic Channel的命名和组合仍是需要实验验证的建模提案。
+我们还需要特别强调语义通道中的认识论元数据。一个成熟 Agent 不应把“看到”“推断”“预测”和“假设”混为同一种事实。因此进入语义通道的结构至少应携带
+\[
+e_i
+=
+(
+source_i,
+confidence_i,
+status_i,
+timestamp_i
+),
+\]
+其中
+\[
+status_i
+\in
+\{
+Observed,
+Derived,
+Predicted,
+Counterfactual,
+Pending
+\}.
+\]
+例如，“门处于关闭状态”可能是直接观测；“房间里可能有人”可能是由声音和历史关系推导；“车辆三秒后可能进入交叉口”属于预测；“如果继续直行则会发生冲突”则属于反事实结构。如果这些不同认识论状态被压平成同一种文本 token，Agent 就很容易把模型生成的未来与传感器观测到的现实混为一谈。三信号通道首先要求语义通道保持这种结构差异。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+语义通道还必须遵守工作记忆有限容量原理。SGC 可以非常丰富，而 $h(t)$ 必须保持稀疏。令当前所有候选 Agent-CSO 集合为
+\[
+\mathcal{C}_t^{candidate}
+=
+\{C_1,\ldots,C_n\},
+\]
+对每一个结构定义语义提升分数
+\[
+\Gamma_i^{sem}
+=
+f
+\left(
+R_i,
+N_i,
+U_i,
+P_i,
+\epsilon_i,
+K_i
+\right),
+\]
+其中 $R_i$ 为目标相关性，$N_i$ 为新颖性，$U_i$ 为不确定性，$P_i$ 为潜在后果，$\epsilon_i$ 为预测残差，$K_i$ 为当前处理成本。只有当
+\[
+\Gamma_i^{sem}>\theta_{sem}
+\]
+时，该结构才有必要竞争有限的显式认知资源。这使语义通道天然连接到前文讨论的 Boundary、CCM 与 Scheduler：它首先将世界转化成 Agent 可以理解的结构，然后再由运行时治理体系决定哪些结构真正成为“当前思考的内容”。
 
-\begin{thought}
-对“Semantic Channel”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此，本书对 Semantic Channel 的定义可以浓缩为
+\[
+\boxed{
+SemanticChannel:
+RealityStructure
+\rightarrow
+CognitivelyManipulableAgentCSO
+}
+\]
+它所保存的是现实的\textbf{内容结构}。这也是为什么在整个 AgentOS 设计中，我们始终坚持从“原始数据流”升级到“结构世界流”：只有当现实被表示成对象、关系、事件、变化、约束和未来可能性之后，持续智能体才真正获得了可以进行长期记忆、规划与自我发展的认知材料。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\section{调制通道：现实并不仅告诉智能体发生了什么}
+\label{sec:modulation-channel}
 
-\section{AHC / Modulation Channel}
-\begin{narration}
-现在把镜头移到“AHC / Modulation Channel”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+仅有语义通道仍然不足以形成完整智能。两个现实状态可能拥有几乎相同的语义内容，却对智能体产生完全不同的功能影响。例如，“房间温度为 $35^\circ$C”作为语义事实只描述环境状态；但如果机器人内部温度已经接近安全上限，同样的环境温度就应显著提高散热需求、降低计算负载并改变行动选择。同样，“某个人接近智能体”可以作为一个空间关系进入 SGC，但这个事件究竟是普通社交接近、需要提高注意力，还是产生强烈风险压力，并不能只由空间语义本身表达。
 
-本节把“AHC / Modulation Channel”落实为对威胁、唤醒、能量、疲劳、信任等信号进行积分、衰减和饱和的连续调制场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“三信号通道”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+因此 AgentOS 必须有一条与语义通道平行、但功能性质完全不同的路径。我们将它定义为\textbf{调制通道}（Modulation Channel）。在历史架构中，这条通道也被称为 AHC 通道，因为其主要认知侧消费者是 AHC，即内稳态--情感样调制层。不过更严格地说，Modulation Channel 是 Body Runtime 到认知内核之间的信号路径，而 AHC 是对这些信号进行时间积分、耦合和状态形成的内部动力学组件，两者不应等同。
 
-把这一关系写成最小数学骨架，可得
+若前文定义的 FCS 为
+\[
+\mathcal{F}_t
+=
+FCS_t,
+\]
+其中包含 EnergyPressure、Threat、ThermalPressure、IntegrityPressure、SensoryLoad、ControlInstability、Urgency 等固定类型的作用场，则调制通道首先执行
+\[
+m_t
+=
+\Pi_{mod}
+\left(
+\mathcal{F}_t,
+x_t^{body},
+x_t^{resource}
+\right).
+\]
+这里的 $m_t$ 与语义结构 $z_t^{sem}$ 有根本区别。$z_t^{sem}$ 通常需要保留对象和关系的可解释内容，而 $m_t$ 更接近一个低维、连续、具有时间动力学意义的调制向量：
+\[
+m_t
+=
+[
+m_t^{energy},
+m_t^{threat},
+m_t^{arousal},
+m_t^{fatigue},
+m_t^{social},
+m_t^{uncertainty},
+\ldots
+]^\top.
+\]
+这些变量的作用不是告诉 Agent “外面有一辆车”，而是改变整个认知系统处理信息的方式。例如：
+\[
+m_t^{threat}\uparrow
+\Rightarrow
+\begin{cases}
+AttentionGain\uparrow,\\
+ExplorationRadius\downarrow,\\
+VerificationStrength\uparrow,\\
+ActionLatencyBudget\downarrow.
+\end{cases}
+\]
+因此我们应把 Modulation Channel 理解成\textbf{控制参数的上游状态通道}。
 
-\begin{equation}\dot a=-\Lambda(a-a_0)+Bs,\quad a\in[a_-,a_+].\end{equation}
+这条通道最大的理论意义，是将“现实内容”与“现实对主体的作用”分离。传统端到端模型往往把两者混入同一个 latent representation：
+\[
+z_t
+=
+Encoder(y_t).
+\]
+这样做在单一任务中可以有效，却会给长期 Agent 带来一个隐患：系统很难区分“我认为世界是什么”与“世界使我处于什么功能状态”。AgentOS 因而要求公共认知边界满足
+\[
+\boxed{
+SemanticContent
+\perp
+FunctionalModulation
+}
+\]
+这里的 $\perp$ 不是严格统计独立，而是指两者在接口语义和控制职责上保持正交。它们可以来自同一事件，却不得成为同一不可解释变量。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对AHC / Modulation Channel的命名和组合仍是需要实验验证的建模提案。
+我们还需要讨论 Modulation Channel 的时间性质。语义事件往往可以是离散的：
+\[
+Event_k=(type,entity,time,\ldots),
+\]
+而内稳态调制具有明显连续性。一个威胁事件消失之后，Threat 状态并不必然立即归零；疲劳不会因为 Agent 暂停一次任务便瞬时恢复。因此 AHC 接收到 $m_t$ 后，应形成类似
+\[
+\tau_a\dot a_t
+=
+-a_t
++
+F_a
+\left(
+m_t,
+a_t,
+h_t,
+\Psi_t
+\right)
+\]
+的连续状态动力学。其中 $a_t$ 是 AHC 状态向量，$\tau_a$ 是不同调制维度的有效时间常数。这样，一个瞬时世界事件才能形成持续一段时间的内部功能影响。
 
-这一小节的反例同样重要：拟人化命名若没有功能通道会把工程状态误写成主观感受。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+进一步地，调制通道对 Agent 的影响通常不是直接把大量内容写入 $h$。如果每一次电量下降、温度变化、处理器负载变化都用自然语言进入工作记忆，Agent 很快会陷入自身状态噪声。因此正常情况下应满足
+\[
+m_t
+\rightarrow
+AHC
+\rightarrow
+TCE/Scheduler,
+\]
+而不是
+\[
+m_t
+\rightarrow
+h_t
+\]
+的无条件直接路径。只有当调制状态本身成为需要显式认知的问题，例如“我的能量已经不足以完成当前任务”，或者“持续的不确定性正在造成当前规划失稳”，才需要形成相应 Self-CSO：
+\[
+a_t
+\xrightarrow{SPC}
+AgentCSO_A(SelfState)
+\rightarrow
+h_t.
+\]
+这说明所谓“感觉进入意识”，在我们的工程框架中其实是一个从连续调制状态到显式自我结构的二次语义化过程，而不是 FCS 数值直接进入工作记忆。
 
-\begin{thought}
-对“AHC / Modulation Channel”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此，调制通道的正式定义可以写成
+\[
+\boxed{
+ModulationChannel:
+RealityImpact
+\rightarrow
+ContinuousInternalControlState
+}
+\]
+如果说 Semantic Channel 携带的是“世界内容”，那么 Modulation Channel 携带的就是“世界与身体正在把主体推向什么状态”。前者支持理解和推理，后者支持资源分配、注意调节、风险敏感性以及长期内稳态。二者分离以后，AgentOS 才真正获得一种类似生物系统中“认知内容与神经调质并存”的多时间尺度结构，而不需要把任何这种功能结构等同于人类主观情绪。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\section{紧急安全通道：不能进入普通认知排队的现实约束}
+\label{sec:emergency-channel}
 
-\section{Emergency / Safety Channel}
-\begin{narration}
-现在把镜头移到“Emergency / Safety Channel”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+语义通道解决“发生了什么”，调制通道解决“这正在怎样影响我”，但现实世界还存在第三种情况：某些状态不允许 Agent 先形成完整认知，再决定是否处理。对于高速移动机器人而言，碰撞时间可能只有数十毫秒；对于计算系统而言，硬件过温、电源异常、权限入侵或者执行器失控也可能要求立即中断。若这些信号必须首先经历
+\[
+Sensor
+\rightarrow
+SGC
+\rightarrow
+SemanticReasoning
+\rightarrow
+h
+\rightarrow
+Planner
+\rightarrow
+Decision
+\rightarrow
+Action,
+\]
+那么所谓“智能”反而可能成为安全系统的额外延迟来源。
 
-本节把“Emergency / Safety Channel”落实为在规定时延内具有高于普通预测控制权限的约束与中断包络。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“三信号通道”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+因此第三条通道必须具有完全不同的系统地位。我们定义 Emergency/Safety Channel 为一条从现实异常检测到保护性动作之间的\textbf{高优先级、低语义负担、可绕过普通认知调度}的路径。设安全相关观测为
+\[
+s_t^{raw},
+\]
+安全判定函数为
+\[
+r_t
+=
+\mathcal{R}
+\left(
+s_t^{raw},
+x_t^{body},
+u_t,
+\mathcal{E}_{safe}
+\right),
+\]
+其中 $\mathcal{E}_{safe}$ 表示允许的安全包络。当
+\[
+r_t>\theta_{critical},
+\]
+系统不得等待正常 Scheduler 为该事件分配 h 资源，而应立即触发
+\[
+u_t^{safe}
+=
+\pi_{safe}(r_t,x_t^{body}).
+\]
+因此形成
+\[
+\boxed{
+Reality
+\rightarrow
+SafetyDetection
+\rightarrow
+ProtectiveAction
+}
+\]
+这一闭环。
 
-把这一关系写成最小数学骨架，可得
+这里必须区分 Emergency Channel 与高 Threat 的 Modulation Channel。一个状态可以“非常令人警觉”，但仍允许认知参与；另一个状态则可能已经进入硬安全区域。例如电池剩余 $15\%$ 可以产生 EnergyPressure 并影响当前计划，这属于调制；若电池管理系统检测到热失控风险，则属于 Emergency。类似地，一个车辆高速靠近可以提高 Threat，但只有预测到碰撞时间低于安全控制窗口时，才应触发硬安全干预。因此可以定义两个不同阈值：
+\[
+r_t>\theta_{mod}
+\Rightarrow
+Modulation,
+\]
+\[
+r_t>\theta_{safe}
+\Rightarrow
+Emergency,
+\qquad
+\theta_{safe}>\theta_{mod}.
+\]
+二者不是重复，而是构成渐进式风险处理结构。
 
-\begin{equation}x_t\in\mathcal S,\quad u_t\in\mathcal U_{\rm safe}(x_t).\end{equation}
+紧急通道还必须满足\textbf{最小语义原则}。安全动作所需的表示不应比实时控制所需更多。例如执行碰撞规避并不一定需要先知道“这是一辆某品牌汽车，由某个人驾驶”；它只需要知道障碍位置、相对速度、可用制动力和安全轨迹。因此安全事件可以具有非常压缩的结构：
+\[
+e_t^{safe}
+=
+(
+hazardType,
+severity,
+timeToFailure,
+safeActionSet,
+confidence
+).
+\]
+这使安全闭环的计算成本和认证范围都显著小于完整认知系统。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Emergency / Safety Channel的命名和组合仍是需要实验验证的建模提案。
+但安全通道绕过高层认知，并不意味着高层 Agent 永远不知道发生过什么。保护动作完成之后，应产生一个异步的事件记录：
+\[
+e_t^{safe}
+\rightarrow
+EventLog
+\rightarrow
+E/h.
+\]
+这样 Agent 可以事后理解：
+\[
+\text{发生了什么？}
+\]
+\[
+\text{为什么我的动作被覆盖？}
+\]
+\[
+\text{是否需要修改未来计划？}
+\]
+于是形成一个非常重要的二阶段结构：
+\[
+\boxed{
+ImmediateProtection
+\rightarrow
+DelayedCognitiveInterpretation
+}
+\]
+前者保护现实安全，后者保护主体连续性和学习能力。
 
-这一小节的反例同样重要：让实时危险等待高层认知会违反最坏时延要求。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这也决定了安全通道的权限必须高于一般 Body 控制器。设正常认知给出的动作请求为 $u_t^{cog}$，身体侧正常控制结果为 $u_t^{body}$，安全控制为 $u_t^{safe}$，则真实执行动作应满足某种仲裁函数
+\[
+u_t^{exec}
+=
+\mathcal{A}
+\left(
+u_t^{cog},
+u_t^{body},
+u_t^{safe}
+\right),
+\]
+并具有
+\[
+SafetyAuthority
+>
+BodyControlAuthority
+>
+CognitivePreference.
+\]
+当安全约束激活时，高层目标不得通过“更强推理”覆盖物理保护边界。
 
-\begin{thought}
-对“Emergency / Safety Channel”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此 Emergency Channel 的本质不是“第三种传感器消息”，而是 AgentOS 对现实因果权威的一种制度化承认：
+\[
+\boxed{
+CriticalSafety
+\nrightarrow
+CognitiveDependency
+}
+\]
+Agent 再聪明，也不能要求现实先等待它想明白。安全通道所保障的正是这一原则：高层认知可以解释世界、规划世界、甚至长期改变世界，但在高频危险边界上，现实约束拥有比认知意图更高的优先级。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\section{为什么安全不能等待认知：时间预算、负载与失效隔离}
+\label{sec:safety-cannot-wait}
 
-\section{为什么安全不能等待认知}
-\begin{narration}
-现在把镜头移到“为什么安全不能等待认知”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+上一节给出了 Emergency Channel 的结构，本节进一步回答一个更基础的问题：为什么不能简单地说“让主模型更快一些”来解决实时安全？原因在于安全与普通认知之间的差异并不只是平均速度，而是\textbf{最坏情况时间预算、负载依赖性和失效模式}完全不同。
 
-本节把“为什么安全不能等待认知”落实为在规定时延内具有高于普通预测控制权限的约束与中断包络。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“三信号通道”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+设一个危险事件从发生到不可恢复失效之间的时间窗口为
+\[
+T_{hazard},
+\]
+正常认知路径总延迟为
+\[
+T_{cog}
+=
+T_{sense}
++
+T_{semantic}
++
+T_{queue}
++
+T_{reason}
++
+T_{plan}
++
+T_{dispatch}
++
+T_{act}.
+\]
+若系统安全依赖
+\[
+T_{cog}<T_{hazard},
+\]
+那么我们不仅需要平均情况下满足该式，还需要在最差认知负载、工具调用、模型推理波动、网络延迟以及 Scheduler 拥塞时仍然成立。这实际上要求
+\[
+\sup T_{cog}
+<
+T_{hazard}.
+\]
+对于开放式大模型认知系统，这通常是一个极难保证的条件。模型可能突然进行更深推理，h 可能处于湍流状态，工具调用可能阻塞，外部服务可能发生网络抖动。所有这些都说明“认知系统通常很快”并不能成为硬实时安全证明。
 
-把这一关系写成最小数学骨架，可得
+相比之下，安全闭环可以定义为
+\[
+T_{safe}
+=
+T_{sensor}^{safe}
++
+T_{detect}^{safe}
++
+T_{arb}^{safe}
++
+T_{act}^{safe},
+\]
+并要求
+\[
+\sup T_{safe}
+<
+T_{hazard}.
+\]
+由于它不必执行开放式语言推理、不必构造完整 Agent-CSO 图，也不需要等待普通调度，因此更容易得到确定性的上界。这就是实时系统与认知系统之间最根本的差异之一：认知追求开放性和表达能力，安全追求可界定的最坏情况行为。
 
-\begin{equation}x_t\in\mathcal S,\quad u_t\in\mathcal U_{\rm safe}(x_t).\end{equation}
+第二个原因来自工作记忆有限性。设当前认知负载为
+\[
+C_{run}(t),
+\]
+并存在
+\[
+C_{run}(t)\rightarrow C_{\max}(W)
+\]
+的极端情况。越接近工作记忆容量边界，新的语义事件越可能需要等待 Boundary、CCM 和 Scheduler 重新分配资源。如果危险事件和普通认知事件共享完全相同的准入机制，那么最需要及时处理的事件反而可能在系统最混乱时遭遇最大排队延迟。因此安全通道必须做到
+\[
+\frac{\partial T_{safe}}{\partial C_{run}}
+\approx 0,
+\]
+至少在工程目标上尽量使安全响应时间与高层认知负载解耦。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对为什么安全不能等待认知的命名和组合仍是需要实验验证的建模提案。
+第三个原因是\textbf{故障域隔离}。如果所有行动都必须经过同一个认知内核，那么 Kernel 的任何错误都会直接成为身体安全错误：模型幻觉、错误 Goal、异常 Self Interpretation、TCE 振荡、Scheduler deadlock 都可能失去最后保护层。三通道设计则允许定义
+\[
+Failure(Kernel)
+\nRightarrow
+Failure(SafetyLoop).
+\]
+这和我们在长期 Agent 中反复强调的多尺度闭环原则一致：每一层应尽量闭合自身必须承担的快速稳定问题，而不是把所有异常上交给最高层。
 
-这一小节的反例同样重要：让实时危险等待高层认知会违反最坏时延要求。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+不过，安全不能等待认知，并不意味着安全系统可以任意控制 Agent。硬安全控制通常只拥有一个受限动作空间
+\[
+\mathcal U_{safe}
+\subset
+\mathcal U_{body},
+\]
+例如停止、减速、撤退、隔离、断开某项输出、进入安全姿态，而不是决定长期任务。这样可以避免另一个极端：一个低层安全模块因为局部风险指标而永久夺取整个 Agent 的目标权。正常情况下，安全层应该只负责将系统重新带回可治理集合
+\[
+x_t\notin\mathcal X_{safe}
+\Rightarrow
+u_t^{safe}
+\Rightarrow
+x_{t+k}\in\mathcal X_{recoverable}.
+\]
+一旦恢复，就把控制权重新交还更高层。
 
-\begin{thought}
-对“为什么安全不能等待认知”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此安全闭环真正追求的并不是“代替认知”，而是\textbf{维持认知继续有机会工作的现实条件}。这可以表述成
+\[
+\boxed{
+SafetyPreservesTheFeasibleFutureOfCognition
+}
+\]
+如果一个高层 Agent 因为没有及时避障而被永久损坏，再完美的长期记忆、自我和推理结构也失去意义。安全因此不是智能之外附加的一套规则，而是持续主体得以存在的最低层现实条件。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+从这个角度看，AgentOS 的多尺度原则在这里获得了非常具体的工程形式：
+\[
+\boxed{
+HigherIntelligenceDoesNotEliminateLowerLevelClosure.
+}
+\]
+智能越成熟，越不应该让最高级认知负责所有毫秒级事件；相反，成熟意味着越来越多确定、稳定、可验证的局部问题能够在适当尺度独立闭合，而真正异常、模糊和具有长期意义的问题才被提升进入显式认知。
 
-\section{通道之间的优先级}
-\begin{narration}
-现在把镜头移到“通道之间的优先级”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\section{三通道的优先级：不是三条并列数据流，而是三种不同的因果权限}
+\label{sec:channel-priority}
 
-本节把“通道之间的优先级”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“三信号通道”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+到这里，我们已经分别定义了 Semantic、Modulation 和 Emergency 三条通道。接下来最容易发生的误解，是把它们理解成类似网络系统中的三个 topic：每条通道只是消息格式不同，最终都送进一个统一队列。实际上，三信号通道的理论价值恰恰在于它们具有\textbf{不同的时间尺度、不同的处理方式和不同的因果权限}。
 
-把这一关系写成最小数学骨架，可得
+我们可以为每个通道定义一个六元描述：
+\[
+\mathcal C_i
+=
+(
+Content_i,
+Timescale_i,
+Latency_i,
+Authority_i,
+Persistence_i,
+Destination_i
+).
+\]
+于是三条通道分别近似具有
+\[
+\mathcal C_{sem}
+=
+(
+StructuredMeaning,
+Medium,
+Flexible,
+Normal,
+EventBased,
+CognitiveRuntime
+),
+\]
+\[
+\mathcal C_{mod}
+=
+(
+FunctionalInfluence,
+Fast\mbox{-}Medium,
+Low,
+Modulatory,
+Continuous,
+AHC/TCE
+),
+\]
+\[
+\mathcal C_{safe}
+=
+(
+CriticalConstraint,
+Fastest,
+HardBound,
+Override,
+Transient,
+SafetyActuator
+).
+\]
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+这种差异说明“优先级”不能只有一个简单整数。更准确地说，至少需要区分三个维度：调度优先级 $p_i$、控制权限 $a_i$ 与持续作用时间 $\tau_i$。一般情况下可以有
+\[
+p_{safe}>p_{mod}>p_{sem},
+\]
+以及
+\[
+a_{safe}>a_{normal},
+\]
+但在持续时间上却通常恰好相反：
+\[
+\tau_{safe}
+<
+\tau_{mod},
+\]
+而很多长期语义结构甚至可以通过 E、$\Theta$ 保持远远更久。也就是说，安全信号最紧急，却未必最持久；调制信号可能不需要显式思考，却会持续影响数秒、数分钟甚至更长；语义结构即时优先级可能较低，却可能最终进入终身记忆。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对通道之间的优先级的命名和组合仍是需要实验验证的建模提案。
+我们还需要允许同一现实事件同时投影到三个通道。例如智能体检测到迎面高速物体。其 SGC 中可能形成：
+\[
+C_{vehicle}
+=
+(
+position,
+velocity,
+identity,
+trajectory,
+\ldots
+),
+\]
+这是 Semantic projection。与此同时 FCS 可能产生
+\[
+Threat\uparrow,\qquad
+Arousal\uparrow,
+\]
+属于 Modulation projection。如果预测碰撞时间进一步满足
+\[
+TTC<T_{critical},
+\]
+则同时生成 Emergency signal。于是一个外部事件 $E_t$ 并不是被“分类到一个通道”，而是经过三个不同投影：
+\[
+E_t
+\mapsto
+\left(
+\Pi_{sem}(E_t),
+\Pi_{mod}(E_t),
+\Pi_{safe}(E_t)
+\right).
+\]
+这一点极其重要，因为它避免把三信号通道误写成互斥分类器。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+三条通道之间还存在受控的跨通道转换。一个语义事件经过持续评估，可能逐渐提高调制强度：
+\[
+SemanticPattern
+\rightarrow
+RepeatedEvaluation
+\rightarrow
+Modulation.
+\]
+反过来，一个持续异常的 AHC 状态也可能通过 SPC 形成 Self-CSO：
+\[
+Modulation
+\rightarrow
+SelfPerception
+\rightarrow
+SemanticSelfState.
+\]
+一个紧急安全事件在解除后则可以转入语义记忆：
+\[
+Emergency
+\rightarrow
+PostEventSemanticization
+\rightarrow
+E.
+\]
+因此三通道不是封闭管道，而是一个具有转换规则的多层路由系统。
 
-\begin{thought}
-对“通道之间的优先级”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+为了避免安全通道长期占用控制权，需要进一步引入\textbf{迟滞}。设进入紧急模式阈值为 $\theta_{on}$，解除阈值为 $\theta_{off}$，应满足
+\[
+\theta_{on}>\theta_{off}.
+\]
+这样系统不会因为风险指标在单一阈值附近轻微波动而不断发生
+\[
+Normal
+\leftrightarrow
+Emergency
+\]
+的高频切换。这一结构与我们在更高层拓扑学习中采用的迟滞思想具有相同动力学理由：高权限模式的切换必须比普通状态变化更加稳定。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+从 AgentOS 的角度看，三通道还定义了三种不同的“现实进入主体”的方式。Semantic Channel 使现实成为\textbf{可理解对象}；Modulation Channel 使现实成为\textbf{主体状态的推动力量}；Emergency Channel 使现实成为\textbf{不可协商的即时约束}。因此可以写成：
+\[
+\boxed{
+Reality
+\rightarrow
+\begin{cases}
+Meaning,\\
+Modulation,\\
+Constraint.
+\end{cases}}
+\]
+这三种因果角色必须同时存在。只有 Meaning 而没有 Modulation，Agent 会成为没有内稳态压力的纯符号系统；只有 Modulation 而没有 Meaning，系统只能产生反应而难以形成结构认知；只有前两者而没有 Constraint，则高层认知的延迟和错误可能直接破坏持续主体。
 
-\section{Body$\rightarrow$Kernel 路由结构}
-\begin{narration}
-现在把镜头移到“Body$\rightarrow$Kernel 路由结构”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+因此我们最终不是在设计“三条输入线”，而是在为一个持续智能体建立三种不同等级的现实权威。
 
-本节把“Body$\rightarrow$Kernel 路由结构”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“三信号通道”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
+\section{Body Runtime 到 Agent Kernel 的完整路由结构}
+\label{sec:body-kernel-routing}
 
-把这一关系写成最小数学骨架，可得
+现在我们可以把三条通道重新放回 AgentOS 的整体架构中。前文已经建立了 Body Runtime 负责把原始物理或数字世界转换成公共的身体语义状态，而 Agent Kernel 负责目标、工作记忆、长期记忆、自我、调度与全局认知。三信号通道正位于二者之间，它不是普通通信中间件，而是\textbf{现实进入认知系统之前的功能分解层}。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+设现实状态为
+\[
+W_t,
+\]
+身体状态为
+\[
+X_t^B,
+\]
+传感器产生
+\[
+Y_t
+=
+H(W_t,X_t^B)+\eta_t.
+\]
+Body Runtime 首先进行局部融合和状态估计，得到
+\[
+\mathcal S_t^{SGC}
+=
+F_{SGC}(Y_{\leq t}),
+\]
+以及
+\[
+\mathcal F_t^{FCS}
+=
+F_{FCS}(Y_{\leq t},X_t^B).
+\]
+与此同时，安全观测器可以保留一部分更直接、延迟更低的输入
+\[
+Y_t^{safe}
+\subseteq
+Y_t,
+\]
+不要求先经过完整高层语义构建。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Body$\rightarrow$Kernel 路由结构的命名和组合仍是需要实验验证的建模提案。
+于是三路路由可以统一写为
+\[
+\begin{aligned}
+Z_t^{sem}
+&=
+\Pi_{sem}
+(\mathcal S_t^{SGC},
+G_t,h_t,\Theta_t),
+\\
+Z_t^{mod}
+&=
+\Pi_{mod}
+(\mathcal F_t^{FCS},
+X_t^B),
+\\
+Z_t^{safe}
+&=
+\Pi_{safe}
+(Y_t^{safe},
+X_t^B,u_t).
+\end{aligned}
+\]
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+其中语义信号进一步进入认知路由：
+\[
+Z_t^{sem}
+\rightarrow
+Boundary
+\rightarrow
+Scheduler/CCM
+\rightarrow
+h,E,\Theta;
+\]
+调制信号主要进入
+\[
+Z_t^{mod}
+\rightarrow
+AHC
+\rightarrow
+SPC/TCE/Scheduler;
+\]
+安全信号则具有：
+\[
+Z_t^{safe}
+\rightarrow
+SafetyController
+\rightarrow
+BodyAction
+\]
+的直接路径，同时异步生成
+\[
+Z_t^{safe}
+\rightarrow
+EventRecord
+\rightarrow
+Kernel
+\]
+用于后续学习。
 
-\begin{thought}
-对“Body$\rightarrow$Kernel 路由结构”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此，我们可以把完整边界表示成一个分流算子
+\[
+\mathfrak R:
+BodyState
+\longrightarrow
+\left[
+Semantic,
+Modulation,
+Emergency
+\right].
+\]
+它的意义不是复制三份数据，而是根据每一类结构的因果角色分配不同的时间预算和访问路径。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+在实现上，每条通道都应拥有独立的消息契约。语义消息可以抽象成
+\[
+M^{sem}
+=
+(
+CSO,
+relations,
+epistemicStatus,
+confidence,
+time
+),
+\]
+调制消息为
+\[
+M^{mod}
+=
+(
+channel,
+intensity,
+derivative,
+confidence,
+spatialMask,
+time
+),
+\]
+安全消息为
+\[
+M^{safe}
+=
+(
+hazard,
+severity,
+deadline,
+allowedResponse,
+confidence,
+time
+).
+\]
+这三个数据结构应尽量保持稳定，从而使 Body Runtime 内部可以使用高度优化、甚至完全不同的实现，而 Agent Kernel 不需要知道底层具体传感器或者控制器细节。
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“三信号通道”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“BPCC：身体预测控制小脑”只使用这里已经给出的结果，不反过来为本章提供前提。
+这一结构还给出了一个重要的工程隔离原则：
+\[
+\boxed{
+PublicSemanticContract
++
+PrivateOptimizedDynamics
+}
+\]
+身体运行时内部可以拥有高速 latent、滤波器、预测器和控制状态，但跨越认知边界时必须输出具有明确语义和权限属性的公共信号。这样才能避免一个常见问题：底层神经网络的 latent representation 逐渐成为整个 Agent 唯一的隐式 ABI，最终导致身体、认知、记忆和控制不可检查地耦合在一起。
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+三通道还帮助我们理解后续 AgentOS 调度为何不能只依赖传统 message queue。普通消息系统通常关心：
+\[
+(priority,size,destination),
+\]
+而 AgentOS 的认知路由至少还需要：
+\[
+(timescale,
+epistemicStatus,
+authority,
+persistence,
+cognitiveCost,
+safetyDeadline).
+\]
+于是 Body--Kernel 边界真正传输的不是“数据包”，而是带有认知和控制属性的结构事件。
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+从更高层看，这恰好对应本书最开始的多尺度智能原则。外部世界同时存在高速物理扰动、中速主体状态变化以及较慢的语义关系演化。如果我们把所有尺度压进同一处理循环，系统必然要么为了安全牺牲认知深度，要么为了认知深度牺牲实时性。三信号通道通过结构分离，使不同尺度各自找到适合自己的闭环：
+\[
+\boxed{
+FastConstraint
+\parallel
+ContinuousModulation
+\parallel
+StructuredCognition
+}
+\]
+三者最终又在真实行动结果中重新汇合。
+
+因此，本章可以用一个完整闭环收束：
+\[
+\boxed{
+World
+\rightarrow
+BodyRuntime
+\rightarrow
+\begin{cases}
+Semantic\rightarrow CognitiveKernel,\\
+Modulation\rightarrow AHC/RuntimeControl,\\
+Emergency\rightarrow SafetyControl,
+\end{cases}
+\rightarrow
+Action
+\rightarrow
+World'
+}
+\]
+
+三信号通道的真正作用，是在身体与认知之间建立一种\textbf{多时间尺度的因果隔离}。它使 Agent 能够同时做到三件通常相互冲突的事情：对现实保持丰富而可解释的理解；让身体与内稳态持续影响认知方式；并在高层认知拥塞、错误甚至暂时失效时，仍然保留最基本的现实安全闭环。
+
+至此，Body Runtime 已经不再只是“传感器和执行器的驱动层”。通过 SGC、FCS 与三信号路由，它开始形成一个能够把原始现实压缩成\textbf{意义、调制与约束}三种公共结构的低层智能边界。下一阶段的工程问题才是：在这一边界之下，如何建立能够进行高频局部预测、控制、残差估计和在线适应的快速身体闭环。

@@ -1,194 +1,1738 @@
-\chapter{具身输入的四象限结构}
-\chaptervoice{这一章，我们围绕“具身输入的四象限结构”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明认知内核通过身体进入现实。}
-
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 Body Runtime、FBI、SGC/FCS、三信号通道、BPCC 与 Reality Authority 的具身讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是具身认知、分层控制、MPC、状态估计与安全包络（模型预测控制、Kalman 状态估计与具身认知）。
-
-本章使用上一章“FBI：Functional Body Interface”已经得到的对象与边界；本章产出将供下一章“SGC：语义图坐标空间”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在具身认知、分层控制、MPC、状态估计与安全包络上。
-\section{External Perception}
-\begin{narration}
-现在把镜头移到“External Perception”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“External Perception”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“具身输入的四象限结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对External Perception的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“External Perception”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Internal Perception}
-\begin{narration}
-现在把镜头移到“Internal Perception”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Internal Perception”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“具身输入的四象限结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Internal Perception的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Internal Perception”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{External Feeling/Influence}
-\begin{narration}
-现在把镜头移到“External Feeling/Influence”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“External Feeling/Influence”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“具身输入的四象限结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对External Feeling/Influence的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“External Feeling/Influence”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Internal Feeling/Influence}
-\begin{narration}
-现在把镜头移到“Internal Feeling/Influence”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Internal Feeling/Influence”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“具身输入的四象限结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Internal Feeling/Influence的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Internal Feeling/Influence”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Origin 与 Information Form 两个正交轴}
-\begin{narration}
-现在把镜头移到“Origin 与 Information Form 两个正交轴”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Origin 与 Information Form 两个正交轴”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“具身输入的四象限结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Origin 与 Information Form 两个正交轴的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Origin 与 Information Form 两个正交轴”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Perception $\neq$ Semantic}
-\begin{narration}
-现在把镜头移到“Perception $\neq$ Semantic”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Perception $\neq$ Semantic”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“具身输入的四象限结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Perception $\neq$ Semantic的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Perception $\neq$ Semantic”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Feeling $\neq$ Modulation}
-\begin{narration}
-现在把镜头移到“Feeling $\neq$ Modulation”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Feeling $\neq$ Modulation”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“具身输入的四象限结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Feeling $\neq$ Modulation的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Feeling $\neq$ Modulation”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Exception 不是第五种 Feeling}
-\begin{narration}
-现在把镜头移到“Exception 不是第五种 Feeling”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Exception 不是第五种 Feeling”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“具身输入的四象限结构”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Exception 不是第五种 Feeling的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Exception 不是第五种 Feeling”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“具身输入的四象限结构”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“SGC：语义图坐标空间”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\chapter{具身输入的四象限结构：从原始作用到认知可用状态}
+\label{chap:embodied-input-four-quadrants}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.92\textwidth}
+\textbf{本章总纲}
+
+本章讨论 AgentOS 从抽象认知内核迈向具身系统以后必须首先解决的一个基础问题：\textbf{现实世界作用于身体之后，究竟以什么基本结构进入智能体？}我们将证明，把身体输入简单理解为 ``sensor data''、``multimodal tokens'' 或 ``observation'' 都是不充分的。对于持续存在并需要长期自我调节的智能体而言，身体输入至少包含两个相互正交的分类轴：第一轴描述作用来自身体外部还是身体内部，即 \emph{Origin Axis}；第二轴描述该信息主要用于形成``世界是什么''的状态表示，还是用于表达``世界或身体正在如何作用于我''的功能影响，即 \emph{Functional Form Axis}。两个二元轴的直积产生四类基本具身输入：
+\[
+\boxed{
+\mathcal I_{B}
+=
+P^{\mathrm{ext}}
+\oplus
+P^{\mathrm{int}}
+\oplus
+F^{\mathrm{ext}}
+\oplus
+F^{\mathrm{int}}
+}
+\]
+其中 $P$ 表示 Perception-oriented state information，$F$ 表示 Functional Influence / Feeling-oriented information；$\mathrm{ext}$ 与 $\mathrm{int}$ 分别表示外源与内源。
+
+本章的核心结论是：\textbf{Perception 与 Feeling 并不是由传感器种类决定的，而是由信息在 Agent 整体闭环中的功能角色决定的；同一个底层物理信号可以同时产生状态表示与功能影响。}因此 ``Camera = Perception''、``Temperature Sensor = Feeling'' 这样的分类在系统论上并不成立。我们将进一步区分 Raw Signal、Perception、Semantic Representation、Functional Influence、Modulation 与 Exception，建立 Body Runtime 面向认知内核时最基本的输入本体。这里所称 ``Feeling'' 始终是可测量、可计算、可用于控制的\textbf{功能影响状态}，不对现象意识或主观感受作任何本体论断言。
+
+本章只建立具身输入的原始分类和数学结构，不提前展开后续章节中的 SGC、FCS 与 BPCC 具体实现；但这一四象限结构将成为这些组件得以正确分工的共同基础。
+\end{minipage}
+}
+\end{center}
+
+\section{为什么不能把具身输入简单定义为 ``多模态传感器数据''}
+\label{sec:why-not-multimodal-sensor-data}
+
+当我们第一次把 AgentOS 从纯数字认知系统推向具有身体的持续智能体时，一个看似简单的问题立即出现：身体到底向认知内核提供什么？在传统机器人系统中，我们习惯于按照硬件来源列举输入：摄像头提供图像，麦克风提供声音，IMU 提供姿态，编码器提供关节位置，温度计提供温度，电池管理系统提供电量。这种划分对于驱动开发是充分的，因为驱动层首先关心的是某个设备产生什么数据格式；但对于一个需要形成世界模型、自我状态、长期记忆、风险判断和行为调节的智能体而言，这种设备列表并没有告诉我们数据\emph{在认知闭环中扮演什么角色}。
+
+设身体具有原始传感向量
+\[
+\mathbf z_t
+=
+[z_t^1,z_t^2,\ldots,z_t^n]^\top
+\in\mathcal Z_B,
+\]
+其中每个 $z_t^i$ 可以来自任意物理或数字设备。若我们仅依据设备类型建立映射
+\[
+\mathrm{DeviceID}
+\longrightarrow
+\mathrm{DataType},
+\]
+那么得到的是一个 Hardware Abstraction Layer，而不是 Cognitive Body Interface。一个持续智能体真正需要解决的是另一类问题：
+\[
+\boxed{
+\mathbf z_t
+\longrightarrow
+\text{What does this signal mean for the Agent's closed loop?}
+}
+\]
+换言之，身体接口不能停留在``摄像头像素是什么''，而必须进一步回答``这些变化是在描述外部世界，描述身体自身，还是在表明某种现实状态正在提高当前 Agent 的行动压力、资源压力或安全风险''。
+
+我们可以通过一个简单例子看到传统分类为什么会失效。假设摄像头观察到一团快速接近的火焰。像素本身首先只是：
+\[
+z_t^{camera}\in\mathbb R^{H\times W\times C}.
+\]
+经过身体侧处理后，它可能同时产生至少两种完全不同的功能结果。第一种是状态表示：
+\[
+P^{\mathrm{ext}}
+:
+\quad
+\text{``前方 $2.3$m 存在高温火焰区域''};
+\]
+第二种是功能影响：
+\[
+F^{\mathrm{ext}}
+:
+\quad
+\text{``当前外部热威胁正在快速增加''}.
+\]
+前者主要服务于回答 ``What is there?''，后者主要服务于回答 ``What is this doing to me?''。二者可能来自同一组像素，却具有不同的认知意义。如果我们坚持按传感器进行本体分类，就不得不错误地把它们视为同一种信息。
+
+反过来，一个身体内部温度传感器也并不必然只产生 ``Feeling''。例如：
+\[
+T_{\mathrm{motor}}=78^\circ \mathrm C
+\]
+首先可以形成一个明确的内部状态事实：
+\[
+P^{\mathrm{int}}
+:
+\quad
+\text{MotorTemperature}=78^\circ \mathrm C.
+\]
+但通过身体模型和安全模型，它又可能形成：
+\[
+F^{\mathrm{int}}
+:
+\quad
+\mathrm{ThermalPressure}=0.82.
+\]
+所以同一物理量既可以成为对身体的描述，也可以成为对身体当前受作用程度的功能评价。
+
+这促使我们从 Hardware Ontology 转向 Functional Embodiment Ontology。我们不再首先问 ``信号从哪个设备来''，而是沿两个更加基础的轴进行分类。第一个轴回答：
+\[
+\boxed{
+\text{Where does the relevant causal condition originate?}
+}
+\]
+即作用主要来自身体外部还是内部；第二个轴回答：
+\[
+\boxed{
+\text{Does the information primarily represent a state,
+or represent its functional influence on the Agent?}
+}
+\]
+两个轴彼此独立，因此形成一个笛卡尔积：
+\[
+\mathcal I_B
+=
+\{\mathrm{ext},\mathrm{int}\}
+\times
+\{P,F\}.
+\]
+由此得到四个象限：
+\[
+\boxed{
+\mathcal I_B
+=
+P^{\mathrm{ext}}
+\oplus
+P^{\mathrm{int}}
+\oplus
+F^{\mathrm{ext}}
+\oplus
+F^{\mathrm{int}}.
+}
+\]
+
+这里的直和符号 $\oplus$ 并不表示四个通道在实现上必须拥有完全独立的传感器和内存，而是强调它们属于\textbf{不同的功能语义子空间}。同一个原始信号可以通过多个映射同时投影到不同子空间：
+\[
+\Phi_B:
+\mathcal Z_B
+\rightarrow
+\mathcal P^{\mathrm{ext}}
+\times
+\mathcal P^{\mathrm{int}}
+\times
+\mathcal F^{\mathrm{ext}}
+\times
+\mathcal F^{\mathrm{int}}.
+\]
+因此，一个成熟的 Body Runtime 并不是 ``收集尽可能多的传感数据然后全部发给大模型''，而是在最接近现实的地方首先完成一次\textbf{功能分流与结构化}。这一步是具身 Agent 能否控制工作记忆负载、形成稳定身体自我、维持高速本地闭环的基础。
+
+从外部理论看，本节与机器人领域的 sensor fusion、状态估计和身体内感知存在联系，也与认知科学中的 exteroception / interoception 区分有某种结构相似性。但本章提出的四象限并不直接复制这些传统分类，因为我们增加了第二个正交维度：\emph{Perception-oriented representation 与 Functional Influence-oriented representation}。这使同一来源的信息能够同时参与 ``描述现实'' 和 ``调节主体''，也是后续整个 AgentOS Body Runtime 架构能够避免把所有感觉都压成统一 embedding 的重要前提。
+
+\section{第一轴：外部来源与内部来源不是空间划界，而是因果来源划界}
+\label{sec:origin-axis}
+
+四象限结构的第一个坐标轴是 Origin Axis：
+\[
+\mathcal O
+=
+\{\mathrm{ext},\mathrm{int}\}.
+\]
+直觉上，我们很容易把它理解成``身体外面''和``身体里面''，但这种几何解释对于数字 Agent、分布式机器人以及带有外部工具的智能体很快就会失效。因此我们需要给 ``External'' 与 ``Internal'' 更严格的系统定义：\textbf{它们区分的首先不是数据存储在哪里，而是当前被表示或被评价的主要因果状态属于 Body Boundary 的哪一侧。}
+
+设 Agent 的身体边界为
+\[
+\mathcal B_A(t),
+\]
+其内部动态状态记为
+\[
+x_B(t)\in\mathcal X_B,
+\]
+外部环境状态记为
+\[
+x_W(t)\in\mathcal X_W.
+\]
+这里的 ``身体边界'' 并不必然等于皮肤。对于数字 Agent，它可能包括操作系统会话、浏览器控制域、授权文件系统、网络执行接口；对于机器人，它可能包括机械本体、传感器、执行器、电源和本地实时控制器。于是我们可以在功能意义上写：
+\[
+\mathcal X
+=
+\mathcal X_W
+\times
+\mathcal X_B.
+\]
+若某个信号主要用于估计
+\[
+\hat{x}_W(t),
+\]
+它属于 External-origin information；若主要用于估计
+\[
+\hat{x}_B(t),
+\]
+则属于 Internal-origin information。
+
+因此 ``external'' 不是说传感器必须安装在身体表面。例如一个云端天气 API 可以提供：
+\[
+P^{\mathrm{ext}}=
+\{\text{outside temperature},\text{rainfall},\text{wind}\},
+\]
+虽然数据经过网络而来；它描述的仍然是 Agent 身体边界外部的现实状态。相反，一个摄像头可能观察机器人自己的机械臂，在某些任务中由此生成：
+\[
+P^{\mathrm{int}}
+:
+\quad
+\text{end-effector pose relative to body}.
+\]
+尽管数据来自视觉设备，其认知对象却是 Body 自身状态。因此来源分类必须以\emph{所指对象及因果关系}为中心，而不是以物理传感器位置为中心。
+
+为了形式化这一点，我们可以定义一个来源判别函数：
+\[
+\chi_O(r)
+=
+\begin{cases}
+\mathrm{ext}, & r \text{ primarily refers to } \mathcal X_W,\\
+\mathrm{int}, & r \text{ primarily refers to } \mathcal X_B.
+\end{cases}
+\]
+然而在真实系统中，一个关系常常跨越边界。例如 ``手正在接触桌面'' 同时涉及：
+\[
+x_B^{hand}
+\quad\text{与}\quad
+x_W^{table}.
+\]
+因此严格的系统不应强迫所有结构只属于单一侧，而可以使用来源权重：
+\[
+\omega_O(r)
+=
+\left[
+w_{\mathrm{ext}}(r),
+w_{\mathrm{int}}(r)
+\right],
+\qquad
+w_{\mathrm{ext}}+w_{\mathrm{int}}=1.
+\]
+例如接触关系可能满足：
+\[
+w_{\mathrm{ext}}\approx w_{\mathrm{int}}\approx 0.5.
+\]
+这说明四象限是一套\textbf{功能分解基}，而不是说现实结构天然被切成互不重叠的四块。
+
+这一轴对于持续 Agent 特别重要，因为身体内部世界并不是工作记忆 $h(t)$ 的一个普通子集。身体本身具有高速、连续、局部的动力过程：
+\[
+\dot{x}_B
+=
+F_B(x_B,u_B,x_W),
+\]
+而认知内核只能以较慢时间尺度接收压缩后的身体状态。若我们不区分 $x_W$ 与 $x_B$，那么所有原始变化都可能被统一送入认知层，最终使 Agent 无法判断某个异常究竟是世界改变了，还是自己的身体状态改变了。例如：
+
+\[
+\text{视觉变暗}
+\]
+可能来自
+\[
+\text{环境光照下降},
+\]
+也可能来自
+\[
+\text{摄像头曝光异常}.
+\]
+两者在像素层可能相似，但对控制策略完全不同。前者要求改变外部世界模型，后者要求改变身体状态模型。
+
+Origin Axis 因而也是因果归因的一部分。一个具身智能体必须不断解决：
+\[
+\boxed{
+\text{Did the world change, did I change, or did our relation change?}
+}
+\]
+这比传统 ``input classification'' 更接近智能体真实需要解决的问题。它也是后续建立身体自我、故障诊断、动作归因和 World Verification 的基础。
+
+从外部理论上，本节可以与 embodied cognition、interoception/exteroception、causal inference、state-space decomposition 以及控制系统中的 plant/environment decomposition 相联系。但我们采取更工程化的立场：Origin Axis 的目的不是重建某种生物感觉分类，而是为 AgentOS 建立一个\textbf{可被运行时使用的因果边界坐标}。只有明确外部世界和身体状态分别在发生什么，Agent 才可能进一步判断这些状态意味着什么。
+
+\section{第二轴：Perception 与 Functional Influence 是两种不同的表示任务}
+\label{sec:function-form-axis}
+
+第二个坐标轴比第一个更关键，也更容易被误解。我们记：
+\[
+\mathcal R
+=
+\{P,F\},
+\]
+其中 $P$ 表示 Perception-oriented representation，$F$ 表示 Functional Influence-oriented representation。这里的区别不是 ``客观信息'' 与 ``主观信息''，也不是 ``视觉'' 与 ``情绪''，而是两个不同的系统问题：
+
+\[
+P:
+\quad
+\boxed{\text{What state is the world/body in?}}
+\]
+
+\[
+F:
+\quad
+\boxed{\text{How is that state functionally acting on this Agent?}}
+\]
+
+Perception 的目标是重建一个尽量结构化的状态描述。给定原始观测 $z_t$，我们可以写：
+\[
+P_t
+=
+\Phi_P(z_{\leq t},x_{t-1}^{model}),
+\]
+其中输出 $P_t$ 可以包含对象、位置、速度、身体姿态、内部温度、资源水平等。它描述的是一个估计状态：
+\[
+P_t
+\approx
+\hat{x}_t.
+\]
+这一层的理想目标接近 state estimation：在不要求包含所有底层细节的前提下，形成足够支持未来预测和行动的现实表示。
+
+Functional Influence 则不同。它不是再次复制状态，而是计算：
+\[
+F_t
+=
+\Phi_F(
+\hat{x}_t,
+x_A(t),
+G_t,
+C_t,
+\mathcal B_A
+),
+\]
+其中 $x_A(t)$ 是 Agent 当前自身状态，$G_t$ 是当前目标，$C_t$ 是身体能力和约束。它回答的是：\emph{同一个现实状态，对这个具体 Agent 的当前运行意味着多大压力、机会、风险、紧迫性或资源影响。}
+
+例如：
+\[
+P_t:
+\quad
+\text{object distance}=0.8\mathrm{m},
+\]
+本身只是状态事实。若对象是一堵墙，而 Agent 正以高速向前运动，则可进一步得到：
+\[
+F_t:
+\quad
+\mathrm{CollisionPressure}=0.91.
+\]
+如果 Agent 静止，则同一个距离可能产生：
+\[
+\mathrm{CollisionPressure}=0.05.
+\]
+这说明 $F$ 不是世界属性的简单复制，而是关系函数：
+\[
+\boxed{
+F
+=
+F(World,Body,Goal,Dynamics)
+}
+\]
+因此 Feeling/Functional Influence 在理论上首先是一种\textbf{主体相对的功能量}。
+
+这也解释了为什么我们不能把 Feeling 理解成某些特定传感器直接输出的数值。温度 $40^\circ C$ 对耐高温工业机器人、普通电子设备和人类的功能意义完全不同。真正进入 Feeling-oriented space 的不是：
+\[
+T=40,
+\]
+而是类似：
+\[
+F^{thermal}
+=
+\phi(
+T,
+T_{\mathrm{safe}},
+\dot{T},
+\text{thermal capacity},
+\text{mission}
+).
+\]
+例如可以定义：
+\[
+f_T(t)
+=
+\sigma
+\left(
+\alpha
+\frac{T(t)-T_{\mathrm{nominal}}}
+{T_{\mathrm{critical}}-T_{\mathrm{nominal}}}
++
+\beta\dot{T}(t)
+\right),
+\]
+其中 $\sigma(\cdot)$ 是饱和函数。这样得到的 $f_T$ 才表示当前温度状态对于 Agent 控制系统产生的功能性热压力。
+
+同样，Perception 也不是 semantic understanding。我们可以形成：
+\[
+P:
+\quad
+\text{a moving human-shaped entity at coordinate }(x,y,z),
+\]
+但尚未知道其社会身份、意图或任务意义。因此第二轴不应被错误理解为：
+\[
+P=\text{semantic cognition}.
+\]
+更准确地说：
+\[
+\boxed{
+Perception
+=
+RepresentationalState
+}
+\]
+它处于原始信号和高层语义之间，是后续语义构造的现实锚点。
+
+至此我们可以得到一个重要的二维矩阵：
+\[
+\begin{array}{c|cc}
+ & P & F\\
+\hline
+\mathrm{ext}
+&
+P^{\mathrm{ext}}
+&
+F^{\mathrm{ext}}
+\\
+\mathrm{int}
+&
+P^{\mathrm{int}}
+&
+F^{\mathrm{int}}
+\end{array}
+\]
+其中横向不是传感器类型，而是表示任务；纵向不是数据存储位置，而是因果来源。这种结构比传统 ``视觉/听觉/触觉/内感'' 分类更加抽象，因此能够同时适用于机器人、自动驾驶系统、数字 Agent 和其他未来身体形态。
+
+从外部理论看，这一划分与控制理论中的 state 与 cost/constraint、机器人中的 occupancy map 与 cost map、认知科学中的 perception 与 affective valuation 都有可以比较的地方。但我们不把 $F$ 直接等同于 cost，因为 Functional Influence 可以是多维的：
+\[
+F_t
+=
+[
+f_1,f_2,\ldots,f_k]^\top,
+\]
+而不是预先压缩成一个标量效用。保留多维影响结构，对于后续形成内稳态调节、风险判断和认知控制非常重要。
+
+\section{$P^{\mathrm{ext}}$：外部世界如何成为可预测的现实状态}
+\label{sec:external-perception}
+
+第一象限是：
+\[
+\boxed{
+P^{\mathrm{ext}}
+}
+\]
+即 External Perception-oriented Representation。它承担 Agent 最基础的外部状态估计任务：把身体之外高度连续、噪声化、异步、多模态的现实作用转换成具有时间连续性和因果意义的状态结构。我们可以把它抽象成：
+\[
+P_t^{\mathrm{ext}}
+=
+\Phi_{P^{ext}}
+(
+z_{\leq t}^{ext},
+u_{\leq t-1},
+M_{t-1}
+),
+\]
+其中 $z^{ext}$ 是外部来源观测，$u$ 是 Agent 已执行动作，$M$ 是已有世界模型。这里显式加入 $u$ 非常重要，因为智能体不能把自身行动导致的世界变化误判成纯外部扰动。
+
+例如一个移动机器人向前行驶时，整个相机图像都会产生 optical flow。若不使用自运动估计，Agent 很容易把：
+\[
+\Delta z_t
+\]
+全部解释成：
+\[
+\Delta x_W.
+\]
+但实际上：
+\[
+\Delta z_t
+=
+H(
+\Delta x_W,
+\Delta x_B,
+\epsilon_t
+),
+\]
+其中 $\Delta x_B$ 表示身体自身运动，$\epsilon_t$ 表示观测噪声。因此 $P^{ext}$ 不是传感数据的直接副本，而是一个经过动作条件化和身体状态校正的现实估计。
+
+在最基本层面，$P^{ext}$ 可以包含：
+\[
+\mathcal P^{ext}
+=
+\{
+Entities,
+Fields,
+Relations,
+Events,
+Dynamics
+\}.
+\]
+Entity 描述相对稳定的对象；Field 描述空间连续量，例如温度场、光照场、地形代价场；Relation 表示对象之间的位置、接触和结构关系；Event 表示具有时间边界的变化；Dynamics 则表示对象或场随时间的变化趋势。这样处理以后，我们才真正从：
+\[
+Pixels
+\]
+进入：
+\[
+WorldState.
+\]
+
+值得强调的是，我们并不要求 $P^{ext}$ 重建``宇宙本身''。Agent 永远只能得到受身体、传感器、时间分辨率和计算资源限制的局部投影：
+\[
+P_t^{ext}
+=
+\Pi_A(
+x_W(t)
+)
++
+\epsilon_t.
+\]
+其中 $\Pi_A$ 依赖 Agent 的 Body Scale。一个红外机器人、一个只有文本 API 的数字 Agent和一个人类，不可能得到完全相同的 $P^{ext}$。因此所谓 ``external perception'' 从一开始就是 Agent-relative observation，而不是无主体的绝对视角。
+
+这里我们应引入另一个重要概念：Epistemic Status。即使还没有进入后续具体语义坐标系统，我们也应要求任何外部状态具有最低限度的认识论标记：
+\[
+e_i
+=
+(
+\hat{x}_i,
+c_i,
+s_i
+),
+\]
+其中 $c_i$ 是 confidence，$s_i$ 至少区分：
+\[
+Observed,\quad Inferred,\quad Predicted.
+\]
+这是因为持续 Agent 最大的危险之一，就是把预测状态和观测状态混在一起。例如：
+\[
+\hat{x}_{t+1}^{pred}
+\]
+绝不能在下一时刻未经传感器验证就自动变成：
+\[
+x_{t+1}^{obs}.
+\]
+否则内部模型会逐渐取代现实，形成封闭自证。
+
+因此 $P^{ext}$ 的最终职责不是``把外部世界全部传给大模型''，而是建立一个：
+\[
+\boxed{
+temporally coherent,\ epistemically marked,\ action-conditioned external state
+}
+\]
+即具有时间连续性、认识论标记并考虑自身行动影响的外部状态表示。
+
+从传统理论上，本节与 Bayesian filtering、SLAM、object tracking、world models、POMDP belief state 等有直接关联。但 AgentOS 所强调的是，这些技术不能只作为某个感知模块独立存在，而必须被放进持续主体的整体认知闭环中：外部状态最终要与工作记忆、目标、自我、身体状态和行动反馈相互校验。因此 $P^{ext}$ 是 Body Runtime 面向高层认知的现实接口之一，而不是一个独立 CV 子系统的最终输出。
+
+\section{$P^{\mathrm{int}}$：身体必须先成为 Agent 自己能够表示的对象}
+\label{sec:internal-perception}
+
+第二象限是：
+\[
+\boxed{
+P^{\mathrm{int}}
+}
+\]
+即 Internal Perception-oriented Representation。它回答的并不是外部世界发生了什么，而是：
+\[
+\boxed{
+\text{What state is my body/runtime currently in?}
+}
+\]
+对于长期运行的 Agent，这一象限与外部感知同样重要，甚至构成主体能够保持稳定性的基础。一个能够理解外部世界却无法形成自身身体状态表示的系统，很难真正拥有持续的 agency，因为它无法准确判断自己的行动能力、资源余量、故障状态和控制边界。
+
+设身体状态空间为：
+\[
+x_B(t)
+=
+[
+q,
+\dot q,
+E,
+T,
+L,
+R,
+C,
+H,\ldots
+]^\top,
+\]
+其中可以分别代表姿态、速度、能源、温度、负载、资源、通信和健康状态。Internal Perception 的任务就是建立：
+\[
+P_t^{int}
+=
+\hat{x}_B(t).
+\]
+对于物理机器人，这可能包括关节位置、扭矩、电池、温度、传感器健康、执行器状态；对于数字身体，则可能包括 CPU/GPU 占用、网络状态、文件系统权限、浏览器窗口状态、API quota、执行任务状态以及软件组件健康度。
+
+这里再次需要强调：$P^{int}$ 并不等于高层 ``Self''。它描述的是：
+\[
+\boxed{
+Body/Runtime State
+}
+\]
+而不是：
+\[
+\boxed{
+Identity/Self Model.
+}
+\]
+例如：
+\[
+P^{int}:
+\quad
+\mathrm{Battery}=34\%
+\]
+与：
+\[
+\Psi:
+\quad
+\text{``我是一个负责长期照护家庭的 Agent''}
+\]
+属于完全不同的时间尺度和结构层次。若把身体状态直接写入长期自我，就会使慢变量被高速噪声污染；反之，如果高层自我完全看不到身体能力状态，则可能生成不可执行的目标。
+
+因此需要一个明确的时间尺度关系：
+\[
+\tau_{body}
+\ll
+\tau_h
+\ll
+\tau_\Psi.
+\]
+Internal Perception 在身体尺度上快速更新，而只有经过压缩、异常检测或任务相关筛选后的部分状态才有必要进入工作记忆。
+
+在数学上，我们可以将 Internal Perception 视为带有自模型的 observer：
+\[
+\dot{x}_B
+=
+f_B(x_B,u,w),
+\]
+\[
+y_B
+=
+h_B(x_B)+v,
+\]
+\[
+\hat{x}_{B,t}
+=
+\mathcal O_B(
+y_{\leq t},
+u_{\leq t-1}
+),
+\]
+其中 $w$ 是过程扰动，$v$ 是观测噪声。于是：
+\[
+P^{int}
+=
+(\hat{x}_B,\Sigma_B),
+\]
+除了状态估计，还应携带不确定度 $\Sigma_B$。这对于故障诊断尤其关键：``我不知道自己的右侧传感器是否可靠''与``右侧没有障碍物''是完全不同的认知状态。
+
+Internal Perception 还承担动作归因的基础功能。Agent 发出控制：
+\[
+u_t,
+\]
+随后观察到：
+\[
+P_{t+1}^{int}.
+\]
+若实际身体变化满足：
+\[
+\hat{x}_{B,t+1}
+\approx
+\hat{f}_B(
+\hat{x}_{B,t},u_t
+),
+\]
+则动作执行符合预期；若残差：
+\[
+\varepsilon_B
+=
+\hat{x}_{B,t+1}
+-
+\hat{f}_B(
+\hat{x}_{B,t},u_t
+)
+\]
+持续增大，则可能存在执行器故障、环境阻力、身体变化或模型失配。于是 $P^{int}$ 也是后续 ``Action Issued $\neq$ Action Succeeded'' 原则得以成立的事实基础。
+
+从更广的智能理论看，这里非常重要的一点是：\textbf{Agent 的身体必须首先成为 Agent 能够表示的现实对象。}身体并不是认知系统透明可知的附属硬件，而是一个需要持续估计、持续校准、具有不确定性的动态对象。这个观点与我们前面关于 SPC 的讨论形成结构呼应：Agent 对自己的认知状态并不透明，同样地，它对自己的身体状态也不是绝对透明的。两者都必须依靠 observer、历史信息和现实反馈逐渐逼近真实状态。
+
+从外部理论上，本节可以依赖 state observer、proprioception、interoception、fault diagnosis、digital twin、health monitoring 等领域。但在 AgentOS 中，它们被统一放入 Persistent Body State 的理论框架中：Internal Perception 不是机械层日志，而是主体能够合理行动的一个基本认识论条件。
+
+\section{$F^{\mathrm{ext}}$：外部现实不是只被看见，它还在持续作用于主体}
+\label{sec:external-functional-influence}
+
+第三象限是：
+\[
+\boxed{
+F^{\mathrm{ext}}
+}
+\]
+即 External Functional Influence。它可能是四象限中最容易被传统机器人架构忽略的一类信息，因为大多数工程系统习惯先建立世界状态，再由高层任务规划器从头计算所有风险和价值。然而对于一个持续运行、需要实时调节资源与行为的 Agent 来说，外部现实不仅具有 ``内容''，还持续以不同方式改变主体的可行动状态。
+
+我们定义：
+\[
+F_t^{ext}
+=
+\Phi_{F^{ext}}
+(
+P_t^{ext},
+P_t^{int},
+G_t,
+\mathcal C_B,
+\dot{P}_t
+),
+\]
+其中 $\mathcal C_B$ 表示身体能力与约束。这样 $F^{ext}$ 不再是纯环境函数：
+\[
+F^{ext}\neq F(x_W),
+\]
+而是：
+\[
+\boxed{
+F^{ext}=F(x_W,x_B,G,C_B).
+}
+\]
+同一个外部世界，对不同身体、不同任务和不同内部状态会产生不同的功能影响。
+
+例如有一条窄路。对于宽体机器人，其：
+\[
+F_{\mathrm{constraint}}^{ext}
+\]
+很高；对于小型机器人则很低。再例如一段坡道：
+\[
+P^{ext}:
+\quad
+\theta_{slope}=12^\circ.
+\]
+如果当前电量充分：
+\[
+F^{ext}_{energy}\approx0.2,
+\]
+而如果电量接近最低安全阈值：
+\[
+F^{ext}_{energy}\approx0.8.
+\]
+因此 ``坡度''属于外部状态，而``当前坡度对我的能源负担''属于 External Functional Influence。
+
+为了避免过早将所有影响压成一个 scalar reward，我们应该保留一个多维向量：
+\[
+F_t^{ext}
+=
+[
+f_{\mathrm{threat}},
+f_{\mathrm{opportunity}},
+f_{\mathrm{thermal}},
+f_{\mathrm{collision}},
+f_{\mathrm{social}},
+f_{\mathrm{urgency}},
+\ldots
+]^\top.
+\]
+也可以进一步保留导数：
+\[
+\dot{F}_t^{ext}
+=
+\frac{dF^{ext}}{dt},
+\]
+因为风险的增长速度常常比绝对值更重要。例如威胁强度 $0.4$ 但快速上升，与威胁强度 $0.6$ 但持续下降，应该产生完全不同的控制行为。
+
+一个通用的功能影响通道可以表示为：
+\[
+f_k^{ext}(t)
+=
+g_k(
+x_W(t),
+x_B(t),
+G_t,
+\dot{x}_W,
+\dot{x}_B
+),
+\]
+再通过有界映射：
+\[
+\tilde f_k
+=
+\sigma_k(f_k)
+\in[0,1].
+\]
+这里的 $[0,1]$ 只是方便的工程归一化，而不是理论强制要求。更重要的是每个通道应该具有清楚的功能意义，而不能全部变成无解释 latent。
+
+这也使我们能够理解 ``Feeling'' 为什么不能简单翻译成 ``情绪''。例如：
+\[
+\mathrm{CollisionPressure},
+\quad
+\mathrm{ThermalThreat},
+\quad
+\mathrm{ControlInstability}
+\]
+都可以是 Functional Feeling，却完全不需要具有人类情绪形式。它们的共同特点只有一个：这些变量\textbf{不主要描述外部对象本身，而描述外部条件与主体之间当前功能关系的强度与方向}。
+
+这一设计同时降低了高层认知负担。如果每一次障碍物接近都需要工作记忆重新根据位置、速度、身体动力学、任务优先级推导风险，那么大量高度重复的计算会占据有限的 $h(t)$。更成熟的具身系统应当允许 Body Runtime 在较低层形成：
+\[
+P^{ext}
+\rightarrow
+F^{ext},
+\]
+只有当：
+\[
+F^{ext}
+\]
+达到较高重要度、出现异常趋势或与高层目标冲突时，才向认知核心提升详细结构。这正符合 AgentOS 的一般原则：
+\[
+\boxed{
+NormalDynamicsStayLocal;
+\quad
+RelevantDeviationBecomesThought.
+}
+\]
+
+从外部理论看，本节与 robot cost field、potential field、risk-sensitive control、affordance、ecological psychology 和 homeostatic RL 都存在相邻关系。但我们更强调 Functional Influence 的\textbf{多通道、主体相对、可解释和跨时间连续}性质。这为后续构造稳定内稳态与认知调制提供了比单一 reward 更丰富的接口。
+
+\section{$F^{\mathrm{int}}$：身体内部动力学如何转化为自我调节压力}
+\label{sec:internal-functional-influence}
+
+第四象限是：
+\[
+\boxed{
+F^{\mathrm{int}}
+}
+\]
+即 Internal Functional Influence。它描述身体或运行时内部状态正在如何影响 Agent 的可行动能力、稳定性和资源条件。与 $P^{int}$ 的区别可以用一个最简单的关系表示：
+\[
+P^{int}
+:
+\quad
+\text{What is my body state?}
+\]
+\[
+F^{int}
+:
+\quad
+\text{What does this body state imply for my ongoing operation?}
+\]
+
+例如：
+\[
+P^{int}
+:
+\quad
+E_{\mathrm{battery}}=18\%.
+\]
+这只是一个身体状态。如果 Agent 正连接充电器并处于低负载待机，则：
+\[
+F^{int}_{energy}
+\]
+可能很低；如果 Agent 距离充电点很远，并正在执行高能耗任务，则：
+\[
+F^{int}_{energy}
+\]
+会显著上升。因此：
+\[
+F^{int}
+=
+\Phi(
+P^{int},
+Task,
+Capability,
+Prediction
+).
+\]
+
+我们可以把内部功能影响写成一个多维状态：
+\[
+F_t^{int}
+=
+[
+f_E,
+f_T,
+f_D,
+f_L,
+f_H,
+f_C,\ldots
+]^\top,
+\]
+分别描述 Energy Pressure、Thermal Pressure、Damage/Integrity Pressure、Load Pressure、Health Risk、Control Instability 等。对于数字 Agent，这些变量同样成立，只是物理含义发生变化。例如：
+\[
+f_L
+\]
+可以表示推理服务负载，
+\[
+f_C
+\]
+可以表示工具调用可靠性下降，
+\[
+f_E
+\]
+可以映射为可用计算预算、token budget 或能源预算。
+
+一个内部功能影响变量不应直接由单一传感器决定，而应该综合当前值、变化趋势和安全边界。我们可以定义：
+\[
+f_k^{int}(t)
+=
+\sigma
+\left(
+a_k d_k(t)
++
+b_k \dot d_k(t)
++
+c_k \int_{t-T}^{t} d_k(\tau)d\tau
+\right),
+\]
+其中：
+\[
+d_k(t)
+=
+\frac{x_k(t)-x_k^{nominal}}
+{x_k^{critical}-x_k^{nominal}}
+\]
+表示归一化偏离程度。这样既包含当前偏离，也包含变化速度和一定时间窗口内的持续性。
+
+这种形式非常符合持续智能体的控制需求。一个瞬时噪声：
+\[
+d_k(t)\gg0
+\]
+但持续时间极短，不应该立刻改变 Agent 的长期认知状态；而持续的轻度异常：
+\[
+d_k(t)>0,\quad t\in[t_0,t_0+T]
+\]
+则可能逐渐累积成重要的运行约束。因此 Functional Influence 本身就天然具有时间动力学，而不是一次性的分类标签。
+
+这里也出现一个重要的层级保护原则：
+\[
+\boxed{
+FastInternalSignal
+\nrightarrow
+DirectSlowSelfChange.
+}
+\]
+也就是说，电量低、温度高、CPU 满载等身体状态不能直接修改 $\Psi$ 或长期身份结构。它们首先进入身体功能影响层，然后再通过较慢的整合机制影响当前认知控制。这样才能防止：
+\[
+FastNoise
+\rightarrow
+SlowIdentityDrift.
+\]
+
+另一方面，$F^{int}$ 也不能被完全隐藏在身体控制器内部。因为在某些情况下，高层目标必须知道身体正在承受什么。例如 Agent 正执行一个可以延迟的任务，而内部能源压力已经很高。若高层仍然只看到：
+\[
+P^{ext}:
+\quad
+\text{task unfinished},
+\]
+却看不到：
+\[
+F^{int}_{energy}\uparrow,
+\]
+就可能持续推进任务直到身体进入故障。因此 Internal Functional Influence 是 Body Runtime 与 Cognitive Kernel 之间的重要调制桥梁。
+
+从理论位置上看，$F^{int}$ 也是我们以后理解 AHC 的重要前置条件，但本章不需要提前展开 AHC 内部结构。这里我们只需要建立清楚的接口原则：Body Runtime 必须能够把复杂内部状态压缩成一组具有可解释功能意义的连续变量，使认知系统能够在不读取全部底层遥测数据的情况下知道：
+\[
+\boxed{
+\text{How hard is my current body/runtime being pushed?}
+}
+\]
+
+从外部理论看，这种思想可以与 physiology 中的 homeostasis/allostasis、control saturation、resource-aware computing、interoceptive processing 等比较。但 AgentOS 的目标不是模拟人类生理系统，而是抽象出一个跨身体类型均成立的工程原则：\textbf{任何持续主体都需要一个从内部状态到内部功能压力的映射，否则它就无法把身体有限性纳入认知决策。}
+
+\section{Perception 不等于 Semantic：从状态表示到认知语义必须保留中间层}
+\label{sec:perception-not-semantic}
+
+在建立四象限以后，我们必须处理一个极其容易在现代大模型架构中被忽略的问题：
+\[
+\boxed{
+Perception\neq Semantic.
+}
+\]
+现代多模态系统往往把图像、声音、状态数据经过 encoder 后直接转换成 latent token，然后交给统一语言模型处理。这种方法在短任务中非常有效，但对于长期具身 Agent，它会模糊两个不同层级：\textbf{现实状态是否被可靠建立}，以及\textbf{这些现实状态在当前语境下意味着什么}。
+
+设原始信号为：
+\[
+z_t,
+\]
+首先通过身体侧估计得到：
+\[
+P_t
+=
+\Phi_P(z_{\leq t}).
+\]
+随后认知系统才进一步形成：
+\[
+S_t
+=
+\Phi_S(
+P_t,
+E_t,
+\Theta_t,
+G_t,
+\Psi_t
+).
+\]
+这里：
+\[
+P_t
+\]
+主要受当前现实约束，而：
+\[
+S_t
+\]
+则同时受到历史经验、结构记忆、当前目标和自我结构影响。因此二者的认识论性质不同。
+
+例如：
+\[
+P^{ext}:
+\quad
+\text{human entity at position }(3.1,2.0,0).
+\]
+这个状态本身可以非常稳定。而语义解释可能是：
+\[
+S_1:
+\quad
+\text{``family member''};
+\]
+\[
+S_2:
+\quad
+\text{``unknown visitor''};
+\]
+\[
+S_3:
+\quad
+\text{``person requiring assistance''}.
+\]
+不同 Agent、不同历史和不同任务可能形成不同 $S$，但它们都应锚定同一个或高度相似的 $P$。
+
+因此我们需要坚持：
+\[
+\boxed{
+RealityAnchoredState
+\rightarrow
+ContextDependentSemantics,
+}
+\]
+而不是：
+\[
+RawSignal
+\rightarrow
+UninspectableSemanticLatent.
+\]
+这并不是否定 latent representation，而是要求系统保留一个足以进行 reality verification 的稳定中间层。
+
+同样，Internal Perception 也不能被立即语义化。例如：
+\[
+P^{int}:
+\quad
+\mathrm{CPUUsage}=92\%.
+\]
+其语义可能根据任务不同被解释为：
+\[
+\text{``normal high-load inference''},
+\]
+或者：
+\[
+\text{``unexpected resource contention''}.
+\]
+如果我们没有保留原始状态层，那么当高层解释错误时就无法重新检验：
+\[
+\text{What was actually observed?}
+\]
+
+这可以形式化为认识论约束：
+\[
+\mathcal P_t
+\perp
+\mathcal S_t
+\quad\text{not statistically independent, but functionally separable}.
+\]
+这里的 ``$\perp$'' 不表示概率独立，而表示架构上应当保留可分离性。至少应满足：
+\[
+\exists\,
+\mathcal R:
+S_t
+\rightarrow
+\mathrm{supporting}\ P_t,
+\]
+即每个重要语义判断能够追溯到它所依赖的现实状态。
+
+这一设计还直接关系到持续学习的稳定性。若世界状态和语义解释完全绑定，那么一次长期记忆更新可能反向改变我们对过去观测事实的记录，造成：
+\[
+SemanticRevision
+\Rightarrow
+HistoricalObservationRewrite.
+\]
+而更可靠的结构应允许：
+\[
+P_t
+\]
+作为历史证据相对稳定保存，同时：
+\[
+S_t^{(1)}
+\rightarrow
+S_t^{(2)}
+\]
+发生重新解释。事实上，我们此前在三相记忆理论中已经形成：
+\[
+\Theta\rightarrow E
+\]
+的 ``re-interpretation'' 思想：新的长期结构可以重新解释旧经历，但不应伪造旧现实证据。具身输入层的 Perception/Semantic 分离正是这一原则在最靠近现实一侧的体现。
+
+从外部理论看，这与 classical perception pipeline、symbol grounding、epistemic logic、world model 和 interpretable state estimation 都有对应。但 AgentOS 的重点是把它提升成一个系统原则：
+\[
+\boxed{
+\text{语义可以改变，现实锚点不能被语义无条件覆盖。}
+}
+\]
+这使 Agent 能够同时拥有持续学习能力和现实纠错能力。
+
+\section{Feeling 不等于 Modulation：功能影响状态与控制信号必须分离}
+\label{sec:feeling-not-modulation}
+
+与 ``Perception 不等于 Semantic'' 对应，第二个必须建立的分离是：
+\[
+\boxed{
+Feeling\neq Modulation.
+}
+\]
+在很多简化架构中，一旦系统检测到高风险、低能量或高负载，就立即把这个变量转换成注意力权重、行为抑制或策略修改。这种 ``感受即控制'' 的设计在简单反射系统中可以工作，但对于长期 Agent，它会使 observer state 与 controller action 混在一起，从而难以解释、难以调试，也容易形成高增益振荡。
+
+在本书的功能定义中，Feeling 首先是：
+\[
+\boxed{
+FunctionalInfluenceState.
+}
+\]
+也就是一个被估计出来的状态：
+\[
+F_t
+=
+\Phi_F(P_t,x_A,G_t).
+\]
+而 Modulation 则是由后续控制机制根据 $F_t$、目标、自我状态和其他约束计算出的控制信号：
+\[
+m_t
+=
+\Pi_m(
+F_t,
+h_t,
+G_t,
+\Psi_t,\ldots
+).
+\]
+因此：
+\[
+\boxed{
+F_t
+\neq
+m_t.
+}
+\]
+
+例如：
+\[
+F^{int}_{energy}=0.8
+\]
+表示能源压力较高，但系统究竟应该：
+\[
+\text{降低速度},
+\quad
+\text{暂停任务},
+\quad
+\text{寻找充电器},
+\quad
+\text{请求外部帮助},
+\]
+并不能由 $0.8$ 本身决定。它取决于目标、任务风险、可用资源和控制策略。因此同一个 Feeling state 可以产生不同 modulation：
+\[
+F
+\overset{\pi_1}{\longrightarrow}
+m_1,
+\qquad
+F
+\overset{\pi_2}{\longrightarrow}
+m_2.
+\]
+
+反过来，同一个调制结果也可能由不同 Feeling 状态触发。例如：
+\[
+m:
+\quad
+\text{reduce action speed}
+\]
+既可能由热压力引起，也可能由碰撞风险、机械损伤风险或认知不确定性引起。如果没有保存 Feeling state，而只记录 modulation，那么 Agent 无法理解 ``为什么我正在减速''。
+
+从控制理论看，这相当于明确区分：
+\[
+\boxed{
+Measured/Estimated State
+}
+\]
+与：
+\[
+\boxed{
+Control Input.
+}
+\]
+若把二者直接绑死：
+\[
+u_t=kF_t
+\]
+并且 $k$ 很大，那么观测延迟和噪声就可能直接导致：
+\[
+F_t\uparrow
+\rightarrow
+u_t\downarrow
+\rightarrow
+F_{t+\Delta}\downarrow
+\rightarrow
+u_{t+\Delta}\uparrow
+\rightarrow\cdots
+\]
+形成反复过度修正。
+
+更合理的系统允许：
+\[
+F_t
+\]
+首先具有自己的连续动力学：
+\[
+\tau_F\dot F
+=
+-F+\Phi_F(P,x),
+\]
+然后由更上层控制器根据其趋势、置信度和持续时间形成 modulation：
+\[
+u_t
+=
+K(
+F_t,
+\dot F_t,
+Conf(F_t),
+Context_t
+).
+\]
+这样系统就可以分别调试：
+\[
+\text{Feeling estimator}
+\]
+和：
+\[
+\text{control policy}.
+\]
+
+这种分离还有重要的认知意义。当某个 Functional Influence 被提升到工作记忆时，Agent 可以形成：
+\[
+\text{``我的能源压力正在升高''}
+\]
+这样的显式自我状态，而不是只能看到：
+\[
+\text{``系统自动降低了速度''}.
+\]
+前者为反思、规划和长期学习提供了可解释因果链。也就是说：
+\[
+FunctionalInfluence
+\rightarrow
+Awareness
+\]
+与：
+\[
+FunctionalInfluence
+\rightarrow
+Modulation
+\]
+是两个不同输出方向。
+
+这也是为什么我们始终坚持 ``Feeling'' 在 AgentOS 中是功能术语，而不是对现象意识的主张。我们并不需要回答一个机器人是否``真正感觉到疲劳''，就可以工程上定义：
+\[
+FatiguePressure=0.73
+\]
+并研究该变量如何估计、如何调节认知和行动，以及如何进入长期经历。将功能问题与意识哲学问题分离，反而使系统能够被测量和验证。
+
+从外部理论看，这种结构与 observer-controller separation、homeostatic control、neuromodulation 和 affective computing 有明显联系。但 AgentOS 的独特要求在于：Feeling 必须既能够影响快速控制，又能够在必要时进入显式认知；因此它既不是纯传感器值，也不是纯控制命令，而是一种位于身体现实和认知调节之间的中间功能状态。
+
+\section{Exception 不是第五种 Feeling：安全事件必须拥有独立的权限语义}
+\label{sec:exception-not-feeling}
+
+在四象限建立以后，还剩下一个重要问题：危险、故障和紧急中断应该放在哪里？一种直觉做法是把它们归入：
+\[
+F^{ext}
+\quad\text{或}\quad
+F^{int},
+\]
+例如把 ``即将碰撞'' 看成极高 Threat，把 ``电池热失控'' 看成极高 Thermal Pressure。作为状态表示，这当然没有问题；但从系统权限角度看，仅仅这样是不够的。
+
+我们需要严格区分：
+\[
+\boxed{
+FeelingState
+}
+\]
+和：
+\[
+\boxed{
+ExceptionEvent.
+}
+\]
+Feeling 是连续或准连续功能影响状态，例如：
+\[
+F_{\mathrm{threat}}\in[0,1].
+\]
+Exception 则是一种具有控制权限的事件：
+\[
+E^{safe}_t
+=
+(
+type,
+severity,
+source,
+timestamp,
+required\_authority
+).
+\]
+当：
+\[
+F_{\mathrm{threat}}>\theta_{safe}
+\]
+或者底层硬安全条件被直接满足时，可以产生：
+\[
+\Gamma_{safe}:
+F
+\rightarrow
+E^{safe}.
+\]
+因此：
+\[
+F
+\]
+是状态，
+\[
+E^{safe}
+\]
+是事件与治理信号。
+
+这种区别的重要性在于：普通 Feeling 可以参与认知调节，但关键安全事件不能依赖高层认知是否及时处理。若一个机器人即将撞击人类，我们不能要求：
+\[
+F_{\mathrm{collision}}
+\rightarrow
+h
+\rightarrow
+Reasoning
+\rightarrow
+Decision
+\rightarrow
+Brake.
+\]
+这条路径存在不可接受的延迟。更合理的是：
+\[
+F_{\mathrm{collision}}
+\rightarrow
+SafetyTrigger
+\rightarrow
+EmergencyControl,
+\]
+同时：
+\[
+F_{\mathrm{collision}}
+\rightarrow
+CognitiveNotification
+\]
+供高层之后解释和学习。
+
+因此 Exception 可以理解为：
+\[
+\boxed{
+StateCondition
++
+AuthorityEscalation.
+}
+\]
+它并不是第五类感知来源，而是对任意四象限状态施加的一种\textbf{事件化与权限提升操作}。例如：
+\[
+P^{ext}
+\]
+发现障碍位置进入硬安全包络，可以触发 Exception；
+\[
+P^{int}
+\]
+发现执行器失联，也可以触发 Exception；
+\[
+F^{ext}
+\]
+达到极高威胁等级，可以触发 Exception；
+\[
+F^{int}
+\]
+达到热失控阈值，同样可以触发 Exception。
+
+所以更准确的体系是：
+\[
+\mathcal I_B
+=
+P^{ext}
+\oplus
+P^{int}
+\oplus
+F^{ext}
+\oplus
+F^{int},
+\]
+外加一个横跨四象限的事件算子：
+\[
+\boxed{
+\Gamma_E:
+\mathcal I_B
+\rightarrow
+\mathcal E.
+}
+\]
+这避免了为了表示安全而人为增加第五种 ``感觉''。
+
+在治理层面，我们还应给 Exception 定义优先关系。设普通认知控制权限为：
+\[
+\mathcal A_C,
+\]
+身体预测控制权限为：
+\[
+\mathcal A_B,
+\]
+实时安全权限为：
+\[
+\mathcal A_S.
+\]
+关键安全情况下应满足：
+\[
+\boxed{
+\mathcal A_S
+>
+\mathcal A_B
+>
+\mathcal A_C
+}
+\]
+至少对于被安全边界保护的局部执行资源如此。这并不是说高层永远低于身体控制，而是说明在明确定义的安全包络内，实时安全系统必须能够临时覆盖普通计划。
+
+这一结构也解释了为什么此前我们形成了三条信号路径的思想：Semantic、Modulation 与 Emergency。四象限描述的是\textbf{具身状态信息的本体分类}；三通道描述的是\textbf{这些状态向上层系统传输时的路由与权限分类}。二者属于不同维度：
+\[
+\boxed{
+InputOntology
+\neq
+SignalRoutingPolicy.
+}
+\]
+一个 $P^{ext}$ 状态通常进入 semantic route，但在满足硬危险条件时也可以触发 emergency route；一个 $F^{int}$ 状态通常进入 modulation route，但当达到临界阈值时同样能够产生 emergency event。
+
+从外部理论看，这种设计可以与 real-time interrupt、functional safety、runtime assurance、control barrier methods 等联系起来。关键原则始终是：
+\[
+\boxed{
+CriticalSafety
+\nrightarrow
+CognitiveDependency.
+}
+\]
+安全不应该依赖一个正在复杂推理、可能过载甚至处于认知湍流状态的高层系统及时作出正确判断。
+
+\section{四象限统一模型：从 Raw Signal 到 Agent 可使用的具身现实}
+\label{sec:four-quadrant-unified-model}
+
+现在我们可以把整章的理论压缩成一个统一变换。设世界—身体联合状态为：
+\[
+X_t
+=
+(
+x_W(t),
+x_B(t)
+),
+\]
+传感与系统遥测产生原始输入：
+\[
+z_t
+=
+H(
+x_W,
+x_B
+)
++
+\epsilon_t.
+\]
+Body Runtime 的第一项认知工作不是直接形成高层语言语义，而是建立一个四象限具身状态：
+\[
+\boxed{
+\mathcal E_B(t)
+=
+\left(
+P_t^{ext},
+P_t^{int},
+F_t^{ext},
+F_t^{int}
+\right).
+}
+\]
+
+其中：
+\[
+P_t^{ext}
+=
+\Phi_{PE}
+(
+z_{\leq t},
+u_{<t}
+),
+\]
+\[
+P_t^{int}
+=
+\Phi_{PI}
+(
+z_{\leq t},
+u_{<t}
+),
+\]
+\[
+F_t^{ext}
+=
+\Phi_{FE}
+(
+P_t^{ext},
+P_t^{int},
+G_t,
+C_B
+),
+\]
+\[
+F_t^{int}
+=
+\Phi_{FI}
+(
+P_t^{int},
+G_t,
+C_B
+).
+\]
+
+这里可以看到一个重要的因果顺序：Perception-oriented states 通常更加靠近现实观测，而 Functional Influence 通常在这些状态基础上进一步考虑 Agent 自身和任务条件。但这不是绝对串行流水线；真实系统可以通过联合估计网络同时更新四个象限，只要逻辑上仍然保留它们的功能区别。
+
+为了使系统具有时间连续性，我们进一步可以写成：
+\[
+\dot{\mathcal E}_B
+=
+F_E(
+\mathcal E_B,
+z_t,
+u_t,
+G_t
+).
+\]
+其中不同部分具有不同时间常数：
+\[
+\tau_{P^{ext}},
+\quad
+\tau_{P^{int}},
+\quad
+\tau_{F^{ext}},
+\quad
+\tau_{F^{int}}.
+\]
+例如碰撞风险可以比对象身份更新更快，电机热压力则可能比姿态变化更慢。因此四象限不是要求所有通道以相同频率刷新，而是定义了共享本体，使不同采样率和不同时间常数能够被统一组织。
+
+一个更完整的具身状态元素应该至少携带：
+\[
+e_i
+=
+(
+value,
+confidence,
+timestamp,
+derivative,
+source,
+validity
+).
+\]
+对于 Functional Influence，还应增加：
+\[
+e_i^F
+=
+(
+intensity,
+trend,
+confidence,
+persistence
+).
+\]
+这样高层系统才能区分：
+\[
+\text{高强度低置信度}
+\]
+和：
+\[
+\text{中强度长期持续高置信度}
+\]
+这两种截然不同的状态。
+
+四象限还可以进一步解释 Body Scale。不同身体的原始传感器空间：
+\[
+\mathcal Z_{B_1},
+\qquad
+\mathcal Z_{B_2}
+\]
+可能完全不同，但如果二者都能够稳定映射到共享的功能结构：
+\[
+\Phi_{B_i}:
+\mathcal Z_{B_i}
+\rightarrow
+\mathcal E_B,
+\]
+那么认知内核就不必为每种身体重新学习全部世界意义。它可以重用相当一部分已经形成的 Agent-CSO，只需要重新学习：
+\[
+\boxed{
+NewBody
+\rightarrow
+SharedEmbodiedSemantics.
+}
+\]
+这正是 Body Scale 原理能够成立的底层条件之一。
+
+从 CSO 理论看，我们还可以给这一结构一个更深的解释。外部 Universe-CSO 首先通过观测形成：
+\[
+P^{ext},
+\]
+身体自身作为 Universe-CSO 的一个局部则形成：
+\[
+P^{int}.
+\]
+随后 Agent 根据这些现实结构与自身目标和能力的关系建立：
+\[
+F^{ext},
+\quad
+F^{int}.
+\]
+因此四象限实际上完成了：
+\[
+\boxed{
+RealityStructure
+\rightarrow
+AgentRelativeEmbodiedStructure.
+}
+\]
+也就是说，它是 Universe-CSO 进入 Agent-CSO 世界之前最靠近现实的一次功能性重编码。
+
+我们因此可以把本章最终原则写成：
+\[
+\boxed{
+\textbf{
+具身智能的第一步不是理解世界，而是把现实作用分解成：
+世界是什么、身体是什么、世界如何作用于我、身体状态如何约束我。
+}
+}
+\]
+
+形式上：
+\[
+\boxed{
+EmbodiedReality
+=
+P^{ext}
+\oplus
+P^{int}
+\oplus
+F^{ext}
+\oplus
+F^{int}.
+}
+\]
+
+其中：
+\[
+P^{ext}
+:
+\text{World State},
+\]
+\[
+P^{int}
+:
+\text{Body State},
+\]
+\[
+F^{ext}
+:
+\text{World-on-Agent Functional Influence},
+\]
+\[
+F^{int}
+:
+\text{Body-on-Agent Functional Influence}.
+\]
+
+同时必须保持四条边界：
+
+\[
+\boxed{
+RawSignal\neq Perception
+}
+\]
+
+\[
+\boxed{
+Perception\neq Semantic
+}
+\]
+
+\[
+\boxed{
+Feeling\neq Modulation
+}
+\]
+
+\[
+\boxed{
+Feeling\neq Exception.
+}
+\]
+
+这四个 ``不等于'' 是本章比四象限本身更加重要的工程结论。因为它们规定了从现实世界进入认知内核的结构分层，防止 Agent 把传感器、现实状态、语义解释、身体影响、控制命令与安全权限压缩成一个无法追踪的统一 latent。
+
+由此我们获得了一条完整但仍保持最小依赖的输入链：
+
+\[
+\boxed{
+Reality
+\rightarrow
+RawInteraction
+\rightarrow
+\left[
+P^{ext},
+P^{int},
+F^{ext},
+F^{int}
+\right]
+\rightarrow
+HigherCognitiveProcessing.
+}
+\]
+
+在下一层工程中，我们可以进一步研究这些状态如何被组织成稳定、可检查、身体中心的现实语义结构，以及 Functional Influence 如何形成统一的连续场表示。但在进入那些具体数据结构之前，本章已经完成最重要的本体工作：\textbf{我们第一次明确规定了 Agent 的身体究竟应该把什么样的``现实''交给认知系统。}
+
+这也使整个 AgentOS 的世界—身体—认知闭环获得一个清楚的起点：
+\[
+\boxed{
+World
+\rightarrow
+Body
+\rightarrow
+EmbodiedState
+\rightarrow
+Cognition
+\rightarrow
+Action
+\rightarrow
+World'.
+}
+\]
+只有当中间的 Embodied State 被正确分层以后，高层智能才可能既保持对现实的忠实，又保持对自身有限性的持续感知，并最终在不让有限工作记忆承担全部底层动力学的条件下实现真正可持续的具身智能。

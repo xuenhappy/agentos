@@ -1,215 +1,867 @@
 \chapter{双预测系统：Kernel 与 BPCC}
-\chaptervoice{这一章，我们围绕“双预测系统：Kernel 与 BPCC”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明认知内核通过身体进入现实。}
-
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 Body Runtime、FBI、SGC/FCS、三信号通道、BPCC 与 Reality Authority 的具身讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是具身认知、分层控制、MPC、状态估计与安全包络（模型预测控制、Kalman 状态估计与具身认知）。
-
-本章使用上一章“BPCC：身体预测控制小脑”已经得到的对象与边界；本章产出将供下一章“异常向上与能力向下”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在具身认知、分层控制、MPC、状态估计与安全包络上。
-\section{Global Prediction}
-\begin{narration}
-现在把镜头移到“Global Prediction”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Global Prediction”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“双预测系统：Kernel 与 BPCC”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Global Prediction的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Global Prediction”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Local Prediction}
-\begin{narration}
-现在把镜头移到“Local Prediction”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Local Prediction”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“双预测系统：Kernel 与 BPCC”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Local Prediction的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Local Prediction”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Predictive Envelope}
-\begin{narration}
-现在把镜头移到“Predictive Envelope”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Predictive Envelope”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“双预测系统：Kernel 与 BPCC”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Predictive Envelope的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Predictive Envelope”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Control Reference}
-\begin{narration}
-现在把镜头移到“Control Reference”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Control Reference”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“双预测系统：Kernel 与 BPCC”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Control Reference的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Control Reference”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Constraint Vector}
-\begin{narration}
-现在把镜头移到“Constraint Vector”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Constraint Vector”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“双预测系统：Kernel 与 BPCC”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Constraint Vector的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Constraint Vector”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Capability Margin}
-\begin{narration}
-现在把镜头移到“Capability Margin”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Capability Margin”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“双预测系统：Kernel 与 BPCC”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Capability Margin的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Capability Margin”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Control Confidence}
-\begin{narration}
-现在把镜头移到“Control Confidence”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Control Confidence”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“双预测系统：Kernel 与 BPCC”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Control Confidence的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Control Confidence”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Prediction Confidence}
-\begin{narration}
-现在把镜头移到“Prediction Confidence”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Prediction Confidence”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“双预测系统：Kernel 与 BPCC”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Prediction Confidence的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Prediction Confidence”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Residual Feedback}
-\begin{narration}
-现在把镜头移到“Residual Feedback”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Residual Feedback”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“双预测系统：Kernel 与 BPCC”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Residual Feedback的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Residual Feedback”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“双预测系统：Kernel 与 BPCC”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“异常向上与能力向下”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\label{chap:dual_prediction_kernel_bpcc}
+
+\begin{center}
+\fbox{
+\parbox{0.92\textwidth}{
+\textbf{本章总体说明：}
+本章讨论 AgentOS 具身架构中的一个核心动力学问题：为什么持续智能体不能依赖单一预测器，而必须同时存在面向较长时间尺度、较大状态空间和较高语义层级的 Agent Kernel 预测，以及面向较短时间尺度、局部身体动力学和实时闭环的 BPCC 预测。二者并不是两个彼此竞争的“世界模型”，而是同一智能主体在不同时间尺度、不同状态空间和不同控制责任上的预测分工。Kernel 不应替代身体层高速控制，BPCC 也不得越权成为目标和意义的决定者。两者通过预测包络、控制参考、约束向量、能力裕度、置信度以及残差反馈形成跨尺度闭环，使 Agent 能够同时获得长期方向性与短时现实适应能力。
+
+本章的中心命题是：
+\[
+\boxed{
+\text{Higher Level Predicts the Feasible Future;
+Lower Level Predicts the Executable Future.}
+}
+\]
+即高层预测未来的可行结构，低层预测未来的可执行轨迹。两者共同服务于同一个 World--Agent--World 闭环，而现实世界始终保有最终验证权。
+}
+}
+\end{center}
+
+\section{Global Prediction：Agent Kernel 的长时间尺度预测}
+
+在进入双预测系统的具体接口之前，我们首先需要澄清一个容易造成架构混乱的问题：Agent Kernel 的预测究竟应该预测什么。如果我们把 Kernel 简单理解成一个性能更强、推理链更长的预测模型，那么很容易自然地要求 Kernel 对身体的每一个未来状态进行越来越精确的预测。例如对于机器人，我们可能试图要求 Kernel 直接预测未来五十毫秒关节的位置、摩擦力变化和驱动器输出；对于数字 Agent，则可能要求 Kernel 直接预测鼠标下一帧位移、浏览器动画状态乃至每一次网络事件。这种设计从计算意义上并非完全不可能，却违反了我们此前反复建立的多尺度闭环原则：不同时间尺度上的动力学，应当在能够闭合该时间尺度反馈的最低层级完成局部预测与控制。
+
+因此，Kernel 的预测不是低层未来状态的高精度复制，而首先是一种\textbf{长时间尺度、语义化、结构化和目标相关的未来状态预测}。令 Agent Kernel 的认知状态为
+\[
+x_K(t)\in\mathcal X_K,
+\]
+其中包含当前工作记忆 $h(t)$、情景记忆 $E$ 的可召回结构、结构记忆 $\Theta$、自我约束 $\Psi$、生命周期生成先验 $\Omega$、当前目标 $G_t$ 以及来自身体运行时的语义状态摘要。Kernel 所关心的未来不是完整物理状态空间 $\mathcal X_B$ 的逐点预测，而是某个经过认知粗粒化之后的未来状态空间
+\[
+\mathcal Z_K=\Pi_K(\mathcal X_B\times\mathcal X_W),
+\]
+其中 $\Pi_K$ 是从身体--世界联合状态空间向 Agent 可处理语义空间的投影。于是 Kernel 的预测可以写为
+\[
+\hat z_{t+\Delta}^{K}
+=
+F_K
+\left(
+z_t^K,
+G_t,
+\Theta,
+\Psi,
+\Omega,
+a_{t:t+\Delta}
+\right),
+\]
+其中 $\Delta$ 明显大于身体控制循环的时间步长。这里预测的可能是“在未来数秒内机器人能否抵达门口”“完成这一工具调用后任务是否进入下一阶段”“当前策略是否会使能量储备跌入危险区域”“这个动作序列是否仍然符合长期目标和身份约束”，而不是驱动器在每一个采样周期的精确电流。
+
+因此，Kernel 预测本质上具有三种压缩。第一是\textbf{状态空间压缩}：它不表示低层全部自由度，而只保留对当前目标具有因果和行动意义的变量。第二是\textbf{时间压缩}：它用过程、阶段、事件和趋势描述未来，而非逐采样点展开未来。第三是\textbf{语义压缩}：它预测的对象已经是 Agent-CSO 层级的结构，例如目标是否可达、风险是否增加、资源是否足够、某个对象是否仍然可交互。
+
+如果把 Kernel 预测看成条件概率分布，可以写成
+\[
+p_K
+\left(
+Z_{t+\Delta}
+\mid
+h_t,E,\Theta,\Psi,\Omega,G_t,\mathcal O_{\leq t}
+\right).
+\]
+这里值得注意的是，Kernel 不必始终输出单一路径。面对不确定环境，更合理的对象是未来结构的概率分布或可达集合：
+\[
+\mathcal R_K(t,\Delta)
+=
+\left\{
+z:
+p_K(z\mid\cdots)>\epsilon
+\right\}.
+\]
+这使 Kernel 能够表达“未来可能是什么”，而不是虚构一个确定的未来。因此，Kernel 的主要作用逐渐从轨迹预测转变为\textbf{未来可能性空间的结构化生成与裁剪}。
+
+这种预测方式也与前面三相记忆理论自然衔接。$h$ 提供当前状态切面，$E$ 提供相似轨迹，$\Theta$ 提供可泛化的生成规律，$\Psi$ 决定哪些未来与当前自我连续，而 $\Omega$ 则在更长时间尺度上影响哪些未来具有生命周期意义。因而 Kernel 的预测实际上是一个典型的多时间尺度生成过程：
+\[
+(h,E,\Theta,\Psi,\Omega)
+\longrightarrow
+\mathcal R_K.
+\]
+我们由此得到一个重要原则：
+\[
+\boxed{
+KernelPrediction\neq FineGrainedPhysicalSimulation.
+}
+\]
+成熟的 Kernel 不应该知道得越来越“细”，而应该知道哪些细节无需进入自身，以及在什么条件下必须把某些低层异常重新提升到认知层处理。Global Prediction 的价值不在于比局部控制器更快，而在于比局部控制器看得更远、覆盖更广，并能够把未来放在目标、自我和生命周期的结构中进行解释。
+
+\section{Local Prediction：BPCC 的短时间尺度身体预测}
+
+如果说 Agent Kernel 负责回答“未来整体可能走向哪里”，那么 BPCC 所面对的问题则完全不同：\textbf{在接下来的极短时间内，这个具体身体实际上会怎样变化，我现在应该怎样控制它，才能保持在高层允许的范围内？} 这使 BPCC 的预测对象从语义未来转向了局部动力学未来。
+
+设 Body Runtime 的内部快速状态为
+\[
+x_B(t)\in\mathcal X_B,
+\]
+其中可以包含姿态、速度、执行器状态、局部接触状态、设备负载、控制器内部变量以及短时间历史。BPCC 还可以拥有专门为快速控制形成的私有潜变量
+\[
+z_t^{B}\in\mathbb R^d.
+\]
+这里必须再次强调此前确立的重要接口原则：$z_t^{B}$ 可以为了性能而采用高度优化、不可直接解释的 latent 表示，但它不能自动成为 Kernel 所认识的现实。BPCC 对外公开的身体状态必须重新投影为 SGC/FCS 或其他稳定语义接口，而实际执行结果最终仍然由现实传感反馈确认。
+
+BPCC 的快速预测可以表示为
+\[
+\hat x_{t+\delta}^{B}
+=
+F_B
+\left(
+x_t^B,
+u_{t:t+\delta},
+c_t,
+z_t^B
+\right),
+\]
+其中 $\delta$ 是远小于 Kernel 预测范围 $\Delta$ 的局部时间尺度：
+\[
+\boxed{
+\delta\ll\Delta.
+}
+\]
+对于物理机器人，$\delta$ 可以对应毫秒到数百毫秒级身体动力学；对于数字 Body，它可以对应一次 UI 操作、一次系统调用或一个局部交互闭环，而不需要强制映射到同样的绝对物理时间。
+
+BPCC 的预测具有明显的局部性。它并不需要知道“为什么 Agent 要走进这间房”，也不需要决定“这间房是否值得进入”。它真正要预测的是：如果身体执行当前控制参考，那么未来短时间内位置、姿态、接触、负载和稳定性会如何变化。如果轮胎开始打滑、机械臂发生接触误差、鼠标移动遭遇 UI 重排，BPCC 应当在这些误差尚未扩展成高层认知问题之前优先完成局部补偿。
+
+因此 BPCC 可以表示为局部模型预测控制问题：
+\[
+\min_{u_{t:t+H_B}}
+\sum_{k=0}^{H_B}
+\ell_B
+\left(
+\hat x_{t+k},
+r_{t+k},
+c_{t+k}
+\right)
++
+\lambda_u
+\|u_{t+k}\|^2,
+\]
+满足
+\[
+\hat x_{t+k+1}
+=
+F_B
+(\hat x_{t+k},u_{t+k}),
+\]
+以及一组高层和硬安全约束
+\[
+g_B(\hat x_{t+k},u_{t+k})\leq0.
+\]
+这里的 $r_t$ 并不是 BPCC 自己生成的全局目标，而是来自上层的 Control Reference；$c_t$ 则代表环境、身体和安全约束。
+
+这种结构说明 BPCC 具有一定程度的局部自主性。所谓自主，不是让 BPCC 获得独立目标，而是允许它在高层规定的可行域中自由寻找最优局部轨迹：
+\[
+\boxed{
+HigherLevelSetsFeasibleRegion,
+\qquad
+LowerLevelOptimizesInsideIt.
+}
+\]
+如果 BPCC 每一次微小变化都必须等待 Kernel 给出新的具体动作，那么高层延迟会直接破坏快速闭环；反过来，如果 BPCC 可以自行改变目标，就会破坏单一主体原则。因此双预测架构真正需要的不是“高层控制低层的一切”，而是\textbf{权限分层}。
+
+我们还可以把 BPCC 的预测误差定义为
+\[
+\varepsilon_B(t)
+=
+x_B^{obs}(t)
+-
+\hat x_B(t),
+\]
+并进一步拆分为
+\[
+\varepsilon_B
+=
+(
+\varepsilon_{ctrl},
+\varepsilon_{SGC},
+\varepsilon_{FCS},
+\varepsilon_{dyn}
+).
+\]
+其中控制残差描述动作没有按照预测实现的程度，SGC 残差描述外部语义状态和几何结构偏差，FCS 残差描述身体影响状态偏差，而动力学残差反映 BPCC 内部模型本身对身体行为的建模不足。
+
+因此 BPCC 不只是一块“控制器”。更准确地说：
+\[
+\boxed{
+BPCC
+=
+FastPredictor
++
+FastController
++
+ResidualEstimator
++
+LocalAdaptiveLearner.
+}
+\]
+它之所以被类比为“小脑”，不是因为我们假定它复制生物小脑，而是因为它承担了类似的系统职能：把大量稳定、重复、时间敏感的身体预测与控制从显式认知层移出，使高层有限工作记忆能够专注于真正需要跨尺度处理的问题。
+
+\section{Predictive Envelope：高层预测如何约束低层未来}
+
+Kernel 与 BPCC 分工以后，紧接着会出现一个关键接口问题：如果 Kernel 不直接发送每一步低层动作，那么 Kernel 究竟怎样约束 BPCC？反过来，如果只发送一个抽象 Goal，例如“走到门口”，BPCC 又如何知道高层对速度、风险、姿态、能量消耗和时间窗口的真实要求？为了解决这一问题，我们引入 \textbf{Predictive Envelope}，即预测包络。
+
+预测包络不是一条单独轨迹，而是一个随时间演化的可行状态域。可以表示为
+\[
+\mathcal E_H(t)
+=
+\left\{
+x\in\mathcal X_B:
+\phi_j(x,t)\leq0,\;
+j=1,\ldots,m
+\right\}.
+\]
+其中 $\phi_j$ 描述高层允许的状态约束。例如移动机器人收到的包络可能规定：未来两秒内身体应当总体向目标区域移动；速度不得超过某范围；与人的最小距离必须保持；姿态倾角不得超过阈值；能量消耗必须保持在预算内。BPCC 并不需要获得一条不可更改的轨迹，它只需要保证自己的局部预测和控制保持在
+\[
+\mathcal E_H
+\]
+之中。
+
+更符合 AgentOS 语义接口的形式可以写成
+\[
+\mathcal E_H
+=
+\left(
+SGC^{target},
+FCS^{constraint},
+T_H,
+P_H
+\right),
+\]
+其中 $SGC^{target}$ 给出期望的行动相关世界状态，$FCS^{constraint}$ 给出身体与环境影响方面允许的范围，$T_H$ 给出时间窗口，而 $P_H$ 则描述优先级或软约束权重。
+
+例如，Kernel 并不需要告诉机械臂：“第 $341$ 毫秒时关节二必须是 $27.4^\circ$。”它可以给出：“在两秒内将杯子稳定移动到目标区域，不得造成碰撞，握持压力保持在安全范围内，并尽可能降低动作突变。”BPCC 根据自身局部身体模型计算具体轨迹。这样，高层意图被表达为\textbf{结构约束}而不是\textbf{微动作指令}。
+
+数学上，BPCC 的优化问题由此从无约束的局部控制变为
+\[
+\min_{u}
+J_B(x,u)
+\]
+subject to
+\[
+\hat x_{t+k}\in\mathcal E_H(t+k)
+\]
+以及
+\[
+\hat x_{t+k}\in\mathcal E_S(t+k),
+\]
+其中 $\mathcal E_S$ 是更高优先级的硬安全包络。于是至少存在：
+\[
+\mathcal E_S
+\subseteq
+\mathcal E_H
+\subseteq
+\mathcal X_B.
+\]
+安全约束比普通高层目标具有更高权限，这也防止 Kernel 由于预测错误而要求身体执行物理上危险的动作。
+
+预测包络还有一个更深的动力学意义。我们此前在智能频谱理论中提出，慢变量并不是逐点规定快变量，而是定义快变量运行的中心、自由半径和可行域。Predictive Envelope 正是这一抽象原则在 Body Runtime 中的工程实现：
+\[
+SlowConstraint
+\neq
+FastMicromanagement.
+\]
+因此一个成熟的多尺度 Agent 不应形成“上层越聪明，下层越失去自治”的结构，而应该相反：上层认知越成熟，越能够用较低带宽的结构约束释放更多稳定的局部自治空间。
+
+预测包络也天然适用于数字 Body。例如对于浏览器 Agent，高层可以规定：“在当前网站完成登录并进入设置页面，不执行支付，不修改安全设置，不离开目标域名。”这些都属于包络，而不是具体点击序列。Body Runtime 可以根据页面变化自主选择点击、滚动、等待和重试，只要不突破高层限制。
+
+因此：
+\[
+\boxed{
+PredictiveEnvelope
+=
+CompressedFutureConstraint.
+}
+\]
+它把大尺度未来预测压缩成低层能够执行的结构约束，是 Kernel Global Prediction 与 BPCC Local Prediction 之间最重要的跨尺度桥梁之一。
+
+\section{Control Reference：从未来约束到当前可执行目标}
+
+Predictive Envelope 描述了一个未来允许区域，但 BPCC 在每一个控制周期中仍然需要一个更具体的短期控制对象，这就是 \textbf{Control Reference}。两者的区别必须明确：Envelope 回答“哪些未来是允许的”，Control Reference 回答“在当前局部阶段，我们应该朝哪个方向推进”。
+
+可以将控制参考写成
+\[
+r_t
+=
+\mathcal R
+\left(
+\mathcal E_H,
+x_t^{obs},
+G_t,
+P_t
+\right),
+\]
+其中 $\mathcal R$ 是从高层包络和当前现实状态中生成局部参考的过程。$r_t$ 可以包含位置目标、方向目标、速度区间、目标对象、交互模式、操作语义或者数字环境中的目标 UI 状态。
+
+对于连续身体系统，可以表示为
+\[
+r_t=
+(
+x_t^{ref},
+\dot x_t^{ref},
+a_t^{ref},
+m_t
+),
+\]
+其中 $m_t$ 是当前行为模式，例如 Follow、Reach、Hold、Stop、Observe。对于数字身体，Control Reference 则可以是一个语义目标，例如
+\[
+r_t=
+(\text{TargetEntity},
+\text{DesiredState},
+\text{AllowedOperations}).
+\]
+
+这里需要强调一个重要的单向权限关系：
+\[
+\boxed{
+KernelOwnsIntent,
+\qquad
+BPCCOwnsLocalRealization.
+}
+\]
+Kernel 决定当前动作为什么发生以及什么结果构成成功；BPCC 决定在当前身体和局部环境条件下怎样实现。因而 BPCC 可以对 $r_t$ 进行局部追踪、插值甚至短时回避，却不应在没有升级事件的情况下自行改写 $G_t$。
+
+Control Reference 的一个重要价值，是把高层认知节奏与低层控制节奏解耦。假设 Kernel 更新频率为
+\[
+f_K
+\]
+而 BPCC 更新频率为
+\[
+f_B,
+\qquad
+f_B\gg f_K.
+\]
+在两次 Kernel 更新之间，BPCC 可以依据同一个 $r_t$ 和 $\mathcal E_H$ 连续运行若干控制周期：
+\[
+r_{t}^{K}
+\rightarrow
+\{u_t,u_{t+1},\ldots,u_{t+n}\}_B.
+\]
+这意味着 Kernel 不再成为实时控制路径上的阻塞点。
+
+同时，Control Reference 不能是无限刚性的。如果环境变化导致原有参考暂时不可执行，BPCC 应允许在包络内进行局部修正。例如目标路径暂时被障碍物阻挡，局部控制可以绕行；如果绕行仍然满足高层目标，就无需把每一次障碍都升级给 Kernel。但是当局部调整所需偏差超过参考容忍度：
+\[
+d(r_t,\hat r_t)>\theta_r,
+\]
+或者持续时间超过：
+\[
+T_{dev}>\theta_T,
+\]
+BPCC 应产生升级残差，让 Kernel 重新评估全局策略。
+
+这正是我们此前提出的：
+\[
+\boxed{
+NormalDynamicsStayLocal.
+}
+\]
+只有无法由局部自由度吸收的结构性偏差，才应进入工作记忆。
+
+因此 Control Reference 既不是命令式程序，也不是模糊 Goal，而是跨尺度控制中的一个中间层变量。它把高层未来约束进一步压缩成短时可追踪目标，使整个 AgentOS 可以同时保持语义控制的明确性与身体执行的实时自治性。
+
+\section{Constraint Vector：多种约束如何进入统一预测控制}
+
+现实中的行动几乎从来不是“只追一个目标”。一个 Agent 在执行某项操作时通常同时受到物理、安全、资源、身体、社会、权限和长期价值等不同约束。因此如果 Kernel 只向 BPCC 发送一个标量目标，就会丢失多尺度治理中最重要的限制信息。为此，我们需要定义统一的 \textbf{Constraint Vector}。
+
+可以写成
+\[
+c_t=
+\left[
+c_{phys},
+c_{safe},
+c_{resource},
+c_{body},
+c_{task},
+c_{social},
+c_{authority}
+\right]_t.
+\]
+其中物理约束描述不可违反的动力学和几何条件；安全约束定义危险边界；资源约束描述电量、算力、网络或执行预算；身体约束表示当前执行器和感知系统的能力范围；任务约束表示当前 Goal 的成功条件；社会约束描述对其他 Agent 或人的距离、权限和互动规范；authority 约束则定义当前主体能够执行哪些动作。
+
+并非所有约束都具有同样的优先级。因此应区分硬约束：
+\[
+g_i(x,u)\leq0,
+\]
+和软约束：
+\[
+J_c
+=
+\sum_j\lambda_j
+\phi_j(x,u).
+\]
+前者不能通过优化代价“买过去”，后者则可以在多目标冲突时进行权衡。
+
+更进一步，我们可以定义约束层级：
+\[
+\mathcal C=
+\mathcal C_{hard}
+\cup
+\mathcal C_{governance}
+\cup
+\mathcal C_{task}
+\cup
+\mathcal C_{preference}.
+\]
+这使得 BPCC 知道，某些局部最优轨迹虽然可以更快达到目标，但如果违反 Safety 或 Authority，就根本不属于可行解：
+\[
+u^\star
+=
+\arg\min_u J
+\quad
+\text{s.t.}\quad
+u\in\mathcal U_{\mathrm{feasible}}.
+\]
+
+Constraint Vector 与 FCS 的关系也需要仔细区分。FCS 描述的是“现实正在怎样影响这个身体和主体”，它属于状态表示；Constraint Vector 则描述“基于当前状态，未来运行不应越过哪些边界”。例如 FCS 中 ThermalPressure 很高，是观测状态；“温度不得继续超过某安全阈值”则属于约束。前者是：
+\[
+WhatIsAffectingMe,
+\]
+后者是：
+\[
+WhatMustNotBeViolated.
+\]
+
+同样，Constraint Vector 与 $\Psi$ 或 $\Omega$ 也不是同一个层次。$\Psi$ 和 $\Omega$ 是非常慢的身份和生成先验，它们可以影响某些高层约束的形成，但不会以高频形式直接进入每一个 servo 控制周期。因此正确结构是：
+\[
+(\Psi,\Omega,G)
+\rightarrow
+ConstraintAbstraction
+\rightarrow
+c_t
+\rightarrow
+BPCC.
+\]
+这再次体现了跨尺度压缩：慢层语义不是原样传到底层，而是逐层转换成下层能够执行的约束形式。
+
+因此 Constraint Vector 的理论意义在于：它把“价值、目标、安全、身体能力和现实限制”从模糊语义变成可计算的可行域。对于多尺度 Agent 来说，真正成熟的控制并不是要求低层理解全部高层意义，而是确保高层意义能够被压缩为低层不可忽略的结构边界。
+
+\section{Capability Margin：智能体必须知道自己离能力边界还有多远}
+
+仅仅知道一个动作“理论上可执行”还不够。现实中的持续智能必须进一步知道：\textbf{这个动作距离自身当前能力边界还有多少余量。} 这就是 Capability Margin。
+
+设当前任务或局部控制需求为
+\[
+d_t,
+\]
+而身体当前可提供能力为
+\[
+c_t^{cap}.
+\]
+最简单的能力裕度可以表示为
+\[
+m_t
+=
+c_t^{cap}
+-
+d_t.
+\]
+但真正的 Body 能力通常是多维的，因此更一般地：
+\[
+\mathbf m_t
+=
+\mathbf c_t^{cap}
+-
+\mathbf d_t.
+\]
+这些维度可以包括速度、负载、定位精度、抓取稳定性、感知质量、剩余能源、网络质量、计算预算等。
+
+当
+\[
+m_i\gg0
+\]
+时，BPCC 可以认为对应能力存在充分裕度；当
+\[
+m_i\rightarrow0
+\]
+时，系统开始逼近能力边界；当
+\[
+m_i<0,
+\]
+则意味着当前控制要求已经超出局部身体能力范围。
+
+Capability Margin 的意义不只是安全。它直接决定局部自治范围。若能力裕度充足，BPCC 可以拥有较大的局部自由度；若能力裕度不断下降，即使尚未出现实际失败，也应提前降低激进程度、扩大保守边界，甚至向 Kernel 报告未来不可执行趋势。
+
+因此可以建立：
+\[
+R_{local}
+=
+F(\mathbf m_t),
+\]
+其中 $R_{local}$ 是 BPCC 当前允许的局部自由半径，并满足大体趋势：
+\[
+\frac{\partial R_{local}}
+{\partial m_i}
+>0.
+\]
+能力裕度越高，低层越可以自治；越接近边界，高层介入概率越高。
+
+这恰好与我们早期智能频谱中的“中心—半径”模型对应。高层定义局部运行中心，而 Capability Margin 决定低层围绕该中心可自由波动的有效半径。因而 Body Runtime 的自治不是一个固定权限，而是：
+\[
+\boxed{
+Autonomy
+=
+Function(CapabilityMargin,Risk,Confidence).
+}
+\]
+
+在具身机器人场景中，如果机械臂目前对一个五百克物体拥有很大抓取裕量，就无需 Kernel 参与每一次微调；如果对象接近负载极限，或者摩擦系数极不确定，则 Capability Margin 快速下降，身体应自动进入更保守模式。数字 Agent 同样如此：如果网页 DOM 稳定、目标元素明确、操作权限充分，那么局部执行可以高速自动完成；如果页面发生异常重排、权限边界模糊或关键按钮存在高影响后果，Capability Margin 就不再仅是物理概念，而成为广义的执行能力裕度。
+
+更重要的是，Capability Margin 为“Agent 是否知道自己的能力边界”提供了一个可工程化入口。一个成熟 Agent 并不要求永远成功，而应当具有：
+\[
+\boxed{
+CompetenceAwareness.
+}
+\]
+也就是知道什么时候可以自主完成，什么时候必须降低速度，什么时候需要寻求高层重新规划。这种能力意识是长期智能避免“高自信失败”的基础。
+
+\section{Control Confidence：局部控制是否值得继续自治}
+
+Capability Margin 描述的是能力空间，而 Control Confidence 描述的是 BPCC 对\textbf{当前控制策略能够实现预期局部效果}的信任程度。两者相关，但并不相同。一个系统可能具有足够的物理能力，却因为当前模型误差过大而缺少控制信心；也可能预测模型很准确，但实际身体能力已经不足。
+
+定义控制置信度：
+\[
+q_t^{ctrl}\in[0,1].
+\]
+它可以由多种局部证据共同计算：
+\[
+q_t^{ctrl}
+=
+F_q
+\left(
+\varepsilon_{ctrl},
+\varepsilon_{dyn},
+\mathbf m_t,
+\sigma_{sensor},
+S_{stability},
+H_{recent}
+\right),
+\]
+其中 $\varepsilon_{ctrl}$ 是近期控制误差，$\varepsilon_{dyn}$ 是动力模型残差，$\mathbf m_t$ 是能力裕度，$\sigma_{sensor}$ 是感知不确定性，$S_{stability}$ 是局部稳定性估计，而 $H_{recent}$ 表示最近一段执行历史。
+
+如果近期动作不断被现实验证，则：
+\[
+q_t^{ctrl}\uparrow.
+\]
+如果预测与现实持续偏离：
+\[
+q_t^{ctrl}\downarrow.
+\]
+因此 Control Confidence 不是模型的静态 self-report，而必须建立在现实反馈上。
+
+控制置信度进一步影响 BPCC 的控制增益和自治模式。例如：
+\[
+K_t
+=
+K_0
+f(q_t^{ctrl}),
+\]
+或者将最大行动幅度约束成：
+\[
+\|u_t\|
+\leq
+u_{\max}
+q_t^{ctrl}.
+\]
+这意味着置信度下降时，系统可以主动降低动作幅度、增加观测、缩短预测 horizon、采用更保守策略，而不是继续以原来的激进度执行。
+
+可以定义三级控制模式：
+\[
+q_t^{ctrl}>\theta_H
+\Rightarrow
+LocalAutonomy,
+\]
+\[
+\theta_L<q_t^{ctrl}\leq\theta_H
+\Rightarrow
+ConservativeLocalControl,
+\]
+\[
+q_t^{ctrl}\leq\theta_L
+\Rightarrow
+Escalation.
+\]
+为了防止阈值附近快速来回切换，还应采用迟滞：
+\[
+\theta_{\mathrm{enter}}
+<
+\theta_{\mathrm{exit}},
+\]
+使控制模式具有稳定性。
+
+Control Confidence 也体现了本书一再坚持的认识论原则：Agent 对自己和现实的理解永远存在不确定性。BPCC 即使拥有快速预测模型，也不应把自己的预测当成真实世界本身。它必须知道：
+\[
+\boxed{
+PredictionCanBeWrong.
+}
+\]
+而置信度就是把这种认识论不确定性转化成控制变量的工程方式之一。
+
+更深一层看，Control Confidence 使智能系统的“谨慎程度”不再只来自高层语义判断，而成为低层闭环中的连续变量。一个成熟 Agent 不需要在每次局部不确定时进入显式推理，而可以先通过降低控制信心自动改变局部控制方式。只有当这种不确定性无法在局部闭环吸收时，才向上形成认知事件。
+
+\section{Prediction Confidence：预测世界与控制世界必须区分}
+
+Control Confidence 回答“我是否能够稳定控制”，Prediction Confidence 则回答“我是否相信自己的短期未来模型”。这两个置信度必须区分，因为预测正确并不自动意味着控制成功，而控制暂时成功也不意味着模型正确。
+
+定义预测置信度：
+\[
+q_t^{pred}\in[0,1].
+\]
+它描述：
+\[
+p
+\left(
+x_{t+\delta}^{obs}
+\approx
+\hat x_{t+\delta}
+\mid
+\mathcal I_t
+\right)
+\]
+的估计水平，其中 $\mathcal I_t$ 表示 BPCC 当前拥有的信息。
+
+Prediction Confidence 可以来自预测分布的方差：
+\[
+q_t^{pred}
+=
+g
+\left(
+\operatorname{Tr}
+\Sigma_{t+\delta}
+\right),
+\]
+也可以由历史预测校准误差估计：
+\[
+q_t^{pred}
+=
+1-
+\frac{1}{T}
+\sum_{\tau=t-T}^{t}
+w_\tau
+d
+\left(
+x_\tau^{obs},
+\hat x_\tau
+\right).
+\]
+真正工程实现可以采用更加复杂的 ensemble、不确定性估计或概率动力模型，但理论核心不变：预测必须附带自己“知道多少”和“不知道多少”的度量。
+
+Kernel 也可以拥有自身预测置信度：
+\[
+q_K^{pred},
+\]
+但其语义不同。Kernel 的置信度主要面向较长时间尺度的未来结构；BPCC 的置信度主要面向短时身体动力学。于是可以形成：
+\[
+q_K^{pred}(\Delta)
+\qquad\text{与}\qquad
+q_B^{pred}(\delta),
+\]
+且通常：
+\[
+\delta\ll\Delta.
+\]
+随着 horizon 增长，预测不确定性往往扩大，因此 Kernel 更适合表达未来集合和趋势，而 BPCC 更适合表达短期连续轨迹。
+
+双预测系统中还存在一个非常重要的跨尺度冲突情形。如果 Kernel 对某条全局方案高度有信心：
+\[
+q_K^{pred}\approx1,
+\]
+但 BPCC 发现局部身体模型正在快速失准：
+\[
+q_B^{pred}\rightarrow0,
+\]
+那么下层现实证据必须有能力挑战高层判断，而不是因为 Kernel “更高级”就自动压制局部反馈。这正是：
+\[
+\boxed{
+RealityAuthority>HierarchyAuthority.
+}
+\]
+高层具有决策权限，但下层拥有关于局部现实的高频证据。如果两者冲突，应首先承认高层模型可能已经过时。
+
+反过来，当 BPCC 对当前局部动力学高度有信心，也不意味着它可以推翻 Kernel 的长期目标。例如车辆可以确信“继续加速在物理上完全可控”，但如果高层目标要求停车，那么 BPCC 的控制知识不能自动变成行为目标。
+
+因此可以总结：
+\[
+\boxed{
+PredictionConfidence
+\neq
+ControlAuthority.
+}
+\]
+置信度是认识论量，权限是治理量。把二者混为一谈，是许多自主系统设计中非常危险的错误。
+
+\section{Residual Feedback：现实如何重新连接双预测系统}
+
+Kernel 与 BPCC 的双预测体系最终必须通过残差闭合，否则系统会退化成两个各自维护内部模型的预测器。现实并不会因为 Kernel 认为某条路径可行，也不会因为 BPCC 预测某个动作能够成功，就自动按照预测发生。真正的闭环必须是：
+\[
+Prediction
+\rightarrow
+Action
+\rightarrow
+Reality
+\rightarrow
+Observation
+\rightarrow
+Residual.
+\]
+
+因此我们定义局部综合残差：
+\[
+\varepsilon_B(t)
+=
+\mathcal D
+\left(
+\hat y_B(t),
+y_B^{obs}(t)
+\right),
+\]
+其中 $\mathcal D$ 不一定是简单欧氏距离，可以根据 SGC、FCS、身体状态和控制任务采用不同误差结构。
+
+进一步可分为：
+\[
+\varepsilon_B
+=
+\left[
+\varepsilon_{control},
+\varepsilon_{SGC},
+\varepsilon_{FCS},
+\varepsilon_{cap},
+\varepsilon_{constraint}
+\right].
+\]
+控制残差表示动作结果与控制参考之间的偏差；SGC 残差表示世界几何、实体和关系预测偏差；FCS 残差表示现实对身体影响的预测偏差；能力残差表示能力估计和实际能力之间的差异；Constraint Residual 则表明局部运行是否逼近或突破允许包络。
+
+但不是所有残差都应该进入 Kernel。否则每一个摩擦变化、像素偏差和 UI 抖动都会涌入有限的工作记忆，最终违反工作记忆有限容量定理。因此我们需要一个残差升级函数：
+\[
+\Gamma_t
+=
+F_\Gamma
+\left(
+\|\varepsilon_t\|,
+\dot\varepsilon_t,
+P_t,
+R_t,
+N_t,
+G_t
+\right),
+\]
+其中 $P_t$ 表示持续性，$R_t$ 表示风险，$N_t$ 表示新颖性，$G_t$ 表示目标相关性。
+
+于是：
+\[
+\Gamma_t<\theta_1
+\Rightarrow
+BPCCLocalCorrection,
+\]
+\[
+\theta_1\leq\Gamma_t<\theta_2
+\Rightarrow
+BodyRuntimeReplanning,
+\]
+\[
+\Gamma_t\geq\theta_2
+\Rightarrow
+KernelEscalation.
+\]
+
+这使我们得到一个贯穿整个 AgentOS 的核心原则：
+\[
+\boxed{
+PredictLocally,\ EscalateResidualGlobally.
+}
+\]
+真正进入认知层的不是“现实本身的全部变化”，而是\textbf{局部闭环无法解释、无法吸收、持续存在且具有更高层意义的偏差}。
+
+从 CSO 理论看，这一机制还可以解释为 Agent-CSO 的跨尺度提升。局部残差最初只是 Body Runtime 内部的动态结构。当它持续存在并影响高层目标时，相应结构被提升成为当前认知的一部分：
+\[
+LocalResidualCSO
+\rightarrow
+ActiveAgentCSO@h.
+\]
+Kernel 随后可能调用 $E$ 中类似经历、用 $\Theta$ 重新生成解释，或者修改当前 Goal/Plan。完成新的全局认知以后，又重新产生新的 Predictive Envelope 和 Control Reference 下发给 BPCC。因此完整闭环是：
+\[
+\boxed{
+KernelPrediction
+\rightarrow
+Envelope
+\rightarrow
+ControlReference
+\rightarrow
+BPCCPrediction
+\rightarrow
+Action
+\rightarrow
+Reality
+\rightarrow
+Residual
+\rightarrow
+KernelRevision.
+}
+\]
+
+这不是简单上下级命令链，而是一个双向耦合快--慢系统。可以形式化为：
+\[
+\dot x_B
+=
+F_B
+(x_B,u_B;x_K),
+\]
+\[
+\dot x_K
+=
+\epsilon
+F_K
+(x_K,\bar\varepsilon_B),
+\qquad
+0<\epsilon\ll1.
+\]
+在正常情况下，$x_K$ 相对于 $x_B$ 变化缓慢，BPCC 在高层约束形成的局部慢流形附近快速闭合；只有经过时间平均仍然无法消失的残差：
+\[
+\left\langle
+\varepsilon_B
+\right\rangle_T
+\neq0
+\]
+才持续推动 Kernel 的慢结构更新。
+
+至此我们可以看到，Kernel 与 BPCC 的关系并不是“中央大脑控制小脑”，而是一种更一般的多尺度智能结构：
+
+\[
+\boxed{
+SlowPrediction
+\rightarrow
+FastFeasibleDynamics
+\rightarrow
+RealityResidual
+\rightarrow
+SlowRevision.
+}
+\]
+
+这一结构同时解决了三种长期困境。第一，它避免 Kernel 被高速身体细节淹没；第二，它避免 BPCC 因缺乏长期语义约束而成为独立目标系统；第三，它保证无论高层还是低层的预测最终都必须重新进入现实接受验证。
+
+因此，本章最终得到的双预测原则可以写成：
+
+\[
+\boxed{
+\begin{aligned}
+Kernel &: \quad
+\text{Predict the meaningful, feasible and goal-consistent future},\\
+BPCC &: \quad
+\text{Predict the locally executable and dynamically stable future},\\
+Reality &: \quad
+\text{Determine which prediction actually survives}.
+\end{aligned}
+}
+\]
+
+从智能动力学的角度看，这一体系揭示了成熟智能的一个重要特征：\textbf{它不是依靠一个越来越庞大的模型同时预测所有尺度，而是让不同时间尺度的预测结构各自闭合自己的局部循环，并通过包络、参考、约束、置信度和残差形成有限带宽的跨尺度耦合。}
+
+因此，双预测系统的真正意义不是增加第二个预测模块，而是建立：
+
+\[
+\boxed{
+\text{Global Meaning}
+\leftrightarrow
+\text{Local Dynamics}
+\leftrightarrow
+\text{Reality}
+}
+\]
+
+三者之间稳定、可验证、可扩展的动力学接口。一个能够长期存在的 Agent，最终必须既能够预测“自己正在走向哪里”，又能够在每一个现实瞬间判断“自己的身体究竟还能不能继续这样走下去”。只有两种预测同时存在，并让现实不断重新校准二者，AgentOS 才真正获得从认知意图到现实行动之间连续而可靠的闭环。

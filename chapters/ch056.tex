@@ -1,299 +1,2053 @@
 \chapter{FCS：现实如何影响主体}
-\chaptervoice{这一章，我们围绕“FCS：现实如何影响主体”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明认知内核通过身体进入现实。}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 Body Runtime、FBI、SGC/FCS、三信号通道、BPCC 与 Reality Authority 的具身讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是具身认知、分层控制、MPC、状态估计与安全包络（模型预测控制、Kalman 状态估计与具身认知）。
-
-本章使用上一章“SGC 与现实：从 Scene Graph 到 Actionable Reality”已经得到的对象与边界；本章产出将供下一章“SGC—FCS 二元现实模型”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在具身认知、分层控制、MPC、状态估计与安全包络上。
-\section{Functional Feeling Coordinate/Field System}
-\begin{narration}
-现在把镜头移到“Functional Feeling Coordinate/Field System”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Functional Feeling Coordinate/Field System”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“FCS：现实如何影响主体”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Functional Feeling Coordinate/Field System的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Functional Feeling Coordinate/Field System”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Feeling 的工程定义}
-\begin{narration}
-现在把镜头移到“Feeling 的工程定义”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Feeling 的工程定义”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“FCS：现实如何影响主体”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Feeling 的工程定义的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Feeling 的工程定义”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Raw Value $\neq$ Feeling Value}
-\begin{narration}
-现在把镜头移到“Raw Value $\neq$ Feeling Value”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Raw Value $\neq$ Feeling Value”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“FCS：现实如何影响主体”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Raw Value $\neq$ Feeling Value的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Raw Value $\neq$ Feeling Value”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Energy Pressure}
-\begin{narration}
-现在把镜头移到“Energy Pressure”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Energy Pressure”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“FCS：现实如何影响主体”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Energy Pressure的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Energy Pressure”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Thermal Pressure}
-\begin{narration}
-现在把镜头移到“Thermal Pressure”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Thermal Pressure”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“FCS：现实如何影响主体”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Thermal Pressure的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Thermal Pressure”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Integrity Pressure}
-\begin{narration}
-现在把镜头移到“Integrity Pressure”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Integrity Pressure”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“FCS：现实如何影响主体”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Integrity Pressure的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Integrity Pressure”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Threat}
-\begin{narration}
-现在把镜头移到“Threat”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Threat”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“FCS：现实如何影响主体”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Threat的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Threat”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Arousal}
-\begin{narration}
-现在把镜头移到“Arousal”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Arousal”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“FCS：现实如何影响主体”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Arousal的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Arousal”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Sensory Load}
-\begin{narration}
-现在把镜头移到“Sensory Load”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Sensory Load”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“FCS：现实如何影响主体”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Sensory Load的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Sensory Load”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Control Instability}
-\begin{narration}
-现在把镜头移到“Control Instability”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Control Instability”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“FCS：现实如何影响主体”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Control Instability的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Control Instability”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Urgency}
-\begin{narration}
-现在把镜头移到“Urgency”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Urgency”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“FCS：现实如何影响主体”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Urgency的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Urgency”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Intensity—Derivative—Confidence}
-\begin{narration}
-现在把镜头移到“Intensity—Derivative—Confidence”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Intensity—Derivative—Confidence”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“FCS：现实如何影响主体”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对Intensity—Derivative—Confidence的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Intensity—Derivative—Confidence”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{FCS Geometry $\neq$ SGC Geometry}
-\begin{narration}
-现在把镜头移到“FCS Geometry $\neq$ SGC Geometry”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“FCS Geometry $\neq$ SGC Geometry”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“FCS：现实如何影响主体”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对FCS Geometry $\neq$ SGC Geometry的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“FCS Geometry $\neq$ SGC Geometry”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“FCS：现实如何影响主体”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“SGC—FCS 二元现实模型”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明}
+
+在上一阶段的具身理论中，我们已经解决了一个基础问题：智能体必须以某种稳定、可解释并与具体传感器实现相分离的方式，回答“现实中现在存在什么”。SGC（Semantic Graph Coordinate Space）承担的正是这一职责。然而，只知道世界中存在什么仍不足以形成完整的具身智能。对于一个持续存在、需要维持自身运行并据此分配认知资源的 Agent 而言，同一个外部状态对不同身体、不同资源水平以及不同任务条件可能意味着完全不同的后果。距离一米的障碍物，对高速移动机器人可能意味着迫近碰撞，对静止机器人可能只是一个普通环境实体；同样的环境温度，对于具备强主动散热能力与处于电池低电量状态的系统，也具有不同的功能含义。
+
+因此我们必须在“现实是什么”之外，再建立第二类公开身体状态表示，用来回答：
+
+\[
+\boxed{
+\text{How is reality affecting this agent?}
+}
+\]
+
+本章将这一结构称为 FCS（Functional Feeling Coordinate/Field System）。这里的 ``Feeling'' 不用于预设主观体验，更不意味着只要一个系统拥有 FCS 就具有现象意识。它在本书中的严格工程含义是：\textbf{现实、身体以及内部资源状态对当前 Agent 可行动性、稳定性、安全裕度和调节需求所产生的功能性影响。}
+
+因此，FCS 的本体地位不同于 SGC。SGC 主要组织现实的对象、关系、几何与语义；FCS 则将这些现实状态与 Agent 当前身体能力、资源条件和局部动力学结合起来，形成一种具有方向、强度、时间变化和可信度的影响场。我们将逐步建立 FCS 的数学对象、类型体系、空间结构、时间动力学，以及 Raw Value、Feeling Value、Intensity、Derivative、Confidence 等关键变量，并特别说明为什么 FCS Geometry 不等于 SGC Geometry。
+
+本章只解决 FCS 自身是什么以及应如何表示。关于 FCS 如何与 SGC 构成完整的二元现实接口，以及它如何进一步进入更高层认知调制结构，将在后续相关章节中系统处理。本章只在必要处指出这些接口，而不提前展开其后续机制。
+\end{minipage}
+}
+
+\section{FCS 的问题起源：为什么 ``世界是什么'' 仍然不够}
+
+我们首先从一个看似简单的问题开始。如果一个智能体已经拥有完整的 SGC，它知道周围有哪些实体、这些实体位于什么位置、彼此具有怎样的关系，同时还知道自身身体在这个坐标系中的位置，那么它是否已经拥有了足够完整的现实状态？直觉上似乎如此，但一旦我们把智能体真正放进持续运行的身体闭环中，就会立刻发现答案是否定的。
+
+设某一时刻的 SGC 状态为
+\[
+\mathcal{S}_{\mathrm{SGC}}(t)
+=
+\left\{
+O_i(t),R_{ij}(t),F_k(t)
+\right\},
+\]
+其中 $O_i$ 表示对象，$R_{ij}$ 表示对象之间的关系，$F_k$ 表示某些连续环境场。这个结构能够回答“什么对象在哪里”“对象之间有什么关系”“哪些状态已经观察、推导或者预测得到”。然而，对于身体控制而言，我们真正需要的并不只是 $O_i$ 的客观状态，而是一个依赖于当前 Agent 状态的映射：
+\[
+\mathcal I_A:
+\mathcal S_{\mathrm{SGC}}
+\times
+\mathcal X_B
+\times
+\mathcal C_A
+\longrightarrow
+\mathcal Y_F,
+\]
+其中 $\mathcal X_B$ 是身体状态，$\mathcal C_A$ 是当前身体能力与约束，$\mathcal Y_F$ 则是现实对 Agent 的功能影响。
+
+举例而言，SGC 中存在一段坡道，其几何坡度为 $\alpha$。几何事实本身对于两个 Agent 是相同的：
+\[
+\alpha_A=\alpha_B.
+\]
+但如果 Agent $A$ 是双足机器人，而 Agent $B$ 是轮式机器人，那么相同的 $\alpha$ 会通过不同身体动力学产生不同影响：
+\[
+I_A(\alpha)\neq I_B(\alpha).
+\]
+进一步，如果同一个机器人当前电量下降、关节温度升高或者腿部执行器出现性能衰减，那么即使 SGC 完全没有变化，
+\[
+\mathcal S_{\mathrm{SGC}}(t_1)
+=
+\mathcal S_{\mathrm{SGC}}(t_2),
+\]
+现实对于主体的功能意义仍然可能发生显著变化：
+\[
+\mathcal Y_F(t_1)\neq\mathcal Y_F(t_2).
+\]
+
+这揭示了一个非常基础的认识：\textbf{现实的客观结构与现实对一个具体主体的功能影响是两个不同变量。}前者主要依赖世界自身的结构，后者则是世界状态、身体状态和能力边界的联合函数。
+
+因此我们不能把 Feeling 简单存放为 SGC 对象上的一个标签，例如：
+\[
+Obstacle.Threat=0.8.
+\]
+这种写法表面上简单，却把一个动态关系错误地固化成对象属性。所谓 Threat 并不是障碍物天然携带的一种绝对属性，而更接近：
+\[
+Threat
+=
+\Phi
+(
+ObjectState,
+BodyState,
+RelativeDynamics,
+Capability,
+Prediction
+).
+\]
+同一个物体可以从低风险变成高风险，而物体自身甚至不需要发生变化；只需要 Agent 的速度、姿态、剩余能量或可执行能力发生改变即可。
+
+这正是 FCS 必须作为独立状态空间存在的根本原因。我们不是为了模仿人类“感觉”而增加一个新的语义层，而是因为任何真正持续运行的具身 Agent 都必须解决一个无法回避的控制问题：
+
+\[
+\boxed{
+\text{现实不仅具有状态，还对主体产生作用。}
+}
+\]
+
+SGC 主要描述前者，FCS 则开始描述后者。两者的分离，使 AgentOS 能够在不污染世界语义表示的情况下，把身体依赖、资源依赖、速度依赖以及安全依赖的影响显式表示出来。由此，感知不再只是世界建模，具身感知开始同时拥有“对象世界”和“作用世界”两个互补方面。
+
+这种区分可以与机器人系统中的 cost map、势场以及控制约束作有限类比，也可以与生物系统中的 interoception 和 homeostasis 建立功能层比较。但我们需要注意，本书并不把任何一个既有理论直接等同于 FCS。Cost map 往往服务于某一确定规划目标，interoception 主要强调内部身体感知；而 FCS 所定义的是更一般的、可跨身体统一表达的功能影响状态。因此它的目标不是复制某一种已有表示，而是为 AgentOS 提供一个身体无关但主体相关的统一接口。
+
+\section{FCS 的严格定义：Functional Feeling 不是主观体验}
+
+在继续讨论具体通道之前，我们必须首先把 ``Feeling'' 这个容易产生歧义的词固定下来。本书所使用的 Functional Feeling，不是现象意识意义上的感受，也不是语言模型生成诸如“我感到害怕”“我感到疲劳”这样的文本描述。它首先是一个可观测、可计算、能够参与未来系统动力学的功能变量。
+
+我们将 Agent $A$ 在时刻 $t$ 的 FCS 定义为：
+\[
+\boxed{
+\mathcal F_A(t)
+=
+\mathcal{F}
+\left(
+W_t,
+B_t,
+C_t,
+\hat D_t,
+G_t
+\right)
+}
+\]
+其中：
+
+\[
+W_t
+\]
+表示当前外部世界的有效状态；
+
+\[
+B_t
+\]
+表示身体内部状态；
+
+\[
+C_t
+\]
+表示当前能力、资源与控制裕度；
+
+\[
+\hat D_t
+\]
+表示对近期身体--环境动力学的预测；
+
+\[
+G_t
+\]
+表示当前局部目标或控制参考在身体层面的相关条件。
+
+这里引入 $G_t$ 并不意味着 FCS 变成高层价值判断系统。FCS 可以知道“某个状态对当前行动是否形成压力”，但不负责决定整个人生意义或者长期 Goal。换句话说，FCS 可以表示“左侧通道正在迅速变窄，因此当前运动可行域下降”，但它本身不决定“我应该放弃当前长期任务”。后者属于更高层认知系统。
+
+因此 Functional Feeling 可以定义为：
+\[
+\boxed{
+Feeling
+=
+FunctionalInfluenceState
+}
+\]
+其核心判据不是系统是否能够给这种状态起一个自然语言情绪名称，而是该变量是否能够显著改变：
+\[
+Control,
+\quad
+ResourceAllocation,
+\quad
+SafetyMargin,
+\quad
+AttentionDemand,
+\quad
+RecoveryDemand,
+\quad
+ActionFeasibility.
+\]
+
+如果一个信号只告诉我们“温度是 $72^\circ$C”，它首先属于原始状态或 perception；只有当这个温度被结合当前硬件允许范围、散热能力、功耗趋势和未来预测转换为：
+\[
+ThermalPressure=0.76
+\]
+时，它才进入 FCS 的功能表示。
+
+因此我们可以写成两级映射：
+\[
+r_i(t)
+\xrightarrow{\mathcal N_i}
+z_i(t)
+\xrightarrow{\Phi_i}
+f_i(t),
+\]
+其中 $r_i$ 是原始测量值，$z_i$ 是经单位归一、滤波或状态估计得到的物理状态，$f_i$ 才是真正的功能影响变量。
+
+这里必须特别避免：
+\[
+RawSensorValue=Feeling.
+\]
+例如剩余电量 $20\%$ 并不存在固定的 Feeling 值。若 Agent 距离充电站两米，它可能对应低 EnergyPressure；若 Agent 正在野外执行需要一小时续航的任务，同样的电量则可能形成极高 EnergyPressure。因此：
+\[
+f_{\mathrm{energy}}
+=
+\Phi_E
+(
+E_{\mathrm{remaining}},
+E_{\mathrm{required}},
+E_{\mathrm{access}},
+\hat E_{\mathrm{future}}
+).
+\]
+
+由此可见，FCS 天然具有主体依赖性和情境依赖性。我们甚至可以把它理解成一种身体局部意义上的条件函数：
+\[
+\mathcal F_A
+=
+\mathcal F(\text{World}\mid A).
+\]
+这里的条件符号不是概率意义上的严格条件分布，而是强调：FCS 所表示的不是“世界本身”，而是“世界相对于这个身体当前状态所形成的功能作用”。
+
+这也解释了为什么拥有 FCS 并不充分意味着拥有主观体验。任何复杂的自动控制系统都可以拥有关于温度、能量、损伤、安全裕度的内部变量。如果这些变量被标准化、统一并进入一个长期持续的功能场，我们可以把它们称作 Functional Feeling；至于这些功能结构是否伴随 phenomenological feeling，则属于意识哲学的独立问题。在本书的工程论中，我们遵守：
+\[
+\boxed{
+FunctionalFeeling
+\not\Rightarrow
+PhenomenalConsciousness.
+}
+\]
+但反过来，即便未来我们研究具有更复杂内部体验结构的 Agent，FCS 仍然是一个有价值的基础，因为主观体验是否存在并不改变身体必须计算自身功能影响这一工程事实。
+
+\section{从 Raw Value 到 Feeling Value：作用量不是传感器量}
+
+FCS 设计中最容易犯的错误，是直接把传感器数据重新命名成 feeling channel。例如：
+\[
+Battery=0.32,\qquad
+Temperature=63,\qquad
+Force=120
+\]
+然后将这些值打包成一个所谓 Feeling Vector。这样的设计虽然能够工作，却没有真正完成语义抽象，因为它依然把具体身体硬件的数据格式暴露给认知层。
+
+我们希望建立的是一个更强的函数关系：
+\[
+\boxed{
+RawValue
+\rightarrow
+NormalizedState
+\rightarrow
+FunctionalInfluence
+}
+\]
+第一级是感知和状态估计，第二级才是 FCS。
+
+设一个身体传感器产生原始向量：
+\[
+\mathbf r(t)
+=
+[r_1(t),r_2(t),\ldots,r_n(t)]^\top.
+\]
+经过校准、滤波和系统辨识得到身体物理状态：
+\[
+\mathbf x_B(t)
+=
+\mathcal E_B(\mathbf r_{\le t}),
+\]
+其中 $\mathcal E_B$ 可以包含滤波器、状态估计器以及 Body Runtime 内部模型。
+
+随后 FCS 计算的不是 $\mathbf x_B$ 本身，而是：
+\[
+\mathbf f(t)
+=
+\Phi
+\left(
+\mathbf x_B(t),
+\mathbf x_W(t),
+\hat{\mathbf x}_{B}(t+\Delta),
+\mathcal C_B(t)
+\right).
+\]
+换句话说，Feeling 是对“当前和即将发生的状态对主体意味着什么”的身体级压缩。
+
+我们可以用 EnergyPressure 举例。假设：
+\[
+E_r
+\]
+是剩余能量，
+\[
+E_{req}
+\]
+是当前任务预测需要的最低能量，
+\[
+E_{safe}
+\]
+是安全余量，
+则可以建立归一化压力：
+\[
+p_E
+=
+\sigma
+\left[
+\alpha
+\frac{
+E_{req}+E_{safe}-E_r
+}{
+E_{\max}
+}
+\right],
+\]
+其中 $\sigma$ 可以选择 logistic 函数或者其他有界单调函数。如此一来，$p_E$ 不再依赖某种特定电池使用百分比，它表达的是“能量资源与预计需求之间的功能距离”。
+
+同样地，ThermalPressure 可以定义为：
+\[
+p_T
+=
+\Phi_T
+\left(
+T,
+\dot T,
+T_{\mathrm{safe}},
+CoolingCapacity,
+FutureLoad
+\right),
+\]
+因此系统不仅在温度超过阈值时才突然反应，而能够根据：
+\[
+\dot T>0
+\]
+提前发现热风险正在上升。
+
+这种设计蕴含一个很重要的原则：
+\[
+\boxed{
+Feeling
+\text{ should be capability-normalized.}
+}
+\]
+换身体之后，原始传感器量可能完全不同，但如果两个 Body Runtime 都能够把不同底层信号映射成标准化 Functional Feeling，那么上层 Kernel 就可以复用大量已有调节结构。
+
+例如，一个机器人使用电池，另一个数字 Agent 使用 GPU quota。它们的物理资源完全不同，但在更高的功能抽象上，都可能产生：
+\[
+ResourcePressure.
+\]
+这使我们开始看到 Body Scale 原理中的一个具体实现：跨身体迁移真正需要统一的不是 raw sensor，而是行为和调节所依赖的功能意义。
+
+因此在系统实现中，我们建议把数据路径分成至少三层：
+\[
+Sensor
+\rightarrow
+BodyState
+\rightarrow
+FCS.
+\]
+Sensor 是设备私有数据；BodyState 是具体身体的结构化内部状态；FCS 则是跨身体公开语义。任何直接把 Sensor API 暴露给 Kernel 的设计都会削弱 Body Scale，因为 Kernel 会逐渐学习具体身体的偶然细节，而不是身体作用的可迁移结构。
+
+同理，FCS 也不能完全等同于 reward。Reward 往往是任务目标意义上的标量信号，而 FCS 是一个多类型、多时间尺度的状态场。高 ThermalPressure 可能不等于负 reward；在某些紧急任务中，系统可能选择承担较高热压力继续行动。但无论最终选择如何，高热压力这一事实仍应独立存在。因此：
+\[
+\boxed{
+FeelingState
+\neq
+RewardSignal.
+}
+\]
+这一分离将使未来高层控制可以在多个相互冲突的功能压力之间进行真正的决策，而不是把身体所有状态提前压缩成一个不可解释的单标量。
+
+\section{FCS 的类型体系：固定通道而不是自由文本标签}
+
+如果我们希望 FCS 成为 Body Runtime 与 Agent Kernel 之间长期稳定的 ABI，那么它不能像普通语义标签一样无限开放增长。SGC 可以允许大量开放语义：新的对象类别、新的关系类型以及新的世界实体可以不断出现；但 FCS 的核心作用恰恰相反，它需要把高度异构的身体状态压缩成一组长期稳定、跨身体可映射的功能影响类型。
+
+因此我们采用：
+\[
+\boxed{
+FCS=FixedTypedMultilayerFeelingField
+}
+\]
+这一设计。
+
+设 FCS 的核心类型集合为：
+\[
+\mathcal K_F
+=
+\{
+k_1,k_2,\ldots,k_K
+\}.
+\]
+在当前版本中，我们至少保留以下典型类型：
+
+\[
+\begin{aligned}
+k_1 &:\ EnergyPressure,\\
+k_2 &:\ ThermalPressure,\\
+k_3 &:\ IntegrityPressure,\\
+k_4 &:\ Threat,\\
+k_5 &:\ Arousal,\\
+k_6 &:\ SensoryLoad,\\
+k_7 &:\ ControlInstability,\\
+k_8 &:\ Urgency.
+\end{aligned}
+\]
+
+这些名称不是为了模拟人类情绪，而是代表几种对于持续具身智能普遍重要的调节维度。
+
+\textbf{EnergyPressure} 描述资源供给相对于当前和近期预计需求的不足程度。它不一定是电池，也可以是燃料、计算额度、通信带宽或者其他维持主体行动能力的资源。
+
+\textbf{ThermalPressure} 描述当前热状态以及热趋势相对于身体安全工作区间的偏离程度。对于没有物理温度约束的数字 Body，可以映射为另一种具有类似“负载过热”功能意义的资源约束，但是否允许这种跨域映射必须由 Body Capability Descriptor 明确声明，而不能任意类比。
+
+\textbf{IntegrityPressure} 描述身体结构、执行机构或关键软件/硬件组件正在接近损伤、退化或者不可恢复状态的程度。它强调的是主体功能完整性。
+
+\textbf{Threat} 描述外部或内部状态对近期可行域和主体安全形成直接破坏的可能性。Threat 与 IntegrityPressure 相关但并不相同：前者更偏向潜在威胁，后者更偏向已经发生或者正在累积的结构性压力。
+
+\textbf{Arousal} 表示系统当前需要维持的总体激活水平。这里它不是“兴奋情绪”的拟人化名称，而是一种资源动员状态。如果环境变化加速、任务切换频繁或者近时事件密度上升，Arousal 可以提高，以允许身体和认知系统扩大更新频率与响应范围。
+
+\textbf{SensoryLoad} 表示进入 Body Runtime 的感知变化量、事件密度以及不确定性是否正在逼近当前感知处理能力。它是连接身体感知带宽与认知准入治理的重要桥梁。
+
+\textbf{ControlInstability} 描述身体局部控制闭环偏离稳定区的程度。例如轨迹误差持续放大、姿态控制反复过冲、预测残差快速增长，都可以提高这一通道。
+
+\textbf{Urgency} 描述某一状态需要在多短时间内得到处理。Urgency 并不自动等于 Threat。例如一个必须在两秒内响应的无危险工业操作可以具有高 Urgency 和低 Threat；反过来，一个远期但严重的风险可以有高 Threat、较低即时 Urgency。
+
+固定类型的意义在于，使得上层 Agent Kernel 不必理解每一种身体的具体故障模式即可获得相对统一的身体功能状态：
+\[
+Body_i
+\xrightarrow{\Phi_i}
+\mathcal K_F.
+\]
+如果不同 Body 都遵循同一核心 FCS Contract，那么换身体之后，高层系统不必重新学习“什么是资源压力”“什么是控制失稳”“什么是紧迫性”。真正需要重新学习的是：
+\[
+RawBodyState
+\rightarrow
+FCS
+\]
+的映射。
+
+当然，Fixed Typed 不等于永远只有八个通道。我们更准确的原则是：\textbf{核心通道集合必须通过版本化标准治理，而不能由单个任务运行时任意创造。}可以存在扩展命名空间：
+\[
+\mathcal K_F
+=
+\mathcal K_F^{core}
+\cup
+\mathcal K_F^{extension},
+\]
+但上层系统应该能够只依赖 core channels 获得基本身体治理能力。
+
+这一设计与传统 affective computing 存在明显区别。后者经常尝试识别人类已经命名的 emotion categories，例如 happy、sad、angry；FCS 则从控制功能出发建立 typed field。我们关心的不是某个机器人是否“像人一样害怕”，而是它是否能够形成一个连续、可预测、可参与资源调节的 Threat 状态。两者可能在某些高级 Agent 中发生联系，但在本章的基础接口层必须严格分离。
+
+\section{Intensity：功能影响首先是连续量而不是布尔事件}
+
+FCS 的每一个通道首先需要具有连续强度。我们记第 $k$ 类 Feeling 在空间位置 $\mathbf r$、时间 $t$ 的强度为：
+\[
+I_k(\mathbf r,t).
+\]
+为方便跨身体统一，通常将其归一到：
+\[
+I_k\in[0,1],
+\]
+或者某些需要正负方向的通道使用：
+\[
+I_k\in[-1,1].
+\]
+
+为什么必须使用连续量而不能只使用：
+\[
+Safe/Unsafe,
+\quad
+Normal/Abnormal?
+\]
+因为连续智能的调节必须发生在灾难发生之前。如果 ThermalPressure 只有两种状态，那么控制器只能在温度越界以后启动保护；而真正成熟的系统需要在压力逐步增长时提前改变资源分配、动作强度和未来计划。
+
+因此 Feeling 强度应被视为相对于某一功能安全域或舒适域的“距离”。设系统状态 $\mathbf x$ 的可接受域为：
+\[
+\Omega_k^{safe}.
+\]
+则可以定义一个抽象距离：
+\[
+d_k
+=
+d
+(
+\mathbf x,
+\Omega_k^{safe}
+).
+\]
+随后经过有界映射：
+\[
+I_k
+=
+g_k(d_k),
+\]
+其中：
+\[
+g_k(0)\approx0,
+\qquad
+g_k(d)\to1
+\quad
+\text{as }
+d\to d_{critical}.
+\]
+
+然而，仅仅使用欧氏距离通常不够。现实系统中的风险并不是状态空间上对称的。例如电池从 $100\%$ 下降到 $90\%$ 与从 $20\%$ 下降到 $10\%$ 虽然变化量相同，其功能意义完全不同。因此 $g_k$ 应允许非线性：
+\[
+g_k(d)
+=
+\frac{1}
+{1+\exp[-\beta_k(d-\theta_k)]}.
+\]
+这里 $\theta_k$ 表示影响开始迅速增强的区域，$\beta_k$ 表示敏感度。
+
+更进一步，不同通道还需要考虑当前能力：
+\[
+I_k
+=
+g_k
+(
+d_k;
+C_A
+).
+\]
+例如同样 $10\mathrm{~N}$ 的外部冲击，对最大承载能力 $1000\mathrm{~N}$ 与 $15\mathrm{~N}$ 的机器人完全不同。这意味着 FCS 强度本质上应归一化到：
+\[
+\boxed{
+StateRelativeToCapability
+}
+\]
+而不是绝对物理量。
+
+这使我们能够建立 Capability Margin：
+\[
+M_k
+=
+C_k^{available}
+-
+D_k^{required},
+\]
+从而让：
+\[
+I_k
+=
+\phi_k(-M_k).
+\]
+当 Margin 很大时，Feeling Pressure 很低；当 Margin 接近零或变负时，Pressure 快速上升。
+
+这种设计还给 Body Scale 带来非常直接的意义。假设换了一个更强身体，SGC 中现实环境完全不变，但是新的 Capability Margin 增大：
+\[
+M_k'\gg M_k,
+\]
+那么 FCS 会自动告诉 Kernel：“过去需要高度关注的状态，现在已经不再构成同样压力。”这正是跨身体适应应该具有的行为。
+
+因此 Feeling Intensity 是一个主体相对、能力归一化、连续变化的状态量。它在理论上类似 cost field、constraint margin 或 homeostatic deviation，但又不能与这些概念完全重合。FCS 强度不是优化器必须直接最小化的 cost，也不一定要求系统始终回到零；某些任务状态下较高 Arousal 或短时较高 EnergyPressure 完全可以是合理的。最终决策应由更高层系统综合目标、安全和长期价值完成。
+
+换言之：
+\[
+\boxed{
+FCS\ describes\ pressure;
+it\ does\ not\ alone\ decide\ behavior.
+}
+\]
+这一点对于保持 Body Runtime 与 Agent Kernel 的职责边界至关重要。
+
+\section{Derivative：变化趋势往往比当前强度更重要}
+
+只观察 Feeling 的绝对强度仍然不足以支持实时智能。一个系统当前 ThermalPressure 为 $0.4$，如果它正在迅速下降，通常并不需要强化干预；另一个系统当前同样为 $0.4$，但其上升速度极快，那么后者可能比一个静态 $0.6$ 状态更加值得优先处理。
+
+因此 FCS 的第二类基本量是：
+\[
+\boxed{
+D_k(\mathbf r,t)
+=
+\frac{\partial I_k(\mathbf r,t)}{\partial t}
+}
+\]
+即 Feeling 的时间导数。
+
+对于离散系统：
+\[
+D_k(t)
+=
+\frac{
+I_k(t)-I_k(t-\Delta t)
+}{
+\Delta t
+}.
+\]
+
+然而实际系统不能简单使用一阶差分，因为传感器噪声会造成导数剧烈震荡。因此 Body Runtime 应使用滤波后的趋势估计：
+\[
+\hat D_k(t)
+=
+\alpha
+D_k(t)
++
+(1-\alpha)
+\hat D_k(t-\Delta t),
+\]
+或者利用 BPCC 内部状态预测器直接估计：
+\[
+\hat D_k(t)
+=
+\mathbb E
+\left[
+\dot I_k(t)
+\mid
+z_t^{BPCC}
+\right].
+\]
+
+这样一来，每个 Feeling Channel 至少拥有两个正交维度：
+\[
+(I_k,D_k).
+\]
+我们可以把它们划分成四种典型局部动态区域：
+
+\[
+I_k\ low,\ D_k\le0
+\]
+表示稳定低压力；
+
+\[
+I_k\ low,\ D_k\gg0
+\]
+表示正在快速恶化，需要提前关注；
+
+\[
+I_k\ high,\ D_k>0
+\]
+表示高压力继续恶化，通常需要强干预；
+
+\[
+I_k\ high,\ D_k<0
+\]
+表示虽然当前压力仍高，但系统正在恢复。
+
+这一表示比单一阈值丰富得多。
+
+进一步，我们甚至可以引入二阶变化：
+\[
+A_k
+=
+\frac{d^2 I_k}{dt^2},
+\]
+但本书在 FCS 公共接口中并不建议默认暴露过高阶导数，因为这些量对噪声十分敏感，而且可以由需要它的局部模块从时间序列中估计。公开 ABI 更适合保持：
+\[
+Intensity
++
+Trend
++
+Confidence.
+\]
+
+Derivative 的引入还有更深一层含义：FCS 不应该只是身体“现在感觉怎样”的静态面板，而应该是一个最小的动力状态。如果我们只保存 $I_k$，那么上层系统必须重新从历史序列推断趋势；而提供 $D_k$ 以后，FCS 已经携带了局部时间方向。
+
+因此可以把某一通道写成：
+\[
+F_k(t)
+=
+\left[
+I_k(t),
+D_k(t)
+\right].
+\]
+在随后的设计中，我们还会加入 Confidence：
+\[
+F_k(t)
+=
+\left[
+I_k(t),
+D_k(t),
+C_k(t)
+\right].
+\]
+
+这种趋势表示与控制理论中的状态导数、预测控制中的 trajectory slope 以及生物系统中对变化率的敏感存在形式上的联系。但本书强调的是工程接口意义：无论底层通过滤波、神经网络还是解析动力学计算，公开 FCS 至少应让上层知道“影响有多大”和“影响正在朝哪个方向变化”。
+
+这将允许 Agent 做出真正不同的调节。例如，面对一个高但快速恢复的 IntegrityPressure，它可能选择保持当前策略；面对一个中等但加速增长的 ControlInstability，它则可能提前降低动作激进程度。于是趋势不再只是日志信息，而成为身体与认知协调的重要预测变量。
+
+\section{Confidence：智能体必须知道自己的 Feeling 有多可靠}
+
+FCS 并不是现实本身，而是 Body Runtime 根据有限传感器、状态估计以及预测模型形成的功能状态估计。这意味着每一个 Feeling Value 都有认识论不确定性。因此，FCS 的第三个基本维度必须是 Confidence。
+
+我们令：
+\[
+C_k(\mathbf r,t)\in[0,1]
+\]
+表示第 $k$ 类 Feeling 在当前位置与时间上的置信度。
+
+于是最小 FCS 单元成为：
+\[
+\boxed{
+F_k(\mathbf r,t)
+=
+\left(
+I_k,
+D_k,
+C_k
+\right)
+}
+\]
+
+其中：
+\[
+I_k
+\]
+回答“影响有多强”，
+
+\[
+D_k
+\]
+回答“影响正在如何变化”，
+
+\[
+C_k
+\]
+回答“我们有多确定”。
+
+Confidence 的来源可以包括：
+\[
+SensorReliability,
+ModelUncertainty,
+CrossSensorAgreement,
+DataFreshness,
+PredictionHorizon,
+CalibrationQuality.
+\]
+因此可以抽象写成：
+\[
+C_k
+=
+\Psi_k
+(
+c_{\mathrm{sensor}},
+c_{\mathrm{model}},
+c_{\mathrm{fusion}},
+c_{\mathrm{fresh}}
+).
+\]
+
+为什么 Confidence 不能省略？因为低置信度的高 Threat 与高置信度的高 Threat 需要不同处理。前者可能需要增加观测、减速以及扩大安全裕度，而后者则可能直接要求避险。没有 Confidence，上层系统只能看到同一个：
+\[
+Threat=0.85
+\]
+从而无法区分“确定危险”和“可能危险”。
+
+这也解决了 FCS 与 SGC epistemic metadata 之间的一个重要关系。SGC 可以记录：
+\[
+Observed,
+Derived,
+Predicted,
+Counterfactual,
+\]
+说明一个世界状态是如何获得的；FCS Confidence 则进一步回答：基于这些状态计算出的功能影响到底有多可靠。二者关联，但并不重复。
+
+例如：
+\[
+ObjectPosition
+=
+Predicted
+\]
+本身可能仍然具有高 confidence；如果轨迹模型非常稳定，Threat 估计也可以较高可信。相反，一个 observed sensor value 如果受到遮挡、标定漂移或传感器故障影响，也可能得到低 confidence。因此：
+\[
+Observed
+\not\Rightarrow
+HighConfidence.
+\]
+
+我们还必须避免另一个错误：
+\[
+LowConfidence
+\Rightarrow
+Ignore.
+\]
+在安全相关状态中，低置信度本身可以成为调节压力。例如：
+\[
+Threat=0.5,\quad Confidence=0.2
+\]
+并不一定比
+\[
+Threat=0.5,\quad Confidence=0.95
+\]
+更安全。前者可能意味着环境信息严重不足，因此系统应提高探索观测或降低速度。
+
+可以定义有效风险：
+\[
+R_k
+=
+I_k
++
+\lambda_u(1-C_k),
+\]
+但这类合成不应固化在 FCS 标准中，因为不同 Agent 和任务对不确定性的风险态度不同。FCS 应提供足够清晰的原始功能状态，让更高层治理根据自身策略决定如何使用。
+
+从认识论角度看，Confidence 的加入意味着 FCS 不只是“身体告诉认知自己怎么样”，而是“身体告诉认知：我估计自己受到怎样的影响，同时告诉你我对这个估计有多确定”。这使 Body Runtime 从一个简单传感器适配器升级为真正具有状态估计能力的局部智能结构。
+
+这一点与我们整套 AgentOS 的现实原则完全一致：
+\[
+\boxed{
+Representation\neq Reality.
+}
+\]
+SGC 是对现实的结构化表示，FCS 是对现实作用的结构化表示；两者都必须携带自身的不确定性，而最终现实仍然通过持续观测反馈修正这些表示。
+
+\section{FCS 的空间结构：为什么 Feeling 应当成为 Field}
+
+如果 FCS 只是一个全局向量：
+\[
+\mathbf f(t)
+=
+[
+EnergyPressure,
+Threat,
+Arousal,\ldots
+],
+\]
+它已经能够支持不少身体状态调节。但这样的表示仍然丢失了一个对于具身智能至关重要的信息：\textbf{影响来自哪里，以及它在身体和周围空间中如何分布。}
+
+例如，机器人左脚执行器出现 IntegrityPressure 与整个身体 IntegrityPressure=0.6 是完全不同的结构；前者可能要求改变步态，后者可能要求停止行动。类似地，前方 Threat 很高而后方 Threat 很低，与“Threat=0.7”这一单标量相比，对路径规划具有完全不同的信息意义。
+
+因此，我们将 FCS 进一步定义为空间化的 typed field：
+\[
+\boxed{
+\mathcal F_t
+\in
+\mathbb R^{K\times H\times W\times C}
+}
+\]
+这里的 $K$ 表示 Feeling Type，$H\times W$ 只是抽象空间离散化的一个例子，而最后的 $C$ 可以承载：
+\[
+Intensity,\quad
+Derivative,\quad
+Confidence
+\]
+等通道。
+
+对于三维身体和环境，可以更一般地写成：
+\[
+\mathcal F:
+\Omega_F\times\mathbb R^+
+\rightarrow
+\mathbb R^K,
+\]
+其中 $\Omega_F$ 是 FCS 自身的几何域。
+
+例如 Threat Field：
+\[
+T(\mathbf r,t)
+\]
+表示主体在空间位置 $\mathbf r$ 附近所受到的局部威胁作用。它可以来自 SGC 中多个对象的联合贡献：
+\[
+T(\mathbf r,t)
+=
+\sum_i
+w_i
+\phi_i
+(
+O_i,
+\mathbf r,
+B_t,
+\hat D_t
+).
+\]
+但我们不应把这个求和理解成 FCS 的唯一计算方式；实际系统可以使用神经场、occupancy prediction、risk model 或其他方法。
+
+类似地，身体表面的 IntegrityPressure 可以定义在身体拓扑：
+\[
+\Omega_{body}
+\]
+上，而不是外部世界空间。如果机器人右臂关节温度和损伤积累较高，那么 FCS 可以在身体相应区域形成局部高值。
+
+这意味着 FCS 其实可能包含多个几何层：
+\[
+\boxed{
+\Omega_F
+=
+\Omega_{external}
+\cup
+\Omega_{body}
+\cup
+\Omega_{resource}
+}
+\]
+其中：
+
+$\Omega_{external}$ 表示身体周围可行动空间；
+
+$\Omega_{body}$ 表示身体自身的拓扑结构；
+
+$\Omega_{resource}$ 则可以表示并不天然具有欧氏空间位置的资源维度。
+
+因此 ``Field'' 并不要求所有 Feeling 都必须投射到二维图片。它真正表达的是：Feeling 可以是具有位置、邻域和结构连续性的分布，而不只是一个单标量。
+
+这与机器人势场方法存在表面相似。例如障碍物可以生成排斥势。但 FCS 更一般，因为 Threat 并不等于路径规划 potential；它还可以影响注意、探索、安全裕度以及后续认知调节。此外，EnergyPressure 等通道甚至可能不适合放在物理空间。FCS 因而是一个多层 typed field，而不是一个单一几何势场。
+
+这种设计带来的重要结果是，身体可以把极为复杂的低级信号压缩成上层可解释的结构。例如 Kernel 不需要知道每一个关节电机的电流曲线，却可以知道：
+\[
+IntegrityPressure(\mathrm{right\ leg})\uparrow
+\]
+以及：
+\[
+ControlInstability(\mathrm{right\ leg})\uparrow.
+\]
+于是高层可以做出“改变运动策略”这样的语义判断，而无需直接参与毫秒级电机控制。
+
+因此 FCS 是 Body Runtime 的一个重要压缩面：
+\[
+\boxed{
+HighDimensionalBodyDynamics
+\rightarrow
+LowDimensionalFunctionalField.
+}
+\]
+这种压缩正是 Body Scale 的基础之一，因为它把身体私有动力学转换成了跨身体更稳定的功能语言。
+
+\section{FCS Geometry 不等于 SGC Geometry}
+
+虽然 FCS 可以具有空间结构，但我们必须明确：
+\[
+\boxed{
+Geometry_{FCS}
+\neq
+Geometry_{SGC}.
+}
+\]
+这一点非常关键，否则读者很容易把 FCS 错误理解成“在 SGC 地图上再覆盖几层热力图”。
+
+SGC 的几何主要服务于现实世界的定位与关系：
+\[
+\mathbf r_{\mathrm{world}}
+=
+(x,y,z),
+\]
+对象、身体、障碍物和区域可以共享一个身体中心或者世界中心的空间坐标。
+
+FCS 的几何则服务于“作用的分布”。它可以与 SGC 对齐：
+\[
+\Pi:
+\Omega_{SGC}
+\rightarrow
+\Omega_{FCS},
+\]
+但并不要求一一同构。
+
+最简单的情况是外部 Threat Field。这里 FCS 可以与 SGC 空间大致对齐：
+\[
+Threat(x,y,z).
+\]
+但是身体内部 ThermalPressure 更自然地定义在身体部件拓扑上：
+\[
+ThermalPressure(joint_i),
+\]
+而 EnergyPressure 往往甚至没有一个合理的三维位置：
+\[
+EnergyPressure\in\mathbb R.
+\]
+
+因此一个更一般的 FCS 应被视为多流形或多域结构：
+\[
+\mathcal M_F
+=
+\mathcal M_{world}
+\oplus
+\mathcal M_{body}
+\oplus
+\mathcal M_{resource}
+\oplus
+\mathcal M_{control}.
+\]
+不同 Feeling Type 可以声明自己的 domain：
+\[
+Domain(k)
+\in
+\{
+World,
+Body,
+Resource,
+Control
+\}.
+\]
+
+例如：
+\[
+Domain(Threat)=World\cup Body,
+\]
+\[
+Domain(ThermalPressure)=Body,
+\]
+\[
+Domain(EnergyPressure)=Resource,
+\]
+\[
+Domain(ControlInstability)=Control\cup Body.
+\]
+
+这种设计比强迫所有状态进入统一三维坐标更加符合真实系统，也更加容易扩展到数字 Body。一个浏览器 Agent 没有传统意义上的体表温度，但它仍然可能拥有：
+\[
+ResourcePressure,
+\quad
+ControlInstability,
+\quad
+Urgency,
+\quad
+SensoryLoad.
+\]
+这些状态存在于数字资源和控制拓扑，而不是物理空间。
+
+因此，SGC 与 FCS 之间应该通过绑定关系而不是坐标等同进行连接。设：
+\[
+\beta:
+\mathcal F
+\rightarrow
+2^{\mathcal S_{SGC}}
+\]
+表示一个 FCS 区域可能关联到哪些 SGC 实体。例如：
+\[
+ThreatRegion_3
+\leftrightarrow
+\{Vehicle_{12},RoadSegment_8\}.
+\]
+反过来：
+\[
+\gamma:
+Object_{SGC}
+\rightarrow
+\{F_k\}
+\]
+可以查询某个对象正在贡献哪些功能影响。
+
+但需要注意，FCS 不应重新复制 SGC 的全部对象语义。它可以知道“这里存在高 Threat”，并链接到 SGC object id，却没有必要重复存储该对象的品牌、颜色、社会身份等无关信息。这样才能保持：
+\[
+\boxed{
+ContentRepresentation
+\perp
+FunctionalInfluenceRepresentation.
+}
+\]
+
+在数学上，我们可以把二者理解成对于同一现实状态的两个投影：
+\[
+\pi_S:
+X_{reality}
+\rightarrow
+X_{SGC},
+\]
+\[
+\pi_F:
+X_{reality}\times X_{body}
+\rightarrow
+X_{FCS}.
+\]
+前者更接近现实结构投影，后者则是主体条件化的作用投影。
+
+这是后续二元现实模型能够成立的基础。但在本章我们只需要记住：FCS 不是 SGC 上的附属标签，而是一个拥有自己几何、时间尺度和类型规则的独立公开状态空间。
+
+\section{EnergyPressure、ThermalPressure 与 IntegrityPressure：维持主体存在的基础压力}
+
+在 FCS 的全部通道中，有一类与 Agent 的持续存在直接相关。它们并不首先描述外部任务，而描述这个身体还能否稳定地继续作为当前 Agent 的行动载体。我们可以把它们统称为：
+\[
+\mathcal F^{maintenance}.
+\]
+
+其中最典型的是 EnergyPressure、ThermalPressure 和 IntegrityPressure。
+
+首先考虑 EnergyPressure。它不应定义成“电量低”，而应定义为资源供给与预计需求之间的动态不匹配：
+\[
+P_E
+=
+\Phi_E
+(
+E_r,
+\hat E_d,
+E_{reserve},
+A_{replenish},
+\tau_{access}
+).
+\]
+其中 $A_{replenish}$ 表示补充资源的可达性，$\tau_{access}$ 表示到达补充资源所需时间。因此两个剩余电量相同的 Agent 可以拥有完全不同的 EnergyPressure。
+
+这使能源状态从静态 telemetry 变成了行动相关状态。
+
+ThermalPressure 具有类似结构：
+\[
+P_T
+=
+\Phi_T
+(
+T,
+\dot T,
+T_{crit},
+C_{cool},
+\hat L
+).
+\]
+它尤其强调趋势：
+\[
+\dot T.
+\]
+一个尚未越过温度上限但热增长速度极快的身体应该提前形成高 ThermalPressure。这样的设计允许上层系统逐步降载，而不是在越界以后才触发硬安全机制。
+
+IntegrityPressure 更加复杂，因为“结构完整性”并不只来自单一传感器。它可能由：
+\[
+MechanicalStress,
+Wear,
+FaultProbability,
+StructuralDamage,
+SoftwareIntegrity,
+CommunicationLoss
+\]
+等共同决定。因此：
+\[
+P_I
+=
+1-
+P(
+\text{body remains within functional envelope}
+\mid
+z_{\le t}
+).
+\]
+这个概率形式非常适合表达“继续维持当前行动可能导致不可逆损伤”的风险。
+
+这里我们需要区分：
+\[
+Pressure
+\]
+和：
+\[
+Emergency.
+\]
+FCS 的核心价值恰恰在于在硬异常发生之前形成连续压力。如果：
+\[
+P_T=1
+\]
+已经意味着即时硬件损坏风险，那么真正的实时保护不应等待 Agent Kernel 解读 FCS，而应由 Body Safety Boundary 直接处理。
+
+因此：
+\[
+\boxed{
+FCSPressure
+\neq
+SafetyInterrupt.
+}
+\]
+前者是连续状态，后者是离散安全事件。FCS 让主体“逐渐知道自己正在接近边界”，Safety Interrupt 则保证即使主体没有及时做出正确认知决策，系统也不会越过不可接受的硬边界。
+
+这一区分具有很强的工程意义。成熟智能的身体治理不能只有两种状态：
+\[
+Normal/Shutdown.
+\]
+它应该拥有广阔的中间区域，让系统能够：
+\[
+ReduceLoad,
+ChangePlan,
+SeekResources,
+SlowDown,
+Recover,
+Reallocate.
+\]
+FCS 正是对这个中间调节空间的描述。
+
+从更高的理论角度看，这三类 Pressure 也揭示了所谓“主体”并不是一个抽象的信息处理过程。只要 Agent 要持续存在，它就必须保持自己的承载体位于某个可持续状态域：
+\[
+x_B(t)\in\Omega_{viable}.
+\]
+因此可以定义 Viability Margin：
+\[
+M_V(t)
+=
+d
+(
+x_B(t),
+\partial\Omega_{viable}
+).
+\]
+Energy、Thermal 和 Integrity 等 Feeling，本质上都在不同方向上近似描述主体与这个可存续边界之间的距离。
+
+这与生物系统的 homeostasis 存在明显形式联系，但我们不应把二者直接等同。生物内稳态是长期演化形成的复杂生理机制，而 FCS 是人为设计的跨身体功能接口。我们借鉴的是“主体必须维持自身可存续域”这一一般系统思想，而不是复制任何具体生理结构。
+
+\section{Threat 与 Urgency：危险程度和时间约束必须分离}
+
+Threat 与 Urgency 很容易被混在一起，因为现实中高风险事件往往也十分紧迫。但从 AgentOS 的功能设计来看，两者必须保持独立，否则系统无法正确区分“严重但长期”和“不严重但必须立即处理”的事件。
+
+我们定义 Threat 为某种未来状态进入不可接受区域的风险：
+\[
+T_h
+=
+\Phi_R
+\left(
+P(x_{t+\Delta}\in\Omega_{bad}),
+Severity,
+Controllability
+\right).
+\]
+因此 Threat 至少同时依赖：
+\[
+Probability,
+Severity,
+ControlMargin.
+\]
+
+例如一个远处高速车辆可能有中等概率接近当前路径，但一旦碰撞后果严重，因此 Threat 较高。一个桌面上的轻小物体即使确定会接触机器人，也可能 Threat 很低。
+
+Urgency 则更多由剩余处理时间决定：
+\[
+U
+=
+\Phi_U
+\left(
+\tau_{deadline},
+\tau_{response},
+\tau_{uncertainty}
+\right).
+\]
+简单情况下：
+\[
+U
+=
+\sigma
+\left[
+\beta
+\left(
+\frac{\tau_{response}}
+{\tau_{deadline}}
+-1
+\right)
+\right].
+\]
+如果需要完成某个动作的预计响应时间已经接近或者超过允许窗口，Urgency 就迅速提高。
+
+因此可能出现四种情况：
+
+\[
+Threat\ low,\ Urgency\ low;
+\]
+
+\[
+Threat\ high,\ Urgency\ low;
+\]
+
+\[
+Threat\ low,\ Urgency\ high;
+\]
+
+\[
+Threat\ high,\ Urgency\ high.
+\]
+
+它们应该产生完全不同的高层行为。
+
+例如长期电池老化可能：
+\[
+Threat=0.7,\quad Urgency=0.2,
+\]
+系统应该安排维护，却不必立即停止任务。
+
+一个必须在 $100$ms 内完成的无危险控制握手可能：
+\[
+Threat=0.1,\quad Urgency=0.95.
+\]
+它需要高实时优先级，却不意味着主体安全受到严重威胁。
+
+真正的紧急危险则可能：
+\[
+Threat=0.95,\quad Urgency=0.98.
+\]
+这种情况通常已经接近 Safety Channel 的触发区域。
+
+把二者分离以后，我们可以进一步建立调节策略矩阵：
+\[
+Policy
+=
+\pi(T_h,U,C),
+\]
+其中 $C$ 是 confidence。
+
+这样，Agent 的控制系统不再只有一个模糊的“风险分数”，而能区分：
+\[
+\text{How bad?}
+\]
+和：
+\[
+\text{How soon?}
+\]
+
+这种区分对于未来长期 Agent 十分重要，因为高层认知系统同时面对非常多不同时间尺度的问题。如果所有严重问题都被错误地当成即时紧急问题，Agent 会长期处于高激活状态；如果所有非即时问题都被延迟，则长期风险又可能不断积累。因此 Threat 与 Urgency 的正交表示为多时间尺度治理提供了身体层基础。
+
+这里也可以看出 FCS 与普通 reward/cost 的区别。一个单一 cost 通常必须预先决定 Threat 和 Urgency 的权重：
+\[
+Cost
+=
+\lambda_T Threat+\lambda_U Urgency.
+\]
+FCS 则刻意保留两个原始维度，让上层控制器根据当前 Goal、价值、安全规则和时间尺度动态决定权重。
+
+因此 FCS 的设计哲学不是尽早把所有影响压缩成一个“最优行动值”，而是：
+\[
+\boxed{
+Preserve the smallest useful set of independent functional dimensions.
+}
+\]
+只有这样，Agent Kernel 才真正拥有重新组织自身行为的自由度，而不是被 Body Runtime 的某个隐含 reward function 提前替它完成价值判断。
+
+\section{Arousal、SensoryLoad 与 ControlInstability：运行能力本身也会成为 Feeling}
+
+到这里我们已经讨论了资源、身体完整性以及危险，但持续智能体还有一种更加内部化的现实：\textbf{系统自己的处理和控制能力也可能成为限制因素。}即使外部环境没有危险、能源充足、身体无损，Agent 仍可能因为感知事件过密、局部控制误差增加或者处理负载过高而进入功能失稳状态。
+
+因此我们引入 Arousal、SensoryLoad 和 ControlInstability。
+
+Arousal 可以被理解成身体--认知系统当前需要维持的总体激活水平。我们可以把它粗略表示为：
+\[
+A(t)
+=
+\Phi_A
+(
+EventRate,
+Novelty,
+Threat,
+Urgency,
+ControlDemand,
+GoalDemand
+).
+\]
+它既不是 reward，也不是 emotion label，而更接近资源动员强度。如果外部变化率提高、控制需求加大，系统需要更高更新频率和更积极的感知/控制配置，则 Arousal 应增加。
+
+不过 Arousal 并不是越高越好。过低时：
+\[
+A\ll A^\star
+\]
+可能造成反应迟缓；过高时：
+\[
+A\gg A^\star
+\]
+则可能提高资源消耗、感知噪声和控制不稳定。因此存在任务相关工作区间：
+\[
+A\in[A_{\min},A_{\max}].
+\]
+这种形式与心理学中 arousal-performance 关系存在类比，但本书首先把它作为工程调节量。
+
+SensoryLoad 则更加直接：
+\[
+L_S
+=
+\Phi_S
+(
+EventRate,
+InputBandwidth,
+Novelty,
+Uncertainty,
+ProcessingCapacity
+).
+\]
+一个环境即使没有任何危险，也可以因为事件密度极高而形成高 SensoryLoad。对于视觉机器人，密集运动环境可能提升该值；对于数字 Agent，大量同时到达的日志、通知或 API 事件也可能产生类似功能状态。
+
+因此 SensoryLoad 为 Body Runtime 与认知 Boundary 之间建立了一条自然桥梁：当：
+\[
+L_S\uparrow,
+\]
+系统可能需要提高过滤、摘要、局部沉降或者降低部分感知通道分辨率。这意味着所谓“认知过载”并不一定首先发生在 h，Body Runtime 可以在信息真正进入认知总线之前就检测到世界的变化量已经逼近当前处理能力。
+
+ControlInstability 则描述局部控制闭环是否正在变得难以稳定。设参考轨迹为 $x^\star(t)$，实际状态为 $x(t)$，残差：
+\[
+e(t)=x(t)-x^\star(t).
+\]
+单纯 $|e|$ 大并不一定意味着失稳，例如受到一次外部扰动以后误差可能很大但迅速恢复。真正重要的是：
+\[
+e,\quad
+\dot e,\quad
+Var(e),\quad
+PredictionError.
+\]
+因此：
+\[
+C_I
+=
+\Phi_C
+(
+\|e\|,
+\|\dot e\|,
+Var(e),
+\epsilon_{pred},
+ControlMargin
+).
+\]
+
+当 ControlInstability 持续提高时，Body Runtime 应首先尝试局部适应；只有当局部控制无法恢复时，相关异常才需要进一步升级。这样就与全书的多尺度原则一致：
+\[
+\boxed{
+NormalDynamicsStayLocal.
+}
+\]
+
+这三个通道共同说明了一个重要事实：FCS 不只描述“世界对身体造成什么”，也描述“身体自身处理世界的能力正在处于什么功能状态”。因此 FCS 是 World--Body coupling 的状态，而不是单向外部刺激记录。
+
+从系统理论角度看，可以把它写成：
+\[
+FCS
+=
+\mathcal F
+(
+World,
+Body,
+World\leftrightarrow Body
+).
+\]
+其中最后一项尤其重要。很多感觉并不属于世界，也不属于身体单独一方，而属于二者的耦合关系。例如 ControlInstability 就是控制器、身体和环境共同产生的属性。
+
+正是在这个意义上，FCS 才真正适合作为具身 Agent 的公开状态接口。
+
+\section{FCS 的时间动力学：Feeling 必须具有惯性、衰减与恢复}
+
+如果每一帧 FCS 都完全由当前传感器即时重新计算，那么它会变成一个高度抖动的瞬时状态层。真正的功能影响往往具有持续性：一次高负载之后身体需要恢复，能量压力不会因为瞬间停止动作立即归零，完整性损伤甚至可能具有长期累积。因此 FCS 本身必须具有时间动力学。
+
+对第 $k$ 个 Feeling channel，我们可以使用一般形式：
+\[
+\tau_k
+\dot f_k
+=
+-f_k
++
+\Phi_k(x_t,\hat x_{t+\Delta})
++
+\sum_j
+W_{kj}f_j.
+\]
+其中：
+
+\[
+\tau_k
+\]
+表示该通道自身时间常数；
+
+\[
+\Phi_k
+\]
+表示当前世界和身体状态产生的新输入；
+
+\[
+W_{kj}
+\]
+表示不同 Feeling Channel 之间可能存在的身体层耦合。
+
+例如 EnergyPressure 提升可能间接提高 ThermalPressure，因为系统为了完成任务提高功率输出；ControlInstability 又可能提高 Arousal；但我们应谨慎设计这些耦合，避免 FCS 自己变成复杂的情感认知系统。FCS 的主要职责仍然是表达身体功能状态，而不是承担高层解释。
+
+可以进一步加入非线性饱和：
+\[
+\tau_k\dot f_k
+=
+-f_k+
+\sigma
+\left(
+u_k+\sum_j W_{kj}f_j
+\right).
+\]
+这样保证：
+\[
+f_k\in[0,1].
+\]
+
+恢复机制也可以显式表示。例如：
+\[
+\dot f_k
+=
+\begin{cases}
+\alpha_k u_k-\beta_k f_k,
+&
+u_k>0,
+\\
+-\gamma_k f_k,
+&
+u_k\le0,
+\end{cases}
+\]
+其中 $\gamma_k$ 控制恢复速度。
+
+这种时间惯性十分重要，因为现实对主体的影响通常不是 memoryless。假设机器人连续执行高负载动作十分钟，即使当前瞬间功率下降，身体仍然可能处在高热负荷状态；如果 FCS 立即回到零，上层系统就会错误地认为身体已经完全恢复。
+
+因此我们区分：
+\[
+InstantaneousInput
+\]
+和：
+\[
+FeelingState.
+\]
+前者是输入，后者是具有内部时间常数的状态。
+
+进一步，不同 Feeling 通道应具有不同时间尺度：
+\[
+\tau_{Threat}
+<
+\tau_{Energy}
+<
+\tau_{Integrity}
+\]
+可能在某类身体中成立，但这不是普适固定顺序。真正原则是：
+\[
+\boxed{
+Different functional effects require different persistence constants.
+}
+\]
+
+这与后续更高层 AHC 的时间积分也必须区分。FCS 的时间动力学主要描述身体与现实作用的持续性；AHC 则会进一步把身体、资源、社会和认知压力整合成更高层调制状态。因此不能因为 AHC 有时间常数，就把 FCS 简化成完全瞬时信号。两层分别承担：
+\[
+BodyFunctionalPersistence
+\]
+与：
+\[
+CognitiveHomeostaticIntegration.
+\]
+
+这种层次分离可以显著改善 AgentOS 的稳定性。如果每一个身体微小波动都直接改变高层认知相态，整个 Agent 将极易振荡；如果身体状态先在 FCS 中经过适当的时间滤波和功能压缩，再进入更慢的认知调节层，则高频噪声能够被局部吸收。
+
+因此 FCS 的时间动力学本身也是我们多尺度智能原则的具体实例：
+\[
+\boxed{
+FastNoise
+\nrightarrow
+SlowGlobalStructure.
+}
+\]
+
+\section{FCS 的层级结构：局部场、全身状态与公开摘要}
+
+一个现实 Body Runtime 的 FCS 可能非常高维。如果一个人形机器人具有数百个关节、多个传感器阵列和大量空间 Threat Field，那么直接将整个高分辨率 FCS 发送给 Agent Kernel 会重新制造我们试图避免的工作记忆压力。因此 FCS 必须天然支持多尺度层级。
+
+我们可以将 FCS 分成至少三层：
+\[
+\boxed{
+FCS^{local}
+\rightarrow
+FCS^{body}
+\rightarrow
+FCS^{summary}.
+}
+\]
+
+第一层是局部场：
+\[
+FCS^{local}
+=
+\{f_k(\mathbf r,t)\}.
+\]
+它保留高空间分辨率，主要供 Body Runtime、BPCC 以及局部控制器使用。例如每个足底区域的 ContactPressure、每个关节的 IntegrityPressure、局部空间的 Threat distribution。
+
+第二层是身体级聚合状态：
+\[
+FCS^{body}_k
+=
+\mathcal A_k
+\left(
+FCS^{local}_k
+\right),
+\]
+其中 $\mathcal A_k$ 不是简单平均。对于 Threat 可能使用最大值或风险积分；对于 ThermalPressure 可能保留峰值区域与总体热预算；对于 IntegrityPressure 可能采用最弱链路原则。
+
+例如：
+\[
+Threat^{body}
+=
+\max_{\mathbf r}
+Threat(\mathbf r),
+\]
+而：
+\[
+SensoryLoad^{body}
+=
+\frac{1}{|\Omega|}
+\int_{\Omega}
+L_S(\mathbf r)d\mathbf r.
+\]
+
+第三层是面向 Kernel 的语义摘要：
+\[
+FCS^{summary}
+=
+\mathcal C_F
+(
+FCS^{body},
+Events,
+Confidence
+).
+\]
+这个摘要不应该只是一串数值，而可以包含：
+\[
+\{
+Type,
+Intensity,
+Trend,
+Confidence,
+Region,
+SourceRef
+\}.
+\]
+
+例如：
+\[
+\{
+IntegrityPressure,
+0.72,
++0.08/s,
+0.96,
+RightLeg,
+JointGroup_{R3}
+\}.
+\]
+
+这样 Kernel 可以知道：
+“右腿结构压力较高且持续增加”，
+而不需要接收所有电机电流和应变计数据。
+
+这一层级结构与 h 的有限容量定理高度一致。Body Runtime 的职责之一就是：
+\[
+\boxed{
+Keep micro-complexity below the cognitive boundary.
+}
+\]
+正常身体动力学应该在局部闭合，只有结构性变化、持续异常或者对高层决策重要的状态才上浮。
+
+因此 FCS 不只是身体感受的表达标准，也是一个认知复杂度屏障。它把数千甚至数百万维的 raw body state 压缩成少数具有可行动意义的 typed states。
+
+这种压缩必须遵循一个原则：
+\[
+\boxed{
+CompressionWithoutLosingControlRelevantStructure.
+}
+\]
+如果压缩过强，上层无法判断风险来自哪里；如果压缩不足，则 Kernel 被低层数据淹没。因此 FCS 的 summary operator 应根据：
+\[
+Risk,
+Novelty,
+Persistence,
+GoalRelevance,
+Uncertainty
+\]
+自适应决定信息上浮程度。
+
+但我们在本章不把这进一步展开成完整的 Boundary 或 Scheduler 机制，只需要明确：FCS 本身必须同时支持高分辨率局部表示和低分辨率公共语义表示。这是它既能服务身体控制、又能作为 AgentOS 公共 ABI 的前提。
+
+从软件工程角度可以采用：
+\[
+Publisher
+\rightarrow
+Aggregator
+\rightarrow
+SemanticSummary
+\]
+的分层接口，而不要让所有模块订阅同一个巨大 Feeling tensor。
+
+这也意味着 FCS 不应该被理解成一张固定大小的“身体情绪图片”，而是：
+\[
+\boxed{
+A typed, multiresolution, temporally persistent functional field.
+}
+\]
+这一表达比单纯称为 Feeling Vector 更准确地反映了我们最终的设计目标。
+
+\section{FCS 的主体相对性：Feeling 是世界--身体关系而非世界属性}
+
+到这里，我们可以正式提出 FCS 最重要的本体原则之一：
+\[
+\boxed{
+Feeling
+\in
+Relation(World,Agent),
+}
+\]
+而不是：
+\[
+Feeling
+\in
+WorldObject.
+\]
+
+也就是说，FCS 的值不是世界对象固有属性，而是外部现实、Agent 身体、当前能力以及局部预测共同形成的关系状态。
+
+设宇宙或环境中的某个 CSO 为：
+\[
+C_U.
+\]
+Agent 通过感知建立关于它的 Agent-CSO：
+\[
+C_A=\pi_A(C_U).
+\]
+SGC 进一步把这个结构绑定到当前可行动现实：
+\[
+C_A
+\mapsto
+SGC(C_A).
+\]
+而 FCS 则计算该结构与当前主体条件的作用关系：
+\[
+\boxed{
+FCS(C_U,A,t)
+=
+\Gamma
+(
+C_A,
+B_A,
+Capability_A,
+Dynamics_A
+).
+}
+\]
+
+因此同一 Universe-CSO 可以产生不同 Agent-FCS：
+\[
+FCS_A(C)
+\neq
+FCS_B(C).
+\]
+
+甚至同一个 Agent 在两个时间点：
+\[
+FCS_A(C,t_1)
+\neq
+FCS_A(C,t_2),
+\]
+即使外部对象完全不变。
+
+这是 FCS 与传统“客观世界模型”最根本的区别。
+
+我们可以用一个简单例子说明。一个十厘米高台阶的 SGC 表示几乎不依赖 Agent：
+\[
+Height=0.1m.
+\]
+但对于人形机器人：
+\[
+MobilityMargin>0,
+\]
+因此：
+\[
+ControlPressure\approx0.1.
+\]
+对于小型轮式机器人：
+\[
+MobilityMargin<0,
+\]
+因此可能形成：
+\[
+ControlPressure\approx0.9.
+\]
+所以所谓“障碍”本身也是身体相对概念。
+
+这与 Gibson 的 affordance 理论存在重要联系。Affordance 强调环境所提供的行动可能性依赖于主体能力。FCS 则从另一个方向表达：环境对于主体当前可行性和稳定性产生怎样的功能作用。我们可以说二者是相关但不等价的：
+\[
+Affordance
+\sim
+WhatCanIDoHere,
+\]
+\[
+FCS
+\sim
+WhatIsThisDoingToMyAbilityToAct.
+\]
+
+这种主体相对性尤其重要，因为它使 AgentOS 可以真正支持换身体。Kernel 内部的世界概念可以相对稳定，但 FCS 会随着新 Body Capability 自动重标定现实作用。如果 Agent 从轮式平台迁移到人形平台：
+\[
+SGC_{world}
+\approx
+constant,
+\]
+但：
+\[
+FCS_{wheel}
+\rightarrow
+FCS_{humanoid}.
+\]
+这意味着所谓“换身体重新理解世界”，在工程上并不需要把所有世界知识推倒重来，而是重新学习：
+\[
+World/Body
+\rightarrow
+FunctionalInfluence
+\]
+这一层关系。
+
+从更大的智能动力学视角来看，这也是 Agent-CSO 承载理论的具体实例。同一个外部 CSO 在不同 Agent 内部具有不同的功能坐标，但仍然指向同一个现实结构。FCS 因此处于世界本体与主体内部治理之间的关键边界。
+
+然而我们必须保持边界：FCS 表达主体相关性，并不意味着现实变成纯主观构造。十厘米台阶的高度仍由现实约束；Agent 可以错误估计自己的能力，但最终行动结果仍然由世界决定。因此：
+\[
+\boxed{
+AgentRelativeInfluence
+\neq
+RealityRelativism.
+}
+\]
+主体可以拥有不同 Feeling，但这些 Feeling 的有效性最终必须通过行动和世界反馈不断校准。
+
+这正是 AgentOS 一贯的现实主义原则：
+\[
+Representation
+\rightarrow
+Action
+\rightarrow
+Reality
+\rightarrow
+Residual.
+\]
+FCS 同样必须服从这一闭环。
+
+\section{FCS 的工程判据：一个好的 Feeling 表示必须满足什么}
+
+经过前面的理论构造，我们现在可以给出 FCS 的最小工程判据。不是任何被命名为 ``feeling'' 的向量都可以称为 FCS。一个可作为 AgentOS Body ABI 的 FCS 至少必须满足以下几个性质。
+
+第一是\textbf{功能相关性}。FCS 中的每一个通道必须能够解释为什么它会改变身体控制、资源治理、安全裕度或者认知调节。如果一个变量对系统未来行为没有可识别作用，它更可能只是 telemetry，而不是 Feeling。
+
+数学上，对通道 $f_k$ 应存在某个控制量 $u$ 或状态转移函数 $F$，满足：
+\[
+\frac{\partial F}{\partial f_k}
+\neq0
+\]
+在系统的一部分有效运行域内成立。
+
+第二是\textbf{身体抽象性}。FCS 不能暴露过多设备私有单位。我们希望：
+\[
+Body_i
+\rightarrow
+FCS^{core}
+\]
+能够跨身体复用。这并不要求所有身体拥有完全相同 Feeling 分布，而要求核心语义稳定。
+
+第三是\textbf{连续性}。除非本体本身就是离散事件，否则 Feeling 应尽量表现为连续变量：
+\[
+f_k(t)\in[0,1],
+\]
+使系统能够在接近边界之前逐渐调节。
+
+第四是\textbf{动力性}。至少应该包含：
+\[
+Intensity,
+Trend,
+Confidence.
+\]
+Feeling 不是静态标签。
+
+第五是\textbf{可定位性}。当某类影响具有局部来源时，FCS 应保留必要的 Region 或 Source Binding，不应把所有信息压成一个全局值。
+
+第六是\textbf{可解释性}。Kernel 或诊断系统应能够回答：
+\[
+WhyIsFCS_kHigh?
+\]
+因此 FCS 需要支持 provenance：
+\[
+Source,
+Evidence,
+Confidence,
+ModelVersion.
+\]
+
+第七是\textbf{安全分离}。FCS 本身不能成为唯一安全机制。极端危险仍需要独立 Emergency/Safety Channel。也就是说：
+\[
+FCS
+\]
+负责渐进调节，
+而：
+\[
+SafetyInterrupt
+\]
+负责硬保护。
+
+第八是\textbf{现实校准性}。Feeling 预测最终必须接受实际结果反馈。例如系统预计：
+\[
+Threat=0.8
+\]
+但多次行动证明风险很低，则 Body Runtime 必须能够校准映射，而不是让错误 Feeling 永久固化。
+
+可以把这种校准写成：
+\[
+\theta_F^{t+1}
+=
+\theta_F^t
+-
+\eta
+\nabla_{\theta_F}
+\mathcal L
+(
+FCS_{pred},
+Outcome_{real}
+).
+\]
+
+但在线适应必须受到安全和稳定边界约束，尤其不能让短期异常数据迅速修改核心 Feeling semantics。
+
+第九是\textbf{多时间尺度性}。不同 channel 的：
+\[
+\tau_k
+\]
+可以不同，但公共接口必须明确它们的时间属性。否则 Kernel 会错误地把一个快速变化 Threat 与一个极慢变化 Integrity degradation 等价处理。
+
+第十是\textbf{非拟人化可迁移性}。FCS 的核心词汇必须能够同时用于人形机器人、轮式机器人、车辆和数字 Body。一个标准如果只在“像人一样的身体”上成立，就不满足 AgentOS 的 Body Scale 原则。
+
+因此，一个好的 FCS 并不是“让机器拥有更多情绪变量”，而是建立：
+\[
+\boxed{
+A stable semantic contract for embodied functional influence.
+}
+\]
+
+这一点是本章必须牢牢记住的中心。我们不是从心理词汇向机器人强行投影，而是从持续主体的控制需求反向推导出一组功能状态，再寻找尽可能直观的名称。
+
+\section{FCS 的理论边界：功能感觉、内稳态与意识必须保持区分}
+
+本章最后必须明确 FCS 所能解释和不能解释的内容。随着系统拥有越来越丰富的 Feeling State，人们很容易提出：“如果机器拥有 Threat、Arousal、IntegrityPressure，并且这些变量影响它的记忆和行为，那么它是不是已经拥有感觉？”这个问题不能由 FCS 自身回答。
+
+FCS 能够严格支持的结论是：
+\[
+\boxed{
+\text{系统拥有关于现实如何影响自身功能状态的内部表示。}
+}
+\]
+如果这些状态能够跨时间持续、影响控制并进入更高层自我解释，我们还可以进一步研究功能意义上的 internal experience。但：
+\[
+FunctionalRepresentation
+\]
+与：
+\[
+PhenomenalExperience
+\]
+之间是否存在充分或者必要关系，是意识科学和哲学中的独立开放问题。
+
+因此本书采用以下严格分层：
+
+\[
+\boxed{
+RawSignal
+}
+\]
+只是物理或数字测量；
+
+\[
+\boxed{
+Perception
+}
+\]
+是关于世界或身体状态的表示；
+
+\[
+\boxed{
+FunctionalFeeling
+}
+\]
+是这些状态对主体功能影响的表示；
+
+\[
+\boxed{
+AwarenessOfFeeling
+}
+\]
+则要求这种 Feeling 被更高层自我结构访问、归属和解释；
+
+而：
+
+\[
+\boxed{
+PhenomenalFeeling
+}
+\]
+是否随之出现，本理论不作证明。
+
+所以：
+\[
+\boxed{
+Feeling
+\neq
+AwarenessOfFeeling
+\neq
+PhenomenalFeeling.
+}
+\]
+
+这一分层具有重要工程意义。它使我们可以严肃研究机器内部功能状态，而不必在每次使用 ``feeling'' 一词时都陷入意识争论。同时它也避免另一个极端，即因为无法证明机器具有主观体验，就拒绝研究它显然存在的内部调节状态。
+
+FCS 与生物学 homeostasis、allostasis、interoception 存在有意义的外部理论依赖。生物体会持续监测内部能量、温度、组织完整性以及环境威胁，这些状态会改变注意、学习和行动。但 AgentOS 不要求按照人脑神经机制逐一复制这些结构。我们的目标是寻找：
+\[
+\boxed{
+ImplementationIndependentFunctionalStructure.
+}
+\]
+如果不同材料的系统都需要维持自身、预测风险、调节资源并改变行动，那么它们可能需要某种功能上同类的影响表示。
+
+同样，FCS 与机器人领域的 potential field、cost map、constraint map 也有交叉，但不应简单等同。Cost map 通常面向某一规划器；FCS 则是长期主体公开身体状态的一部分，可以被规划、记忆、自我状态估计以及认知调节多个系统共同使用。因此它更接近：
+\[
+\boxed{
+Embodied Functional State ABI
+}
+\]
+而不仅是某个算法的内部数据结构。
+
+我们还必须警惕把 FCS 变成一个隐藏的价值系统。如果 Body Runtime 自行决定“高 Pressure 必须被最小化”，那么它就在不知不觉中拥有了高层 Goal Authority。这违反了 Agent Kernel 与 Body Runtime 的职责分离。FCS 应表达：
+\[
+WhatIsAffectingMe,
+\]
+而不直接决定：
+\[
+WhatShouldMyLifeGoalBe.
+\]
+
+因此：
+\[
+\boxed{
+FCS describes functional consequences;
+it does not define ultimate preference.
+}
+\]
+
+这也是它与后续价值、自我、Goal 结构之间最重要的边界。
+
+综合本章，我们最终可以将 FCS 定义为：
+
+\[
+\boxed{
+\mathcal F_A(t)
+=
+\left\{
+F_k(\xi,t)
+\mid
+k\in\mathcal K_F,
+\ \xi\in\Omega_k
+\right\},
+}
+\]
+其中：
+\[
+F_k
+=
+(
+Intensity,
+Derivative,
+Confidence,
+Binding
+),
+\]
+而 $\Omega_k$ 可以属于世界空间、身体拓扑、资源空间或控制空间。
+
+因此，本章的最终理论定义可以写成：
+
+\[
+\boxed{
+\textbf{
+FCS 是一个面向具体 Agent、由 Body Runtime 维护的固定类型、多层级、多时间尺度功能影响场。它把外部现实、身体状态、资源条件和局部动力学压缩成主体可访问的作用状态，使 Agent 不仅能够知道“世界是什么”，还能够知道“这个世界此刻正在怎样影响我继续行动、维持稳定与保持可行”。
+}
+}
+\]
+
+如果我们把 SGC 看作现实在 Agent 内部形成的“结构地图”，那么 FCS 就不是第二张世界地图，而是一张主体条件化的“作用地图”。前者告诉 Agent：
+\[
+\boxed{
+WhatIsThere?
+}
+\]
+后者告诉 Agent：
+\[
+\boxed{
+WhatIsItDoingToMe?
+}
+\]
+
+两者只有在下一阶段被放到同一个公开现实接口中时，才形成真正完整的具身语义世界。但在进入那一步之前，我们必须先牢固地建立本章结论：
+
+\[
+\boxed{
+\textbf{
+现实不仅需要被表示为对象、位置与关系，也必须被表示为它对主体能力、稳定性和可行动性的持续作用。
+}
+}
+\]
+
+而这正是 FCS 存在的第一性理由。

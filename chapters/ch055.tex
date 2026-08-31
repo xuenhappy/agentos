@@ -1,215 +1,1562 @@
 \chapter{SGC 与现实：从 Scene Graph 到 Actionable Reality}
-\chaptervoice{这一章，我们围绕“SGC 与现实：从 Scene Graph 到 Actionable Reality”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明认知内核通过身体进入现实。}
-
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 Body Runtime、FBI、SGC/FCS、三信号通道、BPCC 与 Reality Authority 的具身讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是具身认知、分层控制、MPC、状态估计与安全包络（模型预测控制、Kalman 状态估计与具身认知）。
-
-本章使用上一章“SGC：语义图坐标空间”已经得到的对象与边界；本章产出将供下一章“FCS：现实如何影响主体”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在具身认知、分层控制、MPC、状态估计与安全包络上。
-\section{为什么 SGC 不是普通 Scene Graph}
-\begin{narration}
-现在把镜头移到“为什么 SGC 不是普通 Scene Graph”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“为什么 SGC 不是普通 Scene Graph”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC 与现实：从 Scene Graph 到 Actionable Reality”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对为什么 SGC 不是普通 Scene Graph的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“为什么 SGC 不是普通 Scene Graph”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{世界中心与身体中心}
-\begin{narration}
-现在把镜头移到“世界中心与身体中心”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“世界中心与身体中心”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC 与现实：从 Scene Graph 到 Actionable Reality”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对世界中心与身体中心的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“世界中心与身体中心”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{持续实体身份}
-\begin{narration}
-现在把镜头移到“持续实体身份”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“持续实体身份”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC 与现实：从 Scene Graph 到 Actionable Reality”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对持续实体身份的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“持续实体身份”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{多传感器融合}
-\begin{narration}
-现在把镜头移到“多传感器融合”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“多传感器融合”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC 与现实：从 Scene Graph 到 Actionable Reality”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对多传感器融合的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“多传感器融合”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{关系语义}
-\begin{narration}
-现在把镜头移到“关系语义”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“关系语义”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC 与现实：从 Scene Graph 到 Actionable Reality”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对关系语义的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“关系语义”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{预测语义}
-\begin{narration}
-现在把镜头移到“预测语义”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“预测语义”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC 与现实：从 Scene Graph 到 Actionable Reality”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对预测语义的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“预测语义”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{可行动性}
-\begin{narration}
-现在把镜头移到“可行动性”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“可行动性”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC 与现实：从 Scene Graph 到 Actionable Reality”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对可行动性的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“可行动性”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{《疑犯追踪》Machine View 作为 SGC 的影视化原型}
-\begin{narration}
-现在把镜头移到“《疑犯追踪》Machine View 作为 SGC 的影视化原型”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“《疑犯追踪》Machine View 作为 SGC 的影视化原型”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC 与现实：从 Scene Graph 到 Actionable Reality”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对《疑犯追踪》Machine View 作为 SGC 的影视化原型的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“《疑犯追踪》Machine View 作为 SGC 的影视化原型”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{SGC 作为 Agent-CSO 的现实空间落地层}
-\begin{narration}
-现在把镜头移到“SGC 作为 Agent-CSO 的现实空间落地层”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“SGC 作为 Agent-CSO 的现实空间落地层”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SGC 与现实：从 Scene Graph 到 Actionable Reality”而言，它承担的是认知内核通过身体进入现实中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自具身认知、分层控制、MPC、状态估计与安全包络，但本书对SGC 作为 Agent-CSO 的现实空间落地层的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“SGC 作为 Agent-CSO 的现实空间落地层”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“SGC 与现实：从 Scene Graph 到 Actionable Reality”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“FCS：现实如何影响主体”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\label{chap:sgc-reality}
+
+\fbox{
+\parbox{0.94\textwidth}{
+\textbf{【本章总体说明】}
+
+本章讨论的核心问题不是“智能体如何把摄像头看到的东西画成一张更漂亮的图”，而是一个更基础的问题：\textbf{现实世界中的对象、关系、位置、状态和可能行动，如何被转换为一个持续存在、可被认知系统直接使用的语义现实空间。}
+
+上一章已经定义了 SGC（Semantic Graph Coordinate Space，语义图坐标空间）的基本结构。本章进一步强调，SGC 的理论地位并不等同于传统计算机视觉中的 Scene Graph，也不等同于 SLAM 地图、目标检测结果或多模态特征张量。SGC 是一个以智能体身体为行动参照，将空间几何、持续实体、语义关系、认识论状态、预测结果和可行动性统一绑定起来的 \textbf{Actionable Reality Representation}。
+
+因此，本章将建立如下核心命题：
+\[
+\boxed{
+SGC \neq ImageUnderstanding
+}
+\]
+\[
+\boxed{
+SGC \neq SceneGraph
+}
+\]
+\[
+\boxed{
+SGC \neq World
+}
+\]
+而更准确地说：
+\[
+\boxed{
+SGC
+=
+\text{Agent 对当前可行动现实的持续、空间化、语义化和认识论标注后的结构表示}
+}
+\]
+
+在整个 AgentOS 理论中，SGC 所承担的是 Universe-CSO 与 Agent-CSO 之间极其关键的一层现实落地：它使抽象认知结构能够重新绑定到“这个对象现在在哪里”“这个关系现在发生在谁之间”“这个预测对应现实中的哪一部分”“这个身体当前能够做什么”这些具体问题上。换句话说，SGC 是内部认知结构重新触碰现实的坐标面。
+}
+}
+
+\section{为什么 SGC 不是传统意义上的 Scene Graph}
+
+我们首先需要清除一个很容易产生的误解。第一次看到 ``Semantic Graph Coordinate Space'' 这个名称时，读者很容易把 SGC 理解成计算机视觉领域 Scene Graph 的扩展版本，即把一张图像中的对象表示成节点，把 ``person-holds-cup''、``car-on-road'' 等关系表示成边。这样的理解只触及了 SGC 最表层的一部分，而没有触及它真正的理论功能。
+
+传统 Scene Graph 通常可以抽象为
+\[
+\mathcal{G}_{scene}
+=
+(V,E),
+\]
+其中节点集合
+\[
+V=\{v_1,v_2,\ldots,v_n\}
+\]
+表示某一观察窗口内识别出的对象，边
+\[
+e_{ij}\in E
+\]
+表示对象之间的语义关系。对于静态图像而言，这种表示已经比像素空间前进了一大步，因为它把感知结果从
+\[
+Pixel
+\]
+提升到了
+\[
+Object + Relation.
+\]
+
+然而，一个真正持续存在的智能体面对的并不是一张孤立图片，而是一个连续演化的现实世界。它面对的问题不是“这张图里有什么”，而是：
+\begin{quote}
+昨天出现的那个人和现在摄像头里的人是不是同一个人？\\
+刚才放在桌上的物体现在去了哪里？\\
+这个门虽然在视觉上存在，但对于当前身体而言是否可通过？\\
+前方区域是当前观察到的事实，还是根据过去轨迹预测出来的？\\
+某个对象虽然暂时被遮挡，是否仍应作为持续存在的现实实体保留？\\
+某个关系究竟是传感器直接观察到的，还是系统根据其他结构推导出来的？
+\end{quote}
+
+因此，SGC 必须至少表示为一个随时间演化的结构：
+\[
+\boxed{
+\mathcal{S}_{SGC}(t)
+=
+\left(
+V_t,
+E_t,
+G_t,
+A_t,
+\Xi_t
+\right)
+}
+\]
+其中 \(V_t\) 是当前认为存在的实体集合，\(E_t\) 是实体之间的语义、空间、因果或功能关系，\(G_t\) 是空间几何结构，\(A_t\) 表示与当前身体有关的 affordance 或行动关系，而 \(\Xi_t\) 则保存认识论状态，例如某一信息究竟是 observed、derived、predicted 还是 counterfactual。
+
+这样一来，SGC 的节点就不能只是一个类别标签。一个实体 \(v_i\) 更接近：
+\[
+v_i(t)
+=
+\left[
+id_i,
+g_i(t),
+a_i(t),
+s_i(t),
+q_i(t),
+\chi_i(t)
+\right],
+\]
+其中 \(id_i\) 是跨时间身份，\(g_i\) 是几何状态，\(a_i\) 是相对稳定属性，\(s_i\) 是动态语义状态，\(q_i\) 是置信度或认识论质量，而 \(\chi_i\) 表示该实体与智能体当前目标和身体能力之间的功能关系。
+
+因此，传统 Scene Graph 所回答的是：
+\[
+\boxed{
+WhatRelationsAreVisibleInThisObservation?
+}
+\]
+而 SGC 要回答的是：
+\[
+\boxed{
+WhatPersistentStructuredRealityDoesTheAgentCurrentlyActWithin?
+}
+\]
+
+这是本章第一个关键区别。
+
+我们甚至可以把二者关系写成：
+\[
+\mathcal{G}_{scene}(t)
+\subseteq
+\mathcal{S}_{SGC}(t),
+\]
+但这个包含关系并不是数据结构意义上的简单字段包含，而是认识论层级上的包含。Scene Graph 可以成为构造 SGC 的一个观测源，但它本身并不足以成为智能体的现实空间。
+
+从 AgentOS 的总体框架看，这一区别非常重要。如果我们只把视觉识别结果直接输入大模型，那么每一个观察周期都可能重新产生一套对象描述，世界就会退化成连续文本片段。SGC 的作用恰恰是阻止这种退化。它要求系统形成一个持续存在的、具有实体身份和空间关系的世界，使语言模型、规划器以及其他认知结构不必每次重新从原始感知中重建现实。
+
+因此，SGC 的第一原则可以写为：
+\[
+\boxed{
+ObservationIsTransient,\quad
+WorldStructureMustPersist.
+}
+\]
+
+观察是瞬时的，世界结构必须持续。
+
+这一点为后面讨论世界中心表示、持续实体身份以及多传感器融合奠定了基础。
+
+\section{从相机中心到世界中心，再到身体中心}
+
+传统视觉系统天然从传感器开始。摄像头产生图像，雷达产生点云，麦克风产生波形，因此最自然的计算表示也是传感器中心的：
+\[
+\mathcal{X}^{sensor}_t.
+\]
+例如一个目标在相机坐标系中的位置可以写成
+\[
+p_i^{C}(t)
+=
+(x_i^C,y_i^C,z_i^C).
+\]
+这种表示对于单帧检测非常方便，但对于持续智能而言却存在一个根本问题：传感器自身也在运动。
+
+如果一个机器人转头、移动或者更换摄像头，同一个现实对象会在感知空间中不断改变位置。于是若系统没有更稳定的表示层，就会出现：
+\[
+SameObject
+\rightarrow
+DifferentSensorCoordinates
+\rightarrow
+RepeatedReconstruction.
+\]
+
+因此，SGC 首先需要完成从 sensor-centric 到 world-centric 的转换。设传感器坐标到世界坐标的刚体变换为
+\[
+{}^{W}T_{C}(t),
+\]
+则一个传感器观测点可以转换为
+\[
+p_i^{W}(t)
+=
+{}^{W}T_{C}(t)p_i^{C}(t).
+\]
+来自多个传感器 \(C_1,C_2,\ldots,C_m\) 的观察可以进一步在统一世界框架中融合：
+\[
+p_i^{W}
+=
+\mathcal{F}
+\left(
+{}^{W}T_{C_1}z_{i,1},
+{}^{W}T_{C_2}z_{i,2},
+\ldots
+\right).
+\]
+
+但我们的理论还需要继续前进一步。对于智能而言，仅仅建立所谓 ``objective world coordinates'' 仍然不够。因为智能不是无身体的观察者。一个现实结构是否重要、可达、危险、可操作，与智能体自身身体有直接关系。因此，SGC 最终必须建立：
+\[
+\boxed{
+Body\in SGC.
+}
+\]
+
+这意味着身体不是在世界地图之外的一个 ``viewer''，而是世界图中的一个实体，并且是整个行动意义的参照中心。
+
+如果身体状态记为
+\[
+B_t
+=
+\left(
+x_B,
+R_B,
+v_B,
+\mathcal{C}_B
+\right),
+\]
+其中位置 \(x_B\)、姿态 \(R_B\)、速度 \(v_B\) 和能力集合 \(\mathcal{C}_B\) 共同决定当前行动条件，那么实体 \(o_i\) 对 Agent 的行动意义应写成
+\[
+\mathcal{A}_i
+=
+\mathcal{A}
+\left(
+o_i,
+B_t,
+G_t,
+C_t
+\right),
+\]
+其中 \(G_t\) 表示当前目标，\(C_t\) 表示环境约束。
+
+于是同一个现实对象可能对两个不同身体产生完全不同的 SGC 功能关系。例如：
+\[
+\text{Stairs}
+\]
+对于双足机器人可能具有
+\[
+Affordance=\text{Climbable},
+\]
+而对于普通轮式平台则可能具有
+\[
+Affordance=\text{Blocked}.
+\]
+
+这说明 SGC 既不是主观幻想，也不是纯客观物理地图，而是一种非常特殊的结构：
+\[
+\boxed{
+ObjectiveStructure
++
+AgentRelativeActionMeaning.
+}
+\]
+
+因此我们在这里需要区分三个层级：
+\[
+SensorSpace
+\rightarrow
+WorldSpace
+\rightarrow
+BodyCenteredActionSpace.
+\]
+
+第一层回答：
+\[
+\text{传感器接收到了什么？}
+\]
+
+第二层回答：
+\[
+\text{现实中什么东西在哪里？}
+\]
+
+第三层回答：
+\[
+\text{这些现实结构相对于当前这个身体意味着什么？}
+\]
+
+真正的 SGC 是后二者的统一，而不是第一层的简单语义化。
+
+这也是为什么我们把它称作 Semantic Graph \emph{Coordinate Space}，而不仅仅是 Semantic Graph。所谓 Coordinate，并不仅是欧氏几何坐标，还包括主体相对于现实所处的功能坐标。一个持续 Agent 最终需要的不是关于世界的百科全书，而是：
+\[
+\boxed{
+World + MeInWorld.
+}
+\]
+
+从这个意义上说，身体是现实进入智能的原点，也是智能重新进入现实的原点。
+
+\section{持续实体身份：现实不能在每一帧重新出生}
+
+一个持续智能系统如果不能维持对象跨时间的一致身份，就无法真正形成世界。它得到的只能是一系列互不相关的感知快照。因此，SGC 与普通图像语义分析之间最深的差异之一，是它必须实现：
+\[
+\boxed{
+PersistentEntityIdentity.
+}
+\]
+
+考虑某个现实实体 \(O\)。在不同时间 \(t_1,t_2,\ldots,t_n\)，系统得到观测
+\[
+z_{t_1},z_{t_2},\ldots,z_{t_n}.
+\]
+核心问题并不是分别判断每个 \(z_t\) 属于什么类别，而是估计：
+\[
+P
+\left(
+z_{t_k}\sim O_i
+\mid
+H_{t_k}
+\right),
+\]
+其中 \(H_{t_k}\) 表示截至当前时间的历史观测、空间轨迹、属性信息和关系结构。
+
+因此，一个 SGC 实体并不是由当前帧检测结果定义的，而应具有一个持续 belief state：
+\[
+b_i(t)
+=
+P
+\left(
+X_i(t)
+\mid
+Z_{\leq t}
+\right).
+\]
+即使实体当前没有被传感器直接观察到，只要已有证据足以支持其持续存在，SGC 也不应该立即删除该实体。
+
+例如，一个人走进房间随后进入遮挡区域。视觉检测可能在时刻 \(t_1\) 后消失，但现实并不会因为目标从摄像头中消失而消失。因此：
+\[
+ObservationMissing
+\neq
+EntityNonexistent.
+\]
+
+这可以形成 SGC 的一个基本认识论规则：
+\[
+\boxed{
+Visibility
+\neq
+Existence.
+}
+\]
+
+类似地：
+\[
+Detection
+\neq
+Identity.
+\]
+
+一个新的 detection 只有经过数据关联、轨迹连续性、外观一致性、关系约束等综合判断后，才可以被绑定到已有 SGC entity。
+
+我们可以把身份更新写成：
+\[
+id_t
+=
+\arg\max_i
+P
+\left(
+O_i
+\mid
+z_t,
+G_{t-1},
+R_{t-1},
+H_{t-1}
+\right),
+\]
+其中 \(G_{t-1}\) 表示已有几何状态，\(R_{t-1}\) 表示已有关系图，而 \(H_{t-1}\) 表示历史。
+
+这时关系本身也可以帮助维持身份。例如系统观察到某人过去经常驾驶某辆车、进入某栋建筑，那么新的模糊观察不仅可以依赖视觉相似度，还可以依赖关系一致性：
+\[
+P(O_i|z_t)
+\propto
+P(z_t|O_i)
+P(R_t|O_i)
+P(G_t|O_i).
+\]
+
+这体现了 SGC 的 Graph 属性：对象身份并不只来自对象自身，还来自它在关系网络中的结构位置。
+
+持续实体身份对于 AgentOS 的意义远不止 tracking。因为情景记忆 \(E\)、结构记忆 \(\Theta\) 以及更高层 Agent-CSO 都需要稳定引用现实对象。如果世界中的同一个人今天叫 ``object\_173''，下一分钟又变成 ``object\_628''，那么长期记忆中的很多结构都将失去现实绑定。
+
+因此，应建立：
+\[
+\boxed{
+PersistentWorldIdentity
+\leftrightarrow
+PersistentMemoryReference.
+}
+\]
+
+例如情景记忆可以保存：
+\[
+E_k
+=
+\left(
+id_i,
+event_k,
+t_k,
+context_k
+\right)
+\]
+而不是保存某一帧视觉 feature。这样多年之后，即使底层感知模型已经更新，只要 identity resolution 可以重新建立，历史经验仍然能够指向现实世界中相同的实体。
+
+当然，SGC 不应该假定身份永远确定。现实中会存在模糊、遮挡、替身、分类变化、对象组合与分裂。因此身份本身需要带有 epistemic confidence：
+\[
+q_i^{id}(t)\in[0,1].
+\]
+必要时还可以保留多个候选：
+\[
+\mathcal{H}_{id}
+=
+\{
+(O_1,p_1),
+(O_2,p_2),
+\ldots
+\}.
+\]
+
+因此，成熟 SGC 的原则不是“永远知道对象是谁”，而是：
+\[
+\boxed{
+IdentityMustPersistWhenEvidenceSupportsIt,
+AndUncertaintyMustPersistWhenEvidenceDoesNot.
+}
+\]
+
+保持确定性很重要，保持不确定性同样重要。
+
+\section{多传感器融合：SGC 不是某一种感官的世界}
+
+如果 SGC 要成为 Agent 当前现实的统一表示，它就不能属于任何一个具体传感器。摄像头、深度传感器、雷达、麦克风、触觉甚至网络接口，都只能是 SGC 的证据来源，而不是 SGC 本身。
+
+我们可以定义原始传感器集合：
+\[
+\mathcal{S}
+=
+\{
+S_1,S_2,\ldots,S_m
+\},
+\]
+其观测分别为
+\[
+z_t^{(1)},z_t^{(2)},\ldots,z_t^{(m)}.
+\]
+每一个传感器拥有自己的观测模型：
+\[
+z_t^{(k)}
+\sim
+P
+\left(
+z^{(k)}
+\mid
+X_t
+\right),
+\]
+其中 \(X_t\) 表示真实但不可直接完全获得的世界状态。
+
+SGC 的任务不是把这些信号简单拼接，而是维持：
+\[
+P
+\left(
+\mathcal{S}_{SGC}(t)
+\mid
+z_{\leq t}^{(1:m)}
+\right).
+\]
+换句话说，SGC 应更接近一个持续更新的结构化 belief space。
+
+例如视觉可能告诉系统：
+\[
+\text{前方有一辆汽车},
+\]
+雷达提供：
+\[
+\text{距离与相对速度},
+\]
+声音信号可能指出：
+\[
+\text{车辆引擎仍在运行},
+\]
+地图数据则给出：
+\[
+\text{这里是机动车通道}.
+\]
+这些信息不应成为四个彼此分离的 ``context blocks''，而应该共同更新同一个 SGC entity：
+\[
+v_{\text{car}}
+=
+[
+geometry,
+velocity,
+class,
+state,
+relations,
+confidence
+].
+\]
+
+我们可以将融合过程形式化为：
+\[
+b_t(X)
+\propto
+P(z_t^{1:m}\mid X)
+\int
+P(X_t|X_{t-1})
+b_{t-1}(X_{t-1})
+dX_{t-1}.
+\]
+虽然真实工程实现不一定采用严格 Bayesian filter，但这条公式体现了重要原则：当前 SGC 不只是当前观察的函数，也是上一时刻世界模型和世界动力学的函数。
+
+即：
+\[
+\boxed{
+SGC_t
+=
+Update
+(
+SGC_{t-1},
+Observation_t,
+DynamicsPrior
+).
+}
+\]
+
+这意味着 SGC 天然具有记忆，但这种记忆与 \(E\) 情景记忆不同。SGC 保存的是“当前世界现在被认为是什么”，而 \(E\) 保存的是“过去发生过什么”。因此：
+\[
+SGC_t
+\neq
+E_{\leq t}.
+\]
+
+当一辆汽车离开视野并被确定已经远离当前行动范围时，它可以从活跃 SGC 中退出，但相关事件仍然保留在 \(E\) 中。
+
+这种区别非常重要，否则系统会把当前现实地图和历史事件数据库混在一起。
+
+多传感器融合还必须处理冲突。假设视觉认为某对象是开放的门，而深度传感器认为该区域存在实体障碍，则系统不能简单选一个最高置信度结果，而应保留冲突结构：
+\[
+Conflict(
+Observation_a,
+Observation_b
+).
+\]
+这类结构可以进一步触发重新观察：
+\[
+\boxed{
+EpistemicConflict
+\rightarrow
+ActiveReobservation.
+}
+\]
+
+于是 SGC 不只是融合传感器结果，也可以反过来驱动感知行为。系统发现关键实体置信度不足，就可以转头、移动或调用其他传感器重新确认。这使感知从：
+\[
+PassiveSensing
+\]
+升级为：
+\[
+ActivePerception.
+\]
+
+因此真正的多传感器 SGC 不是：
+\[
+Camera + Radar + Audio
+\]
+的数据拼盘，而是一个由不同证据源共同维护、可以主动寻求新证据的持续现实模型。
+
+\section{关系语义：现实不仅由对象组成}
+
+如果一个系统只知道“有什么对象”和“它们在哪里”，仍然远远不能称为理解现实。现实的许多行动意义并不存在于单个对象内部，而存在于对象之间。
+
+一个人、一把钥匙和一扇门分别独立存在时，只能提供有限信息；而：
+\[
+Person
+\xrightarrow{holds}
+Key
+\]
+以及
+\[
+Key
+\xrightarrow{opens}
+Door
+\]
+形成以后，系统才能得到真正与任务有关的结构。
+
+因此 SGC 的核心对象不仅是 \(V\)，还包括关系集合：
+\[
+E_t
+=
+\{
+r_{ij}^{(k)}
+\}.
+\]
+关系可以分为若干基本类别，例如空间关系：
+\[
+near,\ inside,\ above,\ behind;
+\]
+功能关系：
+\[
+supports,\ opens,\ blocks,\ controls;
+\]
+社会关系：
+\[
+owns,\ follows,\ cooperates,\ conflicts;
+\]
+因果关系：
+\[
+causes,\ enables,\ prevents;
+\]
+以及时间关系：
+\[
+before,\ after,\ during.
+\]
+
+因此 SGC 的一个局部结构可以写成：
+\[
+r_{ij}
+=
+\left(
+id_i,
+type_r,
+id_j,
+q_r,
+\tau_r,
+\xi_r
+\right),
+\]
+其中 \(q_r\) 是关系可信度，\(\tau_r\) 是其有效时间范围，\(\xi_r\) 则是认识论来源。
+
+这种关系表示最重要的意义在于，它允许 Agent-CSO 与现实结构真正发生绑定。
+
+例如认知层可能存在一个抽象 Agent-CSO：
+\[
+C=
+\text{``A 正在追踪 B''}.
+\]
+如果这一结构只存在于语言 token 或 latent representation 中，它还不是一个直接可行动的现实状态。SGC 要做的是把其中的 \(A,B\) 绑定到具体持续实体，把 ``追踪'' 绑定到当前观察与历史轨迹，从而形成：
+\[
+\gamma_t(C)
+=
+r_{AB}^{tracking}(t).
+\]
+
+这里可以定义一个 grounding operator：
+\[
+\boxed{
+\gamma_t:
+AgentCSO
+\rightarrow
+SGCSubgraph.
+}
+\]
+
+反方向则存在：
+\[
+\boxed{
+\eta_t:
+SGCSubgraph
+\rightarrow
+AgentCSO.
+}
+\]
+
+前者把抽象认知落到现实，后者把现实结构提升为认知对象。
+
+于是：
+\[
+SGC
+\leftrightarrow
+AgentCSO
+\]
+不是单向数据流，而是双向绑定关系。
+
+我们可以进一步看到，关系语义解决了传统目标检测很难处理的问题：很多重要结构没有独立视觉外形。
+
+例如：
+\[
+\text{ownership}
+\]
+本身看不见；
+\[
+\text{threatening}
+\]
+本身不是一个像素区域；
+\[
+\text{possible collision}
+\]
+也不是某个当前实体。
+
+它们只能通过：
+\[
+Entity + History + Relation + Prediction
+\]
+形成。
+
+因此 SGC 中的 Graph 并不是为了数据结构优雅，而是因为现实的许多行动意义本来就是关系性的。
+
+这与本书前面 CSO 理论完全一致。CSO 不只包括对象，还包括关系、约束、目标、事件和因果。SGC 所做的，就是把其中与当前可行动现实相关的部分投射到具体世界结构上。
+
+因此，我们可以把 SGC 更严格地定义成：
+\[
+\boxed{
+SGC_t
+=
+GroundedRelationalSlice
+(
+AgentCSO_t,
+Reality_t
+).
+}
+\]
+
+它不是 Agent 全部知识，而是其中当前能够与现实实体、空间和行动发生绑定的那部分结构。
+
+\section{预测语义：SGC 不只表示正在发生的现实}
+
+真正的智能体不能只描述现在。任何行动都要求对尚未发生的状态进行预测。一个机器人决定向前移动之前，实际上必须表示：
+\[
+\text{If I move, what may happen?}
+\]
+因此，SGC 如果只允许存储 observed reality，就会迫使所有预测脱离空间现实表示，在另一个系统中单独进行，这会使当前世界和可能未来之间失去统一坐标。
+
+因此 SGC 必须允许至少四种不同认识论状态：
+\[
+\boxed{
+Observed,
+Derived,
+Predicted,
+Counterfactual.
+}
+\]
+
+Observed 表示当前由传感器直接支持的结构；
+Derived 表示由多个观测和已有规则推导的结构；
+Predicted 表示按照世界动力学或模型推测的未来结构；
+Counterfactual 则表示“如果采取某个动作，可能形成什么结构”。
+
+定义实体或关系的 epistemic label：
+\[
+\xi_i
+\in
+\{
+O,D,P,C
+\}.
+\]
+其完整状态可以写成：
+\[
+v_i
+=
+(x_i,s_i,q_i,\xi_i,\Delta t_i).
+\]
+
+例如前方行人当前的位置是：
+\[
+\xi=Observed,
+\]
+根据轨迹估算其两秒后的区域为：
+\[
+\xi=Predicted,
+\]
+而“如果本车加速，则可能与其轨迹相交”则属于：
+\[
+\xi=Counterfactual.
+\]
+
+这里有一个非常重要的系统原则：
+\[
+\boxed{
+PredictedState
+\neq
+ObservedState.
+}
+\]
+
+二者可以共享同一坐标空间，却绝不能共享同一认识论权限。
+
+这实际上体现了本书贯穿始终的 Reality Authority 原则。一个 Agent 可以预测未来，可以模拟可能世界，但不能把自己的预测悄悄写成现实。
+
+因此 SGC 应存在一个 partial order of epistemic authority，例如：
+\[
+Observed
+>
+Derived
+>
+Predicted
+>
+Counterfactual
+\]
+并不意味着 observed 永远正确，而是表示在现实状态声明中具有更高的直接证据地位。
+
+进一步，可以给每一项定义：
+\[
+\mathcal E_i
+=
+(
+source_i,
+confidence_i,
+timestamp_i,
+mode_i
+).
+\]
+于是规划器读取 SGC 时，不仅知道“那里有一个障碍”，还知道：
+\begin{quote}
+这是直接检测到的障碍，还是根据旧地图推导的障碍？\\
+这个状态多久以前得到？\\
+它当前可信度是多少？\\
+是否需要重新观察？
+\end{quote}
+
+这使 SGC 从一个普通语义地图升级为：
+\[
+\boxed{
+EpistemicallyTypedWorldModel.
+}
+\]
+
+这也是长期 Agent 必须拥有的能力。因为现实不是只存在“不知道”和“知道”两种状态，而是大量存在：
+\[
+likely,\ possible,\ stale,\ inferred,\ disputed,\ hypothetical.
+\]
+
+如果这些状态全部被压缩成普通自然语言文本，Agent 很容易产生典型的认识论错误：把预测当事实，把旧信息当当前信息，把推论当观察，把反事实计划当现实状态。
+
+SGC 的一个重要工程意义正是把这种认识论区分做成数据结构，而不是依赖语言模型每次临时理解。
+
+因此，预测语义不是 SGC 的可选附加功能，而是 Actionable Reality 必须具有的组成部分，因为行动本质上永远发生在：
+\[
+CurrentReality
++
+PossibleFuture
+\]
+之间。
+
+\section{可行动性：同一个世界对于不同身体不是同一个行动世界}
+
+直到这里，我们仍然主要讨论实体、几何、关系和预测。但一个世界只有在能够与行动发生映射以后，才真正成为 Agent 的行动现实。
+
+这里我们引入 affordance 的广义定义。对于某个现实结构 \(o_i\)、当前身体 \(B_t\)、目标 \(G_t\) 和上下文 \(C_t\)，定义：
+\[
+\mathcal{F}_{aff}
+:
+(o_i,B_t,G_t,C_t)
+\mapsto
+\mathcal U_i,
+\]
+其中 \(\mathcal U_i\) 表示当前可能的行动集合。
+
+进一步还可以定义每个行动的可行概率：
+\[
+p(u|o_i,B_t,C_t)
+\]
+和预期结果：
+\[
+P
+\left(
+s_{t+\Delta}
+\mid
+s_t,u
+\right).
+\]
+
+于是一个对象不再只是：
+\[
+Door(
+x,y,z
+),
+\]
+而可以成为：
+\[
+Door
+\left[
+Openable,
+Passable,
+Locked?,
+Reachable,
+Risk,
+Confidence
+\right].
+\]
+
+同样，一个文件系统中的文件也可以具有数字身体意义上的 affordance：
+\[
+File
+\rightarrow
+\{
+read,
+write,
+execute,
+delete,
+share
+\}.
+\]
+一个网页按钮具有：
+\[
+Button
+\rightarrow
+\{
+click
+\},
+\]
+但是否真正可点击，还取决于当前数字 Body 是否拥有权限、焦点和有效 session。
+
+这说明 Body-Centered SGC 并不局限于物理机器人。
+
+对于数字 Agent：
+\[
+Body
+=
+Browser+Cursor+Keyboard+Shell+API+\cdots
+\]
+那么 SGC 可以表示：
+\[
+Window,
+Button,
+TextField,
+File,
+Process,
+NetworkEndpoint
+\]
+及其空间或逻辑位置和可操作关系。
+
+因此：
+\[
+\boxed{
+ActionableReality
+}
+\]
+是一个比 physical reality 更一般的概念。
+
+我们甚至可以定义当前 Agent 的局部行动图：
+\[
+\mathcal G_A(t)
+=
+(V_t,E_t,U_t),
+\]
+其中 \(U_t\) 表示从当前 Body 状态可执行的动作边。一个动作是否存在并不只取决于世界，还取决于身体能力：
+\[
+u\in U_t
+\iff
+Feasible(u|SGC_t,B_t)=1.
+\]
+
+这使我们能够重新理解 Body Scale 原理。更换身体时，世界本体可能没有改变，但：
+\[
+\mathcal U_t
+\]
+会发生巨大变化。于是 Agent 必须重新学习：
+\[
+CSO
+\rightarrow
+BodyRelativeAffordance.
+\]
+
+例如“杯子”这个 Agent-CSO 可以保持稳定，但不同机器人对它的 grasp affordance 完全不同。
+
+因此：
+\[
+\boxed{
+MeaningCanTransfer,
+AffordanceMustBeRegrounded.
+}
+\]
+
+这是一条非常重要的具身智能原则。
+
+另一方面，可行动性还给 SGC 引入了选择性。现实世界包含极其庞大的细节，但 Agent 当前真正需要显式表示的通常只是与可能行动有关的结构。因此 SGC 并不追求建立整个宇宙的无限精度数字复制，而是建立：
+\[
+\boxed{
+ActionSufficientRealityRepresentation.
+}
+\]
+
+也就是说：
+\[
+SGC^\ast
+=
+\arg\min_{SGC}
+Cost(SGC)
+\]
+满足
+\[
+Performance(
+Action|SGC
+)
+\geq
+\theta.
+\]
+
+这一形式说明，理想 SGC 并不是“信息越多越好”，而是在满足行动可靠性的前提下，以尽可能低的表示成本保留相关世界结构。
+
+这与本书前面工作记忆有限性和认知结构迁移的思想保持一致：真正成熟的智能不是无限摄入现实，而是形成适合自身行为尺度的有效现实。
+
+\section{《疑犯追踪》的 Machine View：一个非常接近 SGC 的影视化原型}
+
+为了帮助读者获得直观认识，我们可以观察电视剧《疑犯追踪》中反复出现的 ``Machine View''。这个例子并不是本理论的科学依据，也不是说剧中的视觉界面已经实现了本文定义的全部 SGC，而是因为它非常早地以影视语言展示了一种接近 ``semantic actionable world'' 的机器视觉想象。
+
+普通摄像头界面显示的是：
+\[
+Image.
+\]
+传统目标检测系统在图像上增加：
+\[
+BoundingBox+Class.
+\]
+而《疑犯追踪》中的 Machine View 往往进一步显示：
+\[
+Identity,
+Location,
+Relation,
+History,
+Risk,
+Trajectory,
+Prediction.
+\]
+
+一个人在这种界面中并不是简单被识别为 ``person''，而会进一步与身份、社会关系、行为历史、当前风险状态等联系起来。不同摄像头里的同一个人物也被视为持续存在的同一个实体，而不是每个视频流中的独立检测对象。
+
+这已经非常接近：
+\[
+\boxed{
+PersistentSemanticEntity.
+}
+\]
+
+与此同时，剧中的 Machine View 经常把人与人之间的关系、某个对象属于谁、某个事件是否可能导致危险等结构叠加到视觉现实中。这进一步接近：
+\[
+\boxed{
+RelationalSGC.
+}
+\]
+
+更值得注意的是，它并不只显示已经发生的事件，还经常显示路径推断、行为预测和风险估计。这意味着界面中实际上混合存在：
+\[
+Observed
++
+Derived
++
+Predicted.
+\]
+如果按照本文的严格设计，我们会要求这些状态采用不同 epistemic metadata，而不能仅仅以视觉颜色区分，但概念上二者已经高度接近。
+
+因此，我们可以把 Machine View 抽象成：
+\[
+RawVideo
+\rightarrow
+EntityPersistence
+\rightarrow
+SemanticRelation
+\rightarrow
+Prediction
+\rightarrow
+DecisionRelevance.
+\]
+
+这条链正是 SGC 希望工程化实现的结构。
+
+但剧中的 Machine View 与真正 AgentOS SGC 仍存在一个非常重要的区别：影视表现经常采用一种近似 ``God View'' 的第三人称视角。观众看到的是城市中的摄像头、人物和事件，而 ``机器自己的身体'' 并不总是作为世界模型中的核心实体出现。
+
+严格的 SGC 则必须满足：
+\[
+Body\in SGC.
+\]
+因为一个真正行动的 Agent 必须知道：
+\[
+WhereAmI?
+\]
+\[
+WhatCanIReach?
+\]
+\[
+WhatCanIChange?
+\]
+\[
+WhatWillAffectMe?
+\]
+
+如果系统只是观察城市，而自身不能直接通过某个身体进行空间行动，那么它更接近全局 surveillance world model，而不是完整的 embodied SGC。
+
+这一差异反而帮助我们进一步明确 SGC 的理论位置。《疑犯追踪》的 Machine View 最像的是：
+\[
+\boxed{
+HumanInspectableSGCFrontend.
+}
+\]
+也就是 SGC 的一个可视化层，而不是 SGC 全部内部实现。
+
+真实工程中，SGC 并不需要真的以屏幕 HUD 形式存在。其内部可以是图数据库、连续空间结构、概率状态、稀疏张量和语义索引的组合。可视化界面只是把其中一部分投影给人类：
+
+\[
+UI_t
+=
+\Pi_{human}
+(
+SGC_t
+).
+\]
+
+这里的投影 \(\Pi_{human}\) 会选择人类容易理解的实体、标签、关系和预测，而真正系统内部还可能保存大量不适合直接可视化的信息。
+
+因此，这个影视案例最值得我们保留的启发不是那些视觉框，而是一种更深的设计直觉：
+
+\[
+\boxed{
+\text{机器应该看到的不是像素，而是一个持续存在、具有身份、关系、预测和行动意义的世界。}
+}
+\]
+
+这正是 SGC 的核心。
+
+\section{SGC 作为 Agent-CSO 与现实之间的空间语义绑定层}
+
+现在我们可以把本章重新放回整本书更大的 CSO 理论框架。
+
+前面已经区分：
+\[
+CSO
+\]
+与
+\[
+AgentCSO.
+\]
+前者描述认知所对应的结构本体，后者描述该结构在具体 Agent 内部的实现和承载。然而，仅仅拥有 Agent-CSO 并不能保证这些结构与当前现实仍然保持有效连接。
+
+例如 Agent 可能具有一个结构：
+\[
+C_1=
+\text{``厨房中存在一个杯子''}.
+\]
+这个结构可以存在于长期知识、语言描述或过去情景中，但当前时刻这个杯子是否仍在厨房、在哪里、是否可达，并不能仅从该 Agent-CSO 本身得到。
+
+因此，需要：
+\[
+\boxed{
+Grounding.
+}
+\]
+
+设 Agent 内部存在认知结构集合：
+\[
+\mathcal C_A.
+\]
+当前 SGC 中存在现实实体与关系：
+\[
+\mathcal S_t.
+\]
+我们定义动态 grounding correspondence：
+\[
+\Gamma_t
+\subseteq
+\mathcal C_A
+\times
+\mathcal S_t.
+\]
+
+若
+\[
+(C_i,s_j)\in\Gamma_t,
+\]
+表示内部 Agent-CSO \(C_i\) 当前被绑定到 SGC 中的现实结构 \(s_j\)。
+
+这里使用 correspondence 而不是简单函数，是因为现实绑定可能是多对多的。一个 Agent-CSO 可能对应多个现实对象，例如：
+\[
+\text{``出口''}
+\]
+可以同时对应几扇门；一个现实实体也可能被多个 Agent-CSO 描述，例如同一个人可以同时属于：
+\[
+Person,
+Colleague,
+Target,
+Friend.
+\]
+
+所以更准确地：
+\[
+\boxed{
+\Gamma_t:
+AgentCSO
+\leftrightarrow
+SGC.
+}
+\]
+
+这条映射也是动态的：
+\[
+\Gamma_t
+\neq
+\Gamma_{t+\Delta}.
+\]
+因为现实变化、观测更新、身份重新识别和任务改变都会重新改变 grounding。
+
+因此可以把认知过程写成：
+\[
+UniverseCSO
+\xrightarrow{Observation}
+SGC
+\xrightarrow{\eta}
+AgentCSO.
+\]
+行动过程则反过来：
+\[
+AgentCSO
+\xrightarrow{\gamma}
+SGC
+\xrightarrow{Action}
+UniverseCSO'.
+\]
+
+于是 SGC 位于一个非常特殊的位置：
+\[
+\boxed{
+Reality
+\leftrightarrow
+SGC
+\leftrightarrow
+AgentCSO.
+}
+\]
+
+它既不是现实，也不是完整认知，而是二者之间的当前空间—语义接触面。
+
+这帮助我们解释为什么 SGC 必须是 inspectable。对于高层认知而言，我们需要知道一个结论究竟绑定到了现实中的什么。例如 Agent 说：
+\[
+\text{``那个人正在接近危险区域.''}
+\]
+系统应该能够追溯：
+
+“那个人”对应哪个 persistent entity；
+
+“危险区域”对应哪个空间区域；
+
+“正在接近”是 observed velocity 还是 predicted trajectory；
+
+“危险”来自什么规则或结构；
+
+当前 confidence 是多少。
+
+也就是说，语言命题应该尽可能拥有 grounding path：
+\[
+Proposition
+\rightarrow
+AgentCSO
+\rightarrow
+SGCSubgraph
+\rightarrow
+ObservationEvidence.
+\]
+
+这形成一种现实可追溯性：
+\[
+\boxed{
+SemanticTraceability.
+}
+\]
+
+对于长期 AgentOS，这一点非常重要。因为如果内部所有认知都只存在于不可检查 latent 中，我们就很难区分：
+
+真实观察；
+
+回忆；
+
+猜测；
+
+预测；
+
+幻想。
+
+SGC 不是为了消灭 latent，而是在 Agent 与现实之间保留一层稳定、可校准、可追溯的公共语义结构。
+
+从更一般的观点看，我们甚至可以把 SGC 理解成：
+\[
+\boxed{
+AgentCSO
+\text{ 在当前可行动现实上的 grounded projection.}
+}
+\]
+
+这使此前抽象的 CSO 理论真正落到身体与现实之中。
+
+\section{SGC 不是现实：认识论边界与本章结论}
+
+在完成前面的论证以后，我们必须强调本章最重要的边界：
+
+\[
+\boxed{
+SGC\neq Reality.
+}
+\]
+
+SGC 是 Agent 对现实的当前结构估计。
+
+这一点看似简单，却是整个 AgentOS 是否能够长期保持现实约束的关键。
+
+设真实世界状态为：
+\[
+X_t^{world},
+\]
+Agent 的 SGC 为：
+\[
+\hat X_t^{SGC}.
+\]
+原则上只能存在：
+\[
+\hat X_t^{SGC}
+=
+\mathcal O
+\left(
+X_{\leq t}^{world},
+Z_{\leq t},
+M_t
+\right),
+\]
+其中 \(Z\) 是有限观察，\(M_t\) 是内部世界模型。
+
+因此一般而言：
+\[
+\hat X_t^{SGC}
+\neq
+X_t^{world}.
+\]
+
+二者之间存在结构误差：
+\[
+\varepsilon_{SGC}(t)
+=
+D
+\left(
+\hat X_t^{SGC},
+X_t^{world}
+\right).
+\]
+但真实世界本身通常无法完整获得，所以这个误差只能通过新的感知、行动结果和交叉验证间接估计。
+
+因此，一个成熟的 SGC 必须不仅表示世界，还表示自己的不确定性：
+\[
+\boxed{
+WorldRepresentation
++
+UncertaintyAboutWorldRepresentation.
+}
+\]
+
+这与前文 SPC 的认识论限制具有深刻一致性。Agent 不能完全透明地知道自己的内部状态，也不能完全透明地知道外部世界。无论面对内部还是外部，持续智能都工作在有限观测条件下。
+
+因此：
+\[
+\boxed{
+PersistentIntelligence
+=
+PersistentEstimation
++
+PersistentCorrection.
+}
+\]
+
+这也意味着，SGC 不应设计成一个不断趋向“绝对正确世界模型”的数据库，而应该是一个能够持续被现实修正的动态结构：
+\[
+SGC_t
+\rightarrow
+Observation_{t+1}
+\rightarrow
+Residual_{t+1}
+\rightarrow
+SGC_{t+1}.
+\]
+
+我们可以把这一闭环写成：
+\[
+\boxed{
+Reality
+\rightarrow
+Observation
+\rightarrow
+SGC
+\rightarrow
+Prediction/Action
+\rightarrow
+Reality'
+\rightarrow
+Observation'
+}
+\]
+
+这正是本书更大范围的 World--Agent--World 闭环在身体语义层的具体实现。
+
+从这一点出发，我们可以得到 SGC 的几条核心设计原则。
+
+第一，
+\[
+\boxed{
+SensorData
+\neq
+World.
+}
+\]
+感知只是证据。
+
+第二，
+\[
+\boxed{
+SemanticInference
+\neq
+Observation.
+}
+\]
+推理结果必须保留认识论类型。
+
+第三，
+\[
+\boxed{
+Prediction
+\neq
+Reality.
+}
+\]
+预测可以参与控制，却不能直接拥有现实声明权。
+
+第四，
+\[
+\boxed{
+Body\in SGC.
+}
+\]
+智能体自身必须作为可行动世界中的一个实体存在。
+
+第五，
+\[
+\boxed{
+WorldEntitiesMustPersistAcrossObservations.
+}
+\]
+现实不能随着摄像头帧刷新而重新出生。
+
+第六，
+\[
+\boxed{
+RelationsAreFirstClassRealityStructures.
+}
+\]
+对象之间的关系与对象本身同样重要。
+
+第七，
+\[
+\boxed{
+ActionabilityIsBodyRelative.
+}
+\]
+现实的行动意义取决于身体能力。
+
+第八，
+\[
+\boxed{
+SGCShouldBeInspectableAndTraceable.
+}
+\]
+至少公共现实层必须能够追溯到观测、推导和预测来源。
+
+因此，本章最终可以给出一个比上一章更加完整的 SGC 定义：
+
+\[
+\boxed{
+\mathcal S_{SGC}(t)
+=
+\left[
+\mathcal V_t,
+\mathcal E_t,
+\mathcal G_t,
+\mathcal A_t,
+\mathcal X_t,
+\mathcal Q_t
+\right]
+}
+\]
+其中：
+\[
+\mathcal V_t
+\]
+是持续现实实体；
+
+\[
+\mathcal E_t
+\]
+是语义、空间、功能和因果关系；
+
+\[
+\mathcal G_t
+\]
+是以世界和身体统一参照的几何结构；
+
+\[
+\mathcal A_t
+\]
+是相对于当前身体与目标的可行动性结构；
+
+\[
+\mathcal X_t
+\]
+是 observed、derived、predicted、counterfactual 等认识论状态；
+
+\[
+\mathcal Q_t
+\]
+是置信度、新鲜度、来源和冲突等质量描述。
+
+因此：
+\[
+\boxed{
+SGC
+=
+Persistent
++
+WorldGrounded
++
+BodyCentered
++
+Relational
++
+EpistemicallyTyped
++
+Actionable.
+}
+\]
+
+如果把这一章压缩成一句最重要的话，我们可以说：
+
+\[
+\boxed{
+\textbf{
+SGC 不是机器“看到了什么”的记录，而是机器在当前时刻认为自己正处于怎样一个可行动现实中的结构化答案。
+}
+}
+\]
+
+而把它放回整本书更大的 CSO 理论，则可以进一步写成：
+
+\[
+\boxed{
+\textbf{
+SGC 是 Agent-CSO 与 Universe-CSO 当前发生现实绑定的空间—语义界面：宇宙中的结构通过观测进入 SGC，被智能体解释成 Agent-CSO；智能体内部形成的目标、判断与预测又通过 SGC 找到现实中的对象、位置和行动路径，最终重新进入宇宙。
+}
+}
+\]
+
+因此，从 Scene Graph 到 SGC 的变化并不是一次普通的数据结构升级，而是一次认识论上的变化：
+
+\[
+\boxed{
+Image
+\rightarrow
+Scene
+\rightarrow
+PersistentWorld
+\rightarrow
+BodyCenteredReality
+\rightarrow
+ActionableReality.
+}
+\]
+
+从这一刻开始，我们构建的不再只是一个“能够识别世界”的视觉系统，而是一个能够回答：
+
+\begin{quote}
+\textbf{世界现在是什么样？}\\
+\textbf{我在这个世界的哪里？}\\
+\textbf{哪些结构是真实观察，哪些只是推测？}\\
+\textbf{哪些现实结构与我当前目标有关？}\\
+\textbf{基于这个身体，我现在究竟能够对世界做什么？}
+\end{quote}
+
+的持续现实表示系统。
+
+这正是 SGC 在 AgentOS 中不可替代的理论位置。
