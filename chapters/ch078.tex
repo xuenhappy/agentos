@@ -1,155 +1,1001 @@
-\chapter{产品成熟路线}
-\begin{chapteroverviewbox}
-这一章，我们围绕“产品成熟路线”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明理论到系统与生态的工程路线。
-\end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
+\chapter{产品成熟路线：从数字身体到人形通用具身智能}
+\label{chap:product_maturity_route}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 AgentOS 三条软件主线、两类基础设施、六阶段路线与产品成熟次序的工程推演。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是系统工程、成熟度分级、接口契约与开放治理（混杂系统与模型预测控制）。
+\begin{center}
+\fbox{
+\parbox{0.94\textwidth}{
+\textbf{【本章总体说明】}
 
-本章使用上一章“从模拟环境到真实身体”已经得到的对象与边界；本章产出将供下一章“为什么 Companion Agent 是平台成熟点”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+本章讨论的“产品成熟路线”并不是一份按照市场规模排序的商业预测，也不是认为未来所有 AgentOS 产品都必须严格依次出现，而是把前文建立的 Agent Kernel、三相记忆、自我与生命周期动力学、SPC--AHC--TCE 调节闭环、CCM 与认知卸载、Body Scale、SGC、FCS、BPCC、KRA 以及 Reality Authority 等理论，投影到现实工程后所得到的一条\textbf{能力闭合与风险逐级扩张路线}。其基本顺序为
+\[
+\boxed{
+ComputerUse
+\rightarrow
+MobileManipulator
+\rightarrow
+VirtualButler/Companion
+\rightarrow
+AutonomousDriving
+\rightarrow
+Humanoid
+}
+\]
+这一顺序真正表达的是：先在低物理风险、接口高度结构化的数字世界中验证“持续主体”；再把同一主体迁移到有限现实身体中验证感知--行动闭环；随后引入长期生活环境、人格连续性与社会互动，验证生命周期智能；再进入高速、高安全责任场景，检验多尺度预测控制与实时安全；最终才将这些能力同时压缩进具有高自由度身体、高开放环境和高通用任务空间的人形平台。
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+因此，本章所建立的不是单纯的产品列表，而是一套\textbf{AgentOS 平台成熟度测量方法}：每一个产品阶段都是对前一阶段能力结构的继承，同时加入一种此前尚未被真正闭合的新约束。真正成熟的产品路线不是不断增加演示能力，而是逐渐扩大 Agent 可以稳定闭合的世界范围。
+}
+}
+\end{center}
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在系统工程、成熟度分级、接口契约与开放治理上。
-\section{Computer Use：数字身体验证}
-\begin{narration}
-现在把镜头移到“Computer Use：数字身体验证”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+如果我们已经接受前文的基本判断，即 AgentOS 的目标不是制造一个能够在若干测试集上获得高分的模型，而是构造一个能够在生命周期内持续形成经验、维护身份、调用外部结构、适配不同身体并在现实反馈中不断学习的智能主体，那么产品路线就不能按照传统软件产品的逻辑来设计。普通软件可以先完成若干独立功能，再不断增加功能数量；持续智能系统却不同，因为其核心能力之间存在严格依赖。例如，没有稳定的世界状态表示，就无法验证长期记忆究竟记住了什么；没有现实反馈闭环，就无法判断预测是正确还是自我强化；没有身份连续性，就无法讨论培育；没有低层快速控制，就无法把高层认知迁移到真正的机器人身体；没有安全边界，又不能把已经形成自主性的系统部署到高速现实环境。
 
-本节把“Computer Use：数字身体验证”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“产品成熟路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+因此，本章将产品成熟过程理解成一个逐步扩张的可闭合域。设 AgentOS 在阶段 $k$ 能够稳定运行的任务--身体--环境集合为
+\[
+\mathcal{D}_k
+=
+\left\{
+(\mathcal{T},\mathcal{B},\mathcal{E})
+\mid
+AgentOS
+\text{ 能在给定风险约束下形成长期闭环}
+\right\},
+\]
+那么产品成熟并不只是
+\[
+|\mathcal{T}|\uparrow,
+\]
+而更重要的是
+\[
+\boxed{
+\mathcal{D}_1
+\rightarrow
+\mathcal{D}_2
+\rightarrow
+\cdots
+\rightarrow
+\mathcal{D}_5
+}
+\]
+所表示的闭环域持续扩张。这里的“扩张”并不要求每一种后续产品在所有性能维度都严格支配前一产品。例如自动驾驶的任务语义可能比家庭管家更窄，但它要求更高的时间确定性、安全性和实时控制能力。因而真正累积的是底层 AgentOS 平台的能力集合，而不是每一个具体产品的表面功能集合。
 
-把这一关系写成最小数学骨架，可得
+我们可以把平台在阶段 $k$ 的成熟状态概念性写成
+\[
+\mathcal{M}_k
+=
+\left(
+B_k,
+G_k,
+C_k,
+L_k,
+S_k,
+A_k,
+R_k,
+T_k
+\right),
+\]
+其中 $B$ 表示 Body Scale 与身体迁移能力，$G$ 表示 SGC/FCS 所形成的现实 grounding 能力，$C$ 表示多尺度闭环控制能力，$L$ 表示生命周期连续性，$S$ 表示社会互动能力，$A$ 表示自治水平，$R$ 表示风险治理能力，$T$ 表示所能够闭合的时间尺度跨度。产品成熟路线的实质，就是逐步提高这个向量中不同维度的下界，而不是只提高某一个模型能力指标。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+\section{Computer Use：以数字世界验证持续主体与数字身体}
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Computer Use：数字身体验证的命名和组合仍是需要实验验证的建模提案。
+Computer Use 应当成为 AgentOS 产品化的第一阶段，并不是因为桌面自动化一定具有最大的市场价值，而是因为数字世界给我们提供了一个极其特殊的实验条件：它已经拥有高度结构化的动作接口、丰富而可验证的环境状态、低物理伤害风险以及近乎完备的运行日志。这使我们能够在不首先解决机器人机械、电机、材料和复杂物理安全问题的情况下，直接验证 AgentOS 最核心的命题——一个持续主体是否能够在真实任务流中长期存在、形成经历、沉淀技能，并把过去的认知结构真正用于未来。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+传统 Computer Use 系统通常可以写成
+\[
+Screenshot_t
+\rightarrow
+Model
+\rightarrow
+Action_t,
+\]
+每一个步骤主要依赖当前视觉输入和短期上下文。即便系统能够连续执行几十步，它仍然可能只是一个长序列推理器。AgentOS 所要求的 Computer Use 则具有完全不同的目标：
+\[
+\boxed{
+World_t
+\rightarrow
+AgentCSO_t
+\rightarrow
+h_t
+\rightarrow
+Action_t
+\rightarrow
+World_{t+1}
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+FutureAction.
+}
+\]
+也就是说，数字桌面首先应被当作一种真正的 Body，而不是一个工具调用集合。Browser、Desktop、Shell、File System、Application、Network Endpoint 都属于 Agent 的数字现实环境；鼠标、键盘、命令、API 调用则属于不同类型的数字执行器；光标甚至可以被看成 Digital End Effector。只要我们采用这一身体定义，
+\[
+\boxed{
+Body
+=
+ControlledAndSensedCarrierOfAgency,
+}
+\]
+那么 Computer Use 就成为验证 Body Scale 的最低风险入口。
 
-\begin{thought}
-对“Computer Use：数字身体验证”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+数字 Body 的价值还在于它允许我们第一次严格地区分“Agent 发出了行动”与“行动在世界中真实成功”：
+\[
+ActionIssued
+\neq
+ActionSucceeded.
+\]
+例如 Agent 发出“保存文件”的控制意图后，不能因为内部计划认为文件已经保存，就把这个预测直接写入工作记忆成为事实；它必须重新读取文件系统、应用状态或者其他可观察结果：
+\[
+Action
+\rightarrow
+DigitalReality
+\rightarrow
+Observation
+\rightarrow
+SGC^{obs}.
+\]
+这正是 Reality Authority 原则在数字世界中的最小实现。数字世界虽然不像物理世界那样存在机械碰撞，却同样包含权限失败、网络中断、焦点切换、应用异常、文件冲突、页面变化和用户干预。因此，一个真正的 Computer Use Agent 必须学习“计划世界”和“现实世界”之间始终存在残差。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+在这一阶段，SGC 不必一开始就表现为完整三维空间，而可以实现为数字空间中的 Semantic Graph Coordinate Space。它所描述的不是三维物体位置，而是
+\[
+\mathcal{G}_{digital}
+=
+(V_{window},
+V_{file},
+V_{process},
+V_{application},
+V_{web},
+E_{relation}),
+\]
+其中节点可以是窗口、文件、按钮、网页对象、程序、用户、网络资源，关系可以是 containment、ownership、focus、dependency、permission、execution 等。这样我们就开始把传统 GUI Agent 的“截图像素世界”转换成 Agent 可长期保持身份一致的数字语义世界。
 
-\section{Mobile Manipulator：真实空间闭环}
-\begin{narration}
-现在把镜头移到“Mobile Manipulator：真实空间闭环”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+此阶段同样是验证认知卸载理论的最佳环境。一个 Agent 第一次完成某项复杂操作时，可能经历
+\[
+h
+\rightarrow
+Reasoning
+\rightarrow
+Action.
+\]
+但如果相同工作不断重复，而每次仍然完整调用高层推理，就意味着系统没有成长。成熟的 AgentOS 应逐步形成
+\[
+ExplicitAgentCSO
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+Script/Skill/Program.
+\]
+例如第一次整理某类文件需要显式推理；经过重复经验后形成稳定程序；最终高层只需要提出
+\[
+Goal=\text{“整理本周项目文件”},
+\]
+而局部 Skill 即可完成大部分操作，只有残差异常重新向 $h$ 提升。由此 Computer Use 可以直接验证
+\[
+\boxed{
+StableStructure\downarrow,\qquad UnexpectedResidual\uparrow.
+}
+\]
 
-本节把“Mobile Manipulator：真实空间闭环”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“产品成熟路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+更重要的是，数字环境可以率先检验单一持续主体原则。未来 AgentOS 不应因为存在十个并发任务便产生十个没有身份联系的“Agent 自我”。更合理的结构是
+\[
+N_{Agent}^{D_1}=1,
+\]
+而多个 D2 Task、Worker、Tool Execution 在该持续主体之下运行。用户今天让 Agent 修改代码、明天让它整理资料、下周继续之前的项目，真正要验证的是：这些任务是否形成同一生命周期经验，是否改变同一个 $\Theta$，是否被同一个 $\Psi$ 解释，是否进入统一的未来能力结构。
 
-把这一关系写成最小数学骨架，可得
+因此 Computer Use 阶段的成熟指标不应主要是“成功点击率”，而应至少包括长期任务成功率、跨会话恢复率、重复任务高层推理成本下降率、现实验证率、技能形成率、错误重新提升率以及身份连续性。可以概念性定义
+\[
+M_{CU}
+=
+F(
+P_{task},
+P_{continuity},
+\Delta C_{explicit},
+P_{skill},
+P_{recovery},
+P_{reality}
+).
+\]
+只有当系统已经能够在数字世界中长期闭合
+\[
+Perception
+\rightarrow
+Cognition
+\rightarrow
+Action
+\rightarrow
+Reality
+\rightarrow
+Learning
+\]
+这一循环时，我们才真正拥有一个值得迁移到物理世界的 AgentOS，而不仅是一套更加复杂的 GUI 自动化程序。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+\section{Mobile Manipulator：第一次把同一主体放入真实空间闭环}
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Mobile Manipulator：真实空间闭环的命名和组合仍是需要实验验证的建模提案。
+从 Computer Use 进入 Mobile Manipulator，是整个产品路线的第一场真正结构跃迁。数字身体中的许多动作具有离散、可撤销、接口明确的特点，而移动机械臂开始面对连续物理动力学、不可完全预测的空间结构、传感器误差、执行器噪声、碰撞风险以及大量不能通过语言推理实时解决的问题。因此这一阶段并不是“给 Computer Use Agent 加一个机械臂”，而是第一次检验我们此前提出的
+\[
+\boxed{
+AgentSystem
+=
+AgentKernel
+\bowtie
+BodyRuntime
+}
+\]
+究竟能否在现实中成立。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这里最核心的工程变化，是把状态空间明确拆成认知状态和身体状态：
+\[
+\mathcal{X}
+=
+\mathcal{X}_C
+\times
+\mathcal{X}_B.
+\]
+其中
+\[
+\mathcal{X}_C
+=
+(h,E,\Theta,\Psi,\Omega,\ldots)
+\]
+属于 Agent Kernel，
+而
+\[
+\mathcal{X}_B
+=
+(q,\dot q,p,v,F_{contact},Energy,Temperature,\ldots)
+\]
+属于 Body Runtime。二者不能简单合并，因为身体控制所要求的更新频率通常远高于显式认知：
+\[
+\tau_{BodyFastLoop}
+\ll
+\tau_h.
+\]
+如果高层语言模型必须参与每次抓取中的末端执行器微调，那么系统的结构本身就是错误的。
 
-\begin{thought}
-对“Mobile Manipulator：真实空间闭环”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此 Mobile Manipulator 阶段真正验证的是“局部闭环能否形成”。Kernel 应提供目标和可行域，例如
+\[
+\mathcal{E}_H
+=
+(
+SGC^{target},
+FCS^{constraint},
+Goal,
+RiskEnvelope
+),
+\]
+而 BPCC 则在这一高层约束内部进行快速预测和局部优化：
+\[
+u_{0:H}^{*}
+=
+\arg\min_{u_{0:H}}
+\sum_{\tau=0}^{H}
+\ell(
+x_{\tau},
+u_{\tau},
+\mathcal{E}_H
+).
+\]
+这对应我们一直强调的原则：
+\[
+\boxed{
+HigherLevelSetsFeasibleRegion,
+\qquad
+LowerLevelOptimizesInsideIt.
+}
+\]
+高层不应该告诉机械臂每一个电机在下一毫秒输出多少扭矩，而应表达“抓住杯子但不要使杯壁压力超过阈值”“把物体送到目标区域”“维持当前身体安全边界”等结构约束。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+Mobile Manipulator 还是 SGC 第一次真正从数字语义图扩展成身体中心空间世界模型的产品阶段。对于同一个物体，Agent 需要知道的不只是
+\[
+Object=\text{cup},
+\]
+而是
+\[
+CSO_{cup}
+=
+(
+Identity,
+Pose,
+Geometry,
+Affordance,
+Relation,
+Uncertainty,
+PredictedMotion
+).
+\]
+进一步，它必须把自己的身体也放入世界：
+\[
+\boxed{
+Body\in SGC.
+}
+\]
+同一个桌面空间对于不同机器人不具有相同的可行动意义，因为机械臂长度、抓手结构、底盘宽度、传感器视场和负载能力都会改变 affordance。因此 SGC 不是“客观世界地图”的简单复制，而是“现实相对于该身体能够如何被作用”的结构坐标系。
 
-\section{Virtual Butler：长期生活服务}
-\begin{narration}
-现在把镜头移到“Virtual Butler：长期生活服务”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+与此同时，FCS 开始承担数字 Body 阶段不那么显著的功能。物理身体中大量重要变量不能仅表示成世界对象，它们必须被转换成“世界正在如何影响我”的场：
+\[
+FCS_t
+=
+\{
+Threat,
+EnergyPressure,
+IntegrityPressure,
+ThermalPressure,
+ControlInstability,
+Urgency,\ldots
+\}.
+\]
+例如一个靠近机械臂的障碍物，在 SGC 中是一个具有位置、速度和类别的实体；在 FCS 中则可能形成一个不断上升的 Threat Field。这使 Kernel 不需要持续读取每一个传感器原始值，而可以获得身体已经完成的第一层功能压缩。
 
-本节把“Virtual Butler：长期生活服务”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“产品成熟路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+本阶段还第一次验证 Body Runtime 是否能够成为“现实复杂性的第一道屏障”。真实物理世界每毫秒都有大量变化，而绝大部分变化都不值得进入 $h$。正常抓取时的微小轨迹误差、底盘姿态调整、关节摩擦变化应在低层闭合：
+\[
+\boxed{
+NormalDynamicsStayLocal.
+}
+\]
+只有当
+\[
+\Gamma
+=
+f(
+Residual,
+Risk,
+Novelty,
+Persistence,
+GoalRelevance
+)
+\geq
+\theta_{up}
+\]
+时，相关 Agent-CSO 才应该重新提升到更高尺度。比如抓取同一个杯子时略有位姿误差，BPCC 应自行修正；但如果杯子突然被另一个人拿走，则这是语义结构发生变化，需要重新进入 SGC、h 与任务规划。
 
-把这一关系写成最小数学骨架，可得
+Mobile Manipulator 还是技能“下沉”第一次获得物理意义的阶段。第一次打开抽屉时，高层可能显式规划接近方向、抓取点、拉动力度；重复几百次之后，这些关系不应继续占用有限工作记忆，而应形成
+\[
+BodySkill
+=
+LocalPredictor
++
+LocalController
++
+ResidualModel.
+\]
+这意味着能力不再表现为“模型记住怎样打开抽屉”，而是现实闭环被编译进快速身体控制。只有当环境发生异常时，
+\[
+ProceduralAgentCSO
+\rightarrow
+ExplicitAgentCSO,
+\]
+系统才重新思考。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+因此 Mobile Manipulator 的产品价值远超“会移动和抓东西”。它第一次证明同一个长期 Agent 主体能够跨越
+\[
+CognitiveTimescale
+\rightarrow
+SemanticWorldTimescale
+\rightarrow
+BodyControlTimescale
+\]
+并保持因果闭合。如果这一阶段不能稳定实现，那么直接进入人形机器人只会把尚未解决的结构问题放大数十倍。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Virtual Butler：长期生活服务的命名和组合仍是需要实验验证的建模提案。
+\section{Virtual Butler 与 Companion Agent：把能力测试提升到生命周期测试}
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+如果说 Computer Use 检验的是持续数字主体，Mobile Manipulator 检验的是物理闭环，那么 Virtual Butler 与 Companion Agent 所引入的新问题则完全不同：它要求 Agent 不仅“能够完成任务”，还必须在一个长期稳定的人类生活环境中形成历史、关系、自我解释和连续行为风格。于是产品评价尺度第一次从
+\[
+TaskSuccess
+\]
+真正扩展到
+\[
+\boxed{
+LifecycleCoherence.
+}
+\]
 
-\begin{thought}
-对“Virtual Butler：长期生活服务”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+这里所谓 Virtual Butler 可以是具有数字身体的私人管家，也可以逐渐连接家庭设备、机器人执行器和外部服务；Companion 则可以表现为虚拟伙伴、陪伴机器人甚至猫狗形态的具身 Agent。二者共同的关键不是外观，而是都要求一个长期主体与相对稳定的人类、家庭、空间和习惯形成持续耦合。对于一个只运行几十分钟的 Agent，很多问题根本不会出现；而一个持续数年的 Companion 必须面对记忆积累、偏好变化、自我形成、关系历史、经验选择以及长期状态漂移。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这使三相记忆模型第一次成为产品级必要条件。Agent 的当前互动发生在
+\[
+h(t),
+\]
+经历被选择性沉降成
+\[
+E,
+\]
+长期稳定模式进一步形成
+\[
+\Theta.
+\]
+如果 Companion 每次见到用户都依赖重新检索一堆历史文本，那么它并没有真正形成长期认知结构。成熟系统应该逐渐完成
+\[
+h
+\rightarrow
+E
+\rightarrow
+\Theta,
+\]
+使“用户通常在何时工作”“哪些任务已经形成稳定习惯”“哪些交互策略长期有效”从事件记忆转化成生成结构，而不是无限增长的日志。
 
-\section{Companion Cat/Dog：生命周期成熟测试}
-\begin{narration}
-现在把镜头移到“Companion Cat/Dog：生命周期成熟测试”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+更进一步，这一阶段第一次要求 $\Psi$ 真正发挥主体连续作用。相同环境状态对于不同 Agent 不应产生完全相同的解释，因为 Agent 已经拥有自己的经历历史。可以把某一时刻的行为写成
+\[
+a_t
+\sim
+\pi(
+h_t,
+E_t,
+\Theta_t,
+\Psi_t,
+\Omega_t,
+G_t
+).
+\]
+其中 $\Psi_t$ 不应被理解成静态 persona prompt，而应是跨生命周期形成的慢结构；$\Omega$ 或 DGA 则进一步表达极慢尺度的生成倾向。于是今天的经历会改变未来的 $\Theta$，长期经验又可能缓慢改变 $\Psi$，最终使同一个 Agent 在时间上保持连续，却又不是完全不变。
 
-本节把“Companion Cat/Dog：生命周期成熟测试”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“产品成熟路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+这正是 Companion Agent 与普通聊天机器人最根本的差异：
+\[
+\boxed{
+Continuity
+\neq
+BehavioralRepetition.
+}
+\]
+一个永远重复相同人格模板的系统可能非常一致，却没有真正成长；一个每天随机改变行为的系统可能非常可塑，却没有身份。成熟 Agent 要解决的是
+\[
+\boxed{
+Stability\text{--}PlasticityBalance.
+}
+\]
+因此应满足近似的多时间尺度保护关系：
+\[
+\tau_h
+\ll
+\tau_E
+\ll
+\tau_\Theta
+\ll
+\tau_\Psi
+\ll
+\tau_\Omega.
+\]
+短期事件可以快速改变当前行为，却不能轻易重写身份；只有经过持续经验验证的结构才能逐渐进入更慢层。
 
-把这一关系写成最小数学骨架，可得
+Companion 场景同时把 SPC--AHC--TCE 从内部控制模块转化成可观察的产品稳定性问题。Agent 长期面对不同任务负载、身体状态、社会互动和不确定性，SPC 需要形成关于“我当前处于什么状态”的压缩估计；AHC 将内稳态、资源、风险和社会信号形成连续调制；TCE 再据此调节探索、注意、推理深度和行为保守程度：
+\[
+SPC
+\rightarrow
+AHC
+\rightarrow
+TCE
+\rightarrow
+Dynamics
+\rightarrow
+SPC.
+\]
+如果这个闭环不稳定，长期陪伴系统就可能出现持续过度警惕、反复确认、认知振荡、过度自我关注或状态恢复缓慢等现象。这些问题在一次性 benchmark 中可能完全不可见，却会在数月生命周期里累积。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+因此，Companion 也是检验 Agent 培育思想的第一个真实产品平台。我们不能仅依赖预训练模型能力，然后假定 Agent 一经部署就已经“成年”。一个真正长期存在的 Agent 应通过经历逐渐获得更大能力与更高自治：
+\[
+Experience
+\rightarrow
+Capability
+\rightarrow
+Evaluation
+\rightarrow
+Trust
+\rightarrow
+Authority
+\rightarrow
+Autonomy
+\rightarrow
+NewExperience.
+\]
+这里尤其要强调
+\[
+Capability\uparrow
+\nRightarrow
+Authority\uparrow
+\]
+自动成立。能力、信任和权限必须由外部治理共同决定，否则“会做更多事情”会被错误地等同于“应该拥有更多控制权”。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Companion Cat/Dog：生命周期成熟测试的命名和组合仍是需要实验验证的建模提案。
+Virtual Butler/Companion 还把社会性外部记忆问题带到现实中。家庭中的文件、日历、设备、其他成员甚至家具布置都可能成为 Agent 的外部结构。Agent 不需要把所有信息都内部化，而可以形成
+\[
+InternalAgentCSO
+\leftrightarrow
+ExternalCarrier.
+\]
+例如与其在内部永久记忆某个复杂家庭流程，不如形成一个可靠的 household skill；与其记住所有物品位置，不如维护可更新的环境 SGC；与其自己承担所有专业知识，不如在 Boundary 管理下调用外部工具或其他 Agent。成熟的 Companion 因而不是“记住一切”，而是知道什么应该由谁承载。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+从产品成熟度看，本阶段真正的验收单位不应再是一次任务，而应该是一个足够长的观察窗口 $\Delta T_L$。可以定义
+\[
+M_{comp}
+=
+F(
+C_{identity},
+C_{memory},
+C_{relationship},
+C_{recovery},
+C_{adaptation},
+C_{boundary},
+C_{trust}
+),
+\]
+其中最重要的问题是：数月以后，这个系统是否仍然能够被识别为同一个主体；它的能力是否因为经历而更成熟；错误是否能够被纠正而不是不断沉降；关系结构是否连续；慢变量是否保持稳定；外部结构是否被合理利用。因此，Companion Agent 是 AgentOS 从“智能工具”跨入“持续人工智能生命体”意义上的第一道真正门槛。
 
-\begin{thought}
-对“Companion Cat/Dog：生命周期成熟测试”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\section{Autonomous Driving：以高速、高责任现实检验多尺度预测控制}
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+按照表面任务广度看，Autonomous Driving 似乎比家庭管家更加专用，因此有人可能质疑为什么它在产品成熟路线中位于 Companion 之后。这里必须理解：本书的路线不是按照任务通用性进行单轴排序，而是按照\textbf{系统必须同时承受的约束强度}推进。自动驾驶的特别之处在于，它把 AgentOS 放入一个高速连续、不可暂停、高物理责任、强多主体博弈且安全容错极低的现实环境中。此时许多在数字世界和家庭场景中“偶尔失败可以重试”的机制都必须被重新检验。
 
-\section{Autonomous Driving：高安全、高速具身}
-\begin{narration}
-现在把镜头移到“Autonomous Driving：高安全、高速具身”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+驾驶环境可抽象为部分可观测动态系统
+\[
+x_{t+1}
+=
+F(x_t,u_t,w_t),
+\]
+其中 $w_t$ 包含其他车辆、行人、天气、路面和不可预测事件。Agent 实际获得的是
+\[
+y_t
+=
+H(x_t)+\epsilon_t.
+\]
+因此 Kernel 永远不拥有现实状态本身，只拥有经过 Body Runtime、SGC 与 FCS 构造的 belief/semantic state。驾驶要求系统不断维持：
+\[
+p(x_t\mid y_{\leq t}),
+\]
+同时构造若干未来轨迹
+\[
+\hat{x}_{t:t+H}^{(1)},
+\hat{x}_{t:t+H}^{(2)},\ldots
+\]
+并根据目标、安全和交通规则选择可行控制。
 
-本节把“Autonomous Driving：高安全、高速具身”落实为在规定时延内具有高于普通预测控制权限的约束与中断包络。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“产品成熟路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+自动驾驶由此成为检验“多时间尺度预测”最严格的环境之一。最底层可能是毫秒级执行控制，中层是数百毫秒至数秒的车辆运动预测，更高层则是秒至分钟的路线、策略和交互决策。可以表示成
+\[
+\tau_{servo}
+<
+\tau_{BPCC}
+<
+\tau_{localPrediction}
+<
+\tau_{SGC/FCS}
+<
+\tau_h
+<
+\tau_{strategic}.
+\]
+如果这些层级不能形成清晰的责任分割，系统就会出现两种极端：要么高层不断 micromanage 底层，造成延迟和控制不稳定；要么底层拥有过大的自由度，使高层语义、安全和法律约束无法有效下降。
 
-把这一关系写成最小数学骨架，可得
+因此自动驾驶特别适合检验我们前文提出的
+\[
+\boxed{
+SlowGovernance\neq FastMicromanagement.
+}
+\]
+高层应定义长期意图和约束，例如
+\[
+Goal=\text{到达目的地},
+\]
+\[
+Constraint=
+\{
+Safety,
+TrafficRule,
+Comfort,
+Energy,
+RoutePreference
+\},
+\]
+然后通过 Predictive Envelope 下降为局部可行域。BPCC 或对应的快速驾驶控制层在此区域内优化具体轨迹。换句话说，高层控制的不是每个方向盘角度，而是控制“哪些未来轨迹仍然属于可接受现实”。
 
-\begin{equation}x_t\in\mathcal S,\quad u_t\in\mathcal U_{\rm safe}(x_t).\end{equation}
+与此同时，自动驾驶要求把 Safety Boundary 从一般原则提升成硬实时体系。对于普通认知系统，
+\[
+SPC
+\rightarrow
+TCE
+\rightarrow
+Decision
+\]
+可能允许几百毫秒甚至更长时间的延迟；但面对即将碰撞的现实状态，这种依赖不可接受。因此必须明确：
+\[
+\boxed{
+CriticalSafety
+\nrightarrow
+CognitiveDependency.
+}
+\]
+若实时安全变量进入危险集合
+\[
+x_t\in\mathcal{X}_{unsafe},
+\]
+安全控制器必须能够不等待 h 的显式推理直接改变控制参考：
+\[
+u_t
+\leftarrow
+u_t^{safe}.
+\]
+这也是
+\[
+SafetyAuthority
+>
+BPCCAuthority
+\]
+在产品级的最强验证场景。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Autonomous Driving：高安全、高速具身的命名和组合仍是需要实验验证的建模提案。
+自动驾驶还使 FCS 获得非常清晰的工程意义。道路中的每一辆车在 SGC 中具有位置、速度、类别、意图概率等结构，而 FCS 则把这些结构相对于本车形成 Threat、Control Instability、Urgency 等连续场。这种双表示允许高层认知不必把整个物理状态重算一遍。例如某车辆突然横穿，SGC 负责表示“谁、在哪里、以怎样的轨迹运动”；FCS 则快速表达“这一变化对当前主体意味着多大风险”。
 
-这一小节的反例同样重要：让实时危险等待高层认知会违反最坏时延要求。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+另一个重要问题是控制权必须符合 Single Writer Principle。自动驾驶系统常常存在路径规划器、局部规划器、车辆控制器、安全控制器、人工驾驶员等多个决策源。如果这些层同时直接写执行器，就会产生控制竞争。因此应满足
+\[
+\forall r_i,\qquad
+|\operatorname{ActiveWriter}(r_i)|=1.
+\]
+高层可以修改 Control Reference，安全层可以抢占 authority，但同一时间必须明确谁拥有最终资源写权限。
 
-\begin{thought}
-对“Autonomous Driving：高安全、高速具身”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+自动驾驶阶段还把“能力向下沉降、异常向上升级”的理论变成真实工程需求。熟悉的车道保持、跟车、转弯和停车不应该持续进入 h；它们需要被编译成高可靠的快速闭环。只有新颖道路结构、复杂交互、异常障碍或目标冲突才应提升。于是成熟驾驶 Agent 的显式认知占比反而应该随着技能成熟下降：
+\[
+\frac{
+C_{explicit}
+}{
+C_{successfulDriving}
+}
+\downarrow.
+\]
+这与“大模型持续思考就是更智能”的直觉相反，却符合长期智能成熟理论。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+因此自动驾驶阶段检验的是一种新的 AgentOS 成熟度：
+\[
+M_{drive}
+=
+F(
+Latency,
+Prediction,
+Safety,
+ResidualEscalation,
+Authority,
+RealityVerification,
+Recovery
+).
+\]
+它要求系统不仅“通常会驾驶”，还要求在高速、不确定、多主体环境中做到局部自治、全局约束、异常升级、硬安全抢占以及现实持续验证。如果这一层没有解决，那么人形机器人在开放社会环境中的安全问题将更加不可控。
 
-\section{Humanoid：所有能力的最终综合}
-\begin{narration}
-现在把镜头移到“Humanoid：所有能力的最终综合”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\section{Humanoid：将全部能力压缩进高自由度开放世界身体}
 
-本节把“Humanoid：所有能力的最终综合”落实为按可观测性、可复现性、动作风险和控制带宽逐步提高身体难度的迁移路线。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“产品成熟路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+Humanoid 被放在产品成熟路线末端，并不是因为人形身体在哲学上比其他身体“更高级”，而是因为它将前面各阶段验证的几乎所有困难同时叠加到一个系统中。它既具有 Mobile Manipulator 的物理控制复杂性，又具有 Companion Agent 的长期身份与社会互动要求，同时还继承 Autonomous Driving 对安全、快速预测和多主体环境的严格约束；此外，人形身体自身还具有更高自由度、更复杂接触动力学、更大的行为动作空间以及高度开放的任务分布。因此，人形平台更适合作为 AgentOS 能力成熟后的综合载体，而不是最早的理论验证入口。
 
-把这一关系写成最小数学骨架，可得
+设人形身体状态为
+\[
+x_B
+=
+(
+q,\dot q,
+Contact,
+Balance,
+Load,
+Battery,
+Thermal,
+Damage,\ldots
+),
+\]
+其自由度维数远高于数字 Body 或简单移动机械臂。与此同时，世界语义状态
+\[
+\mathcal{G}_{SGC}
+\]
+可能包含人、物体、工具、空间、社会关系、任务过程和其他 Agent；FCS 又持续反映平衡、威胁、资源、接触和控制不稳定性。若所有这些状态都直接进入工作记忆，则有限容量定理立即被违反。因此人形 Agent 成熟的第一标志不是“h 能装更多东西”，而恰恰是：
+\[
+\boxed{
+MostEmbodiedDynamics\notin h.
+}
+\]
+大量身体动力学必须已经在 Body Runtime 中形成稳定闭环。
 
-\begin{equation}\rho_{k+1}\leq\rho_{\max}(C_k,S_k,V_k).\end{equation}
+这一阶段尤其体现 Body Scale 原理的意义。如果此前 Computer Use、Mobile Manipulator、Companion 和 Driving 所形成的能力只能针对各自身体单独训练，那么它们不会自然汇聚成人形通用智能。AgentOS 真正希望做到的是使部分认知结构与身体实现解耦。设某个本体 CSO 为
+\[
+C,
+\]
+在不同 Body 上的具体承载为
+\[
+AgentCSO_{B_i}(C).
+\]
+理想情况下，换身体需要重新学习的主要是
+\[
+Grounding_{B_i},
+\]
+而不是重新学习全部语义结构：
+\[
+\boxed{
+KnownMeaning
++
+NewBodyGrounding
+\ll
+LearningEverythingAgain.
+}
+\]
+这正是 Body Scale 是否成立的最终检验。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Humanoid：所有能力的最终综合的命名和组合仍是需要实验验证的建模提案。
+人形平台还要求 KRA 从辅助适配器成长为长期动力耦合层。Kernel 的世界概念、目标、身体预测和习得技能必须通过 KRA 与具体 Body Runtime 保持功能一致：
+\[
+D_K
+\overset{D_A}{\longleftrightarrow}
+D_B.
+\]
+如果 Body Runtime 因磨损、负载、新工具或在线学习而发生变化，Kernel 不应立即失去对身体的理解；反过来，Kernel 的长期结构更新也不能让 Body Runtime 的已有控制模型瞬间失效。因此：
+\[
+\boxed{
+RelationshipStability
+>
+ParameterStability.
+}
+\]
+人形 Agent 真正需要维持的是 Kernel、KRA 与 Body 三者之间的功能契约，而不是某一个神经网络参数长期不变。
 
-这一小节的反例同样重要：从语言模型直接跳到高自由度高风险身体会同时混入感知、控制、安全和学习误差。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+人形产品还第一次充分暴露“工具成为身体扩展”的问题。锤子、推车、车辆、电脑甚至另一台机器人都可能临时改变 Agent 的有效身体边界。此时
+\[
+\mathcal{B}_{Agent}(t)
+\]
+不再是固定机械外壳，而是随工具和行动能力变化的动态控制边界。一个成熟 Agent 拿起工具后，应能够形成新的 affordance 与身体模型：
+\[
+Body
+\rightarrow
+Body+Tool.
+\]
+这意味着人形通用性并不主要来源于“五指像人”，而来源于它能够不断把新的外部结构并入自身可控制空间。
 
-\begin{thought}
-对“Humanoid：所有能力的最终综合”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+与此同时，Humanoid 场景将社会语义、安全治理和个体身份结合在一起。它可能在家庭、医院、工厂、公共环境中长期存在，因此不仅要理解物理可行性，还要受到权限、角色、法律、用户授权和社会协议的约束。可以把实际行动可行域写成
+\[
+\Gamma_{feasible}
+=
+\Gamma_{physical}
+\cap
+\Gamma_{semantic}
+\cap
+\Gamma_{authority}
+\cap
+\Gamma_{safety}.
+\]
+能够做到并不等于允许去做。这说明真正的人形 AgentOS 不可能只是一个更强的运动模型；它必须是从高层价值与身份、生命周期权限，到低层身体安全连续贯通的多尺度治理系统。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+因此，人形平台也构成“选择性显式认知”成熟度的最终测试。新生 Agent 面对大量任务需要显式推理，成熟 Agent 则应该把绝大多数熟练结构沉降到 $\Theta$、Skill、BPCC、Tool 和 Environment 中，使 $h$ 只处理真正的新颖冲突。可以写成：
+\[
+Maturity\uparrow
+\Rightarrow
+\frac{
+GlobalExplicitIntervention
+}{
+TotalSuccessfulBehavior
+}
+\downarrow,
+\]
+同时
+\[
+DistributedStableCapability\uparrow.
+\]
+这正是本书此前“成熟智能并不是每件事都思考得更多，而是越来越知道什么不需要进入全局思考”的工程落实。
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“产品成熟路线”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“为什么 Companion Agent 是平台成熟点”只使用这里已经给出的结果，不反过来为本章提供前提。
+所以 Humanoid 不是产品路线中一个简单的“终极外形”，而是前面所有理论能否同时闭合的压力测试：
+\[
+\boxed{
+PersistentSelf
++
+LifecycleMemory
++
+CognitiveControl
++
+BodyScale
++
+SGC/FCS
++
+BPCC
++
+KRA
++
+Safety
++
+SkillCompilation
++
+SocialGovernance.
+}
+\]
+任何一个层级不成熟，都可能在开放世界中被快速放大。因此，人形产品越接近现实部署，我们越应该把它理解成 AgentOS 成熟后的综合载体，而不是用人形硬件本身去倒逼尚未成熟的智能架构。
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+\section{从产品序列到能力闭合序列：AgentOS 成熟度的统一判据}
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+现在我们可以回头重新理解
+\[
+ComputerUse
+\rightarrow
+MobileManipulator
+\rightarrow
+VirtualButler/Companion
+\rightarrow
+AutonomousDriving
+\rightarrow
+Humanoid
+\]
+这条路线。它表面上是五类产品，实际上对应五次不同性质的闭环扩张：
+
+Computer Use 首先要求
+\[
+\boxed{
+PersistentCognitiveClosure;
+}
+\]
+Mobile Manipulator 增加
+\[
+\boxed{
+PhysicalSensorimotorClosure;
+}
+\]
+Companion 增加
+\[
+\boxed{
+LifecycleAndSocialClosure;
+}
+\]
+Autonomous Driving 增加
+\[
+\boxed{
+HighSpeedSafetyCriticalClosure;
+}
+\]
+Humanoid 最终要求
+\[
+\boxed{
+OpenWorldMultidomainClosure.
+}
+\]
+
+因此，产品之间真正的继承关系不是“功能更多”，而是平台已经解决的约束集合不断扩大。设阶段 $i$ 已经稳定解决的约束集合为
+\[
+\mathcal{C}_i,
+\]
+则平台演进应近似满足
+\[
+\mathcal{C}_{platform}^{(i+1)}
+=
+\mathcal{C}_{platform}^{(i)}
+\cup
+\Delta\mathcal{C}_{i+1}.
+\]
+其中 $\Delta\mathcal{C}$ 可以分别对应数字现实验证、连续物理闭环、生命周期、实时安全和开放通用身体等新问题。这样，即使某一商业产品被市场原因跳过，底层能力依赖仍然不能被真正跳过。
+
+为了进一步避免把产品成熟错误理解成单一性能指标，我们可以建立一个能力张量：
+\[
+\mathcal{K}
+=
+\left[
+K_{cog},
+K_{mem},
+K_{self},
+K_{body},
+K_{ground},
+K_{control},
+K_{social},
+K_{safety},
+K_{adapt},
+K_{govern}
+\right],
+\]
+分别表示认知、记忆、自我、身体迁移、现实 grounding、快速控制、社会互动、安全、适应和治理能力。第 $p$ 类产品定义一个最低需求向量
+\[
+\mathcal{R}^{(p)}.
+\]
+只有满足
+\[
+\mathcal{K}
+\succeq
+\mathcal{R}^{(p)}
+\]
+时，AgentOS 才具有进入该产品形态的基础条件。这里的偏序 $\succeq$ 不意味着所有产品需求形成简单线性关系，而是要求每一个关键能力都超过该产品所要求的最低阈值。
+
+例如 Computer Use 对
+\[
+K_{body}
+\]
+的物理要求不高，但对
+\[
+K_{cog},K_{mem},K_{reality}
+\]
+已经具有较高要求；Companion 显著提高
+\[
+K_{self},K_{social},K_{adapt};
+\]
+Driving 则显著提高
+\[
+K_{control},K_{safety};
+\]
+Humanoid 最终要求几乎所有维度同时达到较高水平。因此，人形 Agent 最大的困难并不一定在某一个维度达到极值，而在于：
+\[
+\boxed{
+HighDimensionalSimultaneousClosure.
+}
+\]
+
+这也解释为什么产品路线与科研路线并不完全相同。研究可以并行推进 Body Runtime、Agent Kernel、连续--离散控制、KRA 和硬件；但产品必须选择一个能够真正闭合的能力子空间。如果我们在十个模块都只有 $60\%$ 完成度时强行组合出一个人形演示，得到的通常不是一个 $60\%$ 成熟的人形 Agent，而是一个由多个未闭合环相互放大误差的系统。若第 $i$ 个关键闭环可靠率为 $p_i$，在一个高度简化的独立近似下，整体长任务可靠度甚至可能近似为
+\[
+P_{system}
+\approx
+\prod_{i=1}^{n}p_i.
+\]
+即使每层可靠率都看似较高，层数增加后总体失败概率仍可能快速上升。因此工程成熟必须优先追求闭环可靠性，而不是组件数量。
+
+产品路线的另一个核心判据是“高层认知成本是否随着能力成熟而下降”。我们可以定义显式认知成本
+\[
+C_{explicit}^{(p)}(n),
+\]
+表示某类任务经过第 $n$ 次经验之后，仍需要 h、LLM 大规模推理、全局规划的平均资源。如果系统真正发生了技能形成和 CSO 下沉，应观察到：
+\[
+\frac{\partial C_{explicit}^{(p)}}{\partial n}
+<
+0
+\]
+直到进入一个由任务新颖度和异常率决定的稳定下界。如果同一熟练任务执行一千次以后仍然需要与第一次近似相同的高层推理成本，那么系统虽然可以执行任务，却没有表现出本书意义上的成熟。
+
+同样重要的是异常后的可恢复性。成熟不是永不失败，而是能够在异常发生后找到正确尺度重新接管。定义某次扰动 $d$ 的恢复时间
+\[
+T_R(d)
+=
+\inf
+\left\{
+t>t_d:
+x(t)\in\mathcal{X}_{stable}
+\right\},
+\]
+那么随着 AgentOS 成熟，应出现：
+\[
+\mathbb{E}[T_R]\downarrow,
+\qquad
+P_{catastrophic}\downarrow.
+\]
+这种 Recovery Capability 在 Computer Use 中表现为页面变化后的重新规划，在 Mobile Manipulator 中表现为抓取失败后的重新定位，在 Companion 中表现为长期内部状态恢复，在 Driving 中表现为危险事件后的安全回归，在 Humanoid 中则成为跨身体、认知和社会约束的综合恢复能力。
+
+因此，我们最终可以把平台成熟度写成一个多目标函数：
+\[
+\boxed{
+M_{AgentOS}
+=
+F(
+Closure,
+Continuity,
+Grounding,
+Compilation,
+Recovery,
+Safety,
+Transfer,
+Governance
+).
+}
+\]
+这里并没有单独把“模型智商”放在最高位置，因为一个持续智能系统的价值来自这些维度之间的协同闭合。
+
+本章最需要读者记住的，是产品路线背后的一个反直觉判断：
+
+\[
+\boxed{
+\text{越接近通用智能，越不能通过直接追逐最复杂外形来获得。}
+}
+\]
+
+真正合理的路径恰恰相反。我们首先寻找结构简单但能够验证核心闭环的世界，让 Agent 学会持续存在；然后扩大身体，让它学会作用现实；再扩大生命周期，让它学会形成自己；再提高现实速度与风险，让它学会在强约束下安全自治；最后才把这些已经成熟的多尺度闭环放到高度开放的人形身体中。
+
+所以这条路线可以进一步浓缩为：
+\[
+\boxed{
+DigitalClosure
+\rightarrow
+PhysicalClosure
+\rightarrow
+LifecycleClosure
+\rightarrow
+SafetyCriticalClosure
+\rightarrow
+OpenWorldClosure.
+}
+\]
+
+而从 AgentOS 的角度，真正的产品成熟也不是“机器越来越像人”，而是：
+
+\[
+\boxed{
+\textbf{
+智能体能够稳定闭合的现实范围越来越大，同时越来越多已经掌握的结构从昂贵的显式认知中沉降为可靠的长期结构、技能、身体闭环和外部环境结构。
+}
+}
+\]
+
+这正是为什么本书把产品路线放在工程路线论中，而不是把它当作普通商业规划：产品在这里承担的是理论验证装置。每进入一个新的产品阶段，我们实际上都在向 AgentOS 提出一个更严格的问题——\textbf{这个持续主体究竟能够把多大范围、多长时间尺度、多高现实风险的世界真正纳入自己的稳定闭环之中？}

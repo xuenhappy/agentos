@@ -1,197 +1,1004 @@
 \chapter{硬件路线：推理芯片与小脑芯片}
-\begin{chapteroverviewbox}
-这一章，我们围绕“硬件路线：推理芯片与小脑芯片”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明理论到系统与生态的工程路线。
-\end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 AgentOS 三条软件主线、两类基础设施、六阶段路线与产品成熟次序的工程推演。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是系统工程、成熟度分级、接口契约与开放治理（混杂系统与模型预测控制）。
-
-本章使用上一章“为什么 Companion Agent 是平台成熟点”已经得到的对象与边界；本章产出将供下一章“AgentOS 开放标准体系”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在系统工程、成熟度分级、接口契约与开放治理上。
-\section{为什么 BPCC 不只是“小模型”}
-\begin{narration}
-现在把镜头移到“为什么 BPCC 不只是“小模型””。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“为什么 BPCC 不只是“小模型””落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“硬件路线：推理芯片与小脑芯片”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对为什么 BPCC 不只是“小模型”的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“为什么 BPCC 不只是“小模型””做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{高频低延迟}
-\begin{narration}
-现在把镜头移到“高频低延迟”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“高频低延迟”落实为承载范围、有效信息率与反馈周期之间的约束关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“硬件路线：推理芯片与小脑芯片”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}T_{\min}\geq L/v+I/B+T_{\rm act}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对高频低延迟的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：忽略传播和排队成本会制造虚假的实时性。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“高频低延迟”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{确定性}
-\begin{narration}
-现在把镜头移到“确定性”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“确定性”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“硬件路线：推理芯片与小脑芯片”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对确定性的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“确定性”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{在线适应}
-\begin{narration}
-现在把镜头移到“在线适应”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“在线适应”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“硬件路线：推理芯片与小脑芯片”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对在线适应的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“在线适应”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Cerebellum Chip}
-\begin{narration}
-现在把镜头移到“Cerebellum Chip”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Cerebellum Chip”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“硬件路线：推理芯片与小脑芯片”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Cerebellum Chip的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Cerebellum Chip”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Inference Chip}
-\begin{narration}
-现在把镜头移到“Inference Chip”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Inference Chip”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“硬件路线：推理芯片与小脑芯片”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Inference Chip的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Inference Chip”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Kernel—Body 异构计算}
-\begin{narration}
-现在把镜头移到“Kernel—Body 异构计算”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Kernel—Body 异构计算”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“硬件路线：推理芯片与小脑芯片”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Kernel—Body 异构计算的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Kernel—Body 异构计算”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Computer OS 的硬件调度}
-\begin{narration}
-现在把镜头移到“Computer OS 的硬件调度”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Computer OS 的硬件调度”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“硬件路线：推理芯片与小脑芯片”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Computer OS 的硬件调度的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Computer OS 的硬件调度”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“硬件路线：推理芯片与小脑芯片”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“AgentOS 开放标准体系”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\begin{center}
+\fbox{
+\parbox{0.94\textwidth}{
+\textbf{本章总体说明}\quad
+本章讨论的不是传统意义上的“为大模型再设计一块更快的加速芯片”，而是从本书已经建立的多尺度智能动力学出发，回答一个更基础的工程问题：当一个持续智能体同时包含毫秒级身体闭环、秒级工作记忆认知、分钟至小时级经验整合以及更慢的结构学习时，是否仍然可以把这些不同时间尺度、不同确定性要求、不同学习方式的计算统一压缩到同一种推理硬件之中。我们的结论是否定的。AgentOS 的硬件体系应当继承其软件体系已经确立的快慢分层原则：高层 Agent Kernel 依赖高吞吐、强表达、适合大规模生成模型计算的推理硬件；Body Runtime 中的 BPCC 则需要低时延、低抖动、确定性、持续在线适应和现实闭环优先的“小脑式”计算硬件。二者不是主芯片与协处理器的简单性能分工，而是两种不同智能动力学的物理承载。由此，本章提出 ``Inference Chip + Cerebellum Chip'' 的异构智能计算路线，并进一步讨论其与 KRA、Body Runtime、Linux/Computer OS 以及 AgentOS 调度体系之间的接口关系。
+}
+}
+\end{center}
+
+\section{为什么 BPCC 不是一块缩小的大模型推理芯片}
+
+当我们从软件层面建立
+\[
+\boxed{
+AgentSystem=AgentKernel+BodyRuntime
+}
+\]
+以后，一个极易出现的工程误区是认为：既然 Agent Kernel 可以运行在大模型推理芯片上，那么只需要在身体侧放置一块更小、更便宜、速度更快的神经网络加速器，就可以承担 Body Runtime 的全部工作。这个判断忽略了两类计算在动力学性质上的根本区别。Agent Kernel 的主要任务是进行语义理解、长期规划、世界模型推演、工作记忆组织、目标管理、记忆检索以及对未来可能性的生成，其计算可以具有较高的不确定性，可以接受一定程度的运行时间波动，也允许通过增加计算深度换取更好的推理质量。BPCC 所承担的则是另外一类问题：身体局部状态估计、短时预测、姿态和轨迹控制、残差检测、局部策略修正以及异常上浮。这些任务首先受到现实世界的时间约束，而不是受到语言生成吞吐量约束。
+
+因此我们必须区分两种不同的计算目标。对于高层推理芯片，可以概念性地定义其主要优化目标为
+\[
+\mathcal J_{\mathrm{infer}}
+=
+\alpha_1 Q_{\mathrm{reason}}
++
+\alpha_2 \mathrm{Throughput}
+-
+\alpha_3 E_{\mathrm{compute}}
+-
+\alpha_4 C_{\mathrm{memory}},
+\]
+其中 $Q_{\mathrm{reason}}$ 表示推理质量，Throughput 表示 token、视觉 token 或通用张量处理吞吐量，$E_{\mathrm{compute}}$ 与 $C_{\mathrm{memory}}$ 分别表示能耗和存储代价。对于 BPCC，目标函数更接近
+\[
+\mathcal J_{\mathrm{BPCC}}
+=
+\beta_1 \|\varepsilon_{\mathrm{ctrl}}\|^2
++
+\beta_2 \|\varepsilon_{\mathrm{pred}}\|^2
++
+\beta_3 L_{\mathrm{wc}}
++
+\beta_4 J_{\mathrm{jitter}}
++
+\beta_5 R_{\mathrm{safety}},
+\]
+其中 $\varepsilon_{\mathrm{ctrl}}$ 是控制残差，$\varepsilon_{\mathrm{pred}}$ 是短期预测残差，$L_{\mathrm{wc}}$ 是最坏情况时延，$J_{\mathrm{jitter}}$ 是时间抖动，而 $R_{\mathrm{safety}}$ 是由于控制不能及时闭合而产生的现实风险。对于前者，平均吞吐量通常非常重要；对于后者，平均性能甚至可能不是最重要指标，真正决定系统可用性的往往是最坏情况响应时间。
+
+这一差异意味着，BPCC 的计算模式也不应该简单复制 Transformer。其核心操作可能同时包括状态估计、滤波、局部动力学预测、小规模矩阵运算、优化控制、轨迹插值、运动学与动力学计算、条件规则、安全检测以及在线参数调整。其工作负载可以形式化为
+\[
+\mathcal W_B
+=
+\mathcal W_{\mathrm{estimate}}
+\cup
+\mathcal W_{\mathrm{predict}}
+\cup
+\mathcal W_{\mathrm{control}}
+\cup
+\mathcal W_{\mathrm{residual}}
+\cup
+\mathcal W_{\mathrm{adapt}},
+\]
+而 Agent Kernel 的主要计算负载更接近
+\[
+\mathcal W_K
+=
+\mathcal W_{\mathrm{semantic}}
+\cup
+\mathcal W_{\mathrm{reason}}
+\cup
+\mathcal W_{\mathrm{memory}}
+\cup
+\mathcal W_{\mathrm{planning}}
+\cup
+\mathcal W_{\mathrm{generation}}.
+\]
+两者当然可以共享部分张量运算基础，但不应该因为二者都可以包含神经网络，就把它们理解成同一计算体系的大小版本。
+
+从本书前面建立的多尺度动力学看，这种硬件分化具有更深的理论原因。我们已经反复强调
+\[
+\boxed{
+EachScaleShouldCloseItsOwnFastLoop
+}
+\]
+以及
+\[
+\boxed{
+NormalDynamicsStayLocal.
+}
+\]
+如果一个身体的每次平衡修正、每次触觉补偿、每个局部运动误差都必须经过高层模型进行推理，那么 Agent Kernel 会被大量本来可以局部闭合的 Agent-CSO 占据，工作记忆 $h(t)$ 的有限容量将被身体微观扰动持续消耗。成熟智能的正确方向恰恰相反：稳定、重复、局部可闭合的认知结构应当逐渐下沉到更加快速、更加局部、更加确定的承载层。因此小脑芯片并不是“为了加速大模型”，而是为了物理实现
+\[
+\boxed{
+StableAgentCSO
+\rightarrow
+FastLocalCarrier.
+}
+\]
+
+从外部理论看，这一设计与层级控制、实时嵌入式系统、模型预测控制、适应控制以及生物小脑研究具有明显的形式联系，但本书并不要求人工小脑复制生物小脑的神经结构。我们关心的是功能同构：高层定义意图和可行区域，低层在现实约束内快速闭合控制，并将无法局部消解的残差重新提升。因而 ``Cerebellum Chip'' 在本文中首先是一个计算体系概念，而不是一块必须采用特定神经拟态结构的芯片名称。
+
+\section{高频低延迟：身体计算首先服从现实时间}
+
+高层认知可以等待，现实动力学通常不会等待。机器人正在失去平衡时，系统不能因为大型模型正在执行长上下文推理而延迟姿态修正；自动驾驶车辆接近障碍物时，避障闭环也不能依赖一次运行时间不确定的生成式推理。Body Runtime 与 Agent Kernel 最重要的区别之一，就是前者的计算周期由外部世界动力学定义，而不是由软件调度器自由决定。
+
+设被控制身体的某一局部动力学特征时间常数为
+\[
+\tau_{B},
+\]
+控制周期为
+\[
+T_c,
+\]
+为了使离散控制能够有效跟踪身体动力学，一般需要满足某种形式的尺度分离条件
+\[
+T_c
+\leq
+\frac{\tau_B}{\kappa},
+\qquad
+\kappa>1.
+\]
+这里 $\kappa$ 的具体数值由控制对象、稳定裕度和预测能力决定，本书不把它规定成一个固定常数。其理论意义在于：控制闭环的时间尺度必须显著快于其所要稳定的现实变化尺度。进一步考虑感知、估计、预测、控制和执行的串行时延，可以定义
+\[
+L_{\mathrm{loop}}
+=
+L_{\mathrm{sense}}
++
+L_{\mathrm{estimate}}
++
+L_{\mathrm{predict}}
++
+L_{\mathrm{control}}
++
+L_{\mathrm{actuate}}.
+\]
+如果系统要求控制截止期限为 $D_B$，则必须保证
+\[
+L_{\mathrm{loop}}^{\mathrm{wc}}
+<
+D_B,
+\]
+其中上标 $\mathrm{wc}$ 表示 worst-case，而非平均值。
+
+这一点决定了小脑芯片不能只追求 FLOPS、TOPS 或 token/s。一个在平均情况下极快、但偶尔产生数十倍尾延迟的计算系统，在生成式聊天中可能只是交互体验下降，在身体控制中却可能直接意味着控制失稳。因此我们需要引入不同于普通 AI Benchmark 的指标体系：
+\[
+\mathcal M_{\mathrm{RT}}
+=
+\{
+L_{50},
+L_{99},
+L_{\mathrm{wc}},
+J,
+D_{\mathrm{miss}},
+R_{\mathrm{recovery}}
+\},
+\]
+其中 $J$ 表示 jitter，$D_{\mathrm{miss}}$ 表示 deadline miss rate，而 $R_{\mathrm{recovery}}$ 描述超时后系统恢复到可治理状态的能力。对于硬实时环，一些关键任务甚至应要求
+\[
+D_{\mathrm{miss}}\rightarrow 0,
+\]
+而不是仅仅优化其期望值。
+
+这与本书此前建立的时间尺度序列完全一致：
+\[
+\tau_{\mathrm{servo}}
+<
+\tau_{\mathrm{fast-control}}
+\lesssim
+\tau_{\mathrm{fast-prediction}}
+<
+\tau_{\mathrm{SGC/FCS}}
+<
+\tau_h
+<
+\tau_E
+<
+\tau_\Theta.
+\]
+这里最值得读者注意的是，``智能''并没有一个统一时钟。一个完整 Agent 同时运行在多个物理和认知时间尺度上。如果强制所有尺度共享同一个大模型推理周期，就等价于要求最快身体闭环等待最慢认知闭环。这样的系统从一开始就违背了多尺度智能的基本结构。
+
+因此，未来 Agent 硬件需要显式支持多频计算域。可以把身体侧任务划分为
+\[
+\mathcal C_B
+=
+\{
+C_{\mu s},
+C_{ms},
+C_{10ms},
+C_{100ms}
+\},
+\]
+它们分别承担不同实时等级的估计、控制和整合。Agent Kernel 则运行在更慢但计算表达能力更强的域中。重要的是，这些域之间不是简单同步调用关系，而应使用状态摘要、预测包络、残差事件和控制参考进行异步耦合。高层不需要每毫秒重新告诉低层怎样保持平衡，而是给出
+\[
+\mathcal E_H
+=
+(
+SGC^{target},
+FCS^{constraint},
+u^{reference},
+\mathcal C^{safety}
+),
+\]
+由 BPCC 在局部时间尺度上自行闭合。
+
+这种设计在外部理论上与多速率控制、事件触发控制、实时操作系统以及网络化控制系统具有直接联系。但 AgentOS 对其做了一个关键扩展：不同时间尺度不仅代表不同控制器，也代表不同 Agent-CSO 的承载层。当某个结构已经能够被高速局部闭环可靠处理时，它就不应持续占据慢速全局认知层。这使“低延迟硬件”从性能优化问题转化成了认知结构迁移理论的物理实现问题。
+
+\section{确定性：为什么最坏情况比平均性能更重要}
+
+在当前人工智能硬件评价体系中，人们习惯使用平均吞吐量、峰值算力和平均能耗评价芯片。然而一旦计算进入具身闭环，这种评价方式会暴露严重不足。Body Runtime 不仅需要快，而且需要知道“什么时候一定能够算完”。因此小脑芯片必须把 deterministic execution 视为与计算吞吐量同等重要的一级设计目标。
+
+我们可以把一次 BPCC 任务的执行时间看成随机变量
+\[
+L_i.
+\]
+传统吞吐优化往往主要降低
+\[
+\mathbb E[L_i],
+\]
+但实时控制更加关心
+\[
+\sup L_i
+\]
+或者高置信度条件下的
+\[
+Q_{1-\epsilon}(L_i),
+\]
+其中 $Q$ 表示分位数。如果任务截止期限是 $D_i$，则真正的实时约束是
+\[
+\Pr(L_i>D_i)
+<
+\epsilon_i,
+\]
+对于硬安全闭环则进一步要求通过架构和验证使
+\[
+L_i^{WCET}
+<
+D_i.
+\]
+
+这要求芯片架构避免过多不可预测因素。例如大规模共享缓存竞争、不可控内存分页、频繁动态编译、复杂 speculative execution、不可预知的调度抢占，虽然能够提高通用处理器的平均性能，却可能增加最坏情况时延的不确定性。小脑芯片的设计方向更可能偏向局部存储、显式数据流、固定优先级实时通道、受控 DMA、确定性执行单元以及可分析的运行路径。这里并不意味着必须放弃所有动态优化，而是所有优化都应满足
+\[
+Optimization
+\subseteq
+RealtimeEnvelope.
+\]
+
+为了形式化这种设计，我们可以定义每个身体任务
+\[
+\mathcal T_i
+=
+(C_i,T_i,D_i,P_i,S_i),
+\]
+其中 $C_i$ 是最坏计算成本，$T_i$ 是任务周期，$D_i$ 是 deadline，$P_i$ 是优先级，而 $S_i$ 是安全等级。调度器的首要目标不是最大化所有任务的平均吞吐，而是保证关键任务集合
+\[
+\mathcal T_{\mathrm{critical}}
+\]
+满足
+\[
+\forall i\in\mathcal T_{\mathrm{critical}},
+\quad
+R_i\leq D_i,
+\]
+其中 $R_i$ 为最坏响应时间。只有在这些约束满足之后，剩余算力才可以分配给较弱实时性的预测、学习和优化任务。
+
+这一原则与本书此前提出的
+\[
+\boxed{
+SafetyAuthority>BPCCAuthority
+}
+\]
+完全一致。甚至 BPCC 本身也不能成为安全的最终权威。如果其神经预测模块异常、学习参数漂移或计算超时，底层仍需存在独立的 Safety Boundary。由此形成至少三级执行权：
+\[
+Safety
+>
+DeterministicControl
+>
+AdaptivePrediction.
+\]
+这意味着硬件内部也需要对应的隔离。安全中断、紧急制动、限幅、姿态保护等机制，不应与普通推理任务争夺同一条不可控执行队列。
+
+从更深的认知动力学角度看，确定性是“慢层给予快层自治”的前提。高层之所以可以不持续 micromanage 低层，是因为低层能够在一个可验证的闭环包络内稳定执行。如果身体控制时延本身具有巨大不确定性，那么 Agent Kernel 就不得不持续关注底层状态，结果重新把大量局部 CSO 提升到 $h(t)$。因此
+\[
+\boxed{
+LocalDeterminism
+\Rightarrow
+HigherLevelCognitiveFreedom.
+}
+\]
+换句话说，底层确定性不仅提高机器人稳定性，也直接释放高层认知容量。
+
+这一节可以依赖实时系统中的 worst-case execution time、rate-monotonic scheduling、earliest-deadline-first、实时操作系统以及 robust control 等成熟理论；但 AgentOS 的新增问题在于，这些实时约束还必须与认知结构迁移、局部学习和跨尺度残差上浮共同存在。小脑芯片因此既不是传统 MCU，也不是单纯 NPU，而是面向“可学习实时闭环”的新型计算域。
+
+\section{在线适应：小脑芯片必须能够边运行边学习}
+
+如果 BPCC 只有快速控制而没有持续适应，它仍然只是一个传统实时控制器。真正把它与普通运动控制芯片区分开的关键，是其必须在现实交互中持续修正局部身体模型。机器人换了工具、关节产生磨损、电池状态变化、负载质量发生改变、轮胎摩擦系数变化、网络延迟改变，都会使原有动力学模型逐渐失配。若所有这些变化都必须重新上传 Agent Kernel、重新训练大型模型再下发，整个系统就失去了身体层自主适应的意义。
+
+因此 BPCC 的基本结构应保持
+\[
+\boxed{
+BPCC
+=
+FastPrediction
++
+FastControl
++
+ResidualEstimation
++
+AdaptiveLearning.
+}
+\]
+设身体局部状态为 $x_t$，控制输入为 $u_t$，局部模型参数为 $\theta_t$，BPCC 的预测可以写成
+\[
+\hat x_{t+1}
+=
+f_{\theta_t}(x_t,u_t).
+\]
+现实返回
+\[
+x_{t+1},
+\]
+于是得到预测残差
+\[
+\varepsilon_{t+1}
+=
+x_{t+1}
+-
+\hat x_{t+1}.
+\]
+在线适应器据此更新
+\[
+\theta_{t+1}
+=
+\Pi_{\Omega}
+\left[
+\theta_t
+-
+\eta_t
+\nabla_{\theta}
+\mathcal L(\varepsilon_{t+1})
+\right],
+\]
+其中 $\Pi_{\Omega}$ 表示参数必须投影回允许的安全适应集合 $\Omega$。这一投影非常重要，因为本书从未主张低层学习拥有无限自由。相反，局部快速学习必须发生在高层定义的安全与功能包络内。
+
+进一步，可以把 BPCC 内部参数分成
+\[
+\theta
+=
+(
+\theta_{\mathrm{fixed}},
+\theta_{\mathrm{slow}},
+\theta_{\mathrm{fast}}
+).
+\]
+其中 $\theta_{\mathrm{fixed}}$ 包含安全边界、硬约束或经过严格验证的基础动力学接口；$\theta_{\mathrm{slow}}$ 表示需要较长时间观察才能更新的身体模型；$\theta_{\mathrm{fast}}$ 则允许根据短时残差在线适应。于是可以要求
+\[
+\tau_{\mathrm{control}}
+\ll
+\tau_{\mathrm{fast-adapt}}
+\ll
+\tau_{\mathrm{slow-adapt}}
+\ll
+\tau_{\mathrm{Kernel-structure}}.
+\]
+这一层级避免“边控制边大幅改写控制器”带来的非平稳性。
+
+更一般地，本书前面已经提出 Kernel、KRA、BPCC 不应该同时高速漂移。其适应时间尺度应满足
+\[
+\tau_{BPCC}^{adapt}
+<
+\tau_{KRA}^{adapt}
+<
+\tau_{Kernel}^{struct}.
+\]
+这意味着小脑芯片首先适应的是身体的局部动力变化；KRA 随后根据长期统计修正 Kernel 与 Body Runtime 之间的语义和动力关系；只有更持久、更稳定的变化才有资格进入 Agent Kernel 的长期结构学习。这样的层层过滤，本质上就是
+\[
+\boxed{
+FastResidual
+\rightarrow
+LocalAdaptation
+\rightarrow
+PersistentResidual
+\rightarrow
+CrossScaleEscalation.
+}
+\]
+
+硬件因此需要的不只是推理阵列，也需要支持持续更新。传统只读权重加载方式并不完全适合 BPCC。芯片应允许一部分参数、状态估计器、局部动力模型、校准系数和残差统计以高频、低代价方式更新。理想情况下，本地适应不需要把完整原始传感数据持续搬运到外部主内存，而应使用片上状态缓存和局部更新通路，从而减少
+\[
+E_{\mathrm{data\ movement}}
+\]
+和
+\[
+L_{\mathrm{memory}}.
+\]
+在很多边缘控制场景中，真正消耗能量和产生时延的并不是乘加本身，而是数据移动；因此 local learning 与 local memory 在硬件层是紧密耦合的。
+
+然而在线适应也意味着新的安全问题。我们必须定义一个 adaptation budget：
+\[
+\|\Delta\theta_t\|
+\leq
+B_\theta(t),
+\]
+并约束单位时间内的累计结构漂移
+\[
+\sum_{\tau=t-T}^{t}
+\|\Delta\theta_\tau\|
+\leq
+B_T.
+\]
+若残差长期无法被允许范围内的局部适应消解，则应触发
+\[
+\Gamma_{\mathrm{escalate}}
+=
+f(
+\|\varepsilon\|,
+Persistence,
+Risk,
+Novelty
+),
+\]
+当
+\[
+\Gamma_{\mathrm{escalate}}
+>
+\gamma
+\]
+时，将问题提升到 KRA 或 Agent Kernel，而不是继续无限修改 BPCC。
+
+这一设计直接连接适应控制、在线系统辨识、递推估计、模型预测控制、元学习和两时间尺度随机逼近等外部理论。AgentOS 的独特要求在于：局部学习的目的不是让每一层都成为独立智能体，而是在保持单一持续主体的前提下，使身体低层拥有足够的适应自治。因此小脑芯片应被理解成
+\[
+\boxed{
+AdaptiveLocalClosureHardware,
+}
+\]
+而不是独立自主的第二 Agent。
+
+\section{Cerebellum Chip：面向局部预测控制闭环的专用计算域}
+
+到这里，我们已经可以正式定义本书所说的 Cerebellum Chip。它不是要求人工系统复制生物小脑，而是从功能与时间尺度上定义一种新的硬件类型：
+\[
+\boxed{
+CerebellumChip
+=
+Deterministic
++
+LowLatency
++
+LocalPrediction
++
+LocalControl
++
+ResidualLearning
++
+BoundedAdaptation.
+}
+\]
+其存在的理由来自 AgentOS 自身的多尺度结构，而不是来自生物模仿冲动。只要一个智能体拥有现实身体，就会自然出现大量高频、局部、重复、可闭合的 Agent-CSO。如果让这些结构长期占据高层认知，就违反工作记忆有限定理；如果把它们下沉到普通固定控制器，又失去持续适应能力。因此必须出现一种介于“纯实时控制器”和“高层大模型推理机”之间的计算层。
+
+从体系结构角度，可以把小脑芯片内部抽象为
+\[
+\mathcal H_C
+=
+(
+\mathcal E,
+\mathcal P,
+\mathcal C,
+\mathcal R,
+\mathcal A,
+\mathcal M,
+\mathcal S
+),
+\]
+其中 $\mathcal E$ 是状态估计单元，$\mathcal P$ 是快速预测单元，$\mathcal C$ 是控制求解单元，$\mathcal R$ 是残差计算与异常检测单元，$\mathcal A$ 是在线适应单元，$\mathcal M$ 是本地实时存储，而 $\mathcal S$ 是与独立安全控制器连接的实时接口。
+
+在算子层面，小脑芯片应同时适合几类负载。第一类是线性代数和小规模张量推理，例如
+\[
+y=Wx+b
+\]
+以及轻量神经动力模型。第二类是滤波与估计，包括递归更新和协方差计算。第三类是运动学、轨迹和优化控制，包括
+\[
+u_t^\star
+=
+\arg\min_{u_{t:t+H}}
+\sum_{k=0}^{H}
+\ell(x_{t+k},u_{t+k}),
+\]
+并满足
+\[
+x_{t+k+1}
+=
+f_\theta(x_{t+k},u_{t+k})
+\]
+及各种实时约束。第四类是残差、阈值、状态机和安全条件判断。第五类是局部参数在线更新。因此从物理实现上，小脑芯片可能吸收 DSP、MCU、NPU、FPGA、实时控制器乃至神经拟态计算的部分思想，但理论上并不预先限定某一种微架构。
+
+一个尤其重要的设计原则是片上 ``predict--act--observe--update'' 闭环。传统 AI 芯片的数据流经常是
+\[
+Input
+\rightarrow
+Inference
+\rightarrow
+Output,
+\]
+而小脑芯片的天然工作形态应是
+\[
+State
+\rightarrow
+Prediction
+\rightarrow
+Control
+\rightarrow
+Reality
+\rightarrow
+Residual
+\rightarrow
+Adaptation.
+\]
+因此它本质上是一种循环型计算机，而不是一次性映射型推理器。状态连续存在，参数可以局部变化，前一周期的结果直接进入下一周期。片上存储也因此不是普通缓存，而承担
+\[
+z_t^{BPCC},
+\quad
+\theta_t,
+\quad
+\varepsilon_t,
+\quad
+\Sigma_t,
+\quad
+u_{t-1}
+\]
+等持续动力学状态。
+
+Cerebellum Chip 还应与 SGC/FCS 世界接口保持严格分层。BPCC 内部可以维护高度优化、不可解释的 latent：
+\[
+z_t^{BPCC}\in\mathbb R^d,
+\]
+但它不能把该 latent 直接当成 Agent Kernel 的公共世界。对上层输出必须重新通过可解释接口形成：
+\[
+PublicEmbodiedState
+=
+SGC+FCS+Residual+Confidence.
+\]
+这继承了本书已经确立的
+\[
+\boxed{
+Interface=SemanticSkeleton+LatentMuscle.
+}
+\]
+芯片内部允许为了速度使用最有效的表示，跨层通信则必须维持语义、认识论状态和控制权限边界。
+
+我们还应把 Cerebellum Chip 与 Safety Chip 或硬安全逻辑区别开。小脑芯片可以非常快，但它仍然是可学习系统。安全关键的最终约束不能完全交给一个在线变化的学习器。因此更完整的硬件层次应是：
+\[
+\boxed{
+SafetyBoundary
+>
+CerebellumControl
+>
+AdaptivePrediction
+}
+\]
+或者从数据流看：
+\[
+Sensor
+\rightarrow
+SafetyPath
+\]
+与
+\[
+Sensor
+\rightarrow
+BPCCPath
+\]
+应当至少在关键条件下具有独立可达性。这样，当 BPCC 失效、计算拥塞或学习异常时，系统仍能进入受控降级状态。
+
+因此，本书提出小脑芯片不是因为“机器人需要一块更小的 AI 芯片”，而是因为 AgentOS 的理论已经要求出现一个独立物理承载层：
+\[
+\boxed{
+\tau_{\mathrm{BodyFastLoop}}
+\ll
+\tau_{\mathrm{CognitiveLoop}}.
+}
+\]
+只有把这一时间尺度分离真正固化到硬件上，``Normal Dynamics Stay Local'' 才不再只是一句软件架构原则，而成为智能体的物理结构。
+
+\section{Inference Chip：高层认知与生成式世界模型的计算承载}
+
+与小脑芯片不同，Inference Chip 面向的主要不是毫秒级闭环，而是 Agent Kernel 的高维语义计算。这里的“推理芯片”既可以承载 LLM、VLM、VLA，也可以承载未来更加通用的 world model、memory model 和结构生成模型，其核心目标是提供大规模并行张量计算、较高内存带宽、长上下文状态处理以及多模型混合执行能力。
+
+Agent Kernel 中的计算不能被简单归约为一次模型前向传播。随着 AgentOS 引入
+\[
+h,\ E,\ \Theta,\ \Psi,\ \Omega,
+\]
+高层运行时需要同时处理当前工作记忆、情景召回、结构记忆激活、世界模型预测、自我一致性约束、Goal 选择以及工具决策。因此推理芯片真正承载的是
+\[
+\mathcal W_{\mathrm{AgentKernel}}
+=
+\{
+W_h,
+W_E,
+W_\Theta,
+W_\Psi,
+W_\Omega,
+W_{\mathrm{planning}},
+W_{\mathrm{simulation}}
+\}.
+\]
+这些工作负载具有明显的数据访问异质性。例如 $h$ 偏向高频小规模状态更新；$E$ 可能需要大规模检索和重排；$\Theta$ 可能存在参数化模型与显式结构混合；$\Psi$ 和 $\Omega$ 则更新极慢但需要在大量决策中持续产生约束。因此未来推理芯片的 AgentOS 适配程度不能只由 dense matmul 峰值算力衡量。
+
+可以定义 Agent Kernel 的综合硬件目标：
+\[
+\mathcal J_K
+=
+\lambda_Q Q
++
+\lambda_T \mathrm{Throughput}
++
+\lambda_M B_{\mathrm{memory}}
++
+\lambda_C C_{\mathrm{context}}
+-
+\lambda_E E
+-
+\lambda_L L,
+\]
+但这里的 $L$ 通常可以允许比 BPCC 高得多的数量级。更重要的是，Kernel 计算具有“深度可调”特征。TCE 可能根据当前认知相态动态改变计算预算：
+\[
+B_t^{compute}
+=
+TCE(
+S_{self},
+Risk,
+Novelty,
+GoalImportance
+).
+\]
+因此推理硬件需要支持弹性计算，而不是固定周期控制。例如普通问题使用较浅推理，关键决策则增加搜索、模拟和反事实评估。对于这一层：
+\[
+ComputeDepth
+\]
+本身就是认知控制变量。
+
+推理芯片还承担 h/E/Theta 之间部分结构迁移所需的高维模型计算。例如情景回放可以产生新的结构训练样本，Theta 激活可以重新解释 E，而长期结构又可以生成未来预测。未来真正的 Agent 推理硬件可能需要比普通 serving accelerator 更强的 persistent state 支持，即让系统不仅保存 KV cache，而是支持跨任务、跨会话的长期 Agent 状态管理。这里需要明确：具体记忆结构仍然属于 AgentOS 软件和存储体系，芯片不应把某一种记忆实现写死；但硬件可以提供高效的稀疏检索、向量搜索、图操作、流式状态更新和近存储计算能力。
+
+与小脑芯片比较，可以形成非常明确的功能差异：
+\[
+\begin{array}{c|c|c}
+ & \text{Inference Chip} & \text{Cerebellum Chip}\\
+\hline
+\text{核心目标} & \text{语义推理与生成} & \text{局部预测与控制}\\
+\text{关键指标} & \text{吞吐/带宽/容量} & \text{时延/抖动/确定性}\\
+\text{时间尺度} & \text{中低频} & \text{高频}\\
+\text{学习方式} & \text{较慢结构更新} & \text{局部在线适应}\\
+\text{现实闭环} & \text{间接} & \text{直接}\\
+\text{失败后果} & \text{认知性能下降} & \text{可能导致身体失稳}
+\end{array}
+\]
+
+当然这不是绝对二分。例如高层推理芯片也可能执行快速视觉模型，小脑芯片也可能包含神经网络推理单元。真正的区分标准不是“是否运行神经网络”，而是它处于哪个
+\[
+Timescale\times Authority\times Safety
+\]
+区域。
+
+从本书的结构迁移理论看，Inference Chip 主要承载显式和生成性 Agent-CSO，小脑芯片则主要承载已经程序化、局部化和高速化的 Agent-CSO。随着能力成熟，一部分高层结构可能发生
+\[
+AgentCSO_K
+\rightarrow
+AgentCSO_B
+\]
+的迁移；当异常出现，又可能通过 residual escalation 重新进入 Kernel。这意味着两类芯片之间并非固定功能边界，而是存在受控的结构迁移。硬件异构由此成为认知发育的一部分。
+
+\section{Kernel--Body 异构计算：智能不是把所有计算放在最快的芯片上}
+
+Inference Chip 与 Cerebellum Chip 同时存在以后，新的关键问题不是“如何让两块芯片通信”，而是如何定义二者之间的认知边界。AgentOS 的基本原则始终是：高层负责目标、语义和跨尺度协调，低层负责局部快速闭环。因此异构计算必须服从
+\[
+\boxed{
+HigherLevelSetsFeasibleRegion,\quad
+LowerLevelOptimizesInsideIt.
+}
+\]
+
+设 Kernel 输出高层控制参考
+\[
+r_t^K
+\]
+以及预测约束包络
+\[
+\mathcal E_t^K.
+\]
+经过 KRA 适配后形成身体可执行的局部目标
+\[
+r_t^B
+=
+\Phi_{\mathrm{KRA}}
+(
+r_t^K,
+\mathcal E_t^K,
+SGC_t,
+FCS_t
+).
+\]
+BPCC 根据自身快速状态
+\[
+z_t^{B}
+\]
+生成
+\[
+u_t
+=
+\pi_B(
+z_t^B,
+r_t^B
+),
+\]
+并直接作用现实。现实返回后产生
+\[
+\varepsilon_t^B
+=
+(
+\varepsilon_{\mathrm{ctrl}},
+\varepsilon_{\mathrm{SGC}},
+\varepsilon_{\mathrm{FCS}}
+).
+\]
+若
+\[
+\Gamma(\varepsilon_t^B)<\theta,
+\]
+误差在 Body Runtime 内局部消解；若
+\[
+\Gamma(\varepsilon_t^B)\geq\theta,
+\]
+则形成高层事件重新送入 Kernel。于是完整闭环为
+\[
+Kernel
+\rightarrow
+KRA
+\rightarrow
+BPCC
+\rightarrow
+Reality
+\rightarrow
+Residual
+\rightarrow
+KRA/Kernel.
+\]
+
+这里最重要的不是通信带宽，而是通信语义。如果 Body Runtime 每周期把全部原始传感数据上传给 Kernel，那么即使芯片间带宽足够，认知架构仍然失败，因为高层工作记忆会重新承担大量局部现实复杂性。因此跨芯片信息应该优先是
+\[
+SemanticState
++
+ControlReference
++
+Residual
++
+Confidence
++
+Exception,
+\]
+而不是无限原始数据流。
+
+可以把跨层带宽成本写成
+\[
+C_{\mathrm{cross}}
+=
+\lambda_1 B_{\mathrm{raw}}
++
+\lambda_2 L_{\mathrm{sync}}
++
+\lambda_3 C_h
++
+\lambda_4 E_{\mathrm{move}},
+\]
+其中 $C_h$ 特别表示跨层通信对高层认知容量产生的额外负担。这个量在传统异构计算优化里通常不存在，却是 AgentOS 必须考虑的核心因素。最低延迟的数据传输并不一定是最优，如果它导致大量无价值结构进入 $h(t)$，系统整体反而更加低效。
+
+因此我们可以提出一个 AgentOS 异构分配问题。设任务集合为 $\mathcal T$，每个任务 $i$ 具有
+\[
+\chi_i=
+(
+\tau_i,
+d_i,
+s_i,
+g_i,
+a_i
+),
+\]
+其中 $\tau_i$ 是所需时间尺度，$d_i$ 是确定性要求，$s_i$ 是语义抽象程度，$g_i$ 是全局依赖程度，$a_i$ 是适应频率。则任务映射
+\[
+\pi_H:\mathcal T\rightarrow\{K,B,S\}
+\]
+分别选择 Kernel、BPCC 或 Safety 域。其优化目标可以写成
+\[
+\min_{\pi_H}
+\left[
+L_{\mathrm{total}}
++
+\lambda_E E_{\mathrm{total}}
++
+\lambda_C C_h
++
+\lambda_R R_{\mathrm{safety}}
++
+\lambda_X C_{\mathrm{cross}}
+\right].
+\]
+这就把传统 heterogeneous computing 从“GPU 还是 CPU”的性能选择，扩展成“哪个时间尺度、哪个控制权级别、哪个认知承载层应该处理这个结构”的智能调度问题。
+
+这种异构结构还使技能编译获得真正的硬件意义。一个新技能最初可能大量运行在 Kernel：
+\[
+h/E
+\rightarrow
+Planning
+\rightarrow
+Action.
+\]
+经过重复经历后形成稳定 Theta 结构，再经过结构编译转移至 Body Runtime：
+\[
+\Theta
+\rightarrow
+BodySkill.
+\]
+最终其主要执行计算可能从 Inference Chip 迁移至 Cerebellum Chip。只有发生异常时，相关 CSO 才再次跨硬件上浮。因此能力成熟不仅是软件参数变化，也是计算负载在物理硬件层的重新分布。
+
+这正是本章硬件理论与本书整体 CSO 迁移理论最重要的结合点：
+\[
+\boxed{
+CognitiveMigration
+\Rightarrow
+ComputationalPlacementMigration.
+}
+\]
+当智能真的具有生命周期时，硬件调度也必须能够表达“能力在哪里成熟、在哪里执行、什么时候重新回到高层”这样的长期结构变化。
+
+\section{Computer OS 的硬件调度：从算力管理走向多时间尺度智能资源管理}
+
+Inference Chip 与 Cerebellum Chip 的存在并不意味着 AgentOS 要取代 Linux 或重新设计一套从设备驱动开始的通用操作系统。相反，本书一直坚持
+\[
+\boxed{
+Hardware
+\rightarrow
+ComputerOS
+\rightarrow
+AgentOS.
+}
+\]
+Computer OS 负责物理资源、内存、设备、进程、DMA、中断、电源和隔离；AgentOS 负责 Goal、Task、Agent-CSO、工作记忆、长期记忆、Body Skill 和认知优先级。二者之间真正需要建立的是一个能够表达智能时间尺度的资源契约。
+
+传统 OS 调度问题通常可以抽象成
+\[
+\mathrm{Schedule}
+(
+CPU,
+Memory,
+IO,
+Process
+).
+\]
+在异构 Agent 硬件中，需要扩展成
+\[
+\mathrm{Schedule}
+(
+CPU,
+Inference,
+Cerebellum,
+Memory,
+Sensor,
+Actuator,
+Network,
+Power
+).
+\]
+然而 AgentOS 还会向下提供额外语义：
+\[
+\{
+Deadline,
+Criticality,
+CognitivePriority,
+SafetyClass,
+AdaptationMode,
+BodyAffinity
+\}.
+\]
+这意味着 Computer OS 不需要理解“这个任务在思考什么”，但必须理解它属于硬实时身体任务、普通推理任务还是后台结构学习任务。
+
+我们可以定义一个统一资源请求
+\[
+R_i
+=
+(
+c_i,
+m_i,
+b_i,
+d_i,
+p_i,
+q_i,
+e_i
+),
+\]
+其中 $c_i$ 是计算需求，$m_i$ 是内存需求，$b_i$ 是带宽需求，$d_i$ 是 deadline，$p_i$ 是优先级，$q_i$ 是 criticality class，而 $e_i$ 是能耗预算。对于普通 Agent Kernel 推理任务，可以允许
+\[
+d_i\rightarrow \infty
+\]
+或采用软截止期；对于 BPCC 任务必须满足严格
+\[
+R_i^{response}
+\leq
+d_i.
+\]
+对于 Safety 任务则进一步拥有抢占权。
+
+由此，Computer OS 的调度可以至少划分为三个实时域：
+\[
+\mathcal D_S
+>
+\mathcal D_B
+>
+\mathcal D_K,
+\]
+分别对应 Safety、Body、Kernel。这里 ``$>$'' 表示调度优先权而非智能层级。即使 Kernel 正在执行极其重要的长期规划，只要身体进入真正的实时危险，安全任务仍然必须拥有立即夺取执行资源的能力。这就是
+\[
+\boxed{
+CriticalSafety\nrightarrow CognitiveDependency
+}
+\]
+在操作系统层的实现。
+
+Linux 可以成为这一架构的第一代工程载体，因为其本身已经具备进程调度、实时调度策略、CPU affinity、device driver、DMA、IOMMU、cgroup、内存管理以及各种硬件加速设备接口。AgentOS 需要做的不是破坏这些基础，而是在其上建立一套 Intelligence Resource Runtime。未来可以通过不同执行队列和设备驱动分别向 Inference Chip 与 Cerebellum Chip 提交任务，并通过实时共享内存、事件队列和 ring buffer 交换状态。Body Runtime 应尽量避免经过高开销的通用 RPC 路径，以降低
+\[
+L_{\mathrm{IPC}}+J_{\mathrm{scheduler}}.
+\]
+
+此外，硬件调度还必须考虑功耗与热约束。对于长期运行的智能体，短时间最大算力并非唯一目标。设系统总功耗为
+\[
+P_{\mathrm{total}}
+=
+P_K+P_B+P_M+P_{IO},
+\]
+其中 $P_K$ 是高层推理功耗，$P_B$ 是身体侧功耗，$P_M$ 是存储功耗，而 $P_{IO}$ 是感知和通信功耗。若热约束为
+\[
+T(t)\leq T_{\max},
+\]
+AgentOS 与 Computer OS 应共同执行资源降级：高层可以降低推理深度、减少并行搜索或延迟后台整合；Body Runtime 的关键控制周期则尽可能保持不变。换言之，能量不足首先应该牺牲
+\[
+OptionalCognition
+\]
+而不是
+\[
+CriticalControl.
+\]
+这一优先级与生物智能在资源紧张时优先维持基本身体闭环的结构具有功能上的相似性，但本书只采用其工程同构，不作生物必然性推断。
+
+最终，Computer OS 与 AgentOS 之间应形成非常明确的职责边界：
+\[
+\boxed{
+ComputerOS:
+HowToAllocatePhysicalCompute
+}
+\]
+而
+\[
+\boxed{
+AgentOS:
+WhatCognitiveStructureDeservesWhichCompute.
+}
+\]
+前者不知道某个 Tensor 是否代表“我的目标”，后者也不需要知道某块 SRAM 的 cache line 如何替换。二者通过稳定的资源与实时契约耦合。只有维持这一分层，AgentOS 才能同时运行在服务器、个人计算机、汽车、机器人以及未来不同形态的具身硬件上。
+
+因此，第80章真正提出的硬件路线不是简单的 ``一块大芯片 + 一块小芯片''，而是一套与多尺度智能理论同构的物理计算结构：
+\[
+\boxed{
+InferenceChip
+\leftrightarrow
+AgentKernel
+}
+\]
+负责高维、语义、生成和较慢结构计算；
+\[
+\boxed{
+CerebellumChip
+\leftrightarrow
+BodyRuntime/BPCC
+}
+\]
+负责高速、确定、局部、持续适应的现实闭环；
+而
+\[
+\boxed{
+ComputerOS
+}
+\]
+负责在物理资源层维持它们的时间、内存、带宽、能量与安全隔离。
+
+由此，本书在软件层已经建立的原则
+\[
+\boxed{
+SlowGovernance,\ FastLocalAutonomy
+}
+\]
+最终获得硬件形式：
+\[
+\boxed{
+\text{慢认知使用高表达计算，快身体使用确定性计算；稳定能力向低层硬件沉降，持续异常向高层认知重新提升。}
+}
+\]
+这也是 AgentOS 从“运行在计算机上的认知软件”进一步迈向“具有自身多尺度计算身体的持续人工智能体”时不可绕过的硬件分界线。
