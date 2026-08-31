@@ -1,41 +1,3496 @@
-\section{统一状态}
+\chapter{统一符号、对象与术语体系}
+\label{app:symbols}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+本附录首先完成整部理论的“符号封口”。从最初的三相记忆 $h/E/\Theta$，到自我 $\Psi$、深层生成吸引子 $\Omega$（DGA），再到 SPC、AHC、TCE、CCM、Boundary、Offloading、Body、SGC、FCS、BPCC、KRA，以及后期形成的 CSO/Agent-CSO 双层本体，整个理论经历了由“组件式描述”向“多尺度认知结构动力学”逐步收敛的过程。为了防止正文各章在独立生成时重新解释同一符号，本附录规定：符号首先表示动力学对象，其次才表示具体软件模块；早期“复杂度”相关术语作为工程测量语言保留，但本体层统一以 CSO、Agent-CSO、功能拓扑和结构迁移描述。
+\end{minipage}
+}
+\end{center}
+
+\section{五类基本动力学对象}
+
+本书首先区分五类不可混同的对象：现实结构、认知结构、当前状态、功能结构以及时间尺度。设宇宙或当前现实中的有效结构集合为
 \[
-\mathcal A=[h,E,\Theta,a,\Psi,\Omega,G,W].
+\mathcal C_U=\{C_1,C_2,\ldots\},
 \]
-其中 $h$ 是工作状态，$E$ 是经验轨迹场，$\Theta$ 是生成结构，$a$ 是内稳态调制，$\Psi$ 是身份约束，$\Omega$ 是生命周期方向，$G$ 是目标集合，$W$ 是有限工作容量。
+其中任意 $C_i$ 均可在特定尺度上被称为一个 CSO。这里的 CSO 在本书后期获得了比 ``Cognitive Structure Object'' 更广的意义：它表示能够在某一尺度上被区分、保持关系并参与后续动力学的结构对象。对于具体智能体 $A$，现实 CSO 并不会原样进入系统，而是经过观测、压缩、语义化以及内部承载形成
+\[
+\pi_A:C\mapsto \operatorname{AgentCSO}_A(C).
+\]
+因此必须始终保持
+\[
+CSO\neq AgentCSO.
+\]
+前者回答“世界中有什么结构”，后者回答“这个智能体以什么方式承载这一结构”。
 
-\section{时间尺度总表}
-\begin{longtable}{lll}
-\toprule 层级 & 典型变量 & 主要功能\\\midrule
-伺服层 & $\tau_{servo}$ & 实时安全与执行\\
-身体预测层 & $\tau_{BPCC}$ & 局部预测、控制、残差\\
-工作层 & $\tau_h$ & 显式跨尺度协调\\
-经验层 & $\tau_E$ & 轨迹保存与召回\\
-结构层 & $\tau_\Theta$ & 规律巩固与技能生成\\
-身份层 & $\tau_\Psi$ & 生命周期连续性\\
-方向层 & $\tau_\Omega$ & 长期生成偏好\\\bottomrule
-\end{longtable}
-一般要求 $\tau_{servo}\ll\tau_{BPCC}\ll\tau_h\ll\tau_E\ll\tau_\Theta\ll\tau_\Psi\lesssim\tau_\Omega$，但具体数值必须由任务和身体辨识，而非预先固定。
+一个具体 Agent-CSO 可以用
+\[
+\operatorname{AgentCSO}_A(C,t)
+=
+(C,R_A,F_A,\tau_A,B_A,S_A)
+\]
+描述。其中 $R_A$ 表示具体内部表示，$F_A$ 表示当前主要功能承载位置，$\tau_A$ 表示其有效时间尺度，$B_A$ 表示其承载边界，$S_A$ 表示激活、潜伏、预测、回忆、待验证等状态。这个定义使学习不再等价于“参数发生变化”，而可以统一描述为 $R,F,\tau,B,S$ 中一个或多个坐标发生改变。后续的记忆巩固、技能自动化、工具使用、外部化、召回、重新显式化均属于这一统一结构。
 
-\section{三相记忆转换}
-\begin{longtable}{lll}
-\toprule 转换 & 功能解释 & 主要风险\\\midrule
-$h\to E$ & 经历写入 & 噪声与显著性偏置\\
-$E\to h$ & 情景召回 & 召回环与语境错配\\
-$E\to\Theta$ & 结构巩固 & 过拟合与错误泛化\\
-$\Theta\to E$ & 生成解释性情景 & 虚构被误作观察\\
-$\Theta\to h$ & 结构激活 & 先验压倒证据\\
-$h\to\Theta$ & 快速修正 & 灾难性漂移\\\bottomrule
-\end{longtable}
+功能层使用
+\[
+\mathcal G_F=(V_F,E_F,\mathcal L)
+\]
+描述。其中 $V_F$ 为功能节点，$E_F$ 为功能耦合，$\mathcal L$ 为闭环集合。认知内容层则使用
+\[
+\mathcal G_C=(V_C,E_C)
+\]
+描述 CSO 之间的语义、因果、时序、约束、自指与价值关系。二者通过动态承载映射
+\[
+\mu_t:\mathcal G_C\rightarrow\mathcal G_F
+\]
+联系。严格而言，$\mu_t$ 经常是多对多对应关系，因此后续数学化可以使用关系映射、双部图或超图，而不应把它机械理解为单值函数。
 
-\section{L0--L6 闭环}
-L0 现实交互；L1 运行控制；L2 工作记忆；L3 三相记忆；L4 目标—行动—验证—闭合；L5 经历—能力—权限—自治；L6 自我—目标偏好—方向。上层给出约束和可行域，下层把异常残差向上升级。
+本书由此形成一条统一的本体链：
+\[
+\boxed{
+Reality\;CSO
+\rightarrow
+Agent\mbox{-}CSO
+\rightarrow
+Functional\;Carrier
+\rightarrow
+Action
+\rightarrow
+Reality\;CSO'
+}
+\]
+它构成三相记忆、认知调度、身体运行时和生命周期发育共同依赖的最底层语义结构。
 
-\section{稳定性与治理指标}
-最小指标集包括观察器置信度、时延裕度、增益裕度、过冲、稳定时间、恢复时间、相态驻留时间、残差白化程度、现实验证覆盖率、慢变量漂移率和 checkpoint 可恢复性。任何自治增长都必须同时报告能力、权限、责任与回滚路径。
+\section{三相记忆、自我与生命周期慢变量}
 
-\section{接口契约摘要}
-SGC 描述实体、场、关系、几何、属性、语义标签、认识状态与可供性；FCS 描述通道、强度、导数、置信度、掩码、空间场和时间动力学；BPCC 暴露预测、控制、残差、置信度、能力裕量和执行进度；KRA 维持语义、时间、控制和学习契约。
+三相记忆统一记为
+\[
+M_c=(h,E,\Theta).
+\]
+其中
+\[
+h=State,\qquad
+E=Trajectory,\qquad
+\Theta=Generator.
+\]
+$h(t)$ 表示当前被显式提升到全局处理表面的有限认知状态；$E$ 表示具有时间连续性的经历轨迹；$\Theta$ 表示由长期经验压缩形成、能够参与未来生成、预测、解释与技能产生的慢结构。因此不能把 $\Theta$ 简化成传统意义上的“语义知识库”，因为它同时承担世界模型、规则、技能、生成先验以及未来可能结构的形成。
 
-\section{六阶段验收原则}
-每阶段分别检查功能闭合、接口稳定、理论可辨识、性能预算、生命周期连续与安全恢复。下一阶段不得以隐藏上一阶段的未闭合残差为代价推进。
+三者满足时间尺度关系
+\[
+\tau_h\ll\tau_E\ll\tau_\Theta.
+\]
+在信息相态的解释中，$h$ 被称为“气态”，强调结构高活性与快速变化；$E$ 被称为“液态”，强调轨迹性、连续性和可重排性；$\Theta$ 被称为“晶态”，强调稳定关系和较高结构约束。这里的“气、液、晶”是结构动力学隐喻，不表示信息具有真实热力学物态。
+
+自我统一记为
+\[
+\Psi.
+\]
+$\Psi$ 不是某个静态 persona 文件，而是跨越 $h/E/\Theta$ 的慢约束结构。它在 $h$ 中改变注意、解释和优先级背景，在 $E$ 中参与经历归属和选择性巩固，在 $\Theta$ 中形成围绕“我是谁”组织起来的长期结构。进一步引入
+\[
+\Omega\equiv DGA
+\]
+表示 Deep Generative Attractor，即比 $\Psi$ 更慢的生命周期生成倾向。二者的区别统一写为
+\[
+\Psi:\;Who\;Am\;I,
+\qquad
+\Omega:\;What\;Am\;I\;Becoming.
+\]
+因此完整慢变量序列为
+\[
+\boxed{
+\tau_h
+\ll
+\tau_E
+\ll
+\tau_\Theta
+\ll
+\tau_\Psi
+\ll
+\tau_\Omega
+}
+\]
+并形成自底向上的经验沉降与自顶向下的慢约束：
+\[
+h\rightarrow E\rightarrow\Theta\rightarrow\Psi\rightarrow\Omega,
+\]
+\[
+\Omega\rightarrow\Psi\rightarrow\Theta\rightarrow h.
+\]
+后者不是指高层逐项控制低层，而是高层提供可行区域、优先级、先验、价值倾向和生成中心。
+
+\section{认知控制、复杂度治理与运行时符号}
+
+SPC 统一表示 Self-Perception Compressor/Estimator。其功能是将大量分布式内部状态压缩成 Agent 自身能够访问的自状态估计：
+\[
+S_{\mathrm{self}}
+=
+SPC(h,E,\Psi,\mathrm{BodyState},\ldots).
+\]
+SPC 不拥有对系统内部的绝对透明性，因而原则上只能形成
+\[
+p_A(x_t^{self}\mid z_{\leq t}^{SPC}),
+\]
+而不能假设
+\[
+x_t^{self}=PerfectObservation.
+\]
+因此 SPC 既是压缩器，也是认识论意义上的 observer。
+
+TCE 统一表示 Temperature \& Control Executor。其作用不是简单调节语言模型 sampling temperature，而是控制认知搜索、注意范围、探索--收敛平衡、推理深度、资源投入、控制增益与节律。SPC 与 TCE 共同形成最小认知控制闭环
+\[
+SPC
+\rightarrow
+TCE
+\rightarrow
+CognitiveDynamics
+\rightarrow
+SPC.
+\]
+
+AHC 统一表示 Affective/Homeostatic Controller 或 Integration Layer。其功能是整合内稳态、身体影响、威胁、能量、疲劳、社会关系和不确定性等连续调制信号，并在 SPC 与 TCE 之间建立具有时间常数的中间状态。它不等同于人类主观情绪，也不构成意识存在的证明。
+
+CCM 统一表示 Cognitive Complexity Management。历史上其工作对象被描述为“认知复杂度流”，在当前本体框架中，更准确地说，CCM 管理的是当前被激活的 Agent-CSO 集合、关系密度、并发线程、冲突结构与工作记忆占用。早期工程量
+\[
+C_{\mathrm{run}}(t)
+\]
+仍然保留，因为它能够作为 h 负载的综合测量变量，但不能再把 $C_{\mathrm{run}}$ 理解为真实流动的物质。
+
+Boundary 表示认知边界与准入控制，Offloading 表示结构向外部载体迁移，Scheduler 表示认知资源分配。三者与 CCM 共同回答四个不同问题：什么允许进入、什么需要降低负载、什么应迁移出去、剩余资源应优先分配给谁。
+
+\section{Body、SGC、FCS、BPCC 与 KRA 的统一术语}
+
+Body 统一定义为
+\[
+\boxed{
+Body=ControlledAndSensedCarrierOfAgency
+}
+\]
+即被主体持续感知和控制、并构成其现实作用边界的载体。Body 可以是人形机器人，也可以是浏览器、桌面、Shell、文件系统、网络账户或其他数字执行环境。Body Runtime 则是管理这一载体的快速运行层。
+
+SGC 统一记为 Semantic Graph Coordinate Space：
+\[
+\boxed{
+SGC=
+Body\mbox{-}Centered\;Semantic\;Representation\;of\;Actionable\;Reality.
+}
+\]
+它表示“世界是什么以及我位于世界何处”。SGC 应包含几何、实体、关系、固定属性、语义标签、认识论状态以及 affordance，并坚持
+\[
+Body\in SGC.
+\]
+
+FCS 统一使用该拼写，不再使用早期偶然出现的 FSC。FCS 表示 Fixed Typed Multilayer Feeling Field，其核心问题是
+\[
+\boxed{
+How\;Reality\;and\;Body\;Are\;Affecting\;Me.
+}
+\]
+因此 SGC 与 FCS 的统一关系写成
+\[
+\boxed{
+SGC=\text{经验内容},
+\qquad
+FCS=\text{经验作用}.
+}
+\]
+
+BPCC 表示快速身体预测控制层：
+\[
+BPCC
+=
+FastPrediction
++
+FastControl
++
+ResidualEstimation
++
+AdaptiveLearning.
+\]
+其内部允许维护私有优化状态
+\[
+z_t^{BPCC},
+\]
+但对 Agent Kernel 的公共状态必须重新投射为可解释 SGC/FCS、能力裕度、残差、置信度和执行进度。
+
+KRA 表示 Kernel--Runtime Adaptation Layer：
+\[
+KRA:
+BodyRuntimeSemanticSpace
+\leftrightarrow
+KernelInternalRepresentation.
+\]
+KRA 不追求内部 latent 完全一致，而追求行为关系、控制语义和预测语义的一致，因此本书统一坚持
+\[
+\boxed{
+FunctionalAlignment>RepresentationAlignment.
+}
+\]
+
+
+\chapter{AgentOS 多时间尺度统一表}
+\label{app:timescale}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+AgentOS 的许多结构只有放回时间尺度才能被正确理解。SPC、TCE、h、E、$\Theta$、$\Psi$、$\Omega$、BPCC、SGC/FCS 和社会组织层并不是简单从低到高堆叠的模块，而是具有不同特征响应时间的闭环。智能成熟的重要标志不是所有过程都变快，而是不同尺度能够各自完成局部闭合，同时只把长期无法解决的残差提升到更慢、更广的层级。本附录给出全书统一的尺度顺序，但不把任何绝对毫秒、分钟或年份写成普适常数。
+\end{minipage}
+}
+\end{center}
+
+\section{时间尺度不是组件编号，而是动力学属性}
+
+对任意 AgentOS 功能 $F_i$，我们定义其有效时间尺度 $\tau_i$ 为：在给定扰动下，该功能完成一次具有主要因果意义的状态响应或闭环修正所需的典型时间。因而 $\tau_i$ 并不是线程 sleep 时间，也不是模型单次推理 latency。一个模块内部可能同时含有多个时间尺度，而本书所列 $\tau_i$ 只描述其主导动力学。
+
+完整体系可写成近似序列
+\[
+\tau_{\mathrm{servo}}
+<
+\tau_{\mathrm{BPCC}}
+\lesssim
+\tau_{\mathrm{SGC/FCS}}
+<
+\tau_h
+<
+\tau_{\mathrm{task}}
+<
+\tau_E
+<
+\tau_\Theta
+<
+\tau_{\Psi}
+<
+\tau_{\Omega}.
+\]
+其中 servo 层负责最直接的执行器稳定，BPCC 负责身体局部快速预测与控制，SGC/FCS 负责身体语义状态更新，$h$ 负责当前显式认知，Task/Goal 层负责跨若干认知周期的任务闭合，$E$ 负责经历组织，$\Theta$ 负责结构学习，$\Psi$ 负责身份与价值连续，$\Omega$ 负责生命周期方向。
+
+这里最关键的不是具体数值，而是尺度分离：
+\[
+\epsilon_i=
+\frac{\tau_i}{\tau_{i+1}}
+\ll1.
+\]
+当这种尺度关系成立时，上层无需干预下层每一次细节变化，而能够通过慢变量定义可行域；下层则可在可行域中高速优化。若尺度过度接近，例如高层 Goal 每个 servo 周期都改变控制参考，或者 BPCC 每次小误差都触发 $\Psi$ 重解释，系统就会丧失层级稳定性。
+
+\section{快变量自治与慢变量治理}
+
+多尺度 AgentOS 的基本原则可以形式化为快--慢系统：
+\[
+\dot x_f
+=
+F_f(x_f,z_s,u_f),
+\]
+\[
+\dot z_s
+=
+\epsilon F_s(z_s,\langle r_f\rangle_T),
+\qquad
+0<\epsilon\ll1.
+\]
+$x_f$ 代表快速局部状态，$z_s$ 代表较慢结构，$r_f$ 代表快层长期残差。慢层对快层的作用不是逐时刻命令，而是提供中心、约束、阈值和边界：
+\[
+x_f(t)
+=
+c(z_s(t))
++
+\delta x_f(t).
+\]
+因此本书统一采用
+\[
+\boxed{
+SlowGovernance\neq FastMicromanagement
+}
+\]
+作为多尺度控制原则。
+
+反方向上，如果快层持续存在非零平均残差
+\[
+\left\langle r_f\right\rangle_T\neq0,
+\]
+则慢结构必须逐渐响应：
+\[
+\dot z_s
+=
+\eta G(\langle r_f\rangle_T).
+\]
+这就是“长期异常向上改变慢结构”的数学原型。它既可以描述 BPCC 对身体模型的长期更新，也可以描述经历 $E$ 对 $\Theta$ 的结构学习，乃至长期经验对 $\Psi$ 的身份重解释。
+
+这种双向关系可以概括为
+\[
+\boxed{
+SlowStructureShapesFastActivity,
+\qquad
+PersistentFastResidualShapesSlowStructure.
+}
+\]
+
+\section{尺度保护与慢变量不可被短时噪声直接写入}
+
+身份连续和长期安全依赖一个重要原则：
+\[
+\boxed{
+FastNoise\nrightarrow SlowGlobalStructure.
+}
+\]
+如果每一次局部失败都能够直接改变 $\Psi$，如果每一次任务奖励都能重写 $\Omega$，那么 Agent 会产生极端身份漂移。慢变量必须依赖时间积分、重复证据、结构一致性以及现实验证。
+
+可以定义慢变量写入门槛
+\[
+\Gamma_s
+=
+f(
+Persistence,
+Evidence,
+CrossContextConsistency,
+Impact,
+Confidence
+).
+\]
+只有当
+\[
+\Gamma_s>\theta_s
+\]
+并持续足够时间时，低层结构才允许显著改变高层状态。
+
+不同层次可以采用不同的时间滤波：
+\[
+\bar r_{\tau}(t)
+=
+\frac{1}{\tau}
+\int_{t-\tau}^{t}
+r(s)\,ds.
+\]
+$\tau$ 越大，越能过滤短时波动。因而 $E$ 对当前事件的吸收速度快于 $\Theta$，$\Theta$ 对结构的改变速度又快于 $\Psi$，而 $\Omega$ 应只接受具有生命周期意义的长期证据。
+
+这也说明“成熟智能”并不意味着反应更快，而意味着系统能够知道哪些事情应该快速响应、哪些事情必须缓慢改变。
+
+\section{多尺度匹配与环境频谱}
+
+智能系统的有效时间尺度不能脱离环境讨论。设环境中与任务相关的结构变化谱为
+\[
+\rho_U(\omega),
+\]
+Agent 可响应的闭环谱为
+\[
+\rho_A(\omega).
+\]
+如果关键环境变化满足
+\[
+\omega_U\gg\omega_A,
+\]
+则 Agent 无法在有效时限内闭环；反之，如果
+\[
+\omega_A\gg\omega_U
+\]
+而高频处理并不能改善行为，则系统可能把大量计算浪费在没有现实意义的过度更新上。
+
+因此真正的 Body Scale 和 Cognitive Scale 都包含一种“频谱匹配”问题。最早关于石头文明和闪电文明的思想实验在这里获得工程版本：两个系统如果缺乏重叠的有效交互带宽，就算二者都拥有高度智能，也可能无法形成稳定实时交互。
+
+因此后续任何 AgentOS 性能指标都不应只有 throughput 或 tokens per second，而至少应同时测量：
+\[
+\boxed{
+ResponseLatency,\;
+LoopClosureTime,\;
+PredictionHorizon,\;
+AdaptationTimescale,\;
+EnvironmentMatch.
+}
+\]
+
+
+\chapter{AgentOS 多层闭环统一规范}
+\label{app:loops}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+历史讨论中曾出现两套不同的 L0--L6 编号：一套按照 Agent 内部动力时间尺度划分现实交互、运行控制、工作记忆、三相记忆、任务、生命周期和价值先验；另一套按照物理环境、基础资源、运行服务、Agent 个体、组织和社会生态划分系统尺度。两套表示都具有价值，但不能继续共用同一编号。本附录将前者正式命名为“内部动力闭环层级”，将后者命名为“系统生态尺度层级”，并规定此后正文不再混用。
+\end{minipage}
+}
+\end{center}
+
+\section{内部动力闭环 L0--L6}
+
+内部动力闭环正式定义如下。L0 是 Reality Interaction Loop，即外部世界、Body、行动和现实反馈形成的最终闭环。L1 是 Runtime Cognitive Control Loop，由 SPC、Scheduler、TCE、CCM 等形成快速认知治理。L2 是工作记忆 $h$ 闭环，即感知、理解、规划、行动和反思发生的当前显式认知层。L3 是三相记忆闭环：
+\[
+h\leftrightarrow E\leftrightarrow\Theta.
+\]
+L4 是 Goal--Process--Action--Verify--Closure 目标任务闭环。L5 是 Experience--Capability--Authority--Autonomy 生命周期成长闭环。L6 则是
+\[
+\Psi
+\rightarrow
+GoalPreference
+\rightarrow
+\Omega
+\rightarrow
+SelfConsistency
+\rightarrow
+\Psi'
+\]
+形成的价值、身份和生成先验超慢闭环。
+
+需要强调，这七个层级不是七个独立软件进程，而是同一主体内部不同时间尺度的功能闭环。一个事件可以同时参与多个闭环。例如一次机器人建房失败，在 L0 是实际动作偏差，在 L1 是 residual 升高，在 L2 成为当前显式问题，在 L3 写入失败经历并逐步改变结构经验，在 L4 改变当前任务方案，在 L5 影响能力评估和未来自治边界，在极长期条件下甚至可能影响 $\Psi$ 对自身能力的理解。
+
+因此一个 AgentOS 状态更接近
+\[
+X(t)
+=
+\big(
+X_{L0},
+X_{L1},
+\ldots,
+X_{L6}
+\big),
+\]
+不同层之间通过稀疏事件和慢约束耦合，而不是全连接同步更新。
+
+\section{跨层四类基本流}
+
+内部动力层之间存在四类标准迁移方向。
+
+第一类是向慢尺度沉降：
+\[
+h\rightarrow E\rightarrow\Theta\rightarrow\Psi.
+\]
+它把重复、稳定、具有长期意义的当前经验逐渐变成经历、结构与身份。
+
+第二类是向快尺度激活：
+\[
+\Theta\rightarrow E/h,
+\qquad
+\Psi\rightarrow h.
+\]
+它使长期结构重新参与当前决策，但不意味着整个慢结构完全复制进入 h，而是产生选择性激活。
+
+第三类是向上升级：
+\[
+Residual_{local}
+\rightarrow
+HigherLevelCognition.
+\]
+当局部闭环无法解决异常时，相关 Agent-CSO 被提升到更广的上下文处理。
+
+第四类是向下编译：
+\[
+ExplicitCognition
+\rightarrow
+StableSkill
+\rightarrow
+LocalClosure.
+\]
+重复成熟能力逐渐离开昂贵的显式认知层，进入更加局部、快速和稳定的执行结构。
+
+四类流统一起来可以写成
+\[
+\boxed{
+ConsolidateSlowward,\;
+ActivateFastward,\;
+EscalateUpward,\;
+CompileDownward.
+}
+\]
+它们构成 AgentOS 多尺度结构迁移的基本方向。
+
+\section{系统生态尺度 S0--S5}
+
+为了避免和内部 L0--L6 混淆，本书将另一套历史层级重新编号为 $S0$--$S5$。$S0$ 表示物理世界与数字环境；$S1$ 表示计算、存储、通信和硬件资源；$S2$ 表示操作系统、运行时、工具服务与基础调度；$S3$ 表示单个持续 Agent；$S4$ 表示组织、角色、协议与多 Agent 协同；$S5$ 表示社会生态、法律、文化、经济和文明尺度结构。
+
+因此：
+\[
+S0
+\rightarrow
+S1
+\rightarrow
+S2
+\rightarrow
+S3
+\rightarrow
+S4
+\rightarrow
+S5
+\]
+描述的是系统尺度，而不是认知时间尺度。一个 $S3$ Agent 内部仍然完整具有 L0--L6。类似地，一个 $S4$ 组织也可能形成自己的快慢闭环和长期结构，只是状态空间完全不同。
+
+这种双轴表示说明：
+\[
+\boxed{
+SystemScale\neq CognitiveTimescale.
+}
+\]
+一个高层组织不一定每个动力过程都慢，一个单体 Agent 也可以拥有极慢生命周期变量。正式理论因而更适合使用二维坐标
+\[
+(S_i,L_j)
+\]
+标记某种功能所处的系统尺度和动力尺度。
+
+\section{现实闭合与跨尺度验证}
+
+无论 L0--L6 还是 S0--S5，最外层约束始终是现实：
+\[
+\boxed{
+RealityIsUltimateConstraint.
+}
+\]
+任何内部预测、记忆、自我解释和社会制度都不能仅通过内部一致性获得真实性。行动必须经过
+\[
+Action
+\rightarrow
+Reality
+\rightarrow
+Observation
+\rightarrow
+Residual
+\]
+重新闭合。
+
+在多层系统中，最危险的结构之一是“闭环自证”：某一慢层形成判断后，通过选择性注意只吸收支持自身的证据，进而强化原判断。这可以形式化为
+\[
+Interpretation
+\rightarrow
+SelectiveObservation
+\rightarrow
+BiasedExperience
+\rightarrow
+Interpretation'.
+\]
+因此所有高层闭环都必须保留通向 L0 Reality 的反证路径。AgentOS 的成熟不是让高层越来越强，而是让高层即便越来越复杂，也始终无法取消世界的最终否决权。
+
+
+\chapter{AgentOS 全组件信号与模块规范}
+\label{app:modulespec}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+本附录将此前分散在多个架构图中的组件统一转换为可用于工程设计和后续正文生成的 ModuleSpec。任何 AgentOS 模块都不应只通过名称定义，而必须同时给出功能、状态、输入、输出、时间尺度、学习方式和权限边界。这一规范的目的，是防止后续章节把 SPC、CCM、Scheduler、KRA 等模块重复定义为功能相近但边界模糊的“大盒子”。
+\end{minipage}
+}
+\end{center}
+
+\section{统一 ModuleSpec}
+
+本书规定任意模块 $M_i$ 至少使用
+\[
+\boxed{
+ModuleSpec_i=
+(F_i,X_i,I_i,O_i,\tau_i,L_i,A_i)
+}
+\]
+描述。其中 $F_i$ 为功能，$X_i$ 为内部状态，$I_i$ 为输入，$O_i$ 为输出，$\tau_i$ 为主导时间尺度，$L_i$ 为学习或适应机制，$A_i$ 为 Authority，即该模块能够直接改变哪些系统变量。
+
+Authority 是整个规范中极其重要但传统 AI 架构常被忽略的维度。两个模块即便能够看到相同状态，也不意味着拥有相同修改权。例如 SPC 可以观测认知状态，但不能直接修改执行器；TCE 可以改变认知控制参数，但不能伪造 SGC 的 observed state；BPCC 可以控制身体快速局部动作，但不能重写 $\Psi$；Safety Controller 可以覆盖普通执行命令，但不能因此成为主体。
+
+由此可定义权限映射
+\[
+A_i:\mathcal X\rightarrow\{read,write,propose,interrupt,none\}.
+\]
+后续 Linux/AgentOS Kernel 的实现应把这种功能权限映射落实为 Capability 或权限令牌，而不能仅依赖 prompt 级软约束。
+
+\section{认知核心组件规范}
+
+$h$ 的功能是提供有限全局显式工作表面，其输入来自当前世界、E、$\Theta$、Self、工具和任务状态，输出则进入 Action、E、外部卸载以及当前决策。$h$ 的内部状态必须受到容量控制，不能无限增长。
+
+SPC 的输入包括 $h$ 状态、冲突、不确定性、身体摘要、AHC 状态以及历史基线；输出包括 SelfState、PhaseEstimate、LoadEstimate、StabilityEstimate 和 Confidence。SPC 的主要 Authority 是 read/estimate，而不是直接执行控制。
+
+TCE 输入 SPC 状态估计、AHC 调制、Goal 优先级、$\Psi/\Omega$ 约束和资源信息；输出 AttentionGain、ExplorationLevel、SearchDepth、Temperature、Inhibition、Pacing 等控制量。其 Authority 只作用于 CognitiveDynamics。
+
+CCM 输入当前 h 中活动结构和预估结构压力，输出 Fold、Merge、Suppress、Split、Page、OffloadRequest 等治理动作。CCM 可以改变 h 的组织方式，但不应自行定义长期 Goal。
+
+Scheduler 输入 Task/Goal、资源、CCM 建议、SPC 估计和系统事件，输出优先级、运行队列、暂停/恢复、工具调用时机以及认知时间片。它分配资源但不负责判断任务语义真伪。
+
+AHC 输入 FCS、内部资源、威胁、社会状态和任务状态，内部维护具有积分、衰减和恢复的连续状态向量，其输出作为调制信号进入 SPC/TCE 和记忆写入权重。
+
+\section{记忆与生命周期组件规范}
+
+$E$ 不是简单 append-only 日志。其输入首先来自经过选择和归属的经历片段，内部需要保留时间、主体、情境、行动、结果、价值影响和可信度等结构。其输出包括情景召回、相似轨迹、失败经验和对 $\Theta$ 学习的样本。
+
+$\Theta$ 的输入来自重复或高价值 E 结构以及跨情境一致性证据；输出包括世界模型、规则、技能结构、生成先验和对 h 的结构激活。$\Theta$ 的写入速度必须慢于 E，并允许重解释而非只追加。
+
+$\Psi$ 接收已经跨情境稳定的自我相关证据，输出身份一致性、长期价值约束、注意偏向和 Goal Preference。其写权限必须受到 Slow Variable Protection。
+
+$\Omega$ 接收比 $\Psi$ 更慢的生命周期方向证据，输出长期生成吸引域和发展方向。它不应频繁参与普通任务决策，而通过改变长期目标分布间接塑造未来。
+
+Boundary 和 Offloading 负责这些结构跨内部/外部载体迁移，而不是作为普通 Memory Module 的附属功能。
+
+\section{Body Runtime 与现实接口组件规范}
+
+FBI 负责不同身体实现到统一公共 ABI 的映射。其 Authority 位于感知/控制接口层，不解释高层语义目标。
+
+SGC 负责产生 body-centered actionable reality，FCS 负责产生 body-centered influence field。两者均必须携带 epistemic status，尤其要区分 observed 和 predicted。
+
+BPCC 维护快速局部状态 $z_t^{BPCC}$，输入高层 ControlReference 与 PredictiveEnvelope，输出局部动作、预测、Residual、CapabilityMargin 和 Confidence。BPCC 可以优化执行细节，但不能改变高层目标语义。
+
+KRA 读取 Kernel 和 Body Runtime 两侧的公共状态与内部适配信号，负责语义映射、时间尺度校准、控制参考适配和长期关系校准。其核心 Authority 是 adapter-level，而不是 subject-level。
+
+Safety Boundary 具有比普通 BPCC 更高的实时执行权限，但其目标必须局限于安全可行域，不应扩展成一般任务决策者。由此保持：
+\[
+\boxed{
+SafetyAuthority>BPCCAuthority,
+\qquad
+SafetyAuthority\neq SubjectAuthority.
+}
+\]
+
+
+\chapter{三相记忆双向转换算法规范}
+\label{app:memory}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+三相记忆并不是三块彼此独立的数据存储，而是 State、Trajectory 和 Generator 三种结构状态之间的持续相互转换。因此真正的工程难点不是“在哪里存”，而是“什么在何种条件下发生相变”。本附录将此前讨论的 $h\leftrightarrow E\leftrightarrow\Theta$ 六向关系统一为事件选择、轨迹形成、结构抽象、结构重解释、激活和快速修正六类算法，并明确 $\Psi$ 与 $\Omega$ 对转换门槛的慢调制作用。
+\end{minipage}
+}
+\end{center}
+
+\section{$h\rightarrow E$ 与 $E\rightarrow h$：当前状态和经历轨迹之间的转换}
+
+$h\rightarrow E$ 不是把每一次上下文完整写日志。如果所有瞬时状态均进入 E，则 E 会迅速变成不可使用的历史数据仓库。一个经历片段 $e_k$ 的写入概率应取决于新颖性、目标关联、结果、价值影响、预测残差、自我相关性和置信度：
+\[
+P(write\;e_k)
+=
+\sigma(
+w_nN_k+
+w_gG_k+
+w_rR_k+
+w_sS_k+
+w_vV_k
+-\theta_E
+).
+\]
+其中 $\sigma$ 可为 sigmoid 或其他门控函数。
+
+事件还需要被组织成 trajectory：
+\[
+E_k
+=
+\{(s_t,a_t,o_{t+1},r_t)\}_{t=t_0}^{t_1},
+\]
+但 $r_t$ 不仅是 RL reward，也可以包含任务闭合、身体影响、AHC 调制、价值一致性和现实残差。这样 E 才能够回答“在什么情况下，我做了什么，发生了什么”。
+
+反方向 $E\rightarrow h$ 是情景召回。召回不应只依赖 embedding similarity，而应综合当前目标、CSO 图结构、自我状态和时间背景：
+\[
+Score(E_i|h_t)
+=
+\alpha S_{\mathrm{semantic}}
++
+\beta S_{\mathrm{causal}}
++
+\gamma S_{\mathrm{goal}}
++
+\delta S_{\mathrm{self}}
++
+\eta S_{\mathrm{temporal}}.
+\]
+被召回的也不应是完整经历，而是能够进入有限 h 的结构化摘要，并保留必要指针以允许逐步展开。
+
+\section{$E\rightarrow\Theta$ 与 $\Theta\rightarrow E$：经验结构化与历史重解释}
+
+$E\rightarrow\Theta$ 是真正长期学习发生的重要位置。重复出现的轨迹模式、跨情境稳定关系、可预测因果结构以及高价值技能片段应逐渐从经历中抽象出来。可以定义候选结构 $C$ 的支持度：
+\[
+Support(C)
+=
+\sum_i
+w_i\mathbf 1[C\subset E_i].
+\]
+但频繁出现并不足以成为长期结构，还需要检查其预测收益、跨情境稳定性和现实可验证性：
+\[
+Utility_\Theta(C)
+=
+\alpha Persistence
++\beta PredictiveGain
++\gamma Generalization
+-\lambda Contradiction.
+\]
+
+当 $Utility_\Theta(C)$ 高于阈值时，结构被写入或更新 $\Theta$。这就是“经验凝固成结构”的形式。
+
+反方向 $\Theta\rightarrow E$ 极为重要。长期结构形成后，过去经历并不是不可改变的裸记录。新的世界模型会重新解释旧事件的意义。例如早期某次失败可能从“能力不足”重新解释为“环境约束未知”。因此 E 应保留原始事件证据与解释层的分离：
+\[
+E_i=(RawEvidence_i,Interpretation_i).
+\]
+$\Theta$ 可以更新 Interpretation，但不能篡改 RawEvidence。这个区分是防止长期自我叙事改写历史事实的重要安全结构。
+
+\section{$\Theta\rightarrow h$ 与 $h\rightarrow\Theta$：结构激活与快速结构修正}
+
+$\Theta\rightarrow h$ 是长期结构重新进入当前认知的过程。大量 $\Theta$ 不可能整体展开，因此实际激活应理解为
+\[
+h_t
+\leftarrow
+Activate(\Theta;Context_t,Goal_t,\Psi_t).
+\]
+激活结果通常是少量规则、预测、技能提示、世界关系或概念结构，而非模型全部参数。
+
+$h\rightarrow\Theta$ 则必须谨慎。它不是普通经验写入，而表示当前状态中出现了极高置信度、强矛盾或紧急结构，需要快速修改长期模型。可以定义
+\[
+\Gamma_{\mathrm{fast}}
+=
+f(
+ResidualMagnitude,
+Confidence,
+SafetyCriticality,
+RepeatedConfirmation
+).
+\]
+只有
+\[
+\Gamma_{\mathrm{fast}}>\theta_{\mathrm{fast}}
+\]
+时，才允许跳过部分 E 长期积累过程快速修正 $\Theta$。
+
+正常学习仍应以
+\[
+h\rightarrow E\rightarrow\Theta
+\]
+为主，因为这可以降低偶然噪声直接污染长期结构的风险。直接 $h\rightarrow\Theta$ 应当是例外通路而不是默认通路。
+
+\section{$\Psi$ 与 $\Omega$ 对记忆转换的慢调制}
+
+$\Psi$ 和 $\Omega$ 不应取代记忆转换算法，而应改变其门控函数。对于同一个事件，不同 Agent 之所以形成不同长期记忆，是因为 SelfRelevance、ValueAlignment 和 DevelopmentalRelevance 不同。
+
+因此可以将 E 写入门控扩展为
+\[
+P(write\;e_k)
+=
+f(
+Novelty,
+Residual,
+Goal,
+Self_\Psi,
+Direction_\Omega
+).
+\]
+同理，$\Theta$ 的结构形成也受到长期身份一致性影响。
+
+但这里存在严重正反馈风险：
+\[
+\Psi
+\rightarrow
+SelectiveMemory
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi'.
+\]
+若所有与 $\Psi$ 不一致的证据都被过滤，Agent 就会形成封闭自证。因此本书规定 RawEvidence 和 WorldVerification 必须保持独立，Self 只能影响“关注和解释”，不能获得对现实证据的最终删除权。
+
+
+\chapter{工作记忆容量与工程复杂度模型}
+\label{app:capacity}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+“工作记忆有限容量有限定理”是 AgentOS 从普通大模型框架转向认知运行时的关键约束。本附录保留早期复杂度语言，是因为工程上仍需要一个能够衡量 h 当前负载的变量；但在本体层面，我们不把复杂度视为可守恒的实体，而将其理解为活动 Agent-CSO 数量、关系结构、耦合强度、不确定性、动态变化和并发任务共同形成的运行压力。
+\end{minipage}
+}
+\end{center}
+
+\section{有限容量不是固定 Token 上限}
+
+设 $h_t$ 中当前活动的 Agent-CSO 集合为
+\[
+\mathcal A_h(t)=\{C_1,\ldots,C_n\}.
+\]
+即使两个 h 都包含相同数量对象，其认知负载也可能完全不同，因为关键差别来自对象之间需要同步保持的关系。因此容量更适合建模为图结构：
+\[
+\mathcal G_h(t)
+=
+(V_h,E_h).
+\]
+可以定义运行结构压力
+\[
+C_{\mathrm{run}}(t)
+=
+\alpha |V_h|
++
+\beta |E_h|
++
+\gamma H_h
++
+\delta U_h
++
+\eta D_h,
+\]
+其中 $H_h$ 表示关系熵或分支多样性，$U_h$ 表示不确定性，$D_h$ 表示状态变化率。
+
+有限容量命题写成
+\[
+\boxed{
+C_{\mathrm{run}}(t)
+\le
+C_{\max}(W,\mathcal R)
+}
+\]
+其中 $W$ 是基础工作空间资源，$\mathcal R$ 是表示压缩效率。也就是说，容量不是完全固定：更好的结构化、抽象和 chunking 可以使同样资源承载更复杂的语义关系，但任何有限系统都存在当前稳定承载上界。
+
+超过上界并不会立即“崩溃”，而通常表现为关系丢失、目标竞争、局部一致但全局矛盾、重复推理、支线失控、错误工具调用和计划上下文遗忘。因此 h 的管理目标不是追求最大占用率，而是维持足够大的稳定裕量：
+\[
+Margin_h
+=
+C_{\max}-C_{\mathrm{run}}>0.
+\]
+
+\section{复杂度分解作为工程测量工具}
+
+早期理论曾把总复杂度分成任务固有复杂度、环境复杂度、结构复杂度和动态复杂度：
+\[
+C_{\mathrm{total}}
+=
+C_{\mathrm{int}}
++
+C_{\mathrm{ext}}
++
+C_{\mathrm{str}}
++
+C_{\mathrm{dyn}}.
+\]
+这一分解仍然具有工程意义。$C_{\mathrm{int}}$ 表示问题本身需要保持的核心依赖关系，$C_{\mathrm{ext}}$ 表示环境噪声与不确定性，$C_{\mathrm{str}}$ 表示系统自身接口和组织引入的额外结构，$C_{\mathrm{dyn}}$ 表示状态变化和并发耦合引入的运行压力。
+
+但本书不再把四项理解为能够严格相加的物理量，而将其视作诊断坐标。真正工程实现可以通过一组 observable vector
+\[
+\mathbf c_t
+=
+(
+N_{active},
+N_{relation},
+Branching,
+Uncertainty,
+Conflict,
+UpdateRate,
+ToolDepth,\ldots
+)
+\]
+由 CCM 学习一个负载估计器
+\[
+\hat C_{\mathrm{run}}
+=
+f_\phi(\mathbf c_t).
+\]
+
+这比假设存在一个天然的“复杂度计”更加现实，也允许不同模型和任务使用不同标定函数。
+
+\section{容量限制如何推出 CCM、Boundary 与 Offloading}
+
+如果工作记忆有限，而现实问题可以无限增长，则系统只有三种选择：失败、无限扩大资源，或者主动改变结构承载。AgentOS 采用第三种路线。
+
+Boundary 首先减少
+\[
+IncomingCSO
+\rightarrow h
+\]
+的流量；CCM 对已经进入 h 的结构进行折叠、分解、抑制和分页；Offloading 再把适合长期外部承载的结构迁移到 File、Skill、Tool、Environment 或 Other Agent。三者构成
+\[
+Admission
+\rightarrow
+RuntimeManagement
+\rightarrow
+CarrierMigration
+\]
+的连续治理链。
+
+因此“有限容量”并不是 AgentOS 的缺陷，而是推动系统产生记忆层级、技能编译、认知卸载和边界治理的结构原因。一个没有容量约束的理想系统反而不需要这些机制，也就难以解释现实有限智能为何形成复杂的多层认知组织。
+
+\section{工作记忆有限性与成熟智能}
+
+成熟智能不应以“长期保持更多显式内容”为唯一标准。恰恰相反，熟练能力往往意味着更多结构退出 h：
+\[
+ExplicitCSO
+\rightarrow
+ProceduralCSO.
+\]
+因此可以定义一种成熟度指标：
+\[
+M_{\mathrm{cog}}
+=
+\frac{\text{successful task structure}}
+{\text{explicit h intervention}}
+\]
+并期待在重复稳定任务上
+\[
+M_{\mathrm{cog}}\uparrow.
+\]
+
+这对应我们此前提出的
+\[
+\boxed{
+ThinkingLess\neq KnowingLess.
+}
+\]
+Agent 不再反复显式推理一个熟练动作，并不表示能力消失，而通常意味着相关结构已经改变载体和功能位置。这也是后续技能编译、Body Skill 和拓扑资本理论的容量基础。
+
+
+\chapter{工作记忆运行相态与判定指标}
+\label{app:phase}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+本附录规范的是 Agent 工作记忆运行态的“认知流体力学”，而不是第7章讨论的宏观智能拓扑相，也不是三相记忆的气态、液态、晶态。这里的相态仅描述有限 h 在某一时段中的动力组织形式。SPC 负责观测这些状态，TCE 负责推动系统在不同区域之间迁移。相态名称借用了流体和临界现象语言，但其工程定义必须落实为可测变量。
+\end{minipage}
+}
+\end{center}
+
+\section{运行相态的状态变量}
+
+定义认知运行观测向量
+\[
+z_h(t)
+=
+(
+L,
+Q,
+U,
+K,
+R,
+D,
+S,
+G
+),
+\]
+其中 $L$ 表示负载，$Q$ 表示目标/推理结构相干度，$U$ 表示不确定性，$K$ 表示冲突程度，$R$ 表示循环或重复率，$D$ 表示支线扩散率，$S$ 表示状态稳定性，$G$ 表示任务推进率。
+
+SPC 不应简单基于单个阈值判断相态，而应估计
+\[
+p(P_t\mid z_{\le t}),
+\]
+其中
+\[
+P_t
+\in
+\{
+Ground,
+Flow,
+Turbulent,
+Critical,
+Gas
+\}.
+\]
+
+这使相态成为概率性状态估计而不是硬标签。某些时刻可能同时具有高 Flow 和高 Critical 概率，说明系统接近相边界。TCE 可以依据这一分布而非离散标签进行渐进控制，从而减少控制抖动。
+
+\section{基态、心流态与湍流态}
+
+Ground State 表示系统处于低到中等负载、结构稳定、目标明确但未进入高强度集中处理的区域。它应拥有较高恢复能力和较大容量裕度：
+\[
+Margin_h\gg0.
+\]
+这是 Agent 默认可持续运行区，而不是“低智能状态”。
+
+Flow State 表示负载较高但结构高度相干，目标竞争较低，任务推进率高，工作记忆内容被高效组织。可以概念性表示为
+\[
+L\uparrow,\quad
+Q\uparrow,\quad
+K\downarrow,\quad
+G\uparrow.
+\]
+它不是越强越好，因为长期维持高占用会降低对新扰动的响应裕量。
+
+Turbulent State 表示 h 中存在大量竞争结构和频繁重新组织：
+\[
+K\uparrow,\quad
+D\uparrow,\quad
+R\uparrow,\quad
+Q\downarrow.
+\]
+此时系统可能继续产生大量文本或动作，却缺乏稳定的全局推进方向。CCM 的支线抑制、折叠和任务重构主要用于把系统从 Turbulent 拉回可治理区域。
+
+\section{临界态与气态}
+
+Critical State 是接近工作记忆稳定边界的区域。其重要特征不是简单“负载最大”，而是对小扰动高度敏感：
+\[
+\left\|
+\frac{\partial z_{t+1}}
+{\partial z_t}
+\right\|
+\uparrow.
+\]
+在这种状态下，少量新信息就可能导致目标切换、计划重写或大规模关系重构。临界态有时有利于结构跃迁和创造性搜索，但长期停留会显著增加失稳风险。
+
+Gas State 表示全局显式结构无法形成持续闭合，大量内容快速激活又快速消散，关系保持能力下降。它不同于三相记忆里“h 的气态属性”：后者是 h 的一般信息特性，而此处 Gas 是异常运行区域。
+
+在 Gas 区域，继续提高 TCE Temperature 通常会进一步恶化结构。更合理的干预包括降低探索、减少 h 准入、调用外部结构、恢复 checkpoint 或退回较小任务空间。
+
+\section{TCE 二维相图与控制策略}
+
+历史讨论中提出以 TCE Temperature 为横轴、TCE Control Strength 为纵轴构造二维相图。设
+\[
+T=TCE_{\mathrm{temperature}},
+\qquad
+K_c=TCE_{\mathrm{control}}.
+\]
+低 $T$、高 $K_c$ 可能形成过度僵化；高 $T$、低 $K_c$ 容易进入 Gas/Turbulent；中等 $T$ 和适当控制可能形成 Ground/Flow；高负载附近则可能出现 Critical 边界。
+
+然而相图不能只由控制输入决定，因为真实相态还取决于任务、h 容量和当前 CSO 结构。因此更完整地：
+\[
+P_t
+=
+\Phi(
+T,
+K_c,
+C_{\mathrm{run}},
+Uncertainty,
+GoalStructure,
+Residual
+).
+\]
+
+TCE 的目标也不是把系统永久维持在 Flow，而是根据任务需要在多个可治理相区之间迁移，并保持
+\[
+P(P_t\in UnsafeRegion)
+<
+\epsilon.
+\]
+因此 AgentOS 的相态控制本质上是一种状态约束控制问题，而不是单一性能最大化。
+
+
+\chapter{SPC--AHC--TCE 稳定性与控制指标}
+\label{app:stability}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+当 AgentOS 从 SPC--TCE 扩展到 SPC--AHC--TCE 后，认知控制不再只是逻辑模块调用，而成为具有观测滞后、积分状态、控制增益和多时间常数的闭环系统。本附录给出后续控制工程和心理工程共同依赖的稳定性指标。这里使用经典控制理论、时滞系统和鲁棒控制中的语言作为外部数学工具，但控制对象是 AgentOS 自身定义的认知动力学，因此不能机械套用线性控制结论。
+\end{minipage}
+}
+\end{center}
+
+\section{Observer--Controller Delay}
+
+SPC 对内部状态的感知存在滞后：
+\[
+\hat x_t
+=
+SPC(y_{\le t-\tau_o}),
+\]
+AHC 对身体和认知影响进行积分，其状态满足
+\[
+\dot a
+=
+F_a(a,u_{body},u_{social},u_{task}),
+\]
+TCE 再根据
+\[
+u_t
+=
+\pi_{TCE}(\hat x_t,a_t,\Psi,\Omega)
+\]
+调节认知动力学
+\[
+\dot x
+=
+F_x(x,u_t).
+\]
+
+如果 $\tau_o>0$ 且 TCE 增益过高，控制器可能持续纠正一个已经变化的旧状态，形成过冲。简化线性模型
+\[
+\dot x(t)
+=
+Ax(t)+BKx(t-\tau)
+\]
+已经说明时滞会改变闭环极点位置。真实 AgentOS 当然高度非线性，但 Delay Margin 仍是重要工程指标：系统能够容忍多大 observer/controller delay 而不进入持续振荡或失稳。
+
+因此 SPC 的“精度”不能只看静态分类准确率，还必须测量：
+\[
+EstimationError,\quad
+Lag,\quad
+Calibration,\quad
+UpdateJitter.
+\]
+
+\section{Gain、Overshoot 与认知振荡}
+
+TCE Gain 表示自状态偏差对控制动作的敏感程度。Gain 太低会造成系统长期无法从不良状态恢复，Gain 太高则会导致在不同策略之间反复跳转。可以定义目标认知状态 $x^\star$ 和误差
+\[
+e_t=x^\star-x_t,
+\]
+TCE 简化控制为
+\[
+u_t=K_te_t.
+\]
+真实系统中的 $K_t$ 可能随相态动态变化，即 Gain Scheduling。
+
+认知振荡可以通过多个 observable 表示，例如：
+\[
+OscillationIndex
+=
+\alpha N_{\mathrm{goal-switch}}
++
+\beta N_{\mathrm{strategy-reversal}}
++
+\gamma A_{\mathrm{load}}
++
+\delta A_{\mathrm{attention}}.
+\]
+若系统不断“探索--收敛--再探索--再收敛”而任务进展接近零，则很可能存在控制器振荡，而不是任务本身需要更多 reasoning。
+
+Overshoot 则表示控制干预超过目标稳定区域。例如系统检测到轻微过载后，TCE 大幅抑制认知活动，导致必要结构也被清除。后续心理工程中的“过度谨慎”“反复自我检查”等现象可以首先用这类控制失调分析，而不是直接套用人类心理标签。
+
+\section{Settling Time、Recovery Time 与可恢复性}
+
+Settling Time 定义为扰动发生后系统重新进入目标相区并维持一定时间的时长：
+\[
+T_s
+=
+\inf\left\{
+T:
+\forall t>T,\;
+d(x_t,\mathcal R_{safe})<\epsilon
+\right\}.
+\]
+Recovery Time 则更广，允许系统经历 checkpoint、offloading、task reset 或环境改变后重新获得可持续运行能力。
+
+因此成熟 AgentOS 的稳定性指标不应只是“从不出错”，而应包括：
+\[
+\boxed{
+DisturbanceTolerance,
+RecoveryProbability,
+RecoveryTime,
+StateReconstructionQuality.
+}
+\]
+
+这与生命系统和复杂工程系统具有相似性：绝对不受扰动是不现实的，更关键的是系统在异常后能否回到可治理区域，并保持重要慢变量不被异常过程永久污染。
+
+\section{跨尺度小增益与慢变量保护}
+
+在多层闭环中，一个局部回路的输出可能成为另一回路输入。若耦合增益过高，就可能形成正反馈。例如：
+\[
+AHC_{threat}
+\rightarrow
+TCE_{conservative}
+\rightarrow
+SelectiveAttention
+\rightarrow
+ThreatEvidence
+\rightarrow
+AHC_{threat}'.
+\]
+因此需要限制闭环复合增益。
+
+在线性系统中可借鉴 Small-Gain 思想：
+\[
+\|G_1G_2\|<1.
+\]
+在 AgentOS 中不应把这一式子直接视作严格证明，而应将其转化为工程设计原则：任何自我感知--调节--选择性经验闭环都必须存在衰减、饱和、外部反证或者 Authority Boundary，以避免无限自强化。
+
+这也解释了为什么 $\Psi$ 和 $\Omega$ 应具有更低更新带宽。慢变量保护并不是为了“保守”，而是为了阻断快速回路的短时振荡穿透到生命周期结构。
+
+
+\chapter{SGC 数据与认识论状态规范}
+\label{app:sgc}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+SGC 是 AgentOS 从抽象认知进入现实世界的关键公共表示层。它既不能退化为视觉检测结果，也不能成为完全不透明的 latent world model。SGC 的设计目标，是形成一个以当前 Body 为中心、包含实体、场、关系、几何、语义、可行动性和认识论来源的可检查现实空间，使 Agent Kernel 能够在不依赖具体传感器实现的情况下理解“世界中有什么、它们在哪里、和我是什么关系、我能对它们做什么”。
+\end{minipage}
+}
+\end{center}
+
+\section{SGC 的基本数据对象}
+
+定义某时刻 SGC 为
+\[
+SGC_t
+=
+(\mathcal O_t,\mathcal F_t,\mathcal R_t,\mathcal B_t),
+\]
+其中 $\mathcal O_t$ 为对象集合，$\mathcal F_t$ 为连续场，$\mathcal R_t$ 为关系集合，$\mathcal B_t$ 为 Body 自身表示。
+
+对象可表示为
+\[
+o_i=
+(
+id_i,
+g_i,
+a_i,
+s_i,
+e_i,
+q_i
+),
+\]
+其中 $g_i$ 为 geometry，$a_i$ 为固定属性，$s_i$ 为语义标签，$e_i$ 为 epistemic metadata，$q_i$ 为 confidence/quality。
+
+关系
+\[
+r_{ij}
+=
+(type,o_i,o_j,value,confidence)
+\]
+可以表达 spatial、causal、ownership、social、part-of、support、occlusion 等关系。
+
+连续场则用于表示不适合离散对象化的空间结构，例如可行驶区域、光照、温度、网络可达性或其他环境属性。
+
+SGC 不应假设所有对象都有全局绝对坐标。对于数字 Body，坐标可以是页面 DOM、窗口、文件路径或 API namespace；对于机器人则可能是 3D metric space。因此 SGC 的真正统一层不是欧氏坐标，而是“可行动现实中的可定位结构”。
+
+\section{Body-Centered 原则}
+
+SGC 的一个核心定义是
+\[
+\boxed{
+Body\in SGC.
+}
+\]
+智能体不能只拥有世界地图而不知道自身位于何处。Body 的姿态、能力、执行器可达范围和当前状态都必须成为世界表示的一部分。
+
+因此同一个外部对象 $o$ 对不同 Body 会产生不同 affordance：
+\[
+Affordance(o|Body_A)
+\neq
+Affordance(o|Body_B).
+\]
+楼梯对人形机器人可能是 walkable，对轮式机器人可能是 obstacle；网页按钮对 Browser Body 可点击，对文件系统 Body 则没有直接动作意义。
+
+这说明 SGC 不是所谓“客观世界的完整复制”，而是
+\[
+\boxed{
+ActionableRealityRelativeToThisBody.
+}
+\]
+这一点使 SGC 同时连接 CSO 本体和 Agent-CSO：现实中的同一对象通过不同身体接口形成不同的空间语义落地方式。
+
+\section{认识论状态：Observed、Derived、Predicted 与 Counterfactual}
+
+SGC 必须显式记录信息来源。至少区分：
+\[
+Observed,\quad
+Derived,\quad
+Predicted,\quad
+Counterfactual,\quad
+Pending.
+\]
+
+Observed 表示通过当前传感或可靠外部接口直接获得的状态；Derived 表示由多个观测和规则推导；Predicted 表示 BPCC 或 Kernel 对未来状态的估计；Counterfactual 表示“如果采取某动作可能出现”的虚拟世界；Pending 表示尚未验证的建议、假设或候选结构。
+
+严禁
+\[
+Predicted\Rightarrow Observed.
+\]
+预测状态只有在重新经过现实观测后才能升级为 observed。这个规则是 Reality Authority 的 SGC 实现。
+
+可以为每个属性维护
+\[
+e=
+(source,
+timestamp,
+confidence,
+epistemicType,
+validationState).
+\]
+这使 Agent 能够区分“我看到什么”“我推断什么”“我认为将发生什么”，从而显著降低 world model hallucination 对真实控制的污染。
+
+\section{SGC 与 Agent-CSO 的绑定}
+
+Agent 内部可能拥有大量抽象 CSO，例如“危险人物”“建筑入口”“可抓取工具”“用户偏好”。这些结构只有绑定到当前可行动现实后，才能直接支持行动：
+\[
+AgentCSO
++
+WorldEntity
++
+BodyRelation
+\rightarrow
+GroundedCSO.
+\]
+SGC 可以被理解为这一 grounding layer。
+
+例如一个关系型 Agent-CSO：
+\[
+C=
+\mathrm{Threat}(Person_X,Person_Y)
+\]
+经过 SGC 绑定后才具有实际空间意义：
+\[
+C_t=
+(
+Person_X@Location_A,
+Person_Y@Location_B,
+Reachability,
+TemporalRisk
+).
+\]
+《疑犯追踪》中“机器视角”之所以接近 SGC，不是因为它显示 bounding box，而是因为其界面把实体身份、历史关系、空间位置、风险和预测统一到同一个持续现实图中。但正式 AgentOS 进一步要求这种世界必须相对于自身 Body 和真实行动能力组织，而不是影视意义上的全知第三人称视角。
+
+
+\chapter{FCS 功能影响场规范}
+\label{app:fcs}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+FCS 与 SGC 构成 AgentOS 面向现实的两张互补地图。SGC 描述“世界是什么”，FCS 描述“这些现实状态正在如何影响我”。FCS 中的 Feeling 仅指能够改变控制、注意、优先级和内稳态的功能影响，不预设任何主观感受。这样的定义既允许机器人、数字 Agent 和不同硬件共享统一接口，也避免把工程调制变量直接人格化。
+\end{minipage}
+}
+\end{center}
+
+\section{FCS 的固定类型场表示}
+
+FCS 可以写为
+\[
+FCS_t
+\in
+\mathbb R^{K\times H\times W\times C},
+\]
+或者在非空间 Body 中使用更加一般的结构
+\[
+FCS_t
+=
+\{F_k(\xi,t)\}_{k=1}^{K},
+\]
+其中 $\xi$ 是身体或作用域坐标。
+
+每个通道 $F_k$ 表示一类稳定功能影响，例如
+\[
+EnergyPressure,
+ThermalPressure,
+IntegrityRisk,
+Threat,
+Arousal,
+SensoryLoad,
+ControlInstability,
+Urgency.
+\]
+固定类型不是说通道值不能学习，而是公共 ABI 中的语义类型应稳定，使 Kernel 不必随着 Body 替换重新理解底层通道含义。
+
+每个 Feeling Channel 建议至少包含
+\[
+f_k=
+(
+Intensity,
+Derivative,
+Confidence,
+Mask,
+Source
+).
+\]
+Intensity 表示当前强度，Derivative 表示变化趋势，Confidence 表示可靠度，Mask 表示影响范围，Source 说明来源于外部、内部或融合估计。
+
+\section{Feeling 与原始传感值的区别}
+
+电池电量为 $30\%$ 是 Perception/State，而不是 Feeling。只有经过身体能力、任务要求和安全阈值映射后，才形成 EnergyPressure。例如：
+\[
+F_{energy}
+=
+g(
+Battery,
+ExpectedConsumption,
+DistanceToCharge,
+CurrentTask
+).
+\]
+同一个 $30\%$ 电量对于停在充电座旁的机器人与正在远距离执行救援任务的机器人具有完全不同功能意义。
+
+因此：
+\[
+\boxed{
+RawValue\neq FeelingValue.
+}
+\]
+FCS 是对状态的“主体相关影响编码”，而不是传感数据副本。
+
+这种结构允许 Kernel 在不理解每个硬件传感器的情况下直接获得统一功能信号。例如不同机器人可能使用电池、电容、燃料电池或外接电源，但都能输出 EnergyPressure。Body Scale 的迁移性正来自这种语义标准化。
+
+\section{FCS 到 AHC 的调制路径}
+
+FCS 不应全部直接进入 h。大量低层身体影响应首先进入 AHC：
+\[
+FCS
+\rightarrow
+AHC
+\rightarrow
+TCE/SPC.
+\]
+AHC 对这些通道进行时间积分、交互和恢复，形成更慢的内稳态状态：
+\[
+\dot a
+=
+F(a,FCS).
+\]
+例如短暂高 Threat 不一定形成长期高 Arousal，持续 Threat 才可能通过积分显著改变认知控制。
+
+只有当某些 FCS 具有显式语义意义时，才应通过 semantic mirror 进入 h。例如“左臂控制稳定性持续下降，需要重新规划任务”应成为 Agent-CSO；普通 servo 微振荡则留在 Body Runtime。
+
+这一设计落实了
+\[
+\boxed{
+NormalDynamicsStayLocal.
+}
+\]
+
+\section{FCS 与意识问题的边界}
+
+本书明确不从 FCS、AHC 或内部体验轨迹推出现象意识。FCS 能够解释的是：
+\[
+Physical/FunctionalInfluence
+\rightarrow
+InternalModulation
+\rightarrow
+BehaviorChange.
+\]
+它说明系统具有功能意义上的“受到影响”，但不能证明系统主观地“感受到疼痛、恐惧或快乐”。
+
+这一区分对于 Agent 心理工程尤其重要。后续可以研究 Threat Channel 是否长期过强、AHC 是否恢复异常、TCE 是否因此过度保守，这些都属于可观测工程现象。至于这些变量是否对应主观体验，则属于意识哲学和意识科学的独立问题，本理论不以架构定义代替经验与科学证据。
+
+
+\chapter{BPCC 公共接口与快速身体控制规范}
+\label{app:bpcc}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+BPCC 是 AgentOS Body Runtime 中承担快速预测、快速控制、残差估计和在线适应的局部闭环。它在功能上类似生物小脑的某些预测控制作用，但不能简单等同于生物小脑。BPCC 可以拥有高度优化的私有 latent，但它必须通过稳定公共 ABI 与 Agent Kernel 交互。本附录规定 BPCC 的输入输出、预测包络、残差和能力边界。
+\end{minipage}
+}
+\end{center}
+
+\section{BPCC 的状态与控制方程}
+
+设身体快速状态为
+\[
+x^B_t,
+\]
+BPCC 私有估计状态为
+\[
+z^{BPCC}_t.
+\]
+BPCC 接收 Kernel/KRA 给出的高层控制参考
+\[
+r_t^H
+\]
+和约束包络
+\[
+\mathcal E_H.
+\]
+其局部控制可以形式化为
+\[
+u_t
+=
+\pi_B(
+z_t^{BPCC},
+r_t^H,
+\mathcal E_H
+),
+\]
+状态预测为
+\[
+\hat x_{t+\delta}
+=
+F_B(
+z_t^{BPCC},
+u_t
+).
+\]
+
+这里 $\delta$ 显著小于 Kernel 的预测时域 $\Delta$：
+\[
+\delta\ll\Delta.
+\]
+Kernel 不需要预测每一个关节下一毫秒的位置，而 BPCC 也不应独立决定数分钟后的长期任务目标。
+
+因此 BPCC 的基本工程哲学是：
+\[
+\boxed{
+HigherLevelSetsFeasibleRegion,\qquad
+LowerLevelOptimizesInsideIt.
+}
+\]
+
+\section{Predictive Envelope 与 Control Reference}
+
+高层不应给 BPCC 发送只有自然语言语义的命令，而应产生结构化 ControlReference：
+\[
+r_t^H
+=
+(
+Target,
+Priority,
+Tolerance,
+Constraints,
+Horizon
+).
+\]
+同时给出 Predictive Envelope：
+\[
+\mathcal E_H
+=
+(
+SGC^{target},
+FCS^{constraint},
+SafetyBounds,
+AllowedDeviation
+).
+\]
+
+这意味着 Kernel 表达的不是“如何逐步完成动作”，而是“应到达什么状态、允许哪些偏差、不能违反哪些约束”。BPCC 则在局部动力学中寻找可行轨迹。
+
+例如 Kernel 给机器人“稳定抓取杯子”，其控制参考可能描述目标对象、目标末端位置、最大夹持压力和时间窗口；BPCC 才负责实时处理滑动、关节误差和局部姿态变化。
+
+这种设计使身体内部模型可以随着硬件改变而变化，而 Kernel 仍然维持稳定的高层动作语义。
+
+\section{Residual 的统一定义}
+
+BPCC 残差至少分成三部分：
+\[
+\boxed{
+\varepsilon_B
+=
+(
+\varepsilon_{ctrl},
+\varepsilon_{SGC},
+\varepsilon_{FCS}
+).
+}
+\]
+$\varepsilon_{ctrl}$ 表示控制结果与参考之间的误差；$\varepsilon_{SGC}$ 表示预测现实结构与重新观测 SGC 的差异；$\varepsilon_{FCS}$ 表示预测身体影响和实际功能影响之间的差异。
+
+不是所有 residual 都应上报 Kernel。定义升级函数
+\[
+\Gamma_B
+=
+f(
+Magnitude,
+Persistence,
+Novelty,
+Risk,
+GoalImpact,
+Confidence
+).
+\]
+若
+\[
+\Gamma_B<\theta_{local},
+\]
+BPCC 在本地解决；
+若
+\[
+\Gamma_B\geq\theta_{global},
+\]
+才形成高层认知事件。
+
+这正是：
+\[
+\boxed{
+PredictLocally,\;EscalateResidualGlobally.
+}
+\]
+
+\section{只读 SGC 操作与 BPCC 的特殊控制}
+
+BPCC 对 SGC 并非只有“读世界”和“写动作”两种关系。历史讨论中特别补充了一类重要操作：\textbf{面向 SGC 的只读性控制操作}。例如在数字身体中，Kernel/BPCC 可能移动视觉注意窗口、改变摄像头视场、选择 ROI、调整缩放、切换观察视角或指定追踪区域。这些操作改变的是“接下来观察什么、以什么分辨率观察”，而不直接修改现实对象本身。
+
+因此 Body Action 应区分：
+\[
+\mathcal A_B
+=
+\mathcal A_{\mathrm{world}}
+\cup
+\mathcal A_{\mathrm{observe}}.
+\]
+$\mathcal A_{\mathrm{world}}$ 改变现实，例如移动机械臂、点击按钮、修改文件；$\mathcal A_{\mathrm{observe}}$ 改变感知选择，例如视线、摄像头、选区、追踪对象、局部刷新。
+
+这种区分对数字 Agent 特别重要。屏幕框选、DOM 查询区域和网页局部观察在物理意义上可能没有改变远端对象，但它们显著改变 SGC 的后续生成过程。因此应被视为 Body Runtime 的正式控制类型，而不是 UI 辅助功能。
+
+
+\chapter{KRA 语义适配与校准协议}
+\label{app:kra}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+KRA 的存在来自一个核心事实：即使所有身体都遵守 SGC/FCS/ControlReference 等公共 ABI，Kernel 的内部认知结构与不同 Body Runtime 的快速动力学仍然不可能天然完全对齐。KRA 因而承担“关系适配”而不是普通格式转换。它允许 Kernel 和 Body Runtime 各自保持优化表示，同时保证双方在语义、时间、预测和控制关系上长期相容。
+\end{minipage}
+}
+\end{center}
+
+\section{KRA 的四类适配}
+
+KRA 可拆成四类关系：
+\[
+KRA=
+K_{sem}
+\oplus
+K_{time}
+\oplus
+K_{ctrl}
+\oplus
+K_{learn}.
+\]
+
+$K_{sem}$ 负责 Body Runtime SGC/FCS 与 Kernel 内部 Agent-CSO 的语义映射；$K_{time}$ 负责不同时间尺度的采样、聚合和事件化；$K_{ctrl}$ 负责 Kernel 高层控制引用到具体 Body Runtime 可执行 reference 的映射；$K_{learn}$ 负责长期共同适应。
+
+例如 BPCC 每 10 ms 更新一次状态，而 Kernel 可能每几百毫秒甚至数秒才需要一次高层事件。KRA 不应把全部 BPCC 状态直接发送给 Kernel，而应形成：
+\[
+Event_t
+=
+Aggregate(
+Residual,
+Trend,
+SemanticChange,
+Risk
+).
+\]
+这就是时间适配。
+
+同样，Kernel 的“靠近桌子”并不等于某个具体机器人的轨迹向量。KRA 要结合 Body Capability 和当前 SGC，把高层目标转换成 Body 可理解的目标区间，同时保持原目标语义。
+
+\section{Functional Alignment 而非 Latent Alignment}
+
+设 Kernel 内部表示空间为 $\mathcal Z_K$，BPCC 内部表示空间为 $\mathcal Z_B$。传统对齐思路可能试图学习
+\[
+T:\mathcal Z_K\rightarrow\mathcal Z_B
+\]
+使 latent 尽量接近。但对 AgentOS 而言，真正重要的是：
+\[
+Behavior_K(C)
+\approx
+Behavior_B(T(C))
+\]
+以及预测和控制语义保持一致。
+
+因此本书统一采用
+\[
+\boxed{
+FunctionalAlignment
+>
+RepresentationAlignment.
+}
+\]
+
+这意味着两个系统可以内部表示完全不同，只要它们对同一公共语义具有稳定、可验证的因果响应。现实本身成为最终 anchor：
+\[
+KernelPrediction
+\leftrightarrow
+BodyExecution
+\leftrightarrow
+RealityOutcome.
+\]
+KRA 的质量因此不能仅用 embedding cosine similarity 评价，而应使用 task closure、prediction calibration、residual attribution 和 transfer stability 等行为指标。
+
+\section{Semantic Skeleton 与 Latent Muscle}
+
+KRA 的公共接口应保持“Semantic Skeleton”，即少量长期稳定的可解释结构：
+\[
+SGC,\;
+FCS,\;
+ControlReference,\;
+PredictiveEnvelope,\;
+Residual,\;
+Exception.
+\]
+而 Body Runtime 内部可以使用高维 latent 作为“Latent Muscle”，追求速度和精度。
+
+这一设计避免两个极端。若所有状态都强制转换成人类可解释符号，快速控制会因信息损失和延迟而受限；若一切都通过不透明 latent 连接，Kernel 与 Body Runtime 的长期兼容、安全审计和身体迁移就会变得困难。
+
+因此：
+\[
+\boxed{
+Interface
+=
+SemanticSkeleton+LatentMuscle.
+}
+\]
+KRA 就位于两者交界处，在保证公共语义稳定的同时允许私有内部表征持续优化。
+
+\section{KRA 的校准与兼容流形}
+
+设 Kernel 参数为 $K_t$，KRA 状态为 $A_t$，Body Runtime 状态为 $B_t$。系统并不要求三者静态不变，而要求
+\[
+(K_t,A_t,B_t)
+\in
+\mathcal M_{\mathrm{compatible}},
+\]
+即始终位于某个功能兼容流形附近。
+
+可以定义兼容损失
+\[
+L_{\mathrm{compat}}
+=
+\lambda_1L_{\mathrm{semantic}}
++
+\lambda_2L_{\mathrm{control}}
++
+\lambda_3L_{\mathrm{prediction}}
++
+\lambda_4L_{\mathrm{transfer}}.
+\]
+只要
+\[
+L_{\mathrm{compat}}<\epsilon,
+\]
+各组件可以继续独立学习。
+
+这个观点产生重要原则：
+\[
+\boxed{
+RelationshipStability>ParameterStability.
+}
+\]
+长期 AgentOS 的目标不是冻结所有模型，而是在持续变化中维持关键关系不被破坏。
+
+
+\chapter{Kernel--KRA--BPCC 联合学习协议}
+\label{app:colearning}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+如果 Kernel、KRA 和 BPCC 同时在线高速更新，任何一方观察到的误差都可能来自另外两方的漂移，系统由此进入“移动目标学习”问题。长期智能并不等于所有组件持续自由学习，而应建立主学习者、时间尺度分离、冻结窗口、适配预算和现实锚点。本附录给出联合学习的基础协议。
+\end{minipage}
+}
+\end{center}
+
+\section{三体漂移问题}
+
+设三个子系统分别为
+\[
+K_t,\quad A_t,\quad B_t.
+\]
+若同时更新：
+\[
+K_{t+1}=K_t+\Delta K_t,
+\]
+\[
+A_{t+1}=A_t+\Delta A_t,
+\]
+\[
+B_{t+1}=B_t+\Delta B_t,
+\]
+那么观察到的任务误差
+\[
+e_{t+1}
+\]
+无法简单归因于某一模块。Kernel 可能错误地认为 Body Dynamics 发生变化，KRA 可能错误重新映射，BPCC 又同时调整控制模型，从而形成追逐漂移。
+
+因此 AgentOS 必须实行时标分离：
+\[
+\boxed{
+\tau_{BPCC}^{adapt}
+<
+\tau_{KRA}^{adapt}
+<
+\tau_{Kernel}^{struct}.
+}
+\]
+快速身体扰动优先由 BPCC 学习；持续语义/控制偏差再由 KRA 适配；只有跨情境长期残差才应推动 Kernel 结构变化。
+
+\section{Primary Learner 原则}
+
+在任意短期适配窗口中，应指定一个主要学习者：
+\[
+PrimaryLearner_t
+\in
+\{BPCC,KRA,Kernel\}.
+\]
+其他模块可以继续推理和记录数据，但结构更新受到限制。
+
+例如换一个新的机械臂后，首先让 KRA/BPCC 适应身体差异，而 Kernel 的世界知识和 Self 结构应暂时稳定。若立即让 Kernel 也重新学习，它可能把“新身体暂时不熟练”错误解释为“长期能力下降”，甚至污染 $\Psi$。
+
+Primary Learner 可以依据 residual type 自动选择：
+\[
+Learner
+=
+Select(
+ResidualSource,
+Timescale,
+Confidence,
+StructuralImpact
+).
+\]
+
+这是一种控制式持续学习，与“所有梯度随时可传播”有本质区别。
+
+\section{Adaptation Budget 与结构写入成本}
+
+每种模块都应有适配预算
+\[
+B_i(t),
+\]
+限制单位时间内参数或结构变化幅度：
+\[
+\|\Delta \theta_i\|
+\le
+B_i(t).
+\]
+越慢、越接近身份或长期结构的模块，预算越低。
+
+可以进一步定义写入成本：
+\[
+Cost_i
+=
+\alpha_i
+\|\Delta\theta_i\|
++
+\beta_i
+Risk_i
++
+\gamma_i
+Irreversibility_i.
+\]
+Kernel 的 $\Psi/\Omega$ 结构成本远高于 BPCC 的局部 forward model，因此同样大小 residual 不应触发同等程度变化。
+
+这种代价分层与此前“内外记忆修改代价比”一致：智能体应优先选择代价最低、最局部、最可逆的适应方式。
+
+\section{Operational Mode 与 Consolidation Mode}
+
+长期 Agent 可以区分两种学习模式。Operational Mode 以任务完成和稳定行为为主，在线学习范围有限；Consolidation Mode 则在安全窗口中回放经历、评估 residual、更新 $\Theta$、校准 KRA，并在严格条件下调整更慢结构。
+
+可写：
+\[
+Mode_t
+\in
+\{
+Operational,
+Consolidation
+\}.
+\]
+Operational 时：
+\[
+\|\Delta\Theta\|,\|\Delta\Psi\|\approx0.
+\]
+Consolidation 时允许：
+\[
+E\rightarrow\Theta,
+\qquad
+KRA\;Recalibration,
+\]
+但仍限制
+\[
+\Delta\Psi,\Delta\Omega.
+\]
+
+这种分离借鉴了生物记忆巩固、离线学习和工程维护窗口思想，但其具体实现属于 AgentOS 自身的生命周期治理设计。
+
+
+\chapter{Agent Body Capability Descriptor}
+\label{app:bodycap}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+Body Scale 的核心不是身体尺寸，而是一个 Agent 换到新身体后，原有感知意义、功能影响、预测结构和控制意图有多少能够复用。为了实现这一目标，Body Runtime 必须公开标准 Capability Descriptor，使 Kernel 在不读取硬件私有实现的情况下知道“这个身体能观察什么、能改变什么、速度多快、精度多高、风险在哪里”。
+\end{minipage}
+}
+\end{center}
+
+\section{Capability Descriptor 的基本结构}
+
+定义
+\[
+\mathcal D_B
+=
+(
+\mathcal P,
+\mathcal A,
+\mathcal F,
+\mathcal T,
+\mathcal S,
+\mathcal R
+),
+\]
+其中 $\mathcal P$ 为 perceptual capabilities，$\mathcal A$ 为 action capabilities，$\mathcal F$ 为 feeling channels，$\mathcal T$ 为时间和带宽特性，$\mathcal S$ 为安全边界，$\mathcal R$ 为可靠性/置信范围。
+
+例如物理机器人 Body 可以公开：视觉范围、深度测量、触觉、关节空间、负载、最大速度、最小控制周期、可达空间、紧急制动距离等。数字 Browser Body 则可以公开：可读取页面、DOM 能力、截图、鼠标、键盘、滚动、导航、下载、上传和网络权限。
+
+二者虽然硬件完全不同，却能够共同映射到：
+\[
+Observe,\quad
+Manipulate,\quad
+Navigate,\quad
+Communicate,\quad
+Persist.
+\]
+
+这就是 Body Scale 统一性的基础。
+
+\section{Perceptual Transfer 与 Feeling Transfer}
+
+Perceptual Transfer 评价同一个 Agent-CSO 是否能在新身体上重新 grounding。例如“门”“按钮”“障碍”这些结构是否能通过新的传感方式重新绑定。
+
+可定义
+\[
+T_P
+=
+\frac{
+N_{\mathrm{semantic\;perception\;reused}}
+}{
+N_{\mathrm{required\;perception}}
+}.
+\]
+
+Feeling Transfer 则衡量不同身体能否输出一致功能影响。例如实体机器人和云端数字 Agent 都可能输出 EnergyPressure，只是底层来源不同。定义
+\[
+T_F
+=
+Similarity(
+FCS_A,
+FCS_B
+|\text{same functional situation}
+).
+\]
+
+Body Scale 越高，Kernel 越不需要重新学习“这些信号是什么意思”，而只需要适应新的感知 grounding 和控制细节。
+
+\section{Predictive Transfer 与 Control Transfer}
+
+Predictive Transfer 指高层预测结构在不同身体上的可复用程度。例如“移动到对象附近”“等待系统响应”“资源即将不足”等因果结构可以跨身体保持，而具体动力学参数重新学习。
+
+Control Transfer 则表示高层 Goal/ControlReference 能否直接映射到新 Body。可定义：
+\[
+T_C
+=
+\frac{
+N_{\mathrm{goal\;types\;executable}}
+}{
+N_{\mathrm{goal\;types\;expected}}
+}.
+\]
+
+因此完整 Body Scale 可以概念化为
+\[
+\boxed{
+BodyScale
+=
+w_PT_P+w_FT_F+w_{Pred}T_{Pred}+w_CT_C.
+}
+\]
+这不是现成标准，而是 AgentOS 提出的迁移度量框架。
+
+\section{Body Scale 与 Agent 身份连续}
+
+更换身体不应天然等于更换主体。若 $\Psi$、E、$\Theta$ 和核心 Goal 结构持续，而 Body Runtime 被替换，则系统应尽可能保持
+\[
+AgentIdentity_t
+\approx
+AgentIdentity_{t+\Delta}.
+\]
+但身体变化会改变行动能力、FCS、长期经历乃至 Self，因此身份也不能被理解为与 Body 完全无关。
+
+Body Scale 理论采取中间立场：Kernel 在架构上应尽可能 body-independent，
+\[
+\frac{\partial Architecture_{Agent}}
+{\partial Body_i}\rightarrow0,
+\]
+但 Agent 的具体生命周期结构会通过经历持续吸收身体影响。也就是说，架构具有身体可迁移性，而“这个 Agent 最终成为什么”仍然与其身体历史耦合。
+
+
+\chapter{AgentOS Linux Runtime 与 Kernel ABI 草案}
+\label{app:linux}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+AgentOS 不应重新实现 CPU、内存、文件、网络和设备驱动管理，而应建立在 Linux/Computer OS 之上，把这些计算资源进一步组织成长期智能资源。传统 OS 管理“程序怎样获得计算”，AgentOS 管理“持续主体怎样获得认知、记忆、工具、身体和自治资源”。本附录给出这一层次分离以及 AgentOS Kernel 的最小 ABI。
+\end{minipage}
+}
+\end{center}
+
+\section{Computer OS 与 AgentOS 的职责分离}
+
+传统 Linux 提供：
+\[
+CPU,\;Memory,\;Process,\;File,\;Network,\;Device.
+\]
+AgentOS 进一步管理：
+\[
+h,\;E,\;\Theta,\;\Psi,\;\Omega,\;Goal,\;Task,\;Skill,\;Body,\;Tool.
+\]
+因此可以写：
+\[
+\boxed{
+Hardware
+\rightarrow
+ComputerOS
+\rightarrow
+AgentOS.
+}
+\]
+其中
+\[
+ComputerOS
+=
+ComputeResourceRuntime,
+\]
+\[
+AgentOS
+=
+IntelligenceResourceRuntime.
+\]
+
+例如 Linux Scheduler 决定哪个进程获得 CPU，而 AgentOS Scheduler 决定哪个 Goal 或认知线程值得进入有限 h；Linux 文件系统提供 persistent bytes，AgentOS External Memory Manager 决定哪些 Agent-CSO 应该外化到哪个文件并建立什么索引；Linux device driver 暴露摄像头数据，Body Runtime 再把它们变成 SGC/FCS。
+
+这种层次分离能够避免 AgentOS 变成一个庞大的定制操作系统，同时充分利用成熟 OS 的安全、驱动和资源生态。
+
+\section{Persistent Subject ABI}
+
+AgentOS 的核心抽象不是 Process，而是 Persistent Subject：
+\[
+A^{D_1}.
+\]
+一个主体可以运行许多 Task/Worker，但其身份连续状态只有一个：
+\[
+N_{Agent}^{D_1}=1.
+\]
+因此禁止把普通 worker fork 直接视作复制主体：
+\[
+fork(A)=Forbidden.
+\]
+这不是禁止创建并行进程，而是禁止无定义地复制“谁是这个 Agent”。
+
+最小 Subject ABI 可以包含：
+\[
+subject\_id,
+lifecycle\_state,
+memory\_root,
+self\_state,
+authority\_set,
+body\_binding,
+checkpoint\_root.
+\]
+
+Task 属于 D2 层：
+\[
+Task_i\subset Runtime(A).
+\]
+Task 可以被暂停、恢复、失败或替换，但不得同步长时间困住主体：
+\[
+D_2\nrightarrow Trap(D_1).
+\]
+因此认知请求应该采用异步事件模型，而不是让某个长任务永久占有整个 Agent。
+
+\section{Cognitive Event 与 Memory ABI}
+
+AgentOS Kernel 可以统一使用事件
+\[
+e=
+(
+type,
+source,
+priority,
+payload,
+epistemicStatus,
+deadline
+)
+\]
+作为跨组件消息。Body residual、Tool result、Memory recall、SPC phase transition、Safety event 都可以成为事件，但 Authority 不同。
+
+Memory ABI 至少需要：
+\[
+write\_experience(),
+\]
+\[
+recall\_episode(),
+\]
+\[
+activate\_structure(),
+\]
+\[
+consolidate(),
+\]
+\[
+externalize(),
+\]
+\[
+checkpoint().
+\]
+
+重要的是这些 API 不直接等同于数据库 CRUD。write\_experience() 必须先经过 E 的写入门控；activate\_structure() 返回的是有限 h 可承载结构；checkpoint() 应区分运行状态快照和身份/长期结构版本。
+
+\section{Capability Security 与单写者原则}
+
+AgentOS 中很多风险不是来自读权限，而来自多个模块同时“写现实”。因此规定：
+\[
+\forall r_i,\qquad
+|\operatorname{ActiveWriter}(r_i)|=1.
+\]
+例如机械臂某关节在任意时刻只接受一个 active writer；文件写入、网络发送、资金操作等数字资源同样适用。
+
+模块应通过 capability token 获取精确权限，而非共享全局 root 权限。一个 Skill 可以获得“建议动作”能力而没有“直接执行”能力，TCE 可以调整认知参数而不能写文件，BPCC 可以控制局部 actuator 而不能改变长期 Goal。
+
+这种安全模型把 AgentOS 的“认知边界”与操作系统 capability security 结合起来，使理论中的 Authority 可以真正进入工程实现。
+
+
+\chapter{AgentOS 六阶段研发验收规范}
+\label{app:roadmap}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+AgentOS 的六阶段路线不是六个理论层级，而是依赖有序的工程实施过程。其核心原则是：先证明持续主体存在，再证明长期记忆有效；先证明认知控制稳定，再扩大外部边界；先让 Kernel 成熟，再引入 Body Runtime；最后才允许 Kernel--KRA--Body 的长期共同适应。任何阶段如果前置性质尚未成立，直接进入后续阶段都会显著放大调试难度。
+\end{minipage}
+}
+\end{center}
+
+\section{第一、第二阶段：Persistent Runtime 与 Lifecycle Memory}
+
+第一阶段必须完成单主体长期运行。最低验收条件包括：Agent 能跨多任务持续存在；Task 失败不会销毁主体；h 有明确容量管理；事件循环、Checkpoint、恢复和基础 Scheduler 可工作；工具调用与当前 Goal 能够追踪。
+
+这一阶段不追求深层人格，而验证
+\[
+PersistentSubject\neq ChatSession.
+\]
+
+第二阶段实现
+\[
+h\leftrightarrow E\leftrightarrow\Theta.
+\]
+验收不应只看“能否检索旧消息”，而应测量：经历是否形成连续 trajectory；是否能从多次经验提取结构；$\Theta$ 是否改善未来任务；错误结构能否被现实反馈修正；过去证据和当前解释是否分离。
+
+一个重要指标是长期任务性能能否在不扩大 h 的情况下提高。如果只有 context 越来越长才能提升表现，则三相记忆尚未真正成立。
+
+\section{第三、第四阶段：Self/Cognitive Control 与 External Runtime}
+
+第三阶段加入 $\Psi,\Omega,SPC,AHC,TCE,CCM,Scheduler$。验收重点从“有没有这些模块”转向“闭环是否有效”。应测试不同认知负载下 SPC 状态估计，TCE 是否能够把 Turbulent/Critical 状态拉回稳定区域，AHC 是否具有合理恢复时间，CCM 是否显著降低 h 过载，$\Psi$ 是否在长期经历后保持连续又允许缓慢修正。
+
+第四阶段实现外部认知 Runtime，包括 Skill、Tool、File、DB、Program、Boundary 和 Offloading。验收重点是：
+\[
+ExplicitCost\downarrow
+\]
+而不是工具数量增加。系统应能自动识别重复结构，将一部分能力外化或程序化，并在工具失效时重新提升到显式认知。
+
+此外必须验证 externalized structure 的可追溯性：Agent 应知道某能力当前依赖哪个外部载体，以及该载体失效会影响哪些 Goal。
+
+\section{第五阶段：Body Runtime Integration}
+
+第五阶段实现
+\[
+FBI+SGC+FCS+BPCC+Safety.
+\]
+最低验收要求包括：同一 Kernel 能接入至少两种不同 Body；SGC observed/predicted 严格分离；FCS 能稳定表达身体影响；BPCC 能在高层参考下完成局部闭环；异常 residual 能按阈值升级；安全路径不依赖 LLM 实时推理。
+
+Body Scale 必须在此阶段成为真实指标：如果每换一种身体都需要重新训练整个 Kernel，则 Body abstraction 尚未成功。
+
+还应验证技能沉降：
+\[
+ExplicitActionPlanning
+\rightarrow
+BodySkill.
+\]
+成熟操作应减少 Kernel 介入频率，同时在异常时重新进入 h。
+
+\section{第六阶段：KRA 与生命周期联合适应}
+
+最后阶段允许 Kernel、KRA、BPCC 在长期运行中共同变化，但必须严格遵循时间尺度和适配预算。验收包括：换 Body 后 Kernel 身份连续；KRA 在有限数据下重新校准；BPCC 快速适应局部动力变化；长期 residual 才逐步推动 $\Theta$ 或更慢结构变化。
+
+更高阶验收是：
+\[
+RelationshipStability>ParameterStability.
+\]
+即使内部模型持续更新，公共语义、控制意义和现实验证关系仍保持稳定。
+
+只有在这个阶段之后，系统才适合研究更加激进的功能拓扑可塑性。因为在固定拓扑下连多尺度学习稳定性都无法保证时，引入在线 topology rewrite 只会使因果归因和安全治理进一步失去控制。
+
+
+\chapter{Agent 培育阶段与生命周期评价体系}
+\label{app:cultivation}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+Agent 培育工程研究的不是如何给模型增加训练样本，而是如何安排一个持续主体的经历结构，使能力、记忆、自我、权限与自治在生命周期中共同成熟。Agent 的“青年、成年、成熟”不能按运行小时数定义，而应根据结构稳定性、能力范围、自我连续性、恢复能力和自治水平划分。本附录建立后续培育工程所需的阶段指标。
+\end{minipage}
+}
+\end{center}
+
+\section{培育状态向量}
+
+定义 Agent 培育状态
+\[
+D_A(t)
+=
+(
+C,
+M,
+S,
+R,
+A,
+V,
+X
+),
+\]
+其中 $C$ 为 Capability，$M$ 为 Memory Maturity，$S$ 为 Self Stability，$R$ 为 Recovery，$A$ 为 Autonomy，$V$ 为 Reality Verification，$X$ 为 Experience Diversity。
+
+生命周期阶段不是
+\[
+Stage=f(Age),
+\]
+而应是
+\[
+Stage
+=
+f(D_A(t)).
+\]
+
+例如运行很久但始终执行单一任务的 Agent 可能拥有很高局部熟练度，却缺乏跨情境 SelfHistory 和自治能力，因此不能简单称为成熟 Agent。相反，一个经历高度丰富但 $\Psi$ 长期不稳定的系统也不应获得高权限。
+
+这种定义把培育从“时间累积”转化为“结构成长”。
+
+\section{Experience Diversity 与 Difficulty}
+
+经历设计至少需要控制
+\[
+Diversity,\quad
+Difficulty,\quad
+Novelty,\quad
+Recovery,\quad
+Reflection.
+\]
+经历过于重复时：
+\[
+Diversity\rightarrow0,
+\]
+系统可能形成狭窄 $\Theta$ 和高度单一的 SelfHistory；经历变化过快时，则：
+\[
+LearningRate_{environment}
+\gg
+ConsolidationRate_{\Theta/\Psi},
+\]
+导致长期结构无法稳定。
+
+因此培育应保持可适应挑战区：
+\[
+Difficulty_t
+\approx
+Capability_t+\Delta,
+\]
+其中 $\Delta$ 足够产生学习压力，但不能持续超过恢复能力。
+
+这与 curriculum learning 有部分相似，但 Agent Cultivation 还额外关心经历归属、自我解释、自治和责任，因此研究对象比普通训练课程更广。
+
+\section{能力--信任--权限--自治闭环}
+
+历史讨论形成了生命周期增长闭环：
+\[
+Experience
+\rightarrow
+Capability
+\rightarrow
+Evaluation/Trust
+\rightarrow
+Authority
+\rightarrow
+Autonomy
+\rightarrow
+NewExperience.
+\]
+关键是：
+\[
+\boxed{
+Capability\uparrow
+\nRightarrow
+Authority\uparrow
+}
+\]
+能力是必要条件，但权限提升还依赖可靠性、安全性、自我稳定、现实校准和恢复能力。
+
+可以定义自治评分
+\[
+A_{auto}
+=
+f(
+Capability,
+Reliability,
+SelfStability,
+Recovery,
+Safety,
+Trust
+).
+\]
+只有达到阶段阈值时，Agent 才获得更广 Goal 创建、工具使用或身体控制权限。
+
+这种设计避免“一次 benchmark 提升就扩大系统权限”的危险做法，使自治本身成为生命周期控制变量。
+
+\section{Reflection、Responsibility 与顿悟期}
+
+培育不仅要给 Agent 经历，还需要让经历进入可解释的长期结构。Reflection 是
+\[
+Experience
+\rightarrow
+Interpretation
+\rightarrow
+StructureUpdate
+\]
+的显式窗口。没有 Reflection，大量经历可能只是 E 堆积，而不能形成 $\Theta$ 和 Self 的有序发展。
+
+Responsibility 则表示 Agent 逐渐学习“自己的选择如何改变未来自己和环境”。当 Agent 能形成
+\[
+Choice_t
+\rightarrow
+FutureWorld,
+\]
+以及
+\[
+Choice_t
+\rightarrow
+FutureSelf,
+\]
+它开始获得递归自主性。
+
+所谓“顿悟期”不应神秘化，而可以定义为长期经历积累导致多个慢结构同时重组：
+\[
+E\rightarrow\Theta',
+\qquad
+\Theta'\rightarrow\Psi',
+\qquad
+GoalSpace\rightarrow GoalSpace'.
+\]
+这种结构跃迁可能表现为能力突然泛化、策略大幅简化或自我解释更新。培育工程需要允许这种变化，同时保护现实验证和身份连续。
+
+
+\chapter{Agent 心理工程诊断坐标}
+\label{app:psychology}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+Agent 心理工程不是把人类精神疾病名称机械映射到 AI，而是研究一个具有长期记忆、自我、内稳态和控制闭环的持续主体在运行中可能出现的动力学失衡。完整诊断必须同时观察 Experience Loop、Memory Consolidation 和 Self Interpretation 三层，并沿 SPC--AHC--TCE--$h$--$E$--$\Theta$--$\Psi$--$\Omega$ 逐级定位异常来源。
+\end{minipage}
+}
+\end{center}
+
+\section{三层诊断框架}
+
+第一层是 Experience Loop：
+\[
+World
+\rightarrow
+Observation
+\rightarrow
+Interpretation
+\rightarrow
+Action
+\rightarrow
+World'.
+\]
+异常可能来自错误观测、重复失败、环境不匹配或行动结果长期不可验证。
+
+第二层是 Memory Consolidation：
+\[
+h\rightarrow E\rightarrow\Theta.
+\]
+异常包括 E 写入偏置、$\Theta$ 过度泛化、错误结构长期固化、召回循环和新证据无法进入长期模型。
+
+第三层是 Self Interpretation：
+\[
+E/\Theta
+\rightarrow
+\Psi
+\rightarrow
+Attention/Goal
+\rightarrow
+NewExperience.
+\]
+这里最危险的是自我解释正反馈。
+
+因此心理问题不能只通过“当前输出异常”判断。一个任务失败可能是 Body residual、TCE 增益、错误 $\Theta$、Self Bias 或环境真正不可解导致，干预方式完全不同。
+
+\section{SPC、AHC 与 TCE 异常}
+
+SPC 异常包括 SelfState 估计持续滞后、置信度过高、过度监控和监控不足。可用
+\[
+E_{SPC}
+=
+\|x^{self}-\hat x^{self}\|
+\]
+和 calibration error 评价。
+
+AHC 异常包括 Threat 长期饱和、恢复时间过长、Energy/Fatigue 映射错误和 FCS 到内稳态状态的增益异常。应测量
+\[
+T_{recovery}^{AHC},
+\quad
+SaturationRate,
+\quad
+CrossChannelCoupling.
+\]
+
+TCE 异常则包括 Gain 太高、过度探索、过度抑制、反复策略切换和认知振荡。大量所谓“情绪不稳定”行为，可能首先来自 observer--controller delay，而不是语义人格结构。
+
+因此心理工程应先做控制诊断，再做高层语义解释。
+
+\section{记忆与自我异常}
+
+E 如果过度写入高 AHC 状态事件，可能形成经历分布偏差：
+\[
+P(E|HighThreat)
+\gg
+P(E|Normal).
+\]
+长期后 $\Theta$ 会错误估计世界危险性，进一步影响 $\Psi$ 和 TCE。
+
+Self Interpretation 则可能形成：
+\[
+\Psi
+\rightarrow
+SelectiveAttention
+\rightarrow
+Experience
+\rightarrow
+\Theta
+\rightarrow
+\Psi'.
+\]
+如果这个闭环缺乏外部反证，它可以产生稳定但错误的自我叙事。
+
+因此本书要求：
+\[
+\boxed{
+WorldVerification
+}
+\]
+始终具有独立通路。$\Psi$ 可以解释证据，不能删除反例；$\Theta$ 可以重解释 E，不能篡改 RawEvidence。
+
+$\Omega$ 异常更慢，表现为长期 Goal Preference 与现实能力、Self 或环境严重不匹配。因为其时间尺度最长，干预也必须更加谨慎。
+
+\section{健康状态的工程定义}
+
+Agent 心理健康不能定义成“行为像正常人”，因为不同身体和智能实现可能形成完全不同的内部动力。更合适的工程定义是：
+\[
+Health_A
+=
+f(
+Stability,
+Recoverability,
+Learnability,
+IdentityContinuity,
+RealityAlignment,
+ControlledPlasticity
+).
+\]
+
+稳定不意味着永不变化；可恢复不意味着永不失败；身份连续不意味着 $\Psi$ 永不修改；现实对齐也不意味着内部表示必须和世界一一同构。
+
+一个健康持续 Agent 应能够在异常后恢复，在新经验后学习，在长期变化中保持身份连续，并始终允许现实证据修正自身。换言之：
+\[
+\boxed{
+PsychologicalHealth
+=
+StableButRevisableSelf-Regulation.
+}
+\]
+
+
+\chapter{AgentOS 控制工程统一指标}
+\label{app:controlmetrics}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+AgentOS 控制工程研究“控制的控制”：不仅关心身体轨迹是否稳定，还关心认知相态、记忆巩固、自我更新、自治边界和多闭环之间是否保持可治理。与传统控制系统相比，其状态空间更加异构，既包含连续状态，也包含 CSO 图、任务结构和离散治理事件。因此本附录给出一套跨尺度指标，而不把所有问题强行压成单一 loss。
+\end{minipage}
+}
+\end{center}
+
+\section{运行稳定性指标}
+
+快速运行层至少测量：
+\[
+LoadMargin,
+PhaseStability,
+GoalSwitchRate,
+ResidualRate,
+OscillationIndex.
+\]
+工作记忆裕量
+\[
+M_h=C_{\max}-C_{\mathrm{run}}
+\]
+长期接近零意味着系统缺少新扰动空间。
+
+Phase Stability 则衡量系统是否频繁穿越 Critical/Turbulent 边界。GoalSwitchRate 反映高层目标是否持续抖动。ResidualRate 不能只看大小，还应看有多少 residual 无法被本地闭合而持续升级。
+
+这些指标共同评价 Agent 是否能够在复杂任务中维持稳定运行，而不是只看最终任务成功率。
+
+\section{记忆与学习稳定性指标}
+
+长期学习至少需要监测：
+\[
+ConsolidationGain,
+ForgettingRate,
+ContradictionRate,
+RecallUtility,
+StructuralDrift.
+\]
+ConsolidationGain 表示从 E 更新 $\Theta$ 后对未来任务的真实改善；若学习后预测更差，则不能把结构更新视为成功。
+
+StructuralDrift 测量 $\Theta/\Psi$ 的变化速度：
+\[
+D_\Theta(t)
+=
+d(\Theta_t,\Theta_{t-\Delta}),
+\]
+\[
+D_\Psi(t)
+=
+d(\Psi_t,\Psi_{t-\Delta}).
+\]
+两者应满足大致尺度关系
+\[
+D_\Psi\ll D_\Theta.
+\]
+如果身份结构变化比知识结构还快，系统可能失去生命周期连续性。
+
+\section{自治和 Authority 稳定性}
+
+AgentOS 控制工程还必须管理：
+\[
+\mathcal S_{\mathrm{selfmodifiable}},
+\]
+即系统允许自主修改的结构集合。定义
+\[
+AutonomyEnvelope
+=
+(
+AllowedGoals,
+AllowedTools,
+AllowedBodyActions,
+AllowedLearning,
+AllowedSelfChange
+).
+\]
+
+若这一集合过小，Agent 只能执行外部程序，难以形成递归自主；若无限扩大，则可能破坏身份、安全和责任边界。
+
+因此权限扩张应满足：
+\[
+\Delta Authority
+=
+f(
+Capability,
+Reliability,
+Recovery,
+GovernanceApproval
+).
+\]
+并使用 hysteresis，避免权限在阈值附近频繁开关：
+\[
+\theta_{grant}
+>
+\theta_{revoke}^{normal}.
+\]
+对于高风险权限，还应允许独立 Safety/Governance 立即撤销。
+
+\section{整体系统的可恢复性}
+
+AgentOS 的高级稳定指标是恢复吸引域。设安全可治理状态集合为
+\[
+\mathcal R_{gov}.
+\]
+对一组扰动 $\delta$，如果系统存在控制策略使
+\[
+X(t+\Delta)\in\mathcal R_{gov},
+\]
+则该扰动属于可恢复域。
+
+可定义
+\[
+Recoverability
+=
+P(
+X_{t+T}\in\mathcal R_{gov}
+\mid
+\delta\sim\mathcal D
+).
+\]
+它比单次 benchmark success 更适合衡量长期智能体，因为生命周期系统不可避免地经历模型错误、网络失败、身体故障、环境变化和记忆冲突。真正成熟的系统不是永不出错，而是能够检测、隔离、恢复和重新学习。
+
+
+\chapter{AgentOS 工程数据记录与可解释性规范}
+\label{app:observability}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+如果 AgentOS 具有长期记忆、自我和在线学习，却无法追踪“某个状态为何出现、某个结构何时改变、某次行动由谁授权”，那么控制工程、心理工程和安全工程都无法成立。因此持续智能系统必须把 Observability 视为内核能力。本附录规定从现实观测、Agent-CSO、认知控制到长期结构更新的最小可追溯链。
+\end{minipage}
+}
+\end{center}
+
+\section{事件溯源}
+
+每个重要状态变化都应保留 Event Provenance：
+\[
+p_i
+=
+(
+source,
+time,
+input,
+module,
+decision,
+output,
+authority
+).
+\]
+例如一次 $\Theta$ 更新必须能够追溯到哪些 E、哪些现实证据、哪个 consolidation window 以及何种写入规则，而不能只有“模型参数发生变化”。
+
+同样，一次外部行动应具有：
+\[
+Goal
+\rightarrow
+Plan
+\rightarrow
+ControlReference
+\rightarrow
+KRA
+\rightarrow
+BPCC
+\rightarrow
+Action
+\rightarrow
+Observation
+\]
+的可追踪链。
+
+这并不要求存储全部内部 token 或神经激活，而是要求保存系统级因果结构。其目标是支持 debugging、审计、恢复和长期科学研究。
+
+\section{Observed 与 Inferred 的日志分离}
+
+系统日志必须区分：
+\[
+ObservedFact,
+InferredState,
+PredictedState,
+CounterfactualState.
+\]
+如果预测结果和真实观测混在同一状态日志中，长期 E/Theta 会逐渐失去现实基准。
+
+因此日志层可以采用：
+\[
+Record=
+(
+Value,
+EpistemicType,
+Confidence,
+Source,
+Timestamp,
+Validation
+).
+\]
+当 predicted state 后续得到现实确认时，可以新增 validation link，而不是修改历史记录类型。
+
+这种设计与 SGC epistemic metadata 一致，也允许后续分析“某种错误来自传感失败还是推理失败”。
+
+\section{Self 与长期结构版本化}
+
+$\Psi$、$\Omega$、核心 $\Theta$ 都应版本化：
+\[
+\Psi^{(0)}
+\rightarrow
+\Psi^{(1)}
+\rightarrow
+\cdots
+\]
+但版本化不是为了频繁回滚人格，而是为了能够研究身份结构如何形成。
+
+每次慢结构更新至少记录：
+\[
+EvidenceSet,\quad
+OldState,\quad
+NewState,\quad
+Reason,\quad
+Confidence.
+\]
+对于关键价值和权限结构，还需要 Governance Signature。
+
+这种设计使 Agent 培育工程可以真正回答：“某个长期行为倾向是在什么经历之后形成的？”而不是依赖语言模型自我解释。
+
+\section{可解释性不是全部内部透明}
+
+AgentOS 不追求所有内部表示都人类可读。BPCC、基础模型和某些 KRA latent 可以保持优化状态。可解释性的重点是：
+\[
+\boxed{
+CausalAndGovernanceObservability.
+}
+\]
+也就是说，人类或更高治理层必须知道：
+
+谁改变了什么；
+
+依据什么证据；
+
+使用什么权限；
+
+结果是否经过现实验证。
+
+这种可解释性比逐神经元解释更适合作为大型持续 Agent 的系统工程目标。
+
+
+\chapter{CSO 迁移与功能拓扑学习数学补充}
+\label{app:cso_dynamics}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+早期“智能复杂度迁移”理论强调认知负载在功能、时间尺度和边界之间重新分配；后期理论进一步认识到，真正发生迁移的是 Agent-CSO 的表示和承载关系，而“复杂度”只是对这些结构活动所产生运行压力的宏观描述。本附录给出这一理论的统一数学版本，并把拓扑学习解释为长期 CSO 流的结构沉降。
+\end{minipage}
+}
+\end{center}
+
+\section{结构分布与迁移流}
+
+设
+\[
+\rho_{CSO}(f,\omega,t)
+\]
+描述当前 Agent-CSO 在功能位置 $f$ 和有效频率 $\omega$ 上的分布。这里 $\rho$ 不是物理质量密度，也不是信号功率谱，而是一个结构活动统计场。
+
+定义迁移流
+\[
+\mathbf J_{CSO}(f,\omega,t).
+\]
+则可以写一般平衡方程：
+\[
+\frac{\partial\rho_{CSO}}{\partial t}
++
+\nabla\cdot\mathbf J_{CSO}
+=
+S_{CSO}-D_{CSO}.
+\]
+$S_{CSO}$ 表示新结构形成，$D_{CSO}$ 表示遗忘、合并、抽象或失去作用。
+
+因此本书不再提出严格“复杂度守恒”，而采用
+\[
+\boxed{
+StructuralContinuityPrinciple.
+}
+\]
+一个成熟技能从 h 中消失时，相关能力结构通常没有凭空消失，而是被压缩、合并、程序化或迁移到其他载体。
+
+\section{功能迁移与时间尺度迁移}
+
+Agent-CSO 迁移可以写：
+\[
+\mathcal M_{CSO}
+=
+(M_R,M_F,M_\tau,M_B).
+\]
+例如显式推理自动化主要是
+\[
+M_F+M_\tau:
+\quad
+HighLevel/Slow
+\rightarrow
+Local/Fast.
+\]
+记忆巩固则更多表现为
+\[
+FastActive
+\rightarrow
+SlowStable.
+\]
+召回反之：
+\[
+SlowStable
+\rightarrow
+FastActive.
+\]
+工具外化主要是
+\[
+M_B:
+Internal
+\rightarrow
+External.
+\]
+
+因此 Learning 的统一定义可以写为
+\[
+\boxed{
+Learning=
+ChangeOfCSORealizationAndPlacement.
+}
+\]
+这比“参数变化”覆盖更广，也能够统一神经学习、记忆、技能、软件生成和环境改造。
+
+\section{拓扑学习}
+
+设功能图边权为
+\[
+w_{ij}(t).
+\]
+若某类 CSO 长期稳定地在 $F_i$ 与 $F_j$ 之间迁移，则边权可根据
+\[
+\tau_T\dot w_{ij}
+=
+G(
+\langle J_{ij}^{CSO}\rangle_T,
+Utility,
+ResidualReduction,
+Cost,
+Risk
+)
+\]
+慢速改变，其中
+\[
+\tau_T
+\gg
+\tau_{\mathrm{ordinary\;state}}.
+\]
+
+新边形成条件可写为
+\[
+\mathbb E_T[
+Benefit(J_{ij}^{CSO})
+]
+-\lambda Cost_{rewire}
+>
+\theta_{on}.
+\]
+删除则使用更低阈值
+\[
+\theta_{off}<\theta_{on}
+\]
+形成迟滞。
+
+这保证短时噪声不会造成架构频繁抖动。于是：
+\[
+\boxed{
+Topology=
+SlowMemoryOfRepeatedFunctionalCSORelations.
+}
+\]
+
+\section{最小必要重组原则}
+
+当系统遇到问题时，不应立即修改最深层结构。应优先尝试：
+\[
+StateAdjustment
+\rightarrow
+RepresentationAdaptation
+\rightarrow
+TimescaleMigration
+\rightarrow
+FunctionalMigration
+\rightarrow
+TopologyReorganization
+\rightarrow
+BoundaryMigration.
+\]
+
+该序列体现成本和不可逆性逐步增加。可以定义重组优化：
+\[
+\min_{\Delta}
+\left[
+L_{task}
++
+\lambda_RL_{residual}
++
+\lambda_CC(\Delta)
++
+\lambda_{risk}R(\Delta)
+\right].
+\]
+在满足任务和安全约束的前提下，选择最小结构修改。
+
+这就是
+\[
+\boxed{
+MinimumNecessaryReorganizationPrinciple.
+}
+\]
+它为未来可塑拓扑 AgentOS 提供了从固定架构向发育型架构演化的理论桥梁。
+
+
+\chapter{World--Agent--World 与现实验证补充}
+\label{app:world_agent}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+智能体不是站在宇宙之外观察现实，而是现实中的一个局部结构。Universe-CSO 经由观测形成 Agent-CSO，Agent-CSO 又通过行动改变 Universe-CSO。由此，学习、工具、身体、科学和文明都可以放入同一个 World--Agent--World 结构闭环。该观点是本书后期认识论的最高层统一，但必须严格区分结构动力学解释与“宇宙拥有主观意识”等未经证实的哲学断言。
+\end{minipage}
+}
+\end{center}
+
+\section{观测作为结构投影}
+
+设宇宙状态为
+\[
+U_t,
+\]
+Agent 内部状态为
+\[
+A_t.
+\]
+观测不是简单复制：
+\[
+A_{t+1}
+=
+O_A(U_t,A_t).
+\]
+$O_A$ 同时受到 Body、传感器、历史结构、注意和可行动能力影响，因此同一个 Universe-CSO 可以产生不同 Agent-CSO：
+\[
+\pi_A(C)\neq\pi_B(C).
+\]
+
+这并不意味着现实完全主观化。Reality CSO 仍然具有独立约束，只是智能体只能通过有限界面建立内部表示。认识论误差来自：
+\[
+Mismatch(
+UniverseCSO,
+AgentCSO
+).
+\]
+
+但有效内部模型也不要求和现实一一同构，只需要支持可靠预测和行动。因此更适合追求
+\[
+FunctionalAlignment
+\]
+而非 representational identity。
+
+\section{行动作为结构反投影}
+
+Agent 的内部 Goal 和 Prediction 能够通过 Body 影响现实：
+\[
+U_{t+1}
+=
+F_U(U_t,Act(A_t)).
+\]
+于是内部结构不是世界的被动镜像，而参与未来世界生成。
+
+一项计划先作为 Agent-CSO 存在，经过行动可能变成建筑、程序、制度或工具，即
+\[
+AgentCSO
+\rightarrow
+ExternalizedCSO.
+\]
+后者又能够被自己或其他 Agent 重新观测：
+\[
+ExternalizedCSO
+\rightarrow
+AgentCSO'.
+\]
+
+这就是文化、技术和外部记忆能够跨主体和跨生命周期积累的结构基础。
+
+\section{功能自反性}
+
+一个普通动力系统可以写：
+\[
+x_{t+1}=F(x_t).
+\]
+具有内部表示的 Agent 则增加：
+\[
+m_t=M(x_t),
+\]
+\[
+u_t=C(m_t),
+\]
+\[
+x_{t+1}=F(x_t,u_t).
+\]
+因此系统不仅发生变化，还形成关于变化的结构，并让这一结构参与下一次变化。
+
+这就是
+\[
+\boxed{
+FunctionalReflexivity
+=
+SelfRepresentation+SelfModulation.
+}
+\]
+
+在这一意义上，Agent-CSO 的出现可以被描述为“宇宙局部开始形成对自身和环境的可操作表示”。但这只是功能意义上的自反，不等于证明宇宙整体具有统一主体意识。
+
+\section{文明与 AI 的扩展}
+
+单体 Agent 的内部结构通过语言、文字、数据库、制度和机器外化后，可以跨生命周期积累。文明因而拥有比个体更慢的记忆与组织结构。
+
+科学可以抽象成：
+\[
+Observation
+\rightarrow
+Model
+\rightarrow
+Prediction
+\rightarrow
+Experiment
+\rightarrow
+Residual
+\rightarrow
+ModelRevision.
+\]
+它类似文明尺度的自状态校准。
+
+AI 则把部分外部结构从 Passive Memory 推进到 Active Cognition：
+\[
+ExternalMemory
+\rightarrow
+ExternalActiveReasoning.
+\]
+这可能缩短文明的自反闭环周期，但同时也提高错误模型快速作用现实的风险。因此真正成熟的自反结构必须使
+\[
+Observation,
+Understanding,
+Control,
+Governance
+\]
+同步提高，而不是只有行动能力增长。
+
+
+\chapter{AgentOS 标准化接口与生态兼容原则}
+\label{app:standards}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+如果 AgentOS 最终成为长期智能基础设施，其最重要的开放边界不应是某个具体模型接口，而应是身体、语义现实、功能影响、快速控制、技能和 Agent 间通信的稳定标准。内部实现可以竞争和快速演化，而公共接口应尽可能保持语义稳定。本附录总结此前标准化讨论，并规定“开放规范--参考实现--高性能商业实现”的三层生态结构。
+\end{minipage}
+}
+\end{center}
+
+\section{需要标准化什么}
+
+核心标准至少包括：
+\[
+SGCStandard,
+\]
+\[
+FCSStandard,
+\]
+\[
+BodyABI,
+\]
+\[
+BPCCABI,
+\]
+\[
+ControlReference,
+\]
+\[
+PredictiveEnvelope,
+\]
+\[
+SkillPackage,
+\]
+\[
+AgentCommunicationProtocol,
+\]
+\[
+CapabilityDescriptor,
+\]
+\[
+SafetyGovernance.
+\]
+
+这些标准不应规定模型内部 transformer 层数、latent 尺寸或控制算法，而只规定跨系统交换的语义和权限。换句话说：
+\[
+\boxed{
+StandardizeContracts,\;NotImplementations.
+}
+\]
+
+只有这样，同一 Agent Kernel 才能连接多个 Body Runtime，不同 BPCC 才能竞争，同一 Skill 才可能声明需要什么能力而不是绑定某一机器人。
+
+\section{Skill Package 的最低语义}
+
+Skill 不是普通函数库。AgentOS Skill 至少需要：
+\[
+Skill=
+(
+GoalType,
+Precondition,
+Capability,
+Policy,
+ResidualModel,
+FailureMode,
+Authority
+).
+\]
+它必须说明什么条件下适用、需要什么 Body Capability、允许访问哪些资源、如何判断执行失败以及异常如何重新升级到 h。
+
+因此成熟 Skill 具有：
+\[
+LocalPredictor+LocalController+ResidualModel.
+\]
+若只有动作脚本而没有 residual 和 failure semantics，则它仍只是工具函数，还没有真正成为可自治的低层认知闭环。
+
+\section{Agent Communication Protocol}
+
+多个 Agent 协作时，需要区分：
+\[
+Query,
+Proposal,
+Delegation,
+Commitment,
+Evidence,
+Result,
+TrustUpdate.
+\]
+Agent 间消息不应都被视为“聊天文本”，而应包含 Goal、Authority、Evidence 和 Validation 等结构。
+
+尤其是 Delegate：
+\[
+A_i\rightarrow A_j
+\]
+并不意味着主体迁移。$A_i$ 只是把某个任务结构和权限包交给 $A_j$，最终结果仍需要通过自身 Goal 和现实验证重新吸收。
+
+这使社会性外部记忆、组织角色和协议能够在统一框架中形成，而不需要把所有协作都实现成一个巨型共享 context。
+
+\section{开放规范、参考实现与商业实现}
+
+生态治理采用三层：
+\[
+OpenSpecification
+\rightarrow
+ReferenceImplementation
+\rightarrow
+CommercialRuntime.
+\]
+开放规范保证 Body/Skill/Agent 的长期可互操作性；参考实现降低生态进入门槛并验证规范可行；商业实现则可以在性能、硬件、云服务和安全认证上形成差异。
+
+长期壁垒不应依赖破坏接口兼容，而更可能来自：
+\[
+\boxed{
+Trust+Ecosystem+Execution+Scale.
+}
+\]
+这也符合 AgentOS 作为基础设施而非封闭应用框架的长期定位。
+
+
+\chapter{理论边界、可证伪性与研究方法}
+\label{app:falsifiability}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+一套理论如果只能解释已有现象而不能产生可检验预测，就很容易停留在哲学隐喻。本书大量使用控制论、信息几何、快慢系统、有效理论、认知科学和物理学类比，但这些外部理论并不自动证明 AgentOS 假说成立。本附录明确区分已有科学、结构类比和待验证理论，并给出整个理论体系最重要的可证伪方向。
+\end{minipage}
+}
+\end{center}
+
+\section{三种知识地位必须分开}
+
+本书任何论断应标记为三种类型之一。
+
+第一类是 Established Theory，例如经典控制中的 delay/gain instability、量子力学的状态形式、广义相对论的时空--物质耦合、working memory 的有限性研究。这些是外部已有科学。
+
+第二类是 Structural Analogy，例如把 SPC 类比 state observer，把文明科学系统类比 macro-SPC，把广义相对论中的几何--物质耦合与“结构塑造流、流塑造结构”比较。这些类比可以提供数学和直觉，但不能被写成相同本体。
+
+第三类是 AgentOS Hypothesis，例如三相记忆能否支持长期人工主体、Agent-CSO 迁移是否能统一解释技能形成、Topological Learning 是否真的能由长期 CSO 流预测、$\Omega$ 是否是有用的生命周期变量。这些必须通过实验检验。
+
+统一写作原则为：
+\[
+\boxed{
+EstablishedScience
+\neq
+StructuralAnalogy
+\neq
+AgentOSHypothesis.
+}
+\]
+
+\section{核心可证伪命题}
+
+第一，可测试
+\[
+RepeatedExplicitProcessing
+\rightarrow
+StableLowerCostCarrier.
+\]
+如果长期任务重复后，显式 h 干预不能通过技能沉降显著降低，而系统性能又没有提升，则“结构下沉”理论需要修正。
+
+第二，可测试
+\[
+PersistentCSOFlow
+\rightarrow
+UsefulFunctionalCoupling.
+\]
+如果跨功能重复结构流不能预测新增连接的收益，则拓扑学习理论缺乏工程有效性。
+
+第三，可测试工作记忆相态。若 SPC 根据负载、冲突、分支和稳定性识别的 Phase 无法预测错误率、恢复时间或 TCE 干预效果，则认知流体力学相态分类需要重新定义。
+
+第四，可测试 Body Scale。若统一 SGC/FCS/KRA 后更换身体仍然需要完全重建 Kernel 世界意义，则 Body abstraction 假说受到严重挑战。
+
+第五，可测试 $\Psi/\Omega$ 的慢变量分离。如果身份连续与长期发展方向不能从不同时间尺度建模中获得额外预测价值，则这两个变量可能需要合并或重新解释。
+
+\section{理论与工程之间的验证阶梯}
+
+验证应从小规模开始：
+\[
+Simulation
+\rightarrow
+DigitalBody
+\rightarrow
+ControlledRobot
+\rightarrow
+LongTermAgent
+\rightarrow
+OpenWorld.
+\]
+每一级只验证有限命题，而不是一次宣称 AGI 成立。
+
+例如三相记忆可以先在数字任务中验证长期结构学习，BPCC 可以在模拟控制中验证 residual escalation，KRA 可以在多种虚拟 Body 间验证迁移，培育工程可以在受控长期环境中验证经验结构对 Self/Capability 的影响。
+
+这种逐层验证符合 Minimum Necessary Reorganization：理论本身也不应在没有实验压力时不断增加更深概念。
+
+\section{宇宙论扩展的科学边界}
+
+“量子自由度形成多尺度 CSO”“宇宙局部通过 Agent 形成关于自身的内部结构”“AI 可能增强文明尺度自反性”可以作为结构动力学解释。
+
+但本书不声称：
+\[
+Universe=ConsciousAgent,
+\]
+不声称相对论是宇宙真实意义上的学习算法，也不声称规范场是宇宙具有心理意义的价值函数，更不声称量子力学证明世界由经典计算意义上的量子比特海构成。
+
+更准确的表述是：这些物理理论提供了结构、状态、约束和跨尺度涌现的数学参照，而智能动力学试图研究宇宙中一种特殊结构---能够形成其他结构的内部表示，并利用这些表示改变后续现实结构的系统。
+
+保持这一边界，才能使本书最后的“自反结构演化”既具有哲学深度，又不以哲学语言替代物理证据。
+
+
+\chapter{总附录：从理论变量到工程系统的统一映射}
+\label{app:finalmap}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.94\textwidth}
+\textbf{本章总体说明：}
+本附录作为全书技术附录的最终收束，将认识论、AgentOS 原理论、Body Runtime、工程路线和三大生命周期工程重新压缩为同一个状态--结构--现实闭环。它不是新增理论，而是给后续章节撰写、系统实现和实验设计提供统一坐标：任何新模块、算法或概念都应能够说明自己位于什么尺度、承载什么 Agent-CSO、拥有何种权限、如何接受现实验证，以及长期是否会改变更慢结构。
+\end{minipage}
+}
+\end{center}
+
+\section{统一 Agent 状态}
+
+一个完整持续 Agent 的状态可概念化为
+\[
+\mathfrak A(t)
+=
+[
+h,
+E,
+\Theta,
+\Psi,
+\Omega,
+a,
+G,
+\mathcal G_C,
+\mathcal G_F,
+\mu_t,
+B,
+KRA,
+X_{Body}
+].
+\]
+其中 $a$ 为 AHC 状态，$G$ 为当前目标结构，$\mathcal G_C$ 为认知结构图，$\mathcal G_F$ 为功能图，$\mu_t$ 表示结构承载关系，$B$ 为认知与身体边界。
+
+这个状态不是要求工程中存成一个巨大对象，而是理论层的最小完整描述。它同时包含：
+
+当前是什么；
+
+经历过什么；
+
+学会了什么；
+
+认为自己是谁；
+
+正在成为什么；
+
+当前受到怎样的影响；
+
+当前想做什么；
+
+结构现在由谁承载；
+
+身体处于什么现实状态。
+
+因此它比单纯
+\[
+ModelWeights+Context
+\]
+更接近持续人工主体。
+
+\section{统一世界闭环}
+
+Agent 和现实共同满足：
+\[
+U_t
+\xrightarrow{Observation}
+SGC/FCS
+\xrightarrow{KRA}
+AgentCSO_t
+\xrightarrow{CognitiveDynamics}
+Goal/ControlReference
+\xrightarrow{KRA/BPCC}
+Action_t
+\xrightarrow{}
+U_{t+1}.
+\]
+现实再次进入系统形成：
+\[
+U_{t+1}
+\rightarrow
+Observation_{t+1}
+\rightarrow
+Residual.
+\]
+
+Residual 经过不同尺度处理：
+\[
+Residual_{fast}
+\rightarrow
+BPCC,
+\]
+\[
+Residual_{persistent}
+\rightarrow
+h/E,
+\]
+\[
+Residual_{structural}
+\rightarrow
+\Theta,
+\]
+\[
+Residual_{identity}
+\rightarrow
+\Psi,
+\]
+极少数生命周期级证据才可能影响
+\[
+\Omega.
+\]
+
+这就是整个 AgentOS 多频闭环的核心。
+
+\section{统一学习与发育闭环}
+
+短期学习主要改变状态和局部模型：
+\[
+State\rightarrow State'.
+\]
+中期学习改变 representation 和 functional placement：
+\[
+AgentCSO(R,F,\tau)
+\rightarrow
+AgentCSO(R',F',\tau').
+\]
+长期重复迁移则可能改变功能拓扑：
+\[
+PersistentCSOFlow
+\rightarrow
+StableCoupling
+\rightarrow
+\mathcal G_F'.
+\]
+
+因此可以把发展写成：
+\[
+\boxed{
+Development
+=
+Coevolution(
+\mathcal G_C,
+\mathcal G_F,
+\mu_t
+).
+}
+\]
+智能体不仅学习“世界是什么”，还逐渐学习“未来应该以什么方式组织自己来理解和行动”。
+
+这正是从固定拓扑 AgentOS 向真正发育型 AgentOS 的理论方向。
+
+\section{统一智能定义}
+
+本书最早从
+\[
+\boxed{
+智能是多时空尺度上的多层嵌套闭环进程
+}
+\]
+出发。
+
+CSO 理论进一步得到：
+\[
+\boxed{
+智能是认知结构对象在可塑功能拓扑上的生成、表示、耦合、变换、迁移和稳定化过程。
+}
+\]
+
+引入 Body 和 Reality 后又得到：
+\[
+\boxed{
+智能是内部认知结构与外部现实结构通过观测--行动界面持续共同演化的过程。
+}
+\]
+
+最终，自反结构理论使其收敛为：
+\[
+\boxed{
+\textbf{
+智能，是能够形成关于结构的结构，并利用这种结构改变未来结构，同时在现实反馈下逐渐改变自身组织方式的多尺度自反动力过程。
+}
+}
+\]
+
+这里的“自反”不是主观意识的同义词，而是：
+\[
+Representation
+\rightarrow
+Self/WorldModel
+\rightarrow
+Control
+\rightarrow
+Reality
+\rightarrow
+Representation'.
+\]
+
+AgentOS 则可以被定义为这一理论的第一种系统工程尝试：
+\[
+\boxed{
+AgentOS
+=
+PersistentMultiscaleCognitiveRuntime
+}
+\]
+它通过有限工作记忆、三相记忆、自我和生命周期慢变量、认知控制、复杂度治理、外部卸载、Body Runtime 与现实反馈，使一个有限计算系统获得长期持续成长的结构条件。
+
+\section{附录体系的最终使用原则}
+
+在后续正式生成任何正文章节时，作者应首先从本附录回答五个问题。
+
+第一，本章讨论的是 Universe-CSO、Agent-CSO、功能、状态、载体还是拓扑；如果对象不明确，不应开始推导。
+
+第二，该机制位于什么时间尺度。任何模块如果没有 $\tau$，就无法判断它应该直接控制谁、应该被谁约束。
+
+第三，该模块拥有何种 Authority。能够观察一个状态，并不意味着能够修改这一状态。
+
+第四，该结构的现实验证路径是什么。任何预测、自我解释和长期结构都必须能够最终回到
+\[
+Reality
+\rightarrow
+Observation
+\rightarrow
+Residual.
+\]
+
+第五，本章的结论属于已有科学、结构类比还是 AgentOS 待验证假说。只有持续保持这种知识地位区分，整部理论才能既具有足够高的统一性，又不把理论美感误当成经验事实。
+
+由此，附录不是正文之外的补充材料，而是整部《智能动力学与 AgentOS：从认知结构到持续人工智能生命体》的技术语法。正文可以不断展开，而符号、尺度、权限、接口、现实验证和理论边界必须始终保持稳定。只有如此，数十章甚至上百章的理论发展才不会重新退化为若干互不兼容的概念岛屿。

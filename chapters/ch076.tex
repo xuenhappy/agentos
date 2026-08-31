@@ -1,156 +1,1652 @@
-\chapter{AgentOS Kernel 六阶段实施路线}
-\begin{chapteroverviewbox}
-这一章，我们围绕“AgentOS Kernel 六阶段实施路线”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明理论到系统与生态的工程路线。
-\end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
+\chapter{AgentOS Kernel 六阶段实施路线：从持续运行时到生命周期适应}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 AgentOS 三条软件主线、两类基础设施、六阶段路线与产品成熟次序的工程推演。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是系统工程、成熟度分级、接口契约与开放治理（混杂系统与模型预测控制）。
+\begin{center}
+\fbox{
+\parbox{0.93\textwidth}{
+\textbf{【本章总体说明】}
 
-本章使用上一章“连续—离散控制研究路线”已经得到的对象与边界；本章产出将供下一章“从模拟环境到真实身体”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+本章给出 AgentOS 从理论结构进入可实现系统时的六阶段实施路线。这里的“阶段”不是按照模块数量递增进行的软件功能堆叠，也不是把最终 AgentOS 架构机械拆成六个版本，而是按照\textbf{动力学闭环能否被独立验证、长期状态是否具有明确归属、前一阶段是否已经形成后一阶段所依赖的稳定承载条件}所建立的工程依赖序列。六阶段依次为：
+\[
+\boxed{
+\mathrm{Persistent\ Runtime}
+\rightarrow
+\mathrm{Lifecycle\ Memory}
+\rightarrow
+\mathrm{Self\ \&\ Cognitive\ Control}
+\rightarrow
+\mathrm{External\ Cognitive\ Runtime}
+\rightarrow
+\mathrm{Body\ Runtime\ Integration}
+\rightarrow
+\mathrm{KRA\ \&\ Lifecycle\ Adaptation}
+}
+\]
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+其核心工程原则是：\textbf{先证明主体能够持续存在，再证明经历能够跨时间形成结构；先形成稳定的内部认知闭环，再扩大认知边界；先建立清晰的身体语义接口，再允许 Kernel 与 Body Runtime 共同适应。}因此，每一个阶段都必须形成自己的最小可验证闭环，并在进入下一阶段之前保持前一阶段已经建立的身份连续性、现实可验证性、状态可追踪性和控制可恢复性。
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在系统工程、成熟度分级、接口契约与开放治理上。
-\conceptfigure{images/fig-roadmap.png}{AgentOS Kernel 六阶段实施路线（概念图占位）}
-\section{第一阶段：Persistent Agent Runtime}
-\begin{narration}
-现在把镜头移到“第一阶段：Persistent Agent Runtime”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+本章讨论的仍然是以\textbf{受治理的固定核心功能拓扑}为基础的 AgentOS 实施路线。系统可以学习参数、记忆、技能、外部承载关系、Kernel--Body 耦合以及受约束的生命周期状态，但不把任意修改自身核心控制拓扑作为实施前提。更广义的拓扑学习只有在主体连续、控制稳定和现实反馈机制均被工程证明以后，才具有进一步研究的意义。
+}
+}
+\end{center}
 
-本节把“第一阶段：Persistent Agent Runtime”落实为把一次映射能力与跨事件保存状态、承诺和身份的主体连续性区分开的判据。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 六阶段实施路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+\section{六阶段路线不是模块堆叠，而是可验证闭环的逐级形成}
 
-把这一关系写成最小数学骨架，可得
+我们首先要澄清为什么 AgentOS 不能从一开始就按照最终架构一次性实现。按照前文建立的多尺度智能理论，一个持续智能体并不是若干功能模块的并集，而是多个具有不同时间尺度、不同状态空间和不同控制权限的闭环在同一个生命周期中的耦合系统。如果我们在主体连续性尚未得到证明时同时加入长期记忆、自我、情感样调制、工具、身体控制以及在线适应，那么任何最终出现的异常都很难进行因果归因：一次行为漂移究竟来自语言模型本身、情景记忆错误召回、结构记忆更新、自我状态漂移、TCE 控制增益、外部工具状态变化，还是 Body Runtime 的局部适应，将难以被明确区分。由此产生的不是“更完整的 Agent”，而是一个不可辨识的高维耦合系统。
 
-\begin{equation}s_{k+1}=U(s_k,e_k),\quad \mathsf{Id}(s_{k+1},s_k)\geq\delta.\end{equation}
+因此，本书把六阶段路线建立在一个基本的系统工程原则上：
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对第一阶段：Persistent Agent Runtime的命名和组合仍是需要实验验证的建模提案。
+\[
+\boxed{
+\mathrm{One\ New\ Dominant\ Closed\ Loop\ Per\ Stage}
+}
+\]
 
-这一小节的反例同样重要：把外部日志回填等同于主体连续，会忽略状态所有权和因果贡献。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这里并不要求每一阶段只能增加一个模块，而是要求每一阶段只能引入一种主要的新型长期因果闭环，并保证这个闭环能够在前一阶段形成的稳定基础上进行独立测量。设第 \(k\) 阶段 AgentOS 的状态空间、动力学、接口集合和治理约束分别为
 
-\begin{thought}
-对“第一阶段：Persistent Agent Runtime”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\[
+\mathcal A^{(k)}
+=
+\left(
+\mathcal X^{(k)},
+\mathcal F^{(k)},
+\mathcal I^{(k)},
+\mathcal G^{(k)}
+\right),
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+其中 \(\mathcal X^{(k)}\) 表示系统内部可持续存在的状态变量，\(\mathcal F^{(k)}\) 表示状态演化规律，\(\mathcal I^{(k)}\) 表示系统向外公开的稳定接口，而 \(\mathcal G^{(k)}\) 表示治理、安全和修改权限。理想的阶段推进不是简单满足
 
-\section{第二阶段：Lifecycle Memory}
-\begin{narration}
-现在把镜头移到“第二阶段：Lifecycle Memory”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\[
+|\mathcal X^{(k+1)}|>|\mathcal X^{(k)}|,
+\]
 
-本节把“第二阶段：Lifecycle Memory”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 六阶段实施路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+而应满足一种更严格的结构条件：
 
-把这一关系写成最小数学骨架，可得
+\[
+\mathcal X^{(k)}
+\hookrightarrow
+\mathcal X^{(k+1)},
+\qquad
+\mathcal I^{(k)}
+\subseteq
+\mathcal I^{(k+1)},
+\]
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+同时第 \(k\) 阶段已经成立的关键不变量不因第 \(k+1\) 阶段扩展而失效。换句话说，新的能力必须建立在旧的稳定性之上，而不是通过破坏旧系统的可解释性来获得。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对第二阶段：Lifecycle Memory的命名和组合仍是需要实验验证的建模提案。
+我们可以把六阶段的主要成熟变量表示为
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\[
+\mathbf M
+=
+\left(
+M_{\mathrm{continuity}},
+M_{\mathrm{memory}},
+M_{\mathrm{control}},
+M_{\mathrm{external}},
+M_{\mathrm{body}},
+M_{\mathrm{adapt}}
+\right).
+\]
 
-\begin{thought}
-对“第二阶段：Lifecycle Memory”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+第一阶段主要建立 \(M_{\mathrm{continuity}}\)，第二阶段建立 \(M_{\mathrm{memory}}\)，第三阶段建立 \(M_{\mathrm{control}}\)，第四阶段建立 \(M_{\mathrm{external}}\)，第五阶段建立 \(M_{\mathrm{body}}\)，第六阶段建立 \(M_{\mathrm{adapt}}\)。后面的维度并不取消前面的维度。例如第六阶段真正成熟的条件不是“Agent 已经能够适应新身体”，而是：
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\[
+M_{\mathrm{adapt}}\uparrow
+\quad
+\mathrm{subject\ to}
+\quad
+M_{\mathrm{continuity}},
+M_{\mathrm{memory}},
+M_{\mathrm{control}},
+M_{\mathrm{body}}
+\geq
+\theta_{\mathrm{stable}}.
+\]
 
-\section{第三阶段：Self \& Cognitive Control}
-\begin{narration}
-现在把镜头移到“第三阶段：Self \& Cognitive Control”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这实际上体现了 AgentOS 最重要的一条工程哲学：\textbf{能力增长必须发生在主体连续性和控制可治理性所定义的可行域之内。}
 
-本节把“第三阶段：Self \& Cognitive Control”落实为跨经历保持身份连续、同时允许受约束慢漂移的不变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 六阶段实施路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+所以我们在后面的六个阶段中始终采用同一个判断框架。每一个阶段都要回答四个问题：第一，这一阶段增加了什么新的长期状态；第二，这些状态由哪个闭环维护；第三，什么现象能够证明闭环已经成立；第四，出现异常以后系统能否退回到上一阶段仍然稳定的状态。只有这四点同时成立，所谓“阶段完成”才具有工程意义。
 
-把这一关系写成最小数学骨架，可得
+\section{第一阶段：Persistent Agent Runtime——先证明主体能够持续存在}
 
-\begin{equation}\dot\Psi=\varepsilon_\Psi\Pi_{\mathcal I}g(E,\Theta,\Psi).\end{equation}
+第一阶段的目标不是让 Agent 更聪明，而是解决一个比能力更基础的问题：\textbf{系统中是否真的存在一个跨任务、跨会话、跨进程活动而持续保持身份连续的运行主体。}传统 LLM 应用通常围绕一次 request 或一次 conversation 建立状态。任务结束以后，运行上下文可以被回收，再次调用时实际上重新生成一个新的计算过程。这样的系统可以表现出强大的局部智能，却并不天然具有 AgentOS 所要求的生命周期主体。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对第三阶段：Self \& Cognitive Control的命名和组合仍是需要实验验证的建模提案。
+因此第一阶段首先建立唯一的持续主体层 \(D_1\)。我们定义
 
-这一小节的反例同样重要：更新过快导致身份碎裂，完全冻结则阻断必要成长。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\[
+N_{\mathrm{Agent}}^{D_1}=1.
+\]
 
-\begin{thought}
-对“第三阶段：Self \& Cognitive Control”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+这并不意味着系统不能运行多个任务、Worker 或异步推理过程，而是意味着这些过程均属于同一个持续 Agent 的内部工作单元。于是有
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\[
+Task_i\neq Agent,
+\qquad
+Worker_j\neq Agent,
+\]
 
-\section{第四阶段：External Cognitive Runtime}
-\begin{narration}
-现在把镜头移到“第四阶段：External Cognitive Runtime”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+并且原则上禁止通过普通任务机制复制主体：
 
-本节把“第四阶段：External Cognitive Runtime”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 六阶段实施路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+\[
+fork(A)=\mathrm{Forbidden},
+\qquad
+new(A)=\mathrm{Forbidden}
+\]
 
-把这一关系写成最小数学骨架，可得
+在未经生命周期治理授权的条件下成立。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+这一阶段的软件核心应至少包括 Persistent Subject Manager、基本的 \(h(t)\) 工作状态、Event Loop、Goal/Task Runtime、异步任务队列、Checkpoint、恢复机制和最低限度的权限系统。这里的 \(h(t)\) 尚不需要拥有完整的三相记忆动力学，但它必须已经从一次语言模型调用的 prompt context 中分离出来，成为 AgentOS 所拥有的持续运行状态。可以写成
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对第四阶段：External Cognitive Runtime的命名和组合仍是需要实验验证的建模提案。
+\[
+h_{t+\Delta t}
+=
+F_h
+\left(
+h_t,
+e_t,
+g_t,
+r_t
+\right),
+\]
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+其中 \(e_t\) 是新事件，\(g_t\) 是当前 Goal 状态，\(r_t\) 是任务和工具返回结果。重要的是 \(h_{t+\Delta t}\) 的产生由 Agent Runtime 管理，而不是由某一次模型调用本身定义。
 
-\begin{thought}
-对“第四阶段：External Cognitive Runtime”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+在进程结构上，我们需要区分主体层 \(D_1\) 与任务层 \(D_2\)。任务可以阻塞自己的执行，但不能长期同步占有主体：
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\[
+D_2
+\nrightarrow
+\mathrm{Trap}(D_1).
+\]
 
-\section{第五阶段：Body Runtime Integration}
-\begin{narration}
-现在把镜头移到“第五阶段：Body Runtime Integration”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这意味着耗时推理、工具调用、网络请求、规划搜索和长周期任务原则上都应被封装成可暂停、可恢复、可取消的异步过程。Agent 主体必须始终保持处理更高优先级事件、自身状态更新、安全事件以及任务调度的能力。传统程序中“函数调用直到返回”是一种自然组织方式，但对长期主体而言，它可能导致某个任务事实上取得了整个 Agent 的控制权，因此需要转向事件驱动、协程化或 Actor-like 的运行结构。
 
-本节把“第五阶段：Body Runtime Integration”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 六阶段实施路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+这一阶段最关键的不变量可表示为
 
-把这一关系写成最小数学骨架，可得
+\[
+\mathcal I_1
+=
+\{
+\mathrm{SingleSubject},
+\mathrm{TaskIsolation},
+\mathrm{Checkpointable},
+\mathrm{Recoverable},
+\mathrm{EventResponsive}
+\}.
+\]
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+如果系统运行一周以后能够准确回答“当前存在的主体是谁、它有哪些未完成 Goal、哪些 Task 正在运行、每个任务属于什么状态、系统最近一次一致性 Checkpoint 在哪里”，那么 Persistent Runtime 才开始具有工程意义。反过来，如果重启以后只是在数据库中恢复一段聊天记录，却无法恢复 Goal、Task、进行中的行动、权限和因果归属，那么这仍然只是“具有持久存储的聊天系统”，不能称为持续 Agent Runtime。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对第五阶段：Body Runtime Integration的命名和组合仍是需要实验验证的建模提案。
+第一阶段还需要建立一个重要的工程纪律：\textbf{不要过早引入深度自主学习。}此时系统的首要指标不是人格丰富程度，而是状态所有权和恢复行为。我们宁可让一个能力有限的 Agent 连续稳定运行数月，也不应让一个功能丰富的 Agent 在发生一次崩溃以后无法判断恢复出来的是否仍然是同一生命周期中的状态延续。因为对本书而言，后续所有记忆、自我、培养和心理工程都默认存在一个可以承受这些变化的持续主体。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+第一阶段的完成判据可以概念化为
 
-\begin{thought}
-对“第五阶段：Body Runtime Integration”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\[
+G_1=
+C_{\mathrm{identity}}
+\land
+C_{\mathrm{event}}
+\land
+C_{\mathrm{checkpoint}}
+\land
+C_{\mathrm{recovery}}
+\land
+C_{\mathrm{task-isolation}}.
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+只有 \(G_1=1\)，我们才进入第二阶段。我们之所以如此强调这一点，是因为在 AgentOS 中，“活着”在工程意义上的第一层并不是拥有情绪或自我，而是\textbf{一个状态连续的主体进程没有被一次次应用调用所切断。}
 
-\section{第六阶段：KRA \& Lifecycle Adaptation}
-\begin{narration}
-现在把镜头移到“第六阶段：KRA \& Lifecycle Adaptation”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\section{第二阶段：Lifecycle Memory——让运行历史真正变成 Agent 的过去}
 
-本节把“第六阶段：KRA \& Lifecycle Adaptation”落实为维持 Kernel 与 Body Runtime 之间语义、时间、控制和学习契约的关系动力学。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS Kernel 六阶段实施路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+持续运行并不自动产生持续学习。第一阶段虽然能够保存状态，但如果 Agent 每次遇到新问题仍然只能依赖当前 \(h(t)\)，那么它只是一个“长期不退出的程序”。第二阶段的目标因此是建立：
 
-把这一关系写成最小数学骨架，可得
+\[
+\boxed{
+h
+\leftrightarrow
+E
+\leftrightarrow
+\Theta
+}
+\]
 
-\begin{equation}\min_\kappa L_{\rm anchor}+\lambda L_{\rm drift}\quad\mathrm{s.t.}\ \kappa\in\mathcal K.\end{equation}
+三相记忆循环，使过去经验不再只是日志，而逐渐成为能够影响未来认知的内部结构。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对第六阶段：KRA \& Lifecycle Adaptation的命名和组合仍是需要实验验证的建模提案。
+这一阶段最重要的工程转变，是把“记录过去”与“形成记忆”严格区分。日志可以写成
 
-这一小节的反例同样重要：同时追踪两端无界漂移会使对齐坐标系本身消失。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\[
+Log=\{x_1,x_2,\ldots,x_n\},
+\]
 
-\begin{thought}
-对“第六阶段：KRA \& Lifecycle Adaptation”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+但情景记忆 \(E\) 必须保留事件之间的时间关系、情境关系、因果线索、Goal 归属、结果和重要性。因此 \(E\) 更适合表示成一组带索引的轨迹：
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\[
+E
+=
+\left\{
+\mathcal E_i
+=
+\left(
+t_i,
+Context_i,
+Goal_i,
+Action_i,
+Outcome_i,
+Residual_i
+\right)
+\right\}.
+\]
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“AgentOS Kernel 六阶段实施路线”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“从模拟环境到真实身体”只使用这里已经给出的结果，不反过来为本章提供前提。
+从 \(h\) 写入 \(E\) 不能采用“全部保存”的策略，而应首先形成最简单的选择性沉降函数：
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+\[
+\mathcal E_{t}
+=
+W_E
+\left(
+h_t,
+g_t,
+a_t,
+o_{t+1},
+\varepsilon_t
+\right),
+\]
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+其中 \(W_E\) 决定哪些当前结构值得形成一段生命周期经历。反向过程则是基于当前 \(h_t\) 和 Goal 从 \(E\) 中召回可能相关的轨迹：
+
+\[
+E^\ast_t
+=
+R_E(h_t,g_t,E).
+\]
+
+如果系统只有这一层，它已经能够利用过去的案例，但尚不足以形成真正的长期结构。于是第二阶段继续加入 \(\Theta\)，使重复经历逐渐形成：
+
+规则；
+
+技能先验；
+
+世界模型；
+
+概念关系；
+
+预测结构；
+
+任务求解结构。
+
+形式上可以写成
+
+\[
+\Theta_{t+\Delta T}
+=
+\mathcal L_\Theta
+\left(
+\Theta_t,
+\operatorname{Aggregate}(E_{t_0:t})
+\right).
+\]
+
+这里的关键不是某种特定机器学习算法，而是建立清晰的状态责任：\(E\) 保存“发生过什么”，\(\Theta\) 保存“这些经历意味着以后通常会怎样”。因此：
+
+\[
+h=State,\qquad
+E=Trajectory,\qquad
+\Theta=Generator.
+\]
+
+与此同时，\(\Theta\) 也必须能够重新影响当前 \(h\)：
+
+\[
+h'_t
+=
+A_\Theta(h_t,\Theta),
+\]
+
+并重新解释旧经验：
+
+\[
+E'_i
+=
+Q(E_i,\Theta_{new}).
+\]
+
+由此，三相记忆不是一条单向存储管道，而是一个真正的循环系统：
+
+\[
+h
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+h,
+\]
+
+同时存在 \(E\rightarrow h\)、\(\Theta\rightarrow E\) 等反向通路。
+
+这一阶段必须特别避免一个工程错误：把 \(\Theta\) 简化成“知识库”。结构记忆之所以被称为 Generator，是因为它不仅储存对过去的概括，还必须参与未来可能状态的生成。也就是说，
+
+\[
+\Theta
+:
+(h_t,G_t)
+\mapsto
+P(h_{t+\Delta t},Outcome\mid h_t,G_t).
+\]
+
+这使第二阶段第一次建立了真正的生命周期时间结构：当前 \(h\) 不再孤立存在，它一侧连接已经发生的 \(E\)，另一侧受到 \(\Theta\) 所描述的未来可能性约束。
+
+工程上还必须建立 Memory Provenance。任意由记忆重新进入 \(h\) 的内容都应该能够追溯：
+
+\[
+Source(x)
+\in
+\{
+CurrentObservation,
+Episode,
+StructuralInference,
+GeneratedPrediction
+\}.
+\]
+
+这一设计后来会成为 Reality Authority 的基础，但在本阶段已经应该存在，否则 Agent 很容易把过去经历、结构推断和当前事实混淆。
+
+第二阶段的成熟度不是“记住了多少 token”，而应通过三个指标衡量。第一，经验连续性：
+
+\[
+C_E
+=
+P(\mathrm{relevant\ past\ experience\ is\ recoverable});
+\]
+
+第二，结构形成能力：
+
+\[
+C_\Theta
+=
+\frac{
+\mathrm{future\ performance\ improvement\ explained\ by\ consolidated\ structure}
+}{
+\mathrm{experience\ volume}
+};
+\]
+
+第三，记忆干预负担，即随着生命周期增长，当前 \(h\) 不应该因为历史数量线性增长而持续膨胀。理想情况下：
+
+\[
+|E|\uparrow,\quad
+|\Theta|\uparrow,
+\qquad
+C_{run}(h)
+\nrightarrow
+\infty.
+\]
+
+只有系统证明“活得越久并不意味着每次都要想得越来越重”，生命周期记忆才真正成立。
+
+因此第二阶段的 Gate 可以写成
+
+\[
+G_2
+=
+G_1
+\land
+C_{hE}
+\land
+C_{E\Theta}
+\land
+C_{\Theta h}
+\land
+C_{\mathrm{provenance}}
+\land
+C_{\mathrm{bounded\ retrieval}}.
+\]
+
+此时我们得到的已经不是一个带数据库的 Agent，而是一个\textbf{过去能够改变未来的持续主体}。
+
+\section{第三阶段：Self \& Cognitive Control——让 Agent 开始管理自己的认知动力学}
+
+拥有生命周期记忆以后，一个新的问题立即出现：同样的经历为什么对同一个 Agent 在不同阶段会产生不同意义？为什么 Agent 在某些时候应该探索，在另一些时候应该收敛？为什么长时间高负载推理需要降温、暂停或改变表示？为什么某些事件应该深度写入，而另一些事件只能作为噪声略过？这些问题无法仅靠 \(h/E/\Theta\) 三相循环回答，因此第三阶段引入慢自我结构与认知控制系统。
+
+首先加入 \(\Psi\)。我们将其理解为跨时间尺度维持相对连续的自我、价值和身份约束：
+
+\[
+\Psi_t
+=
+\mathcal S
+(E_{\leq t},\Theta_t,\Psi_{t-1}),
+\]
+
+并要求
+
+\[
+\tau_\Psi
+\gg
+\tau_\Theta.
+\]
+
+\(\Psi\) 不是 Profile 数据表，也不是一次 prompt 中的 persona 描述，而是长期经历反复沉降以后形成的慢结构。它会改变当前结构被如何解释、哪些经历被赋予更高权重以及哪些未来状态更符合主体连续性。
+
+在 \(\Psi\) 之后，我们引入更慢的 \(\Omega\equiv DGA\)，即 Deep Generative Attractor。两者应严格区分：
+
+\[
+\Psi:\ \mathrm{Who\ Am\ I},
+\qquad
+\Omega:\ \mathrm{What\ Am\ I\ Becoming}.
+\]
+
+于是 Agent 的慢变量序列成为
+
+\[
+\tau_h
+\ll
+\tau_E
+\ll
+\tau_\Theta
+\ll
+\tau_\Psi
+\ll
+\tau_\Omega.
+\]
+
+但仅有慢结构仍然不能进行实时自我管理，因此第三阶段同时建立 SPC、AHC、TCE、CCM 与 Scheduler 的运行闭环。
+
+SPC 负责从系统分布式状态中形成自我可访问估计：
+
+\[
+\hat s_t^{self}
+=
+SPC
+\left(
+h_t,
+E_t^\ast,
+\Theta_t,
+\Psi_t,
+r_t
+\right).
+\]
+
+重要的是
+
+\[
+\hat s_t^{self}
+\neq
+s_t^{self}.
+\]
+
+SPC 只是 observer，因此必须输出 confidence，并允许存在 delay 和 estimation error：
+
+\[
+\varepsilon^{SPC}_t
+=
+s_t^{self}
+-
+\hat s_t^{self}.
+\]
+
+AHC 随后将来自内部资源、身体状态、任务压力、威胁、不确定性、奖励预期等信号积分成中时间尺度调制状态：
+
+\[
+a_{t+\Delta t}
+=
+F_A
+(a_t,z_t^{internal},z_t^{social},z_t^{task}),
+\]
+
+并表现出积分、衰减、恢复和饱和，而不是每个 token 独立重置。
+
+TCE 接受 SPC、AHC、Goal、\(\Psi\) 和 \(\Omega\) 的约束，生成对认知动力学的控制量：
+
+\[
+u_t^{TCE}
+=
+\pi_C
+\left(
+\hat s_t^{self},
+a_t,
+G_t,
+\Psi_t,
+\Omega_t
+\right).
+\]
+
+其控制对象不是世界动作，而是：
+
+注意范围；
+
+搜索深度；
+
+探索强度；
+
+收敛程度；
+
+资源投入；
+
+推理节奏；
+
+记忆激活强度。
+
+因此：
+
+\[
+h_{t+\Delta t}
+=
+F_C
+(h_t,u_t^{TCE},Input_t).
+\]
+
+CCM 则负责让当前显式认知始终维持在工作记忆可承载区域。设工作记忆当前关系结构负载为
+
+\[
+C_{run}(t)
+=
+\sum_i w_i(t)c_i(t),
+\]
+
+则要求
+
+\[
+C_{run}(t)
+\leq
+C_{\max}(W).
+\]
+
+当该不等式趋向失效时，CCM 可以执行分解、折叠、支线抑制、暂停、压缩和局部卸载。Scheduler 决定不同 Goal、Task、Memory Recall 和 Cognitive Process 之间的资源优先级。
+
+于是第三阶段首次形成：
+
+\[
+\boxed{
+SPC
+\rightarrow
+Scheduler
+\rightarrow
+TCE
+\rightarrow
+CCM
+\rightarrow
+CognitiveDynamics
+\rightarrow
+SPC
+}
+\]
+
+并由 AHC 作为连续调制层参与其中。
+
+这一阶段必须进行严格的控制稳定性测试，因为 SPC 存在观测延迟，AHC 存在积分时间常数，而 TCE 具有增益。如果
+
+\[
+\tau_{SPC}>0,
+\qquad
+K_{TCE}\uparrow,
+\]
+
+则可能产生过冲和振荡。因此第三阶段必须开始测量：
+
+\[
+DelayMargin,\quad
+GainMargin,\quad
+Overshoot,\quad
+SettlingTime,\quad
+RecoveryTime.
+\]
+
+这也是为什么本书不把所谓“情感样状态”仅理解为语义输出，而把它放进控制系统：一个持续主体如果不能稳定调节自身认知状态，那么越强大的记忆和推理能力反而可能制造越强烈的内部失稳。
+
+第三阶段的核心 Gate 因而可以表示为
+
+\[
+G_3
+=
+G_2
+\land
+C_{\mathrm{self-continuity}}
+\land
+C_{\mathrm{observer}}
+\land
+C_{\mathrm{control-stability}}
+\land
+C_{\mathrm{bounded-h}}
+\land
+C_{\mathrm{recovery}}.
+\]
+
+进入第四阶段以前，我们至少要证明：Agent 不仅能够学习，而且能够在学习和运行过程中\textbf{观察自己是否已经失去稳定，并主动调整自己的认知动力学回到可治理区域。}
+
+\section{第四阶段：External Cognitive Runtime——把有限认知边界扩展到工具、环境与其他载体}
+
+第三阶段解决了 Agent 如何治理内部认知，但如果所有知识、技能、计划、程序和历史状态最终仍然需要存放和运行在内部认知核心，那么工作记忆有限容量问题只会被延后，而不会真正解决。第四阶段因此引入 External Cognitive Runtime，其本质不是增加更多 Tool API，而是第一次把“认知结构由谁承载”提升为运行时可以主动选择的系统变量。
+
+在这一阶段，我们把一个 Agent-CSO 表示为
+
+\[
+AgentCSO(C,t)
+=
+(C,R,F,\tau,B,S),
+\]
+
+其中 \(B\) 表示当前承载边界。当
+
+\[
+B=\mathrm{Internal},
+\]
+
+结构主要由 Agent 内部状态承担；而当
+
+\[
+B\in
+\{
+File,
+DB,
+Program,
+Skill,
+Tool,
+Environment,
+OtherAgent
+\},
+\]
+
+同一认知功能可能通过外部载体实现。
+
+因此 Offloading 不再只是“把内容保存到硬盘”，而是：
+
+\[
+AgentCSO(C,B_{\mathrm{internal}})
+\rightarrow
+AgentCSO(C,B_{\mathrm{external}}).
+\]
+
+为了使这种迁移成为可靠的认知过程，我们需要同时建立 Boundary、Offloading Manager、Skill Runtime、Tool Runtime、External Memory Manager 和 Capability Registry。
+
+Boundary 首先执行 Admission Control。对于输入结构 \(C_i\)，系统不再默认：
+
+\[
+C_i\rightarrow h,
+\]
+
+而是计算：
+
+\[
+D_B(C_i)
+=
+f
+\left(
+Relevance,
+Novelty,
+Risk,
+GoalRelation,
+ExpectedCost,
+Recoverability
+\right),
+\]
+
+然后选择：
+
+\[
+D_B(C_i)
+\in
+\{
+Admit,
+Compress,
+Defer,
+Externalize,
+Delegate,
+Ignore
+\}.
+\]
+
+由此，早期“截流、压缩、时序展开、迁移、重构”的五种复杂度治理动作，在这一阶段获得明确的运行时意义。
+
+第四阶段还必须建立 Index Preservation。一个结构外部化以后，内部并非什么都不保留，而至少保留：
+
+\[
+Index(C)
+=
+(
+Location,
+SemanticKey,
+Trust,
+Version,
+Cost,
+AccessPolicy
+).
+\]
+
+因此 Offloading 的完整形式不是
+
+\[
+Internal\to External,
+\]
+
+而是：
+
+\[
+InternalStructure
+\rightarrow
+ExternalCarrier
++
+InternalRecoverableIndex.
+\]
+
+这一区别非常关键。如果 Agent 把复杂推理转化成一个 Script，却没有记住这个 Script 的作用条件、版本、可靠性和调用接口，那么它下一次仍然需要重新解决同一个问题，这不能称为认知沉降。
+
+Skill Runtime 是这一阶段另一个核心。重复显式认知可以逐渐经过：
+
+\[
+ExplicitReasoning
+\rightarrow
+RepeatedProcedure
+\rightarrow
+StableSkill.
+\]
+
+但 Skill 与文件不同。Skill 是能够执行并闭合一定反馈的结构，因此至少应表示为
+
+\[
+Skill_i
+=
+(
+Precondition_i,
+Policy_i,
+ExpectedOutcome_i,
+Verification_i,
+Fallback_i
+).
+\]
+
+当 Skill 成熟以后，Agent 不再需要每次把全部过程送回 h，只需要激活 Skill，并在残差超阈值时重新提升：
+
+\[
+|\varepsilon_i|<\theta_i
+\Rightarrow
+LocalExecution,
+\]
+
+\[
+|\varepsilon_i|\geq\theta_i
+\Rightarrow
+ReCognition.
+\]
+
+这实际上就是“成熟能力向下、异常向上”原则在数字认知中的第一种工程实现。
+
+第四阶段还把环境与其他 Agent 纳入广义外部认知结构。把一条规则写进文件、写进程序、修改工作目录结构、设置自动任务、让另一个 Agent 持有某项信息，这些都可以改变未来需要由当前 Agent 内部承担的认知结构。于是：
+
+\[
+C_{\mathrm{internal}}(t)
++
+C_{\mathrm{external}}(t)
+\]
+
+共同构成实际可用认知系统，而不再把“智能”错误地等同于模型内部参数。
+
+这一阶段的测试应重点关注三类指标。第一，外化以后能否可靠恢复：
+
+\[
+P(\mathrm{recover}\mid\mathrm{offloaded})
+\geq
+\theta_R.
+\]
+
+第二，外化是否真正降低内部负担：
+
+\[
+\Delta C_{run}<0.
+\]
+
+第三，外部资源发生变化以后，Agent 能否识别失效而不是继续盲目信任：
+
+\[
+VersionMismatch
+\lor
+Residual\uparrow
+\Rightarrow
+Revalidation.
+\]
+
+因此：
+
+\[
+G_4
+=
+G_3
+\land
+C_{\mathrm{boundary}}
+\land
+C_{\mathrm{offloading}}
+\land
+C_{\mathrm{skill}}
+\land
+C_{\mathrm{external-recovery}}
+\land
+C_{\mathrm{revalidation}}.
+\]
+
+完成第四阶段以后，我们得到的 Agent 已经不再只是一个“脑内智能体”，而是开始形成\textbf{内部认知结构与外部认知载体共同构成的认知生态}。但是，此时它主要面对的仍然是数字世界和高层工具；真正进入高频物理现实，需要第五阶段解决完全不同的时间尺度问题。
+
+\section{第五阶段：Body Runtime Integration——让认知主体通过统一身体接口进入现实闭环}
+
+第五阶段不是简单增加摄像头、机械臂或者机器人驱动。它解决的是整个 AgentOS 工程中一个非常基础的尺度分裂：认知 Kernel 的时间尺度通常在秒、分钟甚至更慢，而身体局部控制可能处于毫秒级。如果我们让 Kernel 对每一个传感器输入和每一次执行器修正进行显式推理，那么工作记忆和模型推理会立即成为高频闭环瓶颈。因此这一阶段必须把系统正式分解为：
+
+\[
+\boxed{
+AgentSystem
+=
+AgentKernel
+\bowtie
+BodyRuntime
+}
+\]
+
+并明确：
+
+\[
+Kernel=\mathrm{WhatToDo},
+\qquad
+BodyRuntime=\mathrm{HowThisBodyDoesIt}.
+\]
+
+首先需要建立统一身体语义接口 FBI。FBI 的意义不只是 Driver API，而是把不同物理或数字身体映射到 Agent 能够复用的现实描述空间。为此，我们建立 SGC 与 FCS。
+
+SGC 表示：
+
+\[
+\boxed{
+SGC=
+BodyCenteredSemanticRepresentationOfActionableReality
+}
+\]
+
+并至少包括几何位置、实体身份、关系、属性、语义标签、可行动性以及认识论状态。重要的是：
+
+\[
+Body\in SGC.
+\]
+
+也就是说，Agent 看到的不是一个无主体的世界地图，而是“我在当前可行动世界中的位置”。
+
+FCS 则描述：
+
+\[
+\boxed{
+HowRealityAndBodyAreAffectingMe
+}
+\]
+
+并以固定类型的多层状态场表达能量、威胁、温度、完整性、紧迫性、控制不稳定性等功能影响。因此：
+
+\[
+SGC=\mathrm{Content},
+\qquad
+FCS=\mathrm{FunctionalInfluence}.
+\]
+
+Body Runtime 的第二个核心是 BPCC：
+
+\[
+\boxed{
+BPCC
+=
+FastPrediction
++
+FastControl
++
+ResidualEstimation
++
+AdaptiveLearning
+}
+\]
+
+它承担局部快速预测和控制，可以使用私有 latent：
+
+\[
+z_t^{BPCC},
+\]
+
+而不要求所有内部状态都被 Kernel 显式理解。但 BPCC 对 Kernel 必须提供稳定公共语义：
+
+\[
+PublicBodyState
+=
+SGC+FCS+Residual+Confidence.
+\]
+
+Kernel 与 BPCC 之间采用 Predictive Envelope 与 Control Reference 分工。Kernel 给出较慢尺度的目标和可行域：
+
+\[
+\mathcal E_H
+=
+(
+SGC^{target},
+FCS^{constraint},
+RiskBound,
+GoalPriority
+),
+\]
+
+BPCC 在该可行域内进行快速局部优化：
+
+\[
+u_t^{B}
+=
+\arg\min_u
+J_B
+(x_t,u;\mathcal E_H).
+\]
+
+因此形成：
+
+\[
+\boxed{
+HigherLevelSetsFeasibleRegion,
+\quad
+LowerLevelOptimizesInsideIt.
+}
+\]
+
+这里必须建立 Reality Re-entry 原则。Kernel 发出 Action 并不意味着世界已经改变：
+
+\[
+ActionIssued
+\neq
+ActionSucceeded.
+\]
+
+任何执行结果都必须重新经过：
+
+\[
+Control
+\rightarrow
+Reality
+\rightarrow
+Sensor
+\rightarrow
+BodyRuntime
+\rightarrow
+SGC^{obs},FCS^{obs}.
+\]
+
+BPCC 自己预测的状态不能直接冒充 Observation：
+
+\[
+Prediction
+\nrightarrow
+ObservedState.
+\]
+
+这就是：
+
+\[
+\boxed{
+RealityIsUltimateConstraint
+}
+\]
+
+在工程结构中的具体实现。
+
+第五阶段还需要建立独立 Safety Boundary。对于高速危险事件：
+
+\[
+CriticalSafety
+\nrightarrow
+CognitiveDependency.
+\]
+
+如果碰撞、失稳、过热或硬件故障必须等待 Kernel 完成一次大模型推理才能响应，那么整个结构从一开始就是错误的。因此 Body Runtime 必须存在能够绕过普通认知链的实时保护：
+
+\[
+EmergencySignal
+\rightarrow
+SafetyController
+\rightarrow
+Actuator.
+\]
+
+同时维持：
+
+\[
+SafetyAuthority
+>
+BPCCAuthority
+>
+OrdinaryBodyCommand.
+\]
+
+第五阶段的工程验证不应一开始就选择人形机器人。数字身体、浏览器、桌面、Shell、模拟环境和移动操作平台都可以逐步验证 Body ABI。真正需要证明的是：Kernel 是否能够在不理解底层全部控制细节的情况下稳定获得统一 SGC/FCS，并通过统一控制语义进入不同身体。
+
+其 Gate 可以写为
+
+\[
+G_5
+=
+G_4
+\land
+C_{\mathrm{SGC}}
+\land
+C_{\mathrm{FCS}}
+\land
+C_{\mathrm{local-loop}}
+\land
+C_{\mathrm{reality-reentry}}
+\land
+C_{\mathrm{safety}}
+\land
+C_{\mathrm{body-transfer}}.
+\]
+
+到此为止，AgentOS 第一次形成完整的：
+
+\[
+World
+\rightarrow
+Agent
+\rightarrow
+World
+\]
+
+现实闭环。但是，我们仍然默认 Kernel 和 Body Runtime 之间的对应关系相对稳定。一个真正长期存在的 Agent 则必须面对身体老化、硬件变化、新工具、新环境、新能力和内部模型持续更新所产生的关系漂移，这正是第六阶段的任务。
+
+\section{第六阶段：KRA \& Lifecycle Adaptation——让 Kernel 与 Body 在长期变化中仍然保持同一个主体}
+
+第六阶段不是简单地“再加入一个 Adapter”。它处理的是长期 Agent 最困难的一类问题：当 Kernel 在学习、Body Runtime 在学习、BPCC 在适应、身体能力本身也在发生变化时，如何保证双方仍然能够正确理解彼此，同时不破坏之前五个阶段已经建立的主体连续性、记忆连续性、控制稳定性和现实权威。
+
+因此我们在 Agent Kernel 内部、Cognitive Core 与 Body Runtime ABI 之间加入：
+
+\[
+\boxed{
+KRA
+=
+KernelRuntimeAdaptation
+}
+\]
+
+其更一般的理论定义为：
+
+\[
+\boxed{
+KRA=
+AdaptiveSemanticAndDynamicalCouplingLayer.
+}
+\]
+
+于是：
+
+\[
+AgentKernel
+=
+CognitiveCore
++
+KRA.
+\]
+
+KRA 的第一任务是语义耦合。即使 SGC/FCS 的公共结构稳定，不同 Body Runtime 对同一个语义概念的内部实现仍然可能不同。例如“可抓取”在机械手、无人机和数字鼠标身体中的控制意义完全不同。KRA 不要求这些内部表示同构，而要求它们在 Agent 的任务语义上保持功能对应。因此：
+
+\[
+\boxed{
+FunctionalAlignment
+>
+RepresentationAlignment.
+}
+\]
+
+设 Kernel 内部抽象状态为 \(z_t^K\)，Body Runtime 的公共状态为 \(s_t^B\)，则 KRA 建立：
+
+\[
+\phi_t:
+s_t^B
+\rightarrow
+z_t^K
+\]
+
+以及反向：
+
+\[
+\psi_t:
+z_t^K
+\rightarrow
+r_t^B,
+\]
+
+其中 \(r_t^B\) 是可由 Body Runtime 解释的控制参考。但评价 \(\phi_t,\psi_t\) 的标准不是 latent 相似度，而是闭环后果：
+
+\[
+L_{KRA}
+=
+\lambda_1 L_{\mathrm{semantic}}
++
+\lambda_2 L_{\mathrm{prediction}}
++
+\lambda_3 L_{\mathrm{control}}
++
+\lambda_4 L_{\mathrm{reality}}.
+\]
+
+特别是 \(L_{\mathrm{reality}}\) 必须保持最高地位，因为 Kernel 与 Body Runtime 完全可能在彼此一致的同时共同偏离现实。如果两者内部模型互相预测得很好，却无法准确解释真实观测，那么这是一种危险的“内部共谋稳定”。所以 KRA 的最终锚点永远是 Reality Feedback。
+
+第六阶段的第二个任务是时间尺度耦合。Body Runtime 的更新频率、BPCC 的局部适应、KRA 的关系调整和 Kernel 的结构学习不能处在同一速度。我们要求：
+
+\[
+\tau_{BPCC}^{adapt}
+<
+\tau_{KRA}^{adapt}
+<
+\tau_{Kernel}^{struct}.
+\]
+
+其意义是：局部身体模型优先适应当前环境变化；如果这种变化长期存在，KRA 再调整 Kernel--Body 关系；只有当长期关系已经稳定以后，Kernel 的慢结构才吸收这种变化。如果三个层级同时高速更新，就容易出现不可辨识问题：
+
+\[
+\Delta Error
+=
+\Delta Kernel
++
+\Delta KRA
++
+\Delta BPCC,
+\]
+
+此时系统无法判断残差究竟由谁造成。
+
+因此需要 Primary Learner 原则。在任意短时间窗口内，
+
+\[
+|\mathcal L_{\mathrm{active}}|
+\approx 1,
+\]
+
+即尽量只允许一个主要层级承担适应，其余层保持 observer 或低增益更新状态。长生命周期中则采用 alternating adaptation：
+
+\[
+BPCC
+\rightarrow
+KRA
+\rightarrow
+Kernel
+\rightarrow
+Consolidation.
+\]
+
+这是一种跨时间尺度的学习调度，而不是所有层级同时进行 SGD。
+
+第六阶段还首次把“能力成长”与“权限成长”明确耦合。Agent 通过新身体、新技能和新环境表现出更高 capability，并不意味着系统立即给予其更高 autonomy。应存在：
+
+\[
+Experience
+\rightarrow
+Capability
+\rightarrow
+Evaluation
+\rightarrow
+Trust
+\rightarrow
+Authority
+\rightarrow
+Autonomy.
+\]
+
+因此生命周期适应不仅是模型适应，也包含 Governance Adaptation。对 Agent 可自行修改的状态集合定义：
+
+\[
+\mathcal S_{\mathrm{selfmodifiable}}
+\subset
+\mathcal X_A.
+\]
+
+若
+
+\[
+\mathcal S_{\mathrm{selfmodifiable}}
+\approx
+\varnothing,
+\]
+
+Agent 无法形成真正的长期自主成长；但若
+
+\[
+\mathcal S_{\mathrm{selfmodifiable}}
+=
+\mathcal X_A,
+\]
+
+主体连续性和安全边界又可能失去保障。所以第六阶段要求建立：
+
+\[
+\boxed{
+BoundedSelfModificationEnvelope
+}
+\]
+
+使不同状态拥有不同修改权限和时间常数：
+
+\[
+\eta_h
+>
+\eta_E
+>
+\eta_\Theta
+>
+\eta_\Psi
+>
+\eta_\Omega.
+\]
+
+越接近主体身份、长期价值和生命周期方向的状态，其在线修改门槛越高。
+
+第六阶段还必须正式支持 Skill Compilation。过去需要 Kernel 显式认知的身体控制轨迹，如果长期稳定，可以从：
+
+\[
+h/E
+\rightarrow
+\Theta
+\rightarrow
+BodySkill
+\]
+
+进行下沉。反过来，已经下沉的 Skill 如果持续产生结构性残差：
+
+\[
+\mathbb E_T[|\varepsilon_{skill}|]
+>
+\theta_{promote},
+\]
+
+则重新提升到更高层进行显式认知。这使 Agent 的能力获得真正的成熟过程：
+
+\[
+Explicit
+\leftrightarrow
+Compiled.
+\]
+
+从 CSO 语言来看，这就是 Agent-CSO 在功能位置与时间尺度之间的可逆迁移。
+
+因此第六阶段并不是“AgentOS 完成以后再加一些在线学习”，而是系统第一次实现：
+
+\[
+\boxed{
+PersistentSubject
++
+PersistentMemory
++
+SelfRegulation
++
+ExternalCognition
++
+EmbodiedReality
++
+ControlledCoAdaptation
+}
+\]
+
+的统一生命周期。
+
+其最终 Gate 可以表示为
+
+\[
+G_6
+=
+G_5
+\land
+C_{\mathrm{semantic-alignment}}
+\land
+C_{\mathrm{temporal-separation}}
+\land
+C_{\mathrm{drift-attribution}}
+\land
+C_{\mathrm{skill-compilation}}
+\land
+C_{\mathrm{bounded-adaptation}}
+\land
+C_{\mathrm{identity-preservation}}.
+\]
+
+只有此时，我们才可以合理地说：系统不再只是“可以持续运行”，而开始具有\textbf{持续发育}的工程能力。
+
+\section{跨阶段不变量：任何能力增长都不能破坏已经建立的主体闭环}
+
+六阶段实施路线的真正困难不是让每一阶段单独工作，而是保证第六阶段系统仍然保留第一阶段确立的全部核心不变量。因此我们需要定义一组跨阶段单调保持的系统约束。
+
+第一项是主体连续性：
+
+\[
+I_{\mathrm{subject}}^{(k)}=1,
+\qquad
+\forall k\geq1.
+\]
+
+无论后续加入多少 Memory、Tool、Body 或 Skill，都不得因为任务拆分而无意生成多个相互竞争的主体。
+
+第二项是状态可追溯性：
+
+\[
+\forall x_t\in h,
+\qquad
+Source(x_t)
+\ \mathrm{must\ be\ identifiable}.
+\]
+
+当前 observation、memory recall、structural inference、prediction 和 external result 必须具有不同 provenance。随着系统越来越复杂，这一要求反而越来越重要。
+
+第三项是现实权威：
+
+\[
+I_{\mathrm{reality}}:
+\quad
+Prediction
+\neq
+Observation.
+\]
+
+系统可以形成非常强大的世界模型，但任何模型结果都不能未经现实重新验证就升级成“已发生事实”。
+
+第四项是慢变量保护：
+
+\[
+FastNoise
+\nrightarrow
+SlowIdentityStructure.
+\]
+
+即短期异常不得直接修改 \(\Psi\) 或 \(\Omega\)。从数学上说，若快速扰动 \(n_t\) 满足零均值或短期随机性，则应尽量有：
+
+\[
+\left|
+\frac{\partial\Psi}{\partial n_t}
+\right|
+\approx0,
+\qquad
+\left|
+\frac{\partial\Omega}{\partial n_t}
+\right|
+\approx0.
+\]
+
+只有长期一致的经验统计才能影响慢结构。
+
+第五项是有限显式认知：
+
+\[
+C_{run}(h_t)\leq C_{\max}.
+\]
+
+增加记忆、工具和身体以后，绝不能通过持续扩大 \(h\) 来解决系统复杂度。恰恰相反，系统越成熟，越多正常过程应该在 h 之外闭合：
+
+\[
+Maturity\uparrow
+\Rightarrow
+\frac{
+ExplicitCognitiveIntervention
+}{
+SuccessfulRoutineBehavior
+}
+\downarrow.
+\]
+
+第六项是可恢复性。对每一次重大结构更新，都应存在：
+
+\[
+Checkpoint_{pre}
+\rightarrow
+Update
+\rightarrow
+Validation
+\rightarrow
+Commit/Rollback.
+\]
+
+只有能够回滚的适应才是工程适应，否则就是不可控漂移。
+
+第七项是权限单调治理。能力可以连续变化，但 Authority 的改变必须是离散治理事件：
+
+\[
+Capability(t)
+\ \mathrm{continuous},
+\qquad
+Authority_k
+\rightarrow
+Authority_{k+1}
+\ \mathrm{governed}.
+\]
+
+这体现了本书此前提出的：
+
+\[
+\boxed{
+ContinuousDynamics
+\leftrightarrow
+DiscreteGovernance.
+}
+\]
+
+这些跨阶段不变量共同构成 AgentOS 的工程“宪法层”。一个项目即使第六阶段功能全部存在，如果它在适应新身体以后丢失了身份连续，或者外部 Skill 可以绕过安全权限，或者预测状态能够直接污染观测状态，那么该系统仍然没有真正通过六阶段路线。AgentOS 的成熟度应按照闭环完整性评价，而不是按照模块清单评价。
+
+\section{阶段验收、回退与工程诊断：六阶段必须允许逐层定位失败}
+
+为了使六阶段路线真正具有实施价值，我们还必须把它从概念顺序转化成可诊断的工程流程。每个阶段都应拥有自己的验收向量：
+
+\[
+\mathbf Q_k
+=
+(
+Stability,
+Continuity,
+Latency,
+Accuracy,
+Recoverability,
+Interpretability,
+Safety
+)_k.
+\]
+
+不同阶段对各维度权重不同。第一阶段最关注 Continuity 和 Recoverability；第二阶段最关注 memory accuracy、provenance 和 bounded retrieval；第三阶段关注 control stability；第四阶段关注 external recovery 和 dependency validity；第五阶段关注 latency、reality consistency 与 Safety；第六阶段则重点关注 drift attribution、cross-runtime transfer 和 lifecycle stability。
+
+设阶段 \(k\) 的最低验收区域为
+
+\[
+\mathcal F_k
+=
+\{
+\mathbf Q_k:
+q_{ki}\geq\theta_{ki}
+\}.
+\]
+
+只有：
+
+\[
+\mathbf Q_k\in\mathcal F_k
+\]
+
+时才允许进入下一阶段。
+
+这种设计尤其重要，因为 AgentOS 不是一次部署以后保持不变的软件。随着时间推进，一个已经通过第六阶段的 Agent 仍然可能局部退化。例如 Body Runtime 升级以后，KRA alignment 下降；某个 Skill 更新以后，外部认知恢复率降低；新的经历导致 AHC 参数变化以后，SPC--TCE 控制环出现振荡。这时系统不应把“整个 Agent 故障”作为唯一诊断，而应定位具体失效层。
+
+可以定义最早失效阶段：
+
+\[
+k^\ast
+=
+\min
+\left\{
+k:
+\mathbf Q_k
+\notin
+\mathcal F_k
+\right\}.
+\]
+
+随后系统应优先退回：
+
+\[
+\mathcal A^{(k^\ast)}
+\rightarrow
+\mathcal A^{(k^\ast-1)}
+\]
+
+仍然成立的稳定能力集合，而不是整体重置。
+
+例如，如果 KRA 对新机械臂的映射失稳，而 Persistent Runtime、三相记忆和认知控制全部正常，那么最合理的动作是冻结 KRA/BPCC 适应，退回已知安全 Body Profile，而不是清除 Agent 的 E、\(\Theta\) 或 \(\Psi\)。同理，如果一个外部 Skill 失效，则应把对应 Agent-CSO 重新提升到显式认知层，而不是把整个 Agent 判定为能力丧失。
+
+于是我们得到一条非常重要的工程原则：
+
+\[
+\boxed{
+FailureShouldBeLocalizedToTheSlowestNecessaryLayer.
+}
+\]
+
+它与此前的 Minimum Necessary Reorganization 同构：只有低层机制无法恢复时，才允许触及更慢、更深的结构。
+
+六阶段路线因此也形成了一种“能力保险丝”。Body 问题不应立即变成 Self 问题；Tool 问题不应立即变成 Memory 问题；Memory 检索问题不应立即修改 \(\Psi\)；某一次异常经历更不能直接修改 \(\Omega\)。一个成熟 AgentOS 的重要特征，恰恰是不同尺度的错误不会毫无阻隔地向整个生命周期扩散。
+
+从这一点看，阶段路线同时也是故障隔离结构：
+
+\[
+\boxed{
+StageArchitecture
+=
+DevelopmentPath
++
+DiagnosticHierarchy
++
+RecoveryHierarchy.
+}
+\]
+
+这使“怎样构建 AgentOS”和“怎样维护一个已经存在多年的 AgentOS”第一次被放进同一套工程理论中。
+
+\section{本章总结：六阶段路线的本质是从运行连续性走向受治理的发育连续性}
+
+现在我们可以重新观察六阶段路线的理论含义。
+
+第一阶段回答：
+
+\[
+\boxed{
+CanTheAgentContinueToExist?
+}
+\]
+
+第二阶段回答：
+
+\[
+\boxed{
+CanItsPastChangeItsFuture?
+}
+\]
+
+第三阶段回答：
+
+\[
+\boxed{
+CanItPerceiveAndRegulateItsOwnCognition?
+}
+\]
+
+第四阶段回答：
+
+\[
+\boxed{
+CanItsCognitiveStructureLiveBeyondItsInternalCore?
+}
+\]
+
+第五阶段回答：
+
+\[
+\boxed{
+CanItCloseARealWorldObservationActionLoop?
+}
+\]
+
+第六阶段最终回答：
+
+\[
+\boxed{
+CanAllTheseRelationsChangeWithoutDestroyingTheSubject?
+}
+\]
+
+因此，这六个阶段不是六种产品功能，而是持续人工智能体从“运行”走向“生命周期”的六次工程跃迁：
+
+\[
+\boxed{
+Execution
+\rightarrow
+Continuity
+\rightarrow
+Memory
+\rightarrow
+SelfRegulation
+\rightarrow
+ExtendedCognition
+\rightarrow
+Embodiment
+\rightarrow
+Development
+}
+\]
+
+如果从 CSO 理论重新解释，它们又可以写成认知结构承载能力的逐级扩展。
+
+第一阶段，Agent-CSO 首先获得一个持续存在的运行主体承载面；
+
+第二阶段，Agent-CSO 开始跨时间尺度在 \(h/E/\Theta\) 之间迁移；
+
+第三阶段，Agent-CSO 开始受到 \(\Psi/\Omega\) 以及 SPC--AHC--TCE--CCM 控制闭环的自反治理；
+
+第四阶段，Agent-CSO 可以跨越内部边界沉降到 Skill、Tool、File、Environment 和 Other Agent；
+
+第五阶段，Agent-CSO 通过 SGC/FCS 与真实身体和现实世界建立可行动映射；
+
+第六阶段，Agent-CSO 的表示、身体承载和功能关系可以在生命周期中受约束地共同适应。
+
+于是六阶段路线最终完成的是：
+
+\[
+\boxed{
+\text{State Persistence}
+\rightarrow
+\text{Structural Persistence}
+\rightarrow
+\text{Self-Governed Persistence}
+\rightarrow
+\text{Boundary-Extended Persistence}
+\rightarrow
+\text{Embodied Persistence}
+\rightarrow
+\text{Adaptive Persistence}.
+}
+\]
+
+这最后一个 ``Adaptive Persistence'' 尤其重要。普通在线学习系统强调：
+
+\[
+Model_t\rightarrow Model_{t+1}.
+\]
+
+AgentOS 所要求的则是：
+
+\[
+\boxed{
+Agent_t
+\rightarrow
+Agent_{t+1},
+\qquad
+IdentityContinuity(Agent_t,Agent_{t+1})=1.
+}
+\]
+
+也就是说，真正困难的问题已经不再是“系统能不能变化”，而是\textbf{系统能不能在变化中仍然持续成为同一个可治理主体}。
+
+所以，本章的最终工程判断可以盖章为：
+
+\[
+\boxed{
+\begin{minipage}{0.88\textwidth}
+\centering
+AgentOS 的正确实施顺序不是先追求一个功能最完整的智能体，而是逐级建立不能被后续能力破坏的稳定闭环：先有持续主体，再有生命周期记忆；先有自我调节，再扩大认知边界；先建立现实可验证的身体闭环，再允许 Kernel、KRA 与 Body Runtime 共同适应。只有当能力增长始终发生在身份连续、现实权威、慢变量保护、有限工作记忆和可恢复治理所定义的可行域中，AgentOS 才真正从一个长期运行的软件系统转化为一个能够持续发育的人工智能体。
+\end{minipage}
+}
+\]

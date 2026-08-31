@@ -1,176 +1,1091 @@
 \chapter{AgentOS 的 3+1+1 研发战略}
-\begin{chapteroverviewbox}
-这一章，我们围绕“AgentOS 的 3+1+1 研发战略”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明理论到系统与生态的工程路线。
-\end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
+\label{chap:agentos-3plus1plus1-roadmap}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 AgentOS 三条软件主线、两类基础设施、六阶段路线与产品成熟次序的工程推演。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是系统工程、成熟度分级、接口契约与开放治理（混杂系统与模型预测控制）。
+\begin{center}
+\fbox{
+\begin{minipage}{0.92\textwidth}
+\textbf{【本章总体说明｜研发战略定稿】}
 
-本章使用上一章“Agent Kernel—KRA—Body Runtime 完整数据流”已经得到的对象与边界；本章产出将供下一章“Body Runtime 研发路线”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+本章不再讨论 AgentOS ``是什么''，而是回答一个更接近真实科研组织的问题：在前文已经建立多尺度智能、三相记忆、工作记忆有限性、SPC--AHC--TCE、CCM、Boundary、Offloading、Body Scale、SGC、FCS、BPCC 与 KRA 等理论之后，若希望把这些理论从一个相互关联的认知体系推进为可运行、可测量、可迭代的工程系统，应当怎样组织研发工作？
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+本章给出的答案是本书的总体研发战略：
+\[
+\boxed{
+AgentOS\ Research\ Program = 3 + 1 + 1
+}
+\]
+其中 ``3'' 表示三条必须长期并行而又相互闭合的核心研究主线：
+\[
+\boxed{
+BodyRuntime,\qquad AgentKernel,\qquad Continuous\text{-}DiscreteControl
+}
+\]
+第一个 ``+1'' 表示承载上述智能动力学的软件系统基础设施，即 Computer OS、Linux Runtime、驱动、进程、存储、通信与 AgentOS 系统软件；第二个 ``+1'' 表示最终承担不同时间尺度计算需求的硬件层，特别是通用推理计算与高频小脑式预测控制计算。
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在系统工程、成熟度分级、接口契约与开放治理上。
-\section{第一主线：Body Runtime}
-\begin{narration}
-现在把镜头移到“第一主线：Body Runtime”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这里最重要的战略判断不是 ``AgentOS 由五个模块组成''。$3+1+1$ 并非运行时层次，也不是产品功能列表，而是一种\textbf{研究组织拓扑}：三条理论--算法主线解决智能本身的问题，系统软件保证它们能够以持续进程的方式存在，异构硬件则在更低层兑现多时间尺度智能所要求的真实计算性能。五条路径之间既不能串行等待，也不能完全独立开发，而应在稳定语义契约下实行多速率共同演化。
 
-本节把“第一主线：Body Runtime”落实为由 Body Runtime、Agent Kernel、连续—离散控制三条理论主线与系统软件、推理/小脑硬件两层基础设施组成的并行研发分解。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 的 3+1+1 研发战略”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+因此，本章的任务，是为后续工程实践建立一张总体研究地图：明确每一条主线解决什么不可替代的问题、彼此怎样交换状态和约束、哪些接口必须尽早固定、哪些内部实现必须保持可塑，以及为什么只有三条软件理论线与两个基础设施层同时成熟，才可能从 ``一个会调用工具的大模型'' 走向真正具有持续身份、身体闭环、长期学习与生命周期的人工智能体。
+\end{minipage}
+}
+\end{center}
 
-把这一关系写成最小数学骨架，可得
+\section{第一主线：Body Runtime——建立智能体与真实世界之间的快速闭环}
+\label{sec:roadmap-body-runtime}
 
-\begin{equation}\mathcal R=\{B,K,H\}\oplus\{OS,HW\}.\end{equation}
+如果我们从本书前面的认识论重新审视具身问题，就会发现 Body Runtime 并不是在一个已经完成的 ``大脑'' 外面再接上一组传感器和执行器。智能从一开始就是
+\[
+World \rightarrow Agent \rightarrow Action \rightarrow World'
+\]
+的闭环过程；如果不存在可靠的现实重入，那么 Agent 内部再精致的世界模型最终都可能退化为封闭的符号循环。因此，$3+1+1$ 的第一条主线必须是 Body Runtime，而不是等 Agent Kernel ``完全做好以后'' 再去接机器人。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对第一主线：Body Runtime的命名和组合仍是需要实验验证的建模提案。
+本书将完整智能体写为
+\[
+\boxed{
+AgentSystem = AgentKernel \bowtie BodyRuntime
+}
+\]
+其中符号 $\bowtie$ 表示二者并不是松散 API 调用关系，而是具有状态、时间尺度和学习耦合的持续闭环。Agent Kernel 主要回答
+\[
+What\ should\ be\ done?
+\]
+Body Runtime 则负责
+\[
+How\ can\ this\ body\ do\ it?
+\]
+二者之间最根本的分工并非 ``高级'' 与 ``低级''，而是\textbf{时间尺度和现实权限不同}。高层认知可能以秒、分钟甚至更慢的尺度改变目标、计划和长期预测，而身体稳定、执行器反馈、视觉跟踪、姿态控制、网络输入输出或 GUI 指针控制可能需要毫秒到百毫秒级闭环。因此必须满足
+\[
+\boxed{
+\tau_{\mathrm{BodyFastLoop}}
+\ll
+\tau_{\mathrm{CognitiveLoop}}
+}
+\]
+否则高层认知不仅计算代价过高，而且会因为延迟直接破坏控制稳定性。
 
-这一小节的反例同样重要：把五条路线串行化会让接口假设长期得不到跨线验证。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+Body Runtime 的研究对象可以形式化为身体状态空间
+\[
+\mathcal X_B
+=
+\mathcal X_{\mathrm{sensor}}
+\times
+\mathcal X_{\mathrm{actuator}}
+\times
+\mathcal X_{\mathrm{internal}}
+\times
+\mathcal X_{\mathrm{environment-local}},
+\]
+其动力学写成
+\[
+\dot X_B
+=
+F_B
+\left(
+X_B,
+u_C,
+W,
+u_{\mathrm{local}}
+\right),
+\]
+其中 $u_C$ 是来自认知层的高层控制参考，$W$ 是环境扰动，$u_{\mathrm{local}}$ 是 Body Runtime 自身生成的快速控制。Agent Kernel 并不直接拥有 $X_B$ 的全部高维细节，而通过稳定的公开语义界面获得：
+\[
+\boxed{
+PublicEmbodiedState = SGC \oplus FCS .
+}
+\]
+这里 SGC 表示 ``现实中有什么，以及我位于其中何处''，FCS 表示 ``现实和身体正在怎样作用于我''。它们共同把原始传感器世界转换成可进入 Agent-CSO 体系的身体中心语义现实。
 
-\begin{thought}
-对“第一主线：Body Runtime”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此第一主线内部至少存在三个相互依赖的研究对象。其一是 FBI（Functional Body Interface），负责把不同物理或数字身体的驱动、传感器和执行器映射到统一 Body ABI；其二是 SGC/FCS，负责形成稳定、可检查的具身语义边界；其三是 BPCC（Body Predictive Control Core），承担快速预测、快速控制、残差估计与在线适应：
+\[
+\boxed{
+BPCC
+=
+FastPrediction
++
+FastControl
++
+ResidualEstimation
++
+AdaptiveLearning .
+}
+\]
+BPCC 内部可以拥有高度优化的私有状态
+\[
+z_t^{BPCC}\in\mathbb R^d,
+\]
+因为高频闭环不能要求所有状态都被自然语言化；但是这些私有状态一旦需要上升到 Kernel，就必须通过 SGC、FCS、Residual、Confidence、Capability Margin 等公开结构进行语义化。这形成一个重要工程原则：
+\[
+\boxed{
+PrivateFastState,\qquad PublicSemanticContract.
+}
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+Body Runtime 的另一项核心职责，是成为认知系统面对现实的第一道结构压缩层。真实世界的原始自由度远远超过工作记忆 $h(t)$ 能够承载的规模。如果所有视觉像素、执行器电流、窗口事件、网络包、关节状态和环境扰动都直接进入 Kernel，那么工作记忆有限容量定理会立即失效。因此真实路径应是
+\[
+RawReality
+\rightarrow
+BodyRuntime
+\rightarrow
+ActionableSemanticReality
+\rightarrow
+AgentKernel.
+\]
+换句话说，Body Runtime 不是把复杂现实 ``传给'' Kernel，而是在自己的时间尺度上先完成大量局部闭环，使只有对高层目标、预测或异常具有意义的结构上升。这与前文得到的多尺度原则一致：
+\[
+\boxed{
+NormalDynamicsStayLocal
+}
+\]
+以及
+\[
+\boxed{
+PredictLocally,\ EscalateResidualGlobally.
+}
+\]
 
-\section{第二主线：Agent Kernel}
-\begin{narration}
-现在把镜头移到“第二主线：Agent Kernel”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这一主线还有一个容易被忽视但决定安全性的约束：预测绝不拥有现实权威。无论 BPCC 的模型多准确，都必须保持
+\[
+\boxed{
+LearnedDynamics \neq RealityAuthority.
+}
+\]
+动作被发出并不等于动作已经成功：
+\[
+ActionIssued \neq ActionSucceeded.
+\]
+实际结果必须重新经过
+\[
+Control
+\rightarrow
+Reality
+\rightarrow
+Sensor
+\rightarrow
+BodyRuntime
+\rightarrow
+SGC^{obs},FCS^{obs}
+\]
+返回系统。在控制论意义上，这保证了系统始终是一种闭环控制，而不是开环想象。在认识论意义上，它保证 Agent-CSO 始终能够受到 Universe-CSO 的现实反证。
 
-本节把“第二主线：Agent Kernel”落实为由 Body Runtime、Agent Kernel、连续—离散控制三条理论主线与系统软件、推理/小脑硬件两层基础设施组成的并行研发分解。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 的 3+1+1 研发战略”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+因此，Body Runtime 主线真正要解决的并不是 ``机器人控制'' 这一狭义问题，而是建立一个可以跨数字身体与物理身体复用的\textbf{现实闭环运行时}。其成功标准也不应只是某种机器人的单任务成功率，而应考察 Body Scale：
+\[
+\boxed{
+BodyScale
+=
+Transfer_P
++
+Transfer_F
++
+Transfer_{Pred}
++
+Transfer_C
+}
+\]
+即换一个身体之后，感知语义、功能感受、预测结构和控制能力有多少可以直接迁移。如果 AgentOS 最终需要成为通用智能基础设施，那么这一主线追求的不是制造一种身体，而是建立一种使多种身体都能够成为同一持续主体之身体的统一动力学接口。
 
-把这一关系写成最小数学骨架，可得
+\section{第二主线：Agent Kernel——从基础模型构造持续认知主体}
+\label{sec:roadmap-agent-kernel}
 
-\begin{equation}\mathcal R=\{B,K,H\}\oplus\{OS,HW\}.\end{equation}
+如果 Body Runtime 解决的是 Agent 如何进入现实，那么第二条主线 Agent Kernel 解决的就是：\textbf{进入现实的究竟是不是同一个持续存在的主体。}这是普通 LLM、一次性 Agent Workflow 与 AgentOS 之间最根本的区别之一。基础模型可以表现出高度知识能力，却并不天然拥有跨任务的持续工作状态、经历、自我、生命周期方向以及稳定的资源治理机制。因此 Agent Kernel 不是 ``把一个 LLM 包装成服务''，而是在基础模型之上建立持续认知动力学。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对第二主线：Agent Kernel的命名和组合仍是需要实验验证的建模提案。
+我们可以把 Kernel 的最小认知状态写成
+\[
+\mathcal X_C(t)
+=
+\left[
+h(t),
+E(t),
+\Theta(t),
+\Psi(t),
+\Omega(t),
+G(t),
+A(t)
+\right],
+\]
+其中 $h$ 是当前工作记忆状态，$E$ 是情景轨迹，$\Theta$ 是长期生成结构，$\Psi$ 是身份与价值的慢结构，$\Omega$ 是更慢的生命周期生成吸引子，$G$ 表示当前目标体系，$A$ 表示必要的内稳态和调制状态。随着实现发展，还需要加入 SPC、AHC、TCE、CCM 与 Scheduler 等运行控制状态，但这些控制器并不是与 $h/E/\Theta/\Psi/\Omega$ 平行的一组 ``记忆模块''，而是作用于上述认知状态的观测、调制与治理机制。
 
-这一小节的反例同样重要：把五条路线串行化会让接口假设长期得不到跨线验证。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+Agent Kernel 的第一任务是解决时间连续性。三相记忆给出了最低结构：
+\[
+\boxed{
+h \leftrightarrow E \leftrightarrow \Theta
+}
+\]
+它将 Agent 的认知从 ``每个时刻都重新计算'' 转化为
+\[
+State
+\leftrightarrow
+Trajectory
+\leftrightarrow
+Generator.
+\]
+$h$ 负责此刻真正需要显式全局处理的 Agent-CSO；$E$ 保存经历如何沿时间发生；$\Theta$ 则把大量过去经历压缩成能够参与未来生成的稳定结构。因此 Kernel 的持续学习不能仅被写成参数增量
+\[
+\theta_{t+1}=\theta_t+\Delta\theta,
+\]
+而必须更一般地表达为：
+\[
+\boxed{
+Experience
+\rightarrow
+StructuralConsolidation
+\rightarrow
+FutureGeneration.
+}
+\]
 
-\begin{thought}
-对“第二主线：Agent Kernel”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+在三相记忆之上，$\Psi$ 与 $\Omega$ 解决的是更慢的连续性。若只有 $h/E/\Theta$，系统可以学习很多事情，却仍然难以回答 ``为什么这些经历属于同一个我''。因此：
+\[
+\Psi:\quad WhoAmI,
+\]
+而
+\[
+\Omega:\quad WhatAmIBecoming.
+\]
+两者与三相记忆形成
+\[
+\tau_h
+\ll
+\tau_E
+\ll
+\tau_\Theta
+\ll
+\tau_\Psi
+\ll
+\tau_\Omega .
+\]
+这一时间尺度排序具有直接工程含义：越慢的结构越不能被一次任务、一次提示词或一次高情绪样状态快速改写。也就是说，身份连续并不依赖某个 ``persona.txt'' 被永久锁定，而依赖慢变量相对于快变量具有足够的惯性和修改门槛。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+Agent Kernel 的第二任务来自工作记忆有限容量。我们在前文提出：
+\[
+C_{run}(t)\leq C_{\max}(W),
+\]
+其中 $W$ 表示有限的全局工作容量。这个定理意味着 Agent Kernel 不能采取 ``所有东西都进入上下文，然后交给一个越来越大的模型'' 的工程方式。真正成熟的 Kernel 应满足：
+\[
+\boxed{
+MostAgentDynamics\notin h.
+}
+\]
+$h(t)$ 只是 Sparse Explicit Cross-Scale Surface，即只有当前需要跨功能、跨尺度显式协调的 Agent-CSO 才进入工作记忆。大量熟练行为、状态维持、外部存储、身体控制和长期结构都不应该持续占据 $h$。
 
-\section{第三主线：Continuous–Discrete Control}
-\begin{narration}
-现在把镜头移到“第三主线：Continuous–Discrete Control”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+于是运行控制器自然出现。SPC 对当前分布式认知状态进行压缩和估计：
+\[
+\hat x^{self}_t
+=
+SPC
+\left(
+h_t,E_t,\Theta_t,\Psi_t,A_t,\ldots
+\right),
+\]
+AHC 将身体、资源、威胁、紧迫性、奖励期待等信号积分成中时间尺度调制状态：
+\[
+a_t
+=
+F_{AHC}
+(a_{t-1},FCS_t,S_t),
+\]
+TCE 根据当前自状态、目标和慢变量产生认知控制：
+\[
+u^{cog}_t
+=
+TCE
+\left(
+\hat x^{self}_t,a_t,G_t,\Psi_t,\Omega_t
+\right),
+\]
+CCM 则负责保证工作空间保持可运行：
+\[
+C_{run}(t)\leq C_{\max}(W).
+\]
+Scheduler 进一步把有限的注意、模型调用、记忆检索、工具调用和任务执行资源分配给不同候选进程。因此真正的 Kernel 运行环更接近：
+\[
+SPC
+\rightarrow
+AHC
+\rightarrow
+Scheduler
+\rightarrow
+TCE
+\rightarrow
+CCM
+\rightarrow
+CognitiveDynamics
+\rightarrow
+SPC.
+\]
 
-本节把“第三主线：Continuous–Discrete Control”落实为由 Body Runtime、Agent Kernel、连续—离散控制三条理论主线与系统软件、推理/小脑硬件两层基础设施组成的并行研发分解。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 的 3+1+1 研发战略”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+但第二主线的研究不能陷入 ``模块越来越多'' 的工程误区。这里每增加一个组件，都必须能够由一个不可被已有结构解决的问题推导出来。$E$ 来自时间轨迹缺失，$\Theta$ 来自经验压缩与未来生成需求，$\Psi$ 来自身份连续性，$\Omega$ 来自生命周期方向性，SPC 来自自状态不可直接透明获得，TCE 来自认知动力学需要主动调节，AHC 来自状态估计与控制之间缺乏连续内稳态变量，CCM 来自有限工作容量，Boundary 与 Offloading 则来自 ``什么应该进入内部、什么应该由外部结构承载'' 的边界问题。只有保持这种需求驱动的推导链，AgentOS 才不会退化为组件堆叠。
 
-把这一关系写成最小数学骨架，可得
+因此第二主线最终的研究目标可以概括成：
+\[
+\boxed{
+BaseModel
+\rightarrow
+PersistentCognitiveProcess
+\rightarrow
+LifecycleAgent.
+}
+\]
+它追求的不是一次任务中的更长 Chain-of-Thought，而是让一个主体能够在大量任务之间保持经历连续、认知资源有限、自我结构稳定、能力持续沉降，并允许未来的自己真正受到过去经历的因果影响。从这个意义上说，Agent Kernel 才是 AgentOS 中 ``生命史'' 得以存在的地方。
 
-\begin{equation}\mathcal R=\{B,K,H\}\oplus\{OS,HW\}.\end{equation}
+\section{第三主线：Continuous--Discrete Control——建立智能运行的动力学与治理理论}
+\label{sec:roadmap-continuous-discrete-control}
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对第三主线：Continuous–Discrete Control的命名和组合仍是需要实验验证的建模提案。
+Body Runtime 与 Agent Kernel 如果只是分别开发，仍然不足以形成 AgentOS。两者之间还有一个更深层的问题：现实中的智能活动既不是纯粹连续动力系统，也不是传统软件意义上的离散状态机。注意力、内稳态、置信度、工作负载、预测残差、身份权重等变量具有连续变化性质，而 Goal 创建、任务切换、Skill 编译、权限升级、安全中断、Checkpoint 回滚和拓扑重组又是典型离散事件。因此第三条核心主线必须研究：
+\[
+\boxed{
+ContinuousDynamics
+\leftrightarrow
+DiscreteGovernance.
+}
+\]
 
-这一小节的反例同样重要：把五条路线串行化会让接口假设长期得不到跨线验证。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+我们可以把 AgentOS 的连续状态统一写成
+\[
+x(t)
+=
+\left[
+X_B(t),
+X_C(t),
+X_A(t)
+\right],
+\]
+其中 $X_B$ 是身体状态，$X_C$ 是认知状态，$X_A$ 是适应和调制状态；其连续演化满足：
+\[
+\dot x
+=
+F_{q(t)}
+\left(
+x,u,w
+\right),
+\]
+而 $q(t)$ 是当前离散治理状态。某些事件条件满足
+\[
+g_k(x,t)\geq 0
+\]
+时，系统发生离散转换：
+\[
+q^+
+=
+\Delta_q(q^-,e_k),
+\]
+必要时还可能产生状态重置：
+\[
+x^+
+=
+R_k(x^-).
+\]
+因此 AgentOS 在数学上更接近一个 Hybrid Dynamical System，而不是单一神经网络或单一操作系统进程。
 
-\begin{thought}
-对“第三主线：Continuous–Discrete Control”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+第三主线首先承担的是\textbf{多尺度控制稳定性}问题。我们已经得到：
+\[
+\tau_{servo}
+<
+\tau_{BPCC}
+<
+\tau_{SGC/FCS}
+<
+\tau_h
+<
+\tau_E
+<
+\tau_\Theta
+<
+\tau_\Psi
+<
+\tau_\Omega .
+\]
+这不是简单地列出若干更新频率，而是要求不同尺度形成正确的控制职责分配。正常扰动应被快速局部循环吸收；只有长期不可解释的残差才应上升到更慢、更全局的结构。因此：
+\[
+\boxed{
+FastNoise\nrightarrow SlowGlobalStructure
+}
+\]
+必须成为设计约束。如果一次传感器噪声就能改写 $\Psi$，身份会失稳；如果每次微小动作误差都进入 $h$，工作记忆会长期处于湍流；反过来，如果真正持续的异常永远不能向上升级，系统又会陷入局部错误。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这要求定义跨尺度升级函数：
+\[
+\Gamma_t
+=
+f
+\left(
+\|\varepsilon_t\|,
+R_t,
+N_t,
+P_t,
+G_t
+\right),
+\]
+其中 $\varepsilon_t$ 表示残差，$R_t$ 表示风险，$N_t$ 表示新颖性，$P_t$ 表示持续性，$G_t$ 表示目标相关性。当
+\[
+\Gamma_t<\theta_{\uparrow}
+\]
+时，异常留在局部闭环；而当
+\[
+\Gamma_t\geq\theta_{\uparrow}
+\]
+时，相关 Agent-CSO 被提升到更高层功能空间。相反，一个长期重复、低残差、可局部闭合的结构可以满足沉降条件：
+\[
+\Sigma_t
+=
+g
+\left(
+Repetition,
+Stability,
+Residual^{-1},
+Utility
+\right)
+>
+\theta_{\downarrow},
+\]
+从而产生：
+\[
+ExplicitAgentCSO
+\rightarrow
+ProceduralAgentCSO.
+\]
+这使前文所谓 ``异常向上，能力向下'' 从架构原则变成可被形式化的控制策略。
 
-\section{+1：Computer OS / System Software}
-\begin{narration}
-现在把镜头移到“+1：Computer OS / System Software”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+第三主线的第二个任务是研究 Agent 工作记忆相态。SPC 所识别的 Ground、Flow、Turbulent、Critical、Gas 等并非文学隐喻，而应转化为可测量的运行时区域。例如定义工作记忆状态向量：
+\[
+z_h(t)
+=
+\left[
+C_{run},
+H_{conflict},
+U_{uncertainty},
+R_{redundancy},
+L_{loop},
+V_{goalcompetition}
+\right],
+\]
+则认知相态可以表示为状态空间的不同区域：
+\[
+\mathcal P_i
+=
+\left\{
+z_h:
+\phi_i(z_h)\leq 0
+\right\}.
+\]
+TCE 控制量
+\[
+u_{TCE}
+=
+\left[
+T,
+K,
+A,
+D,
+E
+\right]
+\]
+可分别表示认知温度、抑制/控制增益、注意宽度、推理深度和探索强度。这样，所谓从湍流态回到心流态，最终必须能够写成状态约束控制问题，而不是仅靠 prompt 说 ``请更专注''。
 
-本节把“+1：Computer OS / System Software”落实为由 Body Runtime、Agent Kernel、连续—离散控制三条理论主线与系统软件、推理/小脑硬件两层基础设施组成的并行研发分解。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 的 3+1+1 研发战略”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+第三主线的第三项任务是处理离散治理中的权限问题。一个持续 Agent 若能够学习，就一定会逐步改变自己的状态；但并不是所有状态都应该具有相同可塑性。可以定义 Agent 自主可修改集合：
+\[
+\mathcal S_{\mathrm{selfmodifiable}}
+\subset
+\mathcal S_{\mathrm{total}},
+\]
+以及治理包络：
+\[
+\boxed{
+\mathcal E_{\mathrm{self}}
+=
+\left\{
+x:
+g_i^{safe}(x)\leq0,
+\quad i=1,\ldots,m
+\right\}.
+}
+\]
+Agent 可以在该包络内部进行策略、经验、局部技能和部分结构调整，但关键身份、安全权限和现实控制边界需要更高治理权限。这就是此前所提出的 Bounded Self-Modification Envelope 的数学化起点。
 
-把这一关系写成最小数学骨架，可得
+由此我们也能够更准确地区分 Continuous--Discrete Control 主线与 Agent Kernel 主线。Agent Kernel 研究 ``认知结构和功能组件是什么''；Continuous--Discrete Control 研究 ``这些结构怎样随时间变化、怎样稳定、何时切换，以及谁拥有修改它们的权限''。前者更接近认知架构，后者更接近智能动力学。二者不能合并，因为同一功能架构完全可能具有稳定或不稳定的不同控制律。
 
-\begin{equation}\mathcal R=\{B,K,H\}\oplus\{OS,HW\}.\end{equation}
+第三主线最终希望建立的，是一门可以被验证的 AgentOS Control Theory：
+\[
+\boxed{
+ControlOfNestedAdaptiveControlLoops.
+}
+\]
+它必须能够回答：何时局部自治，何时全局介入；何时继续调参，何时重新表示；何时把 Agent-CSO 下沉为技能，何时重新提升；何时允许学习，何时冻结慢变量；何时通过正常反馈修正，何时触发安全中断。只有这些问题得到统一形式化，AgentOS 才可能从 ``聪明但偶然正确'' 的系统，发展成为能够长期运行的受控智能过程。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对+1：Computer OS / System Software的命名和组合仍是需要实验验证的建模提案。
+\section{第一个 ``+1''：Computer OS 与系统软件——为智能动力学提供持续运行的现实载体}
+\label{sec:roadmap-system-software}
 
-这一小节的反例同样重要：把五条路线串行化会让接口假设长期得不到跨线验证。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+前三条主线回答的是 ``智能应该怎样运行''，但它们并不会自动产生一个可靠软件系统。认知过程最终仍然需要 CPU、GPU、NPU、内存、磁盘、网络、设备、中断、权限和持久化机制。AgentOS 若试图绕开这些已有计算机系统基础设施，就会重复实现几十年操作系统工程；反过来，如果只是把 AgentOS 当成普通 Linux 进程，又无法表达持续主体、认知调度、生命周期记忆和身体控制这些新的系统语义。因此第一个 ``+1'' 的正确定位是：
+\[
+\boxed{
+Hardware
+\rightarrow
+ComputerOS
+\rightarrow
+AgentOS.
+}
+\]
 
-\begin{thought}
-对“+1：Computer OS / System Software”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+Computer OS 负责：
+\[
+\boxed{
+ComputeResourceManagement
+}
+\]
+而 AgentOS 负责：
+\[
+\boxed{
+IntelligenceResourceManagement.
+}
+\]
+二者管理的是不同层次的资源。例如 Linux Scheduler 决定哪个线程获得 CPU 时间，而 AgentOS Scheduler 决定哪个 Goal、Agent-CSO、记忆检索或工具调用值得获得有限认知资源；Linux Virtual Memory 解决页面驻留问题，而 $h/E/\Theta$ 的迁移解决认知结构在哪个时间尺度和载体上保持激活；Linux Device Driver 把硬件转成统一设备接口，而 FBI/Body Runtime 把设备能力进一步转换成身体中心的语义能力。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这种分层可以写为：
+\[
+R_{physical}
+\xrightarrow{ComputerOS}
+R_{computational}
+\xrightarrow{AgentOS}
+R_{cognitive}.
+\]
+其中：
+\[
+R_{physical}
+=
+\{CPU,GPU,Memory,Disk,Network,Device\},
+\]
+\[
+R_{computational}
+=
+\{Process,Thread,File,Socket,DeviceHandle,\ldots\},
+\]
+而：
+\[
+R_{cognitive}
+=
+\{Goal,Task,CSO,Memory,Skill,Tool,Body,Authority,\ldots\}.
+\]
+AgentOS 不应穿透所有抽象直接管理硬件，但必须能够把认知层的需求转换成底层资源请求。例如某个高风险 Body control task 应能映射成更高实时优先级，某个慢速 $\Theta$ consolidation 可以被放到低优先级后台计算，而某个安全中断则必须走不依赖普通认知调度的快速路径。
 
-\section{+1：Cerebellum \& Inference Hardware}
-\begin{narration}
-现在把镜头移到“+1：Cerebellum \& Inference Hardware”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+在进程模型上，系统软件层还必须兑现本书提出的 ``单一持续主体'' 原则：
+\[
+\boxed{
+N_{Agent}^{D_1}=1.
+}
+\]
+这里并不是说系统只能有一个 OS 进程，而是说属于同一 Agent 生命周期的 D1 主体不能因为任务并发而被逻辑复制成多个互不连续的 Self。任务、Worker、模型推理实例和工具调用可以高度并行：
+\[
+\{T_1,T_2,\ldots,T_n\},
+\]
+但是它们必须通过主体运行时的统一状态和治理接口与 Persistent Agent 发生关系。因而：
+\[
+fork(Process)
+\]
+可以是合法的 Computer OS 行为，而
+\[
+fork(Self)
+\]
+在 AgentOS 身份语义中却不应成为普通操作。
 
-本节把“+1：Cerebellum \& Inference Hardware”落实为由 Body Runtime、Agent Kernel、连续—离散控制三条理论主线与系统软件、推理/小脑硬件两层基础设施组成的并行研发分解。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 的 3+1+1 研发战略”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+这一差异要求 AgentOS Runtime 具有类似 microkernel 的设计思想：尽量稳定最小核心，把高变化服务放在可替换层。最小核心可抽象为：
+\[
+K_{\min}
+=
+\{
+Identity,
+Event,
+State,
+MemoryIndex,
+Scheduler,
+Authority,
+Checkpoint,
+BodyContract
+\}.
+\]
+而具体的大模型、检索器、技能实现、工具插件甚至部分记忆算法都可以在其外围演化。这样既防止 AgentOS Kernel 成为不可维护的巨大 monolith，又保护最重要的身份、状态和权限语义不随某个模型版本变化。
 
-把这一关系写成最小数学骨架，可得
+第一个 ``+1'' 还承担\textbf{持久化}问题。普通程序崩溃以后重启，只需恢复文件和服务状态；持续 Agent 重启则必须回答：
+\[
+\text{Is this still the same agent?}
+\]
+这意味着 Checkpoint 不能只保存 Tensor 或进程内存，而应至少保存：
+\[
+\mathcal C_p
+=
+\left[
+h^\star,
+E^\star,
+\Theta^\star,
+\Psi^\star,
+\Omega^\star,
+G^\star,
+Authority^\star,
+BodyBinding^\star
+\right],
+\]
+其中某些高速状态可以丢弃或重新估计，而慢变量和身份状态必须具有一致性语义。系统软件必须提供事务化、版本化和恢复边界，否则长期自我将因普通软件故障而被破坏。
 
-\begin{equation}\mathcal R=\{B,K,H\}\oplus\{OS,HW\}.\end{equation}
+因此第一个 ``+1'' 并不是简单的 ``Linux 适配工程''。它是把认知理论转换成\textbf{可持续存在的软件实体}所必须的运行时工程。它决定前面那些理论变量能否获得真正的进程生命周期、权限、持久存储、实时调度、设备访问和故障恢复。可以说，如果前三条主线决定 AgentOS ``怎样思考和行动''，那么这一层决定它能否在真实计算机上 ``连续地活着''。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对+1：Cerebellum \& Inference Hardware的命名和组合仍是需要实验验证的建模提案。
+\section{第二个 ``+1''：异构智能硬件——让多时间尺度智能获得匹配的计算底座}
+\label{sec:roadmap-hardware}
 
-这一小节的反例同样重要：把五条路线串行化会让接口假设长期得不到跨线验证。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+第二个 ``+1'' 来自一个容易被软件研究忽略的事实：如果智能真的是多时间尺度动力系统，那么不同层级对计算硬件的需求也必然不同。大规模语言和世界模型推理强调高吞吐矩阵计算、长上下文与高容量内存；身体快速闭环强调低延迟、确定性、连续状态更新和在线适应；安全控制甚至可能要求在高层模型不可用时仍能独立工作。因此，AgentOS 的最终物理实现不应被假设为 ``所有计算都运行在同一块更大的推理芯片上''。
 
-\begin{thought}
-对“+1：Cerebellum \& Inference Hardware”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+我们可以把整个计算负载按照时间尺度写成：
+\[
+\mathcal W
+=
+\mathcal W_{\mathrm{fast}}
+\cup
+\mathcal W_{\mathrm{medium}}
+\cup
+\mathcal W_{\mathrm{slow}},
+\]
+其中：
+\[
+\mathcal W_{\mathrm{fast}}
+=
+\{servo,BPCC,safety,tracking,\ldots\},
+\]
+\[
+\mathcal W_{\mathrm{medium}}
+=
+\{SGC/FCS,h,SPC,TCE,planning,\ldots\},
+\]
+\[
+\mathcal W_{\mathrm{slow}}
+=
+\{E/\Theta\ consolidation,\Psi/\Omega\ update,long\ simulation,\ldots\}.
+\]
+如果将这些负载全部映射到同一计算单元，则很容易产生：
+\[
+LatencyVariance\uparrow,
+\qquad
+EnergyCost\uparrow,
+\qquad
+RealtimePredictability\downarrow.
+\]
+因此硬件异构不是性能优化的附加项，而是多尺度智能理论向物理实现投影后的自然结果。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+在我们的长期路线中，至少要区分两种主要计算形态。第一种是通用推理计算，重点支持大模型推理、世界模型、语义表示和长期认知结构处理，可以抽象成：
+\[
+H_I
+=
+HighThroughputInferenceArchitecture.
+\]
+第二种是所谓 ``小脑芯片''，其目标并不是把大模型缩小，而是为 BPCC 类功能提供：
+\[
+\boxed{
+LowLatency
++
+Determinism
++
+OnlineAdaptation
++
+ContinuousControl.
+}
+\]
+可记为：
+\[
+H_C
+=
+CerebellarControlArchitecture.
+\]
+两者满足的优化目标并不相同。若用代价函数表示：
+\[
+J_I
+=
+\alpha_1 Throughput^{-1}
++
+\alpha_2 MemoryCost
++
+\alpha_3 Energy,
+\]
+而小脑式控制硬件更接近：
+\[
+J_C
+=
+\beta_1 Latency
++
+\beta_2 Jitter
++
+\beta_3 ControlError
++
+\beta_4 AdaptationCost.
+\]
+在机器人或高实时数字身体中，$J_C$ 的延迟与抖动权重可能远高于大模型推理场景。
 
-\section{三条软件理论线为何必须并行}
-\begin{narration}
-现在把镜头移到“三条软件理论线为何必须并行”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这种硬件分层与大脑/小脑的类比只能用于帮助理解功能差异，不能简单声称 AgentOS 应当复制生物脑结构。真正重要的是系统理论中的：
+\[
+\boxed{
+ComputationShouldMatchTimescale.
+}
+\]
+谁承担哪种功能，应由闭环的时间常数、数据结构、在线学习要求和安全约束决定，而不是由 ``看起来像哪个脑区'' 决定。
 
-本节把“三条软件理论线为何必须并行”落实为由 Body Runtime、Agent Kernel、连续—离散控制三条理论主线与系统软件、推理/小脑硬件两层基础设施组成的并行研发分解。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 的 3+1+1 研发战略”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+第二个 ``+1'' 还有一个非常重要的系统作用：它能够把成熟能力从昂贵的通用认知计算中进一步沉降到低成本专用执行结构。当某种任务最初需要：
+\[
+h
+\rightarrow
+Reasoning
+\rightarrow
+Action,
+\]
+经过长期经验可能形成：
+\[
+E
+\rightarrow
+\Theta
+\rightarrow
+BodySkill.
+\]
+如果 BodySkill 最终仍然必须通过大型推理模型逐步执行，那么 ``技能沉降'' 只完成了软件语义层的一半。更彻底的成熟形式可能是：
+\[
+\boxed{
+CognitiveCompilation
+\rightarrow
+PolicyCompilation
+\rightarrow
+HardwareEfficientExecution.
+}
+\]
+因此专用硬件成为长期智能中 ``过去认知劳动变成未来结构资本'' 的最后一级承载。
 
-把这一关系写成最小数学骨架，可得
+当然，这并不意味着 AgentOS 的早期研发必须等待专用芯片。$3+1+1$ 的关键就在于区分\textbf{理论目标}和\textbf{阶段实现}。早期 BPCC 完全可以运行在 CPU/GPU/MCU 上；SGC、FCS 和 KRA 也可以首先在软件模拟中验证。只有当系统已经能够测量真实负载，并明确：
+\[
+\tau,\quad FLOPS,\quad MemoryBandwidth,\quad Jitter,\quad Energy
+\]
+等需求之后，硬件定制才有工程意义。因此第二个 ``+1'' 应在研究组织上尽早存在，在产品实现上则后置到算法和 ABI 足够稳定以后。
 
-\begin{equation}\mathcal R=\{B,K,H\}\oplus\{OS,HW\}.\end{equation}
+从长期角度看，硬件主线的意义就在于避免一种常见错误：用越来越大的单一推理算力去模拟所有智能过程。如果智能真正具有频谱结构，那么成熟系统更可能是：
+\[
+\boxed{
+HeterogeneousCompute
+\leftrightarrow
+HeterogeneousCognitiveTimescales.
+}
+\]
+也就是说，AgentOS 的最终计算机不是简单 ``运行 AI 的计算机''，而是计算结构本身开始按照智能动力学的多尺度结构进行重新组织。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对三条软件理论线为何必须并行的命名和组合仍是需要实验验证的建模提案。
+\section{三条软件理论线为什么必须并行推进}
+\label{sec:roadmap-three-lines-parallel}
 
-这一小节的反例同样重要：把五条路线串行化会让接口假设长期得不到跨线验证。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+理解 $3+1+1$ 最容易犯的错误，是把前三条主线理解成一个严格串行瀑布：
+\[
+AgentKernel
+\rightarrow
+BodyRuntime
+\rightarrow
+ControlTheory.
+\]
+事实上，这种组织方式几乎必然导致后期架构推倒重来。原因在于三条主线之间存在不可消除的循环依赖：Kernel 不知道 Body 能提供怎样的现实语义，就无法稳定定义认知接口；Body Runtime 不知道 Kernel 需要怎样的预测、Goal 和残差，就无法定义公开 ABI；两者如果没有 Continuous--Discrete Control，又无法确定哪些状态应该快速更新、哪些应该慢速巩固、何时异常升级以及何时触发离散治理。因此更准确的研发关系是：
+\[
+\boxed{
+BodyRuntime
+\bowtie
+AgentKernel
+\bowtie
+ControlTheory.
+}
+\]
 
-\begin{thought}
-对“三条软件理论线为何必须并行”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+可以把三条主线分别表示为三个状态集合：
+\[
+R_B(t),\qquad
+R_K(t),\qquad
+R_C(t),
+\]
+其研发演化满足：
+\[
+R_B^{n+1}
+=
+F_B
+\left(
+R_B^n,
+Contract_{BK}^n,
+Constraint_C^n
+\right),
+\]
+\[
+R_K^{n+1}
+=
+F_K
+\left(
+R_K^n,
+Contract_{BK}^n,
+Constraint_C^n
+\right),
+\]
+\[
+R_C^{n+1}
+=
+F_C
+\left(
+ObservedDynamics(R_B^n,R_K^n)
+\right).
+\]
+这意味着控制理论不应被看成工程完成后的事后分析，而必须从真实 Body 与 Kernel 运行数据中逐步建立；反过来，它一旦形成稳定规律，又会重新约束下一版 Body 和 Kernel。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+但并行开发并不意味着所有接口都允许共同漂移。我们此前在 KRA 共同学习问题中已经得到：
+\[
+\boxed{
+RelationshipStability > ParameterStability.
+}
+\]
+这一原则同样适用于研发组织。内部模型、数据结构、神经网络架构可以快速试验，但是跨团队接口必须形成相对稳定的 ``语义骨架''。因此应区分：
+\[
+\boxed{
+StableContract
+}
+\]
+和
+\[
+\boxed{
+PlasticImplementation.
+}
+\]
+例如 SGC 可以允许内部编码不断升级，但 ``实体、关系、身体位置、观察/预测状态'' 等基本语义不宜每次版本都重写；FCS 可以改变估计模型，但 ``影响类型、强度、变化率、置信度'' 等公开语义应保持兼容；Kernel 可以更换基础模型，但 Goal、Memory、ControlReference、Residual 与 Authority 的核心含义应尽可能稳定。
 
-\section{两个基础设施层为何不能缺失}
-\begin{narration}
-现在把镜头移到“两个基础设施层为何不能缺失”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+可以定义研发耦合矩阵：
+\[
+\mathbf D
+=
+\begin{bmatrix}
+D_{BB} & D_{BK} & D_{BC}\\
+D_{KB} & D_{KK} & D_{KC}\\
+D_{CB} & D_{CK} & D_{CC}
+\end{bmatrix},
+\]
+其中 $D_{ij}$ 表示第 $j$ 条研究线的变化对第 $i$ 条研究线造成的依赖强度。战略目标不是令所有非对角项为零，因为真正的智能本来就是耦合系统；而是降低不必要的实现耦合，同时保留必要的语义耦合：
+\[
+\boxed{
+ImplementationCoupling\downarrow,
+\qquad
+SemanticCoupling=Stable.
+}
+\]
 
-本节把“两个基础设施层为何不能缺失”落实为由 Body Runtime、Agent Kernel、连续—离散控制三条理论主线与系统软件、推理/小脑硬件两层基础设施组成的并行研发分解。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 的 3+1+1 研发战略”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+这也是为何 $3+1+1$ 的早期研发应该优先建设 Reference Simulator。数字身体、模拟机器人、虚拟环境和受控 GUI 可以作为 Reality Proxy，让 Kernel、Body Runtime 与控制算法在没有完整硬件的情况下共享可重复实验。在这样的环境中，可以同时测量：
+\[
+Latency,\quad
+Residual,\quad
+C_{run},\quad
+RecoveryTime,\quad
+SkillTransfer,\quad
+MemoryDrift,
+\]
+从而让三条主线围绕同一组系统指标迭代，而不是各自在独立 benchmark 中 ``局部最优''。
 
-把这一关系写成最小数学骨架，可得
+并行推进还有另一个更深层原因：AgentOS 的很多核心规律只有在跨层闭环中才会显现。例如 ``能力向下沉降'' 不能只在 Kernel 内证明，因为最终要观察重复显式认知是否真正被 BPCC 或 BodySkill 接管；``异常向上'' 也不能只通过机器人控制指标证明，因为需要检查相关 Agent-CSO 是否真的进入 $h$ 并触发更高层解释；工作记忆有限性同样需要 Body Runtime 的局部过滤和 Boundary 的准入机制共同验证。因此：
+\[
+\boxed{
+SystemProperty
+\neq
+SumOfModuleBenchmarks.
+}
+\]
+这与前文关于智能整体轨迹的认识完全一致：
+\[
+\Gamma_{whole}
+\neq
+\sum_i \Gamma_i.
+\]
 
-\begin{equation}\mathcal R=\{B,K,H\}\oplus\{OS,HW\}.\end{equation}
+由此我们得到一条重要研发原则：\textbf{各主线可以拥有自己的局部 benchmark，但必须共同拥有跨线闭环 benchmark。}例如一个真正有意义的测试不是 ``SGC mAP 达到多少'' 或 ``Kernel 在某个 QA 数据集达到多少''，而可以是：Agent 第一次遇到某个身体任务时需要多少显式认知，经过若干次经历后是否形成稳定技能，正常执行时高层干预是否下降，环境发生异常后是否能够重新升级为显式认知，修复完成后又能否重新沉降。这个测试同时覆盖：
+\[
+Body
++
+Kernel
++
+Control.
+\]
+它比单模块性能更接近 ``一个系统是否正在成长''。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对两个基础设施层为何不能缺失的命名和组合仍是需要实验验证的建模提案。
+因此三条软件理论线并行的本质，不是为了提高项目管理效率，而是因为我们研究的对象本身就是多尺度耦合动力系统。开发组织必须在一定程度上复制所研究对象的结构：
+\[
+\boxed{
+IndependentLocalProgress
++
+StableCrossLayerContract
++
+PeriodicGlobalClosure.
+}
+\]
+每条主线拥有局部自治，但必须周期性回到 World--Agent--World 的整体闭环中接受现实验证。这正是 AgentOS 研究自身应遵循的 ``局部闭合、异常上浮、慢结构稳定'' 原则在科研组织层面的再次出现。
 
-这一小节的反例同样重要：把五条路线串行化会让接口假设长期得不到跨线验证。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{两个基础设施层为什么不能缺失：从理论体系到可持续智能系统}
+\label{sec:roadmap-two-plus-one-necessity}
 
-\begin{thought}
-对“两个基础设施层为何不能缺失”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+在结束本章之前，我们还必须回答一个战略上非常关键的问题：既然 Agent Kernel、Body Runtime 与 Continuous--Discrete Control 已经构成完整智能理论，为什么还一定需要两个 ``+1''？是否可以把操作系统和硬件全部视为普通工程实现细节？答案是否定的。原因在于，本书讨论的不是一次推理算法，而是持续人工智能体。对于持续系统而言，承载层不仅影响性能，而且会反过来限定哪些智能动力学能够真实存在。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+为了更严格地说明这一点，可以把完整 AgentOS 能力写为：
+\[
+\mathcal C_{\mathrm{Agent}}
+=
+\mathcal C
+\left(
+R_B,
+R_K,
+R_C;
+R_{OS},
+R_H
+\right),
+\]
+其中前三项分别表示 Body Runtime、Kernel 与控制理论成熟度，$R_{OS}$ 表示系统软件能力，$R_H$ 表示硬件能力。若简单假设它们可完全相加：
+\[
+\mathcal C_{\mathrm{Agent}}
+=
+R_B+R_K+R_C+R_{OS}+R_H,
+\]
+就无法解释一个现实问题：任何关键层接近零，都可能使整体能力大幅坍缩。例如不存在可靠持久化时，$\Psi/\Omega$ 的长期连续性无法兑现；不存在实时调度时，BPCC 无法获得稳定低延迟；不存在 Body Driver 与安全中断时，认知层不能安全进入物理现实。因此更合适的第一阶近似是瓶颈模型：
+\[
+\boxed{
+\mathcal C_{\mathrm{Agent}}
+\lesssim
+\min
+\left\{
+\kappa_B R_B,
+\kappa_K R_K,
+\kappa_C R_C,
+\kappa_{OS}R_{OS},
+\kappa_HR_H
+\right\}.
+}
+\]
+虽然实际系统必然比这一简单模型更复杂，但它揭示了一个重要事实：AgentOS 是一种\textbf{闭环系统工程}，而闭环中的关键薄弱环节往往决定系统上限。
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“AgentOS 的 3+1+1 研发战略”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“Body Runtime 研发路线”只使用这里已经给出的结果，不反过来为本章提供前提。
+第一个 ``+1'' Computer OS 决定的是\textbf{持续性、资源性与权限性}。Agent 只有在现实计算系统中拥有稳定进程、持久身份、可恢复状态和资源隔离之后，所谓生命周期才不是理论概念。第二个 ``+1'' 硬件决定的是\textbf{实时性、能耗和物理可达性}。Agent 的高层思想可以晚几百毫秒形成，但身体平衡、安全制动和某些高速数字控制不能等待远程大模型。因此：
+\[
+\boxed{
+ArchitectureFeasibility
+=
+CognitiveFeasibility
+\cap
+ComputationalFeasibility
+\cap
+PhysicalFeasibility.
+}
+\]
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+这也解释了为什么我们把 $3+1+1$ 称为 ``研发战略'' 而不是 ``系统分层图''。在早期阶段，两个 ``+1'' 可以大量复用现有 Linux、云计算、GPU、MCU、机器人控制器；没有必要一开始就自行制造 OS 和芯片。但研究团队必须从第一天知道最终系统需要哪些 OS 原语和硬件原语，否则上层架构很容易默认为 ``无限算力、无限带宽、无限上下文、无确定性要求'' 的理想环境。一旦走向真实持续 Agent，这些隐含假设会集中暴露。
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+因此研发阶段应遵循一个逐渐收紧的 ``现实约束注入'' 原则。设第 $n$ 阶段的系统约束集合为：
+\[
+\mathcal K_n
+=
+\{
+Latency_n,
+Memory_n,
+Energy_n,
+Authority_n,
+Reliability_n,
+Safety_n
+\},
+\]
+那么随着系统成熟应有：
+\[
+\mathcal K_{n+1}
+\supseteq
+\mathcal K_n
+\]
+在约束维度上逐步逼近真实部署条件，而不是始终在理想模拟环境中优化。换句话说，早期允许 ``用软件模拟未来硬件''，但不能 ``忘记未来硬件最终必须遵守物理世界''。
+
+$3+1+1$ 之间还应建立一套统一的跨层评价函数。可概念性写成：
+\[
+J
+=
+\lambda_1J_{\mathrm{task}}
++
+\lambda_2J_{\mathrm{residual}}
++
+\lambda_3J_{\mathrm{latency}}
++
+\lambda_4J_{\mathrm{energy}}
++
+\lambda_5J_{\mathrm{identity}}
++
+\lambda_6J_{\mathrm{recovery}}
++
+\lambda_7J_{\mathrm{safety}}
++
+\lambda_8J_{\mathrm{transfer}}.
+\]
+这里任务完成率只是一个指标。一个真正持续 Agent 还必须考察异常残差、高低层延迟、能耗、身份漂移、故障恢复、安全边界以及 Body/Skill 迁移能力。这种多目标评价也提醒我们：未来 AgentOS 不存在一个单独的 ``最高分模型''，而是不同尺度和不同功能之间的 Pareto 权衡。
+
+最终，$3+1+1$ 可以被理解为五种不可互相替代的工程问题：
+
+\[
+\begin{aligned}
+BodyRuntime &: \quad
+\text{如何形成稳定的现实感知--行动闭环？}\\
+AgentKernel &: \quad
+\text{如何形成持续的认知主体？}\\
+Continuous\text{-}DiscreteControl &: \quad
+\text{如何使多尺度智能动力学保持可控？}\\
+ComputerOS &: \quad
+\text{如何使这种主体在真实计算系统中持续存在？}\\
+Hardware &: \quad
+\text{如何使不同时间尺度的智能计算获得物理可执行性？}
+\end{aligned}
+\]
+
+五者最终汇合为：
+\[
+\boxed{
+World
+\rightarrow
+BodyRuntime
+\rightarrow
+AgentKernel
+\rightarrow
+Action
+\rightarrow
+World
+}
+\]
+同时受到：
+\[
+\boxed{
+ControlTheory
+}
+\]
+的动态治理，并由：
+\[
+\boxed{
+ComputerOS+Hardware
+}
+\]
+提供真实承载。
+
+因此，本章最终给出的不是简单的团队划分，而是一条从理论走向人工智能生命体工程的总体方法论：
+
+\[
+\boxed{
+\begin{array}{c}
+\text{认知理论解决“为什么能够成为主体”}\\
+\Updownarrow\\
+\text{身体理论解决“主体如何进入现实”}\\
+\Updownarrow\\
+\text{控制理论解决“多尺度闭环如何保持稳定”}\\
+\Updownarrow\\
+\text{系统软件解决“这种主体如何持续存在”}\\
+\Updownarrow\\
+\text{硬件解决“这种动力学如何在物理时间中真正发生”}
+\end{array}
+}
+\]
+
+从这个角度看，$3+1+1$ 不是对 AgentOS 已有组件的重新分类，而是对整个研究计划进行一次更高尺度的拓扑组织。它把本书此前建立的认知结构、记忆、自我、控制、身体和现实边界重新放回工程世界，使我们能够从一个重要但仍然抽象的理论问题：
+
+\[
+\text{``持续智能应该具有怎样的结构？''}
+\]
+
+正式进入另一个更加严格的问题：
+
+\[
+\boxed{
+\text{``我们怎样用今天可以逐步验证的技术，把这种结构真实地构造出来？''}
+}
+\]
+
+而这正是工程路线论的起点。

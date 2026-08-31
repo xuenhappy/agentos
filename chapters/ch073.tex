@@ -1,218 +1,1015 @@
-\chapter{Body Runtime 研发路线}
-\begin{chapteroverviewbox}
-这一章，我们围绕“Body Runtime 研发路线”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明理论到系统与生态的工程路线。
-\end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
-
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 AgentOS 三条软件主线、两类基础设施、六阶段路线与产品成熟次序的工程推演。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是系统工程、成熟度分级、接口契约与开放治理（混杂系统与模型预测控制）。
-
-本章使用上一章“AgentOS 的 3+1+1 研发战略”已经得到的对象与边界；本章产出将供下一章“Agent Kernel 研发路线”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在系统工程、成熟度分级、接口契约与开放治理上。
-\section{Body ABI}
-\begin{narration}
-现在把镜头移到“Body ABI”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Body ABI”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Runtime 研发路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Body ABI的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Body ABI”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{SGC}
-\begin{narration}
-现在把镜头移到“SGC”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“SGC”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Runtime 研发路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对SGC的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“SGC”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{FCS}
-\begin{narration}
-现在把镜头移到“FCS”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“FCS”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Runtime 研发路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对FCS的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“FCS”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{BPCC Simulator}
-\begin{narration}
-现在把镜头移到“BPCC Simulator”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“BPCC Simulator”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Runtime 研发路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对BPCC Simulator的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“BPCC Simulator”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Physical Robot}
-\begin{narration}
-现在把镜头移到“Physical Robot”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Physical Robot”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Runtime 研发路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Physical Robot的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Physical Robot”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Digital Body}
-\begin{narration}
-现在把镜头移到“Digital Body”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Digital Body”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Runtime 研发路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Digital Body的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Digital Body”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Body Skill}
-\begin{narration}
-现在把镜头移到“Body Skill”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Body Skill”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Runtime 研发路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Body Skill的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Body Skill”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Safety}
-\begin{narration}
-现在把镜头移到“Safety”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Safety”落实为在规定时延内具有高于普通预测控制权限的约束与中断包络。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Runtime 研发路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}x_t\in\mathcal S,\quad u_t\in\mathcal U_{\rm safe}(x_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Safety的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：让实时危险等待高层认知会违反最坏时延要求。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Safety”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Hardware Acceleration}
-\begin{narration}
-现在把镜头移到“Hardware Acceleration”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Hardware Acceleration”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Body Runtime 研发路线”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Hardware Acceleration的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Hardware Acceleration”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“Body Runtime 研发路线”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“Agent Kernel 研发路线”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\chapter{Body Runtime 研发路线：从统一身体接口到可迁移具身闭环}
+\label{chap:body-runtime-roadmap}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.92\textwidth}
+\textbf{【本章总体说明】}
+
+本章讨论 AgentOS ``3+1+1'' 总体研发路线中第一条独立技术主线——Body Runtime 的工程演进路径。这里的核心问题并不是“如何为大模型增加机器人控制接口”，而是如何构造一个可以长期独立演化、能够接入不同物理身体与数字身体，并在毫秒至秒级时间尺度上自主闭合感知--预测--控制--残差--学习循环的身体运行时。我们将坚持此前建立的基本分工：
+\[
+\boxed{
+AgentKernel=\text{决定做什么与为什么做}
+}
+\qquad
+\boxed{
+BodyRuntime=\text{决定这个身体具体怎样做到}
+}
+\]
+因此 Body Runtime 既不是被动设备驱动层，也不是第二个智能主体，而是位于现实世界和认知内核之间的\textbf{快速具身动力学层、现实语义压缩层和局部闭环承载层}。
+
+本章按照工程依赖关系而不是组件罗列顺序展开：首先建立稳定的 Body ABI，使身体成为可替换对象；随后形成 SGC 与 FCS 两个公开现实表示空间；再通过 BPCC 构造快速预测控制闭环；然后分别在仿真、物理机器人和数字身体上验证同一套结构；进一步把反复成功的高层控制沉降为 Body Skill；最终由 Safety 与硬件加速保证这一体系能够进入真实长期运行环境。整个研发过程始终遵守三个原则：
+\[
+\boxed{
+SemanticInterfaceStable,\quad FastDynamicsLocal,\quad RealityAuthoritative
+}
+\]
+即语义接口应尽量稳定，高频动力学应尽量在身体局部闭合，而任何内部预测最终都必须重新经过现实观测验证。本章给出的不是单个机器人产品的开发顺序，而是一条从“身体接口”逐步走向“可迁移身体运行时”的系统工程路线。
+\end{minipage}
+}
+\end{center}
+
+\section{Body ABI：首先固定身体与认知之间的契约}
+
+Body Runtime 的研发不能从某一种具体机器人的电机、摄像头或者浏览器 API 开始。若研发起点就是某个具体身体，那么认知系统最终会把身体特有的坐标系、控制命令、传感器格式和状态变量吸收到自己的内部表示之中，从而形成一种隐性的结构锁定：
+\[
+Architecture_{Agent}
+=
+f(Body_i).
+\]
+当身体发生变化时，整个认知体系便不得不重新学习。对于一个真正面向通用 Agent 的 AgentOS，这种设计是不可接受的。Body Runtime 第一阶段必须完成的工作，是定义一套足够稳定的 \textbf{Body Application Binary Interface，Body ABI}，使认知内核面对的是“身体能够感知什么、能够改变什么、当前处于什么状态、可以接受什么控制意图”，而不是直接面对摄像头编号、电机寄存器、DOM 节点或操作系统调用。
+
+因此，我们首先将一个具体身体表示为
+\[
+B_i=
+\left(
+\mathcal S_i,
+\mathcal A_i,
+\mathcal O_i,
+\mathcal D_i,
+\mathcal C_i
+\right),
+\]
+其中 $\mathcal S_i$ 为身体内部状态空间，$\mathcal A_i$ 为可执行动作空间，$\mathcal O_i$ 为原始观测空间，$\mathcal D_i$ 表示身体自身的快速动力学，$\mathcal C_i$ 表示能力、约束与安全边界。Body ABI 的任务并不是把这些具体变量直接公开给 Agent Kernel，而是构造一个身体无关的公共语义空间
+\[
+\mathcal I_B
+=
+\left(
+SGC,
+FCS,
+ControlReference,
+PredictiveEnvelope,
+Capability,
+Residual,
+Exception
+\right).
+\]
+于是每一种身体只需要实现一个映射
+\[
+\Phi_i:
+(\mathcal S_i,\mathcal O_i,\mathcal A_i)
+\longleftrightarrow
+\mathcal I_B.
+\]
+Agent Kernel 原则上只依赖 $\mathcal I_B$，而不依赖具体的 $B_i$。理想状态下应满足
+\[
+\frac{\partial Architecture_{Agent}}
+{\partial Body_i}
+\rightarrow 0.
+\]
+这里当然不是要求不同身体拥有完全相同的能力，而是要求\textbf{身体差异主要被限制在 Body Runtime 内部，而不是向认知体系无限扩散}。
+
+Body ABI 至少需要稳定表达五类语义。第一类是现实内容，即当前有哪些可持续追踪的实体、区域、关系和事件；第二类是身体影响，即能量、温度、损伤、威胁、控制不稳定等如何影响当前主体；第三类是控制引用，即高层希望身体达到怎样的状态范围，而不是逐电机命令；第四类是能力描述，即这个身体现在究竟能够做什么、精度如何、资源余量如何；第五类是残差与异常，即局部控制什么时候已经不能继续自主闭合，必须把问题升级给高层。
+
+由此我们应特别避免一种常见的工程错误：把所谓“统一身体接口”设计成巨大动作枚举表。真正可扩展的 ABI 不能只规定
+\[
+Action=\{\texttt{walk},\texttt{grasp},\texttt{click},\ldots\},
+\]
+因为动作集合随着身体变化会无限扩张。更稳定的方式是表达\textbf{目标、约束、参考状态和可行动关系}。例如高层不应该规定机器人第 $17$ 个关节旋转多少度，而应表达：
+\[
+x_{\mathrm{cup}}
+\in
+\mathcal R_{\mathrm{reachable}},
+\qquad
+\text{grasp}(cup)
+=
+target,
+\qquad
+Risk<R_{\max}.
+\]
+如何把这一高层约束转化为轨迹和执行参数，是 Body Runtime 自身的职责。
+
+因此 Body ABI 阶段的主要验收标准不是机器人“能不能完成某个 benchmark”，而是更基础的结构指标：同一 Agent Kernel 在更换身体以后，有多少内部认知结构不需要改变；同一个高层 Goal 是否能够由不同 Body Runtime 映射为各自的身体行为；异常是否能够以统一语义返回；身体能力变化是否会通过 Capability Descriptor 被高层正确理解。由此可以定义初步的身体迁移率
+\[
+T_B
+=
+1-
+\frac{
+\Delta Structure_{Kernel}
+}{
+Structure_{Kernel}
+},
+\]
+其中 $T_B$ 越接近 $1$，表明身体替换对认知结构的侵入越小。
+
+这一阶段的外部理论依赖主要来自操作系统中的 Hardware Abstraction Layer、设备驱动模型、机器人中间件、接口契约设计和能力模型，但 Body ABI 与普通 HAL 的根本区别在于：普通 HAL 统一的是设备操作，Body ABI 要统一的是\textbf{主体与现实发生闭环耦合的功能语义}。它因此成为后续 SGC、FCS、BPCC、Body Skill 和跨身体迁移能够成立的前提。
+
+\section{SGC：建立身体中心的可行动现实表示}
+
+当 Body ABI 稳定以后，第二个问题立即出现：不同身体具有完全不同的原始感知格式，Agent Kernel 究竟应该“看到”什么？如果直接把 Camera Frame、LiDAR Point Cloud、DOM Tree、鼠标坐标、Joint State 和各种传感器张量送入高层认知，那么 Body Runtime 实际上并没有完成抽象。认知内核仍然需要知道具体传感器和身体实现，Body Scale 也就无法成立。因此 Body Runtime 的第二阶段必须建立统一的现实内容表示，即
+\[
+\boxed{
+SGC=SemanticGraphCoordinateSpace.
+}
+\]
+
+SGC 的本质不是传统计算机视觉中的 Scene Graph，而是\textbf{身体中心、持续存在、能够被行动约束和预测使用的语义现实坐标空间}。可以形式化写成
+\[
+SGC_t
+=
+\left(
+V_t,
+E_t,
+\mathcal X_t,
+\mathcal A_t,
+\mathcal M_t
+\right),
+\]
+其中 $V_t$ 为当前可追踪实体集合，$E_t$ 为实体之间的关系集合，$\mathcal X_t$ 表示身体中心几何信息，$\mathcal A_t$ 为 affordance 或可行动属性，$\mathcal M_t$ 则保存认识论元数据。一个 SGC 节点并不只是“检测到了一个杯子”，而应逐步形成如下结构：
+\[
+v_i=
+\left[
+Identity,
+Geometry,
+Attributes,
+SemanticTags,
+Affordance,
+EpistemicState,
+Confidence
+\right].
+\]
+关系也不应局限为语言语义：
+\[
+e_{ij}
+\in
+\{
+spatial,
+causal,
+ownership,
+support,
+occlusion,
+reachable,
+dangerous,
+controlledBy,\ldots
+\}.
+\]
+
+SGC 最重要的工程原则之一是
+\[
+\boxed{
+Body\in SGC.
+}
+\]
+智能体不能拥有一个悬浮于世界之外的“上帝视角”。即使 Body Runtime 能通过多摄像头、卫星地图或网络数据形成近似全局地图，任何最终可行动表示仍然必须能够回到“我现在位于哪里、什么是我可达的、什么会阻碍我、什么与我的能力相关”。因此 SGC 的几何并不是纯客观坐标，而是一个以主体能力为参照的 actionable geometry。相同楼梯对于人形机器人可能具有
+\[
+Affordance=\text{walkable},
+\]
+对于轮式机器人却可能是
+\[
+Affordance=\text{blocked}.
+\]
+所以同一 Universe-CSO 在不同身体中的 SGC 实现可以不同，而认知上的高层 CSO 仍然可能保持同一语义。
+
+SGC 的另一个关键设计是必须显式记录认识论状态。我们此前反复强调
+\[
+Prediction\neq Observation.
+\]
+因此一个对象或者关系必须携带来源属性，例如
+\[
+m_i\in
+\{
+Observed,
+Derived,
+Predicted,
+Counterfactual,
+Suggested
+\}.
+\]
+由传感器直接确认的“门已关闭”和 BPCC 推测的“门下一秒仍会关闭”，虽然语义对象相同，却具有完全不同的现实权威。如果系统不保留这种区别，预测状态很容易逐渐污染现实状态，使 Agent 进入内部模型自我验证的闭环。SGC 因此不仅是语义地图，也是 Agent 对自身“知道什么、为什么知道、知道得有多确定”的显式边界。
+
+从研发角度，SGC 不应该一开始追求覆盖世界所有语义类型，而应该按照 Body Runtime 的动作闭环逐层扩大。初始版本只需要实现 Persistent Entity、Body Pose、Geometry、基本关系和 Observation Confidence；第二阶段再加入 Affordance；第三阶段加入预测对象和事件；进一步才加入复杂语义标签与关系结构。其目标不是建立百科全书式世界模型，而是获得
+\[
+\boxed{
+MinimalSufficientActionableRepresentation.
+}
+\]
+若某个语义信息既不能改变局部预测、控制、安全判断，也不能帮助高层推理，那么它没有必要进入实时 SGC。
+
+在数字身体上，同样的原则仍然成立。一个 Browser Body 的 SGC 可以包含页面区域、按钮、输入框、菜单、当前焦点、可滚动区域和可点击关系；一个 Desktop Body 可以包含窗口、文件、应用、光标和活动进程。此时所谓“空间”不必局限为欧氏三维空间，而是可行动坐标空间
+\[
+\mathcal X_{SGC}
+=
+\mathcal X_{physical}
+\cup
+\mathcal X_{digital}.
+\]
+这正是 SGC 能够统一物理机器人与数字 Agent 的关键。
+
+SGC 的理论依赖可以借鉴 SLAM、object-centric perception、scene graph、knowledge graph、affordance theory、world model 和 epistemic state estimation，但它们分别只解决 SGC 的一部分。SGC 的目标是把这些分散表示重新组织成 Body Runtime 向认知内核公开的\textbf{统一现实语义面}。后续 Body Skill、BPCC 和 KRA 都应在这一公共现实坐标系上交换可检查状态，而不是让各自的 latent representation 直接成为系统 ABI。
+
+\section{FCS：建立现实对主体影响的统一功能场}
+
+如果 SGC 回答的是“世界中有什么，以及我在哪里”，那么仅有 SGC 仍然不足以支撑一个长期具身 Agent。真实身体还存在另一类同样重要的信息：这些现实状态正在如何影响主体。电池余量、执行器温度、结构损伤、系统延迟、网络抖动、控制残差、接触力、威胁距离和资源压力并不只是世界中的“对象属性”，它们会直接改变 Agent 当前应采取的控制策略、探索强度和风险容忍度。因此 Body Runtime 的第三阶段必须建立一个与 SGC 正交的公开状态空间：
+\[
+\boxed{
+FCS=FixedTypedMultilayerFeelingField.
+}
+\]
+
+这里的 Feeling 始终是工程功能概念，而不是关于主观体验的判断。FCS 表达的是
+\[
+\boxed{
+HowRealityAndBodyAreAffectingMe.
+}
+\]
+一个基本 FCS 可以形式化成
+\[
+F_t
+\in
+\mathbb R^{K\times H\times W\times C},
+\]
+或者对于无空间拓扑的数字 Body，退化为多维状态场
+\[
+F_t
+\in
+\mathbb R^K.
+\]
+$K$ 表示固定类型通道，例如 EnergyPressure、ThermalPressure、IntegrityPressure、Threat、SensoryLoad、ControlInstability、Urgency 等。对于每个通道，我们又不只保存一个静态值，而可使用
+\[
+f_k(t)
+=
+\left(
+I_k,
+\dot I_k,
+Conf_k,
+Mask_k
+\right),
+\]
+其中 $I_k$ 表示影响强度，$\dot I_k$ 表示变化趋势，$Conf_k$ 表示估计可信度，$Mask_k$ 则表示其空间或功能影响范围。
+
+为什么要把 FCS 从 SGC 中单独分离出来？因为“对象是什么”和“对象怎样作用于我”在系统功能上并不相同。桌面上的火源在 SGC 中可能始终是同一个实体，但随着距离、身体材料、温度和当前任务不同，Threat Field 可以发生完全不同的变化。反之，一个数字 Agent 中 CPU 过载、上下文延迟或者网络中断甚至没有清晰的空间实体，却会显著影响系统行为。因此我们需要：
+\[
+\boxed{
+SGC=\text{Reality Content},
+\qquad
+FCS=\text{Reality Influence}.
+}
+\]
+这两个坐标系共同构成 Body Runtime 的公开现实面。
+
+FCS 的研发必须坚持“固定类型、连续强度、低语义开销”的原则。若每一种身体都产生完全不同的 Feeling token，例如机器人 A 使用 ``motor-overheat'', 机器人 B 使用 ``joint-fatigue'', 浏览器 Agent 使用 ``DOM-latency'', 那么高层又会被身体差异侵入。更合理的方法是将底层异构状态映射到较稳定的功能通道。例如：
+\[
+\text{MotorOverheat}
+\mapsto
+ThermalPressure,
+\]
+\[
+\text{CPUThrottling}
+\mapsto
+ResourcePressure,
+\]
+\[
+\text{JointOscillation}
+\mapsto
+ControlInstability.
+\]
+这样 Agent Kernel 学到的“高控制不稳定时应降低动作激进度”便能够跨身体迁移，而无需知道具体是哪一个关节或哪个操作系统线程。
+
+FCS 还承担从 Body Runtime 向 AHC 提供内稳态基础信号的作用，但 Body Runtime 与 AHC 不应混为一层。FCS 属于身体事实层，它表达“当前身体和环境对我形成怎样的功能压力”；AHC 则属于认知内核内部的慢一些的调制整合，它可以把多个 FCS 通道在时间上积分，并结合任务、社会关系与历史经历形成更稳定的调制状态。因此应保持：
+\[
+FCS
+\rightarrow
+AHC,
+\]
+而不是
+\[
+FCS=AHC.
+\]
+这种分层保证快速身体信号不会直接污染高层自我结构，也使认知层可以对短期身体扰动进行过滤。
+
+FCS 阶段的工程验收应至少包含三种测试。第一是跨身体通道一致性：不同硬件产生的功能压力能否映射到相同类型；第二是响应速度：危险和资源状态是否能够在不等待语言模型推理的情况下及时表达；第三是可恢复性：压力下降后，FCS 是否能够正确回落，而不是形成永久高风险状态。由于 FCS 将直接参与局部预测、安全和认知调制，它必须具有比普通语义标签更明确的时间常数和数值范围。
+
+本阶段可借鉴 homeostasis、interoception、robot cost field、potential field、adaptive control state 和 resource monitoring 等已有理论。但 FCS 的独特位置，在于把身体内部状态和外部影响压缩成一组\textbf{跨身体可迁移的功能影响坐标}。SGC 与 FCS 一旦稳定，Body Runtime 才真正开始拥有一个同时表达“世界是什么”和“世界正在怎样影响我”的统一公开现实接口。
+
+\section{BPCC Simulator：在进入真实身体之前建立快速闭环动力学试验场}
+
+SGC 与 FCS 解决了现实如何被表达，但仍没有解决一个关键问题：谁在毫秒到秒级时间尺度上完成身体预测和身体控制？若所有动作都必须经过 Agent Kernel 的显式推理，则高层认知将持续承担本应由身体局部处理的动力学复杂度，导致
+\[
+\tau_{\mathrm{Kernel}}
+\gg
+\tau_{\mathrm{required-control}}
+\]
+时发生不可避免的控制失稳。因此 Body Runtime 的第四个研发节点必须是 BPCC，即 Body Predictive Control Core 的仿真实现。其功能可以概括为：
+\[
+\boxed{
+BPCC=
+FastPrediction+
+FastControl+
+ResidualEstimation+
+AdaptiveLearning.
+}
+\]
+
+我们首先在 Simulator 中实现 BPCC，而不应该直接把未经验证的快速自适应控制器部署到真实机器人。其原因不仅是安全，更是理论可观测性。在真实环境中，传感噪声、机械误差、网络延迟和设备故障同时存在，难以区分 BPCC 内部模型错误与现实执行误差。Simulator 则允许我们分别控制世界模型、身体模型、噪声与扰动，从而建立清晰的实验变量。
+
+可将 BPCC 的基本动力学写为：
+\[
+z_{t+1}
+=
+f_\phi(z_t,u_t,o_t),
+\]
+\[
+\hat y_{t+1:t+H}
+=
+g_\phi(z_t,u_{t:t+H}),
+\]
+其中 $z_t$ 是 BPCC 私有快速 latent state，$\hat y$ 是对未来短时间窗口的预测。局部控制可以抽象为：
+\[
+u_t^\star
+=
+\arg\min_{u_{t:t+H}}
+\sum_{k=0}^{H}
+\left[
+L_{goal}(\hat y_{t+k},r_{t+k})
++
+\lambda_sL_{safe}
++
+\lambda_u\|u_{t+k}\|^2
+\right].
+\]
+这里 $r$ 不是逐执行器动作，而是来自高层的 Control Reference 或 Predictive Envelope。BPCC 因此不是自由决定“我要做什么”，而是在高层给出的可行区域中选择怎样最有效地做到：
+\[
+\boxed{
+HigherLevelSetsFeasibleRegion;
+BPCCOptimizesInsideIt.
+}
+\]
+
+Residual 是 BPCC 的核心公共信号。我们可以定义：
+\[
+\varepsilon_B
+=
+\left(
+\varepsilon_{ctrl},
+\varepsilon_{SGC},
+\varepsilon_{FCS}
+\right),
+\]
+分别表示控制结果、现实结构预测和功能影响预测的偏差。当
+\[
+\|\varepsilon_B\|
+<
+\theta_{\mathrm{local}},
+\]
+BPCC 应继续局部闭环；只有当残差持续超过阈值、出现新型结构或接近能力边界时，才向上升级：
+\[
+\Gamma_B
+=
+F(
+\|\varepsilon_B\|,
+Persistence,
+Risk,
+Novelty,
+GoalRelevance
+).
+\]
+若
+\[
+\Gamma_B\geq\theta_{\mathrm{up}},
+\]
+则产生 Kernel-level event。由此落实我们此前建立的重要原则：
+\[
+\boxed{
+PredictLocally,\ EscalateResidualGlobally.
+}
+\]
+
+Simulator 阶段应专门测试模型失配，而不是只测试控制成功率。例如人为改变摩擦系数、执行器延迟、传感遮挡、质量分布、UI 布局或 API 响应时间，观察 BPCC 是否能够通过局部在线适应吸收小变化，并在变化过大时主动上报，而不是继续“自信执行”。一个成熟的 BPCC 不是永远局部解决问题，而是能够判断：
+\[
+\boxed{
+IStillKnowHowToControl
+}
+\]
+与
+\[
+\boxed{
+MyLocalModelIsNoLongerTrustworthy
+}
+\]
+之间的边界。
+
+这一阶段还必须严格区分 BPCC 私有 latent 与系统公共状态。为了性能，我们允许：
+\[
+z_t^{BPCC}\in\mathbb R^d
+\]
+高度压缩、不可解释，甚至由神经网络在线学习；但它不能成为 AgentOS 唯一状态接口。对高层必须持续暴露：
+\[
+SGC^{obs},
+FCS^{obs},
+Residual,
+Confidence,
+CapabilityMargin.
+\]
+这样既保留快速神经控制器的效率，又避免整个系统被一个不可审计 latent space 绑架。
+
+BPCC Simulator 的理论依赖主要包括 Model Predictive Control、adaptive control、forward model、system identification、model-based reinforcement learning、trajectory optimization 与小脑控制理论。我们并不要求 BPCC 必须采用其中某一种算法，其真正不变的接口是：
+\[
+Prediction
+\rightarrow
+Control
+\rightarrow
+Reality/Simulation
+\rightarrow
+Residual
+\rightarrow
+Adaptation.
+\]
+也就是说，算法可以替换，动力学角色不能缺失。
+
+\section{Physical Robot：把 Body Runtime 放回不可欺骗的现实}
+
+当 Body ABI、SGC、FCS 与 BPCC Simulator 已能够形成稳定闭环以后，下一阶段必须进入真实物理机器人。此时研究对象发生根本变化：Simulator 中所有状态都由我们定义，而现实具有不可完全建模、不可任意重置和不可预测的扰动。因此真实机器人阶段不是“把仿真代码部署到硬件”，而是第一次真正检验
+\[
+\boxed{
+RealityIsUltimateConstraint.
+}
+\]
+
+真实 Body 的动力学可以写成：
+\[
+\dot x_B
+=
+F_B(x_B,u,w,\eta),
+\]
+其中 $w$ 表示外部扰动，$\eta$ 表示未建模因素。Body Runtime 永远只能拥有近似模型
+\[
+\hat F_B\neq F_B.
+\]
+因此真实具身系统的根本问题不是如何获得一个完全正确的模型，而是如何在模型永远不完美的情况下保持稳定、发现残差、调整局部控制，并在能力边界外停止自作主张。
+
+Physical Robot 的第一阶段不应直接选择全尺寸 humanoid，而应采用可观测性好、控制资源有限、风险可控的 Mobile Manipulator。其原因在于移动底盘、机械臂、夹爪、视觉和基本接触已经足以覆盖位置变化、物体交互、身体约束、局部规划和失败恢复，却不会同时引入全身平衡、复杂步态和高自由度控制。我们需要验证的是 Body Runtime 的抽象是否正确，而不是证明一个特定机器人机械设计有多强。
+
+真实部署首先必须验证 SGC 的现实持续性。例如摄像头短暂失去目标时，Object Identity 是否能够保持；不同视角看到同一个对象时能否合并；身体移动后坐标是否正确转换；预测实体在重新观察后是否被确认或否定。SGC 的现实闭环要求：
+\[
+SGC^{pred}
+\rightarrow
+Reality
+\rightarrow
+SGC^{obs},
+\]
+而不是：
+\[
+SGC^{pred}\rightarrow SGC^{pred}.
+\]
+这条区别看似简单，却决定了长期 Agent 是否最终会生活在自己的预测里。
+
+其次必须验证 FCS 是否真实地参与控制。例如电量下降、执行器温升、碰撞压力和控制震荡是否会提前改变 BPCC 的动作策略。一个机器人不应该等到安全中断触发以后才知道自己已经接近物理极限，而应该通过连续 FCS 感知 Capability Margin 的收缩：
+\[
+M_C(t)
+=
+C_{\max}
+-
+C_{\mathrm{current}}.
+\]
+当 $M_C$ 趋近零时，局部策略应逐步趋向保守，而不是突然从正常模式跳到失败模式。
+
+真实机器人还让 Body Runtime 面对一个仿真中较弱的问题：动作具有现实代价。错误点击网页可以撤销，但错误抓取玻璃杯可能造成破碎。因此控制器的目标函数必须逐步从任务成功率扩展为：
+\[
+J
+=
+L_{task}
++
+\lambda_EE
++
+\lambda_RRisk
++
+\lambda_WWear
++
+\lambda_TTime
++
+\lambda_UUncertainty.
+\]
+这意味着 Body Runtime 的“智能”并不是追求最快动作，而是在现实代价条件下闭合局部目标。
+
+Physical Robot 阶段还承担 Body Scale 的关键实验：将同一 Kernel 接入不同机器人，测量哪些 SGC 语义、FCS 通道、Goal、Skill 与 Control Reference 可以直接复用，哪些必须重新 grounding。真正成功的 Body Runtime 应逐渐呈现：
+\[
+KnownMeaning
++
+NewBodyGrounding
+\rightarrow
+RapidAdaptation,
+\]
+而不是
+\[
+NewBody\rightarrow LearnEverythingAgain.
+\]
+
+这一阶段可借鉴机器人学中的 SLAM、whole-body control、MPC、force control、state estimation、sim-to-real、domain randomization 与 system identification，但我们始终要把它们放在 AgentOS 的更高系统结构中理解：这些技术解决的是 Body Runtime 内部的快速动力学，而不是替代 Agent Kernel 的长期认知和主体结构。
+
+\section{Digital Body：证明“身体”是主体与现实之间的功能边界}
+
+Physical Robot 并不是 Body Runtime 唯一的验证对象。事实上，数字身体是验证 Body Scale 和 Body ABI 是否真正抽象成功的另一条同等重要路线。若我们的 Body 理论只能解释机械臂和摄像头，那么它仍然只是机器人软件。AgentOS 所使用的身体定义更一般：
+\[
+\boxed{
+Body=
+ControlledAndSensedCarrierOfAgency.
+}
+\]
+只要某个系统允许 Agent 持续感知状态、执行动作、承受动作后果并形成闭环，它就可以构成 Body。因此 Desktop、Browser、Shell、Filesystem、Network 和 App Environment 都可以构成数字 Body。
+
+在数字身体中，SGC 的实现发生变化，但结构角色保持不变。例如浏览器状态可表示为：
+\[
+SGC^{browser}
+=
+\{
+Page,
+Region,
+Button,
+Input,
+Menu,
+Link,
+Focus,
+ScrollArea,
+Cursor,
+Relation
+\}.
+\]
+此时 ``position'' 不一定只是像素坐标，还可以包含 DOM 层级、视觉区域、焦点关系和可交互语义。光标可以被理解为 Digital End Effector，其状态类似机器人末端执行器：
+\[
+x_{cursor}
+=
+(position,focus,dragState,interactionMode).
+\]
+点击、拖动、键盘输入等则成为数字动作空间。
+
+FCS 在数字 Body 中同样存在。例如页面突然变化带来 UncertaintyPressure，网络延迟形成 ControlInstability，登录失效形成 CapabilityLoss，资源不足形成 ResourcePressure。这样一个重要的理论结果得到工程验证：
+\[
+\boxed{
+FeelingFunctionalState
+}
+\]
+并不依赖生物内感受或机械躯体，它描述的是现实条件对 Agent 当前行动能力的功能性影响。
+
+数字 Body 是 Body Runtime 研发中的极佳早期平台，因为它同时具备复杂现实结构和低物理风险。浏览器环境仍然存在动态页面、隐藏状态、权限、不确定反馈和操作失败，但可以快速记录、回放和重置。因此我们能够高频测试：
+\[
+Observation
+\rightarrow
+SGC
+\rightarrow
+ControlReference
+\rightarrow
+Action
+\rightarrow
+NewObservation.
+\]
+这条闭环一旦稳定，许多 AgentOS Body Runtime 概念就已经得到非物理环境验证。
+
+然而数字 Body 也容易制造一种错误安全感：软件世界似乎完全可读，因此开发者容易绕过 Body Runtime，直接把 DOM、数据库或操作系统内部状态送给 Agent Kernel。这样做会破坏“现实重入”原则。在工程研究中应有意保留身体边界。例如 Agent 发出点击后，不应因为控制器调用返回 ``success'' 就直接修改 SGC 为“按钮已经生效”，而应重新观察页面：
+\[
+ActionIssued
+\neq
+ActionEffectObserved.
+\]
+即使在数字环境中，系统也必须保持
+\[
+Action
+\rightarrow
+Environment
+\rightarrow
+Observation
+\]
+的因果闭合。
+
+Digital Body 还有一个重要价值：它可以测试身体迁移是否真正跨模态成立。例如 ``打开一个容器'' 这一高层 CSO，可以在 Browser Body 中 grounding 为展开菜单，在 Filesystem Body 中 grounding 为读取目录，在机器人身体中 grounding 为打开柜门。如果高层语义保持而局部 grounding 变化，则证明我们真正建立了
+\[
+CSO
+\rightarrow
+BodySpecificAgentCSO
+\rightarrow
+Action
+\]
+的分层。
+
+因此 Digital Body 并不是 Physical Robot 的“缩水版”，而是检验 Body Runtime 是否拥有通用本体的必要对照组。只有同一套 SGC/FCS/ControlReference/Residual 逻辑能够同时解释机器人和浏览器，我们才能说 Body Runtime 已开始从机器人控制栈演化成真正的 Agent 身体运行时。
+
+\section{Body Skill：让反复显式认知沉降为身体闭环}
+
+当 Body Runtime 能够在数字与物理身体中稳定运行以后，一个新的问题会变得越来越突出：大量已经反复完成的动作仍然由 Agent Kernel 每次重新规划。如果一个 Agent 第一次抓杯子需要显式认知是合理的，但完成一万次之后仍然从高层逐步决定末端轨迹，就说明系统没有真正学习。Body Runtime 的下一研发阶段因此是 Body Skill，即把长期稳定的认知—动作关系沉降为可局部执行的闭环。
+
+我们此前已经得到：
+\[
+\boxed{
+ExplicitCognitiveControl
+\rightarrow
+RepeatedTrajectory
+\rightarrow
+StablePolicy
+\rightarrow
+CompiledBodyController.
+}
+\]
+用最新的 Agent-CSO 语言，可以更准确地写成：
+\[
+AgentCSO^{explicit}
+\rightarrow
+AgentCSO^{procedural}.
+\]
+这里并不是认知结构消失，而是其功能承载发生了迁移。高层原本需要维持的一组关系
+\[
+C@h
+\]
+逐渐迁移为
+\[
+C@BodySkill.
+\]
+因此：
+\[
+\boxed{
+ThinkingLess\neq KnowingLess.
+}
+\]
+真正发生的是
+\[
+StructureChangedCarrier.
+\]
+
+一个完整 Body Skill 不应该只是固定动作序列。它至少需要包含：
+\[
+\boxed{
+BodySkill=
+LocalPredictor+
+LocalController+
+ResidualModel.
+}
+\]
+若技能只记录动作轨迹，那么环境轻微变化就会失败；若技能包含局部 predictor 和 residual detector，则它可以在有限变化范围内自主适应，并在超出能力范围时重新把问题提升给认知层。因此一个 Skill 可以表示为：
+\[
+S_k=
+\left(
+\mathcal P_k,
+\pi_k,
+R_k,
+\mathcal E_k,
+\Gamma_k
+\right),
+\]
+其中 $\mathcal P_k$ 是局部预测器，$\pi_k$ 是策略或控制器，$R_k$ 是适用区域，$\mathcal E_k$ 是残差模型，$\Gamma_k$ 是异常升级规则。
+
+Body Skill 的形成不应该由简单重复次数触发，而需要同时满足：
+\[
+N_{\mathrm{repeat}}>N_0,
+\]
+\[
+\mathbb E[\varepsilon]<\epsilon_0,
+\]
+\[
+Var(\varepsilon)<\sigma_0,
+\]
+\[
+Utility>\theta_U,
+\]
+并且在多个上下文中经过验证。这样才能避免把偶然成功路径错误固化成技能。稳定技能实际上是一种拓扑资本：它把过去昂贵的高层协调转换成未来低成本局部闭环。
+
+Skill Compilation 还必须保留可逆性。当现实发生变化导致：
+\[
+\Gamma_k>\theta_{\mathrm{reopen}},
+\]
+技能应允许重新显式化：
+\[
+ProceduralCSO
+\rightarrow
+ExplicitCSO.
+\]
+也就是说，成熟 Agent 的自动化不是永久封死，而是
+\[
+Explicit
+\leftrightarrow
+Automatic
+\]
+之间的可逆迁移。正常时局部技能执行，异常时重新进入 h，由高层理解新的结构。
+
+从工程路线看，最早的 Body Skill 可以由模板化控制器或参数化动作 primitive 实现；随后引入学习型局部 predictor；再进一步形成 Skill Package，包括能力描述、适用身体、输入 SGC schema、FCS constraints、ControlReference、异常条件与验证记录。这样 Skill 才能成为 AgentOS 生态中真正可传播、可迁移、可审计的程序化认知结构。
+
+Body Skill 阶段可借鉴 motor primitive、options framework、hierarchical reinforcement learning、policy distillation、proceduralization、compiler optimization 和自动技能学习等理论，但 AgentOS 的独特视角是：Skill 不只是一个 policy，而是\textbf{长期重复 Agent-CSO 从高成本显式承载向低成本局部闭环的结构迁移结果}。
+
+\section{Safety：把不可协商约束放在最快闭环中}
+
+Body Runtime 一旦进入现实，就必须面对一个不可回避的问题：认知系统并不总是来得及判断危险。Agent Kernel 的推理可能需要几百毫秒甚至数秒，而机械碰撞、电气过载、网络权限泄露、车辆失稳等事件可能在更短时间尺度内造成不可逆后果。因此安全不能被设计成一个“让大模型再想一下”的特殊 prompt，而必须成为 Body Runtime 中具有更高执行优先级的独立闭环。
+
+其基本原则是：
+\[
+\boxed{
+CriticalSafety
+\nrightarrow
+CognitiveDependency.
+}
+\]
+对高频危险事件，必须存在
+\[
+E_{critical}
+\rightarrow
+SafetyController
+\rightarrow
+ProtectiveAction
+\]
+的直接路径，而无需首先经过 h、SPC、TCE 或 Agent Kernel 的语义推理。于是 Body Runtime 权限关系应满足：
+\[
+\boxed{
+SafetyAuthority>BPCCAuthority.
+}
+\]
+
+Safety 层至少包含三类约束。第一类是硬物理约束，例如最大关节力矩、电池温度、机械结构负载、最小碰撞距离；第二类是系统资源约束，例如文件删除权限、网络发送范围、进程终止能力；第三类是运行时动态安全约束，例如当前控制器已经进入高不确定区域，即使还没有越过物理极限，也应该提前降级。
+
+可将安全可行域定义为：
+\[
+\mathcal X_{safe}
+=
+\{
+x:
+h_j(x)\geq0,\quad j=1,\ldots,m
+\}.
+\]
+BPCC 的局部优化只能在该集合内部进行：
+\[
+u^\star
+=
+\arg\min J(u)
+\quad
+s.t.
+\quad
+x_{t+k}\in\mathcal X_{safe}.
+\]
+当预测显示未来状态即将离开安全域时，Safety Controller 可以直接覆盖普通控制引用。更进一步，对于不确定性过高的状态，也应定义运行安全域：
+\[
+\mathcal X_{operational}
+\subseteq
+\mathcal X_{physical-safe},
+\]
+使 Agent 在“还没有真正危险”之前就能够进入保守模式。
+
+安全设计还必须遵守 Single Writer Principle：
+\[
+\forall r_i,\qquad
+|\operatorname{ActiveWriter}(r_i)|=1.
+\]
+同一个执行资源在任一时刻只能有一个有效写入者。高层 Kernel、BPCC、Skill Controller 和 Safety Controller 可以提出不同控制请求，但必须经过明确仲裁，否则多层控制器同时写入同一个执行器，会形成比算法错误更危险的结构冲突。Safety Controller 的覆盖行为也必须留下可审计记录，使 Kernel 在事后能够理解为什么动作没有按原计划执行。
+
+另一个关键原则是
+\[
+\boxed{
+Feeling\neq Exception.
+}
+\]
+FCS 中 Threat 或 ControlInstability 升高只是连续风险状态，并不意味着立即触发安全中断。若所有风险都直接变成硬中断，系统会不断在正常与紧急之间震荡；反过来，如果所有风险都只是 FCS 调制，则真正危险事件又可能等待认知过久。因此我们需要连续 FCS 与离散 Safety Event 并存：
+\[
+ContinuousRisk
+\rightarrow
+FCS,
+\]
+\[
+CriticalViolation
+\rightarrow
+SafetyInterrupt.
+\]
+这也是 AgentOS 连续动力学与离散治理原则在 Body Runtime 中最清晰的实例。
+
+Safety 阶段的外部理论依赖包括 control barrier function、runtime assurance、functional safety、fault-tolerant control、capability security 和形式化验证。对于车辆和工业设备，还可以借鉴 ISO 26262、IEC 61508 等工程安全思想，但 AgentOS 最终必须比传统设备安全多考虑一个变量：上层认知自身会持续学习和变化。因此 Safety Boundary 必须成为一种相对慢变量稳定、对快速学习保持独立权威的结构，而不能随在线学习任意漂移。
+
+\section{Hardware Acceleration：让时间尺度真正进入物理实现}
+
+Body Runtime 的最后一个研发节点并不是简单“把神经网络放到 GPU 上”，而是让此前所有理论时间尺度真正落实到计算硬件时间尺度。如果控制环理论上要求
+\[
+\tau_{BodyFastLoop}\ll\tau_{CognitiveLoop},
+\]
+但两者最终都排队等待同一块通用推理 GPU，那么这种层级在软件结构上存在，在物理执行上却不存在。真正长期运行的 Agent 必须让计算承载结构与认知频谱相匹配。
+
+我们可以把 Body Runtime 的典型时间尺度写成：
+\[
+\tau_{servo}
+<
+\tau_{fast-control}
+\lesssim
+\tau_{fast-prediction}
+<
+\tau_{SGC/FCS}
+<
+\tau_h.
+\]
+每个频带需要不同的计算性质。Servo 与 Safety 更强调确定性和最坏情况延迟；BPCC 更强调低延迟在线预测与局部适应；SGC/FCS 更强调传感融合和结构更新；Agent Kernel 则更强调大模型推理、长上下文和复杂生成。试图由一种芯片同时最优承担所有这些工作并不符合多尺度智能本身的结构。
+
+因此此前提出的 Cerebellum Chip 应理解为一种面向
+\[
+FastPrediction+
+FastControl+
+Residual+
+OnlineAdaptation
+\]
+的专用高频计算单元，而不是简单的“小型推理芯片”。它最重要的指标不是最大 FLOPS，而是：
+\[
+Latency_{worst},
+\quad
+Jitter,
+\quad
+EnergyPerLoop,
+\quad
+Determinism,
+\quad
+AdaptationLatency.
+\]
+相比之下，大模型推理芯片服务的是更慢、更宽的认知空间，其优化指标可能是吞吐、模型容量、上下文带宽和并行推理效率。两者对应不同智能频段。
+
+可将总体异构硬件结构抽象为：
+\[
+\mathcal H
+=
+H_{safety}
+\oplus
+H_{servo}
+\oplus
+H_{BPCC}
+\oplus
+H_{perception}
+\oplus
+H_{kernel}.
+\]
+这些计算层不一定最终由五块独立芯片实现，但在调度与实时保证上必须表现为不同执行域。特别是 Safety 和 Fast Control 不应因为 Kernel 推理拥塞而失去计算资源。
+
+硬件加速还应反向约束 Body ABI。一个错误方向是为了特定芯片性能，直接把其内部 tensor layout 暴露到 Agent Kernel。这样短期性能提高，却破坏 Body Scale。正确原则应是：
+\[
+\boxed{
+StableSemanticABI
+>
+TemporaryHardwareOptimization.
+}
+\]
+硬件可以在 Body Runtime 内部任意融合 SGC encoder、BPCC latent、sensor processing，但对外仍应恢复成稳定的 SGC、FCS、Residual 和 Control Reference。
+
+这一阶段还需要研究结构迁移的物理成本。如果一个成熟 Body Skill 已经长期稳定，那么它可以从昂贵的通用推理单元进一步下沉到专用控制执行域：
+\[
+ExplicitReasoning
+\rightarrow
+BodySkill
+\rightarrow
+AcceleratedLocalLoop.
+\]
+这实际上使“认知结构沉降”获得了真正的硬件意义：历史上反复进行的高层计算，最终被编译成更快、更局部、更节能的现实控制结构。
+
+从更广义的 AgentOS 理论看，这里出现了一条非常重要的原则：
+\[
+\boxed{
+SemanticTimescale
+\longrightarrow
+ComputationalTimescale
+\longrightarrow
+PhysicalTimescale.
+}
+\]
+智能的多尺度结构如果不能映射到真实计算资源的时间尺度，就只是软件概念；只有当不同功能闭环真正拥有与自身动力学相匹配的计算承载以后，AgentOS 才从认知架构进入完整的物理系统工程。
+
+\section{Body Runtime 研发路线的统一收束}
+
+现在我们可以重新审视本章全部研发步骤。Body Runtime 并不是由 SGC、FCS、BPCC、Safety 等若干模块简单叠加而成，其真正演进逻辑是一条不断减少高层对现实细节依赖、同时增加局部闭环能力的结构迁移过程。
+
+第一步通过 Body ABI 实现：
+\[
+ConcreteBody
+\rightarrow
+StableFunctionalContract.
+\]
+身体差异开始被限制在 Runtime 内部。
+
+第二步通过 SGC 将异构原始感知压缩为：
+\[
+RawPerception
+\rightarrow
+ActionableSemanticReality.
+\]
+Agent 不再直接面对像素、电机和 DOM，而开始面对可持续存在的现实结构。
+
+第三步通过 FCS 建立：
+\[
+RealityInfluence
+\rightarrow
+FunctionalStateField,
+\]
+使主体不仅知道世界中存在什么，也知道这些状态正在怎样影响自身能力和风险。
+
+第四步通过 BPCC 形成：
+\[
+Perception
+\rightarrow
+Prediction
+\rightarrow
+Control
+\rightarrow
+Residual
+\]
+的高频局部闭环，从而把大量无需全局认知的问题限制在身体内部。
+
+第五和第六步分别用 Physical Robot 与 Digital Body 检验这一抽象是否真正跨越不同实现。只有二者均能共享：
+\[
+SGC,
+FCS,
+ControlReference,
+Residual,
+Capability
+\]
+时，我们才有理由说 Body Runtime 已获得实现独立性。
+
+第七步通过 Body Skill 让长期成功的显式认知结构向局部闭环沉降：
+\[
+C@h
+\rightarrow
+C@BodyRuntime.
+\]
+这使成熟 Agent 的能力增长不再等价于高层认知负担持续增加。
+
+第八步由 Safety 把不可协商约束放到最快控制权层，使学习能力始终存在于安全可行域内部。
+
+第九步通过硬件加速将多尺度理论真正落实为多时间尺度物理计算：
+\[
+\tau_{servo}
+\ll
+\tau_{BPCC}
+\ll
+\tau_{Kernel}.
+\]
+
+由此，一条完整 Body Runtime 研发链可以写为：
+\[
+\boxed{
+BodyABI
+\rightarrow
+SGC
+\rightarrow
+FCS
+\rightarrow
+BPCC_{sim}
+\rightarrow
+Physical/DigitalBody
+\rightarrow
+BodySkill
+\rightarrow
+Safety
+\rightarrow
+HardwareAcceleration.
+}
+\]
+
+但更深层的结构关系其实是：
+\[
+\boxed{
+RawReality
+\rightarrow
+SemanticReality
+\rightarrow
+LocalPrediction
+\rightarrow
+LocalControl
+\rightarrow
+Reality
+}
+\]
+并在长期运行中不断发生：
+\[
+\boxed{
+ExplicitCognition
+\rightarrow
+StableLocalClosure.
+}
+\]
+
+因此，我们可以给 Body Runtime 一个比“机器人中间件”更准确的最终定义：
+\[
+\boxed{
+\textbf{
+Body Runtime 是 Agent 与现实之间的快速动力学承载层：它把异构现实压缩为统一的可行动语义状态，把高层意图展开为身体特定的局部控制，并通过持续现实反馈、残差估计和技能沉降，使大量稳定的智能结构在不占用全局工作记忆的情况下直接闭合于身体和环境之中。
+}
+}
+\]
+
+这也解释了为什么在 ``3+1+1'' 路线中 Body Runtime 必须成为一条与 Agent Kernel 并行发展的独立研发主线。没有 Body Runtime，AgentOS 只能拥有一个越来越丰富的内部世界；有了 Body Runtime，内部 Agent-CSO 才能够稳定地通过行动重新进入现实，而新的现实又能够重新成为下一轮认知结构形成的来源。于是最基础的 World--Agent--World 闭环第一次获得真正可工程实现的身体层基础：
+\[
+\boxed{
+World
+\rightarrow
+BodyRuntime
+\rightarrow
+Agent
+\rightarrow
+BodyRuntime
+\rightarrow
+World'.
+}
+\]
