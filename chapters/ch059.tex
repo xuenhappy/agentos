@@ -1234,9 +1234,9 @@ u^{obs}
 
 其中 $\Delta I_{task}$ 表示该观测动作预计带来的任务相关信息增益，$C_{obs}$ 表示观测成本，而 $R_{sideeffect}$ 表示该所谓 ``只读'' 操作实际上对现实产生副作用的风险。后一项尤其重要，因为现实中的很多感知动作并不存在绝对的只读性。例如摄像头转动改变了机器人姿态；鼠标 Hover 可能触发菜单展开；选择文本可能改变网页的 selection state；读取某些远程资源甚至可能触发服务器日志或访问计数。因此 ``Read-Only'' 在 AgentOS 中应定义成：
 
-\begin{statementbox}
+\begin{definition*}
 不以改变目标世界语义状态为主要目的，并受到副作用约束的观测型动作。
-\end{statementbox}
+\end{definition*}
 
 而不是声称它在物理意义上绝对不改变任何状态。
 

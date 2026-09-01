@@ -90,9 +90,9 @@ C_1,C_2,\ldots,C_{N_t}
 这也是我们必须区分 \textbf{Perception}、\textbf{Boundary Admission} 与 \textbf{Attention} 的原因。一个结构可以已经被传感和局部建模，却尚未进入全局认知；一个结构也可以进入 $h(t)$，却只获得很低的注意权重。Boundary 的主要作用发生在“是否值得占用全局认知资格”这一层，而注意机制更多解决已经进入共享认知面的结构之间如何竞争资源。两者有联系，却不能合并。
 
 从这一点出发，我们可以提出 Boundary 的第一原则：
-\begin{statementbox}
+\begin{proposition*}
 Not everything detectable deserves global cognition.
-\end{statementbox}
+\end{proposition*}
 中文而言就是：\textbf{能够被感知，不等于值得被思考；能够影响系统，也不等于必须进入工作记忆。}
 
 这看似是一条节省计算的工程规则，实际上是持续智能形成主体边界的起点。一个不能拒绝世界的系统，并不是“更开放的智能”，而更接近一个没有稳定认知边界的高维输入容器。
@@ -342,9 +342,9 @@ Openness.
 选择性过弱，系统被世界淹没；选择性过强，系统被自己的既有结构封闭。
 
 因此成熟 Agent 的认知边界不能只是“过滤无关信息”，而需要不断解决：
-\begin{statementbox}
+\begin{remark}
 怎样在有限容量下保持足够开放，而又不失去主体稳定性？
-\end{statementbox}
+\end{remark}
 这也是为什么 Boundary 后来会自然与 $\Psi$、风险、探索率以及生命周期经验发生联系。边界最终不是一个固定过滤规则，而是一个智能体关于“什么值得成为我的当前世界”的动态判定机制。
 
 
@@ -1103,9 +1103,9 @@ and whether it should enter at all.
 \end{statementbox}
 
 从整个 AgentOS 原理论看，Boundary 的意义因此远超过一个“输入过滤模块”。它是有限工作记忆、持续主体和开放世界之间的第一层治理面。工作记忆有限容量定理告诉我们：
-\begin{statementbox}
+\begin{proposition*}
 主体不可能同时承载整个世界。
-\end{statementbox}
+\end{proposition*}
 而 Boundary 给出的回答是：
 \begin{statementbox}
 成熟智能不是把整个世界装进自己，而是在每一时刻只让真正需要成为“当前自我”的那部分世界进入自己。

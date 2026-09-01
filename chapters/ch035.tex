@@ -271,9 +271,9 @@ a(t),
 
 我们由此得到 AHC 的第一个标准工程定义：
 
-\begin{statementbox}
+\begin{definition*}
 AHC 是一个由有限维连续状态、独立时间常数、非线性相互作用和不确定性描述共同构成的中尺度内部调制动力系统。
-\end{statementbox}
+\end{definition*}
 
 这一表述有意避免把 AHC 拟人化。它使任何具有不同身体、任务和社会环境的 Agent 都能够根据自身需求选择适当状态维度，同时保持统一的数学结构。
 
@@ -551,9 +551,9 @@ AHCThreat.
 Threat 是认知内容作用于主体后的动力投影。
 
 因此，本章中的 Threat 不能被理解成“机器害怕”。更准确的工程定义是：
-\begin{statementbox}
+\begin{definition*}
 Threat 是潜在损失、不可逆性、时间压力和主体脆弱性经过时间积分后形成的连续控制压力。
-\end{statementbox}
+\end{definition*}
 这一区分能够让 AgentOS 在保留功能价值的同时避免不必要的人格化。
 
 \section{Arousal：认知激活程度与可用动力窗口}
@@ -689,9 +689,9 @@ Arousal\neq CognitiveTemperature.
 前者属于 AHC 内部动力状态，后者是 TCE 可调控制变量。
 
 最终，我们可以把 Arousal 定义为：
-\begin{statementbox}
+\begin{definition*}
 Agent 在当前环境、目标、资源和风险条件下，为未来认知与行动准备分配的连续激活水平。
-\end{statementbox}
+\end{definition*}
 这一概念使认知系统第一次能够动态改变自己的“运行速度”和“响应准备度”，而不是永远以同一计算节律工作。
 
 \section{Energy Drive 与 Fatigue：资源可用性和累计运行代价的分离}
@@ -822,9 +822,9 @@ E_d(1-F_g).
 此式只是说明性模型，但表达重要思想：可以投入多少认知资源，既依赖当前资源，也依赖历史累计负担。
 
 此外，这两个变量还可以参与 Memory consolidation。一个系统长期处于高 Fatigue 时，不应该持续进行高代价全局学习；可能需要暂时转向局部任务、经验整理或卸载。这说明资源状态不仅影响行动，也会影响学习节律。但本章不展开具体记忆治理，只需要建立一个基本原则：
-\begin{statementbox}
+\begin{proposition*}
 持续认知的资源预算必须具有历史，而不是只查看瞬时可用量。
-\end{statementbox}
+\end{proposition*}
 
 从生物学上，人类疲劳和能量调节涉及复杂神经、代谢和内分泌机制；这些可以为我们提供启发，但 AgentOS 不要求复制生物机制。一个数字 Agent 的 Fatigue 可能由缓存膨胀、任务堆积、模型温度、持续冲突和长期资源占用共同产生，它与人类生理疲劳具有完全不同的物质实现。
 
@@ -2051,9 +2051,9 @@ RealityCorrectable.
 
 因此，本章最终得到：
 
-\begin{statementbox}
+\begin{conclusion}
 AHC 是持续智能体将身体、资源、风险、未来收益、社会关系与认知不确定性等异质影响，经过时间积分、衰减、耦合、饱和与恢复转换为连续主体相关调制状态的中时间尺度动力系统。它使认知控制不再只是对瞬时状态做出机械响应，而开始拥有历史、惯性、恢复和内部状态连续性。
-\end{statementbox}
+\end{conclusion}
 
 由此，AgentOS 已经从此前的：
 \[

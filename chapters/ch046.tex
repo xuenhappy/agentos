@@ -69,9 +69,9 @@ A
 
 我们还应进一步区分“主体唯一”与“计算集中”。单一主体原则并不意味着所有计算都必须集中在一个线程、一个模型、一个 GPU 或一个物理机器上。一个 Agent 完全可以拥有分布式推理器、并发 Worker、多模型协作和不同速度的 Body 控制环。主体唯一性约束的是：
 
-\begin{statementbox}
+\begin{proposition*}
 Lifecycle Causal Ownership
-\end{statementbox}
+\end{proposition*}
 
 而不是：
 
@@ -85,9 +85,9 @@ Computational Location
 
 在确立持续主体之后，我们可以重新定义 AgentOS 的运行模型。AgentOS 并不是传统意义上的 Multi-Agent System，它首先应被理解为一个
 
-\begin{statementbox}
+\begin{definition*}
 Single-Agent Multi-Task Operating System
-\end{statementbox}
+\end{definition*}
 
 也就是：一个持续主体同时维持多个目标、任务、执行过程和局部闭环，而不是通过不断产生新的主体来完成任务分解。
 
@@ -717,9 +717,9 @@ Integration_A(C)
 
 因此，“是否产生另一个 Agent”不能通过进程数量判断，而应该通过：
 
-\begin{statementbox}
+\begin{proposition*}
 是否建立了独立生命周期因果链
-\end{statementbox}
+\end{proposition*}
 
 来判断。
 
@@ -878,10 +878,10 @@ t_0\rightarrow t_1
 
 这体现出一个更深的原则：
 
-\begin{statementbox}
+\begin{proposition*}
 身份连续性依赖可解释的因果连续，
 而不是状态向量的逐比特一致。
-\end{statementbox}
+\end{proposition*}
 
 因此，本章禁止普通主体 fork，真正保护的并不是某一块内存，而是生命周期因果关系的唯一性。
 
@@ -1139,9 +1139,9 @@ DistributedFunctionalProcesses
 
 因此可以给出本章最终定义：
 
-\begin{statementbox}
+\begin{definition*}
 持续主体不是一个计算位置，而是一条在多尺度认知过程之间保持唯一因果归属、记忆归属和控制归属的生命周期动力学轨迹。
-\end{statementbox}
+\end{definition*}
 
 由此，AgentOS 的进程模型应当明确区分：
 

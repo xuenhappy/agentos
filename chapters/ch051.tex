@@ -830,9 +830,9 @@ SlowGlobalAdaptation.
 这一结构与 singular perturbation theory、averaging theory、hierarchical control、real-time systems 等成熟理论具有很强的数学兼容性。特别是快--慢动力系统提供了后续严格证明系统稳定性的自然工具。但需要注意，本书借用这些数学理论，是为了描述 AgentOS 的跨尺度结构，而不是宣称整个认知系统天然满足某一个标准奇异摄动模型。真实 Agent 包含离散事件、模型切换、工具调用和记忆更新，因此最终更接近 hybrid multiscale dynamical system。
 
 由此，本节给出 AgentOS 的一个基本架构定理式原则：
-\begin{statementbox}
+\begin{proposition*}
 凡是其必要控制周期显著短于主体认知周期的过程，都不应以持续同步方式依赖 Kernel 闭环。
-\end{statementbox}
+\end{proposition*}
 
 这条原则将在所有物理 Body 和高频数字 Body 中成立。
 

@@ -145,9 +145,9 @@ E_t,
 它更接近于对一个非平稳、多时间尺度、有内部历史状态的动力系统进行\textbf{经历空间设计}。我们不只优化“Agent 会不会做”，还要控制“Agent 是通过什么经历学会的”“这种能力沉降到了哪里”“这些经历是否改变了它对自身和世界的解释”，以及“能力形成之后系统是否获得与之相匹配的行动空间”。
 
 由此得到本章第一条基本原则：
-\begin{statementbox}
+\begin{proposition*}
 训练面向能力映射，培育面向主体轨迹。
-\end{statementbox}
+\end{proposition*}
 
 只有当一个 Agent 具有跨时间连续的内部状态时，培育这个概念才真正成立。对于每一次运行都完全重置的无状态模型，谈培育意义有限；而对于具有 $E$、$\Theta$、$\Psi$ 和长期目标连续性的 Agent，经历序列本身就成为系统结构的一部分。
 
@@ -301,9 +301,9 @@ F_s(x_m,x_s,\bar e_T),
 一个真正成长的 Agent，不是“同一个模型做了越来越多任务”这么简单，而是它过去的经历逐渐改变了未来认知的组织成本。曾经需要大量显式推理的问题可能被 $\Theta$ 压缩成稳定能力；过去失败产生的结构可以减少未来同类错误；长期经验又会改变主体对什么值得关注、什么应被委派、什么必须进入工作记忆的判断。
 
 因此我们得到第二条基本原则：
-\begin{statementbox}
+\begin{proposition*}
 成长不是学习量的累积，而是过去经历逐渐成为未来结构的过程。
-\end{statementbox}
+\end{proposition*}
 
 \section{Experience Matters：经历是持续 Agent 的结构输入}
 
@@ -447,9 +447,9 @@ Verification.
 因此培育工程不是简单制造压力，而是制造\textbf{可以转化成结构的经历}。
 
 这一节得到第三条基本原则：
-\begin{statementbox}
+\begin{proposition*}
 对于持续智能体，经历不是训练素材的被动集合，而是塑造未来主体状态的主动结构输入。
-\end{statementbox}
+\end{proposition*}
 
 \section{Self History：经历如何成为“我的历史”}
 
@@ -587,9 +587,9 @@ E^{self}
 链条。
 
 我们因此得到第四条培育原则：
-\begin{statementbox}
+\begin{proposition*}
 一个 Agent 的身份不应主要由配置文件定义，而应主要由其长期可验证的主体经历逐渐形成和维持。
-\end{statementbox}
+\end{proposition*}
 
 这并不否定外部治理对 $\Psi$ 的约束，而是说“约束身份边界”和“生成身份内容”是两回事。前者可以由工程系统提供，后者若要形成真正持续主体，则必须具有历史来源。
 
@@ -741,9 +741,9 @@ NewEnvironmentRegion.
 成熟培育应使 Agent 的可达世界逐渐扩大，而不是在一开始就把所有现实自由度同时暴露给它。
 
 由此得到第五条原则：
-\begin{statementbox}
+\begin{proposition*}
 Agent 培育的直接控制对象不是能力本身，而是能够产生能力、恢复能力并形成长期结构的经历环境。
-\end{statementbox}
+\end{proposition*}
 
 \section{Autonomy Growth：自治应当随结构成熟逐渐扩大}
 
@@ -885,9 +885,9 @@ Choice_{t+k}.
 
 我们在这一章暂时不进一步展开递归自主性的完整测量和治理，只需要建立培育工程的基础原则：
 
-\begin{statementbox}
+\begin{proposition*}
 自治不应一次性交付，也不应仅依据能力自动增加，而应随着经历、可靠性、自我稳定和责任闭环的成熟逐步扩展。
-\end{statementbox}
+\end{proposition*}
 
 至此，我们便可以重新理解“培育 Agent”的真正含义。它不是把同一个模型不断送入更多训练任务，而是在安全边界和现实反馈下，有组织地扩大一个持续主体：
 

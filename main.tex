@@ -5,6 +5,10 @@
 \setCJKmonofont{Noto Sans Mono CJK SC}
 \setmainfont{TeX Gyre Pagella}
 \setsansfont{TeX Gyre Heros}
+% ElegantBook determines \citshape while loading the class, before the CJK
+% families above are configured. Keep semantic boxes in the Chinese body face
+% instead of falling back to the Latin italic font (which drops CJK glyphs).
+\renewcommand{\citshape}{\normalfont}
 \usepackage{mathtools,eso-pic}
 \usepackage{longtable,tabularx}
 \usepackage{adjustbox}
@@ -19,6 +23,18 @@
 \definecolor{formulabg}{HTML}{FFF4D6}
 \definecolor{formularule}{HTML}{A87418}
 \definecolor{formulaink}{HTML}{3B2A0A}
+% Keep tables and captions visually consistent across the book while retaining
+% ElegantBook's typography and numbering conventions.
+\renewcommand{\arraystretch}{1.16}
+\setlength{\tabcolsep}{5pt}
+\setlength{\LTpre}{8pt plus 2pt minus 2pt}
+\setlength{\LTpost}{8pt plus 2pt minus 2pt}
+\captionsetup{
+  font=small,
+  labelfont={bf,color=deepblue},
+  textfont={color=deepblue},
+  labelsep=quad
+}
 % Prose statements use a breakable, full-width card so long text wraps
 % naturally. Mathematical \boxed expressions use a distinct warm palette.
 \newtcolorbox{statementbox}{

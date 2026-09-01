@@ -130,9 +130,9 @@ I(\mathcal{G}_{h};G_t).
 
 因此，CCM 的第一原则可以正式表述为：
 
-\begin{statementbox}
+\begin{definition*}
 最小充分认知原则：当前工作记忆只应保留完成当前闭环所需的最小充分结构。
-\end{statementbox}
+\end{definition*}
 
 这里的 ``最小'' 并不是追求信息数量绝对最少，而是在任务能力与运行稳定之间寻找一个动态可行区域。
 如果删除过多结构，则系统无法正确决策；如果保留过多结构，则工作记忆的关系耦合、冲突和搜索空间会快速扩大。
@@ -431,9 +431,9 @@ C(F),
 CCM 的复杂度预测能力。
 
 这一机制使 $\Theta$ 在 AgentOS 中具有一个常被忽略的重要功能：它不仅负责知识和规律，也可以作为
-\begin{statementbox}
+\begin{proposition*}
 认知成本预测模型
-\end{statementbox}
+\end{proposition*}
 参与运行时调度。
 
 这也解释了为什么一个成熟 Agent 通常比初生 Agent 更善于 ``知道一个问题大概有多难''。随着长期经验增长，
@@ -802,9 +802,9 @@ CCM 必须先诊断结构，再选择治理算子。
 \end{statementbox}
 
 我们由此得到 CCM 的第二个基础原则：
-\begin{statementbox}
+\begin{proposition*}
 复杂度管理不是减少信息量，而是改变导致当前认知负担的关系结构。
-\end{statementbox}
+\end{proposition*}
 
 这种思想与图论、网络科学、约束满足、层级分解等外部理论具有天然联系，但 CCM 的研究对象具有特殊性：
 它关心的不是一个静态知识图的总体结构，而是当前被激活并必须由工作记忆同时维护的\textbf{动态认知子图}。
@@ -2129,9 +2129,9 @@ Fold
 
 在此基础上，我们可以提出本章的核心稳定性命题：
 
-\begin{statementbox}
+\begin{proposition*}
 CCM 可运行性命题
-\end{statementbox}
+\end{proposition*}
 
 若对于任意有限时间内进入系统的任务结构，存在一组允许的 CCM 操作，使活跃认知图始终能够被转换为
 \[
@@ -2308,13 +2308,13 @@ C_{\mathrm{run}}\downarrow.
 
 因此，本章最终给出 CCM 的正式定义：
 
-\begin{statementbox}
+\begin{definition*}
 CCM 是 AgentOS 中面向有限工作记忆约束的运行态认知结构控制系统。
 它通过持续估计活跃 Agent-CSO 及其关系网络所产生的认知负荷，
 并在保持当前目标所需结构信息的前提下，对显式认知图实施分解、合并、
 去重、折叠、支线抑制、暂停恢复、表示重构与局部卸载，
 使任一时刻的全局认知结构保持在可稳定处理的有限区域内。
-\end{statementbox}
+\end{definition*}
 
 进一步用 CSO 本体语言表达：
 

@@ -268,9 +268,9 @@ K_P=
 
 例如，单纯提高激活增益 $g$ 可能帮助系统更快聚焦于当前目标，但同时也可能增加某些局部结构的自强化，使竞争分支难以进入；提高抑制 $\iota$ 可以降低工作记忆负载，却可能造成关键弱信号被错误清除；提高温度 $T$ 可能扩大搜索，又可能增加 h 中的候选结构数量；扩大注意范围 $\alpha$ 可以获得更多外部证据，却又提高 CCM 所面对的结构负载。由此可见：
 
-\begin{statementbox}
+\begin{remark}
 TCE 的每个控制动作几乎都存在收益—负担双重效应。
-\end{statementbox}
+\end{remark}
 
 因此，控制增益不宜固定。更现实的是建立 gain scheduling：
 
@@ -343,9 +343,9 @@ I_{\max}
 
 因此，本节最重要的结论不是“增益应高还是低”，而是：
 
-\begin{statementbox}
+\begin{conclusion}
 TCE 必须控制认知控制本身的强度。
-\end{statementbox}
+\end{conclusion}
 
 一个成熟 Agent 不是时时被中央控制器紧紧握住，而应在局部结构能够自行闭合时降低高层增益，在持续残差或接近失稳边界时才增加控制强度。这与全书此前反复形成的原则一致：
 
@@ -692,9 +692,9 @@ SelectiveExplicitCognition.
 
 TCE 的注意控制因此承担一个非常重要的跨尺度角色：它不是把整个世界压进 Agent 内部，而是不断调节当前“高清认知窗口”落在哪里。在具身系统中，这一原则后来还会延伸到 SGC 的局部高清输入控制；但即便暂时不涉及 Body 细节，其本质已经很清楚：
 
-\begin{statementbox}
+\begin{proposition*}
 注意不是获得更多世界，而是在有限认知面上决定哪一部分世界当前值得被显式承载。
-\end{statementbox}
+\end{proposition*}
 
 \section{探索控制：什么时候允许认知离开已有结构}
 
@@ -1200,13 +1200,12 @@ CommitmentThreshold.
 
 TCE 的任务是在：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering\bfseries
 探索自由度
-\leftrightarrow
+$\longleftrightarrow$
 现实承诺强度
-}
-\]
+\end{statementbox}
 
 之间建立一道动态阀门。
 

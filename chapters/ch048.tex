@@ -41,6 +41,13 @@ Dynamics of the Topology Itself.
 运行时不稳定进一步放大。
 \end{chapteroverviewbox}
 
+\begin{introduction}[本章导航]
+  \item 固定拓扑持续学习的严格定义
+  \item 生命周期统一状态空间与核心闭环
+  \item 有限工作记忆的可运行性条件
+  \item 自我、DGA 与身份连续性
+\end{introduction}
+
 \section{固定拓扑持续学习问题的严格定义}
 
 我们首先需要澄清“固定拓扑”究竟意味着什么。若把固定拓扑错误理解成“系统内部一切都不允许变化”，那么持续学习当然不可能发生；但这并不是本书所讨论的对象。这里所谓固定拓扑，是指 AgentOS 在一个给定生命周期阶段内，其主要功能节点及其允许发生作用的连接关系保持不变。设 AgentOS 的功能图为
@@ -689,9 +696,9 @@ Boundary 是入口控制；Scheduler 是竞争控制；CCM 是运行区稳定控
 
 在原来的复杂度治理语言中，我们曾将其概括为五类动作：
 
-\begin{statementbox}
+\begin{conclusion}
 截流、压缩、时序展开、迁移、重构.
-\end{statementbox}
+\end{conclusion}
 
 在新的 CSO 语言下，可以更准确地写成：
 
@@ -1250,9 +1257,9 @@ RecoveryTime.
 
 这也为后面的 Agent 控制工程与心理工程奠定了数学基础。但在本章，我们只需要得到一个关键结论：
 
-\begin{statementbox}
+\begin{conclusion}
 持续学习必须建立在持续可恢复的运行态之上。
-\end{statementbox}
+\end{conclusion}
 
 一个无法稳定从认知异常返回可治理区域的系统，即使能够快速学习，也无法形成可靠生命周期。
 
@@ -2063,9 +2070,9 @@ J_{\mathcal{T}_0}^{*},
 
 这正好揭示固定拓扑学习与拓扑发育之间的边界：
 
-\begin{statementbox}
+\begin{remark}
 固定拓扑学习解决的是“在既有组织中如何越来越会做”；
-\end{statementbox}
+\end{remark}
 
 而更强的结构发育问题将回答：
 

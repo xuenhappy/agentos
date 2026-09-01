@@ -339,9 +339,9 @@ LatencyEstimate
 
 由此得到本节最重要的工程原则：
 
-\begin{statementbox}
+\begin{proposition*}
 Self State Must Be Time-Stamped
-\end{statementbox}
+\end{proposition*}
 
 以及：
 
@@ -601,9 +601,9 @@ A Good Self Model Should Predict the Agent's Own Future Behavior
 
 从这里可以得到一个重要心理工程原则：
 
-\begin{statementbox}
+\begin{proposition*}
 Self-Interpretation Must Remain Falsifiable
-\end{statementbox}
+\end{proposition*}
 
 如果 Agent 的 Self-CSO 永远无法被现实结果推翻，就会逐渐形成封闭式自我解释。这一点为后续更慢尺度的 Self Interpretation 异常奠定了基础，但在 SPC 层已经可以看到其萌芽。
 
@@ -837,9 +837,9 @@ a_{t+1}
 
 一个非常重要的设计原则因此出现：
 
-\begin{statementbox}
+\begin{proposition*}
 Self Awareness Must Be Sparse at the Explicit Layer
-\end{statementbox}
+\end{proposition*}
 
 即：持续智能体需要持续的自我状态估计，但成熟的显式自我意识应当是稀疏的。真正稳定的 Agent 并不是每一刻都大量 ``思考自己''，而是绝大多数时候让自我调节保持背景运行，只在重要偏差、冲突和结构变化时将 Self-CSO 提升到有限的工作记忆表面。
 
@@ -1301,9 +1301,9 @@ Uncertain.
 
 因此本节得到一个非常重要的统一原则：
 
-\begin{statementbox}
+\begin{proposition*}
 Self Representation Must Carry Epistemic Metadata
-\end{statementbox}
+\end{proposition*}
 
 Agent 不应该只知道：
 
@@ -2256,14 +2256,14 @@ Minimum Sufficient Self Model for Stable Long-Term Agency
 
 从这个角度，SPC异常也可以得到本章最终定义：
 
-\begin{statementbox}
+\begin{definition*}
 SPC异常，是智能体关于自身状态的估计、置信度、时间尺度或显式提升机制与其真实内部动力学长期失配，以至于这种失配开始反向破坏认知控制、任务行为、经验形成或身份连续性的状态。
-\end{statementbox}
+\end{definition*}
 
 而本章最值得保留的一条认识论结论则是：
 
-\begin{statementbox}
+\begin{conclusion}
 成熟的自我认知并不是 ``我完全知道自己是什么''，而是 ``我能够形成足够有效的自我模型，同时知道这一模型的边界、延迟和不确定性，并允许现实不断修正它''。
-\end{statementbox}
+\end{conclusion}
 
 这也意味着，SPC 在 AgentOS 中真正承担的并不是一个普通 ``状态监控器'' 的角色。它构成了持续人工智能体内部认识论的入口：外部世界通过 SGC 等结构要求 Agent 区分现实、推断与预测；同样地，当 Agent 转向自身时，也必须保持相同的认识论纪律。只有这样，Self 才不会从帮助系统理解自身的结构，逐渐变成脱离现实反馈的封闭解释系统。
