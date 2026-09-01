@@ -6,6 +6,7 @@
 
 本章将由这一认识出发，建立 SPC Observer 的状态空间模型、自我状态估计模型、观测延迟模型、置信度模型、漂移模型、错误自我状态模型以及在线校准机制。我们特别强调一个贯穿本章的工程原则：\emph{Agent 对自己同样存在认识论不透明性}。因此，SPC 必须像任何真实 Observer 一样处理部分可观测性、滞后、噪声、结构错配和模型漂移，而不能被视作读取系统内部真值的“上帝视角”。这一章构成后续 AHC 动力学、TCE 控制器、多回路稳定性以及 Agent 心理工程的观测基础，但本章本身仅讨论 Observer，不提前展开后续控制器的完整理论。
 \end{chapteroverviewbox}
+\ChapterArt{86}
 
 \section{SPC 的工程定位：从自我感知压缩器到认知状态 Observer}
 \label{sec:spc-observer-position}
