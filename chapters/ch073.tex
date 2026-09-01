@@ -1,11 +1,7 @@
 \chapter{Body Runtime 研发路线：从统一身体接口到可迁移具身闭环}
 \label{chap:body-runtime-roadmap}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.92\textwidth}
-\textbf{【本章总体说明】}
-
+\begin{chapteroverviewbox}
 本章讨论 AgentOS ``3+1+1'' 总体研发路线中第一条独立技术主线——Body Runtime 的工程演进路径。这里的核心问题并不是“如何为大模型增加机器人控制接口”，而是如何构造一个可以长期独立演化、能够接入不同物理身体与数字身体，并在毫秒至秒级时间尺度上自主闭合感知--预测--控制--残差--学习循环的身体运行时。我们将坚持此前建立的基本分工：
 \[
 \boxed{
@@ -25,9 +21,7 @@ SemanticInterfaceStable,\quad FastDynamicsLocal,\quad RealityAuthoritative
 }
 \]
 即语义接口应尽量稳定，高频动力学应尽量在身体局部闭合，而任何内部预测最终都必须重新经过现实观测验证。本章给出的不是单个机器人产品的开发顺序，而是一条从“身体接口”逐步走向“可迁移身体运行时”的系统工程路线。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{Body ABI：首先固定身体与认知之间的契约}
 
@@ -991,13 +985,9 @@ StableLocalClosure.
 \]
 
 因此，我们可以给 Body Runtime 一个比“机器人中间件”更准确的最终定义：
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 Body Runtime 是 Agent 与现实之间的快速动力学承载层：它把异构现实压缩为统一的可行动语义状态，把高层意图展开为身体特定的局部控制，并通过持续现实反馈、残差估计和技能沉降，使大量稳定的智能结构在不占用全局工作记忆的情况下直接闭合于身体和环境之中。
-}
-}
-\]
+\end{statementbox}
 
 这也解释了为什么在 ``3+1+1'' 路线中 Body Runtime 必须成为一条与 Agent Kernel 并行发展的独立研发主线。没有 Body Runtime，AgentOS 只能拥有一个越来越丰富的内部世界；有了 Body Runtime，内部 Agent-CSO 才能够稳定地通过行动重新进入现实，而新的现实又能够重新成为下一轮认知结构形成的来源。于是最基础的 World--Agent--World 闭环第一次获得真正可工程实现的身体层基础：
 \[

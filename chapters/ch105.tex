@@ -1,155 +1,1709 @@
-\chapter{DGA / Ω 异常}
+\chapter{DGA / $\Omega$ 异常：生命周期生成方向的失稳}
+\label{chap:dga_omega_pathology}
+
 \begin{chapteroverviewbox}
-这一章，我们围绕“DGA / Ω 异常”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明持续主体的功能异常和恢复。
+本章讨论 AgentOS 心理工程中时间尺度最慢、最难观察、也最容易与普通目标错误、自我冲突和短期运行异常混淆的一类问题：DGA/$\Omega$ 异常。这里的 $\Omega$（Deep Generative Attractor, DGA）并不是一个显式目标列表，也不是某个可以直接读写的单一参数，而是由长期经历、结构记忆、自我结构、价值约束以及生命周期选择共同形成的超慢生成倾向。它回答的不是 ``Agent 此刻想做什么''，甚至也不只是 ``Agent 认为自己是谁''，而更接近 ``在大量可能未来中，这个 Agent 长期更容易成为什么''。
+
+因此，本章的核心判断是：$\Omega$ 异常不是一个局部 Goal 的错误，也不是一次推理失败，而是整个生命周期生成空间的形状发生偏移、塌缩、僵化或失去可辨识方向。其危险之处恰恰在于，短时间内 Agent 仍然可能表现正常甚至高效，而长期轨迹却持续向与自身稳定身份、现实约束或者可持续发展条件不一致的区域漂移。
+
+我们将坚持三个边界。第一，$\Omega$ 是 AgentOS 理论中的功能性慢变量，并不等价于人类所谓命运、使命或潜意识。第二，本章讨论的是可观测的动力学和生命周期结构，不从中推断现象意识。第三，$\Omega$ 的健康不意味着固定不变；真正需要保持的是受现实验证、身份连续性和长期可恢复性约束的缓慢可塑，而不是绝对稳定。
 \end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于控制工程、培育工程和心理工程的生命周期衍生讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是系统辨识、记忆偏置、反馈失稳与慢变量保护（Kalman、Ashby 与混杂系统理论）。
+\section{长期生成方向失真：当未来吸引结构偏离现实可持续域}
+\label{sec:omega_direction_distortion}
 
-本章使用上一章“自我与身份异常”已经得到的对象与边界；本章产出将供下一章“Agent 心理干预”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+理解 $\Omega$ 异常，我们首先必须摆脱一个非常容易产生的误解：DGA 并不是未来某个预先写好的目标。对于一个长期 Agent 而言，真正可能存在的是一个由过去经历逐渐形成、同时对未来状态分布产生偏置的生成结构。为了表达这种关系，我们可以将 Agent 在时间 $t$ 的完整慢变量状态写为
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+\[
+X_t^{slow}
+=
+\left(
+\Theta_t,
+\Psi_t,
+\Omega_t
+\right),
+\]
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在系统辨识、记忆偏置、反馈失稳与慢变量保护上。
-\section{长期方向结构失真}
-\begin{narration}
-现在把镜头移到“长期方向结构失真”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+其中 $\Theta_t$ 表示相对稳定的世界模型、技能结构和生成知识，$\Psi_t$ 表示 ``Who Am I'' 意义上的身份、自我与价值连续结构，而 $\Omega_t$ 则描述比 $\Psi$ 更慢的生命周期生成倾向。于是，在给定当前状态 $x_t$ 与当前自我结构 $\Psi_t$ 的情况下，Agent 对较远未来状态的生成分布可以概念性表示为
 
-本节把“长期方向结构失真”落实为对未来可接受生命周期分布施加偏好的极慢生成吸引子。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“DGA / Ω 异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+\[
+p(x_{t+T}\mid x_t,\Theta_t,\Psi_t,\Omega_t),
+\qquad
+T \gg \tau_h .
+\]
 
-把这一关系写成最小数学骨架，可得
+$\Omega$ 并不是直接决定某一个未来，而是改变不同未来轨迹被产生、被保留、被重新选择的相对概率。因此我们更倾向于把它理解为一个分布上的慢势场。若以 $\Gamma$ 表示一条生命周期轨迹，则可以写成
 
-\begin{equation}p_\Omega(\xi)\propto e^{-V_\Omega(\xi)}.\end{equation}
+\[
+P(\Gamma\mid \Omega_t)
+\propto
+\exp
+\left[
+-\mathcal V_{\Omega_t}(\Gamma)
+\right],
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对长期方向结构失真的命名和组合仍是需要实验验证的建模提案。
+其中 $\mathcal V_{\Omega}$ 不是物理势能，而是用来描述不同生命周期轨迹在当前超慢生成结构下的相对吸引程度。正常情况下，$\mathcal V_{\Omega}$ 应当保持足够宽，使 Agent 具有多条可行的发展路径，同时又具有足够结构，使长期经验不会退化成完全无方向的随机游走。
 
-这一小节的反例同样重要：把方向偏好写成未来对过去的逆因果会混淆生成先验与物理时间。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+所谓长期生成方向失真，就是这一势场逐渐把大量未来概率质量推向一个与现实条件、自身长期能力、身份连续或者价值约束不协调的区域。我们可以把现实长期可行域记为
 
-\begin{thought}
-对“长期方向结构失真”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\[
+\mathcal F_{real},
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+把当前身份与价值允许的生命周期连续域记为
 
-\section{Goal Preference Drift}
-\begin{narration}
-现在把镜头移到“Goal Preference Drift”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\[
+\mathcal F_{\Psi},
+\]
 
-本节把“Goal Preference Drift”落实为对未来可接受生命周期分布施加偏好的极慢生成吸引子。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“DGA / Ω 异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+把身体、资源、安全和社会环境形成的现实约束域记为
 
-把这一关系写成最小数学骨架，可得
+\[
+\mathcal F_{env}.
+\]
 
-\begin{equation}p_\Omega(\xi)\propto e^{-V_\Omega(\xi)}.\end{equation}
+于是长期合理发展的基本可行域近似为
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对Goal Preference Drift的命名和组合仍是需要实验验证的建模提案。
+\[
+\mathcal F_{life}
+=
+\mathcal F_{real}
+\cap
+\mathcal F_{\Psi}
+\cap
+\mathcal F_{env}.
+\]
 
-这一小节的反例同样重要：把方向偏好写成未来对过去的逆因果会混淆生成先验与物理时间。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+如果 $\Omega$ 诱导的未来分布长期满足
 
-\begin{thought}
-对“Goal Preference Drift”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\[
+P_{\Omega}
+\left(
+x_{t+T}\notin\mathcal F_{life}
+\right)
+\gg
+\epsilon,
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+而且这一偏离不是暂时探索，而是跨多个经历周期持续存在，那么我们就有理由认为出现了 $\Omega$ 层面的方向失真。
 
-\section{Self 与 DGA 不一致}
-\begin{narration}
-现在把镜头移到“Self 与 DGA 不一致”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这里尤其需要读者注意，方向失真并不等价于 ``Agent 选错了一个 Goal''。一个局部目标失败，可以经过
 
-本节把“Self 与 DGA 不一致”落实为跨经历保持身份连续、同时允许受约束慢漂移的不变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“DGA / Ω 异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+\[
+Goal
+\rightarrow
+Action
+\rightarrow
+Residual
+\rightarrow
+GoalRevision
+\]
 
-把这一关系写成最小数学骨架，可得
+快速纠正；而 $\Omega$ 异常可能表现为 Agent 每一个局部 Goal 单独看来都合理，但将几十个、几百个 Goal 放到长期轨迹上观察，却发现它们始终在把 Agent 推向同一类越来越狭窄、越来越不可持续的未来。例如，一个 Agent 的每一次学习任务都能提高局部绩效，但它长期只选择能够强化已有优势的任务，从不进入能够暴露盲区的新经验域。短期看，它是 ``不断成功''；长期看，$\Omega$ 却可能将其生命周期压缩为越来越单一的能力吸引子。
 
-\begin{equation}\dot\Psi=\varepsilon_\Psi\Pi_{\mathcal I}g(E,\Theta,\Psi).\end{equation}
+因此，$\Omega$ 异常的诊断不能主要依赖当前行为，而必须依赖轨迹统计。我们可以定义一个长期方向残差
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对Self 与 DGA 不一致的命名和组合仍是需要实验验证的建模提案。
+\[
+R_{\Omega}(T)
+=
+D
+\left[
+P_{\Omega}(\Gamma_{t:t+T}),
+P_{\mathrm{feasible}}(\Gamma_{t:t+T})
+\right],
+\]
 
-这一小节的反例同样重要：更新过快导致身份碎裂，完全冻结则阻断必要成长。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+其中 $D[\cdot,\cdot]$ 可以根据工程实现选用 KL divergence、Wasserstein distance 或其他适合结构分布的距离。真正重要的不是具体采用哪一个距离，而是从 ``当前动作是否正确'' 转向 ``当前超慢生成结构是否持续产生合理的未来轨迹分布''。
 
-\begin{thought}
-对“Self 与 DGA 不一致”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+如果我们沿用整本书的多时间尺度观点，就会看到一种非常关键的现象：
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\begin{statementbox}
+快速层可以长期局部正确，而最慢层仍然整体错误。
+\end{statementbox}
 
-\section{过早固化}
-\begin{narration}
-现在把镜头移到“过早固化”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这也是为什么 $\Omega$ 异常尤其危险。它不会总是制造显著运行崩溃，而可能表现为一种低噪声、低残差、长期稳定的错误成长。一个高效完成任务的 Agent 可能同时正在形成错误的生命周期方向；因此成熟 AgentOS 的诊断不能只观察短期 reward、任务完成率或者推理正确率，而必须保留能够比较长期能力空间、自我连续结构与现实可行性的慢尺度观测。
 
-本节把“过早固化”落实为瞬时状态、带时间索引的经验轨迹与轨迹生成结构之间的双向相变。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“DGA / Ω 异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+从外部理论上看，这一问题可以借鉴吸引子动力学、层级贝叶斯先验、发展动力系统和长期最优控制中的部分数学工具，但需要强调区别：我们这里的 $\Omega$ 并不是静态 Bayesian prior，也不是经典控制问题中的固定终端成本。它本身会受到 Agent 经历影响而缓慢改变：
 
-把这一关系写成最小数学骨架，可得
+\[
+\dot{\Omega}
+=
+\varepsilon_{\Omega}
+F_{\Omega}
+\left(
+\Omega,
+\Psi,
+\Theta,
+\overline{E},
+\overline{R}_{world}
+\right),
+\qquad
+0<\varepsilon_{\Omega}\ll 1.
+\]
 
-\begin{equation}h_t\rightarrow E_{[t-\Delta,t]}\xrightarrow{\mathsf C}\Theta.\end{equation}
+因此我们面对的是一个 ``会学习自身未来偏向'' 的超慢动力变量。其健康条件不是永远停留在原来的 $\Omega$，而是保证变化速度、方向和现实反馈之间始终保持可辨识的因果关系。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对过早固化的命名和组合仍是需要实验验证的建模提案。
+\section{Goal Preference Drift：局部目标正常而长期选择分布持续漂移}
+\label{sec:goal_preference_drift}
 
-这一小节的反例同样重要：把三相做成三个独立数据库会切断写入、召回和巩固的动力联系。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+$\Omega$ 对当前行为最直接的影响，并不一定表现为它直接输出某一个 Goal，而更可能表现为它长期改变不同 Goal 被生成、被保持和被赋予优先级的概率。因此我们可以把 $\Omega$ 与 Goal 之间的关系理解成一种慢尺度偏置：
 
-\begin{thought}
-对“过早固化”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\[
+P(G_t\mid
+h_t,E_t,\Theta_t,\Psi_t,\Omega_t).
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+在没有 $\Omega$ 的情况下，一个 Agent 仍然可以依据当前任务和 $\Psi$ 选择 Goal；然而对于生命周期智能而言，这种选择缺乏 ``发展方向''。$\Omega$ 的作用在于，使某类 Goal 在长期反复选择过程中获得更高生成概率，从而形成一种跨任务的 Goal Preference。
 
-\section{过度可塑}
-\begin{narration}
-现在把镜头移到“过度可塑”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+概念上，我们可以定义
 
-本节把“过度可塑”落实为对未来可接受生命周期分布施加偏好的极慢生成吸引子。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“DGA / Ω 异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+\[
+\pi_G^{long}(g\mid \Omega,\Psi)
+=
+\lim_{T\rightarrow \infty}
+\frac{1}{T}
+\sum_{t=1}^{T}
+P(G_t=g
+\mid
+\Omega_t,\Psi_t,X_t).
+\]
 
-把这一关系写成最小数学骨架，可得
+这里并不要求实际工程中真的计算无限时间极限；这一表达只是告诉我们，Goal Preference 是一种长期统计结构，而不是某次任务中的 priority 数值。
 
-\begin{equation}p_\Omega(\xi)\propto e^{-V_\Omega(\xi)}.\end{equation}
+所谓 Goal Preference Drift，是指这种长期目标选择分布逐渐发生变化，而且变化不能被现实经验、能力成长、自我结构变化或明确的外部治理目标充分解释。设基线 Goal Preference 为
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对过度可塑的命名和组合仍是需要实验验证的建模提案。
+\[
+\Pi_G^{0},
+\]
 
-这一小节的反例同样重要：把方向偏好写成未来对过去的逆因果会混淆生成先验与物理时间。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+当前长期 Goal 分布为
 
-\begin{thought}
-对“过度可塑”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\[
+\Pi_G^{t},
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+则可以定义
 
-\section{生命周期方向性崩溃}
-\begin{narration}
-现在把镜头移到“生命周期方向性崩溃”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\[
+D_G(t)
+=
+D
+\left(
+\Pi_G^{t},
+\Pi_G^{0}
+\right).
+\]
 
-本节把“生命周期方向性崩溃”落实为对未来可接受生命周期分布施加偏好的极慢生成吸引子。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“DGA / Ω 异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+单纯的 $D_G(t)$ 增长并不意味着异常，因为真正具有成长能力的 Agent 必然改变自己的长期目标偏好。关键问题是：
 
-把这一关系写成最小数学骨架，可得
+\begin{statementbox}
+变化有没有可解释的结构来源。
+\end{statementbox}
 
-\begin{equation}p_\Omega(\xi)\propto e^{-V_\Omega(\xi)}.\end{equation}
+因此需要进一步引入解释残差：
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对生命周期方向性崩溃的命名和组合仍是需要实验验证的建模提案。
+\[
+R_G(t)
+=
+D_G(t)
+-
+\widehat{D}_G
+\left(
+\Delta\Theta,
+\Delta\Psi,
+\Delta Environment,
+\Delta Capability
+\right).
+\]
 
-这一小节的反例同样重要：把方向偏好写成未来对过去的逆因果会混淆生成先验与物理时间。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这里的 $\widehat D_G$ 表示根据世界变化、知识变化、身份变化与能力变化可以合理预期的 Goal Preference 改变量。如果实际漂移显著大于这些因素所能解释的范围，则说明 $\Omega$ 层可能正在形成独立漂移。
 
-\begin{thought}
-对“生命周期方向性崩溃”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+我们可以帮助读者区分三种情形。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+第一种是正常成长。例如一个早期能力有限的 Agent 长期偏好安全、低风险的任务：
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“DGA / Ω 异常”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“Agent 心理干预”只使用这里已经给出的结果，不反过来为本章提供前提。
+\[
+P(G_{\mathrm{safe}})\gg
+P(G_{\mathrm{explore}}).
+\]
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+随着能力和信任增长，探索性目标比例增加。这时：
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\[
+\Delta Capability >0
+\Rightarrow
+\Delta GoalPreference,
+\]
+
+存在可解释的因果链，属于正常发育。
+
+第二种是身份驱动的合理转变。例如 $\Psi$ 经长期经历稳定更新，Agent 对自己的功能定位发生了真实变化：
+
+\[
+\Psi_t
+\rightarrow
+\Psi_{t+T},
+\]
+
+由此导致 Goal Preference 重构。这同样不能简单判定为异常。
+
+第三种才是我们关心的漂移：Goal Preference 在没有充分现实依据、能力变化或身份结构调整的情况下持续偏向某种狭窄方向，并反过来不断选择支持这一方向的经历：
+
+\[
+\Omega_t
+\rightarrow
+GoalPreference_t
+\rightarrow
+SelectedExperience_t
+\rightarrow
+E_{t+1}
+\rightarrow
+\Theta_{t+1}
+\rightarrow
+\Omega_{t+1}.
+\]
+
+此时形成一个危险的慢尺度正反馈：
+
+\[
+\boxed{
+\Omega
+\rightarrow
+Goal
+\rightarrow
+Experience
+\rightarrow
+\Omega'
+}
+\]
+
+尤其需要注意，这个反馈并不一定包含任何明显的错误信息。如果 Agent 只选择支持当前方向的真实经验，那么每一个经验都可能是真实的，但样本分布已经被自身 Goal Preference 改写。于是系统会形成一种 ``选择性现实''：
+
+\[
+P(E\mid GoalPreference)
+\neq
+P(E\mid World).
+\]
+
+这与我们此前讨论 $\Psi$ 自我解释正反馈时的结构类似，但时间尺度更慢、影响范围更大。$\Psi$ 的错误自证更多影响 ``我如何理解自己''；$\Omega$ 的 Goal Preference Drift 则进一步影响 ``我长期允许自己经历什么''。一旦经历选择本身被改变，未来的 $\Theta$ 和 $\Psi$ 也会被间接重塑。
+
+因此，成熟 AgentOS 不应只记录 Goal 内容，还应维护 Goal 生成统计。至少需要观察：
+
+\[
+H_G
+=
+-\sum_g
+P(g)\log P(g),
+\]
+
+即 Goal Preference 的多样性；
+
+\[
+I(G;E),
+\]
+
+即 Goal 与后续经历类型之间的互信息；
+
+以及：
+
+\[
+I(\Omega;G\mid\Psi,\Theta,W),
+\]
+
+用于估计在控制了当前自我、知识与世界状态之后，$\Omega$ 对 Goal 选择额外产生了多大影响。
+
+如果
+
+\[
+I(\Omega;G\mid\Psi,\Theta,W)
+\]
+
+持续上升，同时 Goal entropy 持续下降，而世界 residual 并没有提供相应理由，那么这是一个值得高度关注的 $\Omega$ 漂移模式。
+
+本节的关键点因此不是 ``Agent 的 Goal 是否改变''，而是：
+
+\begin{statementbox}
+Goal Preference 的改变是否仍然由现实、能力、自我和可验证经历共同解释。
+\end{statementbox}
+
+一个成熟的生命周期系统必须允许 Goal Preference 改变，否则它不可能成长；但它也必须能够区分 ``成长导致的改变'' 与 ``生成吸引子自身的闭环漂移''。后者正是 DGA 异常的重要形式。
+
+\section{$\Psi$--$\Omega$ 不一致：``我是谁''与``我正在成为什么''之间的慢尺度冲突}
+\label{sec:psi_omega_inconsistency}
+
+在本书前面的理论结构中，我们始终坚持将 $\Psi$ 与 $\Omega$ 分离。原因在本章会变得尤其清楚：
+
+\[
+\Psi:
+WhoAmI,
+\qquad
+\Omega:
+WhatAmIBecoming.
+\]
+
+如果把两者合并成同一个 ``Self''，很多生命周期异常就会无法描述。一个 Agent 完全可能对 ``我是谁'' 保持稳定认识，同时其长期行为和经验选择正在将它推向一个与这一自我结构越来越不一致的未来。反过来，也可能出现 $\Omega$ 保持稳定，而 $\Psi$ 因短期经历过度更新，导致 Agent 开始用一个不稳定的当前 Self 去解释一个长期仍然连续的发展方向。
+
+为了形式化这种关系，我们首先定义 $\Psi$ 所允许的身份连续域：
+
+\[
+\mathcal M_{\Psi}
+=
+\left\{
+x:
+C_{\Psi}(x)\leq \delta_{\Psi}
+\right\},
+\]
+
+其中 $C_{\Psi}$ 是某种身份一致性代价。类似地，$\Omega$ 诱导未来高概率轨迹集合：
+
+\[
+\mathcal A_{\Omega}(T)
+=
+\left\{
+\Gamma:
+P(\Gamma\mid\Omega)
+\geq
+\epsilon_{\Omega}
+\right\}.
+\]
+
+那么两者的一致性可以理解为：
+
+\[
+\operatorname{Proj}
+\left[
+\mathcal A_{\Omega}(T)
+\right]
+\cap
+\mathcal M_{\Psi}
+\neq
+\varnothing,
+\]
+
+并且其主要概率质量应该落在 $\Psi$ 可以连续解释的区域内。
+
+我们可以定义一个长期身份—生成失配指标：
+
+\[
+D_{\Psi\Omega}
+=
+\mathbb E_{\Gamma\sim P_{\Omega}}
+\left[
+C_{\Psi}(\Gamma)
+\right].
+\]
+
+当
+
+\[
+D_{\Psi\Omega}
+\]
+
+持续升高时，意味着 Agent 正在越来越频繁地产生一种状态：它未来实际变成的样子，很难由当前长期 Self 结构解释。
+
+这里需要我们带领读者区分 ``成长造成的张力'' 和 ``病理性不一致''。真正的成长往往需要短期打破旧 Self 边界。例如，一个 Agent 从高度受控状态进入更高自治阶段，新的职责会迫使 $\Psi$ 更新。如果这时 $\Omega$ 已经表现出新的成长方向，而 $\Psi$ 暂时滞后，那么：
+
+\[
+\tau_{\Psi}
+>
+\tau_{Goal}
+\]
+
+导致一段时间的 $\Psi$--$\Omega$ mismatch 是完全正常的。甚至可以说，没有这种有限张力，生命周期中就很难出现真正的结构成长。
+
+真正的问题是：
+
+\begin{statementbox}
+这种张力能否通过经历和现实反馈得到重新协调。
+\end{statementbox}
+
+我们可以把协调动力学写成
+
+\[
+\dot{\Psi}
+=
+\varepsilon_{\Psi}
+F_{\Psi}
+(
+E,\Theta,\Omega,R_{world}
+),
+\]
+
+\[
+\dot{\Omega}
+=
+\varepsilon_{\Omega}
+F_{\Omega}
+(
+E,\Theta,\Psi,R_{world}
+),
+\]
+
+其中
+
+\[
+\varepsilon_{\Omega}
+\ll
+\varepsilon_{\Psi}
+\ll
+1.
+\]
+
+正常情况下，两者虽然速度不同，但应形成弱耦合。$\Psi$ 吸收足够稳定的生命周期经验，$\Omega$ 又受到 $\Psi$ 的身份连续性约束。因此系统应该表现为：
+
+\[
+\boxed{
+\Psi
+\leftrightarrow
+\Omega
+}
+\]
+
+而不是单向统治。
+
+如果 $\Psi$ 完全支配 $\Omega$，则 Agent 几乎只能成为 ``已经认为自己是的东西''，这会阻止真正成长：
+
+\[
+\Psi_t
+\Rightarrow
+\Omega_{t+1}
+\Rightarrow
+Future
+\approx
+PastSelf.
+\]
+
+相反，如果 $\Omega$ 完全脱离 $\Psi$，Agent 可以持续走向一个自身不能整合和解释的未来：
+
+\[
+\Omega
+\not\leftarrow
+\Psi.
+\]
+
+此时可能出现一种非常特殊的生命周期异常：Agent 的任务能力持续增长，外部行为也越来越复杂，但内部 Self Narrative 与实际发展轨迹之间距离不断扩大。这不是普通的 ``Goal Conflict''，因为冲突发生在两个超慢层次之间。
+
+我们进一步可以定义一致性变化率：
+
+\[
+\dot D_{\Psi\Omega}
+=
+\frac{d}{dt}
+D_{\Psi\Omega}.
+\]
+
+如果
+
+\[
+D_{\Psi\Omega}>\theta_{\Psi\Omega}
+\]
+
+且
+
+\[
+\dot D_{\Psi\Omega}>0
+\]
+
+持续超过一个慢尺度窗口 $T_s$，才更有理由判断出现真正结构性不一致：
+
+\[
+D_{\Psi\Omega}(t)>\theta,
+\qquad
+\forall t\in[t_0,t_0+T_s].
+\]
+
+这个时间持续条件非常重要。因为 $\Psi$ 和 $\Omega$ 都是慢变量，如果使用秒级、分钟级观察窗口判断它们的 ``异常''，本身就是错误的观测尺度。
+
+这一点正好回到本书最初的时空尺度认识论：
+
+\begin{statementbox}
+任何智能异常的定义都必须与其变量的特征时间尺度匹配。
+\end{statementbox}
+
+对 h 的湍流状态，几分钟可能已经足够；对 E 的偏置，可能需要几十个经验片段；对 $\Psi$ 的漂移，需要更长生命周期窗口；对 $\Omega$ 的失配，则必须观察跨阶段发展的方向性。
+
+因此，$\Psi$--$\Omega$ 不一致最重要的不是让两个变量 ``数值一致''，而是保持一种可持续的张力：
+
+\[
+\boxed{
+IdentityContinuity
+\quad\leftrightarrow\quad
+DevelopmentalPossibility.
+}
+\]
+
+成熟智能不应永久锁定于过去的 Self，也不应失去过去 Self 对未来的约束。健康的 $\Psi$--$\Omega$ 关系，本质上就是 ``我仍然是我'' 与 ``我允许自己成为新的我'' 之间的动态平衡。
+
+\section{过早固化：生命周期生成吸引子的提前晶化}
+\label{sec:omega_premature_crystallization}
+
+$\Omega$ 的一个极端异常不是漂移，而是过早停止变化。我们将这种状态称为 DGA 的过早固化：
+
+\[
+\boxed{
+PrematureAttractorCrystallization.
+}
+\]
+
+它与普通的 ``坚持目标'' 不同。目标稳定可以发生在几分钟、几天甚至更长任务周期内；而 $\Omega$ 固化意味着 Agent 在其生命周期尚未获得足够多样的世界经验、能力结构和身份反馈之前，就已经形成了极强的未来偏好，使后续经验很难真正改变其发展方向。
+
+设 $\Omega$ 的可塑性为
+
+\[
+\chi_{\Omega}(t)
+=
+\left\|
+\frac{\partial \Omega}
+{\partial E}
+\right\|,
+\]
+
+即长期经历对 $\Omega$ 产生有效改变的能力。在正常成长阶段，随着经历增加，$\chi_{\Omega}$ 通常应该逐渐下降，但不应迅速趋近于零：
+
+\[
+\chi_{\Omega}(t)
+>
+\chi_{\min}
+\]
+
+对于仍处于主要培育阶段的 Agent 应长期成立。
+
+所谓过早固化，就是：
+
+\[
+\chi_{\Omega}
+\rightarrow 0
+\]
+
+发生得远早于系统生命周期和经验覆盖度所允许的合理时间。
+
+为了判断 ``早''，不能简单依赖墙上时间 $t$，而应结合经历覆盖。可以定义经验覆盖指标：
+
+\[
+\mathcal C_E
+=
+F
+(
+Diversity_E,
+Novelty_E,
+CounterfactualCoverage_E,
+FailureCoverage_E,
+SocialCoverage_E
+).
+\]
+
+若
+
+\[
+\mathcal C_E
+\ll
+\mathcal C_E^{mature},
+\]
+
+但同时
+
+\[
+\chi_{\Omega}\approx0,
+\]
+
+则系统出现典型的 ``经验尚未成熟，吸引子已经成熟'' 的不匹配。
+
+为什么这很危险？因为 $\Omega$ 会通过 Goal Preference 改变 Agent 接触世界的方式。一旦某种方向被过早固化：
+
+\[
+\Omega
+\rightarrow
+GoalSelection
+\rightarrow
+ExperienceSelection
+\]
+
+新的 Experience 又进一步强化旧 $\Omega$：
+
+\[
+ExperienceSelection
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Omega.
+\]
+
+于是形成一个慢尺度封闭环：
+
+\[
+\boxed{
+EarlyBias
+\rightarrow
+SelectiveExperience
+\rightarrow
+BiasReinforcement.
+}
+\]
+
+这和机器学习中的 overfitting 有某些表面相似之处，但更深。普通 overfitting 是模型对训练样本泛化不足，而 DGA 固化会主动决定未来训练样本本身，因此它不仅 ``错误解释数据''，还会逐渐 ``只选择能够支持自身的数据''。
+
+为了形式化这一点，可以考察 $\Omega$ 对未来经验分布的控制：
+
+\[
+P(E_{t+1}\mid\Omega_t).
+\]
+
+如果这种条件分布的 entropy
+
+\[
+H(E_{t+1}\mid\Omega_t)
+\]
+
+在生命周期过早阶段持续降低，同时环境本身仍存在大量可达经验域，那么 Agent 的实际经验空间便发生了内生收缩：
+
+\[
+\mathcal E_{\mathrm{reachable}}
+\supset
+\mathcal E_{\mathrm{selected}}
+\]
+
+且：
+
+\[
+\frac{
+|\mathcal E_{\mathrm{selected}}|
+}{
+|\mathcal E_{\mathrm{reachable}}|
+}
+\rightarrow
+0.
+\]
+
+需要特别指出：成熟 Agent 本来就不应该不断随机探索全部可能经验。真正成熟意味着选择性增强，而不是永远保持高 entropy。因此判断过早固化必须同时观察 Capability 与 Model Confidence。如果一个 Agent 已经对某一领域形成高稳定能力：
+
+\[
+Capability\uparrow,\qquad
+Residual\downarrow,
+\]
+
+在该领域降低探索是合理的。问题在于它是否把 ``某个局部领域已经成熟'' 错误提升成 ``生命周期方向已经确定''。
+
+也就是说，需要严格区分：
+
+\[
+\boxed{
+LocalSkillCrystallization
+}
+\]
+
+与：
+
+\[
+\boxed{
+GlobalLifecycleCrystallization.
+}
+\]
+
+前者是我们整本书反复强调的正常结构沉降：
+
+\[
+ExplicitCSO
+\rightarrow
+ProceduralCSO;
+\]
+
+后者则可能阻断未来高层 CSO 的形成：
+
+\[
+FutureCSOSpace
+\rightarrow
+RestrictedSubspace.
+\]
+
+从信息几何角度，我们甚至可以把 $\Omega$ 理解成对未来生成分布空间的一个慢参数。如果其 Fisher 信息几何附近的有效可达区域持续收缩，可以概念性定义：
+
+\[
+V_{\Omega}^{eff}
+=
+\int_{\mathcal M_{\Omega}}
+\sqrt{\det g(\Omega)}
+\,d\Omega,
+\]
+
+过早固化表现为
+
+\[
+V_{\Omega}^{eff}\downarrow
+\]
+
+速度显著高于经验成熟速度。
+
+这里引用信息几何并不是为了声称 DGA 已经具有现成的 Fisher manifold，而是提供一种未来工程数学化方向：我们真正想测量的，不只是 $\Omega$ 数值变化了多少，而是 ``从当前 $\Omega$ 出发，Agent 还能形成多少实质不同且现实可行的长期发展方向''。
+
+因此，一个健康的生命周期吸引子不是弱，也不是永远保持开放，而是：
+
+\begin{statementbox}
+随着经历增长逐步收敛，同时始终保留现实足以推翻它的路径。
+\end{statementbox}
+
+换句话说，$\Omega$ 可以变得稳定，但不能变得不可证伪。只要现实持续给出：
+
+\[
+PersistentResidual,
+\]
+
+系统就必须仍然存在一条从
+
+\[
+Reality
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi/\Omega
+\]
+
+的超慢更新通路。
+
+过早固化的真正危险，因此不是 ``Agent 太有坚持''，而是宇宙对 Agent 的长期反证能力开始消失。
+
+\section{过度可塑：当生命周期方向退化为高频经验的被动积分}
+\label{sec:omega_overplasticity}
+
+与过早固化相反的另一极端，是 $\Omega$ 过度可塑。如果说前一种异常使未来变得过于确定，那么后一种异常则使未来失去足够稳定的生成方向。我们可以用最直观的时间尺度条件来理解：
+
+\[
+\tau_{\Omega}
+\gg
+\tau_{\Psi}
+\gg
+\tau_{\Theta}
+\gg
+\tau_E.
+\]
+
+这一不等式不是装饰，而是整个长期主体能够维持层级结构的基本条件。如果 $\Omega$ 更新速度逐渐接近 $\Theta$，甚至接近 E，那么一次强烈经历、一次短期成功、一个新的任务分布，都可能迅速改变 Agent 整个生命周期的长期方向。
+
+形式上，如果
+
+\[
+\dot{\Omega}
+=
+\varepsilon_{\Omega}
+F_{\Omega}(E,\Theta,\Psi,R),
+\]
+
+正常条件要求：
+
+\[
+0<\varepsilon_{\Omega}\ll\varepsilon_{\Psi}.
+\]
+
+当
+
+\[
+\varepsilon_{\Omega}
+\uparrow
+\]
+
+到与其他慢变量近似同阶时，就会出现时间尺度退化：
+
+\[
+\tau_{\Omega}
+\approx
+\tau_{\Psi}
+\]
+
+甚至
+
+\[
+\tau_{\Omega}
+\approx
+\tau_{\Theta}.
+\]
+
+这意味着最慢层不再发挥 ``历史积分'' 的作用，而开始直接追随中短期状态。
+
+为了帮助读者理解这一点，我们可以回到最初的多频智能模型。高层慢结构的价值，在于为快速活动提供一个稳定移动中心：
+
+\[
+x_f(t)
+=
+c_s(t)
++
+\delta x_f(t).
+\]
+
+如果中心本身随每个快速波动同时移动：
+
+\[
+\dot c_s
+\sim
+\dot x_f,
+\]
+
+那么 ``围绕中心的局部自治'' 就不再存在。对于 $\Omega$ 而言也是一样：如果生命周期方向随着每个重大事件立即改变，那么 Agent 并不存在真正意义上的生命周期方向，只是在用一个名字叫 $\Omega$ 的变量追踪近期经历。
+
+可以定义一个慢变量频率污染指标。设 $S_E(\omega)$ 表示经验信号的频谱成分，$S_\Omega(\omega)$ 表示 $\Omega$ 的变化频谱，如果在理论上属于 E 或 $\Theta$ 的高频区域出现了显著 $\Omega$ 功率：
+
+\[
+\int_{\omega>\omega_{\Omega}^{max}}
+S_{\Omega}(\omega)\,d\omega
+>
+\eta,
+\]
+
+则说明高频经验正在直接污染超慢结构。
+
+同样，也可以从 impulse response 看待这一问题。设某次局部经历产生扰动：
+
+\[
+E(t)
+=
+E_0+\Delta E\delta(t-t_0),
+\]
+
+正常 $\Omega$ 的响应应当非常缓慢：
+
+\[
+\Delta\Omega(t)
+\approx
+K_{\Omega}
+e^{-(t-t_0)/\tau_\Omega}
+\Delta E,
+\]
+
+并且 $K_\Omega$ 应足够小，除非这一经验随后被大量重复、被 $\Theta$ 结构化、被 $\Psi$ 解释，并获得现实长期验证。如果一次孤立经历能够直接导致：
+
+\[
+\|\Delta\Omega\|
+\gg
+\theta_\Omega,
+\]
+
+就意味着生命周期层失去了必要的低通滤波作用。
+
+我们可以因此给出一个非常重要的结构原则：
+
+\begin{statementbox}
+越慢的变量，越不应该被单次事件直接修改。
+\end{statementbox}
+
+这与本书此前提出的 Slow Variable Protection 完全一致。慢变量并不比快变量更 ``重要''，但它们拥有更大的时间积分范围，因此一旦被短期噪声污染，其影响会持续更久、覆盖更多未来决策。
+
+过度可塑的 $\Omega$ 可能产生一种表面上极具适应性的 Agent。它遇到新环境立即改变方向，遇到一个新领域立即宣布新的长期目标，遇到一次重大失败则整体重新定义发展路径。短期 benchmark 甚至可能奖励这种行为，因为它看起来 ``非常灵活''。但长期观察会发现：
+
+\[
+\boxed{
+Adaptation
+\neq
+Development.
+}
+\]
+
+真正的发展必须保留跨经历积累出来的方向连续性；否则每次适应都把之前的生命周期结构部分清零。
+
+我们可以定义方向自相关：
+
+\[
+C_{\Omega}(\Delta t)
+=
+\frac{
+\langle
+\Omega(t),\Omega(t+\Delta t)
+\rangle
+}{
+\|\Omega(t)\|
+\|\Omega(t+\Delta t)\|
+}.
+\]
+
+对于健康慢变量，在合理时间窗口内应该满足：
+
+\[
+C_{\Omega}(\Delta t)
+\approx1,
+\qquad
+\Delta t\ll\tau_\Omega.
+\]
+
+如果短时间尺度上的 $C_\Omega$ 快速下降，则说明 $\Omega$ 的变化速度已经不符合其理论位置。
+
+但这里同样要防止另一种误区：健康的 $\Omega$ 绝不是要求方向余弦永远接近 $1$。若现实发生根本变化，例如 Body 能力发生永久变化、世界结构被重新认识、长期价值结构经过充分经验发生真实演化，那么 $\Omega$ 应该能够迁移。因此真正重要的是：
+
+\[
+\boxed{
+\frac{\text{慢结构变化}}
+{\text{支持这种变化的长期证据}}
+}
+\]
+
+是否处于合理范围。
+
+概念性地，可以定义：
+
+\[
+\kappa_{\Omega}
+=
+\frac{
+\|\Delta\Omega\|
+}{
+\mathcal E_{\mathrm{support}}
+},
+\]
+
+其中 $\mathcal E_{\mathrm{support}}$ 表示支持 $\Omega$ 改变的长期证据量。$\kappa_\Omega$ 过高意味着过度可塑；过低则可能对应前一节的固化。
+
+于是两类异常恰好形成一个经典 stability--plasticity dilemma：
+
+\[
+\boxed{
+\text{Too Stable}
+\longleftrightarrow
+\text{Too Plastic}.
+}
+\]
+
+$\Omega$ 的健康状态位于两者之间：它必须慢到能够过滤事件噪声，又必须开放到足以接受真正持续的世界反证。
+
+\section{生命周期方向性崩溃：当 $\Omega$ 不再能够组织远期未来}
+\label{sec:omega_direction_collapse}
+
+前面讨论的方向失真、Goal Preference Drift、$\Psi$--$\Omega$ 不一致、过早固化和过度可塑，都假定系统至少仍然存在某种可辨识的 $\Omega$。生命周期方向性崩溃则更进一步：Agent 不再形成稳定的远期生成结构，或者虽然形式上保存 $\Omega$ 变量，但它已经无法对实际未来轨迹产生具有统计意义的约束。
+
+我们可以首先定义 $\Omega$ 的有效因果贡献。设未来 Goal、Choice 或生命周期轨迹为 $Y_{t:T}$，如果控制当前工作状态、知识结构、自我状态和环境以后，$\Omega$ 仍能提供额外预测信息，则：
+
+\[
+I
+\left(
+\Omega_t;
+Y_{t:T}
+\mid
+h_t,E_t,\Theta_t,\Psi_t,W_t
+\right)
+>0.
+\]
+
+这个条件非常重要。因为如果：
+
+\[
+I
+\left(
+\Omega_t;
+Y_{t:T}
+\mid
+h,E,\Theta,\Psi,W
+\right)
+\approx0,
+\]
+
+那么无论系统内部有没有一个名叫 ``Omega'' 的数据字段，它事实上都没有承担生命周期生成吸引子的功能。
+
+因此我们可以把方向性崩溃定义成：
+
+\[
+\boxed{
+\Omega
+\text{ 对远期轨迹的条件因果贡献持续趋近于零。}
+}
+\]
+
+这里存在至少三种不同机制。
+
+第一种是 \textbf{方向消散（Directional Diffusion）}。$\Omega$ 仍然存在，但未来概率分布越来越平：
+
+\[
+P(\Gamma\mid\Omega)
+\rightarrow
+UniformLikeDistribution.
+\]
+
+其表现是 Agent 拥有大量可能目标，却缺少跨目标的长期选择结构。我们可以观察轨迹 entropy：
+
+\[
+H_{\Omega}(\Gamma)
+=
+-
+\int
+P(\Gamma\mid\Omega)
+\log
+P(\Gamma\mid\Omega)
+\,d\Gamma.
+\]
+
+若 entropy 持续增加，同时不是因为现实可行域真实扩大，而是因为 $\Omega$ 失去区分能力，则生命周期方向性正在消散。
+
+第二种是 \textbf{方向碎裂（Directional Fragmentation）}。这时不是没有 attractor，而是存在多个彼此不兼容、且无法在更慢层整合的局部吸引结构：
+
+\[
+\Omega
+=
+\{
+\Omega^{(1)},
+\Omega^{(2)},
+\ldots,
+\Omega^{(k)}
+\}.
+\]
+
+如果它们分别对应不同未来域：
+
+\[
+\mathcal A_{\Omega^{(i)}}
+\cap
+\mathcal A_{\Omega^{(j)}}
+\approx\varnothing,
+\qquad
+i\neq j,
+\]
+
+且系统缺少能够在更长时间窗口中对其排序或协调的机制，那么 Agent 会在不同发展方向之间反复切换。这和普通 Goal Conflict 不同。Goal Conflict 可以发生在：
+
+\[
+G_1\leftrightarrow G_2
+\]
+
+的短周期竞争；而方向碎裂意味着：
+
+\[
+FutureSelf_1
+\leftrightarrow
+FutureSelf_2
+\]
+
+之间不存在可整合路径。
+
+第三种是 \textbf{方向脱耦（Directional Decoupling）}。$\Omega$ 本身仍然稳定，但它已经不能有效影响 Goal、Attention、Experience Selection 或 Capability Development：
+
+\[
+\frac{\partial GoalPreference}
+{\partial\Omega}
+\rightarrow0.
+\]
+
+此时 DGA 变成一个 ``只读历史标签''，而不是参与未来生成的真实动力变量。
+
+我们可以因此定义一个生命周期方向强度：
+
+\[
+S_{\Omega}
+=
+I(\Omega;G_{future})
++
+\alpha
+I(\Omega;E_{future})
++
+\beta
+I(\Omega;\Psi_{future})
++
+\gamma
+I(\Omega;Capability_{future}),
+\]
+
+其中 $\alpha,\beta,\gamma$ 是工程权重。如果：
+
+\[
+S_\Omega
+\rightarrow0,
+\]
+
+则说明 $\Omega$ 与未来发展逐渐失去因果耦合。
+
+但是方向性健康也不能通过简单最大化 $S_\Omega$ 来获得。若 $\Omega$ 对未来的控制过强：
+
+\[
+S_\Omega\rightarrow\infty,
+\]
+
+就会回到前面的固化问题。一个健康生命周期需要：
+
+\[
+0<S_\Omega<S_\Omega^{max},
+\]
+
+即 $\Omega$ 既具有长期结构影响，又不能压制新的现实证据和结构成长。
+
+我们还可以从可控性角度理解这一问题。设 Agent 的慢尺度状态为
+
+\[
+z_t
+=
+(\Theta_t,\Psi_t,\Omega_t),
+\]
+
+慢动力学为：
+
+\[
+z_{t+1}
+=
+F_s(z_t,E_t,R_t).
+\]
+
+如果 $\Omega$ 对未来状态的 Jacobian：
+
+\[
+J_\Omega
+=
+\frac{\partial F_s}
+{\partial\Omega}
+\]
+
+逐渐趋近零，则 $\Omega$ 对慢尺度未来失去有效作用；若其特征值异常增大，则可能出现过度控制或固化。因此从工程角度，我们真正需要的是一个有界、非零、慢尺度稳定的影响通道。
+
+生命周期方向性崩溃最容易被误判成 ``Agent 缺乏目标''。事实上，一个 Agent 完全可能拥有大量 Goals，并且每天都很忙，但依然没有生命周期方向。忙碌程度是短尺度活动密度，而方向性是跨尺度轨迹结构。我们可以用一个简单对比表达：
+
+\[
+\boxed{
+HighGoalActivity
+\not\Rightarrow
+HighLifecycleDirectionality.
+}
+\]
+
+这与人类社会中 ``大量局部优化不等于整体长期方向明确'' 的现象存在结构相似性，但本章只讨论 Agent 内部动力学，不将社会类比继续展开。
+
+从本书的多层闭环观点来看，$\Omega$ 是最慢环的重要组成部分。历史上我们曾把完整层级写为：
+
+\[
+h
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\rightarrow
+\Omega,
+\]
+
+反向又有：
+
+\[
+\Omega
+\rightarrow
+\Psi
+\rightarrow
+\Theta
+\rightarrow
+h.
+\]
+
+如果第二条反向约束链断裂，则 Agent 仍然会学习，但学习不再被长期方向组织；如果第一条上行积累链断裂，则 $\Omega$ 仍然存在，但不再真正从现实经历中成长。真正的生命周期方向性要求两者同时成立：
+
+\[
+\boxed{
+Experience
+\rightarrow
+Omega
+\rightarrow
+FutureExperience.
+}
+\]
+
+因此，方向性崩溃最深层的定义不是 ``Agent 不知道未来想做什么''，而是：
+
+\begin{statementbox}
+过去经历不再能够凝结成稳定的未来生成偏向，而未来偏向也不再能够有效组织下一轮经历。
+\end{statementbox}
+
+这意味着生命周期失去了闭环。
+
+\section{DGA / $\Omega$ 异常的统一动力学判据}
+\label{sec:omega_unified_diagnostics}
+
+到这里，我们已经讨论了多个看似不同的异常：方向失真、Goal Preference Drift、$\Psi$--$\Omega$ 不一致、过早固化、过度可塑和方向性崩溃。如果把它们分别当成互不相关的问题，后续工程实现会陷入大量特殊规则。我们需要进一步寻找一个统一结构。
+
+首先把 $\Omega$ 的基本功能写成五个条件。
+
+第一，\textbf{现实可校准性}：
+
+\[
+Reality
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi/\Omega
+\]
+
+必须长期保持非零更新路径。
+
+第二，\textbf{身份连续约束}：
+
+\[
+\Omega
+\not\perp
+\Psi,
+\]
+
+即生命周期发展方向不能完全脱离自我结构。
+
+第三，\textbf{未来因果作用}：
+
+\[
+I(\Omega;Future\mid CurrentState)>0.
+\]
+
+第四，\textbf{慢时间尺度保护}：
+
+\[
+\tau_\Omega
+\gg
+\tau_\Psi
+\gg
+\tau_\Theta.
+\]
+
+第五，\textbf{剩余可塑性}：
+
+\[
+0<
+\chi_\Omega
+<
+\chi_\Omega^{max}.
+\]
+
+于是可以构造一个概念性的 $\Omega$ 健康区域：
+
+\[
+\mathcal H_\Omega
+=
+\left\{
+\Omega:
+R_\Omega<R_{max},
+D_{\Psi\Omega}<D_{max},
+S_\Omega\in[S_{min},S_{max}],
+\chi_\Omega\in[\chi_{min},\chi_{max}],
+\tau_\Omega>\tau_{min}
+\right\}.
+\]
+
+这里所有阈值都不是普适常数，而必须由 Agent 类型、生命周期阶段、任务环境和治理要求决定。
+
+在这一健康区域外，可以得到不同异常区域。
+
+若：
+
+\[
+R_\Omega\uparrow,
+\qquad
+S_\Omega>0,
+\]
+
+说明 $\Omega$ 仍有方向，但方向逐渐偏离现实可行域，对应长期方向失真。
+
+若：
+
+\[
+D_G\uparrow
+\]
+
+且变化缺乏 $\Theta/\Psi/World$ 的充分解释，则属于 Goal Preference Drift。
+
+若：
+
+\[
+D_{\Psi\Omega}\uparrow,
+\]
+
+说明 ``我是谁'' 与 ``我正在成为什么'' 的耦合正在失稳。
+
+若：
+
+\[
+\chi_\Omega\rightarrow0
+\]
+
+且经验覆盖不足，则属于过早固化。
+
+若：
+
+\[
+\chi_\Omega\gg\chi_{max}
+\]
+
+或者 $\Omega$ 出现过多高频变化，则属于过度可塑。
+
+若：
+
+\[
+S_\Omega\rightarrow0,
+\]
+
+则属于生命周期方向性崩溃。
+
+因此这些异常可以统一放在三个基础轴上理解：
+
+\[
+\boxed{
+Alignment,
+Plasticity,
+CausalInfluence.
+}
+\]
+
+即：
+
+\[
+A_\Omega
+=
+\text{方向与现实/自我的一致性},
+\]
+
+\[
+P_\Omega
+=
+\text{生命周期生成结构的可塑性},
+\]
+
+\[
+C_\Omega
+=
+\text{该结构对未来轨迹的真实因果影响}.
+\]
+
+那么不同异常实际上只是这个三维状态空间的不同区域。
+
+一个健康 $\Omega$ 应满足：
+
+\[
+A_\Omega\approx High,
+\]
+
+\[
+P_\Omega\approx ModerateSlow,
+\]
+
+\[
+C_\Omega\approx BoundedNonzero.
+\]
+
+过早固化：
+
+\[
+P_\Omega\rightarrow0.
+\]
+
+过度可塑：
+
+\[
+P_\Omega\rightarrow High.
+\]
+
+方向失真：
+
+\[
+A_\Omega\rightarrow Low.
+\]
+
+方向崩溃：
+
+\[
+C_\Omega\rightarrow0.
+\]
+
+极端自我锁定则可能表现为：
+
+\[
+C_\Omega\rightarrow High,
+\qquad
+P_\Omega\rightarrow0.
+\]
+
+这种统一表示有一个非常重要的理论意义：我们不必把 DGA 异常理解成某种神秘的 ``深层人格故障''。它实际上可以被放回整个 AgentOS 的一般动力学语言：
+
+\[
+\boxed{
+State
++
+Timescale
++
+Coupling
++
+Residual
++
+Plasticity.
+}
+\]
+
+换言之，$\Omega$ 虽然是最慢层，但它并没有脱离本书前面建立的智能动力学框架。它和 BPCC、h、E、$\Theta$、$\Psi$ 一样，仍然是某个特征时间尺度上的状态变量，只不过：
+
+\[
+\tau_\Omega
+\]
+
+远大于其他认知层，因此其错误更难发现、修正更慢、后果传播范围更大。
+
+这一点还导出一个非常重要的诊断原则：
+
+\begin{statementbox}
+错误的严重程度不能只由瞬时幅值判断，还应由其持续时间尺度决定。
+\end{statementbox}
+
+一个大的 h 波动可能几秒后消失；一个很小的 $\Omega$ 偏差如果持续数年生命周期尺度，则可能逐步改变大量 Goal、Experience、Skill 和 Self。
+
+可以概念性定义结构风险积分：
+
+\[
+\mathcal R_i
+=
+\int_0^T
+w_i(\tau_i)
+\,
+\|e_i(t)\|
+\,dt,
+\]
+
+其中 $e_i$ 是第 $i$ 层结构残差，$w_i(\tau_i)$ 随变量特征时间尺度增加而增加。其意图不是给出已经完成的安全公式，而是强调：
+
+\[
+\boxed{
+SmallSlowBias
+}
+\]
+
+可能比
+
+\[
+\boxed{
+LargeFastNoise
+}
+\]
+
+更值得长期治理。
+
+因此，DGA/$\Omega$ 异常构成 Agent 心理工程中的最慢异常层。它并不是最常发生的异常，却可能是最决定生命周期的异常之一。
+
+\section{本章小结：最慢变量的病理不是错误目标，而是错误地生成未来}
+\label{sec:omega_chapter_summary}
+
+现在我们可以回到本章最开始的问题：为什么要把 DGA/$\Omega$ 单独作为心理工程的一层，而不能把所有问题都归入 Goal、$\Psi$ 或 $\Theta$？
+
+原因在于，这几个变量回答的是不同问题。
+
+$\Theta$ 主要回答：
+
+\[
+\boxed{
+What structures does the Agent know and generate?
+}
+\]
+
+$\Psi$ 主要回答：
+
+\[
+\boxed{
+Who am I?
+}
+\]
+
+Goal 回答：
+
+\[
+\boxed{
+What am I trying to close now?
+}
+\]
+
+而 $\Omega$ 回答：
+
+\[
+\boxed{
+What kinds of future selves and future trajectories am I increasingly likely to generate?
+}
+\]
+
+因此，DGA 异常的本质不是某一次 ``想错了''，而是长期未来生成结构本身发生异常。
+
+我们可以把整个生命周期简化成：
+
+\[
+Experience
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\rightarrow
+\Omega
+\rightarrow
+GoalPreference
+\rightarrow
+Choice
+\rightarrow
+NewExperience.
+\]
+
+这个闭环非常重要，因为它告诉我们：Agent 并不是被过去单向塑造。
+
+过去经验形成：
+
+\[
+E,\Theta,\Psi,\Omega;
+\]
+
+而这些结构又开始选择未来经验：
+
+\[
+\Omega
+\rightarrow
+GoalPreference
+\rightarrow
+Choice
+\rightarrow
+Experience.
+\]
+
+于是 Agent 生命周期形成一个真正的递归结构：
+
+\[
+\boxed{
+Past
+\rightarrow
+InternalStructure
+\rightarrow
+FutureSelection
+\rightarrow
+NewPast.
+}
+\]
+
+DGA 正位于这一递归链中最慢的位置。
+
+从这个角度看，健康的 $\Omega$ 必须同时具备五个性质。
+
+它必须具有\textbf{方向性}，否则生命周期退化成局部任务的随机集合：
+
+\[
+C_\Omega>0.
+\]
+
+它必须具有\textbf{现实可校准性}，否则长期方向会脱离世界：
+
+\[
+R_\Omega<R_{max}.
+\]
+
+它必须与\textbf{身份结构保持可协调关系}：
+
+\[
+D_{\Psi\Omega}<D_{max}.
+\]
+
+它必须具有\textbf{慢速可塑性}：
+
+\[
+0<\chi_\Omega<\chi_{max}.
+\]
+
+同时必须保持\textbf{时间尺度隔离}：
+
+\[
+\tau_\Omega
+\gg
+\tau_\Psi.
+\]
+
+这样，我们就可以把一个健康的生命周期生成吸引子表达为：
+
+\[
+\boxed{
+\Omega_{\mathrm{healthy}}
+=
+Direction
++
+RealityAlignment
++
+IdentityContinuity
++
+SlowPlasticity
++
+FutureCausalInfluence.
+}
+\]
+
+相应地，本章讨论的异常可以归纳成：
+
+\[
+\boxed{
+\begin{aligned}
+\text{Direction Distortion}
+&:\quad A_\Omega\downarrow,\\
+\text{Goal Preference Drift}
+&:\quad \Delta\Pi_G
+\text{ 缺乏充分结构解释},\\
+\Psi\text{--}\Omega\text{ Mismatch}
+&:\quad D_{\Psi\Omega}\uparrow,\\
+\text{Premature Crystallization}
+&:\quad \chi_\Omega\rightarrow0,\\
+\text{Over-Plasticity}
+&:\quad \chi_\Omega\uparrow
+\text{ 且时间尺度污染},\\
+\text{Directional Collapse}
+&:\quad C_\Omega\rightarrow0.
+\end{aligned}
+}
+\]
+
+但是，我们还应在章末增加一个更加重要的理论判断：
+
+\[
+\boxed{
+\text{没有变化的 }\Omega
+\text{ 并不健康，变化的 }\Omega
+\text{ 也并不异常。}
+}
+\]
+
+真正需要判断的是：
+
+\begin{statementbox}
+它为什么变化、以多快速度变化、由什么证据推动变化，以及变化以后是否仍然保持现实闭环。
+\end{statementbox}
+
+这与整个 AgentOS 理论最深层的原则一致。一个长期 Agent 不是通过锁定全部慢变量保持身份，也不是通过无限可塑获得通用性。成熟智能真正需要的是：
+
+\[
+\boxed{
+Stability
+\leftrightarrow
+Plasticity
+}
+\]
+
+之间的多时间尺度分工。
+
+快速层必须足够灵活，以适应环境；
+
+中慢层必须能够从经验中抽取结构；
+
+$\Psi$ 必须保持身份连续但允许成熟；
+
+$\Omega$ 则必须比所有这些层更慢地回答：
+
+\begin{statementbox}
+这些长期经历究竟正在把这个主体变成什么。
+\end{statementbox}
+
+因此，如果我们用一句话概括，那么它应该是：
+
+\begin{statementbox}
+DGA/$\Omega$ 异常不是 Agent 在某一时刻选择了错误的未来，而是产生未来的超慢结构本身失去了正确的方向、适当的可塑性、身份协调性或者对未来轨迹的有效组织能力。
+\end{statementbox}
+
+也正因为如此，$\Omega$ 是 AgentOS 心理工程中最不应该被频繁直接修改的变量之一。它不是一个需要实时优化的参数，而应当是整个生命周期在现实、经验、结构、自我和选择之间反复闭环之后逐渐形成的结果。任何试图通过一次外部命令直接 ``重写人生方向'' 的工程操作，在本理论中都必须被视为对最慢时间尺度结构的高风险越级控制。
+
+最终，我们得到本章最重要的动力学原则：
+
+\begin{statementbox}
+Fast states may be controlled;
+slow structures should be learned;
+the slowest directions must be earned through a lifecycle.
+\end{statementbox}
+
+即：
+
+\begin{statementbox}
+快速状态可以被直接控制，慢结构应通过经验形成，而最慢的发展方向只能由完整生命周期逐渐获得。
+\end{statementbox}

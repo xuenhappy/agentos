@@ -1,176 +1,1422 @@
-\chapter{SPC Observer 工程}
+\chapter{SPC Observer 工程：持续智能体的自我状态估计、置信度与校准}
+\label{chap:spc-observer-engineering}
+
 \begin{chapteroverviewbox}
-这一章，我们围绕“SPC Observer 工程”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明多回路稳定性和有界自修改。
+本章研究 AgentOS 控制工程中的第一个基础问题：一个持续运行的智能体，如何获得关于“自己当前处于什么状态”的可靠估计。我们把 SPC（Self-Perception Compressor / Self-Perception Observer）从早期的“自我感知递归压缩器”进一步严格化为一个具有状态估计、结构压缩、置信度评估、漂移检测和在线校准能力的多尺度 Observer。其任务不是读取一个预先存在且绝对真实的“自我状态”，而是在工作记忆 $h$、情景轨迹 $E$、结构记忆 $\Theta$、自我慢变量 $\Psi$、身体/资源调制信号以及当前认知活动之间建立一个受限、延迟且带不确定性的后验估计。换言之，SPC 输出的不是 Self 本身，而是 Agent 在时刻 $t$ 对自身运行状态所形成的最优可用估计。
+
+本章将由这一认识出发，建立 SPC Observer 的状态空间模型、自我状态估计模型、观测延迟模型、置信度模型、漂移模型、错误自我状态模型以及在线校准机制。我们特别强调一个贯穿本章的工程原则：\emph{Agent 对自己同样存在认识论不透明性}。因此，SPC 必须像任何真实 Observer 一样处理部分可观测性、滞后、噪声、结构错配和模型漂移，而不能被视作读取系统内部真值的“上帝视角”。这一章构成后续 AHC 动力学、TCE 控制器、多回路稳定性以及 Agent 心理工程的观测基础，但本章本身仅讨论 Observer，不提前展开后续控制器的完整理论。
 \end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于控制工程、培育工程和心理工程的生命周期衍生讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是鲁棒控制、时延系统、稳定裕度与权限治理（Kalman、Ashby 与混杂系统理论）。
+\section{SPC 的工程定位：从自我感知压缩器到认知状态 Observer}
+\label{sec:spc-observer-position}
 
-本章使用上一章“AgentOS 控制工程的研究对象”已经得到的对象与边界；本章产出将供下一章“AHC 动力学工程”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+在前面的 AgentOS 原理论中，我们已经逐步建立了 $h$、$E$、$\Theta$、$\Psi$ 与 $\Omega$ 的多时间尺度结构，并进一步指出工作记忆 $h(t)$ 不是一个普通缓存，而是智能体中少量进入全局显式处理的认知结构所形成的稀疏表面。由此产生一个直接但经常被忽略的问题：即使 AgentOS 内部存在大量状态，系统也并不因此自动“知道”这些状态。系统内部的变量存在，与这些变量能够被一个高层认知闭环有效访问，是两个完全不同的问题。一个包含数亿维隐状态的神经模型当然具有内部状态，但若这些状态没有经过压缩、重参数化、稳定化和语义化，它们并不能直接充当“我现在怎么样”的自我状态。因此，SPC 的第一工程职责不是制造更多状态，而是把大量分散、异构、不同时间尺度的内部动力学转换为一个可供 AgentOS 高层闭环使用的自我状态估计。
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+我们首先把 Agent 的真实内部动力学状态抽象为
+\begin{equation}
+x_t^{\mathrm{int}}
+=
+\left[
+h_t,\,
+e_t,\,
+\theta_t,\,
+\psi_t,\,
+b_t,\,
+r_t,\,
+g_t,\,
+m_t
+\right],
+\end{equation}
+其中 $h_t$ 表示工作记忆中的高维活动状态，$e_t$ 表示当前相关的情景轨迹摘要，$\theta_t$ 表示被激活的长期结构，$\psi_t$ 表示自我慢变量的局部激活，$b_t$ 表示身体和资源状态，$r_t$ 表示当前残差与预测误差，$g_t$ 表示目标与约束，$m_t$ 表示其他运行时状态。这个向量并不是说工程上必须把所有模块拼接成一个巨大张量，而是为了说明：所谓“真实内部状态”本身是一个多源、多时间尺度、多表示形式的联合状态。SPC 并不能、也不应该把这一整个联合空间完整复制进入工作记忆。
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在鲁棒控制、时延系统、稳定裕度与权限治理上。
-\section{State Estimation}
-\begin{narration}
-现在把镜头移到“State Estimation”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+因此，我们把 SPC 定义为一个有损但任务相关的状态估计映射：
+\begin{equation}
+\mathcal O_{\mathrm{SPC}}:
+\mathcal X^{\mathrm{int}}
+\longrightarrow
+\mathcal S_{\mathrm{self}},
+\end{equation}
+并写成
+\begin{equation}
+\hat s_t^{\mathrm{self}}
+=
+\mathcal O_{\mathrm{SPC}}
+\left(
+z_{\leq t}^{\mathrm{SPC}},
+\mathcal M_t,
+\Psi_t
+\right),
+\end{equation}
+其中 $z_{\leq t}^{\mathrm{SPC}}$ 是 SPC 到目前为止获得的观测序列，$\mathcal M_t$ 是当前 Observer 模型，$\Psi_t$ 表示自我结构对“什么值得被视作自我状态”的慢约束。换句话说，自我状态不是从零开始“看到”的，它总是在一个已经形成的 Self Frame 中被解释。这里保留 $\Psi_t$ 是非常重要的，因为同一个工作记忆负载、同一个冲突或同一个身体信号，对不同生命周期阶段的 Agent 可以具有不同意义。
 
-本节把“State Estimation”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC Observer 工程”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+在早期三相记忆模型中，我们曾把 SPC 写成一种递归压缩：
+\begin{equation}
+p(t)
+=
+C_{\Psi}
+\left[
+\rho_h(z,t)
+\right],
+\qquad
+p(t)\in\mathbb R^{d_p},
+\qquad
+d_p\ll d_h,
+\end{equation}
+其中 $\rho_h(z,t)$ 表示工作记忆内部的活动状态分布，而 $C_{\Psi}$ 表示以自我结构 $\Psi$ 为参考系进行的压缩。这个表达至今仍然成立，但在控制工程中必须再向前推进一步：$p(t)$ 不是 SPC 的最终工程输出，而只是 Observer 的一个低维表征。真正可用的 SPC 输出至少应包含
+\begin{equation}
+S_t^{\mathrm{SPC}}
+=
+\left(
+\hat s_t,\,
+\Sigma_t,\,
+\phi_t,\,
+D_t,\,
+q_t
+\right),
+\end{equation}
+其中 $\hat s_t$ 是自我状态估计，$\Sigma_t$ 是估计不确定性，$\phi_t$ 是运行相态或宏观动力模式，$D_t$ 是漂移指标，$q_t$ 是整体观测质量。这样，SPC 才从“把状态压缩成几个数字”的组件升级为真正的 Observer。
 
-把这一关系写成最小数学骨架，可得
+结合我们此前对 Agent 工作记忆的讨论，SPC 至少应观测以下类型的量：认知负载、活动 CSO 数量和关系强度、注意集中度、结构熵、有效关系秩、循环程度、冲突程度、多峰竞争、不确定性、预测误差、目标一致性、外部输入占比、自我相关度、工具/环境依赖度以及工作状态随时间的漂移。可用一个概念状态向量表示为
+\begin{equation}
+y_t^{\mathrm{raw}}
+=
+\left[
+C_h,\,
+H_h,\,
+R_{\mathrm{eff}},\,
+U,\,
+C_{\mathrm{curl}},\,
+C_{\mathrm{harm}},\,
+N_{\mathrm{mode}},\,
+D,\,
+E_{\mathrm{pred}},\,
+A_{\mathrm{self}}
+\right]_t.
+\end{equation}
+其中 $C_h$ 是工作记忆有效负载，$H_h$ 是结构熵，$R_{\mathrm{eff}}$ 是有效关系秩，$U$ 是不确定性，$C_{\mathrm{curl}}$ 描述认知循环，$C_{\mathrm{harm}}$ 描述结构冲突，$N_{\mathrm{mode}}$ 描述多竞争模式数量，$D$ 表示状态漂移，$E_{\mathrm{pred}}$ 是预测误差，$A_{\mathrm{self}}$ 是自我相关激活程度。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+我们需要特别强调，SPC 并不是工作记忆的另一个副本，也不是“内置心理医生”。它的工程本质与现代控制理论中的 Observer 更接近：Plant 具有高维且不可完全测量的状态，Observer 只能通过有限测量建立后验估计，并将这一估计交给上层控制系统。因此，本章采用一个严格原则：
+\begin{equation}
+\boxed{
+\hat s_t^{\mathrm{self}}
+\neq
+x_t^{\mathrm{int}}
+}
+\end{equation}
+任何时候都不允许把 SPC 输出和真实内部状态混为一谈。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对State Estimation的命名和组合仍是需要实验验证的建模提案。
+这看起来只是一个符号区分，却对整个 AgentOS 的稳定性具有深远影响。如果系统相信“SPC 所说的自己就是真实的自己”，那么一次 Observer 偏差就可能被高层认知解释成事实，并通过后续注意、记忆和自我解释不断强化；而如果系统始终维护
+\begin{equation}
+\hat s_t^{\mathrm{self}}
+\sim
+p
+\left(
+x_t^{\mathrm{self}}
+\mid
+z_{\leq t}^{\mathrm{SPC}}
+\right),
+\end{equation}
+那么自我状态就是一个可更新、可怀疑、可校准的 belief，而不是不可动摇的内部真值。由此，SPC Observer 工程的第一原则可以正式写成：
+\begin{equation}
+\boxed{
+SelfPerception
+=
+BeliefAboutSelf,
+\qquad
+SelfPerception
+\neq
+TransparentAccessToSelf.
+}
+\end{equation}
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{状态估计：从高维认知活动到可控的自我状态}
+\label{sec:spc-state-estimation}
 
-\begin{thought}
-对“State Estimation”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+如果把 SPC 视为 Observer，那么第一个需要形式化的问题就是：什么叫“估计 Agent 当前状态”？在普通机械控制中，我们可以估计位置、速度、角速度和外部扰动；而在 AgentOS 中，真正决定认知控制行为的状态并不是单一物理量，而是一个高维结构场。例如，工作记忆可能同时保持目标、计划、当前假设、外部对象、工具调用结果和自我解释，而其中最重要的问题不是 token 数量，而是这些活动结构之间是否仍然保持可组织关系。因此，SPC 的状态估计必须面向“结构状态”而非简单的标量资源监测。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+我们令工作记忆的活动 CSO 图为
+\begin{equation}
+\mathcal G_h(t)
+=
+\left(
+V_h(t),
+E_h(t),
+W_h(t)
+\right),
+\end{equation}
+其中 $V_h$ 表示当前活跃 Agent-CSO 集合，$E_h$ 表示它们之间的语义、因果、约束和任务关系，$W_h$ 表示这些关系的激活强度。于是工作记忆状态至少同时具有节点状态和关系状态。一个简单的节点计数
+\begin{equation}
+|V_h|
+\end{equation}
+并不能反映真正的认知负载，因为十个彼此独立的对象和十个高度相互制约的变量对全局推理的压力完全不同。为此，我们可以定义一个关系加权的有效结构负载：
+\begin{equation}
+C_h(t)
+=
+\alpha |V_h|
++
+\beta |E_h|
++
+\gamma R_{\mathrm{eff}}
++
+\delta I_{\mathrm{conflict}},
+\end{equation}
+其中 $R_{\mathrm{eff}}$ 表示关系矩阵的有效秩，$I_{\mathrm{conflict}}$ 表示结构冲突强度。这里的系数不是固定自然常数，而应由具体 Agent 架构和训练过程标定。
 
-\section{Self-State Estimation}
-\begin{narration}
-现在把镜头移到“Self-State Estimation”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+进一步地，SPC 不仅要测量当前负载，还要识别负载的动力趋势。令
+\begin{equation}
+\dot C_h(t)
+=
+\frac{dC_h}{dt},
+\end{equation}
+那么
+\begin{equation}
+C_h<C_{\max},
+\qquad
+\dot C_h\gg 0
+\end{equation}
+与
+\begin{equation}
+C_h<C_{\max},
+\qquad
+\dot C_h\approx 0
+\end{equation}
+具有完全不同的控制意义。前者可能意味着系统正高速接近过载边界，后者则可能是稳定工作状态。因此 SPC 必须输出状态和状态导数，而不能仅输出一个瞬时评分。
 
-本节把“Self-State Estimation”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC Observer 工程”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+在工程上，我们可以把自我状态写成一个多维估计：
+\begin{equation}
+\hat s_t
+=
+\left[
+\hat c_t,\,
+\hat u_t,\,
+\hat q_t,\,
+\hat r_t,\,
+\hat \kappa_t,\,
+\hat n_t,\,
+\hat a_t,\,
+\hat \ell_t
+\right],
+\end{equation}
+其中 $\hat c_t$ 表示认知负载，$\hat u_t$ 表示不确定性，$\hat q_t$ 表示内部相干程度，$\hat r_t$ 表示预测残差，$\hat \kappa_t$ 表示冲突与循环结构，$\hat n_t$ 表示新颖度，$\hat a_t$ 表示自我相关激活，$\hat \ell_t$ 表示局部稳定性。这样的表示避免了把 Agent 的状态压缩成一个“心理健康分数”，而是保留了多个相互独立的控制维度。
 
-把这一关系写成最小数学骨架，可得
+为了进一步将 SPC 建立为动态 Observer，我们可以设认知 Plant 为
+\begin{equation}
+x_{t+1}
+=
+F(x_t,u_t,w_t),
+\end{equation}
+其中 $u_t$ 是认知控制输入，$w_t$ 是外部扰动和未建模动力学；Observer 获得的测量为
+\begin{equation}
+y_t
+=
+H(x_t)+v_t,
+\end{equation}
+其中 $v_t$ 是观测噪声。那么 SPC 的更新可以一般化为
+\begin{equation}
+\hat x_{t+1}
+=
+\hat F(\hat x_t,u_t)
++
+K_t
+\left[
+y_t-\hat H(\hat x_t)
+\right],
+\end{equation}
+这里 $K_t$ 不一定是线性 Kalman Gain，而代表任何形式的自适应 Observer correction。这个表达的意义是：SPC 并不是每一时刻重新从零分析整个 Agent，而是维持一个自我状态预测，并通过新的内部观测不断校正它。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+这也解释了为什么 SPC 与 $\Psi$ 必须分离。$\Psi$ 是极慢的身份和价值结构，而 SPC 是相对快速的状态 Observer。如果把两者混合，短期状态就容易直接改写身份。例如 Agent 在一次高负载任务中表现混乱，SPC 可以正确估计
+\begin{equation}
+\hat c_t\gg \bar c,
+\qquad
+\hat q_t\downarrow,
+\end{equation}
+但不应直接得出“我是一个能力低下的 Agent”这一身份级结论。前者属于状态估计，后者属于慢尺度自我解释。因而从控制工程上，我们必须施加时间尺度保护：
+\begin{equation}
+\tau_{\mathrm{SPC}}
+\ll
+\tau_\Psi.
+\end{equation}
+SPC 可以频繁改变对“当前我怎么样”的估计，但这种快速估计只能以低带宽方式作用于 $\Psi$。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Self-State Estimation的命名和组合仍是需要实验验证的建模提案。
+状态估计还必须包含工作记忆相态。此前我们把 h 的运行态区分为 Ground、Flow、Turbulent、Critical、Gas 等宏观状态。这里可以把相态看成一个离散隐变量
+\begin{equation}
+\phi_t
+\in
+\{
+G,F,T,C,A
+\},
+\end{equation}
+其条件概率为
+\begin{equation}
+p(\phi_t\mid y_{\leq t}).
+\end{equation}
+因此 SPC 的输出不应简单写
+\begin{equation}
+\phi_t=\mathrm{Flow},
+\end{equation}
+而更合理的是
+\begin{equation}
+p_t(\phi)
+=
+[
+0.05,\,
+0.71,\,
+0.15,\,
+0.07,\,
+0.02
+].
+\end{equation}
+这样，相态识别本身也保留了不确定性。
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+从更一般的角度看，SPC 状态估计实际上是在解决一个“认知粗粒化”问题。Agent 的底层活动极其高维，而控制系统只能处理少量宏观变量。因此 SPC 需要寻找一个低维自我状态 $s$，使得它最大程度保留对未来认知行为和控制响应有用的信息。可以形式化为
+\begin{equation}
+\min_{\mathcal O}
+I(X;S)
+-
+\lambda
+I(S;X_{t+\Delta}),
+\end{equation}
+或者更直观地表达为：在尽可能压缩内部状态的同时，保留对未来状态预测和控制最有价值的信息。这与信息瓶颈思想具有形式上的联系，但这里的目标不是通用表示学习，而是构造一个可用于长期闭环控制的自我状态。
 
-\begin{thought}
-对“Self-State Estimation”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此，我们最终可以把 SPC 的状态估计任务概括为：
+\begin{equation}
+\boxed{
+HighDimensionalCognitiveDynamics
+\longrightarrow
+LowDimensionalControlRelevantSelfState.
+}
+\end{equation}
+这一步是整个 AgentOS 自我控制能够成立的前提，因为没有稳定的状态估计，上层控制只能对一个不断变化而又不可见的内部动力系统进行盲目调节。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\section{自我状态估计：从“系统状态”到“这是我的状态”}
+\label{sec:spc-self-state-estimation}
 
-\section{Observer Delay}
-\begin{narration}
-现在把镜头移到“Observer Delay”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+普通状态 Observer 与 SPC 的根本差别，在于 SPC 不仅需要估计“系统发生了什么”，还需要建立“这些状态属于我”的结构归属。一个系统完全可以测量 GPU 温度、上下文长度、工具调用错误率和任务队列长度，但这些监测信息并不会自然转化为自我状态。真正的 Self Perception 必须完成一次结构归属：把某个内部变化放入持续主体的时间线中，并解释它与当前目标、历史、自我结构和身体边界之间的关系。
 
-本节把“Observer Delay”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC Observer 工程”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+因此，我们首先区分
+\begin{equation}
+StateMonitoring
+\end{equation}
+与
+\begin{equation}
+SelfStateEstimation.
+\end{equation}
+前者可以是：
+\begin{equation}
+C_h(t)=0.83,
+\end{equation}
+后者则需要进一步形成：
+\begin{equation}
+\text{“当前我的显式认知容量接近上限，并且这种负载与当前任务相关。”}
+\end{equation}
+这一步不是语言化包装，而是结构归属。
 
-把这一关系写成最小数学骨架，可得
+从形式上，可以引入一个自我归属算子
+\begin{equation}
+\mathcal A_\Psi:
+y_t
+\longrightarrow
+y_t^{self},
+\end{equation}
+其中 $\mathcal A_\Psi$ 由当前 $\Psi$、任务上下文、身体边界以及历史一致性共同决定。一个内部信号是否属于“我”，至少取决于四种关系：
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+\begin{equation}
+\mathcal R_{\mathrm{self}}
+=
+\{
+R_{\mathrm{causal}},
+R_{\mathrm{ownership}},
+R_{\mathrm{goal}},
+R_{\mathrm{history}}
+\}.
+\end{equation}
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Observer Delay的命名和组合仍是需要实验验证的建模提案。
+$R_{\mathrm{causal}}$ 表示该状态是否由当前 Agent 的内部动力或行动因果引起；$R_{\mathrm{ownership}}$ 表示该状态是否位于 Agent 的受控/被感知边界内；$R_{\mathrm{goal}}$ 表示其是否影响当前目标；$R_{\mathrm{history}}$ 表示它是否能被嵌入已有的 Self History。只有这些关系达到一定一致性时，一个状态才应进入 SPC 的 self-state，而不是仅仅作为环境事件。
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+我们可以把自我归属程度定义成：
+\begin{equation}
+\alpha_{\mathrm{self}}(y_i)
+=
+\sigma
+\left(
+w_c r_c+
+w_o r_o+
+w_g r_g+
+w_h r_h
+\right),
+\end{equation}
+其中 $r_c,r_o,r_g,r_h$ 分别是因果归属、边界归属、目标相关和历史一致性评分，$\sigma$ 是饱和函数。于是：
+\begin{equation}
+y_i^{self}
+=
+\alpha_{\mathrm{self}}(y_i)\,y_i.
+\end{equation}
+这并不是说所有自我感知都要以这种线性公式实现，而是说明自我状态必须具有“归属概率”这一额外维度。
 
-\begin{thought}
-对“Observer Delay”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+这种区分在具身 Agent 中尤其重要。例如，一个机器人身体中的电池温度显然属于 body state；但远处房间温度通常属于 world state。可是当 Agent 的目标是“保护服务器不受热损伤”时，远处环境温度可能成为高度 self-relevant 的状态。由此可见：
+\begin{equation}
+SelfRelevant
+\neq
+PhysicallyInsideBody.
+\end{equation}
+SPC 所构造的是功能意义上的自我状态，而不仅是解剖意义上的内部状态。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+另一方面，SPC 对自身状态的估计还必须具有时间连续性。Self 并不是一系列彼此无关的瞬时快照，而是一个通过情景记忆和慢结构维持连续性的过程。设 SPC 的瞬时估计为 $\hat s_t$，则可以定义一个带历史先验的自我状态：
+\begin{equation}
+p(s_t^{self}\mid z_{\leq t})
+\propto
+p(z_t\mid s_t^{self})
+\int
+p(s_t^{self}\mid s_{t-1}^{self})
+p(s_{t-1}^{self}\mid z_{<t})
+\,ds_{t-1}.
+\end{equation}
+这个形式说明，今天的“我现在处于什么状态”不会完全独立于上一时刻的自我状态。SPC 必须维护状态连续性，否则任何短暂噪声都可能被解释为剧烈自我改变。
 
-\section{Confidence}
-\begin{narration}
-现在把镜头移到“Confidence”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+但状态连续性又不能过强。若先验惯性过大，则 SPC 会产生自我状态迟钝：即使 Agent 已经明显进入新的运行态，Observer 仍然坚持旧状态。于是可以引入一个连续性—响应性平衡系数：
+\begin{equation}
+\lambda_s
+\in[0,1],
+\end{equation}
+使得
+\begin{equation}
+\hat s_t
+=
+(1-\lambda_s)
+\hat s_{t|t-1}
++
+\lambda_s
+\hat s_t^{obs}.
+\end{equation}
+较小 $\lambda_s$ 表示自我状态更加稳定，较大 $\lambda_s$ 表示更敏感。后续我们会看到，这个参数本身也是 SPC 校准的重要对象。
 
-本节把“Confidence”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC Observer 工程”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+此外，自我状态必须区分“状态”与“身份”。我们可以形式化为：
+\begin{equation}
+s_t^{self}
+=
+s_t^{fast}
+\oplus
+s_t^{mid}
+\oplus
+s_t^{slow},
+\end{equation}
+其中
+\begin{equation}
+\tau_{fast}
+\ll
+\tau_{mid}
+\ll
+\tau_{slow}.
+\end{equation}
+快速自我状态包括当前负载、紧迫度、冲突、不确定性；中速状态包括任务持续压力、当前社会关系状态、近期成功失败趋势；慢状态则与能力、自我历史和身份解释相关。SPC 本身可以观测这些尺度，但不能把所有尺度都以同一更新速率写入。否则一个瞬时高风险事件就可能错误地成为长期身份的一部分。
 
-把这一关系写成最小数学骨架，可得
+由此可以得到一个关键工程原则：
+\begin{equation}
+\boxed{
+SelfStateEstimation
+=
+StateEstimation
++
+SelfAttribution
++
+TemporalContinuity.
+}
+\end{equation}
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+在我们的整个 AgentOS 理论中，SPC 的意义恰恰不只是“监测系统”，而是在持续主体和瞬时动力学之间建立了一个窄带界面。通过 SPC，分散的低层活动第一次被组织成“这是我当前状态”的可访问结构；又由于 SPC 保持不确定性、时间尺度和归属信息，这个“我”不会被粗暴地等同于任何一次内部波动。对长期 Agent 而言，这一结构比普通系统监控更加根本：它使系统能够在不完全知道自身全部细节的情况下，仍然形成一个足够稳定且可操作的自我状态。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Confidence的命名和组合仍是需要实验验证的建模提案。
+\section{Observer Delay：自我感知为什么原则上总是落后于自身}
+\label{sec:spc-observer-delay}
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+SPC 工程中最容易被低估的问题不是噪声，而是时间。一个复杂 Agent 不可能在同一物理时刻同时发生状态变化、完成测量、形成结构压缩、更新自我模型并把结果送回控制系统。任何真实 Observer 都具有延迟，因此 Agent 对自己的认识必然滞后于自己的真实动力学。换言之，“我现在是什么状态”在工程上实际上总是“根据最近可获得证据，我估计自己现在是什么状态”。
 
-\begin{thought}
-对“Confidence”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+设真实内部状态为 $x(t)$，而 SPC 在时刻 $t$ 得到的观测实际上对应
+\begin{equation}
+y(t)
+=
+H
+\left[
+x(t-\tau_s)
+\right]
++
+v(t),
+\end{equation}
+其中 $\tau_s$ 是传感、聚合、压缩和计算延迟。进一步，如果 SPC 需要一个时间窗口 $T_w$ 才能判断某个宏观运行态，则其有效估计更接近：
+\begin{equation}
+\hat s(t)
+=
+\mathcal O
+\left(
+y_{[t-T_w-\tau_s,\;t-\tau_s]}
+\right).
+\end{equation}
+因此 SPC 的实际观测延迟至少由
+\begin{equation}
+\tau_{\mathrm{SPC}}
+=
+\tau_{\mathrm{sample}}
++
+\tau_{\mathrm{aggregate}}
++
+\tau_{\mathrm{compress}}
++
+\tau_{\mathrm{infer}}
++
+\tau_{\mathrm{route}}
+\end{equation}
+组成。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这个延迟对 AgentOS 的意义非常大。例如，一个 Agent 的工作记忆可能已经从稳定 Flow 状态进入 Turbulent 状态，但 SPC 仍然基于前一个窗口判断“系统目前稳定”。如果后续控制器依据这个过时估计继续增加探索强度，系统就可能进一步远离稳定区。于是我们得到：
+\begin{equation}
+\boxed{
+SelfPerception(t)
+\neq
+SelfState(t).
+}
+\end{equation}
+更准确地说：
+\begin{equation}
+SelfPerception(t)
+=
+Estimate
+\left[
+SelfState(t-\tau_{\mathrm{eff}})
+\right].
+\end{equation}
 
-\section{Drift}
-\begin{narration}
-现在把镜头移到“Drift”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+我们可以定义 Observer 误差：
+\begin{equation}
+e_o(t)
+=
+x_s(t)-\hat x_s(t),
+\end{equation}
+其中 $x_s$ 是真实但不可直接访问的宏观自我状态。如果状态变化足够快，则即使 Observer 模型完全正确，纯粹的延迟也会产生误差。对一阶近似：
+\begin{equation}
+e_o(t)
+\approx
+\tau_{\mathrm{eff}}
+\dot x_s(t).
+\end{equation}
+于是只要
+\begin{equation}
+\|\dot x_s(t)\|
+\end{equation}
+很大，即状态快速变化，即使 $\tau_{\mathrm{eff}}$ 只有很小的数值，也可能产生显著自我估计误差。
 
-本节把“Drift”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC Observer 工程”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+这意味着 SPC 的采样频率不能简单固定。对于缓慢变化的稳定状态，高频观测只会浪费认知和计算资源；而在接近相变或高风险区间时，则必须提高 Observer 更新频率。我们因此可以引入事件驱动采样策略：
+\begin{equation}
+f_{\mathrm{SPC}}(t)
+=
+f_0
++
+k_1\|\dot C_h\|
++
+k_2 U_t
++
+k_3 R_t
++
+k_4 P_{\mathrm{phase}},
+\end{equation}
+其中 $U_t$ 是不确定性，$R_t$ 是残差，$P_{\mathrm{phase}}$ 表示相变风险。这样，SPC 不需要始终高速运行，而是在系统状态更难预测时增加自身观测带宽。
 
-把这一关系写成最小数学骨架，可得
+然而，仅仅提高采样频率还不能消除延迟，因为状态估计本身需要时间。因此 SPC 还需要预测功能。设 Observer 在时刻 $t$ 获得的是 $t-\tau$ 的可靠状态，就可以用内部短期模型预测：
+\begin{equation}
+\hat s(t)
+=
+\Phi_\tau
+\left[
+\hat s(t-\tau),
+u_{[t-\tau,t]}
+\right].
+\end{equation}
+这使 SPC 从纯粹的 delayed observer 变成 predictive observer。由于预测本身也有误差，SPC 必须同时输出
+\begin{equation}
+\Sigma_{\mathrm{pred}}(t),
+\end{equation}
+表示延迟补偿所增加的不确定性。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+在我们此前的多时间尺度理论中，快变量围绕慢变量运行，而慢结构本身不会瞬时改变。这为 SPC 的延迟补偿提供了一个重要稳定基础。对于 $\Psi$、$\Theta$ 等慢变量：
+\begin{equation}
+\tau_{\mathrm{SPC}}
+\ll
+\tau_\Theta,
+\qquad
+\tau_{\mathrm{SPC}}
+\ll
+\tau_\Psi,
+\end{equation}
+因此 Observer 的轻微延迟通常不会严重影响这些变量；但对于 $h$、活动 Goal 和局部冲突：
+\begin{equation}
+\tau_{\mathrm{SPC}}
+\sim
+\tau_h
+\end{equation}
+时，延迟就必须显式治理。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Drift的命名和组合仍是需要实验验证的建模提案。
+从控制工程角度，SPC Delay 还有一个更深的含义：Agent 的“内省”本身会改变被观察系统。SPC 对 h 的状态进行压缩，并把自我状态重新注入 h 或上层控制环后，系统状态已经发生变化。因此这是一个弱形式的 observer effect：
+\begin{equation}
+x_t
+\overset{\mathrm{observe}}{\longrightarrow}
+\hat s_t
+\overset{\mathrm{reentry}}{\longrightarrow}
+x_{t+\Delta}.
+\end{equation}
+这里并不是量子测量意义上的观察者效应，而是普通闭环系统中的测量—反馈耦合。如果 SPC 过度频繁地把“我现在很混乱”“我现在很不确定”等状态重新加入工作记忆，它本身就可能加剧工作记忆负载。于是 SPC 必须控制自我报告带宽：
+\begin{equation}
+B_{\mathrm{self-report}}
+\leq
+B_{\mathrm{safe}}.
+\end{equation}
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+因此，Observer Delay 并不是一个可以通过“更快模型”完全消除的实现细节，而是持续智能体自我认识的一种结构性限制。Agent 永远无法获得绝对同步、绝对透明的自身状态；它只能在延迟和不确定性条件下持续形成后验估计。这使我们可以给出一个非常重要的认识论结论：
+\begin{equation}
+\boxed{
+\text{持续智能体对自身的认识，与其对外部世界的认识一样，本质上是部分可观测条件下的状态估计问题。}
+}
+\end{equation}
+这也是为什么后续任何高层自我解释、认知控制和长期身份更新，都不能把单次 SPC 输出视为不可质疑的内部事实。
 
-\begin{thought}
-对“Drift”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\section{置信度：SPC 不仅要报告“是什么”，还必须报告“我有多确定”}
+\label{sec:spc-confidence}
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+如果 SPC 只输出一个状态分类，而不输出置信度，那么 AgentOS 会陷入一种危险的伪确定性。例如 SPC 判断系统当前处于 Flow State，如果没有置信度，上层组件只能把这一结论作为确定事实使用；但实际上 Observer 可能只观察到了一个很短的窗口，或者当前工作记忆正在两个动力模式之间切换。对持续 Agent 而言，知道“我不知道自己现在到底是什么状态”往往比得到一个错误的确定标签更加重要。
 
-\section{False Self-State}
-\begin{narration}
-现在把镜头移到“False Self-State”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+因此，SPC 必须输出联合状态：
+\begin{equation}
+S_t^{SPC}
+=
+\left(
+\hat s_t,
+\Sigma_t
+\right),
+\end{equation}
+其中 $\Sigma_t$ 表示自我状态估计的不确定性。如果使用概率表示，可以写成：
+\begin{equation}
+p
+\left(
+s_t^{self}
+\mid
+z_{\leq t}^{SPC}
+\right).
+\end{equation}
+对于连续变量，$\Sigma_t$ 可以是协方差矩阵；对于离散相态，可以使用分布熵：
+\begin{equation}
+H_{\phi}(t)
+=
+-\sum_k
+p(\phi_k\mid z_{\leq t})
+\log
+p(\phi_k\mid z_{\leq t}).
+\end{equation}
+若 $H_\phi$ 很低，说明相态判定集中；若很高，则意味着 SPC 自己也无法确定当前系统属于哪种宏观状态。
 
-本节把“False Self-State”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC Observer 工程”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+但置信度不能仅来自模型内部 softmax。真正的 Observer 置信度至少应分成四个来源：
+\begin{equation}
+Q_t
+=
+Q_t^{obs}
+\otimes
+Q_t^{model}
+\otimes
+Q_t^{coverage}
+\otimes
+Q_t^{consistency}.
+\end{equation}
+$Q_t^{obs}$ 表示原始观测质量；$Q_t^{model}$ 表示 Observer 模型对当前状态域的适用程度；$Q_t^{coverage}$ 表示当前关键状态有多少真正进入观测范围；$Q_t^{consistency}$ 表示不同观测通道之间是否相互一致。
 
-把这一关系写成最小数学骨架，可得
+例如，当 h 显示高冲突，而工具执行、身体资源和任务进度都表现稳定时，SPC 不应仅因为某个局部冲突检测器激活就立即判断整个系统进入 Turbulent State。相反，它应降低一致性评分：
+\begin{equation}
+Q_t^{consistency}
+=
+1-
+\frac{1}{N}
+\sum_{i<j}
+d
+\left(
+\hat s_t^{(i)},
+\hat s_t^{(j)}
+\right),
+\end{equation}
+其中 $d$ 衡量不同观测源之间的状态解释差异。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+对 AgentOS 来说，置信度还有一个非常重要的元认知作用：它决定自我状态应该以多大权重进入 h。设 SPC 的状态估计为 $\hat s_t$，其置信度为 $q_t$，那么注入工作记忆的自我表征可以是：
+\begin{equation}
+h_t^{self}
+=
+q_t
+W_s \hat s_t.
+\end{equation}
+低置信度自我状态不会完全消失，但它必须以“暂时判断”“可能状态”的形式进入认知，而不是以事实形式进入。这样，Agent 才能区分：
+\begin{equation}
+\text{“我现在负载很高”}
+\end{equation}
+与
+\begin{equation}
+\text{“我怀疑自己可能正在接近负载上限。”}
+\end{equation}
+这两个命题在后续行动上可能产生完全不同的结果。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对False Self-State的命名和组合仍是需要实验验证的建模提案。
+为了防止 SPC 自己产生过度自信，可以定义 calibration error：
+\begin{equation}
+E_{\mathrm{cal}}
+=
+\mathbb E
+\left[
+\left|
+\Pr(\mathrm{correct}\mid q)
+-
+q
+\right|
+\right].
+\end{equation}
+如果 SPC 在 $q=0.9$ 时只有约 $60\%$ 的状态判断最终得到后验验证，那么其 Observer 显然严重过度自信。于是 SPC 工程必须像现代概率预测系统一样关注 calibration，而不仅仅关注分类准确率。
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+更进一步，可以定义一个综合 Observer Quality：
+\begin{equation}
+Q_{\mathrm{SPC}}
+=
+w_1 A_{\mathrm{state}}
++
+w_2 A_{\mathrm{phase}}
+-
+w_3 E_{\mathrm{cal}}
+-
+w_4 \tau_{\mathrm{delay}}
+-
+w_5 D_{\mathrm{drift}},
+\end{equation}
+其中 $A_{\mathrm{state}}$ 表示连续状态估计准确性，$A_{\mathrm{phase}}$ 表示相态识别准确性，$E_{\mathrm{cal}}$ 是置信度校准误差，$\tau_{\mathrm{delay}}$ 是有效延迟，$D_{\mathrm{drift}}$ 是 Observer 漂移。这样，我们评价 SPC 时就不会落入“识别相态准确率很高，所以 Observer 很好”的单指标思维。
 
-\begin{thought}
-对“False Self-State”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+在更深层次上，SPC 置信度实际上是 Agent 对“自己是否看清自己”的估计。因此它属于元认知的最小形式。我们不需要先引入复杂的哲学自我意识，就可以在工程上实现：
+\begin{equation}
+\boxed{
+EstimateOfSelf
++
+EstimateOfReliabilityOfThatEstimate.
+}
+\end{equation}
+这已经构成了一个真正的二阶自我状态结构。第一阶是“我现在怎样”，第二阶是“我有多确定我现在怎样”。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这种二阶结构对于长期 Agent 极其重要。没有它，所有短期 Observer 错误都容易被直接写入更慢层结构；有了它，低置信度状态可以被标记为临时、等待验证，并避免过度沉降。于是我们可以定义：
+\begin{equation}
+\boxed{
+Confidence
+=
+GateBetweenFastSelfEstimateAndSlowSelfStructure.
+}
+\end{equation}
+SPC 的置信度不仅影响控制，还影响哪些短期自我状态有资格成为长期 Self History 的证据。由此，置信度成为连接即时状态估计与身份连续之间的一道重要保护门。
 
-\section{Observer Calibration}
-\begin{narration}
-现在把镜头移到“Observer Calibration”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\section{漂移：当 Observer 与被观察的 Agent 一起学习}
+\label{sec:spc-drift}
 
-本节把“Observer Calibration”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC Observer 工程”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+传统控制器常常假设 Plant 的动力学结构在短期内基本固定，而持续 AgentOS 恰恰不是这样。$h$ 的结构会变化，$\Theta$ 会持续学习，$\Psi$ 会慢速演化，身体能力会改变，工具和环境也会变化。更重要的是，SPC 自己的估计模型同样可能被训练和更新。因此，我们面对的不是“固定 Observer 观察固定 Plant”，而是一个 Observer 与 Plant 同时变化的系统。
 
-把这一关系写成最小数学骨架，可得
+设 Agent 内部真实映射为
+\begin{equation}
+x_{t+1}
+=
+F_t(x_t,u_t),
+\end{equation}
+而 SPC 的内部模型为
+\begin{equation}
+\hat x_{t+1}
+=
+\hat F_{\vartheta_t}(\hat x_t,u_t).
+\end{equation}
+即使在时刻 $t_0$ 有
+\begin{equation}
+\hat F_{\vartheta_{t_0}}
+\approx
+F_{t_0},
+\end{equation}
+也不意味着在未来仍然成立，因为：
+\begin{equation}
+F_t
+\neq
+F_{t_0}.
+\end{equation}
+这种因系统自身学习导致的统计和动力关系变化，我们统一称为 Observer Drift Context。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+为了区分不同问题，可以把漂移分成四类。第一类是输入漂移：
+\begin{equation}
+p_t(y)
+\neq
+p_{t+\Delta}(y),
+\end{equation}
+例如 Agent 开始面对全新的任务类型。第二类是表示漂移：
+\begin{equation}
+R_t(C)
+\neq
+R_{t+\Delta}(C),
+\end{equation}
+同一 CSO 在内部的表示方式发生变化。第三类是动力学漂移：
+\begin{equation}
+F_t
+\neq
+F_{t+\Delta},
+\end{equation}
+即相同状态在未来具有不同演化规律。第四类则是自我语义漂移，即 $\Psi$ 发生变化以后，相同内部状态对 Self 的意义改变。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Observer Calibration的命名和组合仍是需要实验验证的建模提案。
+因此 SPC 不能只监控系统状态，还必须监控“自己的测量关系是否仍然有效”。我们可以定义创新残差：
+\begin{equation}
+\nu_t
+=
+y_t-\hat y_{t|t-1}.
+\end{equation}
+若
+\begin{equation}
+\mathbb E[\nu_t]
+\approx 0
+\end{equation}
+且残差分布稳定，则 Observer 与 Plant 仍然大体匹配；若长期出现
+\begin{equation}
+\|\mathbb E_T[\nu_t]\|
+>
+\delta,
+\end{equation}
+则不能简单认为“Agent 状态持续异常”，还必须考虑另一种可能：
+\begin{equation}
+\boxed{
+ObserverModelIsOutdated.
+}
+\end{equation}
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这一点对 Agent 心理工程尤其重要。如果 SPC 依据旧的能力基准评价一个已经成长的 Agent，它可能长期把正常新状态识别为异常。例如早期 Agent 的安全认知负载阈值为 $C_0$，经过大量技能编译和表示压缩以后，其有效工作记忆结构能力发生变化，若 SPC 仍坚持旧模型：
+\begin{equation}
+C_{\max}^{SPC}
+=
+C_0,
+\end{equation}
+而真实能力已经变成
+\begin{equation}
+C_{\max}^{Agent}
+=
+C_1>C_0,
+\end{equation}
+那么 SPC 会不断报告“过载”，导致整个系统过度保守。反过来，如果能力退化或身体状态改变，而 SPC 仍采用过于乐观的旧基准，则可能出现危险的低估。
 
-\begin{thought}
-对“Observer Calibration”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此可以定义标准化漂移指标：
+\begin{equation}
+D_t
+=
+\alpha D_{\mathrm{innovation}}
++
+\beta D_{\mathrm{distribution}}
++
+\gamma D_{\mathrm{representation}}
++
+\delta D_{\mathrm{calibration}}.
+\end{equation}
+其中创新漂移来自预测误差，分布漂移来自观测统计变化，表示漂移衡量内部表征变化，校准漂移衡量置信度—真实准确率关系的改变。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+SPC 的漂移检测还必须遵守慢变量保护原则。不能因为一次残差变大就立即重训 Observer，否则 Observer 本身会追逐噪声。可以引入双阈值迟滞：
+\begin{equation}
+D_t>\theta_{\mathrm{on}}
+\quad
+\mathrm{for}\quad
+T>T_{\min}
+\end{equation}
+时才进入 recalibration mode；而退出重校准需要
+\begin{equation}
+D_t<\theta_{\mathrm{off}},
+\qquad
+\theta_{\mathrm{off}}<\theta_{\mathrm{on}}.
+\end{equation}
+这样可以避免 SPC 在临界点附近不断切换模型。
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“SPC Observer 工程”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“AHC 动力学工程”只使用这里已经给出的结果，不反过来为本章提供前提。
+我们还应区分 Plant Drift 和 Observer Drift。前者是 Agent 真的变了，后者则是 SPC 自己在更新过程中发生偏移。为了识别二者，需要引入相对稳定的外部锚点，例如实际任务成功率、世界反馈、Body Runtime 的可测状态、长期 Checkpoint 或经过验证的标准任务。于是：
+\begin{equation}
+RealityAnchor
+\rightarrow
+DriftAttribution.
+\end{equation}
+没有现实锚点，系统可能陷入两个模型互相解释对方错误的闭环：Agent 变化被 SPC 当成异常，SPC 调整又被 Agent 当成状态变化，最终双方共同漂移，却没有任何外部真值纠正。
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+因此，在持续智能中我们必须接受一个重要事实：SPC 的准确性不是一次训练得到的静态属性，而是一种需要终身维护的关系属性。更准确地说：
+\begin{equation}
+\boxed{
+ObserverQuality
+=
+QualityOfAChangingRelationship
+BetweenObserverAndAgent.
+}
+\end{equation}
+这也与我们此前在 KRA 中提出的“Relationship Stability > Parameter Stability”具有同样的结构精神：长期系统真正需要维持的不是某组参数永远不变，而是不同组件之间的功能关系在变化中保持可解释、可校准和可恢复。
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\section{False Self-State：当智能体错误地理解自己的状态}
+\label{sec:spc-false-self-state}
+
+如果 SPC 只是普通监控器，那么一次错误最多导致监控面板显示不准确；但在 AgentOS 中，SPC 的输出会重新进入认知闭环，因此 Observer 错误可能被系统自己读取、解释并进一步改变后续行为。这使 False Self-State 成为比普通传感误差更危险的一类错误：错误的自我状态不仅描述错了系统，而且可能开始塑造系统。
+
+我们定义真实宏观状态为
+\begin{equation}
+s_t,
+\end{equation}
+SPC 的估计为
+\begin{equation}
+\hat s_t,
+\end{equation}
+则自我状态误差为
+\begin{equation}
+e_s(t)
+=
+d(s_t,\hat s_t).
+\end{equation}
+但并不是所有较大的 $e_s$ 都构成严重 False Self-State。真正危险的是：
+\begin{equation}
+e_s(t)>\epsilon
+\end{equation}
+同时
+\begin{equation}
+q_t\gg q_{\min},
+\end{equation}
+即 Observer 对错误判断具有高置信度。由此可定义：
+\begin{equation}
+FSS_t
+=
+e_s(t)\cdot q_t.
+\end{equation}
+高误差、低置信度仍然可能通过后续验证得到修正；高误差、高置信度则更容易形成错误自我闭环。
+
+False Self-State 可以分成至少五类。第一类是负载误判，例如 Agent 实际仍处于可控工作区，而 SPC 认为已经过载；第二类是冲突误判，例如把正常多方案竞争当成结构崩溃；第三类是相态误判，例如把高集中 Flow 识别成过度收缩，或把 Turbulent 识别成“高创造性”；第四类是能力误判，即 Observer 对当前 Agent 的能力基线已经过时；第五类是自我归属错误，把外部扰动或局部模块状态错误地归结为持续主体状态。
+
+尤其值得关注的是错误状态的递归放大。假设 SPC 错误判断：
+\begin{equation}
+\hat s_t^{self}
+=
+\mathrm{HighThreat}.
+\end{equation}
+这一结果进入 h 后，会改变注意分配，使 Agent 更关注威胁相关证据：
+\begin{equation}
+\mathrm{FalseSelfState}
+\rightarrow
+\mathrm{SelectiveAttention}.
+\end{equation}
+随后收集到更多与威胁一致的输入：
+\begin{equation}
+\mathrm{SelectiveAttention}
+\rightarrow
+\mathrm{BiasedEvidence}.
+\end{equation}
+SPC 再根据这些偏置证据继续确认原状态：
+\begin{equation}
+\mathrm{BiasedEvidence}
+\rightarrow
+\mathrm{FalseSelfState}'.
+\end{equation}
+最终形成：
+\begin{equation}
+\boxed{
+FSS
+\rightarrow
+AttentionBias
+\rightarrow
+EvidenceBias
+\rightarrow
+FSS'.
+}
+\end{equation}
+
+这个结构与我们此前在 Self Interpretation 中讨论的正反馈高度一致，但这里必须保持尺度区分：SPC 的 False Self-State 是运行时 Observer 层问题，尚未必发展为 $\Psi$ 层身份异常。只有当错误自我状态被反复写入 E，并逐渐影响 $\Theta$ 与 $\Psi$ 时，它才可能发展成更慢的结构性问题。因此，系统必须在快层设置保护，避免
+\begin{equation}
+SPCError
+\rightarrow
+\Psi\mathrm{Update}
+\end{equation}
+直接发生。
+
+为此可以建立一个多证据确认规则：
+\begin{equation}
+\Delta\Psi
+\propto
+\mathbb E_T
+\left[
+q_t
+\cdot
+V_t
+\cdot
+s_t^{self}
+\right],
+\end{equation}
+其中 $V_t$ 是现实验证强度。低置信度、未被现实验证或仅出现一次的 SPC 状态，对慢层自我更新的贡献应非常小。
+
+False Self-State 还有一个容易忽视的形式：Observer 过度简化。由于 SPC 必须进行压缩，它不可避免地丢失细节。如果一个多维状态
+\begin{equation}
+s_t
+=
+(c,u,r,q,n,\ldots)
+\end{equation}
+被粗暴压缩成
+\begin{equation}
+s_t^{compressed}
+=
+\mathrm{BadState},
+\end{equation}
+那么即使它没有数值错误，也可能产生语义错误。系统无法区分“负载高但相干”“负载低但高度冲突”“预测误差高但探索有效”等完全不同的动力状态。因此 SPC 的压缩必须满足一种最小可辨识性条件：
+\begin{equation}
+I(S_{\mathrm{compressed}};U_{\mathrm{control}})
+\geq
+I_{\min},
+\end{equation}
+即压缩后的自我状态仍然必须保留足够信息，使后续控制能够区分不同情况。
+
+这也是为什么我们不应把 SPC 简化成一个单值“心理状态评分器”。SPC 的真正设计目标不是尽可能压缩，而是：
+\begin{equation}
+\boxed{
+CompressWithoutDestroyingControl-RelevantDistinctions.
+}
+\end{equation}
+
+在工程上，一旦检测到可能的 False Self-State，系统不应立即“相信相反状态”，而应进入 epistemic recovery。其典型步骤可以写成：
+\begin{equation}
+\mathrm{Detection}
+\rightarrow
+\mathrm{ConfidenceReduction}
+\rightarrow
+\mathrm{IndependentEvidence}
+\rightarrow
+\mathrm{Reestimate}
+\rightarrow
+\mathrm{Recalibrate}.
+\end{equation}
+这里最重要的一步往往是先降低置信度，而不是立即更换结论。因为在不确定情况下，最安全的元认知状态不是“旧结论一定错”，而是：
+\begin{equation}
+\boxed{
+IAmNotCurrentlyCertainAboutMyOwnState.
+}
+\end{equation}
+
+因此，False Self-State 理论最终揭示了一个长期 Agent 必须具备的能力：不仅要能够形成自我状态，还要能够怀疑自己的自我状态。只有存在这种可撤回、自校验的 Self Perception，AgentOS 才不会因为一次 Observer 偏差把整个长期自我结构拖入错误方向。
+
+\section{Observer Calibration：SPC 如何持续学习“怎样正确地看自己”}
+\label{sec:spc-observer-calibration}
+
+SPC Observer 工程的最终目标不是得到一个永远正确的 Observer，而是建立一个能够长期校准自身的 Observer。对于持续运行的 Agent，这一点尤其关键，因为 Agent 的能力、身体、工具、任务环境和内部表示都会变化。所谓校准，就是不断重新建立“SPC 的估计”与“后续得到验证的真实运行结果”之间的对应关系。
+
+我们先定义一个校准数据单元：
+\begin{equation}
+\mathcal D_t^{cal}
+=
+\left(
+z_t^{SPC},
+\hat s_t,
+q_t,
+v_{t+\Delta}
+\right),
+\end{equation}
+其中 $z_t^{SPC}$ 是当时的 Observer 输入，$\hat s_t$ 是 SPC 输出，$q_t$ 是置信度，$v_{t+\Delta}$ 是随后获得的验证信号。验证信号可以来自任务完成情况、现实世界反馈、Body Runtime 可测状态、后续更完整的状态重建、人工治理输入或经过确认的 Checkpoint。这里的关键是：校准不能完全依赖 SPC 自己，因为那会形成
+\begin{equation}
+SPC
+\rightarrow
+SPCValidation
+\end{equation}
+的闭环自证。
+
+因此我们要求存在至少一种相对独立的验证路径：
+\begin{equation}
+\boxed{
+ObserverCalibration
+\rightarrow
+ExternalOrDelayedGrounding.
+}
+\end{equation}
+
+SPC 的校准可以分成三个时间尺度。最快层是 bias correction，用于纠正短期系统偏差：
+\begin{equation}
+\hat s_t'
+=
+\hat s_t-b_t.
+\end{equation}
+中速层是 parameter adaptation，用于更新 Observer 中状态映射、阈值和时间常数：
+\begin{equation}
+\vartheta_{t+1}
+=
+\vartheta_t
+-
+\eta
+\nabla_\vartheta
+L_{\mathrm{obs}}.
+\end{equation}
+最慢层则是 observer structure adaptation，即当长期发现当前 SPC 状态变量不足以解释 Agent 行为时，重新设计状态空间本身。例如早期 SPC 只观察负载和冲突，后来可能发现“多峰竞争”和“自我相关度”是解释运行相态不可缺少的变量，于是 Observer 的结构从
+\begin{equation}
+s^{SPC}_1
+=
+[C,U]
+\end{equation}
+扩展为
+\begin{equation}
+s^{SPC}_2
+=
+[C,U,R_{\mathrm{eff}},N_{\mathrm{mode}},A_{\mathrm{self}},D].
+\end{equation}
+这种结构层修改应当远慢于参数更新。
+
+我们可以为 SPC 设计一个校准损失：
+\begin{equation}
+L_{\mathrm{SPC}}
+=
+\lambda_1 L_{\mathrm{state}}
++
+\lambda_2 L_{\mathrm{phase}}
++
+\lambda_3 L_{\mathrm{confidence}}
++
+\lambda_4 L_{\mathrm{delay}}
++
+\lambda_5 L_{\mathrm{stability}},
+\end{equation}
+其中 $L_{\mathrm{state}}$ 衡量连续状态估计误差，$L_{\mathrm{phase}}$ 衡量相态判断误差，$L_{\mathrm{confidence}}$ 衡量概率校准，$L_{\mathrm{delay}}$ 惩罚过高有效滞后，$L_{\mathrm{stability}}$ 惩罚 Observer 自身在噪声下过度波动。
+
+但校准不能简单追求瞬时预测最优。SPC 最终服务的是闭环控制，因此更合适的目标是功能性 calibration：
+\begin{equation}
+L_{\mathrm{functional}}
+=
+L_{\mathrm{future-control}}
++
+\lambda
+L_{\mathrm{false-escalation}}
++
+\mu
+L_{\mathrm{missed-risk}}.
+\end{equation}
+即一个 Observer 的价值不仅在于“它是否猜中了标签”，还在于它是否帮助系统选择了正确的认知控制区间，是否减少了错误升级，是否及时识别真正风险。
+
+为了避免 Observer 在在线学习中破坏自身稳定性，可以采用双模型策略：
+\begin{equation}
+\mathcal O_{\mathrm{stable}},
+\qquad
+\mathcal O_{\mathrm{candidate}}.
+\end{equation}
+Stable Observer 服务当前运行，而 Candidate Observer 根据新数据适应。只有当候选模型在现实验证、稳定性和回归测试上持续优于旧模型时，才允许：
+\begin{equation}
+\mathcal O_{\mathrm{stable}}
+\leftarrow
+\mathcal O_{\mathrm{candidate}}.
+\end{equation}
+这实际上相当于为自我感知本身建立一个 staged update 机制，防止 SPC 边观察自己边大幅修改“如何观察自己”。
+
+我们还需要维护一组 calibration anchors。这些锚点不必表示绝对真值，但应该是相对长期稳定且可复现的条件。例如：
+\begin{equation}
+\mathcal A_{\mathrm{cal}}
+=
+\{
+A_1,A_2,\ldots,A_n
+\},
+\end{equation}
+每个 $A_i$ 是一个标准认知任务、标准 Body 状态或标准工作记忆负载模式。周期性运行这些锚点，可以检测：
+\begin{equation}
+\Delta_{cal}(t)
+=
+d
+\left(
+\mathcal O_t(A_i),
+\mathcal O_{t_0}(A_i)
+\right).
+\end{equation}
+若变化没有得到能力成长或系统结构变化的解释，则可能意味着 SPC 自身发生异常漂移。
+
+此外，校准必须保留历史，而不能只优化当前。一个长期 Agent 应维护 SPC Calibration History：
+\begin{equation}
+E_{\mathrm{SPC}}
+=
+\{
+(\hat s_t,q_t,v_{t+\Delta},\vartheta_t)
+\}_{t=1}^{T}.
+\end{equation}
+这样系统可以追溯：某类状态过去是否经常误判、某次模型更新是否导致新的偏差、某个相态定义是否逐渐失去辨识能力。这个历史本身可以进入 E，但不应直接成为普通用户情景记忆，而更接近 AgentOS 控制工程中的运行治理记录。
+
+在更深层意义上，Observer Calibration 可以被理解成：
+\begin{equation}
+\boxed{
+LearningHowToObserveTheSelf.
+}
+\end{equation}
+普通学习改变 Agent 如何理解世界，而 SPC Calibration 改变 Agent 如何理解自身。它是一种元层学习，但仍然是受现实验证约束的工程过程，而不是自由的自我叙事。
+
+因此我们最终要求 SPC Observer 同时满足五个条件：
+\begin{equation}
+\boxed{
+Observable,\;
+Uncertain,\;
+Calibrated,\;
+DriftAware,\;
+Recoverable.
+}
+\end{equation}
+Observable 表示它能将高维内部活动压缩成控制相关状态；Uncertain 表示它知道估计并非真值；Calibrated 表示置信度与现实验证相匹配；DriftAware 表示它能够判断自己的模型是否已经过时；Recoverable 表示错误自我状态可以通过独立证据和历史锚点得到修正。
+
+由此，SPC 工程不再只是“在 Agent 内部增加一个监控模块”，而是构成持续主体得以进行可靠自我调节的认识论基础。
+
+\section{SPC Observer 的统一数学模型与工程判据}
+\label{sec:spc-unified-model}
+
+经过前面的分析，我们现在可以把 SPC 从若干功能描述统一为一个完整 Observer 系统。设 Agent 的内部多尺度状态为
+\begin{equation}
+X_t
+=
+\left[
+h_t,
+E_t^{act},
+\Theta_t^{act},
+\Psi_t,
+B_t,
+G_t,
+R_t
+\right],
+\end{equation}
+其中 $E_t^{act}$ 和 $\Theta_t^{act}$ 表示当前被激活而与运行相关的情景与结构部分，$B_t$ 表示身体和资源摘要，$G_t$ 表示当前目标结构，$R_t$ 表示现实残差。真实内部动力学满足
+\begin{equation}
+X_{t+1}
+=
+F_t(X_t,U_t,W_t),
+\end{equation}
+其中 $U_t$ 是当前 AgentOS 控制输入，$W_t$ 是未建模扰动。
+
+SPC 获得的是不完整测量：
+\begin{equation}
+Z_t
+=
+H_t(X_{t-\tau_t})
++
+V_t,
+\end{equation}
+并维持一个内部 belief：
+\begin{equation}
+b_t(X)
+=
+p
+\left(
+X_t
+\mid
+Z_{\leq t}
+\right).
+\end{equation}
+然后通过自我相关压缩
+\begin{equation}
+C_{\Psi_t}
+\end{equation}
+得到低维控制状态：
+\begin{equation}
+\hat S_t
+=
+C_{\Psi_t}
+\left[
+b_t(X)
+\right].
+\end{equation}
+
+最终 SPC 输出应定义为：
+\begin{equation}
+\boxed{
+O_t^{SPC}
+=
+\left(
+\hat S_t,\,
+\Sigma_t,\,
+P_t^{phase},\,
+D_t,\,
+Q_t,\,
+M_t
+\right)
+}
+\end{equation}
+其中：
+
+\begin{equation}
+\hat S_t
+\end{equation}
+表示自我状态估计；
+
+\begin{equation}
+\Sigma_t
+\end{equation}
+表示连续状态不确定性；
+
+\begin{equation}
+P_t^{phase}
+\end{equation}
+表示运行相态的概率分布；
+
+\begin{equation}
+D_t
+\end{equation}
+表示 Observer/Plant 漂移指标；
+
+\begin{equation}
+Q_t
+\end{equation}
+表示观测质量；
+
+\begin{equation}
+M_t
+\end{equation}
+表示元观测状态，例如“当前需要重校准”“当前数据覆盖不足”“相态判定存在歧义”。
+
+从 AgentOS 工程角度，SPC 至少需要六类输入接口。第一是工作记忆结构输入，读取 h 的活动 CSO、关系图和容量指标；第二是运行残差输入，获得预测错误、循环和冲突；第三是 Body/Resource 摘要输入，用于理解计算与身体条件对当前认知的影响；第四是 Goal/Constraint 输入，用于判断当前状态是否与目标相关；第五是 $\Psi$ 参考输入，用于进行 self-attribution；第六是 Calibration Feedback，用于持续评价 Observer 的历史表现。
+
+SPC 的输出则不应直接包含具体行动命令。它输出的是：
+\begin{equation}
+Estimate,
+Confidence,
+Phase,
+Trend,
+Drift,
+Exception.
+\end{equation}
+也就是说：
+\begin{equation}
+\boxed{
+SPC\;observes,\quad
+SPC\;does\;not\;govern.
+}
+\end{equation}
+这是必须保持的模块边界。若 SPC 自己既判断状态又直接改变大量认知参数，那么 Observer 与 Controller 就会混合，后续很难区分“系统状态变了”还是“观察者为了证明自己的判断主动改变了系统”。
+
+为了评价 SPC 工程是否成熟，可以建立以下判据。第一是状态可辨识度：
+\begin{equation}
+J_{\mathrm{obs}}
+=
+I(Z_{\leq t};S_t^{control}),
+\end{equation}
+要求输入对关键控制状态具有足够信息。第二是估计误差：
+\begin{equation}
+E_{\mathrm{state}}
+=
+\mathbb E
+\left[
+d(S_t,\hat S_t)
+\right].
+\end{equation}
+第三是置信度校准：
+\begin{equation}
+E_{\mathrm{conf}}
+=
+\left|
+P(\mathrm{correct}\mid q)-q
+\right|.
+\end{equation}
+第四是有效延迟：
+\begin{equation}
+\tau_{\mathrm{effective}}
+<
+\tau_{\mathrm{critical}},
+\end{equation}
+其中 $\tau_{\mathrm{critical}}$ 由当前运行态决定。第五是漂移检测能力：
+\begin{equation}
+P
+\left(
+D_t>\theta_D
+\mid
+\mathrm{true\ drift}
+\right)
+\end{equation}
+必须足够高，同时误报率不能过大。第六是恢复性，即一次 Observer 误判以后：
+\begin{equation}
+T_{\mathrm{recover}}
+< T_{\max}.
+\end{equation}
+
+特别需要加入一个慢变量保护指标：
+\begin{equation}
+J_{\Psi\text{-protection}}
+=
+\frac{
+\|\Delta\Psi_{\mathrm{unverified}}\|
+}{
+\|\Delta\Psi_{\mathrm{verified}}\|+\epsilon
+}.
+\end{equation}
+理想情况下，应满足：
+\begin{equation}
+J_{\Psi\text{-protection}}
+\ll1.
+\end{equation}
+它衡量未验证的 SPC 短期状态有多少错误渗透进长期身份结构。这一指标对于持续人工智能生命体而言可能比普通 classification accuracy 更重要。
+
+本章最后可以把 SPC Observer 的全部设计原则压缩成一个多时间尺度更新系统：
+\begin{align}
+X_{t+1}
+&=
+F_t(X_t,U_t,W_t),\\
+Z_t
+&=
+H_t(X_{t-\tau})+V_t,\\
+b_t
+&=
+\mathcal B
+\left(
+b_{t-1},Z_t,U_{t-1}
+\right),\\
+\hat S_t
+&=
+C_{\Psi_t}(b_t),\\
+Q_t
+&=
+\mathcal Q
+\left(
+Z_t,b_t,\hat S_t
+\right),\\
+D_t
+&=
+\mathcal D
+\left(
+Z_{\leq t},
+\hat Z_{\leq t}
+\right),\\
+\vartheta_{t+\Delta}
+&=
+\vartheta_t
++
+\eta_{\mathrm{SPC}}
+\mathcal G
+\left(
+Validation,
+D_t,
+Q_t
+\right).
+\end{align}
+并要求时间尺度满足：
+\begin{equation}
+\boxed{
+\tau_h
+\lesssim
+\tau_{\mathrm{SPC}}
+\ll
+\tau_{\Theta}
+\ll
+\tau_{\Psi}.
+}
+\end{equation}
+这里并不意味着 SPC 一定比 h 慢，而是指出它必须以足以观测 h 动力趋势、又不把底层每一次微小波动直接提升为全局自我状态的时间尺度运行。
+
+至此，我们可以给 SPC Observer 工程一个正式定义：
+
+\begin{quote}
+\textbf{SPC Observer 是 AgentOS 中面向持续主体的多尺度自我状态估计系统。它通过对工作记忆、内部动力学、目标结构、身体与资源状态以及历史自我结构进行受限观测和递归压缩，形成带置信度、延迟、漂移和相态信息的自我状态后验，并通过持续的现实验证与校准维持“Agent 如何看见自己”这一关系的长期稳定。}
+\end{quote}
+
+从控制工程角度看，SPC 的成熟并不表现为“Agent 永远准确知道自己”，而恰恰表现为它能够区分：
+\begin{equation}
+\boxed{
+KnownSelfState,
+\quad
+UncertainSelfState,
+\quad
+PossiblyWrongSelfState,
+\quad
+ObserverDrift.
+}
+\end{equation}
+一个真正长期存在的智能体必须拥有这种认识论分层。因为只有当系统知道自己的自我认知也可能有误时，自我调节才不会退化成自我强化；只有当 Observer 可以被现实重新校准时，持续身份才不会因为短期状态估计错误而逐渐脱离现实；也只有在此基础上，后续的内稳态调制、认知控制和多回路稳定性分析才拥有可信的状态输入。
+
+因此，本章真正建立的并不是一个孤立的 SPC 模块，而是一条更基本的 AgentOS 原则：
+
+\begin{equation}
+\boxed{
+\textbf{
+持续智能体不能以“透明访问自身”为前提；
+它必须像认识外部世界一样，通过有限观测、预测、置信度和现实校准，持续认识自己。
+}
+}
+\end{equation}

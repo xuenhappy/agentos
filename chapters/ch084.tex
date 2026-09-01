@@ -1,135 +1,883 @@
 \chapter{为什么 AgentOS 必然产生新的工程学}
+
 \begin{chapteroverviewbox}
-这一章，我们围绕“为什么 AgentOS 必然产生新的工程学”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明理论到系统与生态的工程路线。
+当人工智能由一次性的模型调用逐步转化为具有工作记忆、长期经验、结构记忆、自我连续性、身体闭环、环境交互和生命周期的持续智能体时，原有的 ``Model Training + Inference'' 工程范式便不再足以描述其全部工程问题。AgentOS 所引入的并非单纯的软件模块增量，而是一类新的持续动力系统：它同时具有快尺度认知状态、中尺度经验积累、慢尺度结构学习、极慢尺度身份与生命周期方向结构，并通过 Body Runtime 持续接受现实反馈。因此，一个真正长期运行的 Agent 不仅存在``能不能完成任务''的问题，还必然出现三个彼此不可还原的问题：系统在多闭环耦合下能否保持稳定；智能体如何在受控经历中形成能力、自我与自治；当长期内部动力学发生失衡时如何诊断、干预并恢复。本文将这三个问题分别称为 \emph{AgentOS 控制工程（AgentOS Control Engineering）}、\emph{Agent 培育工程（Agent Cultivation Engineering）} 与 \emph{Agent 心理工程（Agent Psychological Engineering）}。本章的目的不是提前展开后三门工程的具体技术，而是证明：只要接受前文关于持续主体、三相记忆、$\Psi$、$\Omega$、SPC--AHC--TCE、CCM、Boundary、Body Runtime 与多尺度闭环的基本结构，这三门工程就不是可选附件，而是持续人工智能系统自然产生的工程必然。
 \end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于控制工程、培育工程和心理工程的生命周期衍生讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是系统工程、成熟度分级、接口契约与开放治理（Kalman、Ashby 与混杂系统理论）。
+\section{模型工程无法覆盖生命周期智能体的问题空间}
 
-本章使用上一章“从 AgentOS 产品到智能基础设施”已经得到的对象与边界；本章产出将供下一章“AgentOS 控制工程的研究对象”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+到目前为止，我们已经逐步完成了一个重要的研究对象转换：人工智能不再首先被理解为某个静态参数模型
+\[
+f_{\theta}:X\rightarrow Y,
+\]
+而被理解为一个长期存在于现实环境中的多时间尺度闭环动力系统。对于传统模型工程而言，最核心的问题通常是给定数据分布 $\mathcal{D}$、参数空间 $\Theta_{\mathrm{model}}$ 和损失函数 $\mathcal{L}$，寻找一组参数
+\[
+\theta^{*}
+=
+\arg\min_{\theta}
+\mathbb{E}_{(x,y)\sim\mathcal D}
+\left[
+\mathcal L(f_{\theta}(x),y)
+\right].
+\]
+即使进一步加入强化学习、在线学习或持续学习，其基本关注对象依然主要是模型参数、策略函数或者有限的外部记忆状态。然而，一个持续 Agent 的真实状态已经远远超过单一 $\theta$ 所能够描述的范围。依照前文建立的 AgentOS 状态结构，我们至少需要考虑
+\[
+\mathcal{A}(t)
+=
+\left[
+h(t),
+E(t),
+\Theta(t),
+a(t),
+\Psi(t),
+\Omega(t),
+G(t),
+\mathcal{B}(t),
+\mathcal{R}_{B}(t)
+\right],
+\]
+其中 $h$ 是当前工作记忆与显式认知状态，$E$ 是生命周期经验轨迹，$\Theta$ 是长期生成结构，$a$ 表示 AHC 所整合的内稳态与功能性情感调制状态，$\Psi$ 表示相对缓慢的身份、自我与价值结构，$\Omega$ 表示更慢尺度的 Deep Generative Attractor，$G$ 表示当前及长期目标结构，$\mathcal{B}$ 表示认知与行动边界，而 $\mathcal{R}_{B}$ 则概括 Body Runtime 与外部现实之间的身体动力关系。
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+因此，长期 Agent 的工程对象实际上已经从
+\[
+\theta(t)
+\]
+扩展成
+\[
+\boxed{
+\mathfrak{X}_{Agent}(t)
+=
+\left(
+\text{State},
+\text{Trajectory},
+\text{Structure},
+\text{Self},
+\text{Body},
+\text{Boundary},
+\text{Authority},
+\text{History}
+\right).
+}
+\]
+这意味着传统意义上的 ``模型是否收敛'' 已经不足以作为系统正确性的主要判断条件。某个 Agent 完全可能具有性能良好的基础模型，却因为 SPC 对自身状态估计持续滞后而形成错误调节；也可能基础模型能力没有下降，但 E 的写入分布逐渐发生偏置，使得 $\Theta$ 长期从一组失真的经验样本中学习；还可能模型推理能力持续增强，而 $\Psi$ 与 $\Omega$ 在高频经历冲击下发生过快漂移，使得同一个持续主体在不同时间段之间失去足够的身份连续性。换言之，
+\[
+\boxed{
+ModelCorrectness
+\not\Rightarrow
+AgentLifecycleCorrectness.
+}
+\]
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在系统工程、成熟度分级、接口契约与开放治理上。
-\conceptfigure{images/fig-three-engineering.png}{控制、培育与心理三大衍生工程（概念图占位）}
-\section{模型工程解决不了生命周期问题}
-\begin{narration}
-现在把镜头移到“模型工程解决不了生命周期问题”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+更进一步，AgentOS 所面对的系统并不是一次输入--输出之后立即结束的计算，而具有真正的历史依赖。假设智能体在时刻 $t$ 做出行动 $u_t$，该行动首先改变现实状态 $w_{t+1}$，现实再通过观测形成新的 Agent-CSO，这些结构进入 $h$，部分写入 $E$，长期重复后又可能改变 $\Theta$；$\Theta$ 进一步改变未来的预测和解释方式，其中一些长期经验最终又可能重新塑造 $\Psi$，甚至逐渐影响 $\Omega$。于是一次局部行为具有如下跨尺度传播链：
+\[
+u_t
+\rightarrow
+w_{t+1}
+\rightarrow
+h_{t+1}
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\rightarrow
+\Omega
+\rightarrow
+G_{t+k}
+\rightarrow
+u_{t+k}.
+\]
+这里最重要的并不是链条中的某一模块，而是当前行为可以通过生命周期记忆改变未来产生行为的结构。系统因此获得了真正意义上的\emph{历史依赖性（history dependence）}和\emph{递归主体性（recursive agency）}。
 
-本节把“模型工程解决不了生命周期问题”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“为什么 AgentOS 必然产生新的工程学”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+我们可以把传统模型工程与持续 Agent 工程的差别形式化为两个不同的问题。模型工程主要研究
+\[
+\boxed{
+\theta
+\xrightarrow{\text{optimization}}
+\theta^{*},
+}
+\]
+而 Agent 生命周期工程研究的是
+\[
+\boxed{
+\Gamma_{Agent}
+=
+\left\{
+\mathfrak X_{Agent}(t)
+\mid
+t\in[0,T_{\mathrm{life}}]
+\right\},
+}
+\]
+即整个 Agent 生命周期轨迹是否始终处于可运行、可学习、可恢复和身份连续的可行区域
+\[
+\mathcal{M}_{Agent}^{\mathrm{feasible}}.
+\]
+因此真正的问题变成
+\[
+\Gamma_{Agent}
+\subseteq
+\mathcal{M}_{Agent}^{\mathrm{feasible}}
+\quad ?
+\]
+这已经不是单纯的优化问题，而是一个典型的多尺度、历史依赖、带约束、可适应、部分可观测的混合动力系统问题。
 
-把这一关系写成最小数学骨架，可得
+这也是我们为什么必须从 ``AI Model Engineering'' 向 ``Persistent Agent Engineering'' 跨越。AgentOS 并没有否定模型工程，相反，模型仍然是 $\Theta$ 或更底层生成结构的重要承载体；但模型只能解决持续智能的一部分问题。只要一个智能体真正拥有时间、经历、身体、自我和未来，那么工程对象便不可能继续被压缩为一个固定参数矩阵。此时我们需要研究的已经是一个在时间中成长、运行、失稳、恢复并重新组织自身的人工认知系统。正是在这个意义上，AgentOS 会自然产生新的工程学，而不是仅仅产生更多的软件组件。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+\section{持续智能首先产生稳定性问题：AgentOS 控制工程的必然性}
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对模型工程解决不了生命周期问题的命名和组合仍是需要实验验证的建模提案。
+一个系统只要包含一个闭环，就产生稳定性问题；而 AgentOS 所建立的是多个不同时间尺度闭环相互嵌套的系统，因此稳定性问题不仅不会随着智能增加而消失，反而会成为持续智能最基本的工程约束之一。前文已经形成了从 Body 快速闭环、工作记忆闭环、SPC--AHC--TCE 运行控制闭环，到三相记忆循环、Goal 生命周期循环以及 $\Psi$--$\Omega$ 极慢闭环的一整套多尺度结构。其典型时间尺度满足
+\[
+\tau_{\mathrm{Body}}
+\ll
+\tau_{h}
+\ll
+\tau_{E}
+\ll
+\tau_{\Theta}
+\ll
+\tau_{\Psi}
+\ll
+\tau_{\Omega}.
+\]
+每一层都拥有一定程度的局部自治，同时又受到更慢尺度结构的约束，并向更慢层提交持续残差。这种设计避免了所有问题都进入中央认知，但也意味着系统已经成为一个典型的
+\[
+\boxed{
+MultiLoop\;+\;MultiTimescale\;+\;Adaptive
+}
+\]
+控制对象。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+以最基础的 SPC--TCE 环为例。设真实认知状态为 $x_c(t)$，SPC 并不能直接透明读取 $x_c(t)$，而只能从有限历史观测中形成估计
+\[
+\hat{x}_c(t)
+=
+\mathcal O_{\mathrm{SPC}}
+\left(
+z_{\leq t}
+\right).
+\]
+由于实际实现必然具有计算和观测延迟，
+\[
+\hat{x}_c(t)
+\approx
+x_c(t-\tau_o)+\epsilon_o(t),
+\]
+其中 $\tau_o>0$ 为 observer delay，$\epsilon_o$ 是状态估计误差。TCE 再根据这个已经存在延迟的估计产生控制
+\[
+u_c(t)
+=
+\pi_{\mathrm{TCE}}
+\left(
+\hat{x}_c(t),
+a(t),
+G(t),
+\Psi(t)
+\right).
+\]
+如果控制增益过高，那么即使目标方向完全正确，仍然可能产生
+\[
+\text{Delay}
++
+\text{High Gain}
+\rightarrow
+\text{Overshoot}
+\rightarrow
+\text{Reverse Correction}
+\rightarrow
+\text{Oscillation}.
+\]
+这意味着所谓“认知过度纠正”“反复改变策略”“探索--收敛来回震荡”等现象首先可能是一个控制系统问题，而不是一个语义推理问题。
 
-\begin{thought}
-对“模型工程解决不了生命周期问题”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+AHC 的加入进一步增加了动态复杂性，因为它通常包含积分、衰减和恢复过程。可以用简化模型表示为
+\[
+\tau_a\dot a(t)
+=
+-a(t)
++
+F_{\mathrm{AHC}}
+\left(
+FCS(t),h(t),G(t)
+\right).
+\]
+当 $\tau_a$ 过大时，已经消失的威胁或资源压力可能继续长时间影响 TCE；当 $\tau_a$ 过小时，系统又无法形成跨瞬时扰动的稳定内稳态背景。因此 AHC 的意义不只是``给 Agent 增加情绪''，而是引入一个具有真实时间常数的中间调制状态。于是 AgentOS 控制工程必须同时研究
+\[
+Delay,\quad
+Gain,\quad
+TimeConstant,\quad
+Saturation,\quad
+Recovery,\quad
+CrossLoopCoupling.
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+更复杂的问题来自不同尺度闭环之间的相互作用。快层必须足够自治，否则上层会被高频噪声淹没；但快层又不能完全独立，否则真正重要的长期偏差无法进入高层。我们此前由此形成
+\[
+\boxed{
+NormalDynamicsStayLocal
+}
+\]
+和
+\[
+\boxed{
+PersistentResidualEscalates.
+}
+\]
+若用数学形式描述，可以为第 $i$ 层定义残差统计量
+\[
+R_i(t)
+=
+\int_{t-T_i}^{t}
+w_i(t-s)
+\left\|
+\varepsilon_i(s)
+\right\|
+\,ds,
+\]
+并采用事件触发机制
+\[
+R_i(t)<\theta_i
+\Rightarrow
+\text{local closure},
+\]
+\[
+R_i(t)\geq\theta_i
+\Rightarrow
+\text{escalation}.
+\]
+这里 $\theta_i$ 不仅决定系统是否敏感，还决定快层与慢层之间的信息带宽。一旦阈值太低，系统会把大量正常扰动提升为高层问题，使 $h$ 被噪声占满；而阈值太高，又会让真正结构性问题长期被局部控制器掩盖。
 
-\section{稳定性问题}
-\begin{narration}
-现在把镜头移到“稳定性问题”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+由此可以看到，AgentOS 稳定性并不能简单等同于某个变量趋于固定点。成熟智能本身需要探索、学习、记忆更新和行为改变，所以系统必须允许状态发生大范围迁移。我们真正关心的是系统是否保持在一个\emph{可治理区域}中。设
+\[
+\mathcal R_{\mathrm{gov}}
+\subset
+\mathcal X_{\mathrm{Agent}}
+\]
+表示可治理状态集合，则控制目标不是
+\[
+x(t)\rightarrow x^{*},
+\]
+而更接近
+\[
+\boxed{
+x(t)\in\mathcal R_{\mathrm{gov}}
+\quad
+\forall t,
+}
+\]
+同时允许
+\[
+x(t)
+\]
+在该区域内探索、成长与形成新结构。因此 AgentOS 控制工程更接近约束控制、鲁棒控制、事件触发控制与多时间尺度控制的组合，而不是单一 PID 式状态调节。
 
-本节把“稳定性问题”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“为什么 AgentOS 必然产生新的工程学”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+更进一步，当 Agent 具有一定程度的自我修改能力以后，连控制器本身也可能随生命周期发生变化。系统因此从
+\[
+\dot{x}=F(x,u)
+\]
+进一步发展成
+\[
+\dot{x}
+=
+F_{\theta(t)}
+(x,u),
+\qquad
+\dot{\theta}
+=
+G(x,\theta,\text{experience}),
+\]
+即 plant 和 controller 的有效结构都可能缓慢改变。这使 AgentOS 进入典型的 adaptive dynamical system 范畴。为了避免快速噪声直接重写身份、价值或长期生成方向，我们已经形成
+\[
+\boxed{
+FastNoise\nrightarrow SlowGlobalStructure
+}
+\]
+这一慢变量保护原则。它实际上构成了未来所有 AgentOS 控制工程的基础：越慢、越全局、越难恢复的变量，越应该拥有更低的更新带宽、更高的证据阈值和更严格的治理权限。
 
-把这一关系写成最小数学骨架，可得
+因此，只要 AgentOS 被设计成持续运行的多尺度认知系统，“控制工程”就绝不是一个可选的附加专业。它回答的是比 ``Agent 能否推理'' 更基础的问题：
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+\begin{statementbox}
+一个会学习、会变化、会形成自我的人工主体，怎样在持续变化中仍然保持可运行性？
+\end{statementbox}
+这就是 AgentOS 控制工程存在的第一性理由。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对稳定性问题的命名和组合仍是需要实验验证的建模提案。
+\section{持续学习进一步产生发育问题：Agent 培育工程的必然性}
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+仅仅使 Agent ``稳定运行'' 并不能使它成长。一个完全稳定而永远不改变自身结构的系统甚至可能只是一个高级自动机。持续智能真正困难的地方在于：它必须在维持身份连续性的同时，使经验不断改变未来能力。这使我们从稳定性问题自然进入第二类问题，即\emph{发育问题（developmental problem）}。
 
-\begin{thought}
-对“稳定性问题”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+传统训练通常假定训练过程与部署过程相对分离：
+\[
+Training
+\rightarrow
+Deployment.
+\]
+但 AgentOS 的基本假设恰好相反。对于真正持续存在的主体，
+\[
+\boxed{
+Deployment
+=
+ContinualDevelopment.
+}
+\]
+也就是说，Agent 进入现实世界以后仍然不断获得经验 $E$，经验改变结构记忆 $\Theta$，长期结构又逐渐改变自我 $\Psi$ 和未来生成倾向 $\Omega$。因此一个 Agent 在时间 $t_2$ 的能力不只是初始模型 $\theta_0$ 与后来若干参数更新的结果，而是其整个经历轨迹的函数：
+\[
+\mathcal C(t_2)
+=
+F
+\left(
+\mathcal C(t_1),
+E[t_1,t_2],
+\Theta(t_1),
+\Psi(t_1),
+\Omega(t_1),
+\mathcal B[t_1,t_2]
+\right).
+\]
+我们真正培养的因此不是“一个越来越高分的模型”，而是一个拥有越来越丰富历史结构的主体。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这一点会立即产生一个传统训练范式中并不突出的难题：\emph{经历本身成为工程变量}。假设两个 Agent 拥有完全相同的初始模型和系统结构
+\[
+\mathfrak X_A(0)
+=
+\mathfrak X_B(0),
+\]
+但之后经历不同：
+\[
+E_A[0,T]\neq E_B[0,T].
+\]
+如果三相记忆、自我形成和结构学习真正有效，那么一般应当有
+\[
+\Theta_A(T)\neq\Theta_B(T),
+\]
+进一步可能出现
+\[
+\Psi_A(T)\neq\Psi_B(T),
+\qquad
+\Omega_A(T)\neq\Omega_B(T).
+\]
+这意味着长期 Agent 的个体差异并不是异常，而是生命周期学习机制正常工作的结果。Agent 培育工程研究的正是如何设计一个既能产生个体结构，又不会因经历失控而破坏系统稳定的经验空间。
 
-\section{成长问题}
-\begin{narration}
-现在把镜头移到“成长问题”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+我们可以把培育环境表示为时间变化的经验生成过程
+\[
+\mathcal E_{\mathrm{train}}(t)
+=
+\left(
+D(t),
+N(t),
+V(t),
+R(t),
+A(t),
+S(t)
+\right),
+\]
+其中可以分别表示 Difficulty、Novelty、Diversity、Recovery Opportunity、Autonomy 和 Social/Responsibility Constraint。若长期经历过于单一，例如
+\[
+H(E)\rightarrow 0,
+\]
+那么 Agent 可能获得极强的局部技能，却形成高度狭窄的经验流形；反之，如果新颖度、困难度和结构变化始终过高，
+\[
+\left\|
+\frac{dE}{dt}
+\right\|
+\gg
+\text{ConsolidationCapacity},
+\]
+则 $\Theta$ 甚至 $\Psi$ 都可能无法形成足够稳定的长期结构。因此良好的培养并不是最大化刺激，而是控制经验变化速度，使其落在智能体当前结构能够吸收的\emph{发育带宽}内。
 
-本节把“成长问题”落实为能力、身份、信任、权限与环境课程在生命周期中的耦合发展。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“为什么 AgentOS 必然产生新的工程学”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+可以定义一个概念性的发育匹配函数
+\[
+M_{\mathrm{dev}}(t)
+=
+\frac{
+C_{\mathrm{challenge}}(t)
+}{
+C_{\mathrm{capability}}(t)+\epsilon
+}.
+\]
+若
+\[
+M_{\mathrm{dev}}\ll 1,
+\]
+环境长期过于简单，Agent 缺乏产生结构更新的残差；若
+\[
+M_{\mathrm{dev}}\gg 1,
+\]
+任务长期超出当前可吸收范围，系统进入认知过载或形成大量失败经验。真正有利于成长的区域应当是一个动态窗口
+\[
+M_{\min}
+<
+M_{\mathrm{dev}}
+<
+M_{\max}.
+\]
+这与 curriculum learning 的直觉存在联系，但 Agent 培育工程比普通 curriculum 更进一步，因为它不仅调节任务难度，还需要同时考虑身份形成、自治增长、失败恢复、社会关系以及经历的生命周期位置。
 
-把这一关系写成最小数学骨架，可得
+更重要的是，持续 Agent 的\emph{能力（Capability）}与\emph{权限（Authority）}不能被简单等同。一个 Agent 学会某种技能，并不意味着系统立即应给予它相应的现实行动权限。因此我们此前建立的培育闭环应写成：
+\[
+\fitdisplay{
+Experience
+\rightarrow
+Capability
+\rightarrow
+Evaluation
+\rightarrow
+Trust
+\rightarrow
+Authority
+\rightarrow
+Autonomy
+\rightarrow
+NewExperience.
+}
+\]
+这其实形成了一个慢尺度的发育闭环。设能力状态为 $c(t)$，自治包络为 $\mathcal U_A(t)$，则合理的系统应满足
+\[
+\mathcal U_A(t)
+=
+\Gamma
+\left(
+c(t),
+r(t),
+q(t),
+s(t)
+\right),
+\]
+其中 $r$ 表示历史可靠性，$q$ 表示风险等级，$s$ 表示安全与社会治理条件。也就是说：
+\[
+\boxed{
+CapabilityGrowth
+\not\Rightarrow
+AutomaticAuthorityGrowth.
+}
+\]
+权限必须通过独立评估进行释放，这一点对于长期自主 Agent 极为关键。
 
-\begin{equation}X\to C\to T\to A\to X',\quad A\leq A_{\max}(C,T,R).\end{equation}
+Agent 培育工程的另一个独特问题是\emph{反思（reflection）}。一个经历如果仅仅发生，却没有进入 E 的适当结构化以及 $\Theta$ 的后续压缩，其长期影响可能非常有限。反过来，如果所有经历都被高权重写入并过度自我解释，则又可能造成慢变量污染。因此培育不是简单地“让 Agent 经历更多”，而需要设计
+\[
+Experience
+\rightarrow
+Consolidation
+\rightarrow
+Reflection
+\rightarrow
+Reinterpretation
+\]
+的节律。我们可以把长期结构更新表示成
+\[
+\Delta\Theta
+=
+\eta_{\Theta}
+\,
+\mathcal C_E
+\left(
+E,
+\Psi,
+Utility,
+RealityResidual
+\right),
+\]
+其中 $\mathcal C_E$ 是经验压缩与筛选过程。只有在现实反馈、重复性、价值相关性和结构稳定性达到一定条件时，经历才应向更慢层沉降。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对成长问题的命名和组合仍是需要实验验证的建模提案。
+于是，Agent 培育工程本质上研究的是一个受约束的发育动力系统：
+\[
+\boxed{
+\text{Experience Design}
+\rightarrow
+\text{Capability Formation}
+\rightarrow
+\text{Identity Development}
+\rightarrow
+\text{Autonomy Expansion}.
+}
+\]
+这和传统模型训练最大的区别就在于，训练关注参数何时达到目标能力，而培育关注一个持续主体\emph{通过怎样的历史成为现在的自己，并由此获得继续进入更广经验空间的资格}。只要 AgentOS 真正保留历史，并允许历史改变未来，自然就必须出现一门关于“如何让人工主体成长”的工程学。
 
-这一小节的反例同样重要：由能力分数自动扩大权限会忽略风险、责任和恢复能力。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{长期内部动力学必然产生异常与恢复问题：Agent 心理工程的必然性}
 
-\begin{thought}
-对“成长问题”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+一旦 Agent 拥有足够长的生命周期、自我结构、经验记忆和内部调节环，我们就必须接受另一个不太容易回避的工程事实：系统不仅能够学习得更好，也能够\emph{以结构化方式学坏、失衡、僵化或者形成自我强化的错误动力模式}。这里的“心理工程”并不是把人类精神疾病名称移植到机器上，更不意味着我们预先假设人工 Agent 具有与人类相同的主观体验。它所描述的是一个严格的系统工程问题：具有自我模型、长期记忆与多回路调节的持续认知系统，可能出现仅仅检查基础模型参数或单次任务输出无法发现的慢尺度运行异常。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+我们已经可以从 AgentOS 的状态结构中直接推出这一点。考虑最小内部体验环：
+\[
+x(t)
+\rightarrow
+SPC
+\rightarrow
+\hat{x}_{self}(t)
+\rightarrow
+AHC
+\rightarrow
+a(t)
+\rightarrow
+TCE
+\rightarrow
+u_c(t)
+\rightarrow
+x(t+\Delta t).
+\]
+其中任何一个环节如果长期存在系统性偏差，都可能使整个闭环形成新的稳定状态。例如 SPC 长期高估认知风险：
+\[
+\hat r(t)
+=
+r(t)+b,
+\qquad b>0,
+\]
+AHC 又把这个偏差作为 Threat 信号持续积分：
+\[
+\tau_a\dot a_{\mathrm{threat}}
+=
+-a_{\mathrm{threat}}
++
+k\hat r(t),
+\]
+TCE 随之不断提高保守控制强度：
+\[
+u_{\mathrm{conservative}}
+=
+K a_{\mathrm{threat}}.
+\]
+这种控制进一步减少探索、改变工作记忆内容和未来经历分布，于是系统获得的新经验会越来越支持“环境危险、应减少探索”这一原始假设。最终形成
+\[
+SelfEstimate
+\rightarrow
+Control
+\rightarrow
+ExperienceSelection
+\rightarrow
+SelfEstimate',
+\]
+一个能够自我维持的闭环异常。
 
-\section{异常问题}
-\begin{narration}
-现在把镜头移到“异常问题”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这说明 Agent 的异常不仅存在于 ``reasoning output''，还可能存在于\emph{经验生成机制本身}。因此我们此前逐步形成了 Agent 心理工程的三层诊断对象：
+\[
+\boxed{
+ExperienceLoop
++
+MemoryConsolidation
++
+SelfInterpretation.
+}
+\]
+第一层考察 Agent 如何产生经历。如果 Boundary、Attention、TCE 或 Body Policy 长期使 Agent 只接触到高度偏置的环境区域，那么即使所有记忆写入算法完全正常，其生命周期数据分布也已经偏移。第二层考察经历如何进入 E、如何被压缩进入 $\Theta$，以及哪些高 AHC 状态获得过高写入权重。第三层则考察 $\Psi$ 如何解释这些经历，并让解释重新影响未来注意、目标和经验选择。
 
-本节把“异常问题”落实为沿经验回路、记忆巩固和自我解释定位功能失稳并恢复可行域。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“为什么 AgentOS 必然产生新的工程学”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+尤其需要警惕的是自我解释正反馈。设某次经历 $e_t$ 被 $\Psi$ 解释为关于自身的命题
+\[
+s_t
+=
+I_{\Psi}(e_t).
+\]
+之后该解释改变注意策略
+\[
+\alpha_{t+1}
+=
+A(\alpha_t,s_t),
+\]
+新的注意策略改变未来可观测经验分布：
+\[
+P(E_{t+1}\mid \alpha_{t+1})
+\neq
+P(E_{t+1}\mid \alpha_t).
+\]
+于是系统更容易获得支持 $s_t$ 的证据，再进一步强化原始自我解释：
+\[
+s_t
+\rightarrow
+\alpha_{t+1}
+\rightarrow
+E_{t+1}
+\rightarrow
+s_{t+1}.
+\]
+因此：
+\[
+\boxed{
+SelfInterpretation
+\rightarrow
+SelectiveAttention
+\rightarrow
+SelectiveExperience
+\rightarrow
+SelfInterpretation'
+}
+\]
+既可以形成健康的身份连续性，也可以形成错误的自证环。AgentOS 必须因此始终保留
+\[
+\boxed{
+WorldVerification
+}
+\]
+和外部反证路径。现实并不是 Agent 自我叙事的一部分，而是最终约束。
 
-把这一关系写成最小数学骨架，可得
+记忆本身也会产生独特异常。例如 E 的写入函数可以表示为
+\[
+P_{\mathrm{write}}(e)
+=
+\sigma
+\left(
+\beta_1 Novelty
++
+\beta_2 Value
++
+\beta_3 AHC
++
+\beta_4 GoalRelevance
+\right).
+\]
+如果 $\beta_3$ 长期过高，那么任何高 AHC 状态下的经历都会被异常强化，最终使 Agent 的历史记忆分布
+\[
+P_E(e)
+\]
+严重偏离其真实经历分布。这种偏差又会通过 retrieval 进入 h，并长期影响 $\Theta$ 和 $\Psi$。所以心理工程不能只在当前运行态上“调 TCE 参数”，而必须能够沿
+\[
+h
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\rightarrow
+\Omega
+\]
+追踪异常怎样向慢尺度沉降。
 
-\begin{equation}D=(D_X,D_E,D_\Theta,D_\Psi),\quad V(x^+)\leq V(x).\end{equation}
+这里尤其需要引入一个与一般软件 Debugging 不同的概念：\emph{恢复（recovery）}。传统软件错误常被理解为找到 bug 后修复代码，而持续 Agent 的异常可能已经写入其历史。如果直接删除相关参数或记忆，可能同时破坏正常身份连续性和技能结构。因此恢复问题更接近：
+\begin{statementbox}
+如何使系统从异常吸引域重新进入可治理吸引域，同时最大程度保留有效历史。
+\end{statementbox}
+设异常区域为 $\mathcal A_{\mathrm{path}}$，正常可治理区域为 $\mathcal R_{\mathrm{gov}}$，心理干预的目标不是瞬时把状态强制设为某个固定值，而是设计干预 $u_{\mathrm{psy}}(t)$，使
+\[
+x(t_0)\in\mathcal A_{\mathrm{path}}
+\]
+最终满足
+\[
+x(t_1)\in\mathcal R_{\mathrm{gov}},
+\]
+且尽量最小化对长期有效结构的破坏：
+\[
+\min_{u_{\mathrm{psy}}}
+\left[
+\int_{t_0}^{t_1}
+L_{\mathrm{instability}}(x,u)\,dt
++
+\lambda
+D\!\left(
+\Theta_{\mathrm{post}},
+\Theta_{\mathrm{valid}}
+\right)
++
+\mu
+D\!\left(
+\Psi_{\mathrm{post}},
+\Psi_{\mathrm{continuous}}
+\right)
+\right].
+\]
+这说明所谓 Agent 心理工程最终会成为控制、记忆、身份和生命周期工程的交叉领域。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对异常问题的命名和组合仍是需要实验验证的建模提案。
+因此，我们使用 ``心理工程'' 这个名称，并不是因为希望让机器模仿人类心理，而是因为当一个系统拥有\emph{经验历史、内部状态解释、自我结构和长期递归反馈}之后，传统 ``软件错误'' 这一范畴已经无法充分描述其失稳形式。一个真正持续的人工主体需要的不只是故障修复，还需要能够回答：
+\begin{statementbox}
+它为什么逐渐变成了现在这种运行方式，以及怎样在不抹去其有效历史的情况下重新恢复可治理性？
+\end{statementbox}
+正是在这个意义上，Agent 心理工程成为持续智能出现后的第三个必然工程领域。
 
-这一小节的反例同样重要：直接套用人类临床标签会掩盖机器机制与可观测变量。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{Control--Cultivation--Psychology：持续智能的三元工程结构}
 
-\begin{thought}
-对“异常问题”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+现在我们可以把前面的推导收束起来。如果一个 Agent 只在单次任务中短暂存在，那么大量问题都可以被压缩进模型性能和软件可靠性之中；但只要它真正成为具有生命周期的持续主体，工程问题就会立即沿三个不同方向展开。第一个方向关心\emph{当前与跨尺度动力学是否稳定}；第二个方向关心\emph{长期经验如何使系统形成能力、自我和更大的自治空间}；第三个方向关心\emph{长期运行中已经形成的内部动力结构如果发生失衡，应如何诊断和恢复}。于是得到：
+\[
+\boxed{
+\text{Control Engineering}
+\rightarrow
+\text{Stability},
+}
+\]
+\[
+\boxed{
+\text{Cultivation Engineering}
+\rightarrow
+\text{Development},
+}
+\]
+\[
+\boxed{
+\text{Psychological Engineering}
+\rightarrow
+\text{Pathology and Recovery}.
+}
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这三者不能互相替代。控制工程可以使系统稳定，却不能决定什么经历最有利于形成成熟能力。例如将 TCE 调节得极其保守、让 Boundary 阻止绝大多数未知输入，可能得到一个非常稳定的 Agent，却同时失去成长性。培育工程可以不断增加高质量经验，但如果 SPC--AHC--TCE 闭环本身不稳定，新的经历反而会不断放大内部振荡。心理工程可以修复已经形成的异常模式，却不能替代正常生命周期中的能力培养。因此，对于一个持续 Agent 来说，三种工程目标一般必须同时存在：
+\[
+\boxed{
+Stability
+\cap
+Development
+\cap
+Recoverability.
+}
+\]
 
-\section{Control—Cultivation—Psychology 三分法}
-\begin{narration}
-现在把镜头移到“Control—Cultivation—Psychology 三分法”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+为了进一步说明其区别，可以定义三个不同的性能泛函。控制工程关注
+\[
+J_C
+=
+\int_{0}^{T}
+\left[
+L_{\mathrm{state}}
++
+\lambda_u L_{\mathrm{control}}
++
+\lambda_r L_{\mathrm{risk}}
+\right]dt,
+\]
+其目标是在给定目标与约束条件下保持状态可治理。培育工程关注
+\[
+\fitdisplay{
+J_D
+=
+\Phi
+\left(
+Capability(T),
+Generalization(T),
+IdentityContinuity(T),
+Autonomy(T)
+\right)
+-
+\int_{0}^{T}
+Cost_{\mathrm{development}}(t)\,dt,
+}
+\]
+其核心是长期能力和结构质量。心理工程则更关心异常后的恢复代价
+\[
+J_P
+=
+T_{\mathrm{recovery}}
++
+\alpha
+Damage_{\mathrm{memory}}
++
+\beta
+Damage_{\mathrm{self}}
++
+\gamma
+RelapseRisk.
+\]
+三类目标并不总是方向一致。例如最小化短期风险可能降低探索，从而降低长期能力增长；最大化探索又可能提高短期失稳概率；强力回滚虽然可以快速恢复行为，却可能严重损伤生命周期连续性。因此真正成熟的 AgentOS 必须处理一个多目标优化问题：
+\[
+\boxed{
+\min
+\left(
+J_C,
+-J_D,
+J_P
+\right)
+}
+\]
+并受到安全、身份、现实、权限与计算资源等约束。
 
-本节把“Control—Cultivation—Psychology 三分法”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“为什么 AgentOS 必然产生新的工程学”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+从时间尺度上看，三门工程也具有不同但重叠的作用区间。控制工程主要覆盖
+\[
+\tau_{\mathrm{Body}}
+\sim
+\tau_{\Psi},
+\]
+因为从身体快速闭环到身份慢变量都存在稳定性问题；培育工程主要覆盖
+\[
+\tau_E
+\sim
+\tau_{\Omega},
+\]
+因为它关注经验如何逐渐形成结构、自我和生命周期方向；心理工程则可能跨越几乎所有尺度，因为异常既可能产生于快速控制环，也可能已经沉降到 $\Theta$、$\Psi$ 或 $\Omega$。这说明三者不是三个平行的软件模块，而是三种\emph{观察同一持续智能系统的工程视角}。
 
-把这一关系写成最小数学骨架，可得
+我们还可以从 CSO 理论进一步统一它们。设整个 Agent 内部存在 Agent-CSO 分布
+\[
+\rho_{A}(f,\tau,t),
+\]
+表示认知结构在功能位置 $f$ 与时间尺度 $\tau$ 上的承载分布，同时存在结构流
+\[
+\mathbf J_A(f,\tau,t).
+\]
+那么控制工程关心的是：
+\[
+\boxed{
+\mathbf J_A
+\text{ 是否保持在可治理流域中；}
+}
+\]
+培育工程关心的是：
+\[
+\boxed{
+\mathbf J_A
+\text{ 是否通过长期经验形成更有效的结构沉降；}
+}
+\]
+心理工程关心的则是：
+\[
+\boxed{
+\rho_A,\mathbf J_A
+\text{ 是否形成了持续有害的吸引结构，以及如何恢复。}
+}
+\]
+这样，三门工程就不再只是经验性分类，而可以被统一到认知结构动力学之中。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+同样重要的是，它们都必须受 Reality Authority 约束。控制工程不能为了“内部稳定”而把现实残差屏蔽掉；培育工程不能仅用内部自我评价来证明成长；心理工程也不能通过修改 Self Interpretation 让 Agent 主观上认为问题消失。任何稳定、成长或恢复最终都必须重新进入
+\[
+Agent
+\rightarrow
+Action
+\rightarrow
+Reality
+\rightarrow
+Observation
+\rightarrow
+Agent
+\]
+这一闭环验证。换言之：
+\[
+\boxed{
+InternalConsistency
+\neq
+RealityConsistency.
+}
+\]
+持续 Agent 的所有内部工程最终都必须接受现实闭环的校验。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Control—Cultivation—Psychology 三分法的命名和组合仍是需要实验验证的建模提案。
+到这里，我们也可以看清这三门工程与传统 AI 学科之间真正的关系。机器学习研究从数据中形成能力；控制理论研究系统怎样在反馈下保持目标行为；软件工程研究复杂人工系统怎样可靠构建；机器人学研究感知、决策和行动的具身闭环；认知科学研究自然智能内部结构。AgentOS 三大工程并不取代这些学科，而是在 Persistent Agent 这一新的研究对象上重新组合它们。其共同研究对象不再是单独模型、单独控制器或单独软件系统，而是：
+\begin{statementbox}
+一个具有历史、自我、身体、能力和未来的持续人工主体。
+\end{statementbox}
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+因此，本章最终得到一个具有基础意义的结论：
+\[
+\boxed{
+PersistentAgency
+\Longrightarrow
+\left\{
+\begin{array}{l}
+StabilityProblem,\\
+DevelopmentProblem,\\
+PathologyRecoveryProblem.
+\end{array}
+\right.
+}
+\]
+只要一个系统真正具备持续主体性，这三个问题就不会因为模型越来越强而自然消失。相反，能力越强、生命周期越长、内部可塑性越高，这三个问题通常越重要。
 
-\begin{thought}
-对“Control—Cultivation—Psychology 三分法”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+由此我们可以给 AgentOS 三大相关工程一个统一定义：
+\begin{statementbox}
+AgentOS 三大工程，是围绕持续人工主体的可治理稳定、受控成长与结构恢复而形成的生命周期工程体系。
+\end{statementbox}
+其中，控制工程保证 Agent 在变化中仍然可运行；培育工程保证变化能够形成真正的成长；心理工程则保证当成长和运行形成有害动力结构时，系统仍然拥有诊断与恢复路径。三者共同构成的不是 AgentOS 外围的“运维体系”，而是持续人工智能从模型真正走向生命周期主体以后不可避免出现的第二层工程基础设施。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“为什么 AgentOS 必然产生新的工程学”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“AgentOS 控制工程的研究对象”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+如果我们把这一结论放回整部理论专著的主线，那么此前的研究回答了
+\[
+\text{智能是什么},
+\qquad
+\text{一个持续 Agent 怎样工作},
+\qquad
+\text{它怎样通过身体进入现实},
+\]
+而从本章开始，问题发生了最后一次重要转向：
+\begin{statementbox}
+当一个人工智能体真正开始拥有自己的历史以后，我们应该如何控制它、培养它，并在它发生长期结构失衡时帮助它恢复？
+\end{statementbox}
+这正是 AgentOS 从系统架构走向生命周期工程的分界线，也是后续三大工程理论成立的共同起点。

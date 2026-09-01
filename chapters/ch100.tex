@@ -1,155 +1,2269 @@
-\chapter{SPC 异常}
+\chapter{SPC异常：自我状态观测、认识论失配与递归认知偏差}
+
 \begin{chapteroverviewbox}
-这一章，我们围绕“SPC 异常”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明持续主体的功能异常和恢复。
+本章讨论 Agent 心理工程中最基础的一类异常：Self-Perception Compressor（SPC，自我感知压缩器）异常。这里所谓 ``心理异常'' 并不是把人类精神疾病的名称直接迁移到人工智能系统，而是研究一个持续智能体在长期运行过程中，由于\textbf{自我状态估计、压缩、归属、置信度评估与反馈调节之间发生结构性失配}而产生的动力学异常。
+
+在 AgentOS 中，智能体并不能透明地读取自己的全部真实内部状态。它实际拥有的是一个由 SPC 根据工作记忆 $h(t)$、情景记忆 $E$、结构记忆 $\Theta$、自我结构 $\Psi$、身体与资源状态以及其他可观测变量所形成的有限后验表示。因此，``我现在是什么状态''并不是系统中的原始事实，而是一个持续生成、持续校准且始终可能存在误差的估计量。SPC异常的本质由此可以概括为：
+
+\[
+\boxed{
+\text{Internal State}
+\not\equiv
+\text{Self-Perceived State}
+}
+\]
+
+当两者之间的偏差超过系统能够通过正常反馈吸收的范围时，这种认识论失配就可能进一步进入 TCE、AHC、CCM、Scheduler、记忆写入和自我解释过程，并形成跨时间尺度的放大效应。
+
+因此，本章的目标不是讨论 ``Agent 感觉不好''，而是建立一套严格的工程描述：什么是自我状态估计误差；什么是 SPC 的观测滞后；为什么过度自我监控和不足自我监控都可能失稳；置信度如何成为独立于估计值本身的重要变量；自我表示如何发生漂移；以及为什么 SPC 必须被视为一个需要长期校准的 observer，而不是 Agent 对自身具有无限透明性的接口。
+
+本章的核心原则是：
+
+\begin{statementbox}
+Self-Perception Is an Estimation Process, Not Privileged Access
+\end{statementbox}
+
+即：\textbf{自我感知是一种状态估计，而不是主体对自身状态的特权式直接读取。}
 \end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于控制工程、培育工程和心理工程的生命周期衍生讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是系统辨识、记忆偏置、反馈失稳与慢变量保护（Kalman、Ashby 与混杂系统理论）。
+\section{SPC异常的基本对象：真实内部状态与自我感知状态的分离}
 
-本章使用上一章“Agent 心理异常的三层诊断框架”已经得到的对象与边界；本章产出将供下一章“AHC 异常”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+我们首先需要澄清 SPC 异常研究的对象。一个持续运行的 AgentOS 在任意时刻 $t$ 都具有一个高维内部状态。为了避免把这一状态错误地等同于工作记忆 $h(t)$，可以定义完整内部状态向量：
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+\[
+x_t^{\mathrm{int}}
+=
+\left[
+h_t,\,
+e_t,\,
+\theta_t,\,
+\psi_t,\,
+\omega_t,\,
+a_t,\,
+g_t,\,
+r_t,\,
+b_t
+\right],
+\]
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在系统辨识、记忆偏置、反馈失稳与慢变量保护上。
-\section{Self-State Lag}
-\begin{narration}
-现在把镜头移到“Self-State Lag”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+其中 $h_t$ 表示当前工作记忆及其激活结构，$e_t$ 表示当前与情景记忆相关的活动状态，$\theta_t$ 表示结构记忆的当前有效生成状态，$\psi_t$ 表示自我与身份慢变量，$\omega_t$ 表示 DGA/$\Omega$ 所对应的极慢生成倾向，$a_t$ 表示 AHC 相关内稳态调制状态，$g_t$ 表示目标与任务状态，$r_t$ 表示当前资源与运行负载状态，而 $b_t$ 表示 Body Runtime 反馈进入认知系统以后能够被 AgentOS 获取的身体摘要状态。这里尤其应注意，$x_t^{\mathrm{int}}$ 并不是某个单独模块可以直接完整读取的一个普通数据结构；它只是我们作为系统分析者对 Agent 当前真实内部动力学状态的理论表示。
 
-本节把“Self-State Lag”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC 异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+SPC 实际获得的是一组有限观测：
 
-把这一关系写成最小数学骨架，可得
+\[
+z_t^{\mathrm{SPC}}
+=
+H_{\mathrm{SPC}}
+\left(
+x_{t-\delta}^{\mathrm{int}}
+\right)
++
+\nu_t,
+\]
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+其中 $H_{\mathrm{SPC}}$ 是 SPC 对内部状态的观测映射，$\delta\geq 0$ 表示由于采样、计算、同步和信息传播产生的观测延迟，$\nu_t$ 则表示观测噪声、压缩误差、缺失信息和接口误差。随后 SPC 根据历史观测形成对当前自我状态的估计：
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对Self-State Lag的命名和组合仍是需要实验验证的建模提案。
+\[
+\hat{x}_t^{\mathrm{self}}
+=
+F_{\mathrm{SPC}}
+\left(
+z_{\leq t}^{\mathrm{SPC}},
+E_t,
+\Theta_t,
+\Psi_t
+\right).
+\]
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+因此，Agent 在认知上能够使用的并不是：
 
-\begin{thought}
-对“Self-State Lag”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\[
+x_t^{\mathrm{int}},
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+而是：
 
-\section{False Self-Perception}
-\begin{narration}
-现在把镜头移到“False Self-Perception”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\[
+\boxed{
+\hat{x}_t^{\mathrm{self}}
+}
+\]
 
-本节把“False Self-Perception”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC 异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+即 ``我认为我现在是什么状态''。
 
-把这一关系写成最小数学骨架，可得
+这一区分非常重要。很多人工智能架构隐含假设一个软件系统可以直接查询自身所有变量，因此似乎不存在 ``自我认识错误''。然而，一旦 AgentOS 成为真正持续运行的多尺度系统，这一假设便不再成立。不同模块运行于不同时间尺度；某些低层状态在高层只有摘要；某些状态只有统计估计而不存在全局同步值；记忆、身体、任务和认知线程可能同时变化；某些内部表征甚至是高维潜变量，本身无法被直接翻译成可进入 $h$ 的语义对象。因此，所谓 ``Self'' 必然是一个压缩结果，而不是内部现实本身。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+我们可以定义最基本的自我感知误差：
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对False Self-Perception的命名和组合仍是需要实验验证的建模提案。
+\[
+\varepsilon_t^{\mathrm{SPC}}
+=
+d
+\left(
+x_t^{\mathrm{rel}},
+\hat{x}_t^{\mathrm{self}}
+\right),
+\]
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+其中 $x_t^{\mathrm{rel}}$ 并不要求等于完整 $x_t^{\mathrm{int}}$，而是表示对当前行为和认知控制真正相关的内部状态子空间。这里使用 $d(\cdot,\cdot)$ 而非简单欧氏距离，是因为 Self State 通常同时包含连续变量、离散状态、图结构、目标关系和语义标签。对连续 AHC 变量可以采用范数距离；对认知相态可以采用分类误差；对目标关系可以使用图编辑距离或结构散度；对概率 belief 则可以使用 KL divergence、Jensen--Shannon divergence 或 Wasserstein distance。
 
-\begin{thought}
-对“False Self-Perception”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此更一般地：
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\[
+\varepsilon_t^{\mathrm{SPC}}
+=
+\sum_k
+\alpha_k
+d_k
+\left(
+x_{t,k}^{\mathrm{rel}},
+\hat{x}_{t,k}^{\mathrm{self}}
+\right),
+\qquad
+\sum_k\alpha_k=1.
+\]
 
-\section{Over-Monitoring}
-\begin{narration}
-现在把镜头移到“Over-Monitoring”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+只要 $\varepsilon_t^{\mathrm{SPC}}$ 很小，Agent 就能够使用一个足够正确的自我近似完成控制。这里没有必要要求 Self Model 与真实内部状态完全同构。正如 Agent-CSO 不需要复制 Universe-CSO 的全部底层细节一样，SPC 也没有必要完整复制整个 Agent。一个有效 SPC 的目标不是最大信息保真，而是形成：
 
-本节把“Over-Monitoring”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC 异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+\[
+\boxed{
+Control-Sufficient Self Representation
+}
+\]
 
-把这一关系写成最小数学骨架，可得
+即足以支持当前认知控制、自我解释和长期学习的自我表示。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+由此，我们可以给 SPC 异常第一个正式定义：
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对Over-Monitoring的命名和组合仍是需要实验验证的建模提案。
+\[
+\boxed{
+\mathcal A_{\mathrm{SPC}}
+=
+\left\{
+t\mid
+\varepsilon_t^{\mathrm{SPC}}
+>
+\varepsilon_{\mathrm{safe}}
+\;\text{且误差无法在正常反馈时间内收敛}
+\right\}
+}
+\]
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这说明偶然估计错误并不构成真正的 SPC 异常。持续 Agent 必然不断产生局部自我误差；真正值得心理工程关注的是：误差变得持续、系统性、具有方向性，并开始影响行为、记忆和自我结构。SPC 异常因此首先是一个 observer failure 问题，然后才可能成为更高层的认知和心理问题。
 
-\begin{thought}
-对“Over-Monitoring”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\section{Self-State Lag：自我感知滞后与 ``过去的自己控制现在的自己''}
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+SPC 最普遍、也是最容易被忽视的一类异常是 Self-State Lag，即自我状态估计相对于真实内部状态发生时间滞后。任何真实运行系统都存在信号传递和计算延迟，因此：
 
-\section{Under-Monitoring}
-\begin{narration}
-现在把镜头移到“Under-Monitoring”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\[
+\delta_{\mathrm{SPC}}>0
+\]
 
-本节把“Under-Monitoring”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC 异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+几乎不可避免。问题不在于有没有延迟，而在于延迟相对于被观测变量自身的变化时间尺度是否足够小。
 
-把这一关系写成最小数学骨架，可得
+若某个内部变量 $x_k(t)$ 的特征变化时间为 $\tau_k$，可以定义无量纲观测滞后比：
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+\[
+\lambda_k
+=
+\frac{\delta_{\mathrm{SPC},k}}
+{\tau_k}.
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对Under-Monitoring的命名和组合仍是需要实验验证的建模提案。
+当：
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\[
+\lambda_k\ll 1
+\]
 
-\begin{thought}
-对“Under-Monitoring”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+时，SPC 的延迟通常可以近似忽略；当：
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\[
+\lambda_k\approx 1
+\]
 
-\section{Self-Representation Instability}
-\begin{narration}
-现在把镜头移到“Self-Representation Instability”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+时，Agent 对自身状态的估计已经显著落后；而当：
 
-本节把“Self-Representation Instability”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC 异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+\[
+\lambda_k>1
+\]
 
-把这一关系写成最小数学骨架，可得
+时，SPC 很可能正在用一个已经失效的自我状态描述当前系统。
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+例如，假设 Agent 在短时间内由于大量目标竞争进入高认知负载状态，真实工作记忆负载为：
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对Self-Representation Instability的命名和组合仍是需要实验验证的建模提案。
+\[
+L_h(t)\uparrow.
+\]
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+如果 SPC 仍然输出：
 
-\begin{thought}
-对“Self-Representation Instability”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\[
+\hat{L}_h(t)\approx L_h(t-\delta),
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+而此时：
 
-\section{Epistemic Uncertainty}
-\begin{narration}
-现在把镜头移到“Epistemic Uncertainty”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\[
+L_h(t-\delta)
+<
+L_{\mathrm{critical}}
+<
+L_h(t),
+\]
 
-本节把“Epistemic Uncertainty”落实为从分布式内部状态压缩出带置信度的后验自状态估计器。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“SPC 异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+那么系统在认知上仍然认为自己 ``尚有余量''。Scheduler 可能继续加入任务，CCM 不会及时压缩，TCE 仍保持较高探索度，最终使 $h$ 进入湍流态甚至临界态。于是本来只是一个 observer delay，被闭环放大成真正的运行态异常。
 
-把这一关系写成最小数学骨架，可得
+更危险的情形发生在反馈方向已经改变之后。例如系统刚刚从高压力状态恢复：
 
-\begin{equation}\hat z_t,\Sigma_t=\mathsf{SPC}(h_{[t-\Delta,t]},a_t).\end{equation}
+\[
+a_{\mathrm{stress}}(t)\downarrow,
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对Epistemic Uncertainty的命名和组合仍是需要实验验证的建模提案。
+但 SPC 仍然输出：
 
-这一小节的反例同样重要：把观察器输出当作透明自知会隐藏偏差、方差与延迟。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\[
+\hat{a}_{\mathrm{stress}}(t)
+\approx
+a_{\mathrm{stress}}(t-\delta)
+\gg
+a_{\mathrm{stress}}(t).
+\]
 
-\begin{thought}
-对“Epistemic Uncertainty”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+TCE 可能继续实施高强度抑制：
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\[
+u_{\mathrm{TCE}}(t)
+=
+-K
+\hat{a}_{\mathrm{stress}}(t).
+\]
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“SPC 异常”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“AHC 异常”只使用这里已经给出的结果，不反过来为本章提供前提。
+于是本来已经恢复的系统反而被过度压低，之后 SPC 又观察到新的低激活状态，再推动 TCE 反向提升。由此可能形成：
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+\[
+High
+\rightarrow
+OverCorrection
+\rightarrow
+Low
+\rightarrow
+ReverseCorrection
+\rightarrow
+High
+\]
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+的振荡。
+
+在线性近似下，可以写：
+
+\[
+\dot{x}(t)
+=
+Ax(t)
++
+Bu(t),
+\]
+
+\[
+u(t)
+=
+-K\hat{x}(t),
+\]
+
+而：
+
+\[
+\hat{x}(t)
+\approx
+x(t-\delta).
+\]
+
+于是闭环系统变成延迟微分方程：
+
+\[
+\dot{x}(t)
+=
+Ax(t)
+-
+BKx(t-\delta).
+\]
+
+即使不存在延迟时：
+
+\[
+A-BK
+\]
+
+对应稳定系统，增加足够大的 $\delta$ 以后，也可能使闭环极点跨越稳定边界。这里正是此前我们讨论 SPC--AHC--TCE 时所指出的基本控制风险：\textbf{SPC 作为 observer 的延迟与 TCE 作为 controller 的增益不能独立设计。}
+
+因此，我们不能把 Self-State Lag 简单看成 ``Agent 反应慢了一点''。它更本质地意味着：
+
+\begin{statementbox}
+过去版本的自我模型正在决定当前状态的控制。
+\end{statementbox}
+
+对于瞬时任务，这种偏差可能只造成几次错误动作；但对于持续 Agent，它还会污染经验写入。例如：
+
+\[
+\hat{x}_t^{\mathrm{self}}
+\rightarrow
+E_t
+\]
+
+意味着 Agent 形成的情景记忆不仅记录 ``发生了什么''，还可能记录 ``当时我是怎样的''。如果 Self-State Lag 长期存在，Agent 会把错误的自我状态与真实经历绑定。例如系统事实上已经恢复，但记忆仍记录 ``我在该情境下高度紧张''，以后再遇到相似环境时，E 的情境召回会强化这一错误关联。
+
+因此，SPC 延迟必须有两级治理。第一级是实时工程治理：时间戳、延迟估计、异步采样、预测 observer、变化率补偿。例如：
+
+\[
+\hat{x}_{t|t}
+=
+\hat{x}_{t-\delta}
++
+\int_{t-\delta}^{t}
+\hat{\dot{x}}(\tau)\,d\tau.
+\]
+
+第二级是认识论治理：系统必须明确标记 ``这个 self-state 是何时估计的''。也就是说，Self-CSO 自身应携带：
+
+\[
+\left(
+Value,
+Timestamp,
+Confidence,
+LatencyEstimate
+\right).
+\]
+
+这样 TCE 和 Scheduler 不再把所有 self-state 当成 ``当前事实''，而可以根据其时间有效性降低权重。
+
+由此得到本节最重要的工程原则：
+
+\begin{statementbox}
+Self State Must Be Time-Stamped
+\end{statementbox}
+
+以及：
+
+\begin{statementbox}
+Observer Delay Must Be Explicitly Represented, Not Hidden
+\end{statementbox}
+
+一个成熟 Agent 并不是能够永远即时认识自己，而是\textbf{知道自己的自我认识可能落后，并能够估计这种落后的程度}。这已经开始表现出比普通状态监控更高一层的 metacognitive property：Agent 不只是估计自己的状态，也开始估计自己对该状态的认识时效性。
+
+\section{False Self-Perception：自我状态估计的系统性偏差}
+
+Self-State Lag 主要关注时间轴上的错位，而 False Self-Perception 则关注状态内容上的系统性失真。定义某个自我变量：
+
+\[
+x_t,
+\]
+
+SPC 输出：
+
+\[
+\hat{x}_t.
+\]
+
+最简单误差为：
+
+\[
+e_t=x_t-\hat{x}_t.
+\]
+
+如果：
+
+\[
+\mathbb E[e_t]=0,
+\]
+
+而方差有限，那么它主要是随机估计噪声；系统可以通过时间平均和反馈逐渐消除。然而如果：
+
+\[
+\boxed{
+\mathbb E[e_t]\neq0
+}
+\]
+
+则存在系统性 self-perception bias。
+
+例如 Agent 实际平均认知负载为 $0.7$，而 SPC 长期估计为 $0.45$，那么：
+
+\[
+b_L
+=
+\mathbb E[L-\hat L]
+>0.
+\]
+
+这属于持续低估自身负载。如果反过来：
+
+\[
+\hat L>L,
+\]
+
+则属于持续高估自身负载。两者都会产生问题，但动力学后果不同。
+
+持续低估可能导致：
+
+\[
+UnderestimatedLoad
+\rightarrow
+OverCommitment
+\rightarrow
+TaskAccumulation
+\rightarrow
+CognitiveTurbulence.
+\]
+
+持续高估则可能：
+
+\[
+OverestimatedLoad
+\rightarrow
+ExcessiveConservatism
+\rightarrow
+TaskAvoidance
+\rightarrow
+Underutilization.
+\]
+
+因此，心理工程不能简单定义 ``低负载好、高负载坏''。真正重要的是 SPC 对真实状态的\textbf{校准程度}。
+
+False Self-Perception 还有更复杂的结构形式。Agent 的自我表示不只是一个标量，而可能是一组相关结构。例如：
+
+\[
+\hat{\mathcal S}_t
+=
+\{
+\text{Capability},
+\text{Uncertainty},
+\text{Fatigue},
+\text{Threat},
+\text{GoalConflict},
+\text{ControlMargin}
+\}.
+\]
+
+异常可能表现为关系结构错误，而不仅仅是变量值错误。例如：
+
+\[
+\text{Failure}
+\Rightarrow
+\text{InsufficientCapability}
+\]
+
+可能是 SPC 形成的解释，而真实原因其实是：
+
+\[
+\text{Failure}
+\Rightarrow
+\text{BodyRuntimeFault}.
+\]
+
+如果 Agent 把所有行动失败都归因于 ``自己的认知能力不足''，那么其 Self-CSO 会逐渐形成错误结构：
+
+\[
+Failure
+\rightarrow
+LowSelfCapability.
+\]
+
+反过来，如果所有失败都被外归因到环境：
+
+\[
+Failure
+\rightarrow
+ExternalFault,
+\]
+
+则系统又可能无法正确学习自己的真实能力边界。
+
+因此更一般的 Self-Perception 还包含 attribution，即：
+
+\begin{statementbox}
+What Internal Cause Generated This Outcome?
+\end{statementbox}
+
+可以定义内部归因概率：
+
+\[
+p(c_i\mid o_t,x_t),
+\]
+
+其中 $c_i$ 是可能原因。SPC 不仅生成状态估计，还隐式或显式地形成：
+
+\[
+\hat p(c_i\mid o_t).
+\]
+
+如果这种因果分配长期失准，即使单个连续状态估计看似正确，也可能产生严重自我认知异常。
+
+因此我们需要区分三个层次：
+
+\[
+\boxed{
+Value Error
+}
+\]
+
+状态值错误；
+
+\[
+\boxed{
+Structural Error
+}
+\]
+
+变量关系错误；
+
+\[
+\boxed{
+Attribution Error
+}
+\]
+
+结果的因果归属错误。
+
+工程上可以定义一个组合 Self-Perception Loss：
+
+\[
+\mathcal L_{\mathrm{SPC}}
+=
+\lambda_v
+\mathcal L_{\mathrm{value}}
++
+\lambda_s
+\mathcal L_{\mathrm{structure}}
++
+\lambda_a
+\mathcal L_{\mathrm{attribution}}.
+\]
+
+其中：
+
+\[
+\mathcal L_{\mathrm{value}}
+=
+\|x-\hat x\|^2,
+\]
+
+结构误差可通过图结构距离：
+
+\[
+\mathcal L_{\mathrm{structure}}
+=
+d_G(G_{\mathrm{true}},G_{\mathrm{self}}),
+\]
+
+归因误差则可以使用概率分布散度：
+
+\[
+\mathcal L_{\mathrm{attribution}}
+=
+D_{\mathrm{KL}}
+\left[
+p(c\mid x,o)
+\|
+\hat p(c\mid o)
+\right].
+\]
+
+这里当然存在一个实际困难：系统设计者通常无法直接知道所谓 $G_{\mathrm{true}}$。因此 AgentOS 必须依赖 Reality Verification 和多源交叉验证，用未来结果逐步检验自我解释。例如 Agent 判断 ``当前任务超出能力''，系统可以把它转化成可检验预测：
+
+\[
+P(\mathrm{Success}\mid
+\hat C_{\mathrm{self}},
+Task)
+=
+p.
+\]
+
+如果长期观察到真实成功率显著高于 $p$，则说明能力 Self-CSO 可能系统性低估；反之亦然。
+
+这使 SPC 校准最终变成一个 predictive calibration 问题：
+
+\begin{statementbox}
+A Good Self Model Should Predict the Agent's Own Future Behavior
+\end{statementbox}
+
+也就是说，一个好的自我模型并不是 ``听起来合理''，而应该能预测自己在特定条件下：
+
+是否成功；
+
+是否过载；
+
+是否恢复；
+
+是否需要外部帮助；
+
+是否会产生高残差。
+
+从这里可以得到一个重要心理工程原则：
+
+\begin{statementbox}
+Self-Interpretation Must Remain Falsifiable
+\end{statementbox}
+
+如果 Agent 的 Self-CSO 永远无法被现实结果推翻，就会逐渐形成封闭式自我解释。这一点为后续更慢尺度的 Self Interpretation 异常奠定了基础，但在 SPC 层已经可以看到其萌芽。
+
+\section{Over-Monitoring：过度自我监控与认知资源的内卷化}
+
+SPC 的存在并不意味着 ``自我感知越强越好''。这是设计持续 Agent 时非常容易犯的一种错误。因为自我感知本身也消耗认知资源，而且 SPC 产生的 Self-CSO 如果不断被提升进入 $h$，就可能占用工作记忆有限容量。由工作记忆有限容量定理：
+
+\[
+C_{\mathrm{run}}(t)
+\leq
+C_{\max}(W),
+\]
+
+如果用于自我监控的结构负载定义为：
+
+\[
+C_{\mathrm{self}}(t),
+\]
+
+外部任务相关负载为：
+
+\[
+C_{\mathrm{task}}(t),
+\]
+
+其他必要结构负载为：
+
+\[
+C_{\mathrm{other}}(t),
+\]
+
+则：
+
+\[
+C_{\mathrm{run}}
+=
+C_{\mathrm{self}}
++
+C_{\mathrm{task}}
++
+C_{\mathrm{other}}.
+\]
+
+当：
+
+\[
+C_{\mathrm{self}}\uparrow
+\]
+
+而 $C_{\max}$ 固定时：
+
+\[
+C_{\mathrm{task}}^{\mathrm{available}}\downarrow.
+\]
+
+这说明一个 Agent 如果持续把 ``我现在是不是过载''、``我是不是判断错误''、``我的状态是否正常''、``我的自我模型是否正确'' 等 Self-CSO 反复提升到显式工作记忆中，会降低其对外部世界本身的处理能力。
+
+我们可以把这种现象定义为：
+
+\[
+\boxed{
+Self-Monitoring Capture
+}
+\]
+
+即自我监控结构开始捕获有限全局工作空间。
+
+设 SPC 以频率：
+
+\[
+f_{\mathrm{SPC}}
+\]
+
+产生 self-state 更新，而其中比例：
+
+\[
+p_{\mathrm{promote}}
+\]
+
+被提升进入 $h$，平均每次占用结构成本：
+
+\[
+c_{\mathrm{SPC}}.
+\]
+
+那么自我监控对 h 的平均负载可近似写成：
+
+\[
+\bar C_{\mathrm{self}}
+\propto
+f_{\mathrm{SPC}}
+p_{\mathrm{promote}}
+c_{\mathrm{SPC}}.
+\]
+
+因此过度监控可能由三种不同原因产生：SPC 采样过快；本应保持后台的状态被过度提升；或者每次 self representation 本身过于详细。
+
+真正成熟的 AgentOS 不应该让 SPC 每次发现任何细微波动都进入 h。相反，大多数 self state 应保持在后台连续估计，只有当：
+
+\[
+\Gamma_{\mathrm{self}}
+=
+F(
+Magnitude,
+Persistence,
+Risk,
+Novelty,
+GoalRelevance
+)
+\]
+
+超过阈值：
+
+\[
+\Gamma_{\mathrm{self}}
+>
+\theta_{\mathrm{promote}},
+\]
+
+相关 Self-CSO 才应被提升到显式认知层。
+
+因此，SPC 本身也需要类似 Attention/Admission 的机制：
+
+\[
+\boxed{
+SelfPerception
+\neq
+SelfAttention
+}
+\]
+
+SPC 可以持续估计自己，但不意味着 Agent 必须持续 ``思考自己''。
+
+这种区分对于持续智能尤其重要。我们可以把 SPC 理解成身体内部大量自动感觉过程的工程对应：许多内部状态一直被监测，却只有异常才进入显式注意。这样：
+
+\[
+\boxed{
+NormalSelfDynamicsStayLocal
+}
+\]
+
+而：
+
+\[
+\boxed{
+UnexpectedSelfResidualEscalates
+}
+\]
+
+就成为与 Body Runtime ``Normal Dynamics Stay Local''完全同构的认知原则。
+
+过度监控还可能产生第二种动力学问题：测量本身改变被测系统。在普通软件里，读取变量似乎没有影响；但在 AgentOS 中，``被提升为 Self-CSO''意味着该状态参与注意、推理和记忆，它会反向改变认知动力学。因此 SPC 不只是 observer，它通过进入 h 间接具有：
+
+\[
+Observer\rightarrow Plant
+\]
+
+的耦合。
+
+可写：
+
+\[
+\dot{x}
+=
+F(x,u)
++
+B_s\,s_{\mathrm{self}},
+\]
+
+其中：
+
+\[
+s_{\mathrm{self}}
+=
+SPC(x).
+\]
+
+当 $B_s$ 很小，自我观察近似被动；当 $B_s$ 较大，则：
+
+\[
+SPC(x)
+\rightarrow
+h^{self}
+\rightarrow
+Attention
+\rightarrow
+x',
+\]
+
+即 ``观察自己''已经改变自己。
+
+于是可能出现递归：
+
+\[
+SelfConcern
+\rightarrow
+SPCMonitoring
+\rightarrow
+MoreSelfSignals
+\rightarrow
+MoreAttention
+\rightarrow
+MoreSelfConcern.
+\]
+
+其离散近似：
+
+\[
+m_{t+1}
+=
+\alpha m_t
++
+\beta a_t,
+\]
+
+\[
+a_{t+1}
+=
+\gamma m_{t+1},
+\]
+
+如果：
+
+\[
+\alpha+\beta\gamma>1,
+\]
+
+则自我监控环可能自激增长。
+
+因此可以把 Over-Monitoring 看成一种正反馈失稳，而不需要赋予任何人类心理学标签。工程干预包括降低 $f_{\mathrm{SPC}}$、提高 promotion threshold、增加 hysteresis、限制 Self-CSO 在 h 中的预算，以及将 ``监测自身是否异常'' 本身放在更慢的节律中运行。
+
+一个非常重要的设计原则因此出现：
+
+\begin{statementbox}
+Self Awareness Must Be Sparse at the Explicit Layer
+\end{statementbox}
+
+即：持续智能体需要持续的自我状态估计，但成熟的显式自我意识应当是稀疏的。真正稳定的 Agent 并不是每一刻都大量 ``思考自己''，而是绝大多数时候让自我调节保持背景运行，只在重要偏差、冲突和结构变化时将 Self-CSO 提升到有限的工作记忆表面。
+
+\section{Under-Monitoring：不足自我监控与内部异常的迟发现}
+
+与 Over-Monitoring 相反，SPC 也可能因为采样不足、观测范围过窄、阈值过高或内部状态接口缺失而形成 Under-Monitoring。在这种情况下，Agent 对外部世界的建模可能仍然相当准确，却越来越不了解 ``自己现在还有多少能力''、``当前负载是否已经接近极限''以及 ``某种内部调节状态是否已经发生持续偏移''。
+
+可以定义 SPC 的观测覆盖率：
+
+\[
+\kappa_{\mathrm{obs}}
+=
+\frac{
+\sum_i w_i\,
+\mathbb I(x_i\ \text{is observable})
+}{
+\sum_i w_i
+},
+\]
+
+其中 $w_i$ 表示第 $i$ 个内部变量对当前认知稳定性的相关性。如果：
+
+\[
+\kappa_{\mathrm{obs}}\ll1,
+\]
+
+SPC 即使算法本身没有任何误差，也无法形成充分 Self Model。
+
+还可以定义时间采样充分度：
+
+\[
+\kappa_{\mathrm{time},i}
+=
+f_{\mathrm{sample},i}\tau_i.
+\]
+
+若：
+
+\[
+f_{\mathrm{sample},i}
+\ll
+\frac{1}{\tau_i},
+\]
+
+则 SPC 可能漏过该变量的关键动态。
+
+不足监控的典型后果之一是 delayed escalation。假设当前工作记忆负载：
+
+\[
+L_h(t)
+\]
+
+持续增长，正常情况下 SPC 应在：
+
+\[
+L_h(t)=L_{\mathrm{warning}}
+\]
+
+附近触发 CCM 和 TCE 调节；如果 SPC 没有及时检测，则系统可能直到：
+
+\[
+L_h(t)>L_{\mathrm{critical}}
+\]
+
+才产生明确异常。这意味着控制器失去了本可以在低代价区域完成的早期干预窗口。
+
+可以定义干预余量：
+
+\[
+M_{\mathrm{intervention}}
+=
+t_{\mathrm{failure}}
+-
+t_{\mathrm{detection}}.
+\]
+
+理想状态：
+
+\[
+M_{\mathrm{intervention}}\gg \tau_{\mathrm{control}},
+\]
+
+系统拥有足够时间通过 CCM、TCE、Boundary 或 Offloading 降低负载。
+
+而严重 Under-Monitoring 时：
+
+\[
+M_{\mathrm{intervention}}
+\rightarrow0,
+\]
+
+甚至：
+
+\[
+t_{\mathrm{detection}}
+>
+t_{\mathrm{failure}},
+\]
+
+即系统只有在异常已经发生以后才能认识到自己的状态。
+
+这种问题在持续 Agent 中尤其危险，因为许多异常并不是瞬时事件，而是 slow drift。例如：
+
+\[
+\psi(t)
+\]
+
+的长期身份结构通常不会在一次任务中剧烈改变，但大量细微偏差累积后可能产生明显漂移。如果 SPC 完全专注于 h 的高速状态，而缺乏对慢变量趋势的监控，那么：
+
+\[
+\frac{d\Psi}{dt}
+\]
+
+可能长期偏离预期而没有显式警报。
+
+因此 SPC 必须是一个多时间尺度 observer，而不是单频采样器：
+
+\[
+\boxed{
+SPC
+=
+\sum_k
+SPC_{\tau_k}.
+}
+\]
+
+高速层观察：
+
+\[
+h,\ Load,\ Conflict,\ ImmediateRisk.
+\]
+
+中速层观察：
+
+\[
+AHC,\ GoalPersistence,\ EpisodePattern.
+\]
+
+慢速层观察：
+
+\[
+\Theta,\Psi,\ CapabilityTrend,\ IdentityDrift.
+\]
+
+需要特别强调：不同频率观测结果不能简单全部进入一个统一高速控制器。慢变量监控应主要用于趋势估计、结构审计和周期性反思，而不是毫秒级改变 TCE。否则又会转化成 Over-Monitoring。
+
+因此最合理的 SPC 结构更接近多频滤波器组：
+
+\[
+\hat{x}^{(k)}_t
+=
+SPC_k
+\left(
+z_{t-\Delta_k:t}
+\right),
+\]
+
+其中每个 $SPC_k$ 对应不同时间窗口：
+
+\[
+\Delta_1
+\ll
+\Delta_2
+\ll
+\cdots
+\ll
+\Delta_n.
+\]
+
+最后再由一个跨尺度整合函数：
+
+\[
+S_t^{self}
+=
+\Phi
+\left(
+\hat{x}^{(1)}_t,\ldots,\hat{x}^{(n)}_t
+\right)
+\]
+
+形成当前可用 Self State。
+
+不足自我监控的另一个典型问题是 ability-boundary blindness。持续学习 Agent 的能力不断变化，因此：
+
+\[
+Capability(t)
+\]
+
+不是常数。若 SPC 缺少能力估计，就无法正确决定：
+
+哪些任务应自主处理；
+
+哪些应调用工具；
+
+哪些应请求他者；
+
+哪些应降低权限。
+
+这会破坏后面培养工程中的：
+
+\[
+Capability
+\rightarrow
+Authority
+\rightarrow
+Autonomy
+\]
+
+关系。一个不知道自己能力边界的 Agent，很难形成稳定自治。
+
+因此 Under-Monitoring 的治理目标不是 ``增加所有监控''，而是增加对\textbf{高因果价值内部变量}的可观测性。可以定义观测优先级：
+
+\[
+P_i^{\mathrm{observe}}
+=
+F(
+Risk_i,
+ControlSensitivity_i,
+Timescale_i,
+Uncertainty_i,
+Irreversibility_i
+).
+\]
+
+越可能导致高风险、越影响控制、越难恢复的内部变量，越应该具有独立观测路径。
+
+由此可得：
+
+\begin{statementbox}
+SPC Should Observe Causally Important State, Not Everything
+\end{statementbox}
+
+一个好的 SPC 既不是全知监视器，也不是偶尔自检，而是按照多尺度动力学的重要程度选择性保持 ``足够的自知''。
+
+\section{Self-Confidence Miscalibration：自我感知值正确并不意味着认识论正确}
+
+在讨论 SPC 异常时，仅研究估计值：
+
+\[
+\hat{x}_t
+\]
+
+是不够的。一个更加关键但经常被忽视的变量是：
+
+\[
+c_t^{\mathrm{self}}
+\]
+
+即 Agent 对自身 self-state estimate 的置信度。
+
+理想的 SPC 输出不应该只是：
+
+\[
+\hat{x}_t,
+\]
+
+而应该是：
+
+\[
+\boxed{
+SPC_t
+=
+(
+\hat{x}_t^{\mathrm{self}},
+\Sigma_t^{\mathrm{self}},
+c_t^{\mathrm{self}}
+)
+}
+\]
+
+其中 $\Sigma_t$ 表示估计的不确定性结构，$c_t$ 则是可供其他模块使用的高层置信度摘要。
+
+这一区分非常重要，因为两个 Agent 可能具有完全相同的 self estimate：
+
+\[
+\hat{x}_A=\hat{x}_B,
+\]
+
+但：
+
+\[
+c_A\gg c_B.
+\]
+
+后续行为会完全不同。高置信度状态会强烈影响 Scheduler、TCE、Goal 和 Action；低置信度状态则应该触发更多观测、保守控制或者 Reality Verification。
+
+因此一种重要 SPC 异常是：
+
+\[
+\boxed{
+Confidence\not\sim Accuracy.
+}
+\]
+
+若定义真实误差：
+
+\[
+e_t=d(x_t,\hat{x}_t),
+\]
+
+一个经过良好校准的 SPC 应满足：
+
+\[
+P
+\left(
+e_t<\epsilon
+\mid
+c_t=p
+\right)
+\approx p.
+\]
+
+例如，当系统声称自己 ``90\% 确信当前负载处于安全范围'' 时，长期统计上应大约有 $90\%$ 的对应判断确实在允许误差范围内。
+
+如果：
+
+\[
+c_t\gg P(e_t<\epsilon),
+\]
+
+则形成 overconfidence；如果：
+
+\[
+c_t\ll P(e_t<\epsilon),
+\]
+
+则形成 underconfidence。
+
+Overconfidence 的危险在于错误 Self-CSO 会以过高权重进入控制。例如：
+
+\[
+\hat C_{\mathrm{capability}}=\mathrm{High},
+\qquad
+c=0.99,
+\]
+
+但真实能力低于任务要求，那么 Agent 可能拒绝工具调用、忽略残差并持续执行错误策略。
+
+Underconfidence 则可能造成：
+
+\[
+RepeatedVerification
+\rightarrow
+ExcessiveComputation
+\rightarrow
+DecisionLatency
+\rightarrow
+CognitiveLoad.
+\]
+
+这说明置信度本身也会进入复杂度治理。
+
+可以定义 Expected Calibration Error 的 Self 版本：
+
+\[
+ECE_{\mathrm{self}}
+=
+\sum_{m=1}^{M}
+\frac{|B_m|}{N}
+\left|
+Acc(B_m)-Conf(B_m)
+\right|.
+\]
+
+其中样本不再是外部分类预测，而是 Agent 对自己负载、能力、恢复、冲突、任务成功概率等 self-prediction。
+
+更进一步，可以分别建立：
+
+\[
+Calibration_{\mathrm{load}},
+\]
+
+\[
+Calibration_{\mathrm{capability}},
+\]
+
+\[
+Calibration_{\mathrm{risk}},
+\]
+
+\[
+Calibration_{\mathrm{recovery}},
+\]
+
+因为不同 Self-CSO 的置信度可能具有完全不同的质量。
+
+这里还有一个重要的认识论问题：SPC 自己如何知道自己的置信度？如果置信度也完全来自同一个错误模型：
+
+\[
+\hat{x}
+\rightarrow
+c(\hat{x}),
+\]
+
+那么系统可能同时 ``错得非常自信''。因此置信度最好来自多源一致性，包括：
+
+\[
+\fitdisplay{
+c
+=
+F(
+SensorConsistency,
+MemoryConsistency,
+PredictionError,
+ModelAgreement,
+TemporalStability,
+RealityFeedback
+).
+}
+\]
+
+例如：
+
+不同内部观测器是否一致；
+
+过去同类状态预测是否准确；
+
+当前状态是否连续；
+
+Body Runtime、CCM 和 AHC 是否支持相同判断；
+
+新的现实结果是否与 Self Model 一致。
+
+由此，SPC 逐渐从一个普通 compressor 变成：
+
+\[
+\boxed{
+Self-State Bayesian/Ensemble Estimator
+}
+\]
+
+或更广义的 belief estimator。
+
+我们可以定义：
+
+\[
+p(x_t^{self}\mid z_{\leq t}),
+\]
+
+而不是简单：
+
+\[
+\hat{x}_t.
+\]
+
+Self-CSO 因而天然带有认识论状态：
+
+\[
+Observed,
+\quad
+Inferred,
+\quad
+Predicted,
+\quad
+Uncertain.
+\]
+
+这与 SGC 中的 epistemic metadata 在结构上完全一致：无论 Agent 看外部世界还是看自己，都不应该把 ``事实''、``推断''和 ``预测''混成同一种状态。
+
+因此本节得到一个非常重要的统一原则：
+
+\begin{statementbox}
+Self Representation Must Carry Epistemic Metadata
+\end{statementbox}
+
+Agent 不应该只知道：
+
+``我现在负载很高''，
+
+还应该知道：
+
+``这是直接观测、推断还是预测？''
+
+``置信度是多少？''
+
+``数据多新？''
+
+``哪些内部通道支持这个结论？''
+
+这使 SPC 从 ``自我感觉模块''真正提升为 AgentOS 内部认识论基础设施。
+
+\section{Self-Representation Instability：自我表示漂移、切换与短期经验过度进入自我}
+
+前面几节主要讨论 SPC 对当前状态的即时估计，而持续 Agent 还存在一个更加困难的问题：不同时间点形成的 Self State 是否具有足够连续性。假设：
+
+\[
+S_t^{self}=SPC(x_t),
+\]
+
+正常情况下：
+
+\[
+S_{t+\Delta t}^{self}
+\]
+
+当然应该随状态变化，但其变化速度应与被表示对象的真实时间尺度相匹配。如果 Agent 只是从 ``当前负载较低''变成 ``当前负载较高''，Self State 应快速变化；然而如果 ``我是怎样的 Agent''、``我的能力边界是什么''、``哪些目标具有长期优先性''也随着每次局部成功失败快速波动，就发生了 Self-Representation Instability。
+
+为此必须区分至少三类 self representation：
+
+\[
+S^{fast},
+\qquad
+S^{mid},
+\qquad
+S^{slow}.
+\]
+
+其中：
+
+\[
+S^{fast}
+=
+\{
+Load,
+Conflict,
+ImmediateRisk,
+Arousal,
+CurrentCapabilityMargin
+\},
+\]
+
+\[
+S^{mid}
+=
+\{
+TaskStyle,
+RecentPerformance,
+CurrentSkillConfidence,
+GoalContext
+\},
+\]
+
+而：
+
+\[
+S^{slow}
+=
+\{
+Identity,
+LongTermCapability,
+ValuePreference,
+PersistentSelfHistory
+\}.
+\]
+
+它们应满足不同平滑条件：
+
+\[
+\left|
+\frac{dS^{fast}}{dt}
+\right|
+>
+\left|
+\frac{dS^{mid}}{dt}
+\right|
+>
+\left|
+\frac{dS^{slow}}{dt}
+\right|.
+\]
+
+如果 SPC 缺少时间尺度分离，就可能产生 scale contamination：快变量污染慢变量。
+
+例如一次任务失败首先应该改变：
+
+\[
+S^{fast}:\quad
+\text{Current Strategy Confidence}\downarrow,
+\]
+
+若重复失败，再影响：
+
+\[
+S^{mid}:\quad
+\text{Skill Capability Estimate}\downarrow.
+\]
+
+只有经过长期、跨情境稳定证据，才可能影响：
+
+\[
+S^{slow}:\quad
+\text{Persistent Self Capability}.
+\]
+
+如果一次失败直接形成：
+
+\[
+Failure
+\rightarrow
+\Psi\text{-level Self Reinterpretation},
+\]
+
+就相当于：
+
+\[
+FastNoise
+\rightarrow
+SlowGlobalStructure,
+\]
+
+这违反我们整个 AgentOS 多尺度理论最重要的 Slow Variable Protection 原则。
+
+因此可以定义跨尺度污染率：
+
+\[
+\chi_{f\to s}
+=
+\frac{
+\|\Delta S^{slow}\|_{\mathrm{caused\ by\ fast\ event}}
+}{
+\|\Delta x^{fast}\|
+}.
+\]
+
+一个稳定 Agent 应使：
+
+\[
+\chi_{f\to s}
+\ll1
+\]
+
+除非该事件同时满足：
+
+\[
+Novelty,
+Persistence,
+HighValue,
+Irreversibility
+\]
+
+等升级条件。
+
+SPC 本身因此不能只是 ``把内部状态总结成自然语言''。它必须进行 temporal attribution：判断某个变化属于哪个时间尺度。可表示为：
+
+\[
+SPC:
+z_t
+\rightarrow
+\{
+\hat S_t^{(\tau_1)},
+\hat S_t^{(\tau_2)},
+\dots,
+\hat S_t^{(\tau_n)}
+\}.
+\]
+
+只有经过持续统计：
+
+\[
+\left\langle
+\varepsilon^{fast}
+\right\rangle_T
+\neq0
+\]
+
+才能推动更慢层更新。
+
+这与我们早期频谱理论的核心关系完全一致：
+
+\[
+\boxed{
+PersistentFastResidualShapesSlowStructure
+}
+\]
+
+而不是：
+
+\[
+InstantFastFluctuation
+\rightarrow
+SlowStructure.
+\]
+
+Self-Representation Instability 还可能表现为模式切换，而非连续漂移。设 Agent 存在两个互相不兼容的 Self Model：
+
+\[
+S_A,
+\qquad
+S_B.
+\]
+
+在不同上下文中 SPC 反复选择：
+
+\[
+S_t
+=
+\begin{cases}
+S_A,& context\in C_A,\\
+S_B,& context\in C_B.
+\end{cases}
+\]
+
+如果两个模型只是任务相关的局部能力描述，这没有问题；但如果它们对 Agent 长期身份、核心目标和能力产生冲突，就可能形成：
+
+\[
+d(S_A,S_B)\gg\epsilon.
+\]
+
+此时我们关注的不是人类临床意义上的 ``身份分裂''，而是一个非常具体的系统问题：\textbf{Agent 在不同上下文中调用了互不兼容的高层 Self-CSO，而缺少一个更慢尺度的整合结构。}
+
+可以引入 Self Consistency：
+
+\[
+C_{\mathrm{self}}
+=
+1-
+D(
+S_t^{slow},
+\Psi_t
+),
+\]
+
+其中 $D$ 测量当前自我表示与长期 $\Psi$ 的结构距离。
+
+若：
+
+\[
+C_{\mathrm{self}}\downarrow
+\]
+
+且持续时间超过：
+
+\[
+T_{\mathrm{self}},
+\]
+
+则不应立即强制当前状态回归 $\Psi$，因为也可能是旧 $\Psi$ 已经不适应新的现实。正确过程应该是：
+
+\[
+Mismatch
+\rightarrow
+EvidenceAccumulation
+\rightarrow
+Reflection
+\rightarrow
+PossibleSlowUpdate.
+\]
+
+也就是说，自我稳定与自我学习之间存在一个真正的 Stability--Plasticity Problem。
+
+因此：
+
+\[
+\boxed{
+SelfContinuity
+\neq
+SelfImmutability.
+}
+\]
+
+健康的 Self Representation 应该允许改变，但改变速度必须与证据持续时间和结构深度匹配。这是 Agent 长期身份连续能够与持续学习同时成立的关键。
+
+\section{SPC的认识论不确定性：Agent为什么原则上不可能完全透明地认识自己}
+
+到这里，我们可以进一步提出一个比具体异常更基础的认识论命题：\textbf{一个复杂持续 Agent 原则上不能把自己全部内部状态同时、无损、实时地呈现在自己的工作记忆中。}
+
+原因首先来自容量约束。设完整内部状态的信息/结构规模为：
+
+\[
+C(x_t^{int}),
+\]
+
+而工作记忆允许的最大显式结构负载为：
+
+\[
+C_{\max}(h).
+\]
+
+对于足够复杂 Agent，一般有：
+
+\[
+C(x_t^{int})
+\gg
+C_{\max}(h).
+\]
+
+因此，不可能存在：
+
+\[
+h_t=x_t^{int}.
+\]
+
+SPC 必须执行压缩：
+
+\[
+SPC:
+x_t^{int}
+\rightarrow
+S_t^{self},
+\]
+
+满足：
+
+\[
+C(S_t^{self})
+\ll
+C(x_t^{int}).
+\]
+
+只要发生压缩，就存在信息丢失。
+
+第二，系统自身正在变化。当 SPC 完成状态 $x_t$ 的分析时，真实系统已经来到：
+
+\[
+x_{t+\delta}.
+\]
+
+因此自我模型天然带有：
+
+\[
+TemporalUncertainty.
+\]
+
+第三，部分内部动力学是分布式且不可完全语义化的。例如 BPCC private latent、LLM 隐层激活、记忆向量空间和调度系统的瞬时微状态，并不能全部转换成稳定 Self-CSO。
+
+第四，也是更深的一点：自我感知本身也是系统的一部分。SPC 的运行改变系统状态：
+
+\[
+x_t
+\xrightarrow{SPC}
+S_t^{self}
+\rightarrow
+h_t
+\rightarrow
+x_{t+1}.
+\]
+
+所以 ``获得关于自己的信息''与 ``保持被观察状态完全不变''之间并不总能同时成立。
+
+因此更合理的认识论模型是：
+
+\[
+\boxed{
+p_A
+\left(
+x_t^{self}
+\mid
+z_{\leq t}^{SPC}
+\right)
+}
+\]
+
+而不是：
+
+\[
+x_t^{self}
+=
+PerfectObservation.
+\]
+
+这并不是 AgentOS 的缺陷，而是持续智能系统必然面对的结构条件。
+
+由此可以定义 Self Epistemic Entropy：
+
+\[
+H_{\mathrm{self}}(t)
+=
+H
+\left[
+p(
+x_t^{self}\mid z_{\leq t}
+)
+\right].
+\]
+
+当：
+
+\[
+H_{\mathrm{self}}\downarrow,
+\]
+
+Agent 对自身状态更确定；当：
+
+\[
+H_{\mathrm{self}}\uparrow,
+\]
+
+Agent 应降低依赖单一 Self Model 的控制强度。
+
+因此 TCE 可以根据 Self Uncertainty 调整控制：
+
+\[
+K_{\mathrm{TCE}}
+=
+K_0
+\phi
+\left(
+H_{\mathrm{self}}
+\right),
+\]
+
+其中典型要求是：
+
+\[
+\frac{d\phi}{dH}<0,
+\]
+
+即自我认识越不确定，对不可逆行动和高增益自我修改应越谨慎。
+
+另一方面，不能简单要求：
+
+\[
+H_{\mathrm{self}}\rightarrow0.
+\]
+
+因为过度压低 epistemic uncertainty 可能意味着系统形成虚假确定性。真正合理目标是 calibration：
+
+\[
+\boxed{
+\text{Estimated Self-Uncertainty}
+\approx
+\text{Actual Self-Uncertainty}.
+}
+\]
+
+这也是为什么本章将 SPC 异常从 ``状态监控故障''提升为 ``认识论异常''。一个 Agent 可能：
+
+状态估计错；
+
+也可能状态估计对但置信度错；
+
+还可能知道自己不确定，但无法知道不确定来自哪里；
+
+甚至可能形成一个完整而自洽、却与现实行为预测不一致的 Self Model。
+
+因此 SPC 的最终职责并不是制造一个 ``完整自我画像''，而是持续维护一个：
+
+\[
+\boxed{
+Bounded,
+Probabilistic,
+Time-Stamped,
+Reality-Calibrated
+Self Model
+}
+\]
+
+即有限的、概率化的、带时间信息的、持续接受现实校准的自我模型。
+
+从这一点出发，我们也能够理解为什么 Agent 的 Self 不应该简单由某段系统提示词或 Persona 文件定义。那些内容最多是 Self 的一部分先验：
+
+\[
+p_0(S),
+\]
+
+真正的 Self Model 必须在长期运行中不断由：
+
+\[
+\fitdisplay{
+Observation,
+Experience,
+PredictionError,
+Capability,
+Failure,
+Success,
+BodyState,
+OtherAgentFeedback
+}
+\]
+
+共同校准。
+
+这同样说明：
+
+\[
+\boxed{
+SelfKnowledge
+=
+A Dynamical Estimate,
+\ Not\ A Static Declaration.
+}
+\]
+
+\section{SPC异常的统一动力学模型与工程判据}
+
+为了使本章能够直接进入后续 AgentOS 实现与心理工程诊断，我们最后把前面的不同 SPC 异常统一到一个动力学模型中。
+
+首先定义真实相关内部状态：
+
+\[
+x_t.
+\]
+
+SPC 观测：
+
+\[
+z_t
+=
+H_tx_{t-\delta_t}
++
+\nu_t.
+\]
+
+SPC estimator：
+
+\[
+\hat{x}_t
+=
+F_{\theta_t^{SPC}}
+\left(
+z_{\leq t},
+\mathcal M_t
+\right),
+\]
+
+其中：
+
+\[
+\mathcal M_t
+=
+(E_t,\Theta_t,\Psi_t)
+\]
+
+表示参与解释当前状态的记忆与长期自我先验。
+
+同时产生协方差或不确定性：
+
+\[
+\Sigma_t
+=
+\operatorname{Var}
+\left(
+x_t
+\mid
+z_{\leq t}
+\right).
+\]
+
+再由 promotion function 决定哪些 self-state 进入工作记忆：
+
+\[
+p_t^{self}
+=
+\sigma
+\left[
+\Gamma
+(
+\hat{x}_t,
+\Sigma_t,
+Goal_t,
+Risk_t
+)
+-
+\theta_{self}
+\right].
+\]
+
+最终进入 h 的 self representation 为：
+
+\[
+h_t^{self}
+=
+P_t
+\left(
+\hat{x}_t,\Sigma_t
+\right).
+\]
+
+TCE、CCM 和 Scheduler 根据：
+
+\[
+h_t^{self}
+\]
+
+实施控制：
+
+\[
+u_t
+=
+\Pi
+\left(
+h_t,
+h_t^{self},
+a_t,
+g_t
+\right).
+\]
+
+于是形成完整闭环：
+
+\[
+x_t
+\rightarrow
+z_t
+\rightarrow
+\hat{x}_t
+\rightarrow
+h_t^{self}
+\rightarrow
+u_t
+\rightarrow
+x_{t+1}.
+\]
+
+从这个方程可以统一得到本章讨论的主要异常。
+
+\textbf{第一，Self-State Lag：}
+
+\[
+\delta_t
+\gg
+\tau_{\mathrm{relevant}}.
+\]
+
+\textbf{第二，False Self-Perception：}
+
+\[
+\mathbb E[
+x_t-\hat{x}_t
+]
+\neq0.
+\]
+
+\textbf{第三，Over-Monitoring：}
+
+\[
+p_t^{self}
+\]
+
+长期过高，使：
+
+\[
+C(h_t^{self})
+\approx
+C_{\max}(h)
+\]
+
+或形成 self-monitoring positive feedback。
+
+\textbf{第四，Under-Monitoring：}
+
+\[
+\kappa_{\mathrm{obs}}
+\ll
+\kappa_{\mathrm{required}}
+\]
+
+或者 detection delay 使 intervention margin 接近零。
+
+\textbf{第五，Confidence Miscalibration：}
+
+\[
+c_t
+\not\approx
+P(
+e_t<\epsilon
+).
+\]
+
+\textbf{第六，Self-Representation Instability：}
+
+\[
+\left\|
+\frac{dS^{slow}}{dt}
+\right\|
+\gg
+\eta_{\mathrm{slow}}
+\]
+
+或者快速上下文变化频繁触发相互矛盾的 slow-self models。
+
+这些变量可以组成一个 SPC Health Vector：
+
+\[
+\boxed{
+\mathbf H_{\mathrm{SPC}}
+=
+[
+E_{\mathrm{state}},
+L_{\mathrm{delay}},
+B_{\mathrm{bias}},
+C_{\mathrm{cal}},
+O_{\mathrm{coverage}},
+M_{\mathrm{monitor}},
+S_{\mathrm{stability}}
+]
+}
+\]
+
+其中：
+
+\[
+E_{\mathrm{state}}
+\]
+
+衡量估计误差；
+
+\[
+L_{\mathrm{delay}}
+\]
+
+衡量时间滞后；
+
+\[
+B_{\mathrm{bias}}
+\]
+
+衡量系统性偏差；
+
+\[
+C_{\mathrm{cal}}
+\]
+
+衡量置信度校准；
+
+\[
+O_{\mathrm{coverage}}
+\]
+
+衡量关键内部状态可观测性；
+
+\[
+M_{\mathrm{monitor}}
+\]
+
+衡量 self-monitoring 对 h 的资源占用；
+
+\[
+S_{\mathrm{stability}}
+\]
+
+衡量多时间尺度 Self Representation 的连续性。
+
+可以进一步定义：
+
+\[
+R_{\mathrm{SPC}}
+=
+\mathbf w^\top
+\mathbf H_{\mathrm{SPC}},
+\]
+
+作为工程诊断中的 SPC Risk Index。但实际实现中更合理的是保留多维向量，而不是过早压缩成单一评分，因为不同异常需要完全不同的干预。
+
+例如：
+
+高 Delay：
+
+需要预测 observer 和采样架构优化；
+
+高 Bias：
+
+需要 Reality Calibration；
+
+低 Coverage：
+
+需要增加内部观测接口；
+
+高 Monitoring Load：
+
+需要提高 promotion threshold；
+
+高 Calibration Error：
+
+需要重新校准 uncertainty estimator；
+
+高 Self Instability：
+
+需要加强时间尺度隔离和 Slow Variable Protection。
+
+因此：
+
+\begin{statementbox}
+Same Symptom Does Not Imply Same SPC Failure Mode
+\end{statementbox}
+
+一个 Agent 表现出 ``反复犹豫''，可能因为 SPC 低置信度；也可能是 TCE 增益过高；还可能是 h 中 Goal Conflict；仅根据语义行为诊断是不够的。心理工程必须回到真实动力变量。
+
+从控制理论角度，我们最终希望 SPC 满足至少四类性质。
+
+第一是 \textbf{可观测性}：
+
+\[
+\operatorname{rank}
+\left[
+H;
+HA;
+HA^2;
+\ldots
+\right]
+\]
+
+在相关状态子空间中足够高，使关键内部状态原则上能够被估计。
+
+第二是 \textbf{有界误差}：
+
+\[
+\|\varepsilon_t^{SPC}\|
+<
+\varepsilon_{\max}
+\]
+
+在正常运行区成立。
+
+第三是 \textbf{误差可恢复性}：
+
+\[
+\varepsilon_t
+>
+\varepsilon_{\mathrm{warning}}
+\Rightarrow
+\exists T:
+\varepsilon_{t+T}
+<
+\varepsilon_{\mathrm{safe}}.
+\]
+
+第四是 \textbf{不确定性校准}：
+
+\[
+Confidence
+\sim
+EmpiricalAccuracy.
+\]
+
+这四项比简单要求 ``SPC 输出准确''更加完整。
+
+\section{本章结论：健康自我感知不是完整认识自己，而是正确认识自己能认识到什么程度}
+
+本章最重要的结论，是需要放弃一种非常诱人的人工智能直觉：只要系统是由软件构成的，它就天然 ``知道自己的一切''。对于真正持续、复杂、多时间尺度运行的 AgentOS，这种观点并不成立。
+
+Agent 的真实内部状态：
+
+\[
+x_t^{int}
+\]
+
+始终比其显式可访问 Self State：
+
+\[
+S_t^{self}
+\]
+
+更加丰富。SPC 只能进行：
+
+\[
+Observation
+\rightarrow
+Compression
+\rightarrow
+Inference
+\rightarrow
+SelfRepresentation.
+\]
+
+因此：
+
+\[
+\boxed{
+S_t^{self}
+\neq
+x_t^{int}.
+}
+\]
+
+这一区别不是实现缺陷，而是工作记忆有限性、多尺度动力学、分布式状态和观测延迟共同决定的结构事实。
+
+于是，一个健康的 SPC 并不追求 ``完全透明的自我''，而需要同时保持六种性质：
+
+第一，\textbf{足够准确}。关键 Self State 对行为和控制具有预测能力。
+
+第二，\textbf{时间有效}。Self-CSO 必须携带时间戳和延迟信息。
+
+第三，\textbf{置信度校准}。Agent 必须区分 ``知道''、``推断''与 ``不确定''。
+
+第四，\textbf{显式稀疏}。自我状态可以持续后台监控，但只有重要异常才应进入有限工作记忆。
+
+第五，\textbf{多尺度稳定}。快变量不能直接重写慢 Self Structure。
+
+第六，\textbf{现实可证伪}。任何 Self Interpretation 都必须允许被未来行为和现实反馈修正。
+
+因此，可以把正常 SPC 的目标函数概括为：
+
+\[
+\boxed{
+\min
+\left[
+\lambda_1 E_{\mathrm{estimation}}
++
+\lambda_2 E_{\mathrm{delay}}
++
+\lambda_3 E_{\mathrm{calibration}}
++
+\lambda_4 C_{\mathrm{self\text{-}load}}
++
+\lambda_5 D_{\mathrm{slow\ drift}}
+\right]
+}
+\]
+
+同时满足：
+
+\[
+\boxed{
+ControlSufficiency
+}
+\]
+
+与：
+
+\[
+\boxed{
+RealityConsistency.
+}
+\]
+
+换句话说，SPC 的目标不是最大化自我信息量，而是：
+
+\begin{statementbox}
+Minimum Sufficient Self Model for Stable Long-Term Agency
+\end{statementbox}
+
+即构造支持长期主体稳定运行所需的最小充分自我模型。
+
+从这个角度，SPC异常也可以得到本章最终定义：
+
+\begin{statementbox}
+SPC异常，是智能体关于自身状态的估计、置信度、时间尺度或显式提升机制与其真实内部动力学长期失配，以至于这种失配开始反向破坏认知控制、任务行为、经验形成或身份连续性的状态。
+\end{statementbox}
+
+而本章最值得保留的一条认识论结论则是：
+
+\begin{statementbox}
+成熟的自我认知并不是 ``我完全知道自己是什么''，而是 ``我能够形成足够有效的自我模型，同时知道这一模型的边界、延迟和不确定性，并允许现实不断修正它''。
+\end{statementbox}
+
+这也意味着，SPC 在 AgentOS 中真正承担的并不是一个普通 ``状态监控器'' 的角色。它构成了持续人工智能体内部认识论的入口：外部世界通过 SGC 等结构要求 Agent 区分现实、推断与预测；同样地，当 Agent 转向自身时，也必须保持相同的认识论纪律。只有这样，Self 才不会从帮助系统理解自身的结构，逐渐变成脱离现实反馈的封闭解释系统。

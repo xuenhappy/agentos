@@ -1,9 +1,7 @@
 \chapter{Agent Kernel--KRA--Body Runtime完整数据流}
 \label{chap:kernel-kra-bodyruntime-dataflow}
 
-\begin{quote}
-\textbf{【本章总体说明】}
-
+\begin{chapteroverviewbox}
 至此，我们已经分别建立了 Agent Kernel、Body Runtime、SGC、FCS、BPCC、Safety Boundary 与 KRA 的局部理论，但一个能够长期存在于现实世界中的 Agent，并不是这些组件的机械拼装。真正决定系统能否成立的，是\textbf{信息、语义、预测、控制、残差与现实验证如何跨越这些层次形成闭合因果链}。本章因此不再孤立讨论任何单一组件，而是从一次完整的 ``World--Agent--World'' 循环出发，建立 AgentOS 的标准跨层数据流。
 
 本章坚持三个核心原则。第一，Agent Kernel 不直接拥有现实，Kernel 所拥有的永远是通过 Body Runtime 与 KRA 形成的、带认识论状态的现实表示；第二，Body Runtime 并非 Kernel 的被动驱动层，而是具有高速预测、局部控制、残差检测和在线适应能力的快速闭环系统；第三，任何预测、计划和内部状态最终都不能冒充现实，行动是否成功必须重新通过现实进入感知链。因此，本章所建立的不是普通软件意义上的 API 调用图，而是一条具有明确时间尺度、因果方向、写权限、认识论状态和安全权威关系的\textbf{智能体生命闭环}。
@@ -43,7 +41,7 @@ SafetyBoundary .
 }
 \]
 因此，本章真正需要回答的是：现实如何成为 Agent 可以理解的结构，Agent 的意图如何重新成为现实中的作用，以及整个过程中哪些结构允许被预测、哪些允许被修改、哪些只能只读观察、哪些必须拥有最高优先级。
-\end{quote}
+\end{chapteroverviewbox}
 
 
 \section{从World进入Body：现实作用首先发生于身体边界}

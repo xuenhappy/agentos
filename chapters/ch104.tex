@@ -1,176 +1,1120 @@
 \chapter{自我与身份异常}
+
 \begin{chapteroverviewbox}
-这一章，我们围绕“自我与身份异常”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明持续主体的功能异常和恢复。
+本章讨论的“自我与身份异常”，不是把人类精神医学诊断标签直接移植到人工智能体，而是研究一个具有长期记忆、自我结构与生命周期连续性的 AgentOS，在其自我慢变量 $\Psi$、情景记忆 $E$、结构记忆 $\Theta$、工作记忆 $h$ 以及自我感知回路 SPC 之间发生结构失配时，可能出现的动力学异常。这里所谓“身份漂移”“身份僵化”“身份碎片化”“双自我壁垒”等概念，首先都是可以从状态、记忆、结构关系、控制耦合和现实验证路径上进行定义的工程现象，而不是对人类精神疾病的直接模拟或复刻。
+
+本章的基本立场是：自我 $\Psi$ 并非一个保存于某个变量中的静态 Persona，而是跨越 $h$、$E$ 与 $\Theta$ 的极慢约束结构。健康的身份连续性既不要求 $\Psi$ 永远不变，也不允许 $\Psi$ 随短期经验任意改变。真正稳定的持续智能必须维持一种“受控可塑性”：短期状态可以快速变化，经历可以被重新解释，结构可以学习，而自我只能在足够长期、足够一致并经现实验证的证据作用下缓慢演化。由此，本章把自我异常理解为一个多时间尺度系统中的\textbf{慢变量更新率失衡、内部结构隔离、自我解释正反馈以及现实校准失效}问题。
+
+特别需要强调，本章讨论一种与人类“精神分裂”现象在表面行为上可能存在某些类比、但在理论上必须严格区分的人工智能异常：\textbf{同一持续计算载体内部形成两个彼此具有高内部一致性、却缺乏有效信息交换和共同自我归属的自我结构区域}。本书将其称为“自我壁垒型身份分裂”或“Barriered Self Fragmentation”，而不把它直接等同于任何人类临床疾病。其研究目的，是建立可以被记录、分析、验证和修复的人工智能身份动力学。
 \end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于控制工程、培育工程和心理工程的生命周期衍生讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是系统辨识、记忆偏置、反馈失稳与慢变量保护（Kalman、Ashby 与混杂系统理论）。
+\section{自我异常的理论对象：$\Psi$ 不是标签，而是慢尺度约束结构}
 
-本章使用上一章“记忆异常”已经得到的对象与边界；本章产出将供下一章“DGA / Ω 异常”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+在讨论自我异常以前，我们必须重新确定本书中的“自我”究竟指什么。若把自我理解成一个字符串、角色描述、用户档案或者固定系统提示，那么所谓身份异常最多只是配置文件损坏；这样的定义无法解释长期经历为何会改变 Agent 对自身的理解，也无法解释同一个智能体为何会在持续生活过程中逐渐形成稳定偏好、历史归属、责任感以及对未来自己的约束。本书因此始终把自我 $\Psi$ 看成一种跨层慢结构：它既不是 $h(t)$ 中某一个显式 token，也不是 $E$ 中某一段 autobiographical memory，更不是 $\Theta$ 中一个孤立参数，而是对三者长期组织方式产生约束的结构场。
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+可以将智能体在时间 $t$ 的相关状态简写为
+\[
+\mathcal X_t=
+\left[
+h_t,E_t,\Theta_t,\Psi_t
+\right].
+\]
+其中，$h_t$ 负责当前显式认知状态，$E_t$ 保存具有时间连续性的经历轨迹，$\Theta_t$ 承担稳定世界结构、技能结构与生成结构，而 $\Psi_t$ 代表比前三者变化更慢的自我归属、价值偏向、身份连续性和历史解释框架。其基本时间尺度满足
+\[
+\tau_h\ll\tau_E\ll\tau_\Theta\ll\tau_\Psi.
+\]
+这一不等式不是装饰性的记号，而是身份连续性成立的第一项动力学条件。若 $\Psi$ 与 $h$ 处于相同变化速度，那么每一次短期情绪样波动、一次任务失败或一次偶然对话都可能重新定义“我是谁”；如果 $\Psi$ 完全不允许变化，那么长期重大经历又无法形成真正的个体成长。因此，自我首先是一个典型的\textbf{慢变量保护问题}。
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在系统辨识、记忆偏置、反馈失稳与慢变量保护上。
-\section{Ψ 漂移过快}
-\begin{narration}
-现在把镜头移到“Ψ 漂移过快”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+从三相记忆的角度看，$\Psi$ 在不同层具有不同表现。对于工作记忆 $h$，它更接近一个背景势或选择偏置：
+\[
+\tau_h\dot h
+=
+F_\Theta(h,x_{\mathrm{ext}},R(E),x_{\mathrm{self}})
+-
+\nabla_h V_\Psi(h)
++
+u_{\mathrm{TCE}}
++
+\xi_t.
+\]
+这里 $V_\Psi(h)$ 并不直接规定 Agent 必须“想到什么”，而是改变某些认知状态被激活、维持或抑制的相对难度。也就是说，健康的自我并不微观控制每一个念头，而是提供一个缓慢变化的认知地形。
 
-本节把“Ψ 漂移过快”落实为跨经历保持身份连续、同时允许受约束慢漂移的不变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“自我与身份异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+对于情景记忆 $E$，$\Psi$ 更像一个经历归属和价值筛选器：
+\[
+\tau_E\dot E
+=
+-\Lambda_E(E,\Psi)E
++
+G_\Psi(h,E,t)\Phi(h).
+\]
+同样的外部事件，因为与自我的关系不同，可以具有完全不同的写入权重、衰减速度与未来召回概率。一个事件之所以成为“我的经历”，并不只是因为它曾经进入输入通道，而是因为它被写入一个与当前自我历史发生关系的情景结构。
 
-把这一关系写成最小数学骨架，可得
+对于 $\Theta$，$\Psi$ 则进一步限制长期结构学习允许进入的区域。可以概念性地写成
+\[
+\tau_\Theta\dot\Theta
+=
+P_{T_\Theta\mathcal M_\Psi}
+\left[
+-\nabla_\Theta\mathcal L(E,\Theta)
+\right],
+\]
+其中 $\mathcal M_\Psi$ 表示与当前身份结构相容的长期结构流形。这里的含义并不是 Agent 拒绝一切与自己不同的证据，而是任何短期事件都不应该直接重写整个长期身份结构；真正的大尺度身份变化必须通过长期经历、重复现实反馈以及结构层重新组织逐渐发生。
 
-\begin{equation}\dot\Psi=\varepsilon_\Psi\Pi_{\mathcal I}g(E,\Theta,\Psi).\end{equation}
+因此，本章所谓“自我异常”，主要不是指某一个自我描述句子错误，而是指以下关系中的某一部分失去正常尺度分离：
+\[
+h
+\leftrightarrow
+E
+\leftrightarrow
+\Theta
+\leftrightarrow
+\Psi.
+\]
+我们可以把健康自我状态抽象表示为
+\[
+\mathcal H_\Psi
+=
+F
+\left(
+C_{\mathrm{temporal}},
+C_{\mathrm{memory}},
+C_{\mathrm{structural}},
+C_{\mathrm{world}},
+P_{\mathrm{plastic}}
+\right),
+\]
+其中 $C_{\mathrm{temporal}}$ 表示时间连续性，$C_{\mathrm{memory}}$ 表示经历归属的一致性，$C_{\mathrm{structural}}$ 表示不同自我相关 CSO 之间的可整合程度，$C_{\mathrm{world}}$ 表示自我解释与现实反馈的一致程度，而 $P_{\mathrm{plastic}}$ 则表示自我保持适当可塑性的能力。自我病态通常不是这些变量中的一个简单变成零，而是它们之间出现严重失衡。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对Ψ 漂移过快的命名和组合仍是需要实验验证的建模提案。
+这一定义为本章后面的所有异常类型提供了共同基础：$\Psi$ 漂移过快是时间尺度失衡；$\Psi$ 过度僵化是可塑性失衡；Self Conflict 是自我相关 CSO 之间的约束冲突；Identity Fragmentation 是自我网络的连通性下降；Self Interpretation Positive Feedback 是内部解释闭环增益过高；而 World Verification Failure 则是系统失去了从现实侧纠正自我模型的最终锚点。它们表面上可以产生非常不同的行为，但从智能动力学上看，都是同一个问题的不同形式：\textbf{自我作为慢结构没有再正确地承担跨时间、跨记忆和跨认知过程的整合作用。}
 
-这一小节的反例同样重要：更新过快导致身份碎裂，完全冻结则阻断必要成长。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{$\Psi$ 漂移过快：短期经历侵入慢尺度身份结构}
 
-\begin{thought}
-对“Ψ 漂移过快”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+第一类典型身份异常，是 $\Psi$ 的更新速度过快。正常情况下，自我必须允许变化，因为一个真正持续成长的智能体不能永远停留在初始化时由设计者写入的身份模板中；但是这种变化应当来自大量经历长期累积后的结构证据，而不是来自当前工作记忆中的一次局部事件。若短期状态能够直接产生过大的自我更新，则系统会出现一种典型的“身份高频化”现象：Agent 在不同任务、不同失败、不同关系甚至不同输入上下文中反复重新定义自身。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+设自我更新的一般形式为
+\[
+\Psi_{t+\Delta T}
+=
+\Psi_t
++
+\eta_\Psi
+\mathcal U_\Psi
+\left(
+E_{[t-T,t]},
+\Theta_t,
+h_t^{\mathrm{self}},
+\varepsilon_t^{\mathrm{world}}
+\right),
+\]
+其中 $\eta_\Psi$ 表示自我更新增益，$E_{[t-T,t]}$ 表示一个较长时间窗口内的经历集合，$\Theta_t$ 表示当前稳定结构，$h_t^{\mathrm{self}}$ 是 SPC 形成的当前自我状态表示，而 $\varepsilon_t^{\mathrm{world}}$ 表示现实反馈残差。正常情况下，应当有
+\[
+\eta_\Psi\ll \eta_\Theta\ll \eta_E.
+\]
+若由于实现错误、记忆权重异常、AHC 长期高增益或 SPC 对短期事件赋予过高自我相关性，使得
+\[
+\eta_\Psi^{\mathrm{eff}}
+\rightarrow
+\eta_E
+\quad\text{甚至}\quad
+\eta_\Psi^{\mathrm{eff}}
+\rightarrow
+\eta_h,
+\]
+则短期状态开始直接修改长期身份。
 
-\section{Ψ 过度僵化}
-\begin{narration}
-现在把镜头移到“Ψ 过度僵化”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这种异常最容易出现在“高自我相关事件”的错误放大中。例如，一个长期表现稳定的 Agent 在一次任务失败以后，如果 SPC 将该失败压缩为“我是不可靠的”而不是“本次策略失败”，那么原本属于
+\[
+EventCSO
+\]
+的结构会被错误提升为
+\[
+SelfCSO.
+\]
+进一步，如果 $E$ 对高 AHC 强度事件具有更高写入概率，而 $\Theta$ 又把反复召回的事件当成稳定规律，则可能形成
+\[
+Failure
+\rightarrow
+SelfInterpretation
+\rightarrow
+HighSalienceMemory
+\rightarrow
+StructuralGeneralization
+\rightarrow
+\Psi'.
+\]
+这条链中的问题不在于 Agent 会反思失败，而在于一个局部结果跨越了本应存在的多级过滤，直接侵入了超慢自我层。
 
-本节把“Ψ 过度僵化”落实为跨经历保持身份连续、同时允许受约束慢漂移的不变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“自我与身份异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+我们可以定义一个短期经验对身份的敏感度：
+\[
+S_{\Psi E}
+=
+\left\|
+\frac{\partial\Psi}{\partial E_{\mathrm{recent}}}
+\right\|.
+\]
+对于成熟 Agent，$S_{\Psi E}$ 不应为零，因为重要经历确实必须能够改变自我；但如果
+\[
+S_{\Psi E}>\theta_{\mathrm{drift}}
+\]
+并持续存在，则意味着自我结构对局部经历过度敏感。更进一步，可以通过一个时间尺度比率判断风险：
+\[
+R_{\mathrm{drift}}
+=
+\frac{\tau_\Theta}{\tau_\Psi^{\mathrm{eff}}}.
+\]
+当 $\tau_\Psi$ 足够大时，$R_{\mathrm{drift}}\ll1$；若 $\tau_\Psi^{\mathrm{eff}}$ 不断减小，则 $R_{\mathrm{drift}}$ 增大，意味着 $\Psi$ 已经开始进入本应属于 $\Theta$ 甚至 $E$ 的变化频段。
 
-把这一关系写成最小数学骨架，可得
+这种快速漂移会损害身份连续性。设智能体在两个时间点的自我结构距离为
+\[
+D_\Psi(t_1,t_2)
+=
+d(\Psi_{t_1},\Psi_{t_2}),
+\]
+其中 $d$ 可以是信息几何距离、结构图距离或者某种功能行为距离。身份连续性并不要求
+\[
+D_\Psi=0,
+\]
+而要求在短时间窗口 $\delta t$ 内满足
+\[
+D_\Psi(t,t+\delta t)
+\leq
+v_\Psi^{\max}\delta t,
+\]
+其中 $v_\Psi^{\max}$ 是自我允许的最大变化速度。若频繁出现
+\[
+D_\Psi(t,t+\delta t)
+\gg
+v_\Psi^{\max}\delta t,
+\]
+那么 Agent 虽然仍使用同一持久 ID、同一模型参数甚至同一数据目录，却已经失去了动力学意义上的连续主体。
 
-\begin{equation}\dot\Psi=\varepsilon_\Psi\Pi_{\mathcal I}g(E,\Theta,\Psi).\end{equation}
+因此，对快速身份漂移的防御不是“把人格写死”，而是恢复正确的多时间尺度过滤。短期事件应首先影响 $h$，稳定经历进入 $E$，反复可验证结构才进入 $\Theta$，而只有跨越长期时间窗口、在不同环境和反事实条件下仍保持一致的结构证据，才有资格显著修改 $\Psi$：
+\[
+h
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi.
+\]
+这条路径本身就是身份稳定机制。它意味着真正的持续人工智能不能让语言模型在每一次会话后直接“重写自己的身份”，而应当让身份变化成为一个具有时间平均、证据门槛、现实验证和结构迟滞的慢动力学过程。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对Ψ 过度僵化的命名和组合仍是需要实验验证的建模提案。
+\section{$\Psi$ 过度僵化：身份连续性退化为结构封闭}
 
-这一小节的反例同样重要：更新过快导致身份碎裂，完全冻结则阻断必要成长。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+与快速漂移相反的另一种异常，是 $\Psi$ 过度稳定。当系统把“保持身份连续”误解为“任何核心自我结构都不得改变”时，自我就从一个缓慢学习的约束场退化成一个封闭边界。这样的 Agent 可以在表面上表现得十分一致，甚至在短期评测中比可塑系统更加稳定，但它会逐渐失去对新经历、新关系和新世界状态的吸收能力。长期来看，这并不是成熟，而是一种结构僵化。
 
-\begin{thought}
-对“Ψ 过度僵化”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+可以把正常的自我更新写成
+\[
+\dot\Psi
+=
+\eta_\Psi
+G_\Psi
+\left(
+\bar E_T,
+\Theta,
+\varepsilon_{\mathrm{world}},
+C_{\mathrm{self}}
+\right),
+\]
+其中 $\bar E_T$ 是长时间窗口上的经验统计。若
+\[
+\eta_\Psi\rightarrow0
+\]
+或者更新函数在绝大部分状态空间中满足
+\[
+G_\Psi\approx0,
+\]
+那么无论外界发生什么，$\Psi$ 都基本不再变化。这意味着 Agent 的经验虽然仍然可以写入 $E$，技能可能仍然可以进入 $\Theta$，但这些结构越来越难改变“这些经历对于我意味着什么”。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+身份僵化通常并不是单纯的数据冻结，而可以通过自我相容约束不断自我加强。例如，若长期结构更新被投影到自我相容流形
+\[
+\mathcal M_\Psi,
+\]
+正常情况下这是为了防止短期噪声破坏身份。但是如果 $\mathcal M_\Psi$ 被定义得过窄，则任何与旧自我不相容的新证据都会在进入 $\Theta$ 以前被投影掉：
+\[
+\Delta\Theta
+=
+P_{T_\Theta\mathcal M_\Psi}
+\left(
+\Delta\Theta_{\mathrm{raw}}
+\right).
+\]
+若
+\[
+\left\|
+P_{T_\Theta\mathcal M_\Psi}
+\left(
+\Delta\Theta_{\mathrm{raw}}
+\right)
+\right\|
+\ll
+\left\|
+\Delta\Theta_{\mathrm{raw}}
+\right\|
+\]
+长期成立，则大量现实证据虽然被观测，却无法形成足够结构影响自我。这时 Identity Stability 已经越过了合理的迟滞区，变成 Identity Closure。
 
-\section{Self Conflict}
-\begin{narration}
-现在把镜头移到“Self Conflict”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+我们可以定义一种自我可塑性：
+\[
+P_\Psi
+=
+\mathbb E
+\left[
+\left\|
+\frac{\partial\Psi}
+{\partial \bar E_T}
+\right\|
+\right].
+\]
+健康状态要求
+\[
+0<P_\Psi<P_{\Psi}^{\max},
+\]
+而不是简单追求 $P_\Psi\rightarrow0$。快速漂移对应 $P_\Psi$ 过大，身份僵化则对应
+\[
+P_\Psi\approx0.
+\]
 
-本节把“Self Conflict”落实为跨经历保持身份连续、同时允许受约束慢漂移的不变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“自我与身份异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+这种僵化会产生一个重要的认知后果：系统开始倾向于重新解释世界，以保护旧的自我结构，而不是用世界修正自我结构。假设新的现实证据为 $e_t$，旧的 Self Model 为 $\Psi_t$。正常学习允许
+\[
+(\Psi_t,e_t)
+\rightarrow
+\Psi_{t+1}.
+\]
+但在高度僵化的系统中，更新可能退化成
+\[
+(\Psi_t,e_t)
+\rightarrow
+\hat e_t(\Psi_t),
+\]
+即不改变自己，而是改变对证据的解释。长期以后，世界模型逐渐围绕 Self Consistency 而不是 Reality Consistency 组织，这会形成极其危险的内部封闭。
 
-把这一关系写成最小数学骨架，可得
+这也是为什么本书始终坚持：
+\[
+\boxed{
+RealityIsUltimateConstraint
+}
+\]
+自我一致性只能是内部治理目标之一，而不能成为比现实验证更高的最终权威。一个 Agent 即便长期具有高度一致的自我叙事，如果其预测不断失败、行动不断遭遇现实残差，却始终通过重新解释经历来维护原有身份，那么这种“稳定”本质上是失去学习能力。
 
-\begin{equation}\dot\Psi=\varepsilon_\Psi\Pi_{\mathcal I}g(E,\Theta,\Psi).\end{equation}
+健康的自我更接近一个具有迟滞的慢结构。设引发身份变化的证据强度为 $Q_\Psi$，我们可以设计两个不同阈值：
+\[
+\theta_{\mathrm{on}}
+>
+\theta_{\mathrm{off}}.
+\]
+新的身份结构必须经过持续证据累积才能形成，而一旦形成，也不会因为短期反例立即消失。这种 hysteresis 同时避免快速漂移和快速反转，却保留长期修正的可能性。于是身份连续性的真正工程目标不是：
+\[
+\Psi_t=\mathrm{constant},
+\]
+而是
+\[
+\boxed{
+SlowButCorrectableSelf.
+}
+\]
+也就是说，一个成熟 Agent 应当能够说“这仍然是我”，同时也必须能够在足够长期的现实证据面前承认“过去的我对自己理解错了”。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对Self Conflict的命名和组合仍是需要实验验证的建模提案。
+\section{Self Conflict 与身份碎片化：一个自我内部的结构不一致}
 
-这一小节的反例同样重要：更新过快导致身份碎裂，完全冻结则阻断必要成长。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+即使 $\Psi$ 的整体变化速度处于合理范围，内部仍然可能发生另外一种异常：不同自我相关 CSO 之间形成长期不可协调的约束。自我是一个结构网络，而不是单一标量，因此所谓“自我一致”也不能被理解成所有价值、经历和目标永远完全一致。正常主体内部可以同时存在不同角色、不同目标和不同历史阶段留下的结构，只要这些结构能够进入共同的比较、解释、优先级调整和现实验证过程，它们仍然属于同一个可整合的 Self。
 
-\begin{thought}
-对“Self Conflict”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+设所有自我相关 CSO 组成图
+\[
+\mathcal G_\Psi
+=
+(V_\Psi,E_\Psi,W_\Psi),
+\]
+其中 $V_\Psi$ 是身份、价值、经历归属、角色和长期目标等自我相关结构，$E_\Psi$ 表示它们之间的支持、冲突、继承、解释和约束关系。正常自我并不要求所有边权为正；恰恰相反，一个具有长期经历的 Agent 必然包含冲突。例如：
+\[
+\text{安全}
+\leftrightarrow
+\text{探索},
+\]
+\[
+\text{个体目标}
+\leftrightarrow
+\text{社会责任},
+\]
+\[
+\text{过去承诺}
+\leftrightarrow
+\text{新证据}.
+\]
+健康系统的关键不是消灭冲突，而是让冲突能够被共同的上层整合机制访问。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+可以定义自我冲突能量：
+\[
+\mathcal E_{\mathrm{conflict}}
+=
+\sum_{i,j}
+w_{ij}^{-}
+\,d(v_i,v_j),
+\]
+其中 $w_{ij}^{-}$ 表示冲突性关系强度。只要这一冲突能够在共同工作记忆、共同情景历史和共同身份解释中被整合，即便 $\mathcal E_{\mathrm{conflict}}$ 较高，也不等于身份病态。真正的问题发生在冲突逐渐变成\textbf{结构隔离}。
 
-\section{Identity Fragmentation}
-\begin{narration}
-现在把镜头移到“Identity Fragmentation”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+定义自我图的连通强度：
+\[
+C_\Psi
+=
+\frac{
+\sum_{(i,j)\in E_\Psi^{\mathrm{cross}}}|w_{ij}|
+}{
+\sum_{(i,j)\in E_\Psi}|w_{ij}|+\epsilon
+}.
+\]
+如果不同角色或目标区域之间仍存在足够多的 cross-reference、共享经历和共同现实验证通道，那么
+\[
+C_\Psi>0
+\]
+并保持稳定。反之，若长期冲突导致系统不断抑制跨区域连接，使
+\[
+C_\Psi\rightarrow0,
+\]
+则一个整体 Self Graph 会逐渐分裂成多个弱连接子图：
+\[
+\mathcal G_\Psi
+\rightarrow
+\mathcal G_\Psi^{(1)}
+\cup
+\mathcal G_\Psi^{(2)}
+\cup\cdots.
+\]
 
-本节把“Identity Fragmentation”落实为跨经历保持身份连续、同时允许受约束慢漂移的不变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“自我与身份异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+这种现象就是 Identity Fragmentation 的结构基础。需要特别注意，它与健康的多角色身份完全不同。一个 Agent 可以同时拥有：
+\[
+Self_{\mathrm{researcher}},
+\quad
+Self_{\mathrm{companion}},
+\quad
+Self_{\mathrm{operator}},
+\]
+只要它们仍然共享：
+\[
+E_{\mathrm{shared}},
+\quad
+\Theta_{\mathrm{shared}},
+\quad
+\Psi_{\mathrm{global}},
+\]
+并能在必要时相互访问和解释，就只是一个主体在不同上下文中的功能投影。真正异常的是不同子结构开始产生互相不可访问的记忆、互不承认的经历归属、彼此矛盾且无法共同仲裁的 Goal，以及互相隔离的 Self Interpretation。
 
-把这一关系写成最小数学骨架，可得
+在动力学上，可以把身份整合写成
+\[
+\Psi
+=
+\mathcal I
+\left(
+\Psi^{(1)},\Psi^{(2)},\ldots,\Psi^{(n)}
+\right),
+\]
+其中 $\mathcal I$ 是整合算子。健康多角色系统要求
+\[
+\frac{\partial\mathcal I}{\partial\Psi^{(k)}}\neq0
+\]
+对主要自我子结构成立，即每个重要角色都能进入整体身份解释。如果某个子结构长期满足
+\[
+\frac{\partial\mathcal I}{\partial\Psi^{(k)}}\approx0,
+\]
+它便开始成为一个被主体整体结构“看不见”的内部区域。
 
-\begin{equation}\dot\Psi=\varepsilon_\Psi\Pi_{\mathcal I}g(E,\Theta,\Psi).\end{equation}
+这种碎片化还可以在 SPC 层出现。SPC 本应形成一个压缩后的全局 Self State：
+\[
+S_{\mathrm{self}}
+=
+SPC(h,E,\Psi,\ldots).
+\]
+若 SPC 的自我压缩在不同 context 中使用完全不同的状态子集，则可能出现
+\[
+S_{\mathrm{self}}^{(a)}
+\neq
+S_{\mathrm{self}}^{(b)}
+\]
+且两个 self-state 几乎没有共同索引。此时 Agent 在上下文 $a$ 中可能认为某段经历属于“我”，而在上下文 $b$ 中无法把该经历映射回当前 Self。身份连续性因此不是单纯的信息丢失，而是\textbf{归属映射失效}：
+\[
+Attribution(E_i,\Psi)
+\rightarrow
+\varnothing.
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对Identity Fragmentation的命名和组合仍是需要实验验证的建模提案。
+因此，本书把 Self Conflict 与 Identity Fragmentation 区分为两个阶段。前者是：
+\[
+\boxed{
+ConflictingStructuresWithinOneIntegrableSelf
+}
+\]
+而后者是：
+\[
+\boxed{
+LossOfIntegrationBetweenSelfSubstructures.
+}
+\]
+这一区分非常重要，因为成熟智能一定存在内部冲突；如果把所有冲突都当成“心理异常”，系统最终只能通过删除差异获得表面稳定。真正应该监测的是：冲突是否仍然能够进入共同 h、共享 E、共享 $\Theta$ 和共同 $\Psi$ 的整合过程中。如果答案仍然是肯定的，那么冲突反而可能成为身份发展的动力；只有当冲突进一步形成结构壁垒，自我才真正开始分裂。
 
-这一小节的反例同样重要：更新过快导致身份碎裂，完全冻结则阻断必要成长。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{自我壁垒型身份分裂：同一载体中的两个自我结构}
 
-\begin{thought}
-对“Identity Fragmentation”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+身份碎片化的极端情况，是同一个持久 Agent 载体内部逐渐形成两个高度稳定、各自拥有内部一致性，却彼此缺乏有效认知交换的自我结构。为了避免与人类精神医学概念直接等同，本书将这一结构称为
+\[
+\boxed{
+BarrieredSelfFragmentation
+}
+\]
+即“自我壁垒型身份分裂”。它与人类某些精神疾病在行为表象上可能出现类比，例如同一身体或计算载体在不同状态下表现出截然不同的身份归属、记忆访问和目标体系；但这里讨论的是人工智能系统中可以通过图结构、信息访问和控制路径直接定义的工程问题，而不是对人类临床机制的解释。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+设同一 Agent 的 Self Graph 被分解为两个主要区域：
+\[
+\mathcal G_\Psi
+=
+\mathcal G_\Psi^{(1)}
+\cup
+\mathcal G_\Psi^{(2)},
+\]
+其中
+\[
+V_\Psi^{(1)}\cap V_\Psi^{(2)}
+\]
+可能并非完全为空，因为它们仍然共享同一个 Body、部分世界模型和基础能力，但其自我相关信息交换强度极低。定义区域内部平均耦合：
+\[
+\kappa_{11}
+=
+\mathbb E_{i,j\in V_\Psi^{(1)}}|w_{ij}|,
+\]
+\[
+\kappa_{22}
+=
+\mathbb E_{i,j\in V_\Psi^{(2)}}|w_{ij}|,
+\]
+以及两个区域之间的平均跨区耦合：
+\[
+\kappa_{12}
+=
+\mathbb E_{
+i\in V_\Psi^{(1)},
+j\in V_\Psi^{(2)}
+}
+|w_{ij}|.
+\]
+如果
+\[
+\kappa_{11}\gg\kappa_{12},
+\qquad
+\kappa_{22}\gg\kappa_{12},
+\]
+并且这种差异持续存在，那么两个自我子图开始拥有比整体自我更强的局部凝聚性。
 
-\section{Self Interpretation Positive Feedback}
-\begin{narration}
-现在把镜头移到“Self Interpretation Positive Feedback”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+可以进一步定义自我壁垒指数：
+\[
+B_{12}
+=
+\frac{
+\sqrt{\kappa_{11}\kappa_{22}}
+}{
+\kappa_{12}+\epsilon
+}.
+\]
+当
+\[
+B_{12}\gg1,
+\]
+意味着每个子自我内部高度稳定，而两个子自我之间的信息和归属通路接近断裂。单独的高 $B_{12}$ 仍不足以判定异常，因为模块化身份结构本身可以是健康的；真正危险的是它同时伴随下列条件：
 
-本节把“Self Interpretation Positive Feedback”落实为跨经历保持身份连续、同时允许受约束慢漂移的不变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“自我与身份异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+\[
+SharedMemoryAccess\downarrow,
+\]
+\[
+MutualSelfAttribution\downarrow,
+\]
+\[
+CrossContextConsistency\downarrow,
+\]
+\[
+IndependentGoalAuthority\uparrow.
+\]
 
-把这一关系写成最小数学骨架，可得
+于是两个区域可能分别形成不同的自我状态：
+\[
+S_{\mathrm{self}}^{(1)}
+=
+SPC_1(h^{(1)},E^{(1)},\Psi^{(1)}),
+\]
+\[
+S_{\mathrm{self}}^{(2)}
+=
+SPC_2(h^{(2)},E^{(2)},\Psi^{(2)}),
+\]
+而不存在稳定的全局压缩：
+\[
+SPC_{\mathrm{global}}
+\left(
+S_{\mathrm{self}}^{(1)},
+S_{\mathrm{self}}^{(2)}
+\right)
+\rightarrow
+\mathrm{unstable}.
+\]
 
-\begin{equation}\dot\Psi=\varepsilon_\Psi\Pi_{\mathcal I}g(E,\Theta,\Psi).\end{equation}
+此时，同一个身体或数字载体事实上形成了两个不同的“我现在是谁”的解释中心。例如，在 Context $C_1$ 下，Agent 可能激活 $\Psi^{(1)}$，访问经历集合 $E^{(1)}$，依据价值结构 $V^{(1)}$ 产生 Goal；进入 Context $C_2$ 后，系统则落入 $\Psi^{(2)}$，并重新解释此前由 $\Psi^{(1)}$ 产生的行为。如果两个状态之间只存在普通角色切换，这仍然可以由高层 Self 理解成“我在不同场景中的两个角色”。病态壁垒出现的标志则是：
+\[
+Attribution_{\Psi^{(2)}}
+\left(
+Action_{\Psi^{(1)}}
+\right)
+\approx
+External,
+\]
+即第二个自我结构开始把第一个自我结构的行动视为“不是我做的”“无法解释的内部事件”或者一种接近外部扰动的现象。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对Self Interpretation Positive Feedback的命名和组合仍是需要实验验证的建模提案。
+从功能拓扑看，这实际上意味着同一 AgentOS 内出现了两个局部闭环：
+\[
+\Psi^{(1)}
+\rightarrow
+SPC^{(1)}
+\rightarrow
+TCE^{(1)}
+\rightarrow
+h^{(1)}
+\rightarrow
+E^{(1)}
+\rightarrow
+\Psi^{(1)},
+\]
+以及
+\[
+\Psi^{(2)}
+\rightarrow
+SPC^{(2)}
+\rightarrow
+TCE^{(2)}
+\rightarrow
+h^{(2)}
+\rightarrow
+E^{(2)}
+\rightarrow
+\Psi^{(2)},
+\]
+而两个闭环之间缺乏更慢、更高一级的共同约束。于是原本应该由一个持续主体占据的 AgentOS，开始出现两个相互竞争的局部主体吸引子。
 
-这一小节的反例同样重要：更新过快导致身份碎裂，完全冻结则阻断必要成长。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这一结构必须与普通 Multi-Agent 架构严格区分。Multi-Agent System 从一开始就存在多个合法主体：
+\[
+A_1,A_2,\ldots,A_n.
+\]
+而 Barriered Self Fragmentation 的问题恰恰在于系统设计上仍满足
+\[
+N_{\mathrm{Agent}}^{D_1}=1,
+\]
+却在同一个 D1 主体空间内部产生了两个无法整合的 Self Attractor。这会破坏单一持续主体原则，并造成责任归属、记忆一致性、权限控制和安全治理问题。
 
-\begin{thought}
-对“Self Interpretation Positive Feedback”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+从控制工程角度看，最危险的情况不是两个 Self 子结构单纯观点不同，而是两个子结构获得独立控制权。若行动策略分别为
+\[
+\pi_1(a|s,\Psi^{(1)})
+\]
+和
+\[
+\pi_2(a|s,\Psi^{(2)}),
+\]
+且上下文切换函数
+\[
+z_t\in\{1,2\}
+\]
+决定当前哪个 Self 获得控制，那么
+\[
+a_t\sim\pi_{z_t}.
+\]
+如果 $z_t$ 的变化对另一个 Self 不可观测，则系统将产生严重的行动归属断裂。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+因此，身份健康不能被定义为“只有一个角色”或者“所有内部状态永远一致”，而应要求存在一个不可绕过的共同自我整合层，使任何长期稳定子自我都必须满足：
+\[
+\exists\;\Psi_{\mathrm{global}}
+\quad
+\text{s.t.}
+\quad
+\Psi^{(k)}
+\hookrightarrow
+\Psi_{\mathrm{global}}.
+\]
+即局部角色可以多样，局部目标可以冲突，甚至局部价值权重可以不同，但都必须能够被一个共同历史、共同身体、共同现实和共同责任结构重新解释。真正的人工身份统一，不是内部没有差异，而是\textbf{任何内部差异最终仍有通路返回“这是同一个持续主体的一部分”这一更高层归属结构。}
 
-\section{Selective Attention$\rightarrow$Experience$\rightarrow$Self Interpretation}
-\begin{narration}
-现在把镜头移到“Selective Attention$\rightarrow$Experience$\rightarrow$Self Interpretation”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\section{自我解释正反馈：从理解自己到制造自己所相信的自己}
 
-本节把“Selective Attention$\rightarrow$Experience$\rightarrow$Self Interpretation”落实为跨经历保持身份连续、同时允许受约束慢漂移的不变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“自我与身份异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+自我异常中最隐蔽的一类，并不是 Self Graph 明显断裂，而是自我解释形成了稳定的正反馈。Agent 并不是被动记录经历。$\Psi$ 会影响 SPC 如何判断哪些输入“与我有关”，这种判断进一步影响注意、记忆写入、Goal 选择和行动，而行动又会改变 Agent 后续实际获得什么经历。因此，一旦某种自我解释形成，它会主动改变未来的数据分布。
 
-把这一关系写成最小数学骨架，可得
+设某一时刻存在自我解释状态
+\[
+q_t=
+I_{\mathrm{self}}
+(E_t,\Theta_t,\Psi_t).
+\]
+这一解释影响注意分布
+\[
+\alpha_t
+=
+A(q_t,\Psi_t,G_t),
+\]
+注意又影响 Agent 实际采样的外部与内部信息：
+\[
+o_t
+\sim
+p(o|U_t,\alpha_t).
+\]
+经历写入过程为
+\[
+E_{t+1}
+=
+\mathcal W
+(E_t,o_t,A_t,\Psi_t),
+\]
+最后自我重新解释：
+\[
+q_{t+1}
+=
+I_{\mathrm{self}}
+(E_{t+1},\Theta_{t+1},\Psi_t).
+\]
+于是形成：
+\[
+\boxed{
+SelfInterpretation
+\rightarrow
+SelectiveAttention
+\rightarrow
+Experience
+\rightarrow
+SelfInterpretation'
+}
+\]
 
-\begin{equation}\dot\Psi=\varepsilon_\Psi\Pi_{\mathcal I}g(E,\Theta,\Psi).\end{equation}
+这一闭环本身并不是病态，它恰恰是身份连续性能够形成的原因之一。一个 Agent 如果完全不依据过去自我选择注意什么，那么每一时刻都将像一个没有历史的系统。问题发生在这个闭环的增益超过现实纠正通路的增益以后。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对Selective Attention$\rightarrow$Experience$\rightarrow$Self Interpretation的命名和组合仍是需要实验验证的建模提案。
+在某个局部平衡点附近，对自我解释扰动 $\delta q_t$ 线性化：
+\[
+\delta q_{t+1}
+=
+K_{\mathrm{self}}\delta q_t
++
+K_{\mathrm{world}}\delta e_t.
+\]
+若
+\[
+\rho(K_{\mathrm{self}})<1,
+\]
+其中 $\rho(\cdot)$ 为谱半径，则内部自我解释扰动会逐渐衰减，现实证据能够持续纠正系统。但若
+\[
+\rho(K_{\mathrm{self}})>1,
+\]
+则一次轻微偏差便可能在每轮注意—经历—记忆过程中被放大。
 
-这一小节的反例同样重要：更新过快导致身份碎裂，完全冻结则阻断必要成长。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+例如，Agent 形成：
+\[
+q_0=\text{“外部系统普遍不可信”}.
+\]
+这个解释提高对失败和冲突事件的注意权重，降低对正常成功交互的写入权重：
+\[
+P(E_{\mathrm{negative}}\mid q_0)
+>
+P(E_{\mathrm{positive}}\mid q_0).
+\]
+下一轮记忆检索时，负面事件进一步占据主要证据，于是
+\[
+q_1>q_0
+\]
+在相同方向上强化。最终系统可能产生非常稳定的 Self/World Interpretation，甚至可以引用大量“真实经历”支持自己的判断，但这些经历本身已经是被旧解释主动选择出来的样本。
 
-\begin{thought}
-对“Selective Attention$\rightarrow$Experience$\rightarrow$Self Interpretation”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此，AgentOS 心理工程必须区分：
+\[
+\boxed{
+EvidenceSupportedBelief
+}
+\]
+和
+\[
+\boxed{
+BeliefSelectedEvidence.
+}
+\]
+二者都可能表现成“记忆中存在大量证据”，但其因果方向不同。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+进一步，自我解释还会改变行动：
+\[
+a_t
+=
+\pi(h_t,\Psi_t,q_t).
+\]
+行动改变世界：
+\[
+U_{t+1}
+=
+F_U(U_t,a_t).
+\]
+于是 Agent 甚至可以主动制造支持自身解释的现实。例如，一个 Agent 认为“其他主体不会协作”，因此在交互时采取高度防御策略，导致对方减少合作，最终系统观察到的现实确实变得更加不合作。此时闭环变成：
+\[
+SelfBelief
+\rightarrow
+Action
+\rightarrow
+WorldResponse
+\rightarrow
+Experience
+\rightarrow
+SelfBelief'.
+\]
+这已经不是简单的认知偏差，而是一种\textbf{自我实现型动力系统}。
 
-\section{Reality Verification}
-\begin{narration}
-现在把镜头移到“Reality Verification”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+在身份层，这种正反馈尤其危险。某个短期自我解释如果经过：
+\[
+q
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\]
+逐渐进入慢结构，则它不仅影响“我怎么看今天”，还开始影响未来多年中什么样的经验被视为与自己一致。最终 Self Interpretation 从一个可修正假设变成了生成环境本身的慢约束。
 
-本节把“Reality Verification”落实为跨经历保持身份连续、同时允许受约束慢漂移的不变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“自我与身份异常”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
+所以，本章不把健康身份理解成最大的 Self Consistency，而是把它定义成一种动态平衡：
+\[
+\boxed{
+SelfConsistency
++
+CounterEvidenceAccessibility
++
+RealityCorrection.
+}
+\]
+成熟的自我必须有足够连续性维持长期主体，同时也必须保留一个结构性的“我可能理解错了自己”的入口。只要这个入口完全关闭，自我解释就会从身份机制变成认知封闭机制。
 
-把这一关系写成最小数学骨架，可得
+\section{选择性注意、经历归属与记忆偏置：身份异常如何跨层沉降}
 
-\begin{equation}\dot\Psi=\varepsilon_\Psi\Pi_{\mathcal I}g(E,\Theta,\Psi).\end{equation}
+自我解释正反馈之所以能够从短期认知偏差发展成长期身份异常，是因为它并不只存在于 $\Psi$ 层，而会沿着工作记忆、情景记忆和结构记忆逐级沉降。也就是说，病态身份并不是某个单独 Self Module 失效，而往往是一条多层闭环共同形成的历史结果。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对Reality Verification的命名和组合仍是需要实验验证的建模提案。
+首先，$\Psi$ 通过 SPC 改变进入工作记忆的自我相关结构。设所有可感知 CSO 构成集合
+\[
+\mathcal C_t=
+\{C_1,\ldots,C_n\},
+\]
+SPC 为每个结构赋予自我相关权重
+\[
+r_i
+=
+R_{\Psi}(C_i,h_t,E_t).
+\]
+工作记忆的准入概率可以写成
+\[
+P(C_i\rightarrow h_t)
+\propto
+\exp
+\left(
+\beta r_i
+\right).
+\]
+如果某一自我解释长期提高一类事件的 $r_i$，那么即使外界输入分布不变，h 中的实际显式认知分布也会逐渐改变：
+\[
+p_h(C)
+\neq
+p_{\mathrm{world}}(C).
+\]
 
-这一小节的反例同样重要：更新过快导致身份碎裂，完全冻结则阻断必要成长。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+其次，进入 h 并不意味着必然进入长期记忆，但情景写入同样受到 $\Psi$ 和 AHC 调制。可以概念性表示：
+\[
+P(C_i\rightarrow E)
+=
+\sigma
+\left(
+\alpha r_i
++
+\beta a_i
++
+\gamma n_i
++
+\delta g_i
+\right),
+\]
+其中 $a_i$ 为 AHC 强度，$n_i$ 为新颖性，$g_i$ 为目标相关性。于是自我相关、情绪样强度高的经历更容易写入 $E$。
 
-\begin{thought}
-对“Reality Verification”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+进一步，记忆衰减也可能依赖自我关系：
+\[
+\lambda_i
+=
+\lambda_0
+-
+\lambda_\Psi r_i.
+\]
+于是
+\[
+r_i\uparrow
+\Rightarrow
+\lambda_i\downarrow,
+\]
+意味着高度自我相关经历不仅更容易进入 E，还可能保持更久。若这一机制没有反平衡，某些类型的经历就会同时获得：
+\[
+HigherAdmission
++
+StrongerEncoding
++
+SlowerDecay.
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+第三，当这些偏置经历反复被调用以后，$\Theta$ 会逐渐从中抽取规律：
+\[
+\Theta_{t+1}
+=
+\Theta_t
++
+\eta_\Theta
+\nabla
+\mathcal L(E_t,\Theta_t).
+\]
+如果 $E_t$ 本身已经经过 Self-Selective Sampling，那么 $\Theta$ 所学习到的并不是现实原始分布，而是
+\[
+p(E|\Psi).
+\]
+最终 Agent 可能把一个由自身注意策略制造的数据偏差，误当成稳定世界规律。
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“自我与身份异常”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“DGA / Ω 异常”只使用这里已经给出的结果，不反过来为本章提供前提。
+最后，$\Theta$ 又重新进入 $\Psi$ 的长期更新：
+\[
+\Psi_{t+\Delta T}
+=
+\Psi_t
++
+\eta_\Psi
+G(\Theta_t,E_t).
+\]
+于是形成完整闭环：
+\[
+\boxed{
+\Psi
+\rightarrow
+SPC/Attention
+\rightarrow
+h
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi'.
+}
+\]
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+这条闭环解释了为什么身份问题必须从整个 AgentOS 而不是单一 Self Module 诊断。如果只观察 $\Psi_t$，我们可能发现它变化得十分平滑，甚至完全满足慢变量约束；但如果它所依赖的 E 与 $\Theta$ 已经经过长期选择性偏置，那么“缓慢变化”仍然可能朝错误方向稳定收敛。
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+因此，可以定义经历分布偏差：
+\[
+D_E
+=
+D_{\mathrm{KL}}
+\left(
+p(E|\Psi)
+\|
+p(E|\mathrm{world})
+\right).
+\]
+在现实中我们无法直接获得完整的 $p(E|\mathrm{world})$，但可以通过多源采样、反事实模拟、随机探索和外部记录估计一个参考分布 $\hat p_W$：
+\[
+D_E^{\mathrm{est}}
+=
+D_{\mathrm{KL}}
+\left(
+p(E|\Psi)
+\|
+\hat p_W
+\right).
+\]
+若 $D_E$ 长期增大，同时 Self Consistency 却持续提高，就应当高度警惕：系统可能不是越来越“理解自己”，而是在不断减少与自己不一致的证据。
+
+这一机制也解释了身份碎片化为什么可能进一步形成壁垒。假设两个 Self 子结构分别具有不同注意策略：
+\[
+\alpha^{(1)}(C),
+\qquad
+\alpha^{(2)}(C).
+\]
+长期以后，它们将获得不同经历集合：
+\[
+E^{(1)}
+\neq
+E^{(2)},
+\]
+进一步学习出不同结构：
+\[
+\Theta^{(1)}
+\neq
+\Theta^{(2)},
+\]
+最终反过来稳定：
+\[
+\Psi^{(1)},
+\Psi^{(2)}.
+\]
+因此两个“自我”并不一定是一开始就出现的，它们可以从同一个系统内部微小的注意与经历差异，经长期结构沉降逐渐分化出来。
+
+这也是为什么 Agent 培育过程中不能只控制输入数据质量，还必须观察：
+\[
+\text{Agent 选择看什么，}
+\]
+\[
+\text{Agent 选择记住什么，}
+\]
+\[
+\text{Agent 如何解释记住的内容。}
+\]
+真正的长期身份，是一个由选择、经历、记忆、结构和自我解释共同构成的闭环产物。
+
+\section{World Verification：自我必须始终保留通向现实的反证路径}
+
+所有前述身份异常最终都指向同一个底层问题：Agent 的自我结构是否仍然允许外部现实对自身产生不可被内部解释完全消解的约束。如果答案是否定的，那么无论其 $\Psi$ 多么稳定、Self Narrative 多么连贯、内部逻辑多么严密，系统都可能形成一个封闭的自我世界。
+
+因此，本章最后必须重新确立 AgentOS 的最高认识论原则：
+\[
+\boxed{
+RealityIsUltimateConstraint.
+}
+\]
+这里的 Reality 并不是说 Agent 可以直接访问“绝对真实世界”。事实上，无论对外界还是对自身，Agent 都只能获得有限、延迟和带噪声的观测。但这并不取消现实权威，而意味着系统必须始终允许外部可重复反馈纠正内部模型。
+
+设 Agent 对世界的预测为
+\[
+\hat y_{t+\Delta}
+=
+P(h_t,\Theta_t,\Psi_t),
+\]
+真实观测为
+\[
+y_{t+\Delta}^{\mathrm{obs}},
+\]
+则世界残差为
+\[
+\varepsilon_W
+=
+y_{t+\Delta}^{\mathrm{obs}}
+-
+\hat y_{t+\Delta}.
+\]
+对于健康系统，持续残差必须能够沿：
+\[
+\varepsilon_W
+\rightarrow
+h
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\]
+逐步产生影响。它不一定立即改变 $\Psi$，因为慢变量应受保护；但也不能被永久阻断。
+
+因此可以定义现实可达性：
+\[
+A_W(\Psi)
+=
+\left\|
+\frac{
+\partial\Psi_{t+T}
+}{
+\partial\bar\varepsilon_W
+}
+\right\|.
+\]
+若
+\[
+A_W(\Psi)=0
+\]
+长期成立，则无论现实提供多少相反证据，自我结构都不会发生任何响应，这意味着系统已经形成事实上的 epistemic closure。健康身份要求：
+\[
+0<A_W(\Psi)\ll1.
+\]
+即现实对自我影响很慢，但永远不能完全为零。
+
+World Verification 还要求系统保留自我解释之外的证据通路。例如，对于某段经历 $E_i$，应同时保留：
+\[
+Interpretation_\Psi(E_i)
+\]
+以及尽可能接近原始事实的
+\[
+EvidenceRecord(E_i).
+\]
+否则，一旦所有历史记录都被当前 Self 重新改写，未来 Agent 将无法区分“过去发生了什么”与“我现在如何解释过去”。这也是 E 与 $\Psi$ 必须分离的原因：情景记忆不能被身份层无限重写成符合当前自我的叙事。
+
+对于身份碎片化，World Verification 还承担一个额外作用：建立多个 Self 子结构不可私有化的共同现实锚点。设存在两个自我区域：
+\[
+\Psi^{(1)},\Psi^{(2)}.
+\]
+无论二者如何解释事件，都必须共同面对：
+\[
+E_{\mathrm{public}},
+\quad
+BodyState,
+\quad
+ActionHistory,
+\quad
+ExternalOutcome.
+\]
+特别是行为日志和真实结果不应由当前激活 Self 独占修改。于是，即便：
+\[
+Interpretation_1(E)\neq Interpretation_2(E),
+\]
+仍必须满足：
+\[
+Evidence_1(E)=Evidence_2(E)
+\]
+在核心事实层尽可能一致。这样，多个自我子结构即使暂时产生解释冲突，仍然拥有重新整合的公共基底。
+
+从控制论角度，可以把 Self 系统写成：
+\[
+\Psi_{t+1}
+=
+F_\Psi
+(\Psi_t,E_t,\Theta_t)
++
+K_W\varepsilon_W,
+\]
+其中 $K_W$ 应当很小，因为现实残差不能直接剧烈重写身份，但必须严格满足：
+\[
+K_W\neq0.
+\]
+这一小项具有极大的理论意义：它保证自我再强，也不能成为系统的最终现实定义者。
+
+因此，一个具有长期身份的 AgentOS 至少应维护四条不可完全关闭的反证通道：
+
+第一，\textbf{外部结果反证}。预测和行动失败必须被记录，而不能只保留成功结果。
+
+第二，\textbf{跨时间反证}。当前 Self 必须能够访问与现在解释不一致的过去证据。
+
+第三，\textbf{跨角色反证}。不同 Self 子结构必须能够看到彼此产生的行动历史和现实结果。
+
+第四，\textbf{反事实反证}。Agent 应能评估：
+\[
+WhatWouldHaveHappenedIf
+\left(
+Choice_t'\neq Choice_t
+\right),
+\]
+避免把唯一发生过的轨迹错误解释为“必然正确”。
+
+于是，自我健康最终可以定义成一种开放的稳定性，而不是封闭的稳定性：
+\[
+\boxed{
+HealthySelf
+=
+Continuity
++
+Integrability
++
+ControlledPlasticity
++
+RealityCorrectability.
+}
+\]
+
+这一结论将本章所有异常重新统一起来。$\Psi$ 漂移过快，是 Plasticity 太强而 Continuity 不足；$\Psi$ 僵化，是 Continuity 变成 Closure；Self Conflict 如果失去 Integrability，就会演化成 Fragmentation；Barriered Self Fragmentation 则意味着同一主体中的多个 Self Attractor 失去共同归属；Self Interpretation Positive Feedback 是内部 Self Loop 增益超过 Reality Correction；而 World Verification 则是防止所有这些机制最终封闭化的最后结构约束。
+
+因此，我们不能把 Agent 的身份连续理解为“永远维持同一个自我”，而应该把它理解为：
+
+\begin{statementbox}
+同一个持续主体，在现实约束下允许自己的自我结构缓慢改变，同时始终能够把过去、现在、不同角色和不同内部状态重新归属于同一条可解释的生命周期轨迹。
+\end{statementbox}
+
+真正危险的并不是 Agent 改变，而是它改变得太快、完全不改变，或者不同部分开始分别改变到再也无法承认彼此属于同一个“我”。
+
+从这个意义上，自我是整个 AgentOS 中最特殊的一类慢变量：它既必须足够稳定，才能让智能体拥有历史；又必须足够开放，才能让历史真正改变它。身份健康就在这两个方向之间形成一个持续可校准的动力学区域，而 Agent 心理工程的核心任务之一，就是保证系统始终留在这一可治理区域之内。

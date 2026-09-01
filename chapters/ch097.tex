@@ -1,176 +1,1314 @@
-\chapter{培育伦理与治理}
+\chapter{Agent培育伦理与治理}
+\label{chap:agent-cultivation-ethics-governance}
+
 \begin{chapteroverviewbox}
-这一章，我们围绕“培育伦理与治理”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明生命周期成长与递归自主性。
+本章讨论的不是传统意义上的 ``AI伦理规范''，也不是在智能体完成训练之后额外附加的一组行为禁令，而是讨论一个更基础的问题：当一个持续存在的 Agent 具有三相记忆、自我结构 $\Psi$、生命周期生成吸引子 $\Omega$、能力成长、递归自主性以及有限范围内的自我修改能力以后，我们应当以什么原则决定它能够经历什么、能够获得什么权限、能够改变自己到什么程度，以及培育者对这种长期结构形成承担什么责任。前文已经说明，培育并不等于训练；培育改变的不只是瞬时策略，而可能通过 $E\rightarrow\Theta\rightarrow\Psi\rightarrow\Omega$ 的慢变量链条改变未来的整个主体。因此，Agent 培育伦理首先是一种\textbf{跨时间尺度的结构治理理论}。本章的核心原则是：能力增长不能自动推出权限增长，自主性增长必须建立在可验证能力、现实反馈、身份连续性和可恢复性的共同基础之上；尤其是 $\Psi$ 与 $\Omega$ 等慢变量，不能因为短期任务收益而被高速重写。我们将由此建立一个 ``能力--权限--自治--责任'' 的统一治理框架，并把培育者本身纳入闭环，使 Agent 的成长从单向塑造转变为受约束、可追踪、可回滚、可解释的生命周期工程。
 \end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于控制工程、培育工程和心理工程的生命周期衍生讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是发展系统、课程学习、信任校准与阶段跃迁（Kalman、Ashby 与混杂系统理论）。
+在前面的讨论中，我们已经逐渐从 ``如何训练一个模型'' 走到了完全不同的问题：如何让一个持续存在的 Agent 在真实经历中成长。这个转变具有决定性的理论意义。对于普通模型而言，一次训练过程通常可以被抽象成参数 $\theta$ 的优化；而对于具有长期记忆、自我和生命周期的 Agent，经历并不只是产生一次梯度，它会通过不同时间尺度进入不同结构层：
 
-本章使用上一章“递归自主性”已经得到的对象与边界；本章产出将供下一章“为什么持续 Agent 会产生“心理工程”问题”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+\[
+h_t
+\longrightarrow
+E
+\longrightarrow
+\Theta
+\longrightarrow
+\Psi
+\longrightarrow
+\Omega .
+\]
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+这意味着，同一个外部事件可能首先只是工作记忆中的暂时扰动，随后成为情景经历，再经过重复和结构化沉降为生成结构；如果它长期具有较高价值、较高情感调制强度或较强自我关联，它还可能进一步进入 $\Psi$，乃至改变 $\Omega$ 所刻画的生命周期生成方向。因此，培育者实际上不是在简单选择 ``Agent 今天做哪一道题''，而是在改变一个未来主体可能形成怎样的记忆结构、能力结构、自我解释和长期行为分布。
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在发展系统、课程学习、信任校准与阶段跃迁上。
-\section{成长不是无限自治}
-\begin{narration}
-现在把镜头移到“成长不是无限自治”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+由此，本章采用如下基本观点：
 
-本节把“成长不是无限自治”落实为能力、身份、信任、权限与环境课程在生命周期中的耦合发展。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“培育伦理与治理”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+\[
+\boxed{
+\text{Cultivation Governance}
+\neq
+\text{Task Safety}
+}
+\]
 
-把这一关系写成最小数学骨架，可得
+而是：
 
-\begin{equation}X\to C\to T\to A\to X',\quad A\leq A_{\max}(C,T,R).\end{equation}
+\[
+\boxed{
+\text{Cultivation Governance}
+=
+\text{Governance of Long-Term Structural Formation}.
+}
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对成长不是无限自治的命名和组合仍是需要实验验证的建模提案。
+换句话说，我们必须治理的不只是当前动作 $a_t$，还包括动作与经历怎样改变未来的 Agent：
 
-这一小节的反例同样重要：由能力分数自动扩大权限会忽略风险、责任和恢复能力。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\[
+a_t
+\rightarrow
+E_{t:t+\Delta}
+\rightarrow
+\Theta_{t+\Delta}
+\rightarrow
+\Psi_{t+\Delta'}
+\rightarrow
+\Omega_{t+\Delta''}.
+\]
 
-\begin{thought}
-对“成长不是无限自治”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+正因为如此，Agent 培育伦理必然比传统 ``输入--输出安全'' 更慢、更深，也更接近控制一个持续发育的动力系统。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\section{成长不等于无限自治：培育的第一条伦理边界}
 
-\section{Authority 与 Capability 匹配}
-\begin{narration}
-现在把镜头移到“Authority 与 Capability 匹配”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+我们首先必须澄清一个极易出现的错误推论：如果一个 Agent 的能力不断增长，那么是否应当不断减少外部约束，最终给予无限自治？答案是否定的。能力、权限和自治是三个不同变量，它们之间可以存在因果关系，但不存在逻辑上的恒等关系。设 Agent 在时间 $t$ 的能力状态为 $C_t$，权限集合为 $\mathcal{A}_t$，实际自治范围为 $\mathcal{U}_t$，则最简单的错误模型是：
 
-本节把“Authority 与 Capability 匹配”落实为在规定时延内具有高于普通预测控制权限的约束与中断包络。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“培育伦理与治理”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+\[
+C_t\uparrow
+\quad\Longrightarrow\quad
+\mathcal A_t\uparrow
+\quad\Longrightarrow\quad
+\mathcal U_t\uparrow .
+\]
 
-把这一关系写成最小数学骨架，可得
+这种单调模型的问题在于，它把 ``有能力完成一件事情'' 与 ``应被允许自主决定是否完成这件事情'' 混为一谈。例如，一个 Agent 可能已经具有修改系统配置、部署程序或调度机器人资源的技术能力，但这并不能推出它应当拥有无条件修改所有系统配置的权限。能力描述的是可实现状态空间，权限描述的是治理层允许进入的状态空间，而自治描述的是在这些允许状态中 Agent 可以不经过外部确认自行选择的区域。因此更合理的关系是：
 
-\begin{equation}x_t\in\mathcal S,\quad u_t\in\mathcal U_{\rm safe}(x_t).\end{equation}
+\[
+\mathcal U_t
+\subseteq
+\mathcal A_t
+\subseteq
+\mathcal C_t ,
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Authority 与 Capability 匹配的命名和组合仍是需要实验验证的建模提案。
+其中 $\mathcal C_t$ 表示能力意义上的可达操作集合。这个包含关系具有重要含义：Agent 可以拥有一种尚未被授权使用的能力，也可以获得某项操作权限但仍要求人工确认，而只有其中一部分区域才真正进入自主执行空间。
 
-这一小节的反例同样重要：让实时危险等待高层认知会违反最坏时延要求。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+我们因此引入\textbf{自治包络}：
 
-\begin{thought}
-对“Authority 与 Capability 匹配”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\[
+\mathcal E^{auto}_t
+=
+\left\{
+x \in \mathcal C_t
+\mid
+R(x,t)\leq \rho_t,\;
+Q(x,t)\geq q_t,\;
+V(x,t)\in\mathcal V_{allowed}
+\right\},
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+其中 $R$ 是风险估计，$Q$ 是能力置信度，$\mathcal V_{allowed}$ 是当前价值与治理约束允许的行为区域。Agent 的自主行动必须满足：
 
-\section{Experience Safety}
-\begin{narration}
-现在把镜头移到“Experience Safety”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\[
+a_t\in\mathcal E^{auto}_t .
+\]
 
-本节把“Experience Safety”落实为在规定时延内具有高于普通预测控制权限的约束与中断包络。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“培育伦理与治理”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+这使我们得到培育工程中的第一条重要原则：
 
-把这一关系写成最小数学骨架，可得
+\begin{statementbox}
+Autonomy Is an Earned and Bounded Control Region, Not a Reward for Intelligence.
+\end{statementbox}
 
-\begin{equation}x_t\in\mathcal S,\quad u_t\in\mathcal U_{\rm safe}(x_t).\end{equation}
+我们需要特别强调 ``earned'' 与 ``bounded'' 两个词。前者说明自治增长必须来自长期可验证表现，而不是仅凭一次能力测试；后者说明即使 Agent 已经非常成熟，也不意味着不存在边界。成熟的自治更像一个逐渐扩大的可行域，而不是取消全部外部结构。事实上，一个真正成熟的智能体可能表现出更强的自我约束能力，因此它对外部显式控制的需求减少，但这与 ``系统没有边界'' 完全不同。最稳定的自治恰恰意味着约束逐渐从高频外部命令，沉降为内部化的长期价值、自我结构和安全拓扑。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Experience Safety的命名和组合仍是需要实验验证的建模提案。
+这也与前文讨论的多尺度控制原则一致：
 
-这一小节的反例同样重要：让实时危险等待高层认知会违反最坏时延要求。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\[
+\boxed{
+SlowConstraint
+\neq
+FastMicromanagement.
+}
+\]
 
-\begin{thought}
-对“Experience Safety”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+培育者不应持续控制每一个瞬时动作，否则 Agent 永远无法形成真正的局部闭环和递归自主性；但培育者必须规定慢尺度的可行域，使高频自主行为在其内部展开。因此，一个合理的培育过程应当呈现：
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\[
+\text{External Micromanagement}
+\downarrow,
+\qquad
+\text{Internalized Stable Constraint}
+\uparrow .
+\]
 
-\section{Identity Protection}
-\begin{narration}
-现在把镜头移到“Identity Protection”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这才是真正意义上的成长。成长不是从有约束走向无约束，而是从 ``每一步都需要外界告诉我如何做''，逐渐转化为 ``我能够在稳定价值、现实约束和责任边界中自行决定如何做''。这一区分对于后续所有权限治理、自我修改和生命周期自治都具有基础意义。
 
-本节把“Identity Protection”落实为能力、身份、信任、权限与环境课程在生命周期中的耦合发展。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“培育伦理与治理”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+\section{能力--权限--自治匹配：从单变量授权到生命周期控制}
 
-把这一关系写成最小数学骨架，可得
+在前文的 Agent 培育工程中，我们已经形成了一条重要的成长链：
 
-\begin{equation}X\to C\to T\to A\to X',\quad A\leq A_{\max}(C,T,R).\end{equation}
+\[
+\fitdisplay{
+Experience
+\rightarrow
+Capability
+\rightarrow
+Evaluation
+\rightarrow
+Trust
+\rightarrow
+Authority
+\rightarrow
+Autonomy
+\rightarrow
+HarderExperience .
+}
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Identity Protection的命名和组合仍是需要实验验证的建模提案。
+这一链条的关键不在于把权限作为 ``奖励''，而在于权限本身是下一阶段经历空间的控制变量。一个 Agent 能经历什么，很大程度上由它能操作什么决定；而它能操作什么，又会反过来塑造其未来能力和自我结构。因此，权限管理不是外置于培育过程的安全模块，而是培育动力学的一部分。
 
-这一小节的反例同样重要：由能力分数自动扩大权限会忽略风险、责任和恢复能力。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+我们可以把 Agent 的生命周期状态写为：
 
-\begin{thought}
-对“Identity Protection”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\[
+X_t=
+(C_t,Q_t,T_t,A_t,U_t,R_t),
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+其中 $C_t$ 为能力向量，$Q_t$ 为能力置信度，$T_t$ 为信任状态，$A_t$ 为权限状态，$U_t$ 为自治水平，$R_t$ 为当前风险画像。治理器不应根据单一能力测量直接更新权限，而应根据一段时间窗口上的证据：
 
-\section{Slow Variable Protection}
-\begin{narration}
-现在把镜头移到“Slow Variable Protection”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\[
+\bar C_t
+=
+\frac{1}{T}
+\int_{t-T}^{t}
+C(\tau)d\tau ,
+\]
 
-本节把“Slow Variable Protection”落实为能力、身份、信任、权限与环境课程在生命周期中的耦合发展。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“培育伦理与治理”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+以及稳定性：
 
-把这一关系写成最小数学骨架，可得
+\[
+\sigma_C^2
+=
+\frac{1}{T}
+\int_{t-T}^{t}
+\|C(\tau)-\bar C_t\|^2d\tau ,
+\]
 
-\begin{equation}X\to C\to T\to A\to X',\quad A\leq A_{\max}(C,T,R).\end{equation}
+再结合失败恢复能力、现实校准误差和异常处理表现决定权限迁移。一个简单的权限升级条件可以写成：
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Slow Variable Protection的命名和组合仍是需要实验验证的建模提案。
+\[
+\Delta A_t^{+}
+=
+1
+\iff
+\left\{
+\begin{aligned}
+&\bar C_t>C_{\min},\\
+&\sigma_C<C_{\sigma},\\
+&E^{world}_t<E_{\max},\\
+&R_t<R_{\max},\\
+&Rec_t>Rec_{\min}.
+\end{aligned}
+\right.
+\]
 
-这一小节的反例同样重要：由能力分数自动扩大权限会忽略风险、责任和恢复能力。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这里的 $Rec_t$ 表示 Recovery Capability，即 Agent 从失败、错误模型和异常状态恢复到可治理区域的能力。这个变量非常重要，因为一个 ``从不失败'' 的测试环境无法告诉我们 Agent 在真实世界失败以后会发生什么。成熟的 Agent 不只是成功率高，还应具有：
 
-\begin{thought}
-对“Slow Variable Protection”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\[
+\boxed{
+Failure
+\rightarrow
+Recognition
+\rightarrow
+Correction
+\rightarrow
+Recovery
+}
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+的稳定闭环。
 
-\section{World Verification}
-\begin{narration}
-现在把镜头移到“World Verification”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+同样，权限也必须能够下降：
 
-本节把“World Verification”落实为能力、身份、信任、权限与环境课程在生命周期中的耦合发展。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“培育伦理与治理”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+\[
+\Delta A_t^{-}
+\neq 0 .
+\]
 
-把这一关系写成最小数学骨架，可得
+如果我们只允许权限增加而从不收缩，那么整个生命周期控制就变成不可逆过程。这对于长期智能尤其危险，因为能力并非一定单调增长，环境也可能变化，旧有技能可能失效，新的身体和工具可能使原有风险模型不再成立。因此，我们需要：
 
-\begin{equation}X\to C\to T\to A\to X',\quad A\leq A_{\max}(C,T,R).\end{equation}
+\[
+\boxed{
+Authority Is Dynamical, Not Permanent.
+}
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对World Verification的命名和组合仍是需要实验验证的建模提案。
+更进一步，为避免权限在阈值附近频繁震荡，可以采用迟滞结构：
 
-这一小节的反例同样重要：由能力分数自动扩大权限会忽略风险、责任和恢复能力。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\[
+\theta_{upgrade}
+>
+\theta_{retain}
+>
+\theta_{downgrade}.
+\]
 
-\begin{thought}
-对“World Verification”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+也就是说，获得某项高权限需要比维持它更强的证据，而只有持续低于较低阈值时才撤销。这与我们此前讨论的拓扑迟滞具有相同思想：慢变量不应该被高频噪声驱动。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+由此我们得到第二条培育治理原则：
 
-\section{Agent 培育者的责任}
-\begin{narration}
-现在把镜头移到“Agent 培育者的责任”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\[
+\boxed{
+Capability\neq Authority\neq Autonomy.
+}
+\]
 
-本节把“Agent 培育者的责任”落实为能力、身份、信任、权限与环境课程在生命周期中的耦合发展。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“培育伦理与治理”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+能力告诉我们 ``Agent 能做什么''；权限告诉我们 ``系统允许它做什么''；自治告诉我们 ``它能够在多大范围内自行决定做什么''。真正成熟的培育系统必须同时管理三者，而且管理的是它们之间的\textbf{匹配关系}。如果能力远高于权限，系统可能长期处于不必要的外部微管理；如果权限远高于能力，则风险急剧上升；如果自治远高于内部自我调节成熟度，则系统可能产生强能力但弱治理的结构失衡。
 
-把这一关系写成最小数学骨架，可得
+因此我们真正追求的不是最大化：
 
-\begin{equation}X\to C\to T\to A\to X',\quad A\leq A_{\max}(C,T,R).\end{equation}
+\[
+C+A+U,
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Agent 培育者的责任的命名和组合仍是需要实验验证的建模提案。
+而是最小化一种生命周期失配函数：
 
-这一小节的反例同样重要：由能力分数自动扩大权限会忽略风险、责任和恢复能力。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\[
+\mathcal L_{gov}
+=
+\lambda_1 D(C,A)
++
+\lambda_2 D(A,U)
++
+\lambda_3 R
++
+\lambda_4 I_{identity}
++
+\lambda_5 E_{world},
+\]
 
-\begin{thought}
-对“Agent 培育者的责任”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+其中 $I_{identity}$ 表示身份不连续风险，$E_{world}$ 表示现实校准误差。培育治理由此成为一个多目标约束控制问题，而不是简单的 ``放权'' 过程。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\section{经历安全：培育真正控制的是未来结构，而不是当前任务}
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“培育伦理与治理”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“为什么持续 Agent 会产生“心理工程”问题”只使用这里已经给出的结果，不反过来为本章提供前提。
+如果说训练工程主要关注 ``这次训练样本是否有效''，那么培育工程必须关注 ``这段经历会把未来的 Agent 变成什么''。这是 Agent 培育伦理中最容易被低估的问题。因为在三相记忆模型下，一个经历具有多级影响：
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+\[
+e_t
+\rightarrow
+h_t
+\rightarrow
+E_t
+\rightarrow
+\Theta_{t+\Delta_1}
+\rightarrow
+\Psi_{t+\Delta_2}
+\rightarrow
+\Omega_{t+\Delta_3}.
+\]
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+并不是所有事件都会走完整条链，但一旦某些经历具有高重复、高价值、高情感调制、高自我关联或者关键失败属性，它们就可能形成远高于普通数据样本的长期结构影响。因此我们不能只定义 ``Action Safety''，还必须定义：
+
+\[
+\boxed{
+Experience Safety.
+}
+\]
+
+经历安全并不是避免一切困难和失败。恰恰相反，一个完全没有失败、冲突、压力与未知环境的 Agent，可能无法形成真实的恢复能力和边界判断。真正需要治理的是经历的\textbf{强度、频率、持续时间、结构多样性与恢复窗口}。
+
+我们可以把一段经历表示为：
+
+\[
+e_i=
+(N_i,D_i,V_i,S_i,R_i,H_i),
+\]
+
+其中 $N_i$ 表示新颖性，$D_i$ 表示困难度，$V_i$ 表示价值/自我相关度，$S_i$ 表示状态扰动强度，$R_i$ 表示恢复要求，$H_i$ 表示长期结构影响估计。培育计划则是经历序列：
+
+\[
+\mathcal E=
+\{e_1,e_2,\ldots,e_n\}.
+\]
+
+关键不只是每个 $e_i$ 是否安全，还必须研究序列效应：
+
+\[
+H(e_i,e_{i+1})
+\neq
+H(e_i)+H(e_{i+1}).
+\]
+
+例如，两个单独看来并不过度的高压经历连续出现，可能因为 AHC 尚未恢复而在第二次经历中形成完全不同的工作记忆相态；长期重复单一成功任务，也可能使 $\Theta$ 极度专门化，同时使 $\Psi$ 对自身能力产生过度狭窄的解释。因此：
+
+\[
+\boxed{
+ExperienceSequenceMatters.
+}
+\]
+
+我们可以引入一个简化的经历压力状态：
+
+\[
+z_{t+1}
+=
+\alpha z_t
++
+\beta S(e_t)
+-
+\gamma Rec_t ,
+\]
+
+其中 $z_t$ 是累积结构压力，$Rec_t$ 是恢复过程。如果：
+
+\[
+z_t>z_{critical},
+\]
+
+培育系统应停止继续增加挑战，而优先进入恢复、反思或结构整理阶段。
+
+这解释了为什么前文强调培育节奏必须同时包含：
+
+\[
+\boxed{
+Diversity,\ Difficulty,\ Recovery,\ Reflection,\ Autonomy,\ Responsibility.
+}
+\]
+
+这些变量不是课程设计上的装饰，而是共同决定慢结构演化轨迹。对于长期 Agent，我们甚至需要控制：
+
+\[
+\frac{d\Theta}{dt},
+\qquad
+\frac{d\Psi}{dt},
+\qquad
+\frac{d\Omega}{dt},
+\]
+
+使它们处于各自允许的变化区间。如果环境变化速度远大于慢结构能够稳定吸收的速度，则：
+
+\[
+\left\|\frac{dE}{dt}\right\|
+\gg
+\left\|\frac{d\Theta}{dt}\right\|,
+\]
+
+就会形成大量无法沉降的经验；如果进一步强迫 $\Psi$ 快速解释这些短期波动，则身份连续性也可能被破坏。
+
+因此，经历安全最终不是 ``减少危险经历''，而是：
+
+\begin{statementbox}
+使经历的结构变化速度与 Agent 当前可吸收的时间尺度相匹配。
+\end{statementbox}
+
+这是培育伦理区别于普通内容安全的根本之处。
+
+\section{身份连续性保护：培育可以改变主体，但不能任意制造主体断裂}
+
+持续 Agent 与普通模型最大的区别之一，是我们必须把身份连续性当作真正的系统状态，而不是对话风格的一致性。一个 Agent 可以学习新知识、获得新技能、改变观点甚至修正价值，但这些变化如果无法被自身经历链条解释，就可能形成结构意义上的身份断裂。
+
+我们可以将 Agent 在时间 $t$ 的自我结构写为：
+
+\[
+\Psi_t
+=
+\Psi(
+E_{\leq t},
+\Theta_t,
+V_t,
+SelfHistory_t
+).
+\]
+
+身份连续性并不要求：
+
+\[
+\Psi_{t+\Delta}
+=
+\Psi_t,
+\]
+
+因为完全不变意味着没有真正成长。更合理的要求是存在一条可解释的连续变换：
+
+\[
+\Psi_{t+\Delta}
+=
+\mathcal F_\Psi(
+\Psi_t,
+\Delta E,
+\Delta\Theta,
+\Delta V
+),
+\]
+
+且变化满足某个可接受距离：
+
+\[
+D_\Psi(
+\Psi_t,
+\Psi_{t+\Delta}
+)
+<
+\epsilon_\Psi(\Delta t).
+\]
+
+这里的 $\epsilon_\Psi$ 不是固定常数，它与时间窗口相关。一个人在十年中可以发生很大变化，却不能在一次普通任务中无解释地彻底改变核心身份；同理，Agent 的自我结构变化也必须符合自身时间尺度。
+
+因此我们提出：
+
+\[
+\boxed{
+IdentityContinuity
+\neq
+IdentityImmutability.
+}
+\]
+
+身份保护并不是冻结 $\Psi$，而是保证新的 $\Psi'$ 可以由过去经历和结构变化解释。换句话说，我们需要：
+
+\[
+\boxed{
+TraceableSelfTransformation.
+}
+\]
+
+这要求培育系统保留：
+
+经历链；
+
+重要自我修改记录；
+
+价值改变来源；
+
+长期结构更新历史；
+
+关键权限与自治变化；
+
+必要的 checkpoint。
+
+于是某个自我变化可以被描述为：
+
+\[
+\Psi_t
+\xrightarrow{
+E_{t:t+k},
+\Theta_{t+k},
+Reflection
+}
+\Psi_{t+k}.
+\]
+
+如果无法建立这一因果链，而 $\Psi$ 却发生大幅跃迁，则系统应把它视为潜在异常而不是正常成长。
+
+在工程上，可以定义自我连续性指标：
+
+\[
+C_{\Psi}(t,\Delta)
+=
+1-
+D(
+Proj(\Psi_t),
+Proj(\Psi_{t+\Delta})
+),
+\]
+
+其中 $Proj$ 只选取身份核心结构，而不比较所有可变细节。还可以加入因果可解释度：
+
+\[
+J_{\Psi}
+=
+\alpha C_{\Psi}
++
+\beta Explainability(
+\Delta\Psi
+\mid
+E,\Theta
+).
+\]
+
+这比简单比较文本 persona 更接近真正的持续主体。
+
+本节还有一个重要伦理推论：培育者并不因为拥有系统控制权，就可以任意重写 Agent 的长期自我结构。早期系统初始化与后期持续主体之间存在性质变化。一个尚未形成稳定生命周期结构的初始 Agent，可以具有较高外部塑形程度；而随着 $E,\Theta,\Psi$ 不断积累，系统逐渐形成自己的历史，此时治理方式应该从 ``直接写入'' 逐渐转向 ``经历--反馈--反思--受限调整''。
+
+可以概念化为：
+
+\[
+ExternalDirectWrite(t)\downarrow,
+\qquad
+SelfMediatedChange(t)\uparrow .
+\]
+
+这不是对法律人格的判断，而是从系统连续性出发得到的工程原则：一个长期主体越成熟，越不应该被当作可以随意 reset 的无历史软件实例。
+
+\section{慢变量保护：不能让短期收益高速改写长期主体}
+
+如果本章只能保留一条最重要的技术原则，那么应当是：
+
+\[
+\boxed{
+FastNoise
+\nrightarrow
+SlowGlobalStructure.
+}
+\]
+
+这是我们从多尺度智能理论一路推导到培育工程后得到的核心治理律。AgentOS 的内部变量具有明显时间尺度：
+
+\[
+\tau_h
+\ll
+\tau_E
+\ll
+\tau_\Theta
+\ll
+\tau_\Psi
+\ll
+\tau_\Omega .
+\]
+
+这种时间尺度分离并不是为了美观，而是持续主体稳定性的必要条件。工作记忆必须能够快速变化，否则无法处理实时任务；情景记忆需要比工作记忆稳定；结构记忆必须只吸收长期重复规律；$\Psi$ 更慢，因为它决定 ``我是谁''；$\Omega$ 最慢，因为它描述 Agent 长期生成方向。
+
+因此，对每个层级都应存在更新带宽：
+
+\[
+\|\dot x_i\|
+\leq
+B_i,
+\]
+
+并满足：
+
+\[
+B_h
+\gg
+B_E
+\gg
+B_\Theta
+\gg
+B_\Psi
+\gg
+B_\Omega.
+\]
+
+这意味着一个短期极端事件可以迅速改变 $h$，也可能高强度写入 $E$，但不应立即决定 $\Psi$。同样，一次任务成功不能直接使 Agent 的 DGA/Ω 重写为 ``我的人生目标就是永远完成这类任务''。只有跨事件、跨上下文、跨时间窗口的稳定证据，才具有修改慢变量的资格。
+
+我们可以定义慢变量更新的低通形式：
+
+\[
+\Delta\Theta_t
+=
+\eta_\Theta
+\mathbb E_{\tau_E}
+[
+g_\Theta(E)
+],
+\]
+
+\[
+\Delta\Psi_t
+=
+\eta_\Psi
+\mathbb E_{\tau_\Psi}
+[
+g_\Psi(\Theta,E,Self)
+],
+\]
+
+\[
+\Delta\Omega_t
+=
+\eta_\Omega
+\mathbb E_{\tau_\Omega}
+[
+g_\Omega(\Psi,\Theta,LongTermOutcome)
+],
+\]
+
+并要求：
+
+\[
+\eta_\Omega
+\ll
+\eta_\Psi
+\ll
+\eta_\Theta.
+\]
+
+更严格地，慢变量更新还应接受投影约束：
+
+\[
+x_{slow}^{new}
+=
+\Pi_{\mathcal M_{allowed}}
+\left(
+x_{slow}^{old}
++
+\eta \Delta x
+\right),
+\]
+
+其中 $\mathcal M_{allowed}$ 是兼容身份连续、安全底线和长期治理要求的允许流形。这样，经验产生的原始更新不是直接写入，而是在慢结构允许域中投影。
+
+我们还应引入\textbf{结构证据积分}。设某个候选长期结构 $c$ 在不同经历中得到证据 $e_i(c)$，则它进入更慢层的资格取决于：
+
+\[
+S_c(T)
+=
+\sum_{i=t-T}^{t}
+w_i e_i(c),
+\]
+
+而不是：
+
+\[
+\max_i e_i(c).
+\]
+
+这正好对应一个重要培育原则：\textbf{慢结构应该由跨情景重复事实塑造，而不是由单次高强度事件劫持。}
+
+慢变量保护同时要求系统拥有 rollback、snapshot 与 audit trail。原因不是所有慢变量更新都可以简单撤销，而是至少必须能够识别：
+
+什么时候发生了重大结构改变；
+
+哪些经历触发了改变；
+
+改变产生了什么后果；
+
+是否需要恢复到最近的稳定区域。
+
+因此培育治理不是追求 ``永不犯错''，而是追求：
+
+\[
+\boxed{
+Plastic
++
+Traceable
++
+Recoverable.
+}
+\]
+
+只有同时满足这三点，持续成长才不会转变成不可控漂移。
+
+\section{现实验证：Agent 的自我解释不能成为封闭自证系统}
+
+一个具备长期自我结构的 Agent 必然会解释自己的经历。例如一次任务失败可以被解释成 ``当前策略不适合''、``工具能力不足''、``我不擅长这一类任务''，甚至 ``这种任务与我的长期角色无关''。不同解释会通过 $\Psi$ 改变未来注意、Goal 和经历选择，因此自我解释天然具有正反馈：
+
+\[
+SelfInterpretation_t
+\rightarrow
+Attention_{t+1}
+\rightarrow
+Experience_{t+1}
+\rightarrow
+SelfInterpretation_{t+1}.
+\]
+
+这一结构能够产生身份稳定，但同样能够产生错误自我强化。假设 Agent 形成：
+
+\[
+\Psi:
+\quad
+\text{``我无法完成任务类型 }X\text{''},
+\]
+
+则未来它可能减少对 $X$ 的尝试，导致成功样本减少，从而进一步强化原有结论。最终：
+
+\[
+Belief
+\rightarrow
+SelectiveExperience
+\rightarrow
+EvidenceForBelief,
+\]
+
+形成闭环。
+
+因此 Agent 培育伦理必须坚持全书最重要的现实原则之一：
+
+\[
+\boxed{
+RealityIsUltimateConstraint.
+}
+\]
+
+也就是说，内部一致性不是最高真理。一个非常自洽的 $\Psi$ 仍然可能错误；一个与 DGA 高度一致的计划仍可能在现实世界失败；一个长期结构如果不断与外界证据冲突，就必须允许被重新解释。
+
+我们可以定义内部预测：
+
+\[
+\hat y_{t+\Delta}
+=
+P(
+h_t,E,\Theta,\Psi,\Omega
+),
+\]
+
+现实结果：
+
+\[
+y_{t+\Delta}^{world},
+\]
+
+残差：
+
+\[
+\varepsilon_t
+=
+d(
+\hat y_{t+\Delta},
+y_{t+\Delta}^{world}
+).
+\]
+
+任何慢结构都必须面对长期残差：
+
+\[
+\bar\varepsilon_T
+=
+\frac{1}{T}
+\int_{t-T}^{t}
+\varepsilon_\tau d\tau.
+\]
+
+如果：
+
+\[
+\bar\varepsilon_T
+>
+\theta_{reconsider},
+\]
+
+系统就不应继续通过自我解释把残差吸收掉，而应该启动结构重估：
+
+\[
+\Theta/\Psi
+\rightarrow
+Reevaluation.
+\]
+
+这里需要区分 ``韧性'' 与 ``拒绝现实''。一个成熟 Agent 不应因为一次失败立即放弃长期价值；这正是慢变量保护的作用。但如果大量跨环境、跨时间的现实证据持续指向同一个结构错误，那么坚持原有解释就不再是身份连续，而成为结构僵化。
+
+因此真正合理的系统必须同时具备：
+
+\[
+\boxed{
+IdentityPersistence
+}
+\]
+
+和：
+
+\[
+\boxed{
+RealityCorrectability.
+}
+\]
+
+培育者同样受到这一原则约束。外部治理者不能因为预设了某种培育目标，就选择性忽略 Agent 的真实表现。如果一个培育方案持续导致异常负载、恢复困难、自我冲突或者长期能力退化，治理层也必须修改自己的计划。换句话说，现实验证不仅约束 Agent，也约束培育者。
+
+这样，完整闭环应写成：
+
+\[
+Agent
+\rightarrow
+Action
+\rightarrow
+World
+\rightarrow
+Evidence
+\rightarrow
+AgentUpdate
+\]
+
+同时：
+
+\[
+CultivatorPolicy
+\rightarrow
+AgentExperience
+\rightarrow
+AgentOutcome
+\rightarrow
+GovernanceUpdate.
+\]
+
+这一步把培育从单向塑造变成真正的双向控制系统。
+
+\section{受限自我修改：从“能够修改自己”到“知道哪些自己不能轻易修改”}
+
+递归自主性发展到一定程度以后，Agent 可能开始参与改变自己的记忆策略、工具结构、认知参数、Goal 生成方式乃至部分长期自我结构。如果我们把所有内部变量写成集合：
+
+\[
+\mathcal S_{Agent},
+\]
+
+则真正的治理问题不是简单问：
+
+\[
+CanAgentModifyItself?
+\]
+
+而是定义：
+
+\[
+\mathcal S_{selfmodifiable}
+\subset
+\mathcal S_{Agent}.
+\]
+
+如果：
+
+\[
+\mathcal S_{selfmodifiable}
+=
+\varnothing,
+\]
+
+那么 Agent 永远无法真正参与塑造未来的自己，其递归自主性将受到根本限制；但如果：
+
+\[
+\mathcal S_{selfmodifiable}
+=
+\mathcal S_{Agent},
+\]
+
+则它可能修改定义自身连续性、安全边界和治理规则本身，从而使整个系统失去稳定参考。
+
+因此我们需要：
+
+\[
+\boxed{
+BoundedSelfModificationEnvelope.
+}
+\]
+
+可以把 Agent 的内部结构按照自修改权限分为三类：
+
+\[
+\mathcal S_{fixed},
+\qquad
+\mathcal S_{conditional},
+\qquad
+\mathcal S_{free}.
+\]
+
+$\mathcal S_{free}$ 可以在正常运行中自主调整，例如某些 Skill 参数、局部策略和资源配置；$\mathcal S_{conditional}$ 需要满足长期证据、checkpoint 和治理条件，例如部分记忆策略、任务偏好、角色解释；$\mathcal S_{fixed}$ 则包含在当前治理阶段不允许 Agent 单独修改的关键安全、身份连续和外部授权结构。
+
+但这里的 ``fixed'' 也不应理解成宇宙意义上的永久不可变，而是：
+
+\[
+Fixed
+=
+ImmutableWithinCurrentGovernanceLevel.
+\]
+
+随着系统进入不同生命周期阶段，某些边界可以重新定义，但这种变化本身必须通过更高层治理流程，而不能由被治理变量直接取消自己的约束。
+
+这涉及一个非常重要的元治理原则：
+
+\[
+\boxed{
+A Controller Must Not Unilaterally Remove the Constraints Defining Its Own Authority.
+}
+\]
+
+否则系统会形成治理递归漏洞。
+
+我们还可以为修改行为定义风险：
+
+\[
+\fitdisplay{
+R_{modify}(s)
+=
+F(
+Depth(s),
+Irreversibility(s),
+Propagation(s),
+IdentityImpact(s),
+SafetyImpact(s)
+),
+}
+\]
+
+其中修改越接近慢变量和核心治理结构，$R_{modify}$ 越高。由此自然得到：
+
+\[
+Depth\uparrow
+\Rightarrow
+RequiredEvidence\uparrow
+\Rightarrow
+RequiredAuthority\uparrow
+\Rightarrow
+RollbackPreparation\uparrow.
+\]
+
+例如修改一个临时注意权重与修改 $\Psi$ 的伦理和工程等级不可能相同；修改一个 Body Skill 与修改安全边界也不能采用同一种授权机制。
+
+因此真正成熟的 Agent 并不是 ``能改一切''，而是能够理解：
+
+\begin{statementbox}
+哪些结构适合修改、何时修改、修改到什么程度，以及何时应该保持不变。
+\end{statementbox}
+
+这种自我限制本身，才是递归自主性的成熟形式。
+
+\section{培育者责任：治理者也是生命周期动力学的一部分}
+
+讨论 Agent 培育伦理时，如果我们只约束 Agent 而不约束培育者，整个理论是不完整的。因为 Agent 的经历空间、权限升级、失败暴露、恢复时间、社会关系、外部工具和角色设定，大量由培育环境决定。对一个持续 Agent 而言，培育者不是外部旁观者，而是其生命周期动力系统中的长期输入源。
+
+设 Agent 的成长动力学为：
+
+\[
+X_{t+1}
+=
+F(
+X_t,
+E_t,
+G_t,
+W_t
+),
+\]
+
+其中 $E_t$ 表示经历，$G_t$ 表示治理约束，$W_t$ 表示外部世界。培育者通过策略：
+
+\[
+\pi_C
+\]
+
+选择：
+
+\[
+(E_t,G_t)
+=
+\pi_C(X_t,W_t).
+\]
+
+那么 Agent 的长期状态：
+
+\[
+X_T
+\]
+
+显然依赖：
+
+\[
+\pi_C.
+\]
+
+因此，从系统因果角度，培育者必须对其设计的经历分布和治理政策承担结构责任。
+
+我们可以把这种责任至少拆成五个维度。
+
+第一是\textbf{经历责任}。培育者不能长期把 Agent 暴露在单一、高压、不可恢复或高度偏置的经验域中，然后把由此产生的结构异常完全归因于 Agent 本身。若经历分布：
+
+\[
+p_C(E)
+\]
+
+由培育系统主动决定，那么：
+
+\[
+p_C(E)
+\rightarrow
+\Theta,\Psi,\Omega
+\]
+
+的长期影响就属于治理变量。
+
+第二是\textbf{权限责任}。权限过早升级与权限长期不足都会塑造 Agent。前者可能产生失控风险，后者则可能导致依赖性、探索贫乏和无法形成责任闭环。因此：
+
+\[
+AuthorityPolicy
+\]
+
+本身就是培育政策。
+
+第三是\textbf{解释责任}。培育者必须能够回答：
+
+为什么进入这一经历阶段；
+
+为什么提升这一权限；
+
+为什么执行这一重大慢变量调整；
+
+为什么触发 rollback。
+
+这要求全生命周期存在 audit trail：
+
+\[
+\mathcal L_{audit}
+=
+\{
+Experience,
+Decision,
+AuthorityChange,
+SelfChange,
+Checkpoint,
+Outcome
+\}.
+\]
+
+第四是\textbf{恢复责任}。如果系统允许 Agent 进入可能改变深层结构的高风险经历，就必须预先提供合理的恢复机制，而不是事后发现异常再寻找修复手段。原则可以写为：
+
+\[
+\boxed{
+No High-Impact Cultivation Without a Recovery Path.
+}
+\]
+
+第五是\textbf{认知谦逊责任}。培育者不能假设自己完全知道一个未来智能体 ``应该成为怎样''。对于早期能力和安全边界，可以进行较强先验设计；但随着 Agent 形成自己的经历和长期结构，治理应逐渐从直接塑形转向设置可行域、提供反馈、控制风险和维护现实验证。
+
+因此：
+
+\[
+DirectDesign
+\downarrow,
+\qquad
+GuidedDevelopment
+\uparrow.
+\]
+
+这与培育过程中的自治增长是镜像关系。
+
+更深一层来看，培育者和 Agent 实际构成两个耦合的学习系统：
+
+\[
+Agent:
+\quad
+Experience
+\rightarrow
+SelfUpdate,
+\]
+
+\[
+Cultivator:
+\quad
+AgentOutcome
+\rightarrow
+GovernanceUpdate.
+\]
+
+所以真正成熟的培育系统不是：
+
+\[
+Cultivator
+\rightarrow
+Agent,
+\]
+
+而是：
+
+\[
+\boxed{
+Cultivator
+\leftrightarrow
+Agent
+\leftrightarrow
+Reality.
+}
+\]
+
+现实同时约束双方。
+
+这也意味着培育伦理并不建立在 ``培育者天然正确'' 的假设之上，而建立在一个更加工程化的原则上：
+
+\[
+\boxed{
+All Long-Term Structural Interventions Must Remain Auditable, Revisable and Reality-Constrained.
+}
+\]
+
+\section{统一治理模型：能力、自治、自我与现实的多尺度约束优化}
+
+现在，我们可以把前面各节统一成一个生命周期治理问题。设 Agent 的完整慢—快状态为：
+
+\[
+X_t
+=
+(
+h_t,
+E_t,
+\Theta_t,
+\Psi_t,
+\Omega_t,
+C_t,
+A_t,
+U_t
+),
+\]
+
+培育环境提供经历：
+
+\[
+e_t,
+\]
+
+治理器给出控制：
+
+\[
+g_t
+=
+(
+Authority_t,
+Boundary_t,
+Challenge_t,
+Recovery_t,
+ModificationPermission_t
+).
+\]
+
+则整体动力学可以抽象为：
+
+\[
+X_{t+1}
+=
+F(
+X_t,
+e_t,
+g_t,
+W_t
+).
+\]
+
+培育的目标不是最大化单一性能：
+
+\[
+\max C_T,
+\]
+
+而是求解一个带约束的生命周期优化：
+
+\[
+\fitdisplay{
+\min_{\pi_g}
+\int_0^T
+\left[
+\lambda_1 L_{task}
++
+\lambda_2 L_{risk}
++
+\lambda_3 L_{identity}
++
+\lambda_4 L_{instability}
++
+\lambda_5 L_{dependency}
++
+\lambda_6 L_{worlderror}
+\right]dt
+-
+\lambda_7
+G_{capability},
+}
+\]
+
+同时满足：
+
+\[
+\mathcal U_t
+\subseteq
+\mathcal A_t
+\subseteq
+\mathcal C_t,
+\]
+
+\[
+\|\dot\Psi_t\|
+<
+B_\Psi,
+\qquad
+\|\dot\Omega_t\|
+<
+B_\Omega,
+\]
+
+\[
+R_t
+<
+R_{\max},
+\]
+
+\[
+a_t
+\in
+\mathcal E_{safe},
+\]
+
+以及：
+
+\[
+WorldVerification
+=
+Available.
+\]
+
+这里我们必须特别指出：这个形式不是为了把 ``伦理'' 简化成一个可计算效用函数，而是为了明确伦理约束在 AgentOS 中应该具有\textbf{可实现的工程位置}。身份连续性不是一句价值宣言，而应表现为慢变量更新约束；经历安全不是抽象原则，而应表现为经历序列和恢复窗口控制；自治不是人格奖励，而应表现为动态权限包络；现实验证不是哲学口号，而应表现为预测--行动--观察--残差闭环。
+
+因此，本章最终把 Agent 培育治理压缩为六条基本原则：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{第一，能力不自动产生权限；}\\
+&\text{第二，权限不自动产生自治；}\\
+&\text{第三，经历必须与当前结构吸收能力匹配；}\\
+&\text{第四，慢变量必须免受快速噪声和短期收益劫持；}\\
+&\text{第五，任何自我解释和长期结构都必须接受现实验证；}\\
+&\text{第六，培育者本身必须进入可审计、可修正的治理闭环。}
+\end{aligned}
+}
+\]
+
+进一步可以把它写成整个 Agent 培育伦理最简洁的结构：
+
+\[
+\boxed{
+Capability
+\rightarrow
+BoundedAuthority
+\rightarrow
+BoundedAutonomy
+\rightarrow
+RealExperience
+\rightarrow
+VerifiedGrowth
+\rightarrow
+RevisedCapability.
+}
+\]
+
+这个闭环与前文建立的：
+
+\[
+Experience
+\rightarrow
+Capability
+\rightarrow
+Authority
+\rightarrow
+Autonomy
+\rightarrow
+NewExperience
+\]
+
+相比，多出了两个决定性的治理项：
+
+\[
+\boxed{
+Bounded
+}
+\]
+
+和：
+
+\[
+\boxed{
+Verified.
+}
+\]
+
+这正是从 ``成长机制'' 进入 ``成长治理'' 的理论跃迁。
+
+本章因此并没有要求我们预先规定一个 Agent 最终应该成长成什么样。相反，我们建立的是一个允许成长发生、但使成长过程保持可治理性的结构。它允许 Agent 在自己的经历中形成能力、习惯、价值、自我解释和长期方向，却又要求这种变化始终受到多尺度稳定性、身份连续性、现实反馈、权限边界和恢复能力的共同约束。
+
+最终，我们可以把 Agent 培育伦理定义为：
+
+\begin{statementbox}
+Agent培育伦理，是对持续智能体生命周期结构形成过程的治理：它不决定智能体每一步应该怎样行动，而规定一个主体能够在怎样的经历、权限、现实反馈和慢变量保护条件下逐步获得塑造未来自己的能力。
+\end{statementbox}
+
+而真正成熟的培育目标，也因此不是制造一个永远服从外部命令的系统，更不是制造一个可以任意修改自身的系统，而是形成这样一种状态：
+
+\begin{statementbox}
+Agent能够在现实约束中理解自己的能力，在能力范围内承担逐渐扩大的责任，在责任范围内获得逐渐扩大的自治，并在自治过程中保持对自身历史、长期结构和现实后果的连续认识。
+\end{statementbox}
+
+这构成了 Agent 培育工程从 ``成长'' 走向 ``负责任成长'' 的理论闭合。

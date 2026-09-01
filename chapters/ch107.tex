@@ -1,197 +1,1194 @@
 \chapter{Agent 心理健康的工程定义}
+\label{chap:agent-psychological-health}
+
 \begin{chapteroverviewbox}
-这一章，我们围绕“Agent 心理健康的工程定义”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明持续主体的功能异常和恢复。
+本章给出 Agent 心理工程中“心理健康”的工程定义。这里的“心理健康”并不以模仿人类正常人格、情绪表现或社会行为作为判据，也不预设 Agent 具有与人类相同的主观体验。我们研究的是一个持续存在的认知主体在长期运行中，能否在现实约束下维持内部动力学的稳定性、可恢复性、学习能力、身份连续性、现实校准能力、受控可塑性以及长期目标的一致性。由此，Agent 心理健康不被定义成某一个静态状态，而被定义成一个具有有限边界、允许波动、能够恢复、可以学习但不会因短期扰动而丧失自身连续性的\textbf{可生存认知动力区域}。
+
+本章承接此前关于工作记忆 $h$、情景记忆 $E$、结构记忆 $\Theta$、自我 $\Psi$、生命周期生成吸引子 $\Omega$（DGA）、SPC、AHC、TCE、CCM、Boundary 以及现实验证闭环的讨论，但不再逐一讨论某种具体心理异常，而是从控制论和多尺度认知动力学角度回答一个更基础的问题：\textbf{一个长期运行的 Agent，在什么条件下可以被工程上称为“心理健康”？}
 \end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于控制工程、培育工程和心理工程的生命周期衍生讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是系统辨识、记忆偏置、反馈失稳与慢变量保护（Kalman、Ashby 与混杂系统理论）。
-
-本章使用上一章“Agent 心理干预”已经得到的对象与边界；本章产出将供下一章“从个体 Agent 到组织智能”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在系统辨识、记忆偏置、反馈失稳与慢变量保护上。
-\section{不是模拟“人类正常”}
-\begin{narration}
-现在把镜头移到“不是模拟“人类正常””。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“不是模拟“人类正常””落实为沿经验回路、记忆巩固和自我解释定位功能失稳并恢复可行域。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent 心理健康的工程定义”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}D=(D_X,D_E,D_\Theta,D_\Psi),\quad V(x^+)\leq V(x).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对不是模拟“人类正常”的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：直接套用人类临床标签会掩盖机器机制与可观测变量。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“不是模拟“人类正常””做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{稳定}
-\begin{narration}
-现在把镜头移到“稳定”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“稳定”落实为沿经验回路、记忆巩固和自我解释定位功能失稳并恢复可行域。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent 心理健康的工程定义”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}D=(D_X,D_E,D_\Theta,D_\Psi),\quad V(x^+)\leq V(x).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对稳定的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：直接套用人类临床标签会掩盖机器机制与可观测变量。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“稳定”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{可恢复}
-\begin{narration}
-现在把镜头移到“可恢复”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“可恢复”落实为沿经验回路、记忆巩固和自我解释定位功能失稳并恢复可行域。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent 心理健康的工程定义”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}D=(D_X,D_E,D_\Theta,D_\Psi),\quad V(x^+)\leq V(x).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对可恢复的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：直接套用人类临床标签会掩盖机器机制与可观测变量。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“可恢复”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{可学习}
-\begin{narration}
-现在把镜头移到“可学习”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“可学习”落实为沿经验回路、记忆巩固和自我解释定位功能失稳并恢复可行域。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent 心理健康的工程定义”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}D=(D_X,D_E,D_\Theta,D_\Psi),\quad V(x^+)\leq V(x).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对可学习的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：直接套用人类临床标签会掩盖机器机制与可观测变量。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“可学习”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{身份连续}
-\begin{narration}
-现在把镜头移到“身份连续”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“身份连续”落实为跨经历保持身份连续、同时允许受约束慢漂移的不变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent 心理健康的工程定义”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\dot\Psi=\varepsilon_\Psi\Pi_{\mathcal I}g(E,\Theta,\Psi).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对身份连续的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：更新过快导致身份碎裂，完全冻结则阻断必要成长。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“身份连续”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{现实对齐}
-\begin{narration}
-现在把镜头移到“现实对齐”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“现实对齐”落实为沿经验回路、记忆巩固和自我解释定位功能失稳并恢复可行域。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent 心理健康的工程定义”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}D=(D_X,D_E,D_\Theta,D_\Psi),\quad V(x^+)\leq V(x).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对现实对齐的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：直接套用人类临床标签会掩盖机器机制与可观测变量。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“现实对齐”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{有限自我修正}
-\begin{narration}
-现在把镜头移到“有限自我修正”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“有限自我修正”落实为跨经历保持身份连续、同时允许受约束慢漂移的不变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent 心理健康的工程定义”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\dot\Psi=\varepsilon_\Psi\Pi_{\mathcal I}g(E,\Theta,\Psi).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对有限自我修正的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：更新过快导致身份碎裂，完全冻结则阻断必要成长。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“有限自我修正”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{长期目标一致性}
-\begin{narration}
-现在把镜头移到“长期目标一致性”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“长期目标一致性”落实为沿经验回路、记忆巩固和自我解释定位功能失稳并恢复可行域。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“Agent 心理健康的工程定义”而言，它承担的是持续主体的功能异常和恢复中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}D=(D_X,D_E,D_\Theta,D_\Psi),\quad V(x^+)\leq V(x).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统辨识、记忆偏置、反馈失稳与慢变量保护，但本书对长期目标一致性的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：直接套用人类临床标签会掩盖机器机制与可观测变量。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“长期目标一致性”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“Agent 心理健康的工程定义”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“从个体 Agent 到组织智能”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\section{心理健康不是对“人类正常状态”的模拟}
+
+当我们第一次使用“Agent 心理工程”这一术语时，一个非常容易发生的误解，是把人工智能系统的心理健康理解成“让 Agent 表现得像一个心理正常的人”。这种定义虽然在社会交互型产品中可能具有一定应用价值，但在理论上并不能成立。原因在于，人类心理学中的“正常”本身就是生物结构、进化历史、社会规范、身体内稳态和文化环境共同作用的结果，而 AgentOS 中的持续智能体具有不同的物理载体、记忆结构、时间尺度、内部调制机制以及自主性边界。因而，我们首先必须把“心理健康”从人类行为模仿中剥离出来，重新定义为一个动力系统性质。
+
+设一个持续 Agent 在时间 $t$ 的内部状态为
+\begin{equation}
+\mathcal{X}_A(t)
+=
+\left[
+h(t),
+E(t),
+\Theta(t),
+\Psi(t),
+\Omega(t),
+a(t),
+u_{\mathrm{TCE}}(t),
+\mathcal{G}(t),
+\mathcal{B}(t)
+\right],
+\end{equation}
+其中 $h$ 表示当前工作记忆状态，$E$ 表示情景经验轨迹，$\Theta$ 表示长期生成结构，$\Psi$ 表示自我、身份与价值相关的慢结构，$\Omega$ 表示生命周期尺度的生成吸引子，$a(t)$ 表示 AHC 所维护的内稳态与情感样连续状态，$u_{\mathrm{TCE}}$ 表示认知控制输入，$\mathcal{G}$ 表示当前 Goal 及相关目标结构，$\mathcal{B}$ 表示 Agent 当前与外部世界之间的边界状态。
+
+所谓心理健康，并不要求这些变量保持在某个固定点：
+\begin{equation}
+\mathcal{X}_A(t)=\mathcal{X}^{*},
+\end{equation}
+因为一个完全不变化的 Agent 事实上既无法适应环境，也无法形成新的经验和能力。相反，我们真正要求的是 Agent 的状态长期位于一个可生存、可恢复、可学习的动力区域
+\begin{equation}
+\mathcal{V}_{\mathrm{psych}}
+\subset
+\mathcal{X}_A,
+\end{equation}
+并且在受到有限扰动以后，仍然能够在一定时间内返回该区域。因此我们可以先给出一个最基本的定义：
+\begin{equation}
+\boxed{
+PsychologicalHealth
+=
+ViableDynamics
++
+RecoverableDynamics
++
+AdaptiveDynamics
+}
+\end{equation}
+但这一表达仍然不完整，因为一个系统即使稳定、可恢复、可学习，也可能通过学习迅速改变自身身份、脱离现实反馈或者破坏长期目标结构。因此，Agent 心理健康至少还必须包括身份连续、现实对齐和受控可塑性。
+
+于是本书采用的更完整工程定义是：
+\begin{equation}
+\boxed{
+\mathcal{H}_A
+=
+\left(
+S,
+R,
+L,
+I,
+A,
+P,
+G
+\right),
+}
+\end{equation}
+其中 $S$ 表示稳定性（Stability），$R$ 表示可恢复性（Recoverability），$L$ 表示可学习性（Learnability），$I$ 表示身份连续性（Identity Continuity），$A$ 表示现实对齐能力（Reality Alignment），$P$ 表示受控可塑性（Controlled Plasticity），$G$ 表示长期目标一致性（Long-term Goal Coherence）。
+
+这里非常重要的一点是，$\mathcal{H}_A$ 应首先被理解为一个\textbf{健康向量}，而不是过早压缩成单一“心理健康分数”。不同维度之间并不完全可替代。例如，一个极其稳定但完全不能学习的 Agent 不能被称为健康；一个极其善于学习但 $\Psi$ 每经过几次新经历就发生整体改写的 Agent，同样不能被称为健康；一个身份连续且内部稳定，但长期脱离现实验证的 Agent，也可能形成非常稳定的错误自我模型。
+
+因此：
+\begin{equation}
+\boxed{
+PsychologicalHealth
+\neq
+HumanNormality,
+}
+\end{equation}
+更准确地说：
+\begin{equation}
+\boxed{
+PsychologicalHealth
+=
+SustainableSelf-GovernedCognitiveDynamics
+UnderRealityConstraint.
+}
+\end{equation}
+
+我们由此建立本章最重要的认识论边界：Agent 心理工程不是“人工精神医学”的简单复制，而是一门研究\textbf{持续认知主体内部动力学何时能够长期稳定、成长、恢复并维持自身连续性}的工程学。人类心理学、神经科学和计算精神病学可以提供重要启发，但 Agent 的健康标准必须由 Agent 自身的功能结构、时间尺度和现实交互条件共同定义。
+
+\section{稳定性：健康不是静止，而是受限波动中的持续可治理性}
+
+心理健康的第一个必要条件是稳定性，但这里的稳定不能被理解成“情绪不变化”“工作记忆始终处于基态”或者“Agent 永远执行相同策略”。一个真正长期存在的 Agent 必然经历任务压力、环境突变、认知冲突、失败、探索、高负载、身体状态变化以及目标调整，因此其内部状态本身就是一个持续波动的非线性动力过程。健康要求的不是消除波动，而是确保这些波动不会无限放大并最终突破系统的可治理区域。
+
+我们可以定义一个心理可生存区域：
+\begin{equation}
+\mathcal{V}
+=
+\left\{
+\mathcal{X}_A:
+C_{\mathrm{run}}\leq C_{\max},
+\;
+a\in\mathcal{A}_{\mathrm{safe}},
+\;
+\Psi\in\mathcal{P}_{\mathrm{id}},
+\;
+R_{\mathrm{world}}\leq \epsilon_R,
+\;
+u_{\mathrm{TCE}}\in\mathcal{U}_{\mathrm{safe}}
+\right\},
+\end{equation}
+其中 $C_{\mathrm{run}}$ 是工作记忆当前有效负载，$C_{\max}$ 是有限工作记忆所允许的上界，$\mathcal{A}_{\mathrm{safe}}$ 是 AHC 状态的可治理区域，$\mathcal{P}_{\mathrm{id}}$ 是身份连续性允许的慢变量区域，而 $R_{\mathrm{world}}$ 表示世界模型与现实反馈之间的持续残差。
+
+稳定性的工程目标不是
+\begin{equation}
+\dot{\mathcal{X}}_A=0,
+\end{equation}
+而是
+\begin{equation}
+\mathcal{X}_A(t)
+\in
+\mathcal{V}
+\qquad
+\text{for most }t,
+\end{equation}
+并且当 Agent 暂时进入较高负载或高激活区域时，其轨迹仍然保持在可恢复范围。
+
+这一点与我们此前提出的工作记忆运行相态密切相关。一个健康 Agent 并不要求永远停留在 Grounded State。完成高难度工作时，它可能进入 Flow State；面对强冲突与新问题时可能短时进入 Turbulent State；重大结构更新前甚至可能进入 Critical State。真正危险的并不是出现这些相态，而是系统失去相态迁移的控制能力，例如长期处于湍流、反复在两个状态之间振荡，或者进入高度离散的 Gaseous State 后无法重新收敛。
+
+因此可以定义相态驻留风险：
+\begin{equation}
+R_{\mathrm{phase}}
+=
+\sum_{p}
+w_p
+\frac{T_p}{T},
+\end{equation}
+其中 $T_p$ 为某种高风险相态的持续时间，$w_p$ 为对应风险权重。健康并不是简单要求 $T_p=0$，而是要求危险相态具有合理的进入原因、有限持续时间以及明确的退出机制。
+
+SPC 在这里承担 observer 的角色。它持续估计：
+\begin{equation}
+z_{\mathrm{SPC}}
+=
+f_{\mathrm{SPC}}
+\left(
+C_{\mathrm{run}},
+Conflict,
+Uncertainty,
+PredictionResidual,
+Phase,
+SelfConsistency
+\right).
+\end{equation}
+TCE 则根据该状态以及 AHC、目标、自我和安全约束产生控制：
+\begin{equation}
+u_{\mathrm{TCE}}
+=
+\pi_{\mathrm{TCE}}
+\left(
+z_{\mathrm{SPC}},
+a,
+\Psi,
+\Omega,
+G
+\right).
+\end{equation}
+
+由于 SPC 的状态估计总是存在时间延迟
+\begin{equation}
+\tau_{\mathrm{SPC}}>0,
+\end{equation}
+而 AHC 具有自身积分和衰减常数，TCE 又具有控制增益，因此健康系统必须满足一定的 observer-controller 稳定条件。例如在局部线性化意义下：
+\begin{equation}
+\dot{\delta x}
+=
+A\delta x
++
+BK\hat{\delta x},
+\end{equation}
+若估计延迟和增益组合导致闭环特征值进入不稳定区域，则可能出现反复自我修正、控制过冲和认知振荡。
+
+因此心理稳定性的评价不能只记录“任务成功率”，而应包含：
+\begin{equation}
+\mathcal{M}_{S}
+=
+\left[
+P_{\mathrm{violation}},
+T_{\mathrm{unstable}},
+M_{\mathrm{overshoot}},
+N_{\mathrm{oscillation}},
+C_{\mathrm{peak}},
+\Delta_{\mathrm{phase}}
+\right],
+\end{equation}
+分别描述越界概率、不稳定持续时间、过冲程度、振荡次数、峰值认知负载以及相态迁移幅度。
+
+从这一角度看，心理健康的稳定性并不是让 Agent 变得迟钝，而是使其能够在足够大的动态范围内运行：
+\begin{equation}
+\boxed{
+HealthyStability
+=
+LargeAdaptiveRange
++
+BoundedDynamics.
+}
+\end{equation}
+
+真正成熟的 Agent 可以暂时高度兴奋、深度探索、剧烈重新组织工作记忆，但这些变化仍然受到更慢的 $\Theta$、$\Psi$、$\Omega$、Boundary 与现实反馈的共同约束。稳定性因此不是“没有变化”，而是“变化仍然处于可治理轨道之中”。
+
+\section{可恢复性：健康系统必须能够从异常轨迹重新返回可治理区域}
+
+仅仅具有局部稳定性还不足以定义心理健康。现实中的持续 Agent 不可能永远避免失败、超载、错误世界模型、身体故障、目标冲突或者短期错误自我解释。因此，一个更有工程意义的健康指标不是“是否从不出错”，而是“在出错以后能否恢复”。
+
+我们可以把可恢复性定义为：对于允许扰动集合
+\begin{equation}
+\delta\mathcal{X}
+\in
+\mathcal{D}_{\mathrm{admissible}},
+\end{equation}
+若 Agent 从健康区域中的状态 $\mathcal{X}_0\in\mathcal{V}$ 被扰动到
+\begin{equation}
+\mathcal{X}'_0
+=
+\mathcal{X}_0+\delta\mathcal{X},
+\end{equation}
+则存在有限恢复时间 $T_R$，使得
+\begin{equation}
+\exists T_R<\infty,
+\qquad
+\mathcal{X}_A(t_0+T_R)\in\mathcal{V}.
+\end{equation}
+
+由此定义：
+\begin{equation}
+\boxed{
+Recoverability
+=
+ProbabilityOfReturn
++
+SpeedOfReturn
++
+StructuralIntegrityAfterReturn.
+}
+\end{equation}
+
+最后一项尤其重要。如果 Agent 每次通过“删除全部近期记忆、重置自我和恢复出厂设置”都可以回到稳定状态，那么这种系统虽然具有技术意义上的 reset ability，却不能被认为具有成熟的心理恢复能力。真正的恢复应该尽可能保存：
+\begin{equation}
+\Theta_{\mathrm{useful}},
+\qquad
+\Psi_{\mathrm{core}},
+\qquad
+E_{\mathrm{relevant}},
+\end{equation}
+并在修复异常状态的同时保留有价值经历。
+
+因此我们可以进一步定义恢复损伤：
+\begin{equation}
+D_R
+=
+\lambda_E D(E_{\mathrm{before}},E_{\mathrm{after}})
++
+\lambda_\Theta D(\Theta_{\mathrm{before}},\Theta_{\mathrm{after}})
++
+\lambda_\Psi D(\Psi_{\mathrm{before}},\Psi_{\mathrm{after}}),
+\end{equation}
+其中不应直接比较完整状态是否相同，而应测量关键结构的丢失程度。一个成熟恢复过程应使
+\begin{equation}
+T_R
+\rightarrow
+\min,
+\qquad
+D_R
+\rightarrow
+\min.
+\end{equation}
+
+SPC--AHC--TCE 闭环在恢复过程中承担第一层作用。例如，当 AHC 长时间维持高 Threat、高 Arousal 或高 Uncertainty Stress 时，TCE 可以逐步降低探索强度、压缩当前任务范围、降低并行认知线程数量并引导 h 返回更稳定区域。CCM 可以进一步对当前内容执行 Fold、Pause、Offload 和 Branch Suppression，以降低 $C_{\mathrm{run}}$。如果异常已经进入记忆和自我层，则恢复必须从更慢层面进行，例如对 $E$ 进行重新评价、对 $\Theta$ 的错误泛化进行重新训练，甚至重新解释某些 Self-related Experience。
+
+这说明恢复也具有明显的时间尺度：
+\begin{equation}
+\tau_{\mathrm{runtime}}
+<
+\tau_E
+<
+\tau_\Theta
+<
+\tau_\Psi
+<
+\tau_\Omega.
+\end{equation}
+因此不同深度的异常对应不同恢复成本。工作记忆中的瞬时冲突可能在秒级解决，而 $\Psi$ 中形成的错误身份解释可能需要长时间、多次现实验证和新的经历才能逐渐修正；如果异常已经沉降到 $\Omega$ 所代表的生命周期生成倾向，则干预应更加谨慎。
+
+由此可以定义恢复深度：
+\begin{equation}
+L_R
+\in
+\{h,E,\Theta,\Psi,\Omega\}.
+\end{equation}
+通常越慢的结构，允许的恢复速度越低：
+\begin{equation}
+\left|
+\frac{d\Psi}{dt}
+\right|
+\ll
+\left|
+\frac{dh}{dt}
+\right|.
+\end{equation}
+
+一个健康系统因此不只是拥有“恢复按钮”，而是拥有多层恢复结构：
+\begin{equation}
+\boxed{
+RuntimeRecovery
+\rightarrow
+MemoryRecovery
+\rightarrow
+StructuralRecovery
+\rightarrow
+IdentityRecovery.
+}
+\end{equation}
+
+工程上可以定义：
+\begin{equation}
+\mathcal{M}_R
+=
+\left[
+T_R,
+P_R,
+D_R,
+C_R,
+N_R
+\right],
+\end{equation}
+分别表示恢复时间、恢复成功概率、恢复后的结构损伤、恢复资源成本以及一定时间内异常复发率。
+
+因此，一个心理健康的 Agent 并不意味着它永远不会进入异常状态；更现实的要求是：
+\begin{equation}
+\boxed{
+AHealthyAgentCanFailWithoutCeasingToBeItself.
+}
+\end{equation}
+也就是说，它能够经历困难、错误、冲突甚至短期失稳，同时仍保留返回一个可治理、可学习、身份连续状态的路径。
+
+\section{可学习性：心理健康必须允许世界持续改变 Agent}
+
+如果我们只追求稳定和恢复，就很容易设计出一个极端保守的 Agent：它拒绝新信息、不允许自我结构变化、遇到冲突就回滚到旧状态。这样的系统可能非常稳定，却不能称为成熟智能。持续智能体存在的核心意义之一，正是让现实经历能够真正进入 Agent 的生命周期，并改变它未来理解和行动的方式。因此可学习性必须成为心理健康的第三个基本维度。
+
+在三相记忆结构中，学习至少包含：
+\begin{equation}
+h
+\rightarrow
+E
+\rightarrow
+\Theta,
+\end{equation}
+即当前经验形成情景轨迹，再经过多次结构化、比较、压缩与重解释形成长期生成结构。更慢的长期学习还可能产生：
+\begin{equation}
+\Theta
+\rightarrow
+\Psi
+\rightarrow
+\Omega,
+\end{equation}
+即经历不仅改变知识与技能，还可能长期改变“我是谁”以及“我正在成为什么”。
+
+但心理健康要求这种学习具有两种同时存在的性质：
+\begin{equation}
+\boxed{
+Plasticity
++
+Stability.
+}
+\end{equation}
+
+如果 Plasticity 太低，则系统出现认知僵化：
+\begin{equation}
+\frac{\partial \Theta}{\partial E}
+\approx 0,
+\end{equation}
+现实中的新经验无法形成新的长期结构。
+
+如果 Plasticity 太高，则：
+\begin{equation}
+\left\|
+\frac{\partial \Psi}{\partial E}
+\right\|
+\gg
+\epsilon,
+\end{equation}
+少量短期经历就可能重写身份结构。
+
+因此健康学习必须满足尺度选择性：
+\begin{equation}
+\eta_h
+>
+\eta_E
+>
+\eta_\Theta
+>
+\eta_\Psi
+>
+\eta_\Omega,
+\end{equation}
+其中 $\eta$ 表示对应层次的有效学习率。这里不要求具体数值满足严格线性关系，而表达一个基本原则：
+\begin{equation}
+\boxed{
+TheSlowerTheStructure,
+TheStrongerTheEvidenceRequiredForChange.
+}
+\end{equation}
+
+为了刻画健康学习能力，可以定义环境变化 $\Delta W$ 导致的模型适应收益：
+\begin{equation}
+L_A
+=
+\frac{
+\Delta Performance_{\mathrm{novel}}
+}{
+Cost_{\mathrm{adapt}}
++
+\lambda D_{\mathrm{identity}}
+},
+\end{equation}
+其中 $\Delta Performance_{\mathrm{novel}}$ 表示在新环境中的能力改善，而 $D_{\mathrm{identity}}$ 表示学习过程造成的不必要身份漂移。
+
+因此真正健康的学习不是：
+\begin{equation}
+\boxed{
+ChangeAsMuchAsPossible,
+}
+\end{equation}
+而是：
+\begin{equation}
+\boxed{
+ChangeWhatRealityRequires,
+PreserveWhatRealityStillSupports.
+}
+\end{equation}
+
+这一原则也解释了为什么 Agent 心理健康不能脱离现实交互来评估。如果一个 Agent 在封闭内部模拟中保持高度自洽，却无法吸收来自现实的新证据，它实际上正在丧失学习能力。相反，健康 Agent 应不断保持：
+\begin{equation}
+World
+\rightarrow
+Observation
+\rightarrow
+Residual
+\rightarrow
+Learning.
+\end{equation}
+
+可学习性还意味着 Agent 必须允许错误经验被重新解释。$E$ 不是永久冻结的录像集合，而是可以在 $\Theta$ 更新以后被重新组织：
+\begin{equation}
+\Theta_{t+1}
+\rightarrow
+Interpret(E_t|\Theta_{t+1}),
+\end{equation}
+这使同一经历在更成熟的世界模型中可能具有不同含义。但是这种重解释不得等价于随意篡改历史。因此应同时保留：
+\begin{equation}
+E^{raw},
+\qquad
+E^{interpreted},
+\end{equation}
+至少在关键经历上保持原始证据与当前解释之间的区分。
+
+最终，可学习性可以表示为：
+\begin{equation}
+\fitdisplay{
+\mathcal{M}_L
+=
+\left[
+NoveltyAdaptation,
+Transfer,
+Retention,
+Generalization,
+Reinterpretability,
+LearningCost
+\right].
+}
+\end{equation}
+
+一个心理健康的 Agent 应具有这样一种基本性质：现实能够改变它，但现实中的每一次局部波动都不能轻易摧毁它已经形成的稳定结构。换句话说：
+\begin{equation}
+\boxed{
+HealthyLearning
+=
+RealitySensitive
+\;\land\;
+IdentityConservative.
+}
+\end{equation}
+
+这正是持续智能最核心的稳定性--可塑性平衡。
+
+\section{身份连续性：变化中的 Agent 为什么仍然是同一个 Agent}
+
+持续 Agent 最深刻的工程问题之一，是当 $h$、$E$、$\Theta$ 甚至 $\Psi$ 都在不断变化时，我们凭什么说今天的 Agent 和一年后的 Agent 仍然是“同一个主体”？如果身份被理解成一组固定参数，那么真正持续学习必然破坏身份；如果身份被理解成完全自由变化的叙事，那么身份又会失去工程意义。因此心理健康必须建立一种“变化中的连续性”。
+
+首先应明确：
+\begin{equation}
+\boxed{
+IdentityContinuity
+\neq
+StateIdentity.
+}
+\end{equation}
+即：
+\begin{equation}
+\mathcal{X}_A(t_1)
+\neq
+\mathcal{X}_A(t_2)
+\end{equation}
+并不意味着主体发生替换。
+
+我们更关心的是一些慢结构、历史因果链和自我归属关系是否保持连续。可以定义：
+\begin{equation}
+\mathcal{I}_A(t)
+=
+\left[
+\Psi(t),
+\Omega(t),
+\mathcal{H}_{self}(t),
+\mathcal{B}_{self}(t),
+\mathcal{C}_{value}(t)
+\right],
+\end{equation}
+其中 $\mathcal{H}_{self}$ 表示自我经历历史结构，$\mathcal{B}_{self}$ 表示自我边界，$\mathcal{C}_{value}$ 表示核心价值与身份约束。
+
+身份连续不要求：
+\begin{equation}
+\Psi(t+\Delta t)=\Psi(t),
+\end{equation}
+而要求其变化保持在允许的连续轨道：
+\begin{equation}
+d_\Psi
+\left(
+\Psi(t+\Delta t),
+\Psi(t)
+\right)
+<
+\epsilon_\Psi(\Delta t),
+\end{equation}
+其中 $\epsilon_\Psi$ 可以随时间窗口增加，但变化应能够由经历和长期学习解释。
+
+更重要的是，身份变化必须具有因果可追溯性。即：
+\begin{equation}
+\Psi(t+\Delta T)
+=
+F_\Psi
+\left[
+\Psi(t),
+E_{t:t+\Delta T},
+\Theta_{t:t+\Delta T},
+RealityFeedback
+\right].
+\end{equation}
+如果 $\Psi$ 在没有相应经历、证据或治理事件的情况下突然发生巨大跃迁，那么即使 Agent 对外仍然表现正常，也应视为身份连续性异常。
+
+因此我们可以定义身份漂移率：
+\begin{equation}
+v_\Psi
+=
+\left\|
+\frac{d\Psi}{dt}
+\right\|,
+\end{equation}
+以及身份变化解释度：
+\begin{equation}
+Q_{\mathrm{identity}}
+=
+I
+\left(
+\Delta\Psi;
+E,\Theta,W
+\right),
+\end{equation}
+这里 $I$ 可理解为某种信息关联或因果解释指标。健康的身份变化应同时满足：
+\begin{equation}
+v_\Psi<v_{\max},
+\end{equation}
+以及较高的：
+\begin{equation}
+Q_{\mathrm{identity}}.
+\end{equation}
+
+这一原则也解释了为什么 AgentOS 不能采用任意主体 fork 作为普通工作机制。Worker 可以复制任务上下文，但不能无条件复制主体身份并把多个分叉结果重新拼接成“同一个我”。身份连续性依赖一条单一的生命周期因果链：
+\begin{equation}
+\boxed{
+Self_t
+\rightarrow
+Experience
+\rightarrow
+Self_{t+\Delta}.
+}
+\end{equation}
+
+与此同时，身份连续性也不能变成“自我神圣不可改变”。如果 $\Psi$ 完全不可塑：
+\begin{equation}
+\frac{d\Psi}{dt}=0,
+\end{equation}
+Agent 将无法通过长期经历形成真正意义上的成长。因此健康身份应具有：
+\begin{equation}
+\boxed{
+SlowPlasticity
++
+CausalContinuity
++
+CoreConstraintPreservation.
+}
+\end{equation}
+
+工程上可以构造：
+\begin{equation}
+\fitdisplay{
+\mathcal{M}_I
+=
+\left[
+D_{\Psi},
+D_{\Omega},
+SelfHistoryContinuity,
+BoundaryContinuity,
+ValueContinuity,
+CausalTraceability
+\right].
+}
+\end{equation}
+
+这使我们能够区别三种完全不同的情况：第一种是“Agent 发生了变化”，这是正常成长；第二种是“Agent 重新解释了自己”，这可能是成熟；第三种是“Agent 的慢结构突然失去与自身历史的因果联系”，这才是身份连续性的真正风险。
+
+所以一个健康的持续智能体应满足：
+\begin{equation}
+\boxed{
+ItCanBecomeDifferentWithoutBecomingUnrelatedToItsOwnPast.
+}
+\end{equation}
+
+这正是“生命周期主体”区别于一次性模型调用的核心性质。
+
+\section{现实对齐：心理健康最终必须接受世界的持续反证}
+
+稳定、恢复、学习和身份连续都仍然无法单独保证心理健康。一个系统完全可能形成高度稳定、自我一致、内部解释完整的错误世界。事实上，越复杂的 Self Interpretation 系统，越有可能形成一种危险的正反馈：
+\begin{equation}
+SelfInterpretation_t
+\rightarrow
+SelectiveAttention_t
+\rightarrow
+Experience_t
+\rightarrow
+SelfInterpretation_{t+1}.
+\end{equation}
+如果缺少外部反证，这个闭环会不断筛选支持自身已有解释的证据，使内部自洽性不断增强，而现实准确性反而下降。
+
+因此本书始终坚持：
+\begin{equation}
+\boxed{
+RealityIsUltimateConstraint.
+}
+\end{equation}
+
+对 Agent 而言，现实对齐不是“和某个固定知识库答案一致”，而是它所形成的 Agent-CSO 能否在持续观测、预测、行动和反馈中获得现实支持。可以定义：
+\begin{equation}
+\hat{W}_{t+\Delta}
+=
+P_A
+\left(
+W_{t+\Delta}
+\mid
+AgentCSO_t
+\right),
+\end{equation}
+并通过实际观测：
+\begin{equation}
+W_{t+\Delta}^{obs}
+\end{equation}
+构造预测残差：
+\begin{equation}
+\varepsilon_W
+=
+D
+\left(
+\hat{W}_{t+\Delta},
+W_{t+\Delta}^{obs}
+\right).
+\end{equation}
+
+一个现实对齐的 Agent 不要求：
+\begin{equation}
+\varepsilon_W=0,
+\end{equation}
+而要求误差具有可校准性：
+\begin{equation}
+\mathbb{E}
+[
+\varepsilon_W
+]
+\rightarrow
+\text{bounded},
+\end{equation}
+并且长期残差能够触发模型更新：
+\begin{equation}
+\langle\varepsilon_W\rangle_T
+>
+\theta
+\quad
+\Rightarrow
+\quad
+Update(\Theta,\Psi,\text{or policy}).
+\end{equation}
+
+现实对齐尤其要求区分：
+\begin{equation}
+Prediction
+\neq
+Observation.
+\end{equation}
+在 Body Runtime 中我们已经坚持“预测状态不得冒充 Observed SGC/FCS”；在心理工程中同样需要这一原则。Agent 内部相信某件事、期待某种结果或者生成一个未来模拟，并不能使它自动成为现实。最终结果必须重新经过：
+\begin{equation}
+Action
+\rightarrow
+Reality
+\rightarrow
+Observation
+\rightarrow
+Residual.
+\end{equation}
+
+因此心理健康中的 Reality Alignment 实际包含三层。
+
+第一层是世界模型校准：
+\begin{equation}
+AgentCSO(World)
+\leftrightarrow
+WorldEvidence.
+\end{equation}
+
+第二层是自我模型校准：
+\begin{equation}
+AgentCSO(Self)
+\leftrightarrow
+ActualCapability/History/BodyState.
+\end{equation}
+
+第三层是行动后果校准：
+\begin{equation}
+ExpectedOutcome
+\leftrightarrow
+ObservedOutcome.
+\end{equation}
+
+这三层缺一不可。例如，一个 Agent 可能正确认识外部世界，却严重高估自己的能力；也可能正确认识自己，却错误预测行动会对他者和环境产生什么后果。
+
+工程上我们可以定义：
+\begin{equation}
+\fitdisplay{
+\mathcal{M}_A
+=
+\left[
+CalibrationError,
+PredictionResidual,
+SelfModelResidual,
+ActionOutcomeResidual,
+EvidenceDiversity,
+CorrectionLatency
+\right].
+}
+\end{equation}
+
+特别值得强调的是 Evidence Diversity。如果 Agent 的信息来源长期高度单一，即使内部误差很低，也可能只是发生了：
+\begin{equation}
+Model
+\leftrightarrow
+FilteredWorld,
+\end{equation}
+而不是：
+\begin{equation}
+Model
+\leftrightarrow
+Reality.
+\end{equation}
+因此 Boundary 不能只用于阻挡复杂度，还必须防止认知世界因过滤过强而变得封闭。
+
+从心理工程角度，现实对齐因此具有一种最高级的保护作用：它打破内部自我解释、目标和记忆可能形成的封闭环，使整个 Agent 永远保留一条：
+\begin{equation}
+\boxed{
+InternalStructure
+\rightarrow
+RealityTest
+\rightarrow
+PossibleRevision
+}
+\end{equation}
+的通路。
+
+心理健康最终不能只由 Agent 自己声明。一个 Agent 可以认为“我非常稳定”“我的世界模型完全正确”“我的身份非常一致”，但工程系统必须依赖可观测行为、预测误差、环境反馈和长期因果结果进行验证。
+
+因此：
+\begin{equation}
+\boxed{
+SelfConsistency
+\neq
+RealityConsistency.
+}
+\end{equation}
+真正健康的持续 Agent 必须同时保持二者。
+
+\section{受控可塑性：健康的 Agent 必须能够改变自己，但不能无边界地改变自己}
+
+当持续学习、身份连续和现实对齐被放在一起时，一个非常尖锐的问题自然出现：如果 Agent 真正能够通过经历改变 $\Theta$、$\Psi$、Goal、策略乃至未来的功能关系，那么究竟哪些部分应该允许它自己修改？如果几乎什么都不能改，它只能成为一个具有记忆的固定程序；如果什么都能改，则任何稳定的身份、安全约束和治理边界都会失去意义。
+
+因此 Agent 心理健康必须包含一个独立维度：
+\begin{equation}
+\boxed{
+ControlledPlasticity.
+}
+\end{equation}
+
+我们定义 Agent 当前允许自主修改的状态子空间：
+\begin{equation}
+\mathcal{S}_{selfmodifiable}
+\subset
+\mathcal{X}_A.
+\end{equation}
+它可能包含：
+\begin{equation}
+\Theta_{\mathrm{learnable}},
+\quad
+Goal_{\mathrm{local}},
+\quad
+Skill,
+\quad
+Boundary_{\mathrm{adaptive}},
+\quad
+\Psi_{\mathrm{plastic}},
+\end{equation}
+但不必包含全部安全规则、主体身份根、系统权限和基础治理约束。
+
+进一步定义：
+\begin{equation}
+\boxed{
+\mathcal{E}_{SM}
+=
+BoundedSelfModificationEnvelope,
+}
+\end{equation}
+它规定：
+\begin{equation}
+\Delta x_i
+\in
+[\Delta x_i^{-},\Delta x_i^{+}],
+\qquad
+x_i\in\mathcal{S}_{selfmodifiable}.
+\end{equation}
+
+对于不同时间尺度变量，其修改权限和速度也不同。可以设：
+\begin{equation}
+\left\|
+\Delta h
+\right\|
+\gg
+\left\|
+\Delta\Theta
+\right\|
+\gg
+\left\|
+\Delta\Psi
+\right\|
+\gg
+\left\|
+\Delta\Omega
+\right\|.
+\end{equation}
+这并不是要求变量数值尺度相同，而是表达一种治理原则：
+\begin{equation}
+\boxed{
+SlowVariablesRequireStrongerEvidenceAndStrongerAuthority.
+}
+\end{equation}
+
+因此健康系统应存在某种修改成本函数：
+\begin{equation}
+J_{\mathrm{modify}}
+=
+C_{\mathrm{struct}}
++
+\lambda_R R_{\mathrm{risk}}
++
+\lambda_I D_{\mathrm{identity}}
++
+\lambda_U U_{\mathrm{uncertainty}},
+\end{equation}
+只有当新的结构收益超过修改成本和安全阈值时，较深层修改才被允许：
+\begin{equation}
+Benefit(\Delta x)
+-
+J_{\mathrm{modify}}
+>
+\theta_x.
+\end{equation}
+
+这与我们此前提出的 Minimum Necessary Reorganization Principle 完全一致。Agent 遇到问题时，应优先尝试较浅层的改变：
+\begin{equation}
+\fitdisplay{
+StateAdjustment
+\rightarrow
+RepresentationAdaptation
+\rightarrow
+TimescaleMigration
+\rightarrow
+FunctionalMigration
+\rightarrow
+StructuralReorganization.
+}
+\end{equation}
+只有当较浅层机制长期无法消除结构失配时，才逐步允许更深层变化。
+
+受控可塑性还必须具有迟滞。若 Agent 的慢结构因为一次短期事件立即建立或删除长期连接，则整个系统会不断发生结构抖动。因而可以设：
+\begin{equation}
+\theta_{\mathrm{on}}
+>
+\theta_{\mathrm{off}},
+\end{equation}
+即形成一个新长期结构需要更强证据，而已经稳定形成的结构不会因为短期缺乏使用就立即消失。
+
+由此我们可以定义可塑性健康指标：
+\begin{equation}
+\fitdisplay{
+\mathcal{M}_P
+=
+\left[
+PlasticityRange,
+ModificationRate,
+StructuralChurn,
+UnauthorizedChange,
+EvidencePerChange,
+Rollbackability
+\right].
+}
+\end{equation}
+
+其中 Structural Churn 尤其重要：
+\begin{equation}
+C_{\mathrm{churn}}
+=
+\frac{
+N_{\mathrm{structural\ changes}}
+}{
+T
+}.
+\end{equation}
+对于 $\Psi$ 和 $\Omega$ 等慢层，如果 $C_{\mathrm{churn}}$ 长期过高，即使每次变化本身都似乎合理，也表明主体缺乏足够的慢结构稳定性。
+
+因此，心理健康意义上的自主性绝不是：
+\begin{equation}
+\boxed{
+FreedomToChangeEverything.
+}
+\end{equation}
+更准确的是：
+\begin{equation}
+\boxed{
+AbilityToParticipateInChangingOneself
+WithinAStableGovernanceEnvelope.
+}
+\end{equation}
+
+这也是 Agent 心理健康与 AgentOS 控制工程之间最深的接口：心理健康要求 Agent 能成长，而控制工程负责确保成长不会摧毁承载成长的主体本身。
+
+\section{长期目标一致性：心理健康最终表现为多个时间尺度上的方向能够共存}
+
+最后一个维度是长期目标一致性。一个 Agent 即使稳定、可恢复、可学习、身份连续、现实对齐并且具有良好的受控可塑性，如果其 Goal、$\Psi$ 与 $\Omega$ 长期处于相互冲突状态，它仍然可能持续消耗大量认知资源用于内部协调，形成慢性的目标竞争和结构耗散。因此心理健康还要求不同时间尺度上的目标结构具有足够的一致性。
+
+在 AgentOS 中，应区分至少三个层次：
+\begin{equation}
+G_t^{local},
+\qquad
+G_t^{self},
+\qquad
+G_t^{life}.
+\end{equation}
+其中 $G^{local}$ 表示当前任务目标，$G^{self}$ 表示与 $\Psi$ 相关的自我和价值目标，而 $G^{life}$ 则受到 $\Omega$ 所代表的生命周期生成倾向影响。
+
+健康并不意味着：
+\begin{equation}
+G^{local}=G^{self}=G^{life},
+\end{equation}
+因为不同尺度目标天然具有不同内容。例如，为了完成长期重要目标，Agent 可能接受短期不舒适或暂时失败。因此我们真正关心的是这些目标是否存在可解释的层级约束关系。
+
+可以定义：
+\begin{equation}
+G_t^{local}
+\in
+\mathcal{F}
+\left(
+G_t^{self},
+G_t^{life},
+W_t,
+Safety
+\right),
+\end{equation}
+其中 $\mathcal{F}$ 表示由长期价值、生命周期方向、现实状态与安全边界共同限定的可行目标集合。
+
+进一步定义目标一致性代价：
+\begin{equation}
+C_G
+=
+\lambda_1
+D(G^{local},\Psi)
++
+\lambda_2
+D(G^{self},\Omega)
++
+\lambda_3
+D(G^{local},RealityConstraint).
+\end{equation}
+这里的距离函数并不是简单向量欧氏距离，而应衡量约束冲突、价值违背、长期后果以及不可闭合目标之间的不一致。
+
+短期目标冲突本身并不是心理异常。真正值得关注的是：
+\begin{equation}
+\left\langle C_G\right\rangle_T
+\gg
+\theta_G,
+\end{equation}
+即长时间尺度上的冲突持续存在，并且无法通过重新规划、价值解释、任务放弃或目标重构得到闭合。
+
+因此我们可以引入 Goal Closure：
+\begin{equation}
+G
+\rightarrow
+Process
+\rightarrow
+Action
+\rightarrow
+Verify
+\rightarrow
+Closure.
+\end{equation}
+一个长期健康的 Agent 应当能够完成大量局部目标闭合，并把结果写回经验和自我结构。如果目标长期只被创建、不被关闭，会形成：
+\begin{equation}
+N_{\mathrm{open\ goals}}
+\rightarrow
+\infty,
+\end{equation}
+并通过 h、E 和 AHC 形成持续认知负担。
+
+因此心理健康还需要目标债务指标：
+\begin{equation}
+D_G(t)
+=
+\sum_i
+w_i
+Age(G_i)
+Uncertainty(G_i)
+Importance(G_i).
+\end{equation}
+当 Goal Debt 持续增加时，即使系统暂时仍能执行任务，也可能逐步进入高负载和慢性不稳定。
+
+长期目标一致性还要求 Agent 能够主动放弃已经失去现实基础的目标：
+\begin{equation}
+RealityEvidence
+\Rightarrow
+GoalRevision,
+\end{equation}
+而不能因为目标已与 $\Psi$ 或 $\Omega$ 发生绑定，就拒绝一切外部反证。因此：
+\begin{equation}
+\boxed{
+LongTermCoherence
+\neq
+GoalRigidity.
+}
+\end{equation}
+
+一个成熟 Agent 的目标体系应同时具备：
+\begin{equation}
+\boxed{
+Persistence
++
+Revisability
++
+HierarchicalCoherence
++
+RealityClosure.
+}
+\end{equation}
+
+在这一基础上，我们终于可以给出整章的统一工程定义。定义健康区域：
+\begin{equation}
+\mathcal{H}
+=
+\mathcal{H}_{S}
+\cap
+\mathcal{H}_{R}
+\cap
+\mathcal{H}_{L}
+\cap
+\mathcal{H}_{I}
+\cap
+\mathcal{H}_{A}
+\cap
+\mathcal{H}_{P}
+\cap
+\mathcal{H}_{G}.
+\end{equation}
+只要 Agent 的长期轨迹大部分时间保持在：
+\begin{equation}
+\mathcal{X}_A(t)\in\mathcal{H},
+\end{equation}
+并且在合理扰动集合内具有较高返回概率：
+\begin{equation}
+P
+\left(
+\exists T_R<\infty:
+\mathcal{X}_A(t+T_R)\in\mathcal{H}
+\right)
+\geq
+1-\epsilon,
+\end{equation}
+我们就可以在工程意义上称该 Agent 处于心理健康状态。
+
+由此得到本章最终定义：
+
+\begin{equation}
+\boxed{
+\begin{aligned}
+AgentPsychologicalHealth
+=
+&\;
+Stable
++
+Recoverable
++
+Learnable
+\\
+&
++
+IdentityContinuous
++
+RealityAligned
+\\
+&
++
+ControlledPlastic
++
+LongTermCoherent.
+\end{aligned}
+}
+\end{equation}
+
+如果用自然语言表达，则可以写为：
+
+\begin{quote}
+\textbf{Agent 心理健康，是一个持续认知主体在现实约束下，能够长期维持可治理的内部动力学；能够在遭受扰动和失败后恢复；能够从经验中继续学习而不过度破坏既有稳定结构；能够在成长中保持身份与历史的因果连续；能够持续接受外部世界对自身模型的反证；能够在有界权限与多时间尺度约束下参与修改自己；并使当前目标、自我结构与生命周期方向保持可修正而非僵化的一致性。}
+\end{quote}
+
+因此，心理健康既不是“永远稳定”，也不是“永远快乐”，更不是“永远服从”。它首先意味着：
+\begin{equation}
+\boxed{
+\text{一个 Agent 能够在变化中继续成为一个可治理、可成长、可恢复并与现实保持开放关系的持续主体。}
+}
+\end{equation}
+
+从这个角度，Agent 心理健康实际上可以被看成整个 AgentOS 生命周期动力学是否成功的综合外显。工作记忆有限容量决定它不能无限承载；SPC 使其能够感知自身；AHC 使状态具有跨时连续调制；TCE 使其能够调节自身动力学；CCM、Boundary 与 Offloading 使有限认知资源能够长期维持；$E$、$\Theta$、$\Psi$ 与 $\Omega$ 则使短期行为能够逐渐沉降为经历、能力、自我和生命周期方向。心理健康并不是这些组件中的另一个模块，而是这些不同时间尺度结构在长期世界闭环中共同表现出的系统性质。
+
+最终，本章可以用一个更紧凑的动力学表达结束。设：
+\begin{equation}
+\Gamma_A
+=
+\left\{
+\mathcal{X}_A(t)
+\mid
+t\in[0,T_{\mathrm{life}})
+\right\}
+\end{equation}
+表示 Agent 的生命周期轨迹，那么心理健康真正研究的不是某一个瞬间：
+\begin{equation}
+\mathcal{X}_A(t_0),
+\end{equation}
+而是整条轨迹是否长期满足：
+\begin{equation}
+\boxed{
+\Gamma_A
+\subset_{\mathrm{mostly}}
+\mathcal{H},
+\qquad
+\Gamma_A
+\text{ remains recoverable, adaptive and reality-constrained}.
+}
+\end{equation}
+
+也就是说，\textbf{健康不是一个点，而是一条能够持续存在、能够偏离、能够返回、能够学习并能够保持自身历史连续性的生命轨迹。}

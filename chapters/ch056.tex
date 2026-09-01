@@ -1,8 +1,6 @@
 \chapter{FCS：现实如何影响主体}
 
 \begin{chapteroverviewbox}
-\textbf{本章总体说明}
-
 在上一阶段的具身理论中，我们已经解决了一个基础问题：智能体必须以某种稳定、可解释并与具体传感器实现相分离的方式，回答“现实中现在存在什么”。SGC（Semantic Graph Coordinate Space）承担的正是这一职责。然而，只知道世界中存在什么仍不足以形成完整的具身智能。对于一个持续存在、需要维持自身运行并据此分配认知资源的 Agent 而言，同一个外部状态对不同身体、不同资源水平以及不同任务条件可能意味着完全不同的后果。距离一米的障碍物，对高速移动机器人可能意味着迫近碰撞，对静止机器人可能只是一个普通环境实体；同样的环境温度，对于具备强主动散热能力与处于电池低电量状态的系统，也具有不同的功能含义。
 
 因此我们必须在“现实是什么”之外，再建立第二类公开身体状态表示，用来回答：
@@ -151,6 +149,7 @@ FunctionalInfluenceState
 \]
 其核心判据不是系统是否能够给这种状态起一个自然语言情绪名称，而是该变量是否能够显著改变：
 \[
+\fitdisplay{
 Control,
 \quad
 ResourceAllocation,
@@ -162,6 +161,7 @@ AttentionDemand,
 RecoveryDemand,
 \quad
 ActionFeasibility.
+}
 \]
 
 如果一个信号只告诉我们“温度是 $72^\circ$C”，它首先属于原始状态或 perception；只有当这个温度被结合当前硬件允许范围、散热能力、功耗趋势和未来预测转换为：
@@ -697,12 +697,14 @@ C_k
 
 Confidence 的来源可以包括：
 \[
+\fitdisplay{
 SensorReliability,
 ModelUncertainty,
 CrossSensorAgreement,
 DataFreshness,
 PredictionHorizon,
 CalibrationQuality.
+}
 \]
 因此可以抽象写成：
 \[
@@ -1079,12 +1081,14 @@ C_{cool},
 
 IntegrityPressure 更加复杂，因为“结构完整性”并不只来自单一传感器。它可能由：
 \[
+\fitdisplay{
 MechanicalStress,
 Wear,
 FaultProbability,
 StructuralDamage,
 SoftwareIntegrity,
 CommunicationLoss
+}
 \]
 等共同决定。因此：
 \[

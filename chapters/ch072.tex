@@ -1,11 +1,7 @@
 \chapter{AgentOS 的 3+1+1 研发战略}
 \label{chap:agentos-3plus1plus1-roadmap}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.92\textwidth}
-\textbf{【本章总体说明｜研发战略定稿】}
-
+\begin{chapteroverviewbox}
 本章不再讨论 AgentOS ``是什么''，而是回答一个更接近真实科研组织的问题：在前文已经建立多尺度智能、三相记忆、工作记忆有限性、SPC--AHC--TCE、CCM、Boundary、Offloading、Body Scale、SGC、FCS、BPCC 与 KRA 等理论之后，若希望把这些理论从一个相互关联的认知体系推进为可运行、可测量、可迭代的工程系统，应当怎样组织研发工作？
 
 本章给出的答案是本书的总体研发战略：
@@ -25,9 +21,7 @@ BodyRuntime,\qquad AgentKernel,\qquad Continuous\text{-}DiscreteControl
 这里最重要的战略判断不是 ``AgentOS 由五个模块组成''。$3+1+1$ 并非运行时层次，也不是产品功能列表，而是一种\textbf{研究组织拓扑}：三条理论--算法主线解决智能本身的问题，系统软件保证它们能够以持续进程的方式存在，异构硬件则在更低层兑现多时间尺度智能所要求的真实计算性能。五条路径之间既不能串行等待，也不能完全独立开发，而应在稳定语义契约下实行多速率共同演化。
 
 因此，本章的任务，是为后续工程实践建立一张总体研究地图：明确每一条主线解决什么不可替代的问题、彼此怎样交换状态和约束、哪些接口必须尽早固定、哪些内部实现必须保持可塑，以及为什么只有三条软件理论线与两个基础设施层同时成熟，才可能从 ``一个会调用工具的大模型'' 走向真正具有持续身份、身体闭环、长期学习与生命周期的人工智能体。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{第一主线：Body Runtime——建立智能体与真实世界之间的快速闭环}
 \label{sec:roadmap-body-runtime}
@@ -587,6 +581,7 @@ fork(Self)
 
 这一差异要求 AgentOS Runtime 具有类似 microkernel 的设计思想：尽量稳定最小核心，把高变化服务放在可替换层。最小核心可抽象为：
 \[
+\fitdisplay{
 K_{\min}
 =
 \{
@@ -599,6 +594,7 @@ Authority,
 Checkpoint,
 BodyContract
 \}.
+}
 \]
 而具体的大模型、检索器、技能实现、工具插件甚至部分记忆算法都可以在其外围演化。这样既防止 AgentOS Kernel 成为不可维护的巨大 monolith，又保护最重要的身份、状态和权限语义不随某个模型版本变化。
 
@@ -1082,10 +1078,8 @@ ComputerOS+Hardware
 
 正式进入另一个更加严格的问题：
 
-\[
-\boxed{
-\text{``我们怎样用今天可以逐步验证的技术，把这种结构真实地构造出来？''}
-}
-\]
+\begin{statementbox}
+``我们怎样用今天可以逐步验证的技术，把这种结构真实地构造出来？''
+\end{statementbox}
 
 而这正是工程路线论的起点。

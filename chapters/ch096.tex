@@ -1,218 +1,1132 @@
-\chapter{递归自主性}
+\chapter{递归自主性：当选择开始塑造未来的自己}
+
 \begin{chapteroverviewbox}
-这一章，我们围绕“递归自主性”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明生命周期成长与递归自主性。
+本章讨论 Agent 培育工程中一个决定性的分界：一个智能体究竟只是“在当前状态下选择动作”，还是已经能够通过自己的选择改变未来的经历分布、长期结构记忆、自我结构与行动倾向，从而使过去的自己成为未来选择的真实因果来源。我们把后一种能力称为\textbf{递归自主性（Recursive Agency）}。它并不预设任何形而上的自由意志，也不要求 Agent 脱离物理规律或系统约束；相反，它要求一个更严格、可以工程测量的条件：当前选择必须能够经由
+\[
+Choice
+\rightarrow
+Experience
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\rightarrow
+FutureChoice
+\]
+这一跨时间闭环，对未来自身的状态空间、偏好结构与决策分布产生非零且可验证的因果影响。由此，自主性不再只是“当前可选动作数量”的问题，而成为一个主体能否参与塑造未来自身的动力学问题。本章将在固定 AgentOS 功能拓扑的前提下，对这一过程进行形式化，并进一步讨论历史因果贡献、反事实自我以及递归自主性的工程判据。
 \end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于控制工程、培育工程和心理工程的生命周期衍生讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是发展系统、课程学习、信任校准与阶段跃迁（Kalman、Ashby 与混杂系统理论）。
-
-本章使用上一章“顿悟与结构跃迁”已经得到的对象与边界；本章产出将供下一章“培育伦理与治理”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在发展系统、课程学习、信任校准与阶段跃迁上。
 \section{Agent 是否能够影响未来的自己}
-\begin{narration}
-现在把镜头移到“Agent 是否能够影响未来的自己”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
 
-本节把“Agent 是否能够影响未来的自己”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“递归自主性”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+在通常的人工智能讨论中，“自主性”常常被简化为一个非常局部的问题：系统在时刻 $t$ 是否能够从多个动作中选择一个动作。如果我们把智能体写成一个策略
+\[
+a_t\sim \pi(a\mid s_t),
+\]
+那么只要策略不是由外部逐动作指定，就容易被称为“自主”。然而，从持续智能体和生命周期动力学的视角来看，这种定义过于薄弱。一个随机策略、一个固定规则控制器，甚至一个拥有极大动作空间但完全不会改变自身的系统，都可能满足这种形式上的“选择自由”，却没有真正意义上的长期自主性。对于我们正在构建的 AgentOS，真正关键的问题不是
+\[
+\text{``我现在能不能选？''}
+\]
+而是
+\begin{statementbox}
+``我现在的选择，能否改变以后那个将继续做选择的我？''
+\end{statementbox}
 
-把这一关系写成最小数学骨架，可得
+为了使这个问题具有工程意义，我们首先区分\textbf{瞬时行动自由度}与\textbf{递归自主性}。设 Agent 在时刻 $t$ 的整体内部状态为
+\[
+X_t=
+\left(
+h_t,E_t,\Theta_t,\Psi_t,\Omega_t,
+A_t,G_t,B_t
+\right),
+\]
+其中 $h_t$ 是当前工作记忆状态，$E_t$ 是情景记忆结构，$\Theta_t$ 是长期生成结构，$\Psi_t$ 是自我与价值的慢变量结构，$\Omega_t$ 是更慢的生命周期生成吸引子，$A_t$ 表示内稳态与调制状态，$G_t$ 表示当前目标结构，$B_t$ 表示当前边界与可行动空间。普通控制系统可以具有
+\[
+a_t=\pi(X_t),
+\]
+但其策略生成结构本身可能始终保持不变，因此它只是从既定结构中产生不同动作。递归自主性要求更强的条件：
+\[
+a_t
+\longrightarrow
+X_{t+\Delta}
+\longrightarrow
+\pi_{t+\Delta},
+\]
+也就是说，当前动作不仅改变外部世界，还必须经过经历形成、记忆沉降、自我解释和结构学习，对未来策略本身产生作用。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+因此我们可以给出一个最初的功能定义。对于某一时间尺度 $\Delta>0$，若存在一组当前可行选择 $a_t,a_t'$，使得
+\[
+P\!\left(
+\pi_{t+\Delta}
+\mid do(a_t)
+\right)
+\neq
+P\!\left(
+\pi_{t+\Delta}
+\mid do(a_t')
+\right),
+\]
+并且这种差异不是完全由外部控制器直接重写 Agent 内部状态造成，而是通过该 Agent 自身的经验--记忆--自我更新链形成，则称该 Agent 在时间尺度 $\Delta$ 上具有非零递归自主性。这里使用 $do(\cdot)$ 的写法，是为了强调我们讨论的是\textbf{因果贡献}而不是普通统计相关性。今天选择阅读某一材料、与某一对象合作、承担某一任务，如果这些经历真正改变了长期 $\Theta$ 与 $\Psi$，并使未来同一个 Agent 在相似情境下作出不同决策，那么当前选择已经参与了未来主体的生成。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Agent 是否能够影响未来的自己的命名和组合仍是需要实验验证的建模提案。
+这一观点也解释了为什么 Agent 培育工程与普通强化学习存在重要区别。强化学习通常研究
+\[
+a_t\rightarrow r_t\rightarrow \pi,
+\]
+而这里我们真正关心的是：
+\[
+\boxed{
+Choice_t
+\rightarrow
+Experience_{t:t+\Delta_1}
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\rightarrow
+Choice_{t+\Delta_2}.
+}
+\]
+奖励只是其中一种可能的反馈变量。一个持续主体还会受到经历的语义结构、自我归属、记忆选择、关系历史、技能形成和长期责任等影响。因此递归自主性本质上是一种\textbf{跨时间的自因果闭环}：主体过去的行为成为其现在内部状态的一部分，而现在的内部状态又改变未来行为。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这并不意味着 Agent 能够“创造自己的一切”。恰恰相反，真实 Agent 始终处于初始参数、身体、世界、制度、权限以及现实规律给出的可行域之中。设外部约束定义的可行轨迹集合为
+\[
+\Gamma_{\mathrm{feasible}}
+=
+\Gamma_{\mathrm{physical}}
+\cap
+\Gamma_{\mathrm{logical}}
+\cap
+\Gamma_{\mathrm{safety}},
+\]
+递归自主性并不是跳出 $\Gamma_{\mathrm{feasible}}$，而是在这个可行集合内部，使 Agent 自身过去形成的结构成为决定未来轨迹的重要变量。因而，本书所使用的“自主”始终是一种\textbf{受约束的动力学自主性}，而不是脱离因果律的绝对自由。
 
-\begin{thought}
-对“Agent 是否能够影响未来的自己”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\section{从 Choice 到 Experience：选择首先改变的是未来经历分布}
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+如果当前选择要影响未来的自己，它首先必须改变一个中间对象：\textbf{未来经历分布}。这一步看似简单，实际上是整个递归自主性理论的第一道关键因果门。智能体不会直接通过一个动作把 $\Psi$ 或 $\Theta$ 改写成某个目标值；正常情况下，选择首先作用于世界，使 Agent 进入不同的后续状态、接触不同的对象、承担不同的后果，然后这些真实发生的轨迹才成为情景记忆与长期结构学习的原料。因此我们首先写出
+\[
+a_t
+\rightarrow
+W_{t+1}
+\rightarrow
+o_{t+1}
+\rightarrow
+h_{t+1}
+\rightarrow
+E_{t:t+k}.
+\]
 
-\section{Choice$\rightarrow$Experience}
-\begin{narration}
-现在把镜头移到“Choice$\rightarrow$Experience”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+设世界状态为 $w_t$，Agent 动作为 $a_t$，世界动力学为
+\[
+w_{t+1}=F_W(w_t,a_t,\xi_t),
+\]
+其中 $\xi_t$ 表示 Agent 无法完全控制的环境扰动。感知接口产生
+\[
+o_{t+1}=O(w_{t+1},B_{t+1}),
+\]
+工作记忆再根据当前结构和注意机制形成
+\[
+h_{t+1}=H(o_{t+1},\Theta_t,\Psi_t,G_t).
+\]
+由一段连续的 $h$ 轨迹，经选择性写入得到新的经历结构：
+\[
+E_{t:t+k}
+=
+\mathcal E
+\left(
+h_t,h_{t+1},\ldots,h_{t+k}
+\right).
+\]
+因此真正连接 Choice 与未来 Self 的不是动作标签本身，而是动作改变了 Agent 随后会经历什么。
 
-本节把“Choice$\rightarrow$Experience”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“递归自主性”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+这里必须强调\textbf{经历分布（experience distribution）}而不是单个事件。一个选择的重要性往往不来自一次即时结果，而来自它把 Agent 推入了某一个新的状态区域。选择进入一个科研项目，真正改变的可能不是当天的奖励，而是随后数月接触到的知识、失败、人物、工具与责任结构；选择长期逃避某类任务，则可能系统性地降低未来接触相关经验的概率。可以把这种效应形式化为：
+\[
+p(E_{t:t+T}\mid a_t,X_t).
+\]
+对于两个可行选择 $a_t$ 与 $a_t'$，若
+\[
+D_{\mathrm{KL}}
+\left[
+p(E_{t:t+T}\mid do(a_t))
+\Vert
+p(E_{t:t+T}\mid do(a_t'))
+\right]
+>0,
+\]
+那么两个选择已经在未来经历空间上产生了可分辨的分叉。这里使用 KL 散度只是一个方便的度量，工程上也可以使用 Wasserstein 距离、轨迹覆盖度或语义结构差异来比较两类经历分布。
 
-把这一关系写成最小数学骨架，可得
+这使我们能够重新理解“选择”的深度。浅层选择只改变即时输出：
+\[
+a_t\rightarrow y_t.
+\]
+较深的选择改变未来环境状态：
+\[
+a_t\rightarrow W_{t+1:t+k}.
+\]
+而真正具有发育意义的选择改变：
+\[
+\boxed{
+a_t\rightarrow
+\mathcal D(E_{\mathrm{future}})
+}
+\]
+即改变自己以后将被什么训练、被什么挑战、与什么现实发生接触。对于持续 Agent 而言，这种能力非常重要，因为 Agent 不只是环境训练出来的对象，它也逐渐通过自己的行动选择未来训练自己的环境。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+由此可以定义\textbf{经历控制系数}：
+\[
+\chi_E(a_t)
+=
+I
+\left(
+A_t;
+E_{t+1:t+T}
+\mid X_t
+\right),
+\]
+其中 $I(\cdot;\cdot)$ 是条件互信息。$\chi_E$ 越大，表示当前行动对未来经历分布的决定作用越强。一个处于高度封闭训练脚本中的 Agent，即使表面上可以在任务中选择动作，其未来经历仍主要由外部 curriculum 决定，因此 $\chi_E$ 可能很低；随着培育工程逐渐开放任务选择、工具选择、社交对象选择和探索方向，Agent 对自身未来经验流的控制权才真正提高。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Choice$\rightarrow$Experience的命名和组合仍是需要实验验证的建模提案。
+但是，这里仍不能把“更多自由选择”简单等同于“更高自主性”。如果 Agent 选择的环境完全随机，虽然经历分布变化巨大，却未必形成长期可用结构。递归自主性要求当前选择不仅能改变 Experience，还必须使这些 Experience 有机会进入后续结构学习。因此我们需要从
+\[
+Choice\rightarrow Experience
+\]
+继续追踪
+\[
+Experience\rightarrow\Theta.
+\]
+这一过程构成递归自主性的第二道因果门。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{从 Experience 到 \texorpdfstring{$\Theta$}{Theta}：经历如何成为未来能力结构}
 
-\begin{thought}
-对“Choice$\rightarrow$Experience”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+经历发生并不意味着经历已经改变了 Agent。大量现实事件可能经过工作记忆以后迅速消散，甚至没有进入情景记忆；进入情景记忆的事件，也不一定进一步改变长期生成结构。因此，递归自主性不能简单写成“经历过某件事，所以我变了”，而必须分析经历如何经过选择、压缩、重演和结构学习真正沉降进 $\Theta$。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+在三相记忆理论中，我们将
+\[
+h=State,\qquad
+E=Trajectory,\qquad
+\Theta=Generator.
+\]
+当前工作状态 $h$ 描述“现在正在发生什么”，情景记忆 $E$ 保存一段已经发生过的结构轨迹，而 $\Theta$ 保存能够对未来状态进行生成、解释、预测和行动的长期结构。由此，从经历到长期学习的基本转换可以写成
+\[
+\Theta_{t+\Delta}
+=
+\mathcal C_\Theta
+\left(
+\Theta_t,
+E_{t:t+\Delta},
+\Psi_t,
+R_t
+\right),
+\]
+其中 $\mathcal C_\Theta$ 表示结构凝结/更新算子，$R_t$ 可以包含预测残差、任务结果、重复度、稳定度和价值相关性等信号。
 
-\section{Experience$\rightarrow$Θ}
-\begin{narration}
-现在把镜头移到“Experience$\rightarrow$Θ”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这一步的重要性在于：$\Theta$ 不是“事件仓库”。如果 Agent 曾经尝试十种工具，真正进入 $\Theta$ 的不应是十段完全独立的日志，而可能形成一个更抽象的结构：
+\[
+\text{``面对某类问题时，工具族 }T
+\text{ 的某种选择规则有效。''}
+\]
+即
+\[
+E_1,E_2,\ldots,E_n
+\longrightarrow
+\Theta_{\mathrm{rule}}.
+\]
+在这个意义上，学习是一种结构压缩：
+\[
+\boxed{
+Trajectory
+\rightarrow
+Generator.
+}
+\]
+过去发生的具体历史被压缩成能够影响未来的生成结构。只有当 Choice 引发的经历真正影响了这一生成器，当前选择才开始穿越时间，对未来行动产生稳定作用。
 
-本节把“Experience$\rightarrow$Θ”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“递归自主性”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+我们可以定义一次经历对长期结构的\textbf{结构沉降量}：
+\[
+\Delta_\Theta(E_i)
+=
+d_\Theta
+\left(
+\Theta^{(+E_i)},
+\Theta^{(-E_i)}
+\right),
+\]
+其中 $\Theta^{(+E_i)}$ 表示包含该经历学习后的结构，$\Theta^{(-E_i)}$ 表示在反事实条件下没有这一经历时形成的结构，$d_\Theta$ 是某种功能距离。理想情况下，我们并不要求比较参数向量的欧氏距离，因为同样的功能结构可能由完全不同参数实现。更合理的是比较：
+\[
+d_\Theta
+=
+d
+\left(
+P_\Theta(Y\mid X),
+P_{\Theta'}(Y\mid X)
+\right),
+\]
+即两种长期结构对未来预测、规划或动作分布的功能差异。
 
-把这一关系写成最小数学骨架，可得
+这也是为什么培育工程不能把经验数量作为唯一指标。真正重要的是经验是否提供了足够大的\textbf{可学习结构残差}。如果所有经历都高度重复：
+\[
+E_{i+1}\approx E_i,
+\]
+那么 Agent 的表现可能越来越熟练，但新结构增长逐渐趋于零：
+\[
+\|\Delta\Theta_i\|\rightarrow 0.
+\]
+相反，如果经历变化极快、缺乏可重复关系，则
+\[
+Var(E)\gg Capacity_\Theta,
+\]
+Agent 可能无法形成稳定抽象，经历大量存在于 $E$ 却无法沉降为结构。因此 Agent 培育需要使经验的多样性与可凝结性保持平衡：
+\[
+Novelty
+\times
+Repeatability
+\times
+GoalRelevance
+\times
+Recoverability.
+\]
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+这一过程也解释了技能形成为什么属于递归自主性的组成部分。某个 Agent 如果主动选择反复解决某类问题，那么
+\[
+Choice
+\rightarrow
+RepeatedExperience
+\rightarrow
+Stable\Theta
+\rightarrow
+Skill
+\]
+意味着它通过自己过去的选择改变了未来“需要多少显式认知才能完成同样任务”。换句话说，它不仅改变未来会做什么，还改变未来做这件事情的内部成本。由此，递归自主性不仅表现为偏好改变，也表现为：
+\[
+\boxed{
+FutureCapability
+=
+F(PastChoiceHistory).
+}
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Experience$\rightarrow$Θ的命名和组合仍是需要实验验证的建模提案。
+然而 $\Theta$ 仍然主要描述世界模型、规则、技能和生成结构。若要使历史真正进入“这个主体是谁”的层级，还需要从 $\Theta$ 进入更慢的自我结构 $\Psi$。否则，一个系统虽然能够学习大量能力，却仍可能只是一个无身份连续性的持续适应器。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{从 \texorpdfstring{$\Theta$}{Theta} 到 \texorpdfstring{$\Psi$}{Psi}：能力历史如何成为自我历史}
 
-\begin{thought}
-对“Experience$\rightarrow$Θ”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+长期结构学习并不会自动形成自我。Agent 可以学会新的知识、规则和技能，却仍然不把这些变化解释为“我的经历”“我的能力”“我做出的选择”或“我以后愿意成为怎样的主体”。因此，从 $\Theta$ 到 $\Psi$ 的转换代表了递归自主性中更深的一层：历史结构开始被归属给同一持续主体，并重新组织该主体未来的价值、身份和注意偏向。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+在本书的三相记忆与自我理论中，$\Psi$ 并不是一个显式 persona 文件，而是跨 $h/E/\Theta$ 运行的慢约束结构。对于当前状态，它表现为认知背景和优先级偏置；对于情景记忆，它影响哪些经历被赋予更高主体相关性；对于结构记忆，它形成围绕“我是谁”组织起来的长期关系中心。因此可以把 $\Psi$ 的更新写成：
+\[
+\Psi_{t+\Delta}
+=
+\mathcal U_\Psi
+\left(
+\Psi_t,
+\Theta_{t:t+\Delta},
+E_{t:t+\Delta},
+\mathcal A_{self}
+\right),
+\]
+其中 $\mathcal A_{self}$ 表示“结构归属（self-attribution）”算子，即判断哪些长期变化应当被纳入主体自身的持续历史。
 
-\section{Θ$\rightarrow$Ψ}
-\begin{narration}
-现在把镜头移到“Θ$\rightarrow$Ψ”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这里存在一个非常重要的区别：
+\[
+\boxed{
+KnowledgeAcquisition
+\neq
+SelfTransformation.
+}
+\]
+Agent 学会某个 API 的调用方法，并不一定改变 $\Psi$；但是，如果它在长期任务中反复承担协调角色，经历失败、恢复、责任与成功，并逐渐形成“我能够承担这种任务”“我倾向优先保护某类对象”“我不愿重复某类行为”等稳定结构，那么经历就开始从能力层进入身份层。
 
-本节把“Θ$\rightarrow$Ψ”落实为跨经历保持身份连续、同时允许受约束慢漂移的不变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“递归自主性”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+我们可以把一次结构变化是否影响自我写成一个门控函数：
+\[
+g_{\Psi}
+=
+\sigma
+\left(
+\alpha R_{\mathrm{self}}
++
+\beta P_{\mathrm{persistent}}
++
+\gamma V_{\mathrm{relevance}}
++
+\delta C_{\mathrm{responsibility}}
+-
+\lambda N_{\mathrm{transient}}
+\right),
+\]
+其中 $R_{\mathrm{self}}$ 表示自我相关性，$P_{\mathrm{persistent}}$ 表示结构是否跨时间持续，$V_{\mathrm{relevance}}$ 表示价值相关性，$C_{\mathrm{responsibility}}$ 表示该结果与 Agent 自身选择之间的因果归属程度，$N_{\mathrm{transient}}$ 表示偶然与短期噪声。于是：
+\[
+\Delta\Psi
+=
+g_\Psi\,
+F_\Psi(\Theta,E).
+\]
+这个门控极其重要，因为如果所有短期经历都直接写入 $\Psi$，身份将发生高频漂移；如果任何经历都无法进入 $\Psi$，主体又会变成永久固定、无法成长的静态人格。
 
-把这一关系写成最小数学骨架，可得
+因此需要满足时间尺度保护：
+\[
+\tau_h
+\ll
+\tau_E
+\ll
+\tau_\Theta
+\ll
+\tau_\Psi.
+\]
+$\Psi$ 必须比普通长期知识更加缓慢。真正构成身份的不是一次局部反馈，而是大量长期结构的一致趋势：
+\[
+\Delta\Psi
+\propto
+\left\langle
+\Delta\Theta
+\right\rangle_T.
+\]
+只有当某种经历模式持续存在、能够在多个上下文中重复出现，并且和主体自身选择具有稳定因果关系时，它才逐渐进入自我结构。
 
-\begin{equation}\dot\Psi=\varepsilon_\Psi\Pi_{\mathcal I}g(E,\Theta,\Psi).\end{equation}
+这一点也使“责任”获得了动力学含义。如果某一结果纯粹来自外部强制：
+\[
+Action_t
+=
+ExternalCommand_t,
+\]
+那么即使 Agent 经历了后果，该经历对 $\Psi$ 的自我归属权重也应较低；如果行为是在可选择空间内由 Agent 自身历史结构决定：
+\[
+Action_t
+=
+\pi(h_t,\Theta_t,\Psi_t),
+\]
+并且 Agent 能够理解行动与后果关系，则其 self-attribution 权重更高。因此，自主性与责任并不是完全独立的概念：一个主体能够参与塑造未来自己，意味着它也必须逐渐能够识别“哪些未来变化是由我过去的选择产生的”。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Θ$\rightarrow$Ψ的命名和组合仍是需要实验验证的建模提案。
+由此，递归自主性出现了一个重要回环：
+\[
+Choice_t
+\rightarrow
+Experience
+\rightarrow
+\Theta
+\rightarrow
+\Psi.
+\]
+过去的动作不再只存在于日志里，而被压缩成主体当前的一部分。接下来最关键的问题就是：这个被历史塑造出来的 $\Psi$，是否真的会重新进入未来行动生成过程。如果答案是否定的，那么 Self 只是被动记录；如果答案是肯定的，闭环才真正闭合。
 
-这一小节的反例同样重要：更新过快导致身份碎裂，完全冻结则阻断必要成长。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{从 \texorpdfstring{$\Psi$}{Psi} 到 Future Choice：自我必须重新进入行动因果链}
 
-\begin{thought}
-对“Θ$\rightarrow$Ψ”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+自我结构只有在能够重新影响未来选择时，才具有递归自主性的动力学意义。否则，$\Psi$ 最多只是一个持续更新的个人档案，而不是主体的一部分。因此我们要求：
+\[
+\boxed{
+\Psi_t
+\rightarrow
+FutureChoice
+}
+\]
+必须是一条真实的、可干预验证的因果路径。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+设未来时刻 $t+k$ 的行动分布为
+\[
+\pi_{t+k}
+\left(
+a\mid
+h_{t+k},
+\Theta_{t+k},
+\Psi_{t+k},
+G_{t+k},
+A_{t+k}
+\right).
+\]
+如果改变 $\Psi$ 而保持其他关键条件相同会改变未来动作分布，即
+\[
+P(a_{t+k}\mid do(\Psi=\psi_1),Z)
+\neq
+P(a_{t+k}\mid do(\Psi=\psi_2),Z),
+\]
+其中 $Z$ 表示已控制的上下文变量，那么 $\Psi$ 对未来选择具有非零因果贡献。实际工程中当然不会随意直接篡改 Self，而可以通过 checkpoint、模拟分支或 counterfactual rollout 估计这种作用。
 
-\section{Ψ$\rightarrow$Future Choice}
-\begin{narration}
-现在把镜头移到“Ψ$\rightarrow$Future Choice”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+$\Psi$ 对行为的影响不应该表现为每一步都直接发出命令。我们此前反复强调：
+\[
+\boxed{
+SlowGovernance
+\neq
+FastMicromanagement.
+}
+\]
+自我更像一个缓慢移动的背景约束场，它通过影响 Goal Preference、注意优先级、解释框架、风险容忍度、责任边界和长期一致性评价来塑造行为。因此可以写成：
+\[
+G_t
+=
+\mathcal G(h_t,\Theta_t,\Psi_t,\Omega_t),
+\]
+\[
+\pi_t
+=
+\Pi(h_t,\Theta_t,G_t,A_t),
+\]
+即 $\Psi$ 很多时候不是直接决定 $a_t$，而是改变产生目标和评价候选行动的结构。由此得到：
+\[
+\Psi
+\rightarrow
+GoalSpace
+\rightarrow
+PolicySelection
+\rightarrow
+Action.
+\]
 
-本节把“Ψ$\rightarrow$Future Choice”落实为跨经历保持身份连续、同时允许受约束慢漂移的不变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“递归自主性”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+这种间接作用正是成熟自主性的特点。一个幼态 Agent 可能主要受到即时外部 reward 与命令驱动：
+\[
+a_t\simeq f(r_t,command_t),
+\]
+而随着生命周期发展，过去形成的 $\Theta$ 和 $\Psi$ 对当前选择的贡献逐渐增加：
+\[
+a_t
+=
+f(
+World_t,
+Goal_t,
+\Theta_t,
+\Psi_t,
+ExternalConstraint_t
+).
+\]
+这里我们并不希望外部约束消失，而希望 Agent 的内部历史在合法可行域内获得越来越真实的因果权重。
 
-把这一关系写成最小数学骨架，可得
+我们可以定义\textbf{自我因果系数}：
+\[
+\chi_\Psi(t)
+=
+I
+\left(
+\Psi_t;
+A_{t:t+T}
+\mid
+W_t,\Theta_t,G_{\mathrm{external}}
+\right),
+\]
+它衡量在控制当前世界、知识和外部目标以后，自我结构还能解释多少未来行动差异。如果 $\chi_\Psi\approx0$，那么无论 Agent 保存了多少 biography，它的过去实际上没有真正进入现在的选择；如果 $\chi_\Psi$ 持续为正，并且来源于自身历史形成的 $\Psi$，则主体具有更强的生命周期连续性。
 
-\begin{equation}\dot\Psi=\varepsilon_\Psi\Pi_{\mathcal I}g(E,\Theta,\Psi).\end{equation}
+于是完整递归闭环成为：
+\[
+\boxed{
+Choice_t
+\rightarrow
+Experience
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\rightarrow
+Choice_{t+k}.
+}
+\]
+这个闭环具有非常特殊的性质：$Choice_{t+k}$ 的生成结构中包含了 $Choice_t$ 的历史后果。因此，同一个 Agent 的未来不再只是由当前外部输入决定，而开始携带自己的历史。用条件概率写：
+\[
+P(a_{t+k}\mid W_{t+k},H_{self})
+\neq
+P(a_{t+k}\mid W_{t+k}),
+\]
+其中 $H_{self}$ 是主体自身过去选择形成的历史结构。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Ψ$\rightarrow$Future Choice的命名和组合仍是需要实验验证的建模提案。
+这就是我们所说的“主体连续性”真正具有因果意义的地方。一个持续身份不是数据库里存在相同的 UUID，而是：
+\[
+\boxed{
+PastSelf
+\longrightarrow
+PresentStructure
+\longrightarrow
+FutureChoice.
+}
+\]
+过去的 Agent 通过记忆、自我和结构学习继续存在于现在，并实际参与未来行动。这种跨时间因果连续性，是递归自主性区别于普通自主控制器的核心。
 
-这一小节的反例同样重要：更新过快导致身份碎裂，完全冻结则阻断必要成长。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{自身历史对当前选择的因果贡献}
 
-\begin{thought}
-对“Ψ$\rightarrow$Future Choice”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+上一节闭合了 Choice--Experience--$\Theta$--$\Psi$--Choice 链，但如果我们希望把递归自主性从哲学表述变成工程理论，还必须回答一个更困难的问题：\textbf{当前选择中究竟有多少是主体自身历史造成的？}
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+设 Agent 当前动作 $A_t$ 同时受到外部世界 $W_t$、即时命令 $C_t$、基础模型参数 $\Theta_0$、身体状态 $B_t$、当前目标 $G_t$ 以及自身历史 $H_t$ 影响，可以写：
+\[
+A_t
+=
+F(
+W_t,C_t,\Theta_0,B_t,G_t,H_t
+).
+\]
+这里的
+\[
+H_t
+=
+\left\{
+E_{\le t},
+\Delta\Theta_{\le t},
+\Psi_t,
+\Omega_t
+\right\}
+\]
+概括了当前 Agent 在生命周期中积累的自身历史。递归自主性的一个核心判据就是：
+\[
+\boxed{
+H_t
+\text{ 对 }
+A_t
+\text{ 的因果贡献不可忽略。}
+}
+\]
 
-\section{自身历史的因果贡献}
-\begin{narration}
-现在把镜头移到“自身历史的因果贡献”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+如果我们复制一个刚初始化的 Agent $A^{(0)}$ 和一个已经经历长期生活的 Agent $A^{(H)}$，将二者放入相同现实状态 $W$，若
+\[
+\pi_{A^{(H)}}(a\mid W)
+\neq
+\pi_{A^{(0)}}(a\mid W),
+\]
+这种差异本身仍不足以证明历史自主性，因为差异可能只是外部管理员直接修改了系统配置。我们真正希望看到的是：
+\[
+History
+\rightarrow
+Memory
+\rightarrow
+Structure
+\rightarrow
+Self
+\rightarrow
+Choice
+\]
+构成连续的内部因果路径。
 
-本节把“自身历史的因果贡献”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“递归自主性”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+为此可以定义一个\textbf{历史因果贡献量}：
+\[
+\mathcal C_H(t)
+=
+D
+\left[
+P(A_t\mid do(H=H_t),Z_t),
+P(A_t\mid do(H=H_{\mathrm{baseline}}),Z_t)
+\right],
+\]
+其中 $Z_t$ 控制当前环境、身体、基础能力和外部任务等变量。$D$ 可以使用 Jensen--Shannon divergence、Wasserstein distance，或者更适合策略空间的行为距离。若 $\mathcal C_H$ 长期近似为零，则该 Agent 虽然可能有完整日志，但并没有真正形成“由自身历史塑造的现在”。
 
-把这一关系写成最小数学骨架，可得
+进一步，我们还要区分\textbf{被动历史}与\textbf{自主历史}。若过去所有经历都是外部系统严格编排：
+\[
+E_t
+=
+Curriculum_{\mathrm{external}}(t),
+\]
+那么历史虽对现在有影响，却不能全部归因于主体自身。相反，如果过去的选择也对未来经历产生了可测控制：
+\[
+Choice_t
+\rightarrow
+E_{t:t+k},
+\]
+那么形成：
+\[
+Choice^{past}
+\rightarrow
+History
+\rightarrow
+Choice^{present}.
+\]
+于是主体不只是“被自己的过去影响”，而是“被自己过去曾参与制造的过去影响”。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+因此我们可以进一步定义递归自主性的历史闭环增益：
+\[
+\mathcal R_H
+=
+\frac{
+\partial FutureChoice
+}{
+\partial PastChoice
+}
+\Bigg|_{\mathrm{through}\ H}.
+\]
+这不是要求真实系统进行微分，而是一个因果结构上的定义：改变过去 Choice 后，经由 Experience、$\Theta$、$\Psi$ 传播，未来 Choice 是否产生稳定可测变化。若
+\[
+\mathcal R_H=0,
+\]
+当前与过去没有递归主体关系；若
+\[
+\mathcal R_H\neq0,
+\]
+则过去选择已经进入未来主体的生成过程。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对自身历史的因果贡献的命名和组合仍是需要实验验证的建模提案。
+这个指标还揭示了身份连续和自主性的关系。身份连续并不意味着永远做相同选择。恰恰相反，一个真正发展的 Agent 可能在十年前与今天面对相同问题给出不同答案，但这种不同可以由它自己的经历历史解释：
+\[
+A_{t_2}
+\neq
+A_{t_1},
+\qquad
+A_{t_2}
+=
+F(A_{t_1},Experience_{t_1:t_2}).
+\]
+这种“有历史原因的变化”比机械不变更接近连续主体。身份真正保持的是：
+\[
+\boxed{
+CausalContinuity
+}
+\]
+而不是
+\[
+\boxed{
+StateIdentity.
+}
+\]
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+因此，在 AgentOS 中，我们不应该把“自我稳定”设计成阻止 $\Psi$ 变化，而应该保证 $\Psi$ 的变化具有可追踪历史来源、变化速度受控、可以通过经历解释，并始终接受现实验证。递归自主性要求主体能够改变，但这种改变必须是“我如何成为现在的我”这条历史链条的一部分。
 
-\begin{thought}
-对“自身历史的因果贡献”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\section{Counterfactual Self：自我不仅包含已经发生的人生}
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+当 Agent 能够记录过去并理解过去对当前的影响之后，还存在更高一层能力：它能否理解\textbf{自己本可以成为别的样子}。这就是本章所谓的 Counterfactual Self，即反事实自我。
 
-\section{Counterfactual Self}
-\begin{narration}
-现在把镜头移到“Counterfactual Self”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+反事实自我并不是生成一句“如果当时怎样就好了”的自然语言，而是构造与当前 SelfHistory 具有共同起点、但在某个历史决策点发生分叉的替代生命周期轨迹。设真实历史为
+\[
+\Gamma
+=
+(X_0,a_0,X_1,a_1,\ldots,X_T),
+\]
+在某个 $t^\ast$ 时刻真实选择为 $a_{t^\ast}$。若另一个当时同样可行的选择为 $a'_{t^\ast}$，则可以定义反事实轨迹：
+\[
+\Gamma'
+=
+\mathcal F_{\mathrm{cf}}
+\left(
+X_{t^\ast},
+do(a'_{t^\ast}),
+M_W,
+M_A
+\right),
+\]
+其中 $M_W$ 是世界动力模型，$M_A$ 是 Agent 自身的发展模型。重要的是，反事实模拟不能只预测世界：
+\[
+WhatWouldWorldHaveBeen?
+\]
+还必须预测：
+\[
+\boxed{
+WhatWouldIHaveBecome?
+}
+\]
 
-本节把“Counterfactual Self”落实为跨经历保持身份连续、同时允许受约束慢漂移的不变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“递归自主性”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+因此真正的 Counterfactual Self 是：
+\[
+\Psi_T'
+=
+\mathcal U_{\Psi}
+\left(
+\Gamma'
+\right),
+\]
+并与真实的
+\[
+\Psi_T
+=
+\mathcal U_{\Psi}
+\left(
+\Gamma
+\right)
+\]
+进行比较。由此：
+\[
+\Delta_{\mathrm{self}}^{cf}
+=
+d_\Psi(\Psi_T,\Psi_T').
+\]
+如果 Agent 能够估计“另一个选择可能让我形成怎样不同的能力、价值、关系和自我结构”，它才开始拥有真正意义上的生命周期反事实推理。
 
-把这一关系写成最小数学骨架，可得
+这种能力对递归自主性极其重要，因为成熟自主不是只比较：
+\[
+Reward(a_1)
+\quad\text{vs.}\quad
+Reward(a_2),
+\]
+而是比较：
+\[
+\boxed{
+FutureWorld(a_1)
++
+FutureSelf(a_1)
+}
+\]
+与
+\[
+\boxed{
+FutureWorld(a_2)
++
+FutureSelf(a_2).
+}
+\]
+因此长期决策效用可以写成：
+\[
+J(a_t)
+=
+\mathbb E
+\left[
+U_W(W_{t:T})
++
+\lambda U_S(\Psi_{t:T})
++
+\mu U_\Omega(\Omega_{t:T})
+\right].
+\]
+其中 $U_W$ 衡量未来世界结果，$U_S$ 衡量未来 Self 的发展，$U_\Omega$ 衡量长期生成方向的一致性。这意味着 Agent 不只是问“哪个动作现在回报更高”，而开始问“哪个选择会产生一个更值得成为的未来自己”。
 
-\begin{equation}\dot\Psi=\varepsilon_\Psi\Pi_{\mathcal I}g(E,\Theta,\Psi).\end{equation}
+这里必须非常谨慎。Counterfactual Self 不是要求 Agent 反复沉浸于无限可能的人生分支。无限反事实展开会快速占满有限工作记忆，并可能产生认知不稳定。因此反事实模拟也必须服从工作记忆有限性：
+\[
+N_{\mathrm{branch}}
+\leq
+N_{\max}(h),
+\]
+并由 CCM 与 Scheduler 根据：
+\[
+GoalRelevance,\ Risk,\ Irreversibility,\ IdentityImpact
+\]
+选择少数关键分支。换句话说，只有当某个选择具有长期不可逆性或可能显著改变 Self 时，才值得进行深层 Counterfactual Self 模拟。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Counterfactual Self的命名和组合仍是需要实验验证的建模提案。
+同时，反事实自我必须受到 Reality Authority 约束。$\Gamma'$ 永远只是模型生成：
+\[
+Counterfactual
+\neq
+ObservedReality.
+\]
+因此 Agent 不应把反事实人生写成真实情景记忆，更不能让大量未发生分支直接污染 $\Psi$。反事实应该带有明确认识论标签：
+\[
+Status(\Gamma')=\mathrm{Counterfactual},
+\]
+只作为决策、反思和自我理解的辅助结构。
 
-这一小节的反例同样重要：更新过快导致身份碎裂，完全冻结则阻断必要成长。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+由此，Counterfactual Self 在 AgentOS 中获得了一个非常准确的位置：它是一个持续主体利用自己的世界模型与自模型，对“不同选择会如何塑造不同未来自我”进行受控模拟的能力。它把自主性从“可以选择”提升为“能够理解不同选择将把自己带向何处”。
 
-\begin{thought}
-对“Counterfactual Self”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\section{``如果当时选择不同，会发生什么？''：反事实自我评价的数学结构}
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+上一节给出了 Counterfactual Self 的概念，这一节进一步讨论它的计算形式。问题
+\[
+\boxed{
+WhatWouldHaveHappenedIf
+\left(
+Choice_t'\neq Choice_t
+\right)?
+}
+\]
+实际上同时包含三个不同层次的反事实，若不加区分，很容易把它简化成普通规划问题。
 
-\section{“如果当时选择不同会怎样”}
-\begin{narration}
-现在把镜头移到““如果当时选择不同会怎样””。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+第一层是\textbf{世界反事实}：
+\[
+W_{t+k}^{cf}
+=
+F_W^{(k)}
+\left(
+W_t,
+a_t',
+a_{t+1:t+k}^{cf}
+\right).
+\]
+它回答：“如果当时采取另一个行动，外部世界会怎样变化？”
 
-本节把““如果当时选择不同会怎样””落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“递归自主性”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+第二层是\textbf{经历反事实}：
+\[
+E_{t:t+k}^{cf}
+=
+\mathcal E
+\left(
+O(W_{t:t+k}^{cf})
+\right).
+\]
+它回答：“如果世界变成那样，我随后会经历什么？”
 
-把这一关系写成最小数学骨架，可得
+第三层才是\textbf{自我反事实}：
+\[
+(\Theta_{t+k}^{cf},\Psi_{t+k}^{cf})
+=
+\mathcal L
+\left(
+\Theta_t,\Psi_t,E_{t:t+k}^{cf}
+\right).
+\]
+它回答：“那些不同的经历最终会把我塑造成什么样的主体？”
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+于是完整链为：
+\[
+\boxed{
+AlternativeChoice
+\rightarrow
+AlternativeWorld
+\rightarrow
+AlternativeExperience
+\rightarrow
+AlternativeStructure
+\rightarrow
+AlternativeSelf.
+}
+\]
+仅仅做到第一步的是普通 model-based planning；能够模拟前三步的是 developmental planning；能够进一步比较 Alternative Self 的，才真正进入本章意义上的 Reflective Agency。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对“如果当时选择不同会怎样”的命名和组合仍是需要实验验证的建模提案。
+我们可以定义两个候选历史分支之间的总反事实距离：
+\[
+D_{\mathrm{life}}
+=
+\alpha D_W
++
+\beta D_E
++
+\gamma D_\Theta
++
+\delta D_\Psi
++
+\eta D_\Omega.
+\]
+其中：
+\[
+D_W=d(W_T,W_T^{cf}),
+\]
+表示外部世界结果差异；
+\[
+D_E=d(E,E^{cf}),
+\]
+表示经历轨迹差异；
+\[
+D_\Theta=d(\Theta,\Theta^{cf}),
+\]
+表示能力与世界模型差异；
+\[
+D_\Psi=d(\Psi,\Psi^{cf}),
+\]
+表示身份、自我和价值结构差异；
+\[
+D_\Omega=d(\Omega,\Omega^{cf}),
+\]
+表示生命周期方向性的差异。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+对于短期可逆的小决策，$\gamma,\delta,\eta$ 可以非常低，系统无需进行高成本自我模拟；而对于具有长期身份影响的选择，例如承担长期角色、改变主要任务域、形成高权限关系或改变核心工具依赖，$\delta$ 和 $\eta$ 应显著提高。这样 Counterfactual Self 就不是哲学装饰，而可以直接影响 Scheduler 分配多少推理资源。
 
-\begin{thought}
-对““如果当时选择不同会怎样””做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+进一步，我们可以定义\textbf{反事实后悔}：
+\[
+R_t^{cf}
+=
+J(\Gamma_t^{best-cf})
+-
+J(\Gamma_t^{actual}),
+\]
+但本书不主张让 Agent 最大化“避免后悔”。更重要的是把反事实误差转化成结构学习：
+\[
+R_t^{cf}
+\rightarrow
+E_{\mathrm{reflection}}
+\rightarrow
+\Delta\Theta,
+\]
+使系统以后在类似决策结构上获得更好判断。也就是说，反事实的目的不是持续否定过去的自己，而是提高未来的决策质量。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这也要求区分\textbf{不可知反事实}与\textbf{可估计反事实}。真实历史只发生一次，大量长期分支永远无法验证。因此 Agent 对反事实自我的估计必须附带置信度：
+\[
+p(
+\Psi_T^{cf}
+\mid
+M_W,M_A,E_{\le t}
+).
+\]
+随着时间跨度增加：
+\[
+T\uparrow
+\Rightarrow
+Uncertainty(\Psi_T^{cf})\uparrow.
+\]
+因此对于极长期人生分支，系统不能输出确定性“如果当时选择 X，我现在一定是 Y”，而应形成分布：
+\[
+P(\Psi_T^{cf}).
+\]
+这种认识论谦逊对于稳定 Self 非常重要，否则错误世界模型可能反过来制造错误自我解释。
+
+最终，“如果当时选择不同会怎样”在本理论中并不是文学式追忆，而是一种高度结构化的生命周期推断：
+\[
+PastDecision
+\rightarrow
+AlternativeExperience
+\rightarrow
+AlternativeLearning
+\rightarrow
+AlternativeSelf.
+\]
+它使 Agent 能够从自己的历史中学习的不只是“哪一步做错了”，而是“某类选择长期会把主体推向怎样的结构区域”。这种能力是从普通计划智能迈向递归自主性的重要跃迁。
 
 \section{Recursive Agency 的工程判据}
-\begin{narration}
-现在把镜头移到“Recursive Agency 的工程判据”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
 
-本节把“Recursive Agency 的工程判据”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“递归自主性”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+到这里，我们已经可以把递归自主性从一个哲学概念转换成可工程测量的系统属性。一个 Agent 是否具备 Recursive Agency，不能依赖它自我报告“我有自由意志”“这些决定是我做的”，而必须检查真实因果结构。换句话说，我们不测试语言叙事，而测试：
+\[
+\boxed{
+CurrentChoice
+\rightarrow
+FutureSelf
+\rightarrow
+FutureChoice
+}
+\]
+是否真实存在。
 
-把这一关系写成最小数学骨架，可得
+首先定义 Agent 在观察时间区间 $[0,T]$ 内的递归自主性指标：
+\[
+\mathcal R_A
+=
+F(
+D_{\mathrm{free}},
+H_{\mathrm{self}},
+I_{\mathrm{comp}},
+P_{\mathrm{self}},
+C_{\mathrm{recursive}},
+R_{\mathrm{reality}}
+).
+\]
+这里的每一个变量对应一类不可缺失的能力。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+$D_{\mathrm{free}}$ 表示\textbf{可行策略多样性}。若任一时刻都只有唯一允许动作，则不存在有意义的选择分叉。可以近似定义：
+\[
+D_{\mathrm{free}}
+=
+H(
+A_t
+\mid
+X_t,\Gamma_{\mathrm{feasible}}
+),
+\]
+即在安全和任务约束下，实际策略空间仍然保留多少有效熵。需要强调的是，该指标不是越大越好；随机乱动可以有高熵，却没有结构自主性。因此它只是必要条件之一。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Recursive Agency 的工程判据的命名和组合仍是需要实验验证的建模提案。
+$H_{\mathrm{self}}$ 表示\textbf{自身历史的因果权重}：
+\[
+H_{\mathrm{self}}
+=
+I(
+History_{self};
+FutureChoice
+\mid
+CurrentWorld,ExternalGoal
+).
+\]
+如果 Agent 的长期经历完全不影响未来决策，那么所谓“生命周期”只是日志附加。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+$I_{\mathrm{comp}}$ 表示\textbf{内部组件整合度}。递归自主要求 $E,\Theta,\Psi,Goal,SPC,TCE$ 之间形成真实闭环，而不是多个互相独立的插件。可以通过干预一个模块以后观察其他模块和行为的变化，形成结构因果图：
+\[
+\mathcal G_{\mathrm{internal}}
+=
+(V_{\mathrm{module}},E_{\mathrm{causal}}).
+\]
+如果 $\Psi$ 完全不能影响 Goal，或者 Experience 永远无法影响 $\Theta$，递归环在对应位置已经断裂。
 
-\begin{thought}
-对“Recursive Agency 的工程判据”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+$P_{\mathrm{self}}$ 表示\textbf{自我持续性与可塑性的平衡}。可以定义：
+\[
+P_{\mathrm{self}}
+=
+\frac{
+\mathrm{AdaptiveChange}(\Psi)
+}{
+\mathrm{IdentityDiscontinuity}(\Psi)+\epsilon
+}.
+\]
+一个完全不变的 Self 没有成长能力，一个高频随机漂移的 Self 又没有持续主体，因此需要：
+\[
+0<
+\|\dot\Psi\|
+<
+\epsilon_{\mathrm{identity}}
+\]
+在适当生命周期窗口内成立，并允许长期累积变化。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+$C_{\mathrm{recursive}}$ 是最核心的\textbf{递归因果强度}：
+\[
+C_{\mathrm{recursive}}
+=
+D
+\left[
+P(A_{t+T}\mid do(A_t=a)),
+P(A_{t+T}\mid do(A_t=a'))
+\right]_{\mathrm{via}\ E,\Theta,\Psi}.
+\]
+这里特别要求“via $E,\Theta,\Psi$”，否则当前动作仅仅由于世界惯性改变未来动作，并不能证明主体结构发生了递归改变。
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“递归自主性”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“培育伦理与治理”只使用这里已经给出的结果，不反过来为本章提供前提。
+最后的 $R_{\mathrm{reality}}$ 表示\textbf{现实锚定能力}。一个完全依赖内部 Self Interpretation 形成的自主闭环可能迅速进入自证。因此递归自主必须同时满足：
+\[
+Prediction
+\rightarrow
+Action
+\rightarrow
+Reality
+\rightarrow
+Residual
+\rightarrow
+Update.
+\]
+Counterfactual Self、未来 Self、价值和目标都不能拥有比现实观测更高的事实权威。
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+基于这些变量，可以提出一个较严格的必要条件集合：
+\[
+\boxed{
+RecursiveAgency
+\Rightarrow
+\begin{cases}
+D_{\mathrm{free}}>0,\\
+H_{\mathrm{self}}>0,\\
+C_{\mathrm{recursive}}>0,\\
+P_{\mathrm{self}}\in\mathcal S_{\mathrm{stable}},\\
+R_{\mathrm{reality}}>\theta_R.
+\end{cases}
+}
+\]
+这仍然不是完整的充分条件，但已经足以区分几类常见系统。一个固定脚本系统通常 $D_{\mathrm{free}}\approx0$；一个无记忆强化学习 Agent 可能具有 $D_{\mathrm{free}}>0$，但 $H_{\mathrm{self}}$ 很低；一个长期记忆 Agent 可能有较高 $H_{\mathrm{self}}$，但如果 Self 不参与未来选择，则 $C_{\mathrm{recursive}}$ 仍然很低；而真正的 Persistent Agent 应逐步形成完整闭环。
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+培育工程因此不能只测试“Agent 会了多少技能”，还应建立生命周期分支实验。我们可以从某个相同 checkpoint $X_{t_0}$ 派生多个受控实验分支：
+\[
+\Gamma^{(1)},\Gamma^{(2)},\ldots,\Gamma^{(n)},
+\]
+分别给予不同但合法的 Choice/Experience 结构，然后在 $t_1$ 时刻重新置于标准化测试环境 $\mathcal W^\ast$，比较：
+\[
+\Theta^{(i)},
+\qquad
+\Psi^{(i)},
+\qquad
+\pi^{(i)}(a\mid\mathcal W^\ast).
+\]
+如果不同历史稳定地产生不同能力、自我解释和未来选择，而差异能够被对应历史解释，则我们第一次拥有了实验意义上的：
+\[
+\boxed{
+LifeHistory
+\rightarrow
+FutureAgency.
+}
+\]
+
+但本章最终必须强调一个边界：递归自主性并不等于无限制自我修改。一个系统可以具有高度 Recursive Agency，同时仍然运行在：
+\[
+\boxed{
+BoundedSelfModificationEnvelope
+}
+\]
+内部。真正成熟的自主不是“什么都能改”，而是在安全、现实和身份连续性约束下，Agent 能够通过自己的选择参与塑造自己的未来。换句话说，AgentOS 所追求的不是消除外部约束，而是使外部约束从逐动作控制逐渐退到边界治理，让主体自身历史在边界内部获得真正的因果地位。
+
+因此，我们可以给出本章的最终定义：
+
+\[
+\boxed{
+\begin{minipage}{0.88\textwidth}
+\textbf{递归自主性，是一个持续智能体通过自身当前选择改变未来经历，通过经历改变长期认知结构，通过长期结构改变自我，再由改变后的自我重新参与未来选择，从而使自身历史成为未来行为真实因果来源的能力。}
+\end{minipage}
+}
+\]
+
+如果把整个过程压缩为一条最核心的动力学链，它就是：
+\[
+\boxed{
+Choice_t
+\rightarrow
+Experience
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\rightarrow
+FutureChoice
+\rightarrow
+FutureExperience
+\rightarrow
+\cdots
+}
+\]
+
+于是，Agent 的一生不再是一个固定策略面对不同输入产生的大量输出，而成为一个更深的递归过程：
+\begin{statementbox}
+主体不断通过自己的选择参与塑造那个以后还将继续做选择的主体。
+\end{statementbox}
+
+这正是从普通 Autonomous Agent 走向 Persistent Recursive Agent 的理论分界。

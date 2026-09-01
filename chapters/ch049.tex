@@ -2,7 +2,6 @@
 \label{chap:from-cognitive-kernel-to-complete-agent}
 
 \begin{chapteroverviewbox}
-\textbf{本章总体说明：}
 在前述 AgentOS 原理论中，我们已经建立了一个能够在固定功能拓扑上维持工作记忆、三相记忆、自我、生命周期生成倾向以及认知调节的持续主体。然而，到目前为止，这一主体仍主要被描述为一个“内部认知动力系统”。本章完成一个决定性的理论跃迁：我们不再把智能理解为封闭在认知内核中的计算过程，而把完整 Agent 定义为一个通过稳定的观测--行动边界持续嵌入现实的闭环系统。
 
 本章的核心命题是：
@@ -521,6 +520,7 @@ DigitalBody.
 
 数字 Body 也具有自身的“身体状态”。例如：
 \[
+\fitdisplay{
 x_D^{body}
 =
 [
@@ -532,6 +532,7 @@ Compute,
 CredentialState,
 SessionState
 ].
+}
 \]
 这些状态与人类身体的能量、温度或损伤不同，但在功能上具有类似意义：它们限制 Agent 当前能够执行哪些动作。如果某个 API token 失效，Agent 的行动能力会下降；如果网络断开，外部服务变得不可达；如果文件系统只读，某些计划无法执行。因此数字 Agent 同样需要回答：
 \[
@@ -600,6 +601,7 @@ Body_i
 
 首先考虑 Browser。普通软件意义上的浏览器是一个应用程序；但对 Computer Use Agent 而言，浏览器实际上提供了一个持续数字空间。其状态不仅包括网页文本，还包括：
 \[
+\fitdisplay{
 x_{\mathrm{browser}}
 =
 [
@@ -614,6 +616,7 @@ Downloads,
 Permissions,
 NetworkState
 ].
+}
 \]
 Agent 可以观察这一状态的某些投影，并通过点击、输入、滚动、导航等动作改变它。于是存在：
 \[
@@ -1062,6 +1065,7 @@ x_W'.
 
 从 CSO 理论看，这个过程可以进一步表示为：
 \[
+\fitdisplay{
 UniverseCSO
 \rightarrow
 Observation
@@ -1073,6 +1077,7 @@ CognitiveTransformation
 ActionStructure
 \rightarrow
 UniverseCSO'.
+}
 \]
 于是本章完成了认识论与工程原理之间的重要闭合：我们在认识论中提出的
 \[

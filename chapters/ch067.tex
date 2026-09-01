@@ -1,8 +1,6 @@
 \chapter{Kernel--KRA--BPCC 的共同学习稳定性}
 
 \begin{chapteroverviewbox}
-\textbf{本章总体说明}
-
 在前述 Agent Kernel、KRA 与 BPCC 的分层设计中，我们已经建立了一个基本事实：长期智能体并不是由一个统一模型独立承担认知、适配与控制，而是由不同时间尺度、不同状态空间以及不同学习目标的动力系统共同组成。Agent Kernel 负责较慢尺度上的认知结构、世界模型、目标、自我以及长期生成结构；BPCC 负责身体侧的快速预测、局部控制、残差估计和在线适配；KRA 则承担两者之间的语义、动力学与控制关系适配。由此，一个比单模型持续学习更困难的问题自然出现：\textbf{当 Kernel、KRA 和 BPCC 都具有学习能力时，如何避免三个系统相互追逐、相互补偿和共同漂移，最终使整体闭环失去真实参照？}
 
 本章将这一问题定义为\textbf{多时间尺度共同学习稳定性问题}。我们的基本判断是：长期智能系统真正需要维持的并不是每一个模型参数的静止，而是 Kernel、KRA、BPCC 与现实之间的\textbf{功能关系稳定性}。因此本章提出
@@ -595,6 +593,7 @@ r_K
 
 因此可以定义归因函数
 \[
+\fitdisplay{
 \Gamma_t
 =
 \Gamma
@@ -607,6 +606,7 @@ CrossBodyConsistency,
 CrossTaskConsistency,
 RealityEvidence
 \right)
+}
 \]
 并得到：
 \[

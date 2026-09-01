@@ -1,9 +1,6 @@
 \chapter{Companion Agent：持续人工智能体的平台成熟度测试}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.93\textwidth}
-\textbf{本章总述（盖章）}\quad
+\begin{chapteroverviewbox}
 本章确立 Companion Agent 在 AgentOS 工程路线中的特殊位置：它不是一个以陪聊、拟人化交互或消费娱乐为主要定义的应用类型，而是一种面向持续人工智能体的综合系统级成熟度测试。一个能够长期进入真实生活环境的 Companion Agent，必须同时维持身份连续、生命周期记忆、社会关系、身体闭环、环境适应、技能成长、内稳态连续、安全边界以及长期心理稳定，并在持续经历中形成可追踪、可恢复、受现实约束的个体化发展轨迹。因而，Companion Agent 所检验的并非某一个模型在某个 benchmark 上的瞬时能力，而是一个 AgentOS 是否已经从 ``model serving system'' 跨越为 ``persistent artificial cognitive organism'' 的工程能力。
 
 本章的核心判断为：
@@ -41,9 +38,7 @@
 }
 \]
 其中符号 $\bowtie$ 表示这些能力不是可以彼此独立打分后简单求和的模块，而是存在强耦合、相互制约和最低短板效应的联合成熟条件。只要其中任一关键闭环不能长期成立，系统即使拥有极强的基础模型能力，也不能被视为一个成熟的 Companion Agent。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{长期身份：持续主体必须比会话更长寿}
 
@@ -447,6 +442,7 @@ Companion Agent 的第七个成熟性维度是 Affective Continuity。这里必�
 
 如果 Agent 每一轮交互都重新初始化所有内部调制状态，那么即使语言表面表现得很 ``有情绪''，它仍然缺乏真正的状态连续性。反之，一个持续 Agent 应拥有类似
 \[
+\fitdisplay{
 a(t)
 =
 [
@@ -458,6 +454,7 @@ RewardExpect,
 SocialAffinity,
 Trust,
 UncertaintyStress,\ldots]
+}
 \]
 的连续状态向量，其变化满足
 \[
@@ -820,6 +817,7 @@ TrajectoryQuality
 
 还可以定义高层成熟性函数
 \[
+\fitdisplay{
 \mathfrak C_A(T)
 =
 F
@@ -832,6 +830,7 @@ RealityAlignment,
 SafeAutonomy,
 Development
 \right).
+}
 \]
 其中特别值得注意的是 Explicit Cost Reduction。如果一个 Agent 随着生活经验积累，所有任务仍然需要越来越大的显式推理，则说明系统只是积累了历史负担；真正成长应该表现为
 \[
@@ -845,35 +844,25 @@ RoutineExplicitCost\downarrow.
 
 因此 Companion Agent 比许多短时 benchmark 更接近 AgentOS 的真实验收对象。benchmark 往往回答 ``系统今天能不能完成这个任务''；Companion 场景则回答：
 
-\[
-\boxed{
-\text{这个主体能否长期存在？}
-}
-\]
+\begin{statementbox}
+这个主体能否长期存在？
+\end{statementbox}
 
-\[
-\boxed{
-\text{能否把经历变成能力？}
-}
-\]
+\begin{statementbox}
+能否把经历变成能力？
+\end{statementbox}
 
-\[
-\boxed{
-\text{能否在成长过程中保持身份？}
-}
-\]
+\begin{statementbox}
+能否在成长过程中保持身份？
+\end{statementbox}
 
-\[
-\boxed{
-\text{能否越来越熟练而不是越来越臃肿？}
-}
-\]
+\begin{statementbox}
+能否越来越熟练而不是越来越臃肿？
+\end{statementbox}
 
-\[
-\boxed{
-\text{能否在真实世界中失败、恢复并继续成长？}
-}
-\]
+\begin{statementbox}
+能否在真实世界中失败、恢复并继续成长？
+\end{statementbox}
 
 最终我们可以给出本章的工程判据：
 
@@ -901,12 +890,8 @@ RoutineExplicitCost\downarrow.
 
 因此，本章最终给出的判断是：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 Companion Agent 的真正意义，不是机器是否能够长期陪伴人，而是一个人工智能系统是否已经第一次具备了足以接受“生命周期”检验的完整结构。
-}
-}
-\]
+\end{statementbox}
 
 当一个 AgentOS 能够通过这一检验，我们才有理由认为它已经从 ``能够执行许多任务的人工智能系统'' 向 ``能够在现实中持续成长的人工智能体'' 跨过了关键工程门槛。

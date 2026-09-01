@@ -2,8 +2,6 @@
 \label{chap:agentos-kernel-architecture}
 
 \begin{chapteroverviewbox}
-\textbf{【本章总体说明｜AgentOS Kernel 体系结构章】}
-
 本章完成从前述认知动力学原理向可实现系统内核的第一次完整收束。我们在这里所称的
 \textbf{AgentOS Kernel}，并不是 Linux Kernel 的替代物，也不是把一个大型语言模型重新命名为
 ``Kernel''；它是运行在传统计算机操作系统与基础模型之上的
@@ -1062,6 +1060,7 @@ AgentCSO@Skill.
 
 Skill 不能只等同于一段 prompt。一个成熟可执行 Skill 至少应包含
 \[
+\fitdisplay{
 Skill=
 (
 Trigger,
@@ -1072,6 +1071,7 @@ ResidualModel,
 Confidence,
 Fallback
 ).
+}
 \]
 对于具身技能，还可以进一步写成
 \[
@@ -1155,6 +1155,7 @@ Service
 \]
 对每一个外部记忆对象建立
 \[
+\fitdisplay{
 m_k=
 (
 URI_k,
@@ -1166,6 +1167,7 @@ Freshness_k,
 Confidence_k,
 Cost_k
 ).
+}
 \]
 
 这里的核心不是 Location，而是 Semantic Index。
@@ -1228,6 +1230,7 @@ AgentOS 的真正能力来自在两者之间持续优化承载，而不是试图
 Checkpoint 不能简单等同于保存进程内存，因为 AgentOS 状态跨越多个时间尺度和外部载体。
 一个完整 checkpoint 可以定义为
 \[
+\fitdisplay{
 CP_k=
 (
 S_A,
@@ -1241,6 +1244,7 @@ Authority_k,
 ExternalRefs_k,
 Version_k
 ).
+}
 \]
 其中不一定复制所有外部数据，但必须保存一致性引用。
 

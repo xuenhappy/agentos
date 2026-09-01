@@ -1,13 +1,8 @@
 \chapter{硬件路线：推理芯片与小脑芯片}
 
-\begin{center}
-\fbox{
-\parbox{0.94\textwidth}{
-\textbf{本章总体说明}\quad
+\begin{chapteroverviewbox}
 本章讨论的不是传统意义上的“为大模型再设计一块更快的加速芯片”，而是从本书已经建立的多尺度智能动力学出发，回答一个更基础的工程问题：当一个持续智能体同时包含毫秒级身体闭环、秒级工作记忆认知、分钟至小时级经验整合以及更慢的结构学习时，是否仍然可以把这些不同时间尺度、不同确定性要求、不同学习方式的计算统一压缩到同一种推理硬件之中。我们的结论是否定的。AgentOS 的硬件体系应当继承其软件体系已经确立的快慢分层原则：高层 Agent Kernel 依赖高吞吐、强表达、适合大规模生成模型计算的推理硬件；Body Runtime 中的 BPCC 则需要低时延、低抖动、确定性、持续在线适应和现实闭环优先的“小脑式”计算硬件。二者不是主芯片与协处理器的简单性能分工，而是两种不同智能动力学的物理承载。由此，本章提出 ``Inference Chip + Cerebellum Chip'' 的异构智能计算路线，并进一步讨论其与 KRA、Body Runtime、Linux/Computer OS 以及 AgentOS 调度体系之间的接口关系。
-}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{为什么 BPCC 不是一块缩小的大模型推理芯片}
 
@@ -996,9 +991,7 @@ SlowGovernance,\ FastLocalAutonomy
 }
 \]
 最终获得硬件形式：
-\[
-\boxed{
-\text{慢认知使用高表达计算，快身体使用确定性计算；稳定能力向低层硬件沉降，持续异常向高层认知重新提升。}
-}
-\]
+\begin{statementbox}
+慢认知使用高表达计算，快身体使用确定性计算；稳定能力向低层硬件沉降，持续异常向高层认知重新提升。
+\end{statementbox}
 这也是 AgentOS 从“运行在计算机上的认知软件”进一步迈向“具有自身多尺度计算身体的持续人工智能体”时不可绕过的硬件分界线。

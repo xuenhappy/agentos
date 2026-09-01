@@ -1,9 +1,6 @@
 \chapter{连续--离散控制研究路线}
 
-\begin{center}
-\fbox{
-\parbox{0.93\textwidth}{
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 在前述 AgentOS 理论中，我们已经逐步得到一个越来越清晰的结论：持续智能体既不能被描述为一个纯粹的离散程序，也不能被描述为一个完全连续的神经动力系统。工作记忆 $h$、AHC 内稳态状态、SPC 估计、TCE 调节、CCM 负载变化以及 Body Runtime 中的快速预测控制，本质上表现为连续变化的动力过程；而 Goal 的建立与撤销、任务切换、认知相态跃迁、Skill 编译、Checkpoint、权限变化、安全中断以及长期结构修改，又具有明显的离散事件性质。因此，一个能够长期运行、保持身份连续并同时具备适应能力的 AgentOS，必须被研究为一个\textbf{多时间尺度、连续动力学与离散治理相互耦合的混杂智能系统（Hybrid Intelligent System）}。
 
 本章不再增加新的认知模块，而是把此前已经建立的 $h/E/\Theta/\Psi/\Omega$、SPC--AHC--TCE、CCM、Scheduler、Boundary、Body Runtime、BPCC 与 Reality Authority 统一放入一个控制工程框架中。我们将依次讨论快速连续动力学、慢速结构学习、混杂控制、运行相态识别、稳定性、权限治理、Checkpoint、自修改边界以及未来受控拓扑可塑性。其核心原则可以浓缩为：
@@ -15,15 +12,11 @@
 }
 \]
 亦即：
-\[
-\boxed{
-\text{连续执行，离散治理；局部自治，跨尺度约束；现实反馈，慢结构保护。}
-}
-\]
+\begin{statementbox}
+连续执行，离散治理；局部自治，跨尺度约束；现实反馈，慢结构保护。
+\end{statementbox}
 这一研究路线的目的不是把 AgentOS 强制改写成传统控制器，而是建立一套能够描述、分析和验证长期人工智能主体运行稳定性的统一动力学语言。
-}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{快速连续动力学：智能运行时首先是一个流动过程}
 
@@ -254,11 +247,9 @@ E
 \]
 
 从控制工程角度看，这意味着 AgentOS 需要研究多时间尺度随机逼近（two-timescale/multi-timescale stochastic approximation）、平均系统理论和慢流形，而不是只研究在线训练。一个成熟系统应该允许高速子系统不断适应，却使长期身份结构只接受统计上稳定的证据。换句话说，AgentOS 的持续学习不是``所有东西一直学习''，而是：
-\[
-\boxed{
-\text{不同结构在不同证据尺度上获得不同修改权。}
-}
-\]
+\begin{statementbox}
+不同结构在不同证据尺度上获得不同修改权。
+\end{statementbox}
 这是长期主体能够同时成长与保持自身连续性的基础。
 
 \section{混杂控制：连续执行与离散治理必须共同存在}
@@ -364,11 +355,9 @@ Goal_i:\mathrm{Inactive}\rightarrow\mathrm{Active}.
 这样，AgentOS 才能够对生命周期中的重大决策建立可审计的离散历史，而不把所有长期结构都埋在不可解释的连续 latent 中。
 
 因此，我们在这里建立一条非常重要的系统设计原则：
-\[
-\boxed{
-\text{连续变量负责表达程度，离散事件负责表达制度性改变。}
-}
-\]
+\begin{statementbox}
+连续变量负责表达程度，离散事件负责表达制度性改变。
+\end{statementbox}
 例如认知压力可以连续变化，但是否进入安全恢复模式是离散事件；Self consistency 可以连续下降，但是否触发身份结构重审是治理事件；BPCC 的局部残差连续增长，但是否把问题升级给 Kernel 是离散事件。
 
 混杂控制的研究价值还在于，它使 AgentOS 能够同时借用两套成熟理论工具：连续部分可以研究 Lyapunov 稳定性、频率响应和鲁棒控制；离散部分可以研究状态机、形式验证、权限控制和事件逻辑；二者之间则通过 Guard 与 Reset Map 分析切换稳定性。这样我们才真正获得一个适合长期 Agent 的系统语言，而不是强行把认知系统塞进纯神经模型或纯程序框架。
@@ -376,11 +365,9 @@ Goal_i:\mathrm{Inactive}\rightarrow\mathrm{Active}.
 \section{相态识别：SPC 必须从状态观察器升级为运行制度观察器}
 
 在传统控制系统中，observer 的主要任务通常是估计不可直接测量的连续状态。但在 AgentOS 中，仅仅估计 $x(t)$ 还不够，因为同一个数值状态在不同动力组织形式下可能具有完全不同的含义。例如工作记忆中同时存在十个活跃 CSO 并不一定表示过载：如果它们高度相干、围绕同一个目标形成稳定闭环，系统可能处于高效率心流态；而只有五个 CSO，如果彼此竞争、目标冲突且不断相互激活，也可能已经进入认知湍流。因此 SPC 还必须判断：
-\[
-\boxed{
-\text{系统现在处于哪一种运行相态？}
-}
-\]
+\begin{statementbox}
+系统现在处于哪一种运行相态？
+\end{statementbox}
 
 设我们选择一组运行时宏观观测量
 \[
@@ -582,11 +569,9 @@ x(t)\in\mathcal X_{\mathrm{governable}}
 内。如果暂时离开，也应能够在有限时间内恢复。
 
 因此 AgentOS 控制工程真正关心的不是``不变化''，而是：
-\[
-\boxed{
-\text{变化是否有界、是否可解释、是否可恢复。}
-}
-\]
+\begin{statementbox}
+变化是否有界、是否可解释、是否可恢复。
+\end{statementbox}
 这一区别非常关键。它使我们能够同时保留智能成长与工程安全，而不是把安全错误地定义为冻结系统。
 
 \section{权限与 Authority：控制问题最终也是“谁有权改变谁”的问题}
@@ -632,6 +617,7 @@ StructuralRewrite.
 
 权限还必须与时间尺度对应。越慢的变量，修改权越应受到保护：
 \[
+\fitdisplay{
 AuthorityRequirement(\Omega)
 >
 AuthorityRequirement(\Psi)
@@ -639,6 +625,7 @@ AuthorityRequirement(\Psi)
 AuthorityRequirement(\Theta)
 >
 AuthorityRequirement(h).
+}
 \]
 这是 Slow Variable Protection 的治理表达。工作记忆内容可以快速改变，但身份和生命周期生成结构不能以相同的写入机制更新。
 
@@ -688,27 +675,21 @@ BoundedAuthorityGrowth.
 权限应随着能力、长期稳定性、历史表现和风险等级逐步变化，而不是一次性完全开放。
 
 因此，在 AgentOS 中，控制工程最终必须回答两类问题：
-\[
-\boxed{
-\text{How should a variable change?}
-}
-\]
+\begin{statementbox}
+How should a variable change?
+\end{statementbox}
 以及
-\[
-\boxed{
-\text{Who is allowed to change it?}
-}
-\]
+\begin{statementbox}
+Who is allowed to change it?
+\end{statementbox}
 只有这两者同时成立，AgentOS 才从``会调节的系统''升级为``受治理的持续主体''。
 
 \section{Checkpoint：长期智能必须具有可恢复的历史结构}
 
 一个普通程序失败后可以重新启动，而持续 Agent 面临的问题完全不同。它的当前状态并不只来自软件版本，还来自长期积累的 $E$、$\Theta$、$\Psi$、Skill、权限、外部记忆索引和社会关系。如果简单重启模型，主体的生命周期连续性就可能被破坏；如果完全保留所有变化，又可能把一次错误的结构学习永久写入未来。因此 Checkpoint 不是传统系统中的文件快照，而应被定义为：
-\[
-\boxed{
-\text{可恢复的生命周期结构边界。}
-}
-\]
+\begin{statementbox}
+可恢复的生命周期结构边界。
+\end{statementbox}
 
 设完整 Agent 状态为
 \[
@@ -897,6 +878,7 @@ Benefit(\mathcal R)
 
 更重要的是，自修改不应只有``能否执行''，还要包括修改后的验证环：
 \[
+\fitdisplay{
 Proposal
 \rightarrow
 Simulation
@@ -908,6 +890,7 @@ LimitedDeployment
 RealityVerification
 \rightarrow
 Consolidation.
+}
 \]
 这与普通在线学习的即时参数更新完全不同。越接近核心结构，越应该增加验证层。
 
@@ -930,11 +913,9 @@ LifecyclePrior.
 越向右，修改频率越低、证据要求越高、权限越严格、checkpoint 越完整。
 
 因此所谓``Agent 能够改变自己''不应该理解成一个二值属性，而是一个有边界、有频谱、有权限、有恢复机制的连续谱。真正成熟的递归自主性不是最大化自修改能力，而是：
-\[
-\boxed{
-\text{在保持可验证连续性的前提下，逐步扩大可安全自修改空间。}
-}
-\]
+\begin{statementbox}
+在保持可验证连续性的前提下，逐步扩大可安全自修改空间。
+\end{statementbox}
 这也是 AgentOS 控制工程与 Agent 培育工程未来相互连接的关键位置。
 
 \section{受控拓扑可塑性：从固定拓扑 AgentOS 向发育型 Agent 的远期扩展}
@@ -1027,11 +1008,9 @@ R_{ij}
 \right),
 \]
 其中 $A_{ij}$ 表示功能耦合强度，$U_{ij}$ 是长期效用，$C_{ij}$ 是结构成本，$R_{ij}$ 是风险。这个方程表达的是：
-\[
-\boxed{
-\text{Topology is the slow memory of repeated CSO interaction.}
-}
-\]
+\begin{statementbox}
+Topology is the slow memory of repeated CSO interaction.
+\end{statementbox}
 
 从这一点看，我们此前定义的
 \[
@@ -1045,6 +1024,7 @@ DynamicsOfTopology
 
 为了避免拓扑学习退化成任意 Architecture Search，我们坚持 Minimum Necessary Reorganization Principle：
 \[
+\fitdisplay{
 StateAdjustment
 \rightarrow
 RepresentationAdaptation
@@ -1054,11 +1034,13 @@ TimescaleMigration
 FunctionalMigration
 \rightarrow
 TopologyReorganization.
+}
 \]
 只要较低成本机制能够解决问题，就不应升级到更深层结构变化。只有长期残差持续存在、反复跨模块协调成本过高并且新结构具有明确收益时，才允许提出 topology rewrite。
 
 此外，拓扑修改必须通过与自修改相同甚至更严格的治理流程：
 \[
+\fitdisplay{
 StructuralMismatch
 \rightarrow
 TopologyProposal
@@ -1074,6 +1056,7 @@ LimitedActivation
 RealityVerification
 \rightarrow
 Consolidation.
+}
 \]
 因此，未来的拓扑可塑 Agent 不是一个``可以随意重写自己代码的 AI''，而是一个能够在极慢尺度上，以现实证据、长期收益和结构稳定性为依据，对自身功能组织进行受控发育的系统。
 
@@ -1110,12 +1093,8 @@ LearningOfTopology.
 
 在这个阶梯中，AgentOS 不再被理解为一个静态软件框架，而成为一个多时间尺度混杂智能系统：快速层保证现实交互和局部稳定，中层完成认知组织与任务治理，慢层吸收长期经验并维持身份连续，最慢层才允许在充分证据下改变系统本身的组织结构。于是，我们得到本章最重要的工程结论：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 持续人工智能的核心控制问题，并不是如何让系统拥有最大的可塑性，而是如何把不同类型的变化分配到正确的时间尺度、权限层级与治理机制中，使 Agent 能够不断成长，却不会因为成长本身而失去连续性、稳定性与现实约束。
-}
-}
-\]
+\end{statementbox}
 
 这也定义了 AgentOS 连续--离散控制研究路线的最终目标：不是寻找一个包办所有智能行为的单一控制算法，而是建立一个能够协调\textbf{状态变化、事件治理、结构学习、自我修改与拓扑发育}的统一控制框架，使未来的长期 Agent 从``能够运行''逐步过渡到``能够稳定地成长''。

@@ -1,8 +1,6 @@
 \chapter{固定拓扑持续学习的统一闭环}
 
 \begin{chapteroverviewbox}
-\textbf{本章总体说明}
-
 本章完成第二编“AgentOS 原理论”的第一次总收束。此前各章分别建立了三相记忆
 $h$--$E$--$\Theta$、自我慢变量 $\Psi$、生命周期生成吸引子 $\Omega$、工作记忆有限容量约束、
 SPC 自我状态估计、AHC 内稳态调制、TCE 认知动力学控制、CCM 运行复杂度治理、
@@ -698,6 +696,7 @@ Boundary 是入口控制；Scheduler 是竞争控制；CCM 是运行区稳定控
 在新的 CSO 语言下，可以更准确地写成：
 
 \[
+\fitdisplay{
 Admission,
 \quad
 Compression,
@@ -707,6 +706,7 @@ Temporalization,
 CarrierMigration,
 \quad
 RepresentationReorganization.
+}
 \]
 
 例如，一个过大的问题不必一次塞入 $h$，而可以被展开成：
@@ -786,6 +786,7 @@ h\rightarrow E.
 不是所有进入 $h$ 的内容都值得成为经历。写入概率可以概念化为：
 
 \[
+\fitdisplay{
 P(write_E\mid x)
 =
 \sigma
@@ -800,6 +801,7 @@ P(write_E\mid x)
 +
 \alpha_5 SelfRelevance
 \right).
+}
 \]
 
 因此 E 是选择性历史，而不是录像机。Agent 的人生史本身就带有目标、自我与调制偏差。
@@ -1125,6 +1127,7 @@ SPC_t
 AHC 接收这些信号以后，不应简单产生离散的“开心、焦虑”等拟人标签，而应形成连续状态：
 
 \[
+\fitdisplay{
 a_t
 =
 [
@@ -1136,6 +1139,7 @@ RewardExpect,
 SocialAffinity,
 Trust,
 UncertaintyStress,\ldots].
+}
 \]
 
 其动力学具有积分和恢复性质：

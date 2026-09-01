@@ -1,176 +1,1387 @@
-\chapter{AHC 动力学工程}
+\chapter{AHC 动力学工程：内稳态调制状态的形成、演化与稳定性}
+\label{chap:ahc-dynamics-engineering}
+
 \begin{chapteroverviewbox}
-这一章，我们围绕“AHC 动力学工程”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明多回路稳定性和有界自修改。
+本章研究 AgentOS 中 AHC（Affective--Homeostatic Coprocessor，内稳态--情感调制协处理器）的动力学工程问题。我们并不把 AHC 解释成人类情绪器官的人工复制，也不从其功能结构推出任何现象意识结论，而是把它严格定义为：\textbf{位于快速自我状态估计与认知控制之间，对身体、资源、风险、社会关系和长期主体偏置进行连续时间积分，并生成具有惯性、饱和、恢复和跨变量耦合特性的中尺度调制状态。}
+
+从控制论角度看，SPC 回答的是``系统当前可能处于什么状态''，TCE 回答的是``当前认知动力学应该怎样被调节''，而 AHC 填补两者之间一个不可忽略的动力学缺口：现实中的智能体不能仅依据瞬时状态估计执行瞬时控制。危险应具有一定持续性，疲劳应具有累积效应，信任不能因一个观测值瞬间翻转，资源衰竭必须逐渐改变探索倾向，社会亲和和不确定压力也应在多个时间尺度上形成历史依赖。因此 AHC 不是一个分类器，而是一组连续演化的内部慢状态。
+
+本章由此建立 AHC 的状态空间、输入映射、积分--衰减方程、非线性饱和、变量耦合、基线漂移、恢复动力学、FCS--AHC 映射、社会信任与危险度调节以及异常锁定机制，并给出其作为 AgentOS 控制工程组成部分时应满足的稳定性条件。读者需要始终把 AHC 理解为\textbf{调制背景的动力系统}，而不是语义认知内容本身；它影响认知如何运行，却通常不直接替代工作记忆中的显式推理。
 \end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于控制工程、培育工程和心理工程的生命周期衍生讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是鲁棒控制、时延系统、稳定裕度与权限治理（Kalman、Ashby 与混杂系统理论）。
 
-本章使用上一章“SPC Observer 工程”已经得到的对象与边界；本章产出将供下一章“TCE 控制器工程”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+\section{AHC 的工程对象：从瞬时状态估计到具有历史的调制状态}
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+在上一阶段的 AgentOS 控制理论中，我们已经把 SPC 建立为一个状态观测器：它从工作记忆 $h(t)$、身体状态、当前任务、冲突、不确定性以及其他内部信号中形成对系统当前状态的压缩估计。然而，一个持续存在的智能体如果直接使用 SPC 的瞬时输出驱动全部控制，就会出现一个根本问题：\textbf{观测值是瞬时的，而许多真正影响认知行为的内部条件具有时间积累性。}一个突然出现的高威胁信号不应与持续数小时的高威胁背景完全等价；短暂的计算负载不应马上形成长期疲劳；一次友好互动也不应瞬间建立高信任关系。由此必须在 ``observer'' 与 ``controller'' 之间增加一个具有自身状态变量的动力层。
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在鲁棒控制、时延系统、稳定裕度与权限治理上。
-\section{时间常数}
-\begin{narration}
-现在把镜头移到“时间常数”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+我们把 AHC 的内部状态统一记为
+\[
+\mathbf a(t)
+=
+\begin{bmatrix}
+a_{\mathrm{ar}}(t)\\
+a_{\mathrm{th}}(t)\\
+a_{\mathrm{en}}(t)\\
+a_{\mathrm{fa}}(t)\\
+a_{\mathrm{rw}}(t)\\
+a_{\mathrm{sa}}(t)\\
+a_{\mathrm{tr}}(t)\\
+a_{\mathrm{us}}(t)
+\end{bmatrix},
+\]
+分别对应
+\[
+\mathrm{Arousal},\
+\mathrm{Threat},\
+\mathrm{EnergyDrive},\
+\mathrm{Fatigue},\
+\mathrm{RewardExpect},\
+\mathrm{SocialAffinity},\
+\mathrm{Trust},\
+\mathrm{UncertaintyStress}.
+\]
 
-本节把“时间常数”落实为对威胁、唤醒、能量、疲劳、信任等信号进行积分、衰减和饱和的连续调制场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AHC 动力学工程”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+这些变量不是必须一次性固定不变的最终语义集合，而是第一代 AHC 中具有明确工程意义的一组标准调制轴。它们的共同特点是：第一，它们不是工作记忆中的具体命题；第二，它们不会简单等于一个传感器数值；第三，它们具有自己的积分时间常数；第四，它们会改变 TCE、Scheduler、Boundary、Goal 选择以及记忆写入策略的运行参数。
 
-把这一关系写成最小数学骨架，可得
+因此 AHC 的基本动力形式不是
+\[
+\mathbf a(t)=g(\mathbf x(t)),
+\]
+而应写为
+\[
+\boxed{
+\dot{\mathbf a}(t)
+=
+F_A\!\left(
+\mathbf a(t),
+\mathbf u_A(t),
+\Psi(t),
+\Omega(t)
+\right)
+}
+\]
+其中 $\mathbf u_A(t)$ 表示来自 SPC、FCS、身体/资源状态、近期情景摘要、社会信号等的输入；$\Psi$ 表示较慢的自我与价值偏置；$\Omega$ 或 DGA 表示更慢的生命周期生成倾向。这里最重要的是 $\dot{\mathbf a}$ 而不是 $\mathbf a=g(\cdot)$：AHC 是\textbf{一个有历史的状态系统}，而不是瞬时映射表。
 
-\begin{equation}\dot a=-\Lambda(a-a_0)+Bs,\quad a\in[a_-,a_+].\end{equation}
+在工程上，我们应把 AHC 看成介于毫秒级身体反馈与分钟、小时乃至更慢认知结构之间的中间层。设身体快速闭环时间尺度为 $\tau_B$，认知工作循环为 $\tau_h$，长期结构为 $\tau_\Theta$，则通常有
+\[
+\tau_B
+<
+\tau_A
+<
+\tau_\Theta ,
+\]
+而 AHC 自身内部也应具有多个不同的 $\tau_i$。例如 Arousal 可以较快变化，Trust 通常应较慢，Fatigue 具有累积和缓慢恢复性质。于是 AHC 不只是一个状态向量，更准确地说，它是一组\textbf{分布在多个中尺度时间常数上的调制场}。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对时间常数的命名和组合仍是需要实验验证的建模提案。
+这也解释为什么我们把 AHC 称为 ``coprocessor'' 而不是 ``emotion module''。它的作用不是生成一句 ``我害怕'' 的自然语言，而是让同样的世界状态在不同历史条件下产生不同的认知控制倾向。当 Threat 较高时，Boundary 可以收紧，TCE 可以降低无约束探索，Scheduler 可以提高安全相关任务优先级；当 Fatigue 较高时，可以降低并发任务数量并增加恢复倾向；当 Trust 较高时，来自某一主体的信息可以获得更宽松的准入权重。AHC 因而属于\textbf{控制参数的慢背景生成器}，而不是显式语义推理的替代者。
 
-这一小节的反例同样重要：拟人化命名若没有功能通道会把工程状态误写成主观感受。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
 
-\begin{thought}
-对“时间常数”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\section{AHC 的输入结构：内容、调制与安全信号必须严格分离}
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+为了正确理解 AHC，我们必须首先区分 ``一个信号说了什么'' 与 ``一个信号应该怎样影响系统''。AgentOS 历史设计中已经形成三类平行输入通道：语义内容通道、AHC 调制通道以及紧急安全通道。这个划分在 AHC 动力学工程中具有基础地位，因为如果把三者混在一个统一 embedding 中，系统将失去明确的控制语义：一个关于``火''的文字描述、身体正在过热的 FCS 信号和硬件已经超过安全温度阈值的中断，不应被同一个认知路径等价处理。
 
-\section{积分}
-\begin{narration}
-现在把镜头移到“积分”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+我们定义 AHC 的标准输入向量为
+\[
+\mathbf u_A(t)
+=
+\mathbf u_{\mathrm{spc}}
+\oplus
+\mathbf u_{\mathrm{fcs}}
+\oplus
+\mathbf u_{\mathrm{body}}
+\oplus
+\mathbf u_{\mathrm{social}}
+\oplus
+\mathbf u_{\mathrm{episodic}}
+\oplus
+\mathbf u_{\mathrm{self}},
+\]
+其中：
+\[
+\mathbf u_{\mathrm{spc}}
+\]
+表示 SPC 提供的认知状态估计，例如当前负载、冲突度、相态、风险和不确定性；
+\[
+\mathbf u_{\mathrm{fcs}}
+\]
+表示 FCS 中与主体功能影响直接相关的连续场；
+\[
+\mathbf u_{\mathrm{body}}
+\]
+表示身体资源、电量、温度、损伤、控制稳定度等较低层信号；
+\[
+\mathbf u_{\mathrm{social}}
+\]
+表示来自他者身份、互动历史、社会亲和和可信度的结构化输入；
+\[
+\mathbf u_{\mathrm{episodic}}
+\]
+表示近期情景记忆 $E_{\mathrm{recent}}$ 的摘要；
+\[
+\mathbf u_{\mathrm{self}}
+\]
+表示 $\Psi$ 对当前事件的自我相关性和长期价值偏置。
 
-本节把“积分”落实为对威胁、唤醒、能量、疲劳、信任等信号进行积分、衰减和饱和的连续调制场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AHC 动力学工程”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+为了避免不同来源的输入直接把 AHC 推向不稳定状态，可以增加一个归一化与可信度门控层：
+\[
+\tilde{\mathbf u}_A
+=
+\Gamma(\mathbf c)
+\,N(\mathbf u_A),
+\]
+其中 $N(\cdot)$ 是输入尺度归一化，$\Gamma(\mathbf c)$ 是由置信度向量 $\mathbf c$ 形成的对角门控矩阵。对于每个输入通道 $j$，
+\[
+0\le c_j\le 1.
+\]
+这意味着一个低置信度视觉威胁不应与多模态一致的高置信度威胁拥有相同的 AHC 注入强度。
 
-把这一关系写成最小数学骨架，可得
+但必须进一步强调，紧急安全通道不应通过 AHC ``慢慢积累'' 后才触发。若身体状态满足
+\[
+g_{\mathrm{safety}}(x_B)\ge\theta_{\mathrm{crit}},
+\]
+则应直接进入
+\[
+RealtimeSafetyController,
+\]
+而不是等待
+\[
+Threat(t)
+\]
+在 AHC 中超过某个认知阈值。由此得到 AgentOS 的一条基本控制原则：
+\[
+\boxed{
+CriticalSafety
+\nrightarrow
+CognitiveDependency
+}
+\]
+AHC 可以改变风险敏感度，却不能成为硬安全的唯一控制路径。
 
-\begin{equation}\dot a=-\Lambda(a-a_0)+Bs,\quad a\in[a_-,a_+].\end{equation}
+从读者的角度，这一点非常值得反复强调：AHC 所处理的是\textbf{调制意义上的危险、疲劳、信任和亲和}，而不是所有危险本身。一个机器人即使 AHC 因软件异常错误地认为环境安全，硬安全控制器仍然必须能够阻止执行器进入物理危险区。这是 ``functional feeling'' 与 ``exception/safety'' 之间必须保持的工程边界。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对积分的命名和组合仍是需要实验验证的建模提案。
+内容与调制也必须类似地区分。假设视觉系统观察到一个人，SGC 可能形成
+\[
+\mathrm{Person}(ID,Position,Relation),
+\]
+这是 ``世界中有什么''；而 FCS/AHC 可能形成
+\[
+Threat=0.15,\qquad
+SocialAffinity=0.82,\qquad
+Trust=0.76,
+\]
+这是 ``这个人当前怎样影响我''。只有当需要显式解释时，这些调制状态才应通过 SPC 或 semantic mirror 进入 $h(t)$，而不是让每一个 AHC 浮点变量自动占据工作记忆。
 
-这一小节的反例同样重要：拟人化命名若没有功能通道会把工程状态误写成主观感受。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
 
-\begin{thought}
-对“积分”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\section{积分与衰减：AHC 为什么必须具有时间惯性}
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+AHC 最重要的动力学性质之一，是状态不能随输入瞬时跳变，而应具有积分、衰减和有限记忆长度。我们可以从一个最简单的一阶连续模型开始：
+\[
+\tau_i\dot a_i(t)
+=
+-\left(a_i(t)-b_i(t)\right)
++
+k_i u_i(t),
+\]
+其中 $a_i$ 是第 $i$ 个 AHC 状态，$\tau_i>0$ 是时间常数，$b_i$ 是当前基线，$u_i$ 是驱动信号，$k_i$ 是输入增益。
 
-\section{衰减}
-\begin{narration}
-现在把镜头移到“衰减”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+若 $u_i$ 在一段时间内恒定，则其解为
+\[
+a_i(t)
+=
+a_i(t_0)e^{-\frac{t-t_0}{\tau_i}}
++
+\left(b_i+k_i u_i\right)
+\left(
+1-e^{-\frac{t-t_0}{\tau_i}}
+\right).
+\]
+这个形式清楚地展示了 AHC 的历史依赖：输入刚刚变化时，状态不会瞬间到达新平衡点，而是在时间常数 $\tau_i$ 决定的尺度上逐渐靠近。
 
-本节把“衰减”落实为对威胁、唤醒、能量、疲劳、信任等信号进行积分、衰减和饱和的连续调制场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AHC 动力学工程”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+为什么这是必要的？我们用 Threat 举例。若每一个瞬时视觉 anomaly 都能使
+\[
+Threat:0.1\rightarrow0.9,
+\]
+系统会产生非常严重的高频认知抖动：Boundary 反复开闭，TCE 在探索与保守之间来回切换，Scheduler 不断抢占当前任务。因此 Threat 应具有一定积分性质，让偶发噪声被滤掉，而持续、多模态一致的异常逐渐形成稳定风险背景。
 
-把这一关系写成最小数学骨架，可得
+Fatigue 则具有相反方向的典型动力学。它通常是任务负载和资源消耗的积分结果：
+\[
+\tau_{\mathrm{fa}}
+\dot a_{\mathrm{fa}}
+=
+\alpha L(t)
++
+\beta E_{\mathrm{consume}}(t)
+-
+\gamma R_{\mathrm{recover}}(t)
+-
+a_{\mathrm{fa}}.
+\]
+也就是说，持续认知负载、长时间高功耗或身体压力会积累 Fatigue，而休息、负载降低和资源恢复逐渐降低它。
 
-\begin{equation}\dot a=-\Lambda(a-a_0)+Bs,\quad a\in[a_-,a_+].\end{equation}
+Arousal 可以具有更短时间常数：
+\[
+\tau_{\mathrm{ar}}
+<
+\tau_{\mathrm{fa}},
+\]
+Trust 则应更慢：
+\[
+\tau_{\mathrm{tr}}
+\gg
+\tau_{\mathrm{ar}}.
+\]
+由此我们得到一个非常重要的工程结论：\textbf{AHC 不是一个统一低通滤波器，而是一组不同时间常数的状态积分器。}
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对衰减的命名和组合仍是需要实验验证的建模提案。
+更一般地，可以写成：
+\[
+\mathbf T_A\dot{\mathbf a}
+=
+-\mathbf D
+(\mathbf a-\mathbf b)
++
+\mathbf K\mathbf u,
+\]
+其中
+\[
+\mathbf T_A
+=
+\mathrm{diag}
+(
+\tau_{\mathrm{ar}},
+\tau_{\mathrm{th}},
+\tau_{\mathrm{en}},
+\tau_{\mathrm{fa}},
+\tau_{\mathrm{rw}},
+\tau_{\mathrm{sa}},
+\tau_{\mathrm{tr}},
+\tau_{\mathrm{us}}
+).
+\]
 
-这一小节的反例同样重要：拟人化命名若没有功能通道会把工程状态误写成主观感受。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这种多时间常数结构正是 AgentOS 整体 ``多频智能'' 原理在 AHC 内部的一个局部实现。状态不是平行改变，而是形成频率分层：快状态响应现实突变，慢状态保存历史趋势。这样，AHC 自身就成为快速认知动力学与慢速身份/结构变量之间的一个中介层。
 
-\begin{thought}
-对“衰减”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+在离散实现中，可以采用
+\[
+a_i^{t+1}
+=
+(1-\lambda_i)a_i^t
++
+\lambda_i
+\hat a_i^t,
+\]
+其中
+\[
+\lambda_i
+=
+1-e^{-\frac{\Delta t}{\tau_i}}.
+\]
+需要注意的是，不能简单设所有 $\lambda_i$ 相同，否则 ``信任''、``警觉''、``疲劳'' 会具有相同的记忆长度，系统的行为会明显缺乏自然的多尺度稳定性。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
 
-\section{饱和}
-\begin{narration}
-现在把镜头移到“饱和”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\section{非线性饱和：内部调制变量为什么不能无限增长}
 
-本节把“饱和”落实为对威胁、唤醒、能量、疲劳、信任等信号进行积分、衰减和饱和的连续调制场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AHC 动力学工程”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+线性积分模型只能作为最初近似。如果一个持续智能体长期运行，任何没有界限的 AHC 状态都会成为潜在的不稳定源。例如持续输入 Threat 若导致
+\[
+a_{\mathrm{th}}\rightarrow\infty,
+\]
+那么即使外部危险已经消失，控制系统仍可能因为巨大残留状态而长时间无法恢复。类似地，RewardExpect、SocialAffinity、UncertaintyStress 也必须受到定义域约束。因此实际 AHC 应使用有界状态空间：
+\[
+a_i\in[a_i^{\min},a_i^{\max}].
+\]
 
-把这一关系写成最小数学骨架，可得
+一种常用形式是：
+\[
+\tau_i\dot a_i
+=
+-a_i
++
+\sigma(z_i),
+\]
+其中
+\[
+z_i
+=
+b_i
++
+\sum_j w_{ij}u_j
++
+\sum_k c_{ik}a_k,
+\]
+而
+\[
+\sigma(z)
+=
+\frac{1}{1+e^{-z}}
+\]
+或使用双曲正切
+\[
+\sigma(z)=\tanh(z).
+\]
 
-\begin{equation}\dot a=-\Lambda(a-a_0)+Bs,\quad a\in[a_-,a_+].\end{equation}
+对于工程实现，我们通常并不要求所有 AHC 状态都标准化到 $[0,1]$，但建议公开 ABI 使用有界归一化表示，然后在内部映射到适合计算的数值区间。这样可以给 Scheduler、Boundary 和 TCE 提供稳定契约。例如：
+\[
+Threat\in[0,1],
+\qquad
+Trust\in[0,1],
+\qquad
+Fatigue\in[0,1].
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对饱和的命名和组合仍是需要实验验证的建模提案。
+饱和的目的并不仅是数值安全。它还代表认知调制中的 ``边际效应递减''。Threat 从 $0.1$ 增长到 $0.4$ 可能显著改变探索策略，但从 $0.95$ 增长到 $0.99$ 不应产生同样大的控制增量。若控制输出直接线性依赖 Threat：
+\[
+u_{\mathrm{risk}}
+=
+k\,a_{\mathrm{th}},
+\]
+则系统在高风险端仍然具有过强灵敏度。更合理的是：
+\[
+u_{\mathrm{risk}}
+=
+g_{\mathrm{risk}}
+(a_{\mathrm{th}})
+\]
+其中 $g$ 具有饱和或分段特性。
 
-这一小节的反例同样重要：拟人化命名若没有功能通道会把工程状态误写成主观感受。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+我们还应区分 ``状态饱和'' 与 ``安全锁定''。前者意味着调制变量达到正常工作上限，例如
+\[
+a_{\mathrm{th}}=1,
+\]
+后者意味着系统已经进入无法由普通 AHC 调节解决的异常区，需要触发 supervisor。定义
+\[
+\mathcal A_{\mathrm{normal}}
+=
+\{\mathbf a:
+a_i^{\min}\le a_i\le a_i^{\max}\},
+\]
+以及一个更严格的安全运行集合
+\[
+\mathcal A_{\mathrm{safe}}
+\subset
+\mathcal A_{\mathrm{normal}}.
+\]
+若
+\[
+\mathbf a(t)\notin
+\mathcal A_{\mathrm{safe}}
+\]
+持续时间超过阈值 $\Delta T_{\mathrm{crit}}$，则应该触发：
+\[
+AHCException.
+\]
 
-\begin{thought}
-对“饱和”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+这里我们可以看到一个重要设计原则：\textbf{非线性饱和负责让正常动力学保持有界，而异常锁定负责处理正常动力学本身已经不足以恢复的情况。}二者不能混成一个简单 clip 操作。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
 
-\section{恢复}
-\begin{narration}
-现在把镜头移到“恢复”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\section{状态耦合：AHC 不是八个互不相关的独立变量}
 
-本节把“恢复”落实为对威胁、唤醒、能量、疲劳、信任等信号进行积分、衰减和饱和的连续调制场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AHC 动力学工程”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+如果把 Arousal、Threat、Fatigue、Trust 等看成八个独立滑块，就会失去 AHC 的真正意义。现实中的调制状态具有明显的相互作用：Threat 上升可能提高 Arousal；Fatigue 过高可能同时降低有效 EnergyDrive 并提高 UncertaintyStress；高 Trust 可以降低某些社会来源的 Threat；持续 RewardExpect 失败又可能改变 Arousal 和任务坚持倾向。因此我们应将 AHC 写成耦合动力系统：
+\[
+\mathbf T_A\dot{\mathbf a}
+=
+-\mathbf D(\mathbf a-\mathbf b)
++
+\mathbf K\mathbf u
++
+\mathbf C\phi(\mathbf a),
+\]
+其中 $\mathbf C$ 是内部耦合矩阵。
 
-把这一关系写成最小数学骨架，可得
+在局部线性化下：
+\[
+\delta\dot{\mathbf a}
+=
+\mathbf J_A
+\delta\mathbf a
++
+\mathbf B_A
+\delta\mathbf u,
+\]
+其中
+\[
+\mathbf J_A
+=
+-\mathbf T_A^{-1}\mathbf D
++
+\mathbf T_A^{-1}
+\mathbf C
+\frac{\partial\phi}{\partial\mathbf a}.
+\]
+AHC 自身的局部稳定性要求其平衡点附近
+\[
+\Re\lambda_k(\mathbf J_A)<0.
+\]
 
-\begin{equation}\dot a=-\Lambda(a-a_0)+Bs,\quad a\in[a_-,a_+].\end{equation}
+如果某些正反馈耦合过强，例如
+\[
+Threat
+\rightarrow
+Arousal
+\rightarrow
+UncertaintyStress
+\rightarrow
+Threat,
+\]
+则可能形成：
+\[
+c_{\mathrm{th,ar}}
+c_{\mathrm{ar,us}}
+c_{\mathrm{us,th}}
+\gg 1,
+\]
+导致内部状态长时间自增强，即使外部危险已经下降，系统仍然维持高威胁、高警觉、高不确定压力的闭环。对于 AgentOS 而言，这类异常不应首先被解释成人类心理学术语，而应首先被视为\textbf{耦合增益过大形成的内部动力学不稳定}。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对恢复的命名和组合仍是需要实验验证的建模提案。
+相反，也存在有益的负反馈。例如高 Fatigue 可以降低 Arousal target 并提高 RecoveryDrive：
+\[
+Fatigue\uparrow
+\Rightarrow
+ArousalTarget\downarrow,
+\qquad
+RecoveryDrive\uparrow.
+\]
+又例如高 Trust 可以提高特定主体的信息准入权，但若当前观测持续与预测矛盾，则 Trust 下降：
+\[
+PredictionError_{\mathrm{social}}\uparrow
+\Rightarrow
+Trust\downarrow.
+\]
 
-这一小节的反例同样重要：拟人化命名若没有功能通道会把工程状态误写成主观感受。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+为了降低耦合矩阵直接人工调参的复杂度，可以进一步把状态分成几个局部块：
+\[
+\mathbf a
+=
+[
+\mathbf a_{\mathrm{activation}},
+\mathbf a_{\mathrm{resource}},
+\mathbf a_{\mathrm{risk}},
+\mathbf a_{\mathrm{social}}
+].
+\]
+例如：
+\[
+\mathbf a_{\mathrm{activation}}
+=
+[Arousal,RewardExpect],
+\]
+\[
+\mathbf a_{\mathrm{resource}}
+=
+[EnergyDrive,Fatigue],
+\]
+\[
+\mathbf a_{\mathrm{risk}}
+=
+[Threat,UncertaintyStress],
+\]
+\[
+\mathbf a_{\mathrm{social}}
+=
+[SocialAffinity,Trust].
+\]
 
-\begin{thought}
-对“恢复”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+在工程第一阶段，我们可以优先保证块内耦合，再逐渐加入跨块弱耦合。这样既保留 AHC 的动态真实性，又避免形成完全不可解释的高维黑箱。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+从整个 AgentOS 的理论角度看，这一节还有一个更深的含义：AHC 的状态耦合正是 ``智能不是若干模块简单求和'' 的局部证明。真正决定 Agent 行为的并不是 $Threat$、$Fatigue$ 或 $Trust$ 单独是多少，而是这些变量共同形成的\textbf{内部调制几何}。
 
-\section{状态耦合}
-\begin{narration}
-现在把镜头移到“状态耦合”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
 
-本节把“状态耦合”落实为对威胁、唤醒、能量、疲劳、信任等信号进行积分、衰减和饱和的连续调制场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AHC 动力学工程”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+\section{基线、慢漂移与个体差异：AHC 为什么不能永远围绕同一个零点运行}
 
-把这一关系写成最小数学骨架，可得
+如果 AHC 所有状态都以固定零点为基准，那么 Agent 即使经历数年，其内部调制结构仍然与初始状态完全相同。这与持续智能体的生命周期设定矛盾。一个长期 Agent 应允许 ``什么算高威胁''、``多少互动形成信任''、``什么负载会形成疲劳'' 等基线在安全范围内逐渐发生变化。换句话说，AHC 不只是状态变量 $\mathbf a(t)$ 会动，其平衡中心 $\mathbf b(t)$ 也应是慢变量。
 
-\begin{equation}\dot a=-\Lambda(a-a_0)+Bs,\quad a\in[a_-,a_+].\end{equation}
+我们可以把单个状态写成：
+\[
+\tau_i
+\dot a_i
+=
+-
+\left(
+a_i-b_i
+\right)
++
+f_i(\mathbf u,\mathbf a),
+\]
+同时：
+\[
+\tau_{b_i}\dot b_i
+=
+\epsilon_i
+G_i(
+\bar a_i,
+E,
+\Psi
+),
+\]
+并要求
+\[
+\tau_{b_i}
+\gg
+\tau_i.
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对状态耦合的命名和组合仍是需要实验验证的建模提案。
+这里 $\bar a_i$ 是较长时间窗平均：
+\[
+\bar a_i(t)
+=
+\frac{1}{T}
+\int_{t-T}^{t}
+a_i(s)\,ds.
+\]
+只有持续的、反复出现的结构性偏差才允许推动基线改变。这样就符合整套 AgentOS 的多尺度原则：
+\[
+\boxed{
+FastNoise
+\nrightarrow
+SlowGlobalStructure
+}
+\]
 
-这一小节的反例同样重要：拟人化命名若没有功能通道会把工程状态误写成主观感受。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+例如，一个长期处在低资源环境中的 Agent，其 EnergyDrive 与 Fatigue 的平衡点可能需要适当重新标定；一个与某位长期稳定合作对象反复互动的 Agent，其 Trust 基线可能逐渐提高。但这里必须谨慎区分：
+\[
+StateAdaptation
+\neq
+IdentityChange.
+\]
+AHC baseline 是中慢尺度调制结构，$\Psi$ 则是更慢的自我与价值结构。不能因为某一段时间持续高 Threat 就立即改写 Self。
 
-\begin{thought}
-对“状态耦合”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+为了避免基线漂移越界，可以引入：
+\[
+b_i(t)
+\in
+[b_i^{L},b_i^{U}],
+\]
+并增加慢变量变化率限制：
+\[
+|\dot b_i|
+\le
+r_i^{\max}.
+\]
+对于更敏感的社会或安全变量，还可以设置外部治理包络：
+\[
+b_i(t)
+\in
+\mathcal B_i^{\mathrm{governed}}.
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这就给我们一个更加严格的 ``个体气质'' 工程定义：所谓不同 Agent 的长期调制倾向，不应主要靠 Prompt 中写 ``你很谨慎'' 或 ``你很乐观''，而可以表现为不同的 AHC 基线、时间常数和耦合增益：
+\[
+\mathcal P_A
+=
+\{
+\mathbf b,
+\mathbf T_A,
+\mathbf C,
+\mathbf K
+\}.
+\]
+但这些参数仍然不是 $\Psi$ 本身。$\Psi$ 表示 ``我是谁、什么重要''，AHC 参数则表示 ``现实作用于我以后，我的内部调制状态通常怎样演化''。前者偏结构身份，后者偏动力响应特性。这个区分对于后续控制和心理工程极其重要。
 
-\section{Body FCS$\rightarrow$AHC 的稳定性}
-\begin{narration}
-现在把镜头移到“Body FCS$\rightarrow$AHC 的稳定性”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
 
-本节把“Body FCS$\rightarrow$AHC 的稳定性”落实为对威胁、唤醒、能量、疲劳、信任等信号进行积分、衰减和饱和的连续调制场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AHC 动力学工程”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+\section{恢复动力学：稳定智能体必须能够从高激活状态返回可治理区域}
 
-把这一关系写成最小数学骨架，可得
+一个只有激活机制而没有恢复机制的 AHC，从长期运行角度看一定是不完整的。真实持续系统会不断遭遇异常、任务压力、身体资源下降和社会冲突。如果 Threat、Arousal、Fatigue、UncertaintyStress 只能上升而不能在条件改善后系统性降低，那么 AHC 最终必然进入饱和。因此 ``Recovery'' 不应只是输入消失后的自然衰减，而应作为一个可控制的动力学过程显式设计。
 
-\begin{equation}\dot a=-\Lambda(a-a_0)+Bs,\quad a\in[a_-,a_+].\end{equation}
+我们定义正常工作区域：
+\[
+\mathcal A_{\mathrm{work}}
+\]
+和恢复目标区域：
+\[
+\mathcal A_{\mathrm{rec}}.
+\]
+当状态满足
+\[
+d(
+\mathbf a,
+\mathcal A_{\mathrm{work}}
+)
+>
+\theta_{\mathrm{rec}}
+\]
+持续一定时间，Scheduler/TCE 可以降低任务负载，Boundary 可以减少新任务准入，Body Runtime 可以执行资源恢复动作，使 AHC 输入进入恢复模式：
+\[
+\mathbf u_A
+\rightarrow
+\mathbf u_A^{\mathrm{recover}}.
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Body FCS$\rightarrow$AHC 的稳定性的命名和组合仍是需要实验验证的建模提案。
+一个简单的恢复项可以写成：
+\[
+\mathbf T_A
+\dot{\mathbf a}
+=
+F_A(\mathbf a,\mathbf u)
+-
+\mathbf R
+(\mathbf a-\mathbf a^{\mathrm{rest}}),
+\]
+其中 $\mathbf R$ 是恢复增益矩阵，$\mathbf a^{\mathrm{rest}}$ 是当前可接受的恢复目标，而不是永恒固定的零状态。
 
-这一小节的反例同样重要：拟人化命名若没有功能通道会把工程状态误写成主观感受。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+我们还可以把恢复分成被动恢复与主动恢复。被动恢复是输入消失以后系统自然回归：
+\[
+u(t)\rightarrow0
+\Rightarrow
+a(t)\rightarrow b.
+\]
+主动恢复则需要 Agent 采取动作改变未来输入，例如停止高负载任务、充电、降低感知带宽、退出危险区域或减少社会互动。于是：
+\[
+RecoveryAction
+\rightarrow
+World/BodyChange
+\rightarrow
+FCS'
+\rightarrow
+AHC'.
+\]
+这再次体现 World--Agent--World 闭环：AHC 不应永远只靠内部数值衰减恢复，成熟 Agent 应能够\textbf{改变环境或自身行为，使恢复条件真实出现}。
 
-\begin{thought}
-对“Body FCS$\rightarrow$AHC 的稳定性”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+为了评价恢复能力，可以定义 Recovery Time：
+\[
+T_R
+=
+\inf
+\left\{
+t>t_0:
+\mathbf a(t)\in
+\mathcal A_{\mathrm{rec}}
+\right\},
+\]
+以及 Recovery Overshoot：
+\[
+O_R
+=
+\max_t
+d(
+\mathbf a(t),
+\mathcal A_{\mathrm{rec}}
+).
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+如果一个 Agent 在受到扰动后虽然最终恢复，但恢复时间极长，则其实际长期可用性仍然很低。因而 AHC 工程不能只关注 ``是否稳定''，还应关注：
+\[
+SettlingTime,\qquad
+RecoveryTime,\qquad
+PeakDeviation.
+\]
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“AHC 动力学工程”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“TCE 控制器工程”只使用这里已经给出的结果，不反过来为本章提供前提。
+更进一步，恢复机制还是 Agent 心理稳定性的一个前置条件。很多长期异常并不是状态曾经达到高值，而是系统\textbf{无法从高值返回正常吸引域}。因此从控制工程角度，我们更应关注 ``可恢复性'' 而不仅是 ``不发生波动''。
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\section{FCS 到 AHC 的映射：从身体影响场到中尺度内部状态}
+
+FCS 与 AHC 的关系必须精确定义，否则二者容易被误认为同一系统。FCS 描述的是现实和身体在当前时刻如何功能性影响主体，它更接近一种空间化、通道化、身体中心的影响表示；AHC 则对这些影响进行跨时间积分，形成全局中尺度调制状态。因此可以写：
+\[
+\boxed{
+FCS_t
+\rightarrow
+AHC_t
+}
+\]
+但不应写：
+\[
+FCS_t
+=
+AHC_t.
+\]
+
+设 FCS 为：
+\[
+\mathbf F_t
+\in
+\mathbb R^{K\times H\times W\times C},
+\]
+则 AHC 首先需要对其进行功能汇聚：
+\[
+\mathbf z_F(t)
+=
+\mathcal P_F(
+\mathbf F_t,
+SGC_t,
+Body_t
+),
+\]
+其中 $\mathcal P_F$ 可以根据空间位置、身体相关性、语义对象、置信度和当前目标对 FCS 做加权积分。例如 Threat 输入可以来自：
+\[
+u_{\mathrm{th}}(t)
+=
+\int_{\Omega_B}
+w_{\mathrm{th}}(x,t)
+F_{\mathrm{th}}(x,t)
+dx.
+\]
+
+如果 SGC 中某个危险对象距离身体较近，则：
+\[
+w_{\mathrm{th}}(x,t)
+\]
+提高；如果该区域感知置信度很低，则权重下降。这样，FCS 的 ``局部空间影响'' 被转换成 AHC 的 ``全局时间状态''。
+
+类似地，EnergyPressure、ThermalPressure、IntegrityPressure、SensoryLoad、ControlInstability 等 FCS 通道可以映射到不同 AHC 状态。例如：
+\[
+u_{\mathrm{fa}}
+=
+\alpha_1
+EnergyPressure
++
+\alpha_2
+SensoryLoad
++
+\alpha_3
+ControlInstability,
+\]
+而：
+\[
+u_{\mathrm{ar}}
+=
+\beta_1
+Threat
++
+\beta_2
+Novelty
++
+\beta_3
+TaskUrgency.
+\]
+
+这里尤其要避免 ``一通道一状态'' 的机械映射。AHC 状态更像对多个 FCS 通道以及认知背景的低维动力学压缩。因此应写成：
+\[
+\mathbf u_A^{FCS}
+=
+M_F
+\mathbf z_F,
+\]
+其中 $M_F$ 是多对多映射。
+
+从理论上讲，这一过程还说明了一个重要分层：
+\[
+\boxed{
+FCS
+=
+HowRealityAffectsMeNow
+}
+\]
+而：
+\[
+\boxed{
+AHC
+=
+HowRecentInfluencesHaveAccumulatedIntoMyCurrentModulatoryCondition
+}
+\]
+前者更贴近现实当前切片，后者更贴近具有历史的主体内部状态。也正因为存在这个分层，同一个现实瞬时输入，在不同历史 AHC 状态下可能产生完全不同的控制结果。
+
+
+\section{社会亲和、信任与危险度：AHC 的社会性动力学扩展}
+
+当 Agent 从独立任务执行者进入长期社会环境以后，AHC 不能只处理身体能量和物理危险，还必须处理具有持续性的社会关系调制。在我们此前对 Agent 认主、信任和危险判定的讨论中，一个重要问题已经出现：一个新 Agent 不可能等待数月社会学习以后才知道谁拥有更高初始信任与权限，而身份识别、人脸识别、设备证书或其他授权机制可以向 AHC 提供一种\textbf{初始信任偏置}。但这个初始偏置必须与长期经验学习严格分开。
+
+设对主体 $j$ 的信任状态为：
+\[
+T_j(t)\in[0,1].
+\]
+初始状态可以由身份认证函数给出：
+\[
+T_j(t_0)
+=
+T_j^{\mathrm{prior}}
+=
+f_{\mathrm{id}}(
+Identity_j,
+Credential_j,
+Role_j
+).
+\]
+这里的 $T_j^{\mathrm{prior}}$ 不代表``喜欢''，而是一个用于降低无必要防御阈值、提高信息准入和减少社会不确定性的功能先验。
+
+长期信任则由真实互动结果更新：
+\[
+\tau_T
+\dot T_j
+=
+-\lambda_T
+\left(
+T_j-T_j^{\mathrm{prior}}
+\right)
++
+\eta_+
+S_j^+
+-
+\eta_-
+S_j^-,
+\]
+其中 $S_j^+$ 表示可靠、可验证的正向互动残差，$S_j^-$ 表示违约、不一致、欺骗或高风险行为证据。
+
+为了避免一次事件把长期关系瞬间翻转，可以令
+\[
+\eta_-
+>
+\eta_+
+\]
+但同时施加饱和和证据置信度。这样，建立信任可以较慢，而重大负面证据可以更快降低信任，却仍然不应让单个低置信度 anomaly 完全清零长期历史。
+
+Trust 与 Threat 可以耦合：
+\[
+Threat_j
+=
+g(
+EnvironmentalRisk_j,
+BehaviorRisk_j,
+1-T_j
+).
+\]
+但这里必须警惕错误设计：
+\[
+HighTrust
+\nRightarrow
+ZeroThreat.
+\]
+即使某主体长期可信，当前行为若触发硬风险条件，安全系统仍应优先。由此得到：
+\[
+\boxed{
+TrustModulatesRisk,
+ButDoesNotOverrideSafety.
+}
+\]
+
+SocialAffinity 则与 Trust 不完全相同。一个主体可以：
+\[
+Trust\ high,\quad
+SocialAffinity\ low,
+\]
+例如系统认可某机构提供的信息可靠，却不需要建立高亲和关系。反过来，长期社交亲和也不能直接推导高权限。因此在 AHC 中必须至少区分：
+\[
+Affinity,
+\quad
+Trust,
+\quad
+Authority.
+\]
+Authority 属于治理和权限层，不应仅由 AHC 动态自动决定。
+
+这一点对未来家庭机器人、长期陪伴 Agent 和多 Agent 社会环境非常关键。AHC 可以形成 ``见到熟悉授权主体时，Threat baseline 下降、Boundary 更宽松、Social Uncertainty 降低'' 的快速功能效果，但真正的控制权限仍必须由独立安全/授权结构保证。这样既能模拟长期社会适应，又不会把 ``情感样亲和'' 错误变成安全认证机制。
+
+
+\section{AHC 对认知控制的输出：调制的是控制参数，而不是直接替代决策}
+
+AHC 的输出不是 ``行动指令''，而是一个调制向量：
+\[
+\mathbf m_A
+=
+G_A(\mathbf a),
+\]
+它影响 TCE、Scheduler、Boundary、Goal Generator、Memory Write 等多个系统。我们可以定义：
+\[
+\mathbf m_A
+=
+[
+m_{\mathrm{risk}},
+m_{\mathrm{explore}},
+m_{\mathrm{attention}},
+m_{\mathrm{wm}},
+m_{\mathrm{memory}},
+m_{\mathrm{boundary}},
+m_{\mathrm{recovery}},
+m_{\mathrm{goal}}
+].
+\]
+
+例如：
+\[
+m_{\mathrm{risk}}
+=
+g_1(
+Threat,
+UncertaintyStress,
+Trust
+),
+\]
+\[
+m_{\mathrm{explore}}
+=
+g_2(
+Arousal,
+RewardExpect,
+Threat,
+Fatigue
+),
+\]
+\[
+m_{\mathrm{boundary}}
+=
+g_3(
+Threat,
+Trust,
+SocialAffinity
+),
+\]
+\[
+m_{\mathrm{recovery}}
+=
+g_4(
+Fatigue,
+EnergyDrive,
+Arousal
+).
+\]
+
+这里必须坚持一条原则：
+\[
+\boxed{
+AHC\rightarrow Bias,
+\qquad
+AHC\nrightarrow DirectCognitiveConclusion.
+}
+\]
+Threat 高不意味着 ``这个对象一定危险''；它只意味着系统当前应提高风险敏感度。Trust 高不意味着 ``该主体的话一定正确''；它只是改变初始证据权重。RewardExpect 高也不意味着 ``必须执行该 Goal''；它只改变目标竞争背景。
+
+这种设计可以避免把 AHC 变成隐藏的决定论决策器。真正的显式决策仍然需要经过 $h(t)$ 中的当前世界模型、目标、约束、规划和验证。AHC 只是改变：
+\[
+\Pr(
+CSO_i\ \mathrm{enters}\ h
+),
+\]
+以及 TCE 和 Scheduler 对当前候选过程的控制参数。
+
+例如可以写：
+\[
+P_i^{\mathrm{effective}}
+=
+P_i^{\mathrm{base}}
++
+\mathbf w_i^\top
+\mathbf m_A.
+\]
+这样某任务的有效优先级受 AHC 调制，但不是被 AHC 完全决定。
+
+同理，Boundary 的准入阈值可以写：
+\[
+\theta_{\mathrm{admit}}(t)
+=
+\theta_0
++
+k_{\mathrm{th}}
+a_{\mathrm{th}}
+-
+k_{\mathrm{tr}}
+a_{\mathrm{tr}}.
+\]
+Threat 高时准入更严格，Trust 高时对特定可信源可适当放宽，但仍需满足最低安全约束：
+\[
+\theta_{\mathrm{admit}}
+\ge
+\theta_{\mathrm{safe}}.
+\]
+
+从控制系统角度看，这种设计意味着 AHC 是 ``gain scheduling'' 和 ``policy bias'' 的来源之一，而不是完整策略本身。它更接近一个慢调制层，持续改变其他控制器的工作点。这样既符合生物式内稳态调节的启发，也保持 AgentOS 工程架构的可解释性。
+
+
+\section{AHC 的稳定性、异常检测与锁定机制}
+
+AHC 作为一个持续动力系统，必须具有明确的稳定性判据。我们先考虑固定输入下的平衡点：
+\[
+\mathbf a^*
+=
+F_A^{\mathrm{eq}}(
+\mathbf u^*
+).
+\]
+局部稳定性可以通过雅可比矩阵：
+\[
+\mathbf J
+=
+\left.
+\frac{\partial F_A}
+{\partial\mathbf a}
+\right|_{\mathbf a^*}
+\]
+判断。如果：
+\[
+\Re\lambda_i(\mathbf J)<0,
+\qquad
+\forall i,
+\]
+则该平衡点局部渐近稳定。
+
+但实际 AgentOS 中输入并不固定，且 AHC 还与 SPC、TCE、Boundary 和 Body Runtime 构成闭环。因此我们真正需要控制的是：
+\[
+AHC
+\rightarrow
+CognitiveControl
+\rightarrow
+Action
+\rightarrow
+Reality
+\rightarrow
+FCS/SPC
+\rightarrow
+AHC.
+\]
+也就是说，AHC 的稳定性不能只看自身 $\mathbf J_A$，还要看闭环耦合增益。
+
+设 AHC 到控制系统的传递增益为 $G_{AC}$，现实/身体反馈回 AHC 的等效增益为 $G_{CA}$，则小扰动下可粗略要求：
+\[
+\|G_{AC}G_{CA}\|_\infty<1.
+\]
+这不是最终严格模型，而是明确一个工程原则：\textbf{AHC 调制增益与现实反馈增益的乘积不能让闭环正反馈无限放大。}
+
+此外，AHC 必须持续监控以下异常指标：
+\[
+\mathbf q_A
+=
+[
+q_{\mathrm{sat}},
+q_{\mathrm{drift}},
+q_{\mathrm{osc}},
+q_{\mathrm{stuck}},
+q_{\mathrm{coupling}},
+q_{\mathrm{recovery}}
+].
+\]
+
+其中：
+
+\[
+q_{\mathrm{sat}}
+\]
+表示长期饱和；
+
+\[
+q_{\mathrm{drift}}
+\]
+表示基线异常漂移；
+
+\[
+q_{\mathrm{osc}}
+\]
+表示高频振荡；
+
+\[
+q_{\mathrm{stuck}}
+\]
+表示状态被困在异常吸引域；
+
+\[
+q_{\mathrm{coupling}}
+\]
+表示内部正反馈过强；
+
+\[
+q_{\mathrm{recovery}}
+\]
+表示恢复时间异常增长。
+
+可以定义统一异常分数：
+\[
+Q_A
+=
+\mathbf w_q^\top
+\mathbf q_A.
+\]
+若：
+\[
+Q_A>\theta_A^{\mathrm{warn}},
+\]
+则进入受控降级；若：
+\[
+Q_A>\theta_A^{\mathrm{lock}},
+\]
+则触发：
+\[
+AHCLock.
+\]
+
+锁定并不意味着关闭 AHC，而是冻结一部分慢参数，把系统恢复到已验证的安全参数集合：
+\[
+\mathcal P_A
+\rightarrow
+\mathcal P_A^{\mathrm{safe}}.
+\]
+例如停止 baseline learning、禁止 Trust 自动继续上升、降低 AHC 到 TCE 的增益，并限制 Boundary 依据 AHC 放宽权限。
+
+这体现了整个 AgentOS 控制工程中的一条普遍原则：
+\[
+\boxed{
+Plasticity
+\subset
+GovernedEnvelope.
+}
+\]
+允许学习不等于允许任何状态无限改变；真正长期稳定的 Agent 必须同时拥有可塑性和故障回退路径。
+
+
+\section{AHC 的可观测性、记录与工程验证}
+
+AHC 要成为工程系统而不是隐喻，所有关键变量原则上都必须可记录、可重放、可解释和可验证。我们不应只让模型输出一句 ``当前压力很大''，而应保存完整状态轨迹：
+\[
+\mathcal T_A
+=
+\{
+\mathbf a(t),
+\mathbf u_A(t),
+\mathbf m_A(t),
+\mathbf q_A(t)
+\}_{t_0}^{t_1}.
+\]
+这样才能进行稳定性分析、故障复盘和长期参数校准。
+
+第一类指标是响应时间：
+\[
+T_{rise},
+\quad
+T_{settle},
+\quad
+T_{recover}.
+\]
+第二类指标是幅值特性：
+\[
+Peak,
+\quad
+Overshoot,
+\quad
+SaturationRatio.
+\]
+第三类指标是状态依赖：
+\[
+Hysteresis,
+\quad
+BaselineDrift,
+\quad
+CrossCouplingGain.
+\]
+第四类指标是与外部事实的对齐程度，例如：
+\[
+Corr(
+Threat,
+VerifiedRisk
+),
+\]
+以及：
+\[
+Corr(
+Fatigue,
+PerformanceDegradation
+).
+\]
+
+我们尤其需要测试 ``同样输入、不同历史'' 的行为差异。给定相同当前刺激 $u_t$，若历史状态不同：
+\[
+\mathbf a^{(1)}(t)
+\neq
+\mathbf a^{(2)}(t),
+\]
+则：
+\[
+m_A^{(1)}
+\neq
+m_A^{(2)}.
+\]
+这不是 bug，而正是 AHC 具有历史依赖的意义。然而这种差异必须受到可解释范围约束，否则 AHC 会成为一个难以验证的隐藏记忆系统。
+
+因此测试集不能只有静态输入输出样例，还需要完整轨迹测试。例如：
+
+\[
+ThreatPulse
+\rightarrow
+Rise
+\rightarrow
+Decay
+\]
+
+\[
+RepeatedThreat
+\rightarrow
+Accumulation
+\]
+
+\[
+FalseAlarm
+\rightarrow
+FastRecovery
+\]
+
+\[
+PersistentLoad
+\rightarrow
+FatigueAccumulation
+\]
+
+\[
+Rest
+\rightarrow
+Recovery
+\]
+
+\[
+TrustedIdentity
++
+ContradictoryEvidence
+\rightarrow
+TrustReduction.
+\]
+
+这些轨迹测试应与参数版本共同保存，使：
+\[
+AHCVersion
+=
+(
+Model,
+Parameters,
+Calibration,
+TestSuite
+)
+\]
+成为真正可审计的工程对象。
+
+进一步地，AHC 还应支持 ``counterfactual replay''：使用同一段历史输入，修改某个参数，例如 $\tau_{\mathrm{th}}$ 或 Trust gain，再比较系统轨迹差异。这为后续控制参数优化、稳定性分析和心理工程异常诊断提供统一基础。
+
+
+\section{AHC 动力学工程的统一模型与设计原则}
+
+经过本章前面的构造，我们可以把第一代 AHC 的统一状态方程写成：
+\[
+\boxed{
+\mathbf T_A\dot{\mathbf a}
+=
+-\mathbf D
+(
+\mathbf a-\mathbf b
+)
++
+\mathbf K_u
+\tilde{\mathbf u}_A
++
+\mathbf C
+\phi(\mathbf a)
++
+\mathbf R
+(
+\mathbf a^{\mathrm{rest}}-\mathbf a
+)
+}
+\]
+其中：
+
+\[
+\mathbf T_A
+\]
+规定各调制轴的时间尺度；
+
+\[
+\mathbf D
+\]
+规定自然衰减；
+
+\[
+\mathbf b
+\]
+规定慢变基线；
+
+\[
+\mathbf K_u
+\]
+规定外部与内部输入耦合；
+
+\[
+\mathbf C
+\]
+规定 AHC 状态间相互作用；
+
+\[
+\phi(\mathbf a)
+\]
+提供非线性和饱和；
+
+\[
+\mathbf R
+\]
+表示恢复动力学。
+
+慢基线进一步满足：
+\[
+\boxed{
+\tau_b\dot{\mathbf b}
+=
+\epsilon
+G_b(
+\langle\mathbf a\rangle_T,
+E,
+\Psi,
+\Omega
+)
+}
+\]
+并要求：
+\[
+\tau_b
+\gg
+\tau_A.
+\]
+
+AHC 输出为：
+\[
+\boxed{
+\mathbf m_A
+=
+G_m(\mathbf a)
+}
+\]
+作用于：
+\[
+TCE,\quad
+Scheduler,\quad
+Boundary,\quad
+Goal,\quad
+MemoryWrite.
+\]
+但不直接覆盖：
+\[
+RealityObservation,
+\quad
+SafetyAuthority,
+\quad
+ExplicitReasoning.
+\]
+
+由此可以给出本章最终的八条设计原则。
+
+第一，\textbf{状态原则}：AHC 必须拥有内部状态，不能退化成输入到输出的瞬时网络。
+
+第二，\textbf{多时间尺度原则}：不同调制轴必须具有不同 $\tau_i$，Trust、Fatigue、Threat、Arousal 不应同速变化。
+
+第三，\textbf{有界原则}：所有内部状态和慢参数都必须存在可治理边界，避免积分发散。
+
+第四，\textbf{耦合原则}：AHC 状态可以相互影响，但内部正反馈必须满足稳定性约束。
+
+第五，\textbf{恢复原则}：任何正常可达高激活状态都应存在回到可治理区域的恢复路径。
+
+第六，\textbf{内容--调制分离原则}：AHC 表示现实对主体的持续影响，不替代世界语义和显式认知。
+
+第七，\textbf{安全优先原则}：
+\[
+SafetyAuthority>AHCAuthority.
+\]
+AHC 可以调制风险偏好，但不能关闭硬安全。
+
+第八，\textbf{慢变量保护原则}：
+\[
+FastNoise\nrightarrow SlowBaseline.
+\]
+只有长期、重复、具有置信度的结构性经验才允许改变 AHC baseline 或更慢主体结构。
+
+最终，我们可以把 AHC 的理论位置浓缩为：
+\[
+\boxed{
+\mathrm{Instantaneous\ Influence}
+\rightarrow
+\mathrm{AHC\ Temporal\ Integration}
+\rightarrow
+\mathrm{Persistent\ Modulatory\ State}
+\rightarrow
+\mathrm{Cognitive\ Control\ Bias}
+}
+\]
+
+中文表述就是：
+
+\begin{statementbox}
+AHC 将现实和身体对主体的瞬时作用，转化为具有时间惯性、个体基线、非线性饱和、内部耦合与恢复能力的持续调制状态，并以此改变认知系统未来一段时间内“如何思考、如何分配资源以及如何面对风险”，而不是直接决定“应该思考什么结论”。
+\end{statementbox}
+
+这正是 AHC 动力学工程在 AgentOS 中的核心位置：如果 SPC 让智能体能够观察自己，那么 AHC 让这种观察获得了时间厚度；如果 TCE 负责调节未来认知动力学，那么 AHC 则提供了决定这种调节应当处于何种背景条件下的连续内部状态。由此，AgentOS 的认知控制不再是瞬时的 ``观测--动作'' 映射，而开始具有真正的历史、惯性、恢复和个体差异。

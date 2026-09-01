@@ -1,9 +1,6 @@
 \chapter{FCS 的群体感受扩展：流体群体智能、SFPU 与跨尺度具身协同}
 
-\begin{center}
-\fbox{
-\parbox{0.93\textwidth}{
-\textbf{本章总体说明——从个体身体感受到群体尺度结构感受。}
+\begin{chapteroverviewbox}
 前一章已经建立了 AgentOS 面向现实世界的二元接口：SGC（Semantic Graph Coordinate Space）负责描述“现实中有什么、它们在哪里以及彼此具有怎样的语义关系”，FCS（Feeling Coordinate/Field System）负责描述“这些现实状态正在如何作用于本体”。在此基础上，本章进一步研究一个自然但具有重要架构意义的问题：当一个独立 Agent 不再只通过视觉、触觉、本体感觉、能源状态等普通 Body Driver 感知现实，而开始成为一个大规模机器人群体的一部分时，群体宏观结构应当通过什么接口进入本地 AgentOS？
 
 本章给出的答案是：\textbf{群体协调不应该首先表现为一个外部中央系统对本地 AgentOS 的强制命令，而应首先表现为一种新的身体感受。} 为此，我们引入 SFPU（Swarm Field Processing Unit）。在软件架构意义上，单个 SFPU 被严格定义为 AgentOS Body Driver 体系中的一种特殊群体场驱动器；多个 SFPU 通过 Field Plane 互联后共同形成分布式群体场网络；独立于本地 AgentOS 的 SwarmOS 通过 Potential Plane 向 SFPU 提供群体任务势能和目标嵌入；SFPU 再通过局部场重构与势能微分产生物理梯度和语义梯度，并经 Gradient Plane 映射为 FCS 中的一种特殊“群体梯度感受面”。
@@ -29,9 +26,7 @@ Collective\ Field
 }
 \]
 其中，群体层提供宏观结构约束，个体层保留本体认知、边界与最终行动决策权。由此，FCS 不再只是“身体内部感受场”，而获得了一种更一般的含义：\textbf{任何能够以本体为参照表达“现实结构对我产生怎样方向性影响”的结构化场，都可以作为一种 FCS 感受面接入 AgentOS。}
-}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 
 \section{从 SGC--FCS 二元现实接口到群体感受面}
@@ -150,11 +145,9 @@ X_N
 通常构成一个微观状态等价类，而不是唯一状态。
 
 于是群体控制的基本原则成为
-\[
-\boxed{
-\text{控制宏观功能状态，而非唯一微观配置。}
-}
-\]
+\begin{statementbox}
+控制宏观功能状态，而非唯一微观配置。
+\end{statementbox}
 这一原则直接改变了群体中央智能的角色。中央系统不再必须回答“机器人 $R_{173}$ 下一秒应运动到哪里”，而是更多回答：“某区域的群体功能状态应该向哪个方向变化？”
 
 需要同时划定该思想的适用边界。若任务要求毫米级严格刚性编队、精密同步装配或硬实时多体约束，仅依赖宏观场并不充分。这些问题仍然需要局部几何控制、刚性约束控制器或专用 Body Driver。流体群体控制的优势主要存在于那些具有微观可替换性、宏观目标明确、局部自治具有意义的任务之中。
@@ -807,11 +800,9 @@ O(Kd_z).
 \approx0.
 \]
 这并不意味着整个群体扩张没有成本。总通信资源、无线竞争、物理拥堵、能耗等仍可能随 $N$ 增长。真正成立的命题只是：
-\[
-\boxed{
-\text{单节点局部认知维数不必与群体总规模成正比。}
-}
-\]
+\begin{statementbox}
+单节点局部认知维数不必与群体总规模成正比。
+\end{statementbox}
 
 
 \section{Potential Plane：SwarmOS 的战略约束接口}
@@ -1483,17 +1474,17 @@ V_k(z).
 因此更合理的更新流程是：
 \[
 \boxed{
-发布
+\text{发布}
 \rightarrow
-预下载
+\text{预下载}
 \rightarrow
-影子推理
+\text{影子推理}
 \rightarrow
-统一激活
+\text{统一激活}
 \rightarrow
-监控
+\text{监控}
 \rightarrow
-回滚.
+\text{回滚}.
 }
 \]
 
@@ -1960,11 +1951,9 @@ CollectiveEmergence.
 本章从 SGC--FCS 二元现实接口出发，把 FCS 从普通身体感受进一步扩展到群体尺度。最重要的变化并不是给 FCS 再增加一个数据通道，而是重新认识“感受”的一般结构。
 
 只要某一种现实关系可以被转换成：
-\[
-\boxed{
-\text{以本体为参照的方向、强度、不确定度与功能影响}
-}
-\]
+\begin{statementbox}
+以本体为参照的方向、强度、不确定度与功能影响
+\end{statementbox}
 它就可以成为 FCS 的一种感受面。
 
 SFPU 正是这一思想在群体系统中的典型实现。SwarmOS 首先形成群体宏观任务势能；分布式 SFPU 网络在局部重构群体认知场并计算势能梯度；Gradient Plane 再把这种梯度转换成
@@ -2018,15 +2007,15 @@ Action.
 于是，群体协同最终不再是简单的“中央大脑控制大量机器人”，而成为：
 \[
 \boxed{
-\textbf{
-Macro Structural Constraint
+\begin{gathered}
+\textbf{Macro Structural Constraint}
 \rightarrow
-Micro Autonomous Dynamics
+\textbf{Micro Autonomous Dynamics}\\
+{}\rightarrow
+\textbf{Collective Emergence}
 \rightarrow
-Collective Emergence
-\rightarrow
-Structural Learning.
-}
+\textbf{Structural Learning}
+\end{gathered}
 }
 \]
 

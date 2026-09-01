@@ -1,239 +1,1188 @@
-\chapter{AgentOS 开放标准体系}
+\chapter{AgentOS开放标准体系}
+\label{chap:agentos-open-standards}
+
 \begin{chapteroverviewbox}
-这一章，我们围绕“AgentOS 开放标准体系”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明理论到系统与生态的工程路线。
+本章讨论的不是某一种 AgentOS 产品实现，而是回答一个更基础的工程问题：当一个持续智能体由认知内核、Body Runtime、KRA、自我与生命周期记忆、技能系统、工具系统以及安全治理系统共同组成以后，哪些部分必须形成跨模型、跨厂商、跨身体、跨硬件的稳定公共契约，哪些部分又必须保留为实现者的自由空间。
+
+我们将在本章确立一个基本标准化原则：
+
+\begin{statementbox}
+Standardize Semantics and Contracts,
+not Internal Intelligence
+\end{statementbox}
+
+即：\textbf{标准化语义、状态类型、因果责任、时间关系、权限关系以及跨组件交换契约，而不标准化模型内部的神经表示、私有 latent、控制器算法、学习算法和商业实现。}
+
+由此，AgentOS 的开放标准不是试图制造一个巨大的统一数据结构，而是在世界、身体、认知和行动之间建立一套稳定的``语义骨架''：
+
+\[
+\boxed{
+World
+\rightarrow
+SGC/FCS
+\rightarrow
+AgentKernel
+\rightarrow
+ControlReference
+\rightarrow
+BodyRuntime
+\rightarrow
+World
+}
+\]
+
+并在这一主闭环周围建立 BPCC、Skill、Agent Communication、Capability、Safety 等公共契约。
+
+本章所设计的标准体系首先服务于固定核心功能拓扑的第一代 AgentOS，但其设计必须避免把内部实现固化。一个真正具有生命期的智能系统，其模型、控制算法、身体和技能都可能长期变化，因此开放标准真正需要保持稳定的不是参数，而是\textbf{关系、含义和责任边界}。这也是本章的基本立场。
 \end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于 AgentOS 三条软件主线、两类基础设施、六阶段路线与产品成熟次序的工程推演。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是系统工程、成熟度分级、接口契约与开放治理（混杂系统与模型预测控制）。
+\section{SGC Standard：可行动现实的公共语义坐标标准}
+
+SGC（Semantic Graph Coordinate Space）标准解决的第一个问题，是不同身体、不同感知系统与不同认知内核之间如何形成一个稳定的``现实语义接口''。如果每一种摄像头、机器人、浏览器、车辆或者数字桌面都直接把自己的内部 tensor、像素、检测框或私有 latent 暴露给 Agent Kernel，那么所谓通用 Agent 实际上仍然被具体感知模型和具体身体绑定。我们因此必须在原始感知与高层认知之间建立一个不依赖具体实现的公共世界描述层。
+
+SGC 的基本对象不是图像，而是\textbf{身体中心的、可行动的、带认识论状态的语义现实}。我们可以把某一时刻的 SGC 写成
+
+\[
+\mathcal S_t^{SGC}
+=
+\left(
+\mathcal V_t,
+\mathcal E_t,
+\mathcal F_t,
+\mathcal X_t,
+\mathcal M_t
+\right),
+\]
+
+其中，$\mathcal V_t$ 为实体集合，$\mathcal E_t$ 为实体之间的关系集合，$\mathcal F_t$ 为连续或离散场结构，$\mathcal X_t$ 为统一坐标和几何结构，$\mathcal M_t$ 则是描述来源、可信度、时效性和预测属性的认识论元数据。由此，一个实体不能只表示为检测器意义上的类别标签，而至少应允许表示为
+
+\[
+v_i=
+(
+id_i,
+pose_i,
+geometry_i,
+attributes_i,
+semantic_i,
+affordance_i,
+epistemic_i
+).
+\]
+
+这里最重要的不是字段数量，而是其语义边界。$id_i$ 应当具有跨帧连续性，$pose_i$ 必须属于一个明确的坐标系，$semantic_i$ 表示智能体当前能够使用的语义标签，$affordance_i$ 表示该实体相对于\emph{当前身体能力}所具有的可行动属性，而 $epistemic_i$ 则必须回答：这个结构究竟是直接观察到的、由多个观测推导出来的、预测得到的，还是反事实模拟得到的。
+
+因此标准应至少规定如下认识论类型：
+
+\[
+\chi_i
+\in
+\{
+Observed,
+Derived,
+Predicted,
+Counterfactual,
+Pending
+\}.
+\]
+
+它们不能简单合并。若系统把 Predicted Object 与 Observed Object 赋予同样的现实权威，就会破坏本书反复强调的
+
+\[
+\boxed{
+RealityIsUltimateConstraint
+}
+\]
+
+原则。一个 BPCC 或世界模型可以预测门后存在障碍物，但在获得现实观测之前，该结构仍然必须保留预测身份，而不能静默覆盖现实层。
+
+SGC 的第二项核心要求是：
+
+\[
+\boxed{
+Body\in SGC
+}
+\]
+
+智能体自己的身体不能位于世界模型之外。对于物理机器人，Body 可以包含基座、机械臂、末端执行器、传感器视场以及可达空间；对于数字 Agent，Body 则可以包含屏幕、窗口、光标、键盘输入能力、浏览器上下文、文件系统作用范围以及网络执行端点。正因为身体属于 SGC，``同一个世界对象''对于不同 Body 才可能具有不同 affordance。例如相同的一段楼梯，对于轮式机器人可能表示不可达结构，对于人形机器人却可能表示标准可通行结构。
+
+这意味着 SGC Standard 不应规定智能体必须使用什么视觉模型、SLAM 算法或 neural scene representation。标准真正需要约束的是跨实现可以交换的\textbf{语义骨架}：
+
+\[
+\boxed{
+Coordinate
++
+Entity
++
+Relation
++
+Field
++
+Affordance
++
+EpistemicStatus
+}
+\]
+
+从工程上看，这一思想与传统 Scene Graph、SLAM、知识图谱和世界模型均有交集，但 SGC 的目标更具体：它不是要求完整描述现实，而是提供 Agent 行动所需的\textbf{可检查公共现实面}。也正因为如此，类似影视作品中把人物、身份、空间、关系和威胁状态同时叠加在现实中的``机器视角''，只能算一种形象化近似；真正的 SGC 标准还必须严格管理坐标、时间、来源、身体中心性和现实可信度。
+
+最终，SGC Standard 应当允许不同实现产生不同内部世界模型，却能够在 Kernel---Body Runtime 边界上共享一种稳定含义。其原则不是：
+
+\[
+Representation_A=Representation_B,
+\]
+
+而是：
+
+\[
+\boxed{
+Meaning_A\simeq Meaning_B
+}
+\]
+
+从而使跨身体、跨感知模型和跨硬件的 AgentOS 仍然可以获得足够稳定的世界语义契约。
+
+\section{FCS Standard：现实对主体作用的固定类型功能场标准}
+
+如果说 SGC 回答的是``世界中有什么，以及它们在哪里''，那么 FCS（Functional Feeling Coordinate/Field System）标准回答的则是另一个同样基础但传统软件系统很少显式表达的问题：
+
+\[
+\boxed{
+HowIsRealityAffectingThisAgent?
+}
+\]
+
+这是我们在 Body Runtime 理论中逐步建立 SGC--FCS 双表示的原因。世界中的同一个状态，不仅具有客观语义内容，还可能对某个具体 Agent 形成完全不同的功能影响。例如外界温度本身可以成为 SGC 中的环境属性，但它对机器人电池、散热系统和动作能力产生的压力，则属于另一种意义结构。如果将两者混合，Agent Kernel 就难以区分``世界是什么''与``世界正在怎样作用于我''。
+
+因此，本书将 FCS 规定为一种\textbf{固定类型、多层、连续可更新的功能影响场}。在空间化实现中，可以形式化为
+
+\[
+\mathcal F_t^{FCS}
+\in
+\mathbb R^{K\times H\times W\times C},
+\]
+
+其中 $K$ 表示类型层，$H,W$ 表示必要时的身体或环境空间分辨率，$C$ 表示每种感受状态的内部字段。例如单个 FCS 通道可以至少包含
 
-本章使用上一章“硬件路线：推理芯片与小脑芯片”已经得到的对象与边界；本章产出将供下一章“开源、商业实现与生态治理”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+\[
+f_k(x,t)
+=
+\left(
+I_k,
+\dot I_k,
+C_k
+\right),
+\]
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+其中 $I_k$ 是当前强度，$\dot I_k$ 是趋势，$C_k$ 是可信度。这样，``威胁正在快速上升''就能够与``威胁长期处于稳定中等水平''在功能上区分开来。
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在系统工程、成熟度分级、接口契约与开放治理上。
-\section{SGC Standard}
-\begin{narration}
-现在把镜头移到“SGC Standard”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+标准化 FCS 时应优先标准化\textbf{类型与物理/功能含义}，而不是规定统一神经编码。例如可以形成 EnergyPressure、ThermalPressure、IntegrityPressure、Threat、Arousal、SensoryLoad、ControlInstability、Urgency 等基础通道。具体设备可以不存在其中部分通道，也可以扩展私有通道，但所有标准通道都必须拥有明确的数值范围、更新语义、方向含义、时间戳和置信度定义。
 
-本节把“SGC Standard”落实为以身体为参考、带持续身份和认识状态的可行动现实关系图。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 开放标准体系”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+因此，FCS 的标准字段更接近
 
-把这一关系写成最小数学骨架，可得
+\[
+F_k=
+(
+type,
+value,
+rate,
+confidence,
+source,
+timestamp,
+scope
+).
+\]
 
-\begin{equation}\mathcal G_S=(V,E,X,\eta),\quad \eta\in\{o,d,p,c\}.\end{equation}
+这里一个非常重要的工程原则是：
+
+\[
+\boxed{
+RawMeasurement\neq FCS
+}
+\]
+
+例如电池电量为 $31\%$ 是原始状态或 SGC/Body State 中的事实，而 EnergyPressure 可能是
+
+\[
+P_E
+=
+\phi_E
+(
+E_{remain},
+P_{load},
+E_{target},
+T_{mission}
+),
+\]
+
+它描述的是这些事实对于当前 Agent 任务和身体稳定性的功能影响。也就是说，FCS 本身已经包含一层身体语义转换，而不是简单的 sensor passthrough。
+
+FCS Standard 同样必须严格避免把工程功能状态与现象意识混淆。本书使用 Feeling 一词所表达的是
+
+\[
+\boxed{
+FunctionalInfluenceState
+}
+\]
+
+而不是声明系统拥有与人类相同的主观体验。FCS 可以影响 AHC，AHC 又进一步影响 SPC 所形成的自状态和 TCE 控制，但从这一功能链本身不能推出 phenomenal consciousness。标准化层必须尤其谨慎，因为一旦公共 ABI 将``Threat=0.8''定义成人类意义的``恐惧强度''，整个系统就会引入不必要的拟人化语义。
+
+SGC 与 FCS 因此形成一对互补标准：
+
+\[
+\boxed{
+SGC=\text{Content of Actionable Reality}
+}
+\]
+
+\[
+\boxed{
+FCS=\text{Functional Influence of Reality}
+}
+\]
+
+它们之间可以有关联，但不能相互替代。更正式地，我们可以定义身体状态到两个公共空间的映射
+
+\[
+\Pi_S:
+X_B\rightarrow SGC,
+\qquad
+\Pi_F:
+X_B\rightarrow FCS.
+\]
+
+同一个 $X_B$ 可以同时在两种空间中产生不同描述。标准所保证的是 Kernel 能够可靠理解这两类描述，而不要求 Kernel 知道底层传感器、网络结构或控制算法如何形成它们。
+
+因此 FCS Standard 的根本意义，是第一次把``身体与环境如何影响认知主体''从隐含模型内部状态提升成公共系统接口。这为 AHC、SPC、TCE 以及长期心理工程建立了统一输入边界，也使不同 Body Runtime 可以在不共享内部实现的情况下，向同一个 Agent Kernel 提供可比较的功能影响状态。
+
+\section{Body ABI：身体作为可替换智能载体的系统契约}
+
+Body ABI 是 AgentOS 能否真正实现 Body Scale 的核心工程边界。如果每一种机器人、车辆、浏览器或数字系统都必须为认知内核重新编写专用逻辑，那么 AgentOS 实际上没有形成操作系统意义上的身体抽象。正如传统操作系统通过设备驱动和稳定 ABI 隔离具体硬件，AgentOS 也需要通过 Body ABI 将
+
+\[
+\text{具体身体实现}
+\]
+
+与
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对SGC Standard的命名和组合仍是需要实验验证的建模提案。
+\[
+\text{持续认知主体}
+\]
 
-这一小节的反例同样重要：预测节点若覆盖观察节点，内部世界会失去现实校准锚点。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+分离。
+
+我们可以把 Body Runtime 对 Kernel 暴露的公共契约写为
 
-\begin{thought}
-对“SGC Standard”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\[
+\mathcal I_B
+=
+(
+SGC,
+FCS,
+Capabilities,
+ControlReference,
+Feedback,
+Residual,
+Exception,
+Safety
+).
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这八类信息并不意味着最终软件中必须存在八个 RPC，而是定义了 Body Runtime 和 Agent Kernel 之间不可混淆的语义责任。SGC 和 FCS 提供公共状态面；Capabilities 描述身体现在能够做什么；Control Reference 描述认知层希望身体实现什么；Feedback 描述执行进展；Residual 描述预期与实际之间的偏差；Exception 描述无法由普通局部控制处理的异常；Safety 则提供具有更高权限的安全状态。
 
-\section{FCS Standard}
-\begin{narration}
-现在把镜头移到“FCS Standard”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+Body ABI 必须遵守一个核心职责分离：
 
-本节把“FCS Standard”落实为把原始身体量转换为强度、导数和置信度组成的主体影响场。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 开放标准体系”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+\[
+\boxed{
+AgentKernel=WhatToDo
+}
+\]
+
+\[
+\boxed{
+BodyRuntime=HowThisBodyDoesIt
+}
+\]
 
-把这一关系写成最小数学骨架，可得
+这并不是绝对禁止 Kernel 产生具体动作，而是定义默认责任层级。Kernel 给出的应首先是语义和目标意义上的控制引用，例如``保持目标在可跟踪区域''、``移动到该可达区域''、``点击当前语义为确认按钮的对象''，而 Body Runtime 可以根据身体构型、当前动力学、局部传感和实时限制把这些高层结构变成真正可执行动作。
+
+因此 Body ABI 的控制请求不宜只有一个 action 字符串，而可抽象为
+
+\[
+r_t^B=
+(
+goal,
+target,
+constraints,
+priority,
+horizon,
+tolerance,
+authority,
+validity
+).
+\]
+
+其中 $goal$ 表示控制目的，$target$ 给出必要目标状态，$constraints$ 表示不可违反条件，$horizon$ 表示参考预测窗口，$tolerance$ 指定允许误差，$authority$ 表示该请求的控制权限，$validity$ 则规定其生效时段。这样的结构比``move\_joint(0.2)''更有 Body Scale，因为它允许不同身体用不同控制方式满足相同语义目标。
+
+Body ABI 还必须具有时间语义。不同 Body Runtime 的内部更新频率可能从毫秒级 servo 到秒级数字操作不等，因此公共接口不能假设：
+
+\[
+\tau_{Kernel}=\tau_{Body}.
+\]
+
+更合理的是规定每个状态和指令都带有
+
+\[
+(timestamp,
+valid\_until,
+update\_rate,
+confidence),
+\]
+
+让 Kernel 清楚知道某个身体状态有多新、某个控制引用何时失效、某个能力描述是否仍然可信。
+
+此外，Body ABI 必须支持能力降级。现实中的身体不是一个固定功能集合。机器人可能失去一个传感器，网络可能断开，机械臂可能进入热保护，数字 Body 可能失去某个 API 权限。因此：
+
+\[
+Capability_t
+\neq
+Capability_{t+\Delta}.
+\]
+
+这意味着 Body Capability 必须是动态状态而不是安装时常量。Body ABI 需要把这种变化作为正常系统事件，而不是把所有变化升级为致命异常。
+
+标准化到这里就应停止。Body ABI 不应规定电机控制器类型、私有 latent 维度、SLAM 算法、控制器实现甚至神经网络结构。换言之：
+
+\[
+\boxed{
+StandardizeBodyMeaning,
+NotBodyMechanism
+}
+\]
+
+只有保持这一边界，未来完全不同的机器人、车辆和数字执行环境才有可能共享同一个持续 Agent Kernel。
+
+\section{BPCC ABI：局部预测控制闭环的公共接口}
+
+BPCC（Body Predictive Control Core）在 AgentOS 中承担快速预测、快速控制、残差估计和局部适应的职责。它的出现源于本书此前已经建立的多时间尺度原则：
+
+\[
+\boxed{
+EachScaleShouldCloseItsOwnFastLoop
+}
+\]
+
+认知内核不应该持续介入毫秒级或高频局部控制，因为那既会造成延迟，也会浪费有限的工作记忆和全局认知容量。因此，BPCC 必须能够在 Kernel 不连续干预的情况下关闭局部快速回路，同时又不能演化成一个与 Agent Kernel 争夺主体地位的第二智能体。
+
+BPCC ABI 的核心任务就是规定这一边界。
+
+首先，BPCC 必须可以拥有完全私有的内部状态：
+
+\[
+z_t^{BPCC}\in\mathbb R^d,
+\]
+
+并且这个状态没有义务对 Kernel 可解释。它可以来自神经网络、MPC 状态估计器、控制器隐藏状态或任意高性能实现。开放标准真正要求的是其公共投影：
 
-\begin{equation}f_k=(\sigma_k,\dot\sigma_k,q_k).\end{equation}
+\[
+\Pi_{pub}
+(
+z_t^{BPCC}
+)
+=
+(
+Prediction,
+Execution,
+Residual,
+Confidence,
+CapabilityMargin
+).
+\]
+
+这里 Prediction 表示在当前动作和环境条件下 BPCC 对局部未来的预测；Execution 表示当前控制过程执行到什么程度；Residual 表示局部预测与现实反馈的偏差；Confidence 表示 BPCC 对自身预测或控制结果的可靠度估计；CapabilityMargin 表示身体当前距离能力边界还有多少余量。
+
+可以进一步定义标准残差结构：
+
+\[
+\varepsilon_B
+=
+\left(
+\varepsilon_{ctrl},
+\varepsilon_{SGC},
+\varepsilon_{FCS}
+\right).
+\]
+
+其中 $\varepsilon_{ctrl}$ 衡量控制目标与实际执行的误差，$\varepsilon_{SGC}$ 衡量现实状态与局部世界预测的差异，$\varepsilon_{FCS}$ 则衡量预期身体影响与实际身体影响之间的差异。这样的三分法十分重要，因为``动作没有达到位置''、``世界与预测不同''以及``虽然动作成功但身体代价显著超出预期''是三种完全不同的问题。
+
+BPCC ABI 还必须体现异常上浮原则。定义局部升级函数
+
+\[
+\Gamma_B
+=
+f
+(
+\|\varepsilon_B\|,
+Risk,
+Novelty,
+Persistence,
+CapabilityMargin
+).
+\]
+
+当
+
+\[
+\Gamma_B<\theta_B,
+\]
+
+BPCC 应继续局部修正；而当
+
+\[
+\Gamma_B\geq\theta_B,
+\]
+
+系统则需要把相应结构升级给 Kernel/KRA，由更高层重新解释。由此形成本书反复强调的原则：
+
+\[
+\boxed{
+PredictLocally,
+EscalateResidualGlobally
+}
+\]
+
+这也是 BPCC ABI 与普通机器人控制接口的关键区别：它不仅输出``成功/失败''，还必须能够向更高层描述为什么现有局部模型正在失效。
+
+与此同时，BPCC 预测不能取得现实权威。我们必须明确：
+
+\[
+\boxed{
+BPCCPrediction
+\neq
+ObservedReality
+}
+\]
+
+任何预测结果都不能直接写入 Observed SGC/FCS。动作之后的真实世界状态必须重新经过传感路径进入 Body Runtime，形成新的 Observation。否则系统可能形成一个危险的内部闭环：控制器根据自己的预测确认自己的成功，最终脱离世界反馈。
+
+因此，BPCC Standard 本质上应形成一种``高速私有实现、低带宽公共语义''结构：
+
+\[
+\boxed{
+PrivateFastState
++
+PublicSemanticContract
+}
+\]
+
+这允许工业机器人使用确定性控制器、消费机器人使用学习控制器、车辆使用 MPC，而 Agent Kernel 无需理解它们的内部算法。对 AgentOS 而言，真正需要稳定的是功能责任和残差语义，而不是 BPCC 如何完成计算。
+
+\section{Control Reference：跨时间尺度控制意图的标准表达}
+
+在传统软件系统中，上层通常通过函数调用直接要求下层执行动作；但在 AgentOS 中，这种方式不足以表达跨时间尺度、跨身体和带预测约束的控制关系。Kernel 与 Body Runtime 并不是普通 caller---callee 关系，而是两个不同时间尺度动力系统之间的控制耦合。因此我们引入 Control Reference，作为高层认知意图向低层身体控制空间投影的公共标准。
+
+Control Reference 不能等同于 Action Command。后者一般指定``执行什么动作''，而前者更接近：
+
+\begin{statementbox}
+希望局部动力系统进入怎样的可接受状态区域
+\end{statementbox}
+
+因此可以形式化为
+
+\[
+R_t
+=
+(
+G_t,
+X_t^\ast,
+\mathcal C_t,
+P_t,
+H_t,
+\Delta_t,
+A_t
+),
+\]
+
+其中 $G_t$ 为语义目标，$X_t^\ast$ 为目标状态或目标状态集合，$\mathcal C_t$ 为约束，$P_t$ 为优先级，$H_t$ 为预测时间窗，$\Delta_t$ 为允许偏差，$A_t$ 为 authority。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对FCS Standard的命名和组合仍是需要实验验证的建模提案。
+这里 $X_t^\ast$ 不一定是一个点。对于智能身体，更一般地应表示为可行目标集合：
 
-这一小节的反例同样重要：原始传感值与功能影响混同会让不同身体无法使用统一语义。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\[
+X_t^\ast
+\subseteq
+\mathcal X_{feasible}.
+\]
 
-\begin{thought}
-对“FCS Standard”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+例如 Kernel 可能并不关心机器人以哪条具体轨迹绕过桌子，而只要求其在五秒左右进入目标区域、不可碰撞、FCS 中的 IntegrityPressure 不超过阈值，并保持摄像头对目标的可视性。这时 Control Reference 实际定义的是一个受约束状态流形，而 BPCC 则在该流形内优化具体局部轨迹。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这正体现了本书的多尺度控制原则：
 
-\section{Body ABI}
-\begin{narration}
-现在把镜头移到“Body ABI”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\[
+\boxed{
+HigherLevelSetsFeasibleRegion,
+LowerLevelOptimizesInsideIt
+}
+\]
 
-本节把“Body ABI”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 开放标准体系”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+Control Reference Standard 因此必须至少具有四类语义：目标语义、约束语义、时间语义和权限语义。没有时间语义，Body Runtime 无法知道一个目标是否仍然有效；没有权限语义，就无法解决高层任务、身体安全和局部控制之间的冲突。
 
-把这一关系写成最小数学骨架，可得
+如果多个控制来源同时存在，则还必须满足单写者原则：
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+\[
+\forall r_i,
+\qquad
+\left|
+ActiveWriter(r_i)
+\right|
+=1.
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Body ABI的命名和组合仍是需要实验验证的建模提案。
+这里的 ActiveWriter 不是说系统中只有一个模块可以提出建议，而是说对某个最终执行资源，在某一时间窗内必须存在唯一具有执行权的控制源。其他组件可以通过约束、建议或者安全覆盖影响决策，但不能同时直接写入同一执行器，否则会产生控制争用甚至物理不稳定。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+因此 Control Reference 标准真正把 AgentOS 中抽象的``意图''变成工程可执行的跨层契约。它既不是自然语言 prompt，也不是低层 actuator command，而是：
 
-\begin{thought}
-对“Body ABI”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\[
+\boxed{
+SemanticGoal
++
+StateEnvelope
++
+Constraint
++
+Time
++
+Authority
+}
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+的组合。
 
-\section{BPCC ABI}
-\begin{narration}
-现在把镜头移到“BPCC ABI”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这一层一旦稳定，不同 Kernel 可以控制不同 Body Runtime，而同一个 Body Runtime 也可以接受来自不同上层智能系统的兼容控制请求，从而形成真正意义上的智能体控制 ABI。
 
-本节把“BPCC ABI”落实为在身体时间尺度闭合快速预测、约束控制和残差估计的局部运行时。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 开放标准体系”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+\section{Predictive Envelope：高层预测约束的公共边界}
 
-把这一关系写成最小数学骨架，可得
+Control Reference 表达``希望身体做什么''，Predictive Envelope 则表达``高层认为未来怎样变化仍属于可接受范围''。两者的区别十分重要。一个成熟 AgentOS 不应该持续给 BPCC 发送逐步轨迹，而应该允许局部身体系统在一个由高层世界模型、自我状态、目标和安全约束共同定义的预测包络内自主运行。
 
-\begin{equation}u^*=\arg\min_{u_{0:H}}\sum_{k=0}^{H}\ell(x_k,u_k)\ \mathrm{s.t.}\ x_{k+1}=f_B(x_k,u_k).\end{equation}
+我们将 Predictive Envelope 定义为
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对BPCC ABI的命名和组合仍是需要实验验证的建模提案。
+\[
+\mathcal E_t^H
+=
+\left(
+\mathcal S_t^{target},
+\mathcal F_t^{constraint},
+\mathcal P_t,
+H_t,
+\eta_t
+\right),
+\]
 
-这一小节的反例同样重要：若 BPCC 形成独立目标和自我，它便越过局部控制边界成为第二主体。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+其中 $\mathcal S_t^{target}$ 是未来 SGC 可接受区域，$\mathcal F_t^{constraint}$ 是未来 FCS 可接受范围，$\mathcal P_t$ 是高层对未来事件或状态关系的预测结构，$H_t$ 是包络有效时间窗，$\eta_t$ 是高层预测置信度。
 
-\begin{thought}
-对“BPCC ABI”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+例如对于移动机器人，高层可能给出：
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\[
+Position(t+\tau)\in\mathcal R_{goal},
+\]
 
-\section{Control Reference}
-\begin{narration}
-现在把镜头移到“Control Reference”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+同时要求
 
-本节把“Control Reference”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 开放标准体系”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+\[
+Threat(t+\tau)<\theta_{threat},
+\]
 
-把这一关系写成最小数学骨架，可得
+\[
+IntegrityPressure(t+\tau)<\theta_{integrity},
+\]
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+以及
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Control Reference的命名和组合仍是需要实验验证的建模提案。
+\[
+TargetVisibility(t+\tau)>\theta_{visible}.
+\]
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+BPCC 无需严格执行 Kernel 内部模拟出的每一个中间动作，而只需保证自身局部控制轨迹大体保持在这个 envelope 内。只有当局部现实使得该 envelope 不再可满足时，才形成具有认知意义的 residual。
 
-\begin{thought}
-对“Control Reference”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此可以定义包络违反量：
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\[
+d_{\mathcal E}(x_t)
+=
+\inf_{y\in\mathcal E_t}
+d(x_t,y),
+\]
 
-\section{Predictive Envelope}
-\begin{narration}
-现在把镜头移到“Predictive Envelope”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+并进一步定义升级条件
 
-本节把“Predictive Envelope”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 开放标准体系”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+\[
+d_{\mathcal E}(x_t)>\epsilon_{\mathcal E}
+\quad\Longrightarrow\quad
+Escalation.
+\]
 
-把这一关系写成最小数学骨架，可得
+这使得 Kernel 与 BPCC 之间不必交换高频原始状态，而是交换更稀疏、更结构化的``预测约束偏差''。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+Predictive Envelope 还有一个重要意义：它允许高层与低层保持不同世界模型。Kernel 可能使用较抽象的语义预测，而 BPCC 使用高频连续动力学预测。标准并不要求两者共享同一 latent，只要求二者能够在某个公共可验证空间中判断：
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Predictive Envelope的命名和组合仍是需要实验验证的建模提案。
+\[
+\boxed{
+Compatible
+\quad\text{or}\quad
+Incompatible.
+}
+\]
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+因此，Predictive Envelope 实际上是一个跨表示的兼容性流形。
 
-\begin{thought}
-对“Predictive Envelope”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+更进一步，如果记 Kernel、KRA 和 Body Runtime 的联合状态为
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\[
+(K_t,A_t,B_t),
+\]
 
-\section{Agent Communication Protocol}
-\begin{narration}
-现在把镜头移到“Agent Communication Protocol”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+则系统长期稳定要求它们保持在某个兼容区域
 
-本节把“Agent Communication Protocol”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 开放标准体系”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+\[
+(K_t,A_t,B_t)
+\in
+\mathcal M_{compatible}.
+\]
 
-把这一关系写成最小数学骨架，可得
+Predictive Envelope 就是这一兼容流形在短期控制层的一种显式公共表示。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+标准化这一概念时尤其要避免规定具体预测模型。Kernel 可以是 Transformer、VLA、世界模型甚至混合符号系统；BPCC 可以是 MPC、神经控制器或经典状态空间系统。开放标准只规定预测包络的语义和违反条件，而把内部预测算法留给实现者。由此我们得到一个重要的标准化原则：
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Agent Communication Protocol的命名和组合仍是需要实验验证的建模提案。
+\[
+\boxed{
+StandardizePredictionContract,
+NotPredictionModel.
+}
+\]
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{Agent Communication Protocol：跨主体的结构交换协议}
 
-\begin{thought}
-对“Agent Communication Protocol”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+当 AgentOS 从单主体走向多 Agent 环境时，我们不能简单把网络消息等同于 Agent Communication。传统 RPC 或消息队列只解决``字节如何送达''，而持续智能体之间的交互还需要回答：谁在说、以什么身份说、表达的究竟是什么结构、它对接收者具有什么权限、这个结构是否仍然有效，以及接收者是否应该把它纳入自己的认知状态。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+因此 Agent Communication Protocol 的第一原则是：
 
-\section{Skill Package Standard}
-\begin{narration}
-现在把镜头移到“Skill Package Standard”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+\[
+\boxed{
+Communication
+\neq
+SharedMind
+}
+\]
 
-本节把“Skill Package Standard”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 开放标准体系”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
+两个 Agent 可以交换 Agent-CSO 的外部表示，却不能因此假定它们拥有相同内部表示。设 Agent $A$ 内部存在
 
-把这一关系写成最小数学骨架，可得
+\[
+C_A=\pi_A(C),
+\]
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+Agent $B$ 内部最终形成
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Skill Package Standard的命名和组合仍是需要实验验证的建模提案。
+\[
+C_B=\pi_B(C),
+\]
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+通信协议真正负责的只是提供一个中间公共结构
 
-\begin{thought}
-对“Skill Package Standard”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\[
+m(C),
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+使
 
-\section{Capability Descriptor}
-\begin{narration}
-现在把镜头移到“Capability Descriptor”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Capability Descriptor”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 开放标准体系”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Capability Descriptor的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Capability Descriptor”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Safety Governance Standard}
-\begin{narration}
-现在把镜头移到“Safety Governance Standard”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Safety Governance Standard”落实为在规定时延内具有高于普通预测控制权限的约束与中断包络。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 开放标准体系”而言，它承担的是理论到系统与生态的工程路线中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}x_t\in\mathcal S,\quad u_t\in\mathcal U_{\rm safe}(x_t).\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自系统工程、成熟度分级、接口契约与开放治理，但本书对Safety Governance Standard的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：让实时危险等待高层认知会违反最坏时延要求。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Safety Governance Standard”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“AgentOS 开放标准体系”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“开源、商业实现与生态治理”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\[
+C_A
+\rightarrow
+m(C)
+\rightarrow
+C_B
+\]
+
+在语义上尽可能保持主要关系，而不是复制发送者内部 latent。
+
+因此标准消息至少应表示为
+
+\[
+\fitdisplay{
+M=
+(
+Identity,
+Intent,
+Payload,
+Semantics,
+EpistemicStatus,
+Authority,
+TemporalScope,
+Provenance
+).
+}
+\]
+
+Identity 表示发送主体；Intent 表示请求、通知、建议、委派、回答、警告等交互性质；Payload 承载具体内容；Semantics 描述其结构类型；EpistemicStatus 表明这是 observation、prediction、belief 还是 counterfactual；Authority 说明其权限；TemporalScope 说明何时有效；Provenance 则保留来源和可追踪链。
+
+这里尤其需要防止一个危险误区：来自另一个 Agent 的消息不能直接获得现实观测权威。若 Agent $A$ 告诉 $B$ ``门后有人''，则对 $B$ 来说它首先是：
+
+\[
+ExternalClaim,
+\]
+
+而不是：
+
+\[
+ObservedReality.
+\]
+
+$B$ 可以根据对 $A$ 的历史信任、权限和上下文形成自己的 Agent-CSO，但必须保留来源信息。这一原则和 SGC 的 epistemic metadata 是同一套认识论约束在社会交互中的延伸。
+
+Agent Communication Protocol 还必须支持委派，而委派不能等同于失去主体边界。我们可以表示：
+
+\[
+Delegation
+=
+(Task,
+CapabilityRequirement,
+AuthorityEnvelope,
+ReturnContract).
+\]
+
+委派者可以把任务交给他者，却必须清楚限定对方可以使用的资源、能够修改的现实范围、返回结果的验证方式。这样，Other Agent 才能成为本书所定义的社会性外部认知载体，而不是未经治理的第二控制源。
+
+标准也不应规定多 Agent 的组织策略、角色字典或者高层治理模型。那些属于组织层可编程结构。协议需要稳定的是：
+
+\[
+\boxed{
+Identity
++
+Meaning
++
+Authority
++
+Provenance
++
+TemporalValidity
+}
+\]
+
+而不是``所有 Agent 应该怎样合作''。只有坚持这一边界，多 Agent 协议才不会把某一种社会结构固化成整个 AgentOS 生态的唯一模型。
+
+\section{Skill Package Standard：可迁移执行闭环的封装规范}
+
+在本书的理论中，Skill 从来不只是一个函数、prompt 或脚本。真正成熟的 Skill 是经过长期经验沉降以后形成的局部可执行闭环：
+
+\[
+\boxed{
+Skill
+=
+LocalPredictor
++
+LocalController
++
+ResidualModel
+}
+\]
+
+因此 Skill Package Standard 的任务，并不是定义一种新的插件压缩包格式，而是回答一个更基础的问题：一个已经从显式认知中沉降出去的能力，怎样被不同 AgentOS、不同 Body Runtime 和不同生命周期安全地保存、调用、验证、迁移和重新升级到显式认知。
+
+可以将标准 Skill 描述为
+
+\[
+\fitdisplay{
+\mathcal K
+=
+(
+ID,
+SemanticGoal,
+Precondition,
+CapabilityNeed,
+Policy,
+Prediction,
+ResidualModel,
+Postcondition,
+Safety,
+Version
+).
+}
+\]
+
+SemanticGoal 描述这个 Skill 实现什么意义上的能力；Precondition 描述什么条件下它可以被调用；CapabilityNeed 描述需要的 Body 能力；Policy 是实际执行结构，可以是代码、模型、控制器或组合；Prediction 描述该 Skill 对自身执行结果的预期；ResidualModel 则定义什么偏差仍可以局部修正、什么偏差必须升级；Postcondition 描述成功结束后的公共状态；Safety 表示不可突破的安全约束；Version 则保证长期学习过程中能够追踪结构变化。
+
+这一标准直接连接本书此前的技能编译过程：
+
+\[
+ExplicitCognition
+\rightarrow
+RepeatedTrajectory
+\rightarrow
+StablePolicy
+\rightarrow
+CompiledSkill.
+\]
+
+当一个任务第一次出现时，它可能大量占据 $h(t)$；随着经验进入 $E$ 并形成 $\Theta$，反复稳定的 CSO 关系可以逐渐下沉至 Skill。调用 Skill 后，Kernel 不应重新承担全部低层结构，而只需要保留：
+
+\[
+Goal,
+Progress,
+Residual,
+Exception.
+\]
+
+由此实现：
+
+\[
+\boxed{
+MatureIntelligence
+=
+SelectiveExplicitCognition
+}
+\]
+
+的工程形式。
+
+Skill Package Standard 因而必须把``失败重新升级''视为一级能力。如果 Skill 只知道成功或崩溃，它就无法成为长期学习系统中的成熟局部闭环。更合理的是定义 residual promotion：
+
+\[
+\Gamma_K
+=
+f(
+Residual,
+Novelty,
+Risk,
+Persistence
+),
+\]
+
+当
+
+\[
+\Gamma_K>\theta_K
+\]
+
+时，Skill 应输出足够的上下文让 Kernel 恢复显式认知，而不是继续在失效模型内盲目执行。
+
+标准化 Skill 时另一个重要原则是区分语义封装和执行封装。同一语义 Skill 可以具有多个实现：
+
+\[
+K^{semantic}
+\rightarrow
+\{
+K_1^{robot},
+K_2^{browser},
+K_3^{vehicle}
+\}.
+\]
+
+只要它们满足兼容的前置条件、结果语义和 residual contract，就可以被视作某种程度上的同类能力。这使 Body Scale 与 Skill 生态自然连接起来。
+
+因此 Skill Package Standard 真正标准化的不是``技能内部怎样计算''，而是：
+
+\[
+\boxed{
+WhatItMeans
++
+WhenItCanRun
++
+WhatItNeeds
++
+WhatItPredicts
++
+HowItFails
++
+WhatItGuarantees
+}
+\]
+
+这六项构成可迁移技能的公共契约。
+
+\section{Capability Descriptor：从静态功能列表到动态能力状态}
+
+如果 Agent Kernel 需要控制不同 Body、调用不同 Skill、委派给其他 Agent，就必须拥有一种统一方式回答：
+
+\[
+\boxed{
+WhatCanThisCarrierActuallyDoNow?
+}
+\]
+
+传统软件通常把 Capability 理解为静态功能列表，例如某设备``支持摄像头''或某 API``支持文件写入''。但对持续 AgentOS 而言，这远远不够。一个能力不仅有``有没有''，还有范围、精度、速度、可靠度、代价、权限和当前健康状态。
+
+因此我们把 Capability Descriptor 写成
+
+\[
+\mathcal C_i
+=
+(
+Semantics,
+Domain,
+Range,
+Precision,
+Latency,
+Confidence,
+Cost,
+Authority,
+Health
+).
+\]
+
+例如``移动''能力不能只表示为 Boolean。对于某具体身体，更合理的描述可能包含速度范围、可达空间、最小定位精度、当前负载、剩余能量、预计延迟以及当前可靠度。因此能力本质上应描述一个可行集合：
+
+\[
+\mathcal X_i^{cap}(t)
+\subseteq
+\mathcal X.
+\]
+
+当前环境与身体健康变化会使这个集合变化：
+
+\[
+\mathcal X_i^{cap}(t)
+\neq
+\mathcal X_i^{cap}(t+\Delta t).
+\]
+
+这一动态性对 AgentOS 非常重要。高层规划不能假定身体能力恒定，而应根据 Capability Descriptor 判断当前某个计划是否仍在可行域中。由此，Goal Planning 实际上受到
+
+\[
+\Gamma_{feasible}
+=
+\Gamma_{goal}
+\cap
+\Gamma_{capability}
+\cap
+\Gamma_{safety}
+\]
+
+约束。
+
+Capability Descriptor 还必须连接 Body Scale。换身体以后，Kernel 不应该重新学习``什么叫抓取''这一完整语义，而应询问新 Body 是否提供兼容的 capability：
+
+\[
+Capability(newBody)
+\models
+Requirement(Skill).
+\]
+
+如果满足，则已有 Skill 可以通过 KRA 和 Body Runtime 进行重新 grounding；如果不满足，则系统应明确知道能力缺失，而不是让认知模型通过猜测产生不存在的动作空间。
+
+同样的结构也可以用于数字身体。一个浏览器 Body 的 Capability 可以包括 Navigate、Click、Type、Download、Upload、ReadDOM 等，而 Shell Body 可能具有 ReadFile、ExecuteProcess、NetworkAccess 等能力。它们的物理机制完全不同，却可以通过 Capability Descriptor 被同一个 Agent Kernel 纳入统一规划。
+
+这里还需要区分 Capability 与 Authority：
+
+\[
+\boxed{
+CanDo\neq MayDo
+}
+\]
+
+系统技术上能够执行某个动作，并不意味着当前 Agent 被授权执行。例如某 Body 能够删除文件，但特定任务上下文下可能不存在 Delete Authority。因此标准应显式表达：
+
+\[
+EffectiveCapability
+=
+PhysicalCapability
+\cap
+GrantedAuthority.
+\]
+
+这一原则对于长期智能体尤其重要，因为能力通常随着学习增加，而权限应该具有独立的治理路径。否则能力成长就会自动变成权力增长，破坏本书在生命周期控制中已经确立的能力---权限分离原则。
+
+最终，Capability Descriptor 是 AgentOS 的一种``动作空间类型系统''。它让 Kernel 不必知道所有身体实现细节，却可以知道：
+
+\[
+\boxed{
+WhatIsPossible,
+HowWell,
+AtWhatCost,
+UnderWhatAuthority.
+}
+\]
+
+这是跨身体迁移、Skill 复用、工具调度和 Agent 委派共同依赖的最基础公共语义之一。
+
+\section{Safety Governance Standard：不可被学习吞没的安全治理契约}
+
+开放标准体系最后必须回答一个最重要的问题：当 AgentOS 具有持续学习、自我调节、Skill 编译、Body 控制和跨 Agent 协作能力以后，哪些安全边界必须高于普通认知动力学，并且不能被一次局部学习或临时目标静默覆盖。
+
+本书在 Body Runtime 中已经建立：
+
+\[
+\boxed{
+CriticalSafety
+\nrightarrow
+CognitiveDependency
+}
+\]
+
+以及：
+
+\[
+\boxed{
+SafetyAuthority
+>
+BPCCAuthority
+}
+\]
+
+这意味着关键安全闭环必须能够在 Agent Kernel、TCE、Skill 甚至 BPCC 出现错误时仍然独立生效。Safety Governance Standard 因此不能只规定``模型应该安全''，而应规定系统级权限、状态和中断结构。
+
+我们可以把安全治理状态定义为
+
+\[
+\mathcal S^{safe}
+=
+(
+Constraints,
+Monitors,
+Authority,
+Interrupts,
+Recovery,
+Audit
+).
+\]
+
+Constraints 表示不可违反的约束集合；Monitors 负责观测安全相关状态；Authority 定义哪些组件拥有覆盖权；Interrupts 定义何时触发硬中断或降级；Recovery 规定如何回到可治理区域；Audit 则保证安全事件可以被追踪和解释。
+
+在连续控制层，可以把安全区域表示为
+
+\[
+\mathcal X_{safe}
+=
+\{x\mid h_j(x)\geq0,\; j=1,\dots,m\}.
+\]
+
+普通控制目标只能在其中优化：
+
+\[
+u^\ast
+=
+\arg\min_u J(x,u)
+\]
+
+subject to
+
+\[
+x(t)\in\mathcal X_{safe}.
+\]
+
+这里安全约束不是一个与 Goal 平级的 preference，而是定义 Goal 优化的可行域。这一点必须在 ABI 中体现。如果 TCE 希望提高探索性，而 Safety Runtime 判断某动作将离开安全区域，则后者必须具有确定的覆盖关系：
+
+\[
+u_{executed}
+=
+\Pi_{\mathcal U_{safe}}
+(
+u_{requested}
+).
+\]
+
+安全治理还必须管理跨层权限。我们可以定义权限偏序：
+
+\[
+Safety
+\succ
+BodyCriticalControl
+\succ
+AuthorizedKernelControl
+\succ
+SkillControl
+\succ
+Suggestion.
+\]
+
+这并不意味着所有系统必须采用完全相同的实现层级，而是标准必须保证对于冲突控制存在可判定的 authority relation。
+
+与此同时，安全系统不能完全成为一个不可观察黑盒。安全中断发生以后，Kernel 至少需要获得：
+
+\[
+(
+EventType,
+TriggerCondition,
+AffectedCapability,
+ActionTaken,
+RecoveryState
+).
+\]
+
+否则 Agent 无法从安全事件中形成新的 $E$ 和 $\Theta$。但是``知道为什么被安全系统阻止''并不意味着 Agent 可以修改该安全边界。这里必须区分：
+
+\[
+Observability
+\neq
+Modifiability.
+\]
+
+这对持续自主学习系统尤为关键。
+
+Safety Governance Standard 还应保留失联与降级语义。对于物理身体或分布式系统，中心 Kernel 不可用时，局部系统不应立即失控，而应进入确定的 degraded mode。原则上：
+
+\[
+CommunicationLoss
+\Rightarrow
+SafeLocalClosure
+\]
+
+而不是：
+
+\[
+CommunicationLoss
+\Rightarrow
+UndefinedBehavior.
+\]
+
+例如可以保留基本避障、局部姿态稳定、资源保护和安全停机，而暂停需要高层语义判断的行为。
+
+至此我们可以看到，AgentOS 的开放标准体系并不是十个互相独立的 API，而是一张逐层闭合的公共语义网：
+
+\[
+\boxed{
+\begin{aligned}
+&SGC &&:\quad \text{世界是什么以及在哪里},\\
+&FCS &&:\quad \text{世界如何作用于我},\\
+&BodyABI &&:\quad \text{身体如何成为可替换执行载体},\\
+&BPCCABI &&:\quad \text{快速局部闭环如何被认知层观察},\\
+&ControlReference &&:\quad \text{高层如何表达控制意图},\\
+&PredictiveEnvelope &&:\quad \text{高层如何规定未来可接受区域},\\
+&AgentProtocol &&:\quad \text{主体如何交换结构而不混淆身份},\\
+&SkillPackage &&:\quad \text{成熟能力如何被封装和重新升级},\\
+&CapabilityDescriptor &&:\quad \text{系统现在实际上能做什么},\\
+&SafetyGovernance &&:\quad \text{哪些边界始终高于普通学习与执行}.
+\end{aligned}
+}
+\]
+
+它们共同体现同一个标准化原则：
+
+\[
+\boxed{
+\textbf{
+Interface=SemanticSkeleton+ImplementationFreedom
+}
+}
+\]
+
+对于 AgentOS 来说，真正应该被开放标准长期冻结的，不是今天某个大模型的 latent space，不是某种机器人控制算法，也不是某个厂商的内部组件图，而是跨系统必须长期保持稳定的\textbf{语义责任、状态类型、时间关系、权限关系和现实验证路径}。
+
+从这一意义上说，开放标准的目的并不是让所有 AgentOS ``内部变得一样''。恰恰相反，它要允许
+
+\[
+Implementation_A\neq Implementation_B
+\]
+
+同时仍然满足
+
+\[
+\boxed{
+Contract_A\simeq Contract_B.
+}
+\]
+
+只有这样，一个 Agent Kernel 才可能跨越模型迭代而保持生命周期，一个成熟 Skill 才可能跨身体迁移，一个 Body Runtime 才可能被不同认知内核使用，而未来不同企业、机器人和数字系统也才可能真正进入同一个持续智能生态。
+
+本章因此确立了 AgentOS 标准化的最终边界：
+
+\begin{statementbox}
+标准化智能体与世界、身体、技能和其他主体之间的关系；
+不要标准化智能本身如何在内部实现。
+\end{statementbox}

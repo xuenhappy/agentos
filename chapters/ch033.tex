@@ -2,7 +2,6 @@
 \label{chap:spc-tce-minimal-loop}
 
 \begin{chapteroverviewbox}
-\textbf{本章总体说明：}
 在前两章中，我们已经分别建立了自我感知压缩器 SPC（Self-Perception Compressor）与认知动力学控制器 TCE（Temperature \& Control Executor）。如果把二者孤立理解，SPC 只是一个内部状态估计器，而 TCE 只是一个认知参数调节器；真正重要的跃迁发生在二者闭合以后。当 SPC 对智能体当前认知状态形成有限、压缩且带不确定性的自我估计，TCE 再依据这一估计调节注意、探索、搜索深度、激活范围、认知温度与资源投入，而调节后的认知动力学重新改变工作记忆 $h(t)$ 并再次进入 SPC 时，一个最小的认知自调节闭环才真正形成。由此，Agent 不再只是``执行认知过程''，而开始``根据自己正在如何认知而改变自己的认知方式''。
 
 本章将这一结构形式化为一个典型的 Observer--Controller--Plant 闭环，但同时强调：AgentOS 中的 Plant 不是单一物理对象，而是以有限工作记忆 $h(t)$ 为显式界面的多尺度认知动力学；SPC 观测的也不是透明的内部真实状态，而是对分布式认知过程的有限后验估计；TCE 更不是简单的语言模型 sampling temperature，而是作用于认知运行条件的多变量控制器。因此，

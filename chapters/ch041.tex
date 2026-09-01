@@ -2,8 +2,6 @@
 \label{chap:offloading}
 
 \begin{chapteroverviewbox}
-\textbf{本章总体说明}
-
 本章确立 AgentOS 中“认知卸载（Cognitive Offloading）”的基本理论地位。工作记忆 $h(t)$ 的有限容量决定了，一个持续智能体不可能把全部知识、经验、中间结果、操作步骤、环境状态以及协作关系同时保持在显式认知空间中。成熟智能因此不能被理解为“内部保存越来越多东西”，而应被理解为：\textbf{让不同认知结构按照其使用频率、修改代价、恢复代价、实时性要求和控制责任，被安置到最适合的承载位置。}
 
 从早期“复杂度迁移”的语言看，Offloading 是将当前认知核心无法或无需持续承担的复杂度迁移至长期记忆、技能、文件、数据库、程序、工具、环境或其他智能体；在本书已经建立的 CSO/Agent-CSO 本体中，更精确的表述是：\textbf{Offloading 是 Agent-CSO 的承载迁移（carrier migration）与执行责任迁移（responsibility migration）过程。} 被卸载的结构并非因此消失，而是从“当前必须显式维持”转化为“可通过索引、调用、感知或协作重新进入认知闭环”的结构。
@@ -476,6 +474,7 @@ ExecutableExternalCSO.
 
 然而程序化卸载绝不能被理解为“程序执行结果天然可信”。程序只是在一组假定边界内封装了过去建立的结构。如果输入域、环境规则或接口发生变化，原程序就可能失效。因此 Program 必须具有显式契约：
 \begin{equation}
+\fitdisplay{
 P_k
 =
 (
@@ -487,6 +486,7 @@ Invariant,
 FailureMode,
 Version
 ).
+}
 \end{equation}
 
 每次调用以后，Agent 仍需根据任务风险决定验证强度：
@@ -563,6 +563,7 @@ Capability(A+T)
 
 因此一个 Tool-CSO 至少应包含
 \begin{equation}
+\fitdisplay{
 C_T
 =
 (
@@ -575,6 +576,7 @@ Reliability,
 Authority,
 FailureModes
 ).
+}
 \end{equation}
 
 成熟 Agent 对工具的记忆不应该只是工具名称，而应该是一个结构化能力模型。这样 Scheduler 或 CCM 才能在当前工作记忆压力上升时比较“继续内部推理”和“转交工具”的相对代价。
@@ -981,6 +983,7 @@ AdaptiveCognitivePlacement.
 
 我们可以定义一个最小主体连续结构
 \begin{equation}
+\fitdisplay{
 \mathcal C_{\mathrm{core}}
 =
 \{
@@ -991,6 +994,7 @@ ExternalIndex,
 RealityVerification,
 Recovery
 \}.
+}
 \end{equation}
 有效卸载要求：
 \begin{equation}
@@ -1072,7 +1076,7 @@ OptimalCarrierPlacement.
 
 因此 Offloading 不是智能的附属能力，而是工作记忆有限性与世界复杂性之间的基本调和机制。有限智能之所以能够处理远超自身当前容量的问题，不是因为它消除了有限性，而是因为它学会了把结构沉积在时间中、写入环境中、固化在程序中、封装在工具中、分布在社会中，并在真正需要的时候重新把其中极少的一部分提升到 $h(t)$。
 
-这也给出了本章最终的理论盖章：
+这也给出了本章最终的理论概括：
 
 \begin{equation}
 \boxed{

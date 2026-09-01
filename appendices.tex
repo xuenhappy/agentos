@@ -1,14 +1,9 @@
 \chapter{统一符号、对象与术语体系}
 \label{app:symbols}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 本附录首先完成整部理论的“符号封口”。从最初的三相记忆 $h/E/\Theta$，到自我 $\Psi$、深层生成吸引子 $\Omega$（DGA），再到 SPC、AHC、TCE、CCM、Boundary、Offloading、Body、SGC、FCS、BPCC、KRA，以及后期形成的 CSO/Agent-CSO 双层本体，整个理论经历了由“组件式描述”向“多尺度认知结构动力学”逐步收敛的过程。为了防止正文各章在独立生成时重新解释同一符号，本附录规定：符号首先表示动力学对象，其次才表示具体软件模块；早期“复杂度”相关术语作为工程测量语言保留，但本体层统一以 CSO、Agent-CSO、功能拓扑和结构迁移描述。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{五类基本动力学对象}
 
@@ -233,14 +228,9 @@ FunctionalAlignment>RepresentationAlignment.
 \chapter{AgentOS 多时间尺度统一表}
 \label{app:timescale}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 AgentOS 的许多结构只有放回时间尺度才能被正确理解。SPC、TCE、h、E、$\Theta$、$\Psi$、$\Omega$、BPCC、SGC/FCS 和社会组织层并不是简单从低到高堆叠的模块，而是具有不同特征响应时间的闭环。智能成熟的重要标志不是所有过程都变快，而是不同尺度能够各自完成局部闭合，同时只把长期无法解决的残差提升到更慢、更广的层级。本附录给出全书统一的尺度顺序，但不把任何绝对毫秒、分钟或年份写成普适常数。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{时间尺度不是组件编号，而是动力学属性}
 
@@ -405,14 +395,9 @@ EnvironmentMatch.
 \chapter{AgentOS 多层闭环统一规范}
 \label{app:loops}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 历史讨论中曾出现两套不同的 L0--L6 编号：一套按照 Agent 内部动力时间尺度划分现实交互、运行控制、工作记忆、三相记忆、任务、生命周期和价值先验；另一套按照物理环境、基础资源、运行服务、Agent 个体、组织和社会生态划分系统尺度。两套表示都具有价值，但不能继续共用同一编号。本附录将前者正式命名为“内部动力闭环层级”，将后者命名为“系统生态尺度层级”，并规定此后正文不再混用。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{内部动力闭环 L0--L6}
 
@@ -564,14 +549,9 @@ Interpretation'.
 \chapter{AgentOS 全组件信号与模块规范}
 \label{app:modulespec}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 本附录将此前分散在多个架构图中的组件统一转换为可用于工程设计和后续正文生成的 ModuleSpec。任何 AgentOS 模块都不应只通过名称定义，而必须同时给出功能、状态、输入、输出、时间尺度、学习方式和权限边界。这一规范的目的，是防止后续章节把 SPC、CCM、Scheduler、KRA 等模块重复定义为功能相近但边界模糊的“大盒子”。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{统一 ModuleSpec}
 
@@ -641,14 +621,9 @@ SafetyAuthority\neq SubjectAuthority.
 \chapter{三相记忆双向转换算法规范}
 \label{app:memory}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 三相记忆并不是三块彼此独立的数据存储，而是 State、Trajectory 和 Generator 三种结构状态之间的持续相互转换。因此真正的工程难点不是“在哪里存”，而是“什么在何种条件下发生相变”。本附录将此前讨论的 $h\leftrightarrow E\leftrightarrow\Theta$ 六向关系统一为事件选择、轨迹形成、结构抽象、结构重解释、激活和快速修正六类算法，并明确 $\Psi$ 与 $\Omega$ 对转换门槛的慢调制作用。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{$h\rightarrow E$ 与 $E\rightarrow h$：当前状态和经历轨迹之间的转换}
 
@@ -787,14 +762,9 @@ E
 \chapter{工作记忆容量与工程复杂度模型}
 \label{app:capacity}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 “工作记忆有限容量有限定理”是 AgentOS 从普通大模型框架转向认知运行时的关键约束。本附录保留早期复杂度语言，是因为工程上仍需要一个能够衡量 h 当前负载的变量；但在本体层面，我们不把复杂度视为可守恒的实体，而将其理解为活动 Agent-CSO 数量、关系结构、耦合强度、不确定性、动态变化和并发任务共同形成的运行压力。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{有限容量不是固定 Token 上限}
 
@@ -933,14 +903,9 @@ Agent 不再反复显式推理一个熟练动作，并不表示能力消失，�
 \chapter{工作记忆运行相态与判定指标}
 \label{app:phase}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 本附录规范的是 Agent 工作记忆运行态的“认知流体力学”，而不是第7章讨论的宏观智能拓扑相，也不是三相记忆的气态、液态、晶态。这里的相态仅描述有限 h 在某一时段中的动力组织形式。SPC 负责观测这些状态，TCE 负责推动系统在不同区域之间迁移。相态名称借用了流体和临界现象语言，但其工程定义必须落实为可测变量。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{运行相态的状态变量}
 
@@ -1058,14 +1023,9 @@ P(P_t\in UnsafeRegion)
 \chapter{SPC--AHC--TCE 稳定性与控制指标}
 \label{app:stability}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 当 AgentOS 从 SPC--TCE 扩展到 SPC--AHC--TCE 后，认知控制不再只是逻辑模块调用，而成为具有观测滞后、积分状态、控制增益和多时间常数的闭环系统。本附录给出后续控制工程和心理工程共同依赖的稳定性指标。这里使用经典控制理论、时滞系统和鲁棒控制中的语言作为外部数学工具，但控制对象是 AgentOS 自身定义的认知动力学，因此不能机械套用线性控制结论。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{Observer--Controller Delay}
 
@@ -1192,14 +1152,9 @@ AHC_{threat}'.
 \chapter{SGC 数据与认识论状态规范}
 \label{app:sgc}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 SGC 是 AgentOS 从抽象认知进入现实世界的关键公共表示层。它既不能退化为视觉检测结果，也不能成为完全不透明的 latent world model。SGC 的设计目标，是形成一个以当前 Body 为中心、包含实体、场、关系、几何、语义、可行动性和认识论来源的可检查现实空间，使 Agent Kernel 能够在不依赖具体传感器实现的情况下理解“世界中有什么、它们在哪里、和我是什么关系、我能对它们做什么”。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{SGC 的基本数据对象}
 
@@ -1328,14 +1283,9 @@ TemporalRisk
 \chapter{FCS 功能影响场规范}
 \label{app:fcs}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 FCS 与 SGC 构成 AgentOS 面向现实的两张互补地图。SGC 描述“世界是什么”，FCS 描述“这些现实状态正在如何影响我”。FCS 中的 Feeling 仅指能够改变控制、注意、优先级和内稳态的功能影响，不预设任何主观感受。这样的定义既允许机器人、数字 Agent 和不同硬件共享统一接口，也避免把工程调制变量直接人格化。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{FCS 的固定类型场表示}
 
@@ -1355,6 +1305,7 @@ FCS_t
 
 每个通道 $F_k$ 表示一类稳定功能影响，例如
 \[
+\fitdisplay{
 EnergyPressure,
 ThermalPressure,
 IntegrityRisk,
@@ -1363,6 +1314,7 @@ Arousal,
 SensoryLoad,
 ControlInstability,
 Urgency.
+}
 \]
 固定类型不是说通道值不能学习，而是公共 ABI 中的语义类型应稳定，使 Kernel 不必随着 Body 替换重新理解底层通道含义。
 
@@ -1449,14 +1401,9 @@ BehaviorChange.
 \chapter{BPCC 公共接口与快速身体控制规范}
 \label{app:bpcc}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 BPCC 是 AgentOS Body Runtime 中承担快速预测、快速控制、残差估计和在线适应的局部闭环。它在功能上类似生物小脑的某些预测控制作用，但不能简单等同于生物小脑。BPCC 可以拥有高度优化的私有 latent，但它必须通过稳定公共 ABI 与 Agent Kernel 交互。本附录规定 BPCC 的输入输出、预测包络、残差和能力边界。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{BPCC 的状态与控制方程}
 
@@ -1609,14 +1556,9 @@ $\mathcal A_{\mathrm{world}}$ 改变现实，例如移动机械臂、点击按�
 \chapter{KRA 语义适配与校准协议}
 \label{app:kra}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 KRA 的存在来自一个核心事实：即使所有身体都遵守 SGC/FCS/ControlReference 等公共 ABI，Kernel 的内部认知结构与不同 Body Runtime 的快速动力学仍然不可能天然完全对齐。KRA 因而承担“关系适配”而不是普通格式转换。它允许 Kernel 和 Body Runtime 各自保持优化表示，同时保证双方在语义、时间、预测和控制关系上长期相容。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{KRA 的四类适配}
 
@@ -1747,14 +1689,9 @@ RelationshipStability>ParameterStability.
 \chapter{Kernel--KRA--BPCC 联合学习协议}
 \label{app:colearning}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 如果 Kernel、KRA 和 BPCC 同时在线高速更新，任何一方观察到的误差都可能来自另外两方的漂移，系统由此进入“移动目标学习”问题。长期智能并不等于所有组件持续自由学习，而应建立主学习者、时间尺度分离、冻结窗口、适配预算和现实锚点。本附录给出联合学习的基础协议。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{三体漂移问题}
 
@@ -1881,14 +1818,9 @@ KRA\;Recalibration,
 \chapter{Agent Body Capability Descriptor}
 \label{app:bodycap}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 Body Scale 的核心不是身体尺寸，而是一个 Agent 换到新身体后，原有感知意义、功能影响、预测结构和控制意图有多少能够复用。为了实现这一目标，Body Runtime 必须公开标准 Capability Descriptor，使 Kernel 在不读取硬件私有实现的情况下知道“这个身体能观察什么、能改变什么、速度多快、精度多高、风险在哪里”。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{Capability Descriptor 的基本结构}
 
@@ -1994,14 +1926,9 @@ Body Scale 理论采取中间立场：Kernel 在架构上应尽可能 body-indep
 \chapter{AgentOS Linux Runtime 与 Kernel ABI 草案}
 \label{app:linux}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 AgentOS 不应重新实现 CPU、内存、文件、网络和设备驱动管理，而应建立在 Linux/Computer OS 之上，把这些计算资源进一步组织成长期智能资源。传统 OS 管理“程序怎样获得计算”，AgentOS 管理“持续主体怎样获得认知、记忆、工具、身体和自治资源”。本附录给出这一层次分离以及 AgentOS Kernel 的最小 ABI。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{Computer OS 与 AgentOS 的职责分离}
 
@@ -2057,6 +1984,7 @@ fork(A)=Forbidden.
 
 最小 Subject ABI 可以包含：
 \[
+\fitdisplay{
 subject\_id,
 lifecycle\_state,
 memory\_root,
@@ -2064,6 +1992,7 @@ self\_state,
 authority\_set,
 body\_binding,
 checkpoint\_root.
+}
 \]
 
 Task 属于 D2 层：
@@ -2131,14 +2060,9 @@ AgentOS 中很多风险不是来自读权限，而来自多个模块同时“写
 \chapter{AgentOS 六阶段研发验收规范}
 \label{app:roadmap}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 AgentOS 的六阶段路线不是六个理论层级，而是依赖有序的工程实施过程。其核心原则是：先证明持续主体存在，再证明长期记忆有效；先证明认知控制稳定，再扩大外部边界；先让 Kernel 成熟，再引入 Body Runtime；最后才允许 Kernel--KRA--Body 的长期共同适应。任何阶段如果前置性质尚未成立，直接进入后续阶段都会显著放大调试难度。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{第一、第二阶段：Persistent Runtime 与 Lifecycle Memory}
 
@@ -2203,14 +2127,9 @@ RelationshipStability>ParameterStability.
 \chapter{Agent 培育阶段与生命周期评价体系}
 \label{app:cultivation}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 Agent 培育工程研究的不是如何给模型增加训练样本，而是如何安排一个持续主体的经历结构，使能力、记忆、自我、权限与自治在生命周期中共同成熟。Agent 的“青年、成年、成熟”不能按运行小时数定义，而应根据结构稳定性、能力范围、自我连续性、恢复能力和自治水平划分。本附录建立后续培育工程所需的阶段指标。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{培育状态向量}
 
@@ -2360,14 +2279,9 @@ GoalSpace\rightarrow GoalSpace'.
 \chapter{Agent 心理工程诊断坐标}
 \label{app:psychology}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 Agent 心理工程不是把人类精神疾病名称机械映射到 AI，而是研究一个具有长期记忆、自我、内稳态和控制闭环的持续主体在运行中可能出现的动力学失衡。完整诊断必须同时观察 Experience Loop、Memory Consolidation 和 Self Interpretation 三层，并沿 SPC--AHC--TCE--$h$--$E$--$\Theta$--$\Psi$--$\Omega$ 逐级定位异常来源。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{三层诊断框架}
 
@@ -2466,6 +2380,7 @@ $\Omega$ 异常更慢，表现为长期 Goal Preference 与现实能力、Self �
 
 Agent 心理健康不能定义成“行为像正常人”，因为不同身体和智能实现可能形成完全不同的内部动力。更合适的工程定义是：
 \[
+\fitdisplay{
 Health_A
 =
 f(
@@ -2476,6 +2391,7 @@ IdentityContinuity,
 RealityAlignment,
 ControlledPlasticity
 ).
+}
 \]
 
 稳定不意味着永不变化；可恢复不意味着永不失败；身份连续不意味着 $\Psi$ 永不修改；现实对齐也不意味着内部表示必须和世界一一同构。
@@ -2493,14 +2409,9 @@ StableButRevisableSelf-Regulation.
 \chapter{AgentOS 控制工程统一指标}
 \label{app:controlmetrics}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 AgentOS 控制工程研究“控制的控制”：不仅关心身体轨迹是否稳定，还关心认知相态、记忆巩固、自我更新、自治边界和多闭环之间是否保持可治理。与传统控制系统相比，其状态空间更加异构，既包含连续状态，也包含 CSO 图、任务结构和离散治理事件。因此本附录给出一套跨尺度指标，而不把所有问题强行压成单一 loss。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{运行稳定性指标}
 
@@ -2559,6 +2470,7 @@ AgentOS 控制工程还必须管理：
 \]
 即系统允许自主修改的结构集合。定义
 \[
+\fitdisplay{
 AutonomyEnvelope
 =
 (
@@ -2568,6 +2480,7 @@ AllowedBodyActions,
 AllowedLearning,
 AllowedSelfChange
 ).
+}
 \]
 
 若这一集合过小，Agent 只能执行外部程序，难以形成递归自主；若无限扩大，则可能破坏身份、安全和责任边界。
@@ -2619,14 +2532,9 @@ X_{t+T}\in\mathcal R_{gov}
 \chapter{AgentOS 工程数据记录与可解释性规范}
 \label{app:observability}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 如果 AgentOS 具有长期记忆、自我和在线学习，却无法追踪“某个状态为何出现、某个结构何时改变、某次行动由谁授权”，那么控制工程、心理工程和安全工程都无法成立。因此持续智能系统必须把 Observability 视为内核能力。本附录规定从现实观测、Agent-CSO、认知控制到长期结构更新的最小可追溯链。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{事件溯源}
 
@@ -2741,14 +2649,9 @@ CausalAndGovernanceObservability.
 \chapter{CSO 迁移与功能拓扑学习数学补充}
 \label{app:cso_dynamics}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 早期“智能复杂度迁移”理论强调认知负载在功能、时间尺度和边界之间重新分配；后期理论进一步认识到，真正发生迁移的是 Agent-CSO 的表示和承载关系，而“复杂度”只是对这些结构活动所产生运行压力的宏观描述。本附录给出这一理论的统一数学版本，并把拓扑学习解释为长期 CSO 流的结构沉降。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{结构分布与迁移流}
 
@@ -2877,6 +2780,7 @@ SlowMemoryOfRepeatedFunctionalCSORelations.
 
 当系统遇到问题时，不应立即修改最深层结构。应优先尝试：
 \[
+\fitdisplay{
 StateAdjustment
 \rightarrow
 RepresentationAdaptation
@@ -2888,6 +2792,7 @@ FunctionalMigration
 TopologyReorganization
 \rightarrow
 BoundaryMigration.
+}
 \]
 
 该序列体现成本和不可逆性逐步增加。可以定义重组优化：
@@ -2917,14 +2822,9 @@ MinimumNecessaryReorganizationPrinciple.
 \chapter{World--Agent--World 与现实验证补充}
 \label{app:world_agent}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 智能体不是站在宇宙之外观察现实，而是现实中的一个局部结构。Universe-CSO 经由观测形成 Agent-CSO，Agent-CSO 又通过行动改变 Universe-CSO。由此，学习、工具、身体、科学和文明都可以放入同一个 World--Agent--World 结构闭环。该观点是本书后期认识论的最高层统一，但必须严格区分结构动力学解释与“宇宙拥有主观意识”等未经证实的哲学断言。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{观测作为结构投影}
 
@@ -3054,14 +2954,9 @@ Governance
 \chapter{AgentOS 标准化接口与生态兼容原则}
 \label{app:standards}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 如果 AgentOS 最终成为长期智能基础设施，其最重要的开放边界不应是某个具体模型接口，而应是身体、语义现实、功能影响、快速控制、技能和 Agent 间通信的稳定标准。内部实现可以竞争和快速演化，而公共接口应尽可能保持语义稳定。本附录总结此前标准化讨论，并规定“开放规范--参考实现--高性能商业实现”的三层生态结构。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{需要标准化什么}
 
@@ -3175,14 +3070,9 @@ Trust+Ecosystem+Execution+Scale.
 \chapter{理论边界、可证伪性与研究方法}
 \label{app:falsifiability}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 一套理论如果只能解释已有现象而不能产生可检验预测，就很容易停留在哲学隐喻。本书大量使用控制论、信息几何、快慢系统、有效理论、认知科学和物理学类比，但这些外部理论并不自动证明 AgentOS 假说成立。本附录明确区分已有科学、结构类比和待验证理论，并给出整个理论体系最重要的可证伪方向。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{三种知识地位必须分开}
 
@@ -3267,14 +3157,9 @@ Universe=ConsciousAgent,
 \chapter{总附录：从理论变量到工程系统的统一映射}
 \label{app:finalmap}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{本章总体说明：}
+\begin{chapteroverviewbox}
 本附录作为全书技术附录的最终收束，将认识论、AgentOS 原理论、Body Runtime、工程路线和三大生命周期工程重新压缩为同一个状态--结构--现实闭环。它不是新增理论，而是给后续章节撰写、系统实现和实验设计提供统一坐标：任何新模块、算法或概念都应能够说明自己位于什么尺度、承载什么 Agent-CSO、拥有何种权限、如何接受现实验证，以及长期是否会改变更慢结构。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{统一 Agent 状态}
 
@@ -3330,6 +3215,7 @@ ModelWeights+Context
 
 Agent 和现实共同满足：
 \[
+\fitdisplay{
 U_t
 \xrightarrow{Observation}
 SGC/FCS
@@ -3341,6 +3227,7 @@ Goal/ControlReference
 Action_t
 \xrightarrow{}
 U_{t+1}.
+}
 \]
 现实再次进入系统形成：
 \[

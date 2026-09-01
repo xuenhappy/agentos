@@ -2,7 +2,6 @@
 \label{chap:skill-compilation}
 
 \begin{chapteroverviewbox}
-\textbf{【本章总体说明】}
 本章讨论 AgentOS 从“能够完成任务”走向“形成能力”的关键动力学机制：技能编译（Skill Compilation）与认知沉降（Cognitive Sedimentation）。我们将看到，一个成熟智能体不应在每一次面对熟悉问题时都重新占用工作记忆 $h(t)$、重新展开显式推理、重新构造动作序列；相反，经过反复验证的显式认知过程，应当逐步经历
 \[
 h
@@ -772,6 +771,7 @@ ControlMargin_t
 
 重新显式化并不意味着把底层所有状态原样推送到 $h$。这会破坏工作记忆有限容量原则。合理做法是让 Body Runtime 或技能层首先形成异常摘要：
 \[
+\fitdisplay{
 \zeta_S
 =
 Compress
@@ -784,6 +784,7 @@ RecentActions,
 Risk,
 Confidence
 \right),
+}
 \]
 然后：
 \[

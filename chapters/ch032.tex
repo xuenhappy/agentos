@@ -2,7 +2,6 @@
 \label{chap:tce-cognitive-dynamics-controller}
 
 \begin{chapteroverviewbox}
-\textbf{本章总体说明：}
 如果说上一章所讨论的 SPC（Self-Perception Compressor）解决的是“智能体如何形成关于自身当前认知状态的可访问估计”，那么本章所讨论的 TCE（Temperature \& Control Executor）所解决的，则是紧随其后的第二个问题：\textbf{当智能体已经知道自己大致处于何种认知状态之后，它究竟应该如何改变自身接下来的认知动力学？}
 
 这一问题不能被简化为“提高或降低大语言模型的采样温度”。在本书的 AgentOS 理论中，TCE 是面向整个认知运行过程的动力学控制器。它调节的不是某一个孤立模型参数，而是显式认知过程的搜索宽度、探索程度、收敛强度、注意范围、激活深度、推理节奏、资源投入、状态切换倾向以及对不确定性的容忍程度。换句话说，TCE 所控制的是\textbf{认知过程怎样运行}，而不是\textbf{认知内容是什么}。

@@ -1,19 +1,13 @@
 \chapter{Agent Kernel 研发路线：从基础模型到持续认知主体}
 \label{chap:agent-kernel-roadmap}
 
-\begin{center}
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\textbf{【本章总体说明】}
-
+\begin{chapteroverviewbox}
 本章讨论的不是 Agent Kernel 已完成系统的静态组件清单，而是回答一个更加工程化、也更加困难的问题：\textbf{如果我们从今天已经可获得的 LLM/VLA 基础模型出发，应当按照怎样的依赖关系，一步一步构造出具有持续运行、生命周期记忆、身份连续、自我感知、内稳态调节、认知控制、有限容量治理以及内外边界管理能力的 Agent Kernel？}
 
 本章坚持一个基本原则：Agent Kernel 不能通过一次性堆叠大量模块获得。其能力必须按照动力学依赖逐层生长。基础模型首先提供局部语义变换能力；Persistent Runtime 将离散调用转化为持续进程；工作记忆 $h$ 建立当前认知状态；情景记忆 $E$ 建立跨时间经历；结构记忆 $\Theta$ 将经历沉降为生成结构；自我 $\Psi$ 建立跨经历身份连续；DGA/$\Omega$ 建立生命周期尺度的发展方向；SPC 使系统获得对自身当前状态的有限估计；AHC 建立身体、资源与任务压力的连续内稳态调制；TCE 使自我状态能够反向调节认知动力学；CCM 和 Scheduler 则在工作记忆有限性的约束下管理活动认知结构；Boundary 与 Offloading 最终使 Kernel 不再试图把整个世界装入自身，而是学会决定什么应进入、什么应保留、什么应延后以及什么应迁往外部载体。
 
 因此，本章给出的不是 ``模块增加顺序''，而是一条\textbf{认知闭环逐步闭合路线}。每增加一个层级，都必须回答三个问题：它解决了上一阶段什么不可消除的问题；它引入了哪些新的状态变量和时间尺度；以及加入该结构后系统是否仍然满足身份连续、现实约束、慢变量保护和有限认知容量等基本不变量。只有这些条件同时满足，我们才认为 Agent Kernel 从一个阶段真正进入下一个阶段。
-\end{minipage}
-}
-\end{center}
+\end{chapteroverviewbox}
 
 \section{从基础 VLA/LLM 开始：把模型限定为认知变换器，而不是主体}
 
@@ -615,6 +609,7 @@ a_1(t),a_2(t),\ldots,a_n(t)
 \]
 其中典型维度可以包括
 \[
+\fitdisplay{
 Arousal,\,
 Threat,\,
 EnergyDrive,\,
@@ -623,6 +618,7 @@ RewardExpectation,\,
 SocialAffinity,\,
 Trust,\,
 UncertaintyStress.
+}
 \]
 这些名称描述的是功能性调制维度，而不是宣称 Agent 具有与人类相同的主观情绪。
 
@@ -1170,13 +1166,9 @@ HowToMaintainAndDevelopAnIntelligentProcess.
 前者关注参数训练完成后的能力，后者关注一个主体在运行过程中如何产生现在、形成过去、构造未来、建立自我、观察自身、调节自身、管理有限认知资源，并把部分认知结构迁移到更广阔的外部世界。
 
 因此，本章的最终研发原则可以写成
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
 Agent Kernel 的建设不是把更多智能功能添加到模型周围，而是逐层建立一个能够维持自身状态、积累自身历史、形成自身结构、保持身份连续、观察自身运行、调节自身动力学并管理自身认知边界的持续闭环。
-}
-}
-\]
+\end{statementbox}
 
 从工程顺序而言，这意味着我们始终坚持：
 \[

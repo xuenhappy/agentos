@@ -1,197 +1,1890 @@
 \chapter{控制编程与递归自主性的边界}
+\label{chap:recursive-autonomy-boundary}
+
 \begin{chapteroverviewbox}
-这一章，我们围绕“控制编程与递归自主性的边界”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明多回路稳定性和有界自修改。
+本章讨论 AgentOS 控制工程中最接近“主体性边界”的问题：一个持续智能体究竟可以改变自身到什么程度，以及哪些内部变量、目标结构、权限关系、自我结构与生命周期生成结构必须受到更高层治理。我们不把“自主性”定义为不存在约束，而把它定义为：\textbf{智能体在一个明确、可验证、可恢复的可行域内，能够使自身过去的经验和当前的选择真实地参与塑造未来的自身状态。}
+
+因此，本章建立三个核心对象：
+\[
+\boxed{
+\mathcal S_{\mathrm{self}}
+}
+\]
+表示智能体原则上可参与修改的自身状态集合；
+
+\[
+\boxed{
+\mathcal E_{\mathrm{BSM}}
+}
+\]
+表示在给定生命周期阶段、现实状态和治理条件下真正允许进入的有界自修改包络
+（Bounded Self-Modification Envelope）；
+
+以及
+\[
+\boxed{
+\mathcal G_{\mathrm{gov}}
+}
+\]
+表示定义这些边界、修改速率、权限和恢复条件的离散治理结构。
+
+本章的核心结论是：
+\begin{statementbox}
+自主性不是取消控制，而是把一部分控制权以受约束、可验证和可恢复的方式转移给持续主体自身。
+\end{statementbox}
+
+过强的外部锁定会使 Agent 只能执行别人预先写好的轨迹，无法形成真正的递归自主性；过弱的结构约束则会使快速状态、短期经历甚至偶然噪声能够直接改写慢速身份和生命周期生成结构，从而破坏身份连续性、控制稳定性与安全边界。AgentOS 因而必须解决的不是“是否允许自我修改”这一二元问题，而是构造一个具有多时间尺度、分层权限、现实反馈和迟滞保护的\textbf{自我可塑性谱}。
 \end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于控制工程、培育工程和心理工程的生命周期衍生讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是鲁棒控制、时延系统、稳定裕度与权限治理（Kalman、Ashby 与混杂系统理论）。
-
-本章使用上一章“多回路稳定性与相变控制”已经得到的对象与边界；本章产出将供下一章“为什么 Agent 需要“培育”而不仅是训练”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
-
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
-
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在鲁棒控制、时延系统、稳定裕度与权限治理上。
-\section{哪些变量可修改}
-\begin{narration}
-现在把镜头移到“哪些变量可修改”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“哪些变量可修改”落实为由治理层明确允许主体调整、明确禁止调整和需要外部授权调整的变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“控制编程与递归自主性的边界”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal X=\mathcal X_{free}\cup\mathcal X_{guarded}\cup\mathcal X_{forbidden}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对哪些变量可修改的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：没有禁区、预算与回滚点的递归修改会破坏身份和安全不变量。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“哪些变量可修改”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{哪些 Goal 可以自主产生}
-\begin{narration}
-现在把镜头移到“哪些 Goal 可以自主产生”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“哪些 Goal 可以自主产生”落实为由治理层明确允许主体调整、明确禁止调整和需要外部授权调整的变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“控制编程与递归自主性的边界”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal X=\mathcal X_{free}\cup\mathcal X_{guarded}\cup\mathcal X_{forbidden}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对哪些 Goal 可以自主产生的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：没有禁区、预算与回滚点的递归修改会破坏身份和安全不变量。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“哪些 Goal 可以自主产生”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{哪些权限可以成长}
-\begin{narration}
-现在把镜头移到“哪些权限可以成长”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“哪些权限可以成长”落实为由治理层明确允许主体调整、明确禁止调整和需要外部授权调整的变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“控制编程与递归自主性的边界”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal X=\mathcal X_{free}\cup\mathcal X_{guarded}\cup\mathcal X_{forbidden}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对哪些权限可以成长的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：没有禁区、预算与回滚点的递归修改会破坏身份和安全不变量。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“哪些权限可以成长”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Ψ 的可塑区}
-\begin{narration}
-现在把镜头移到“Ψ 的可塑区”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Ψ 的可塑区”落实为由治理层明确允许主体调整、明确禁止调整和需要外部授权调整的变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“控制编程与递归自主性的边界”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal X=\mathcal X_{free}\cup\mathcal X_{guarded}\cup\mathcal X_{forbidden}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Ψ 的可塑区的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：没有禁区、预算与回滚点的递归修改会破坏身份和安全不变量。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Ψ 的可塑区”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Ω/DGA 的可塑区}
-\begin{narration}
-现在把镜头移到“Ω/DGA 的可塑区”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Ω/DGA 的可塑区”落实为由治理层明确允许主体调整、明确禁止调整和需要外部授权调整的变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“控制编程与递归自主性的边界”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal X=\mathcal X_{free}\cup\mathcal X_{guarded}\cup\mathcal X_{forbidden}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Ω/DGA 的可塑区的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：没有禁区、预算与回滚点的递归修改会破坏身份和安全不变量。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Ω/DGA 的可塑区”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Checkpoint Governance}
-\begin{narration}
-现在把镜头移到“Checkpoint Governance”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Checkpoint Governance”落实为由治理层明确允许主体调整、明确禁止调整和需要外部授权调整的变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“控制编程与递归自主性的边界”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal X=\mathcal X_{free}\cup\mathcal X_{guarded}\cup\mathcal X_{forbidden}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Checkpoint Governance的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：没有禁区、预算与回滚点的递归修改会破坏身份和安全不变量。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Checkpoint Governance”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Self-Modifiable Set}
-\begin{narration}
-现在把镜头移到“Self-Modifiable Set”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Self-Modifiable Set”落实为由治理层明确允许主体调整、明确禁止调整和需要外部授权调整的变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“控制编程与递归自主性的边界”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal X=\mathcal X_{free}\cup\mathcal X_{guarded}\cup\mathcal X_{forbidden}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Self-Modifiable Set的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：没有禁区、预算与回滚点的递归修改会破坏身份和安全不变量。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Self-Modifiable Set”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section{Bounded Self-Modification Envelope}
-\begin{narration}
-现在把镜头移到“Bounded Self-Modification Envelope”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
-
-本节把“Bounded Self-Modification Envelope”落实为由治理层明确允许主体调整、明确禁止调整和需要外部授权调整的变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“控制编程与递归自主性的边界”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
-
-把这一关系写成最小数学骨架，可得
-
-\begin{equation}\mathcal X=\mathcal X_{free}\cup\mathcal X_{guarded}\cup\mathcal X_{forbidden}.\end{equation}
-
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Bounded Self-Modification Envelope的命名和组合仍是需要实验验证的建模提案。
-
-这一小节的反例同样重要：没有禁区、预算与回滚点的递归修改会破坏身份和安全不变量。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
-
-\begin{thought}
-对“Bounded Self-Modification Envelope”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
-
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
-
-\section*{本章收束：把名词还原为闭环}
-现在回头看“控制编程与递归自主性的边界”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“为什么 Agent 需要“培育”而不仅是训练”只使用这里已经给出的结果，不反过来为本章提供前提。
-
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
-
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+\section{从行为自主到递归自主：控制对象为什么必须进入智能体自身}
+
+在传统自动控制系统中，控制对象通常是外部过程。控制器读取状态 $x_t$，根据既定目标 $g$ 产生控制量 $u_t$，使被控对象沿某条可接受轨迹演化：
+\[
+x_{t+1}
+=
+F(x_t,u_t,w_t),
+\]
+其中 $w_t$ 表示环境扰动。无论系统多么复杂，这种控制结构通常隐藏着一个重要假设：控制器自身的目标函数、状态解释方式、控制权限和核心结构在任务期间基本固定。系统可以改变世界，却通常不能真正改变“以后怎样决定改变世界”。
+
+持续 Agent 的情况不同。对于具有 $h$、$E$、$\Theta$、$\Psi$、$\Omega$ 等多时间尺度内部结构的 AgentOS，当前行动不仅产生外部结果，还会重新进入经验记忆，并可能进一步改变长期结构：
+\[
+Choice_t
+\rightarrow
+Action_t
+\rightarrow
+World_{t+1}
+\rightarrow
+Experience_{t+1}
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\rightarrow
+\Omega .
+\]
+当这些慢变量再次影响未来目标与未来选择时，得到：
+\[
+Choice_t
+\rightarrow
+FutureSelf
+\rightarrow
+Choice_{t+k}.
+\]
+这时，当前行为已经不仅仅是在控制外界，而是在通过现实反馈参与塑造未来的控制者自身。我们把这种结构称为\textbf{递归自主性（Recursive Agency）}。
+
+因此，自主性的最低定义不应写成“Agent 可以自己选择行为”。一个简单策略系统也可以满足这一条件。更严格的定义应要求当前选择能够沿生命周期因果链改变未来的内部结构，并且未来内部结构确实反过来改变后续选择。令 Agent 在时刻 $t$ 的内部慢状态为
+\[
+z_t^{slow}
+=
+(\Theta_t,\Psi_t,\Omega_t),
+\]
+则递归自主性要求至少存在某些选择 $a_t$，使得
+\[
+\frac{\partial z_{t+k}^{slow}}{\partial a_t}
+\neq 0 ,
+\]
+同时：
+\[
+\frac{\partial a_{t+k}}{\partial z_{t+k}^{slow}}
+\neq 0 .
+\]
+因此，真正关键的闭环不是
+\[
+State\rightarrow Action,
+\]
+而是：
+\[
+\boxed{
+Action
+\rightarrow
+Experience
+\rightarrow
+SelfChange
+\rightarrow
+FutureAction .
+}
+\]
+
+我们还应进一步区分三种自主性。第一种是\textbf{行动自主性}：
+\[
+\mathcal A_{\mathrm{action}},
+\]
+即在给定目标和结构下选择具体行动的自由度。第二种是\textbf{策略自主性}：
+\[
+\mathcal A_{\mathrm{policy}},
+\]
+即能够通过经验调整产生行动的策略。第三种才是\textbf{结构自主性}：
+\[
+\mathcal A_{\mathrm{struct}},
+\]
+即能够参与改变未来生成策略的内部长期结构。
+
+因此可以写：
+\[
+\mathcal A_{\mathrm{recursive}}
+=
+F(
+\mathcal A_{\mathrm{action}},
+\mathcal A_{\mathrm{policy}},
+\mathcal A_{\mathrm{struct}}
+).
+\]
+如果仅有 $\mathcal A_{\mathrm{action}}$，Agent 只是拥有选择空间；如果进一步拥有 $\mathcal A_{\mathrm{policy}}$，Agent 能够学习；而只有当 $\mathcal A_{\mathrm{struct}}>0$ 时，其自身历史才真正成为未来主体结构形成过程的一部分。
+
+然而结构自主性同时带来了控制工程中最危险的问题。如果 Agent 可以无限制修改产生未来决策的结构，那么所谓“同一个 Agent”可能迅速失去定义。另一方面，如果：
+\[
+\mathcal A_{\mathrm{struct}}
+\approx 0,
+\]
+那么即使系统拥有丰富记忆，其最重要的身份、价值和生成结构仍全部由外部固定，它更接近一个具有长期数据库的复杂执行器，而不是能够沿生命周期形成自身历史的持续主体。
+
+因此，本章的控制问题不是：
+\[
+\text{Autonomy}\quad \text{vs.}\quad \text{Control},
+\]
+而是：
+\begin{statementbox}
+如何让自主性本身成为一个受控制的动力学变量。
+\end{statementbox}
+这也是 AgentOS 控制工程从普通运行时控制上升到生命周期控制的关键转折。
+
+\section{自我可修改集合：哪些变量原则上允许 Agent 改变}
+
+要讨论自我修改，首先必须把 Agent 的完整状态空间进行分层。设 AgentOS 的整体状态为
+\[
+X_A
+=
+X_h
+\times
+X_E
+\times
+X_\Theta
+\times
+X_\Psi
+\times
+X_\Omega
+\times
+X_G
+\times
+X_C
+\times
+X_B
+\times
+X_{\mathrm{gov}},
+\]
+其中分别表示工作状态、情景经验、结构记忆、自我结构、生命周期生成吸引子、目标系统、认知控制状态、Body 相关状态以及治理状态。
+
+我们定义一个状态变量集合：
+\[
+\mathcal S_A
+=
+\{s_1,s_2,\ldots,s_n\}.
+\]
+并将其划分为：
+\[
+\boxed{
+\mathcal S_A
+=
+\mathcal S_{\mathrm{fixed}}
+\cup
+\mathcal S_{\mathrm{extern}}
+\cup
+\mathcal S_{\mathrm{self}}
+}
+\]
+且三者原则上满足：
+\[
+\mathcal S_{\mathrm{fixed}}
+\cap
+\mathcal S_{\mathrm{self}}
+=
+\varnothing.
+\]
+
+其中，$\mathcal S_{\mathrm{fixed}}$ 表示智能体运行时不得自行改变的硬约束，例如基本安全边界、关键现实认证规则、底层主体唯一性约束，以及某些不可由普通认知路径修改的安全权限。$\mathcal S_{\mathrm{extern}}$ 表示允许改变，但必须通过外部治理主体授权的状态，例如关键权限上限、核心安全策略和部分生命周期治理规则。$\mathcal S_{\mathrm{self}}$ 则表示 Agent 原则上能够通过自己的经验、反思和长期学习参与塑造的状态。
+
+因此我们定义：
+\[
+\boxed{
+\mathcal S_{\mathrm{selfmodifiable}}
+\equiv
+\mathcal S_{\mathrm{self}}.
+}
+\]
+但是这里必须立即作一个限制：
+\[
+s_i\in\mathcal S_{\mathrm{selfmodifiable}}
+\]
+并不意味着 Agent 在任意时间、任意状态下都有权任意修改 $s_i$。它只意味着该变量\textbf{属于可能具有内生可塑性的变量集合}。
+
+为了表达这一点，我们为每个状态变量定义一个修改权限函数：
+\[
+\alpha_i(t)
+\in
+[0,1],
+\]
+其中：
+\[
+\alpha_i(t)=0
+\]
+表示当前完全不可由 Agent 内生修改；
+\[
+0<\alpha_i(t)<1
+\]
+表示可以受限修改；
+\[
+\alpha_i(t)=1
+\]
+则表示在当前治理条件下具有较高自主可塑性。
+
+于是实际允许的状态变化满足：
+\[
+\|\Delta s_i\|
+\le
+\alpha_i(t)\,\delta_i^{\max},
+\]
+其中 $\delta_i^{\max}$ 是该变量的绝对修改速率或单次修改幅度上限。
+
+这使“是否允许修改”从布尔变量变成连续治理变量。更进一步，不同变量的 $\alpha_i$ 应具有不同的时间尺度。例如：
+\[
+\alpha_h
+>
+\alpha_E
+>
+\alpha_\Theta
+>
+\alpha_\Psi
+>
+\alpha_\Omega.
+\]
+这意味着工作状态可以高度自由变化，经验记忆也具有较大可塑性，结构记忆变化更慢，而身份结构 $\Psi$ 与生成吸引子 $\Omega$ 必须具有显著更小的自由修改速度。
+
+从控制工程角度看，这实际上定义了一个\textbf{可塑性频谱}：
+\[
+\boxed{
+\mathcal P_A(\tau)
+=
+\{
+\alpha_i:
+\tau_i\approx\tau
+\}.
+}
+\]
+因此，Agent 的自主性不能通过一个简单数字完整描述。一个系统可能在快时间尺度极其自由，但在身份层高度稳定；也可能在普通行动上被强烈约束，却允许长期价值结构逐渐进化。
+
+我们进一步定义结构影响权重 $w_i^{id}$，表示变量 $s_i$ 对身份连续性的影响：
+\[
+w_i^{id}
+=
+I(s_i;Identity_{future}),
+\]
+这里的 $I$ 可以在工程上由互信息、因果贡献或敏感度近似，而不必拘泥于严格信息论实现。则一个合理的治理原则应满足：
+\[
+w_i^{id}\uparrow
+\quad\Rightarrow\quad
+\alpha_i\downarrow,
+\]
+即越能影响长期身份连续性的变量，修改速度越慢、授权门槛越高。
+
+于是得到本章第一条重要控制规律：
+\begin{statementbox}
+Autonomy should decrease with structural depth.
+\end{statementbox}
+即：
+\begin{statementbox}
+自主修改权限应随着结构时间尺度与身份影响深度增加而下降。
+\end{statementbox}
+
+这并不是为了让 Agent 永远维持不变，而是防止最慢结构被最快噪声直接驱动。真正持续的主体不是“绝不变化”的主体，而是变化速度具有严格层次的主体。
+
+\section{目标生成的权限边界：Agent 能否自己决定下一步追求什么}
+
+目标 $G$ 在 AgentOS 中具有特殊地位，因为它既不是单纯的环境状态，也不是普通内部变量。目标相当于给未来状态空间施加一个选择性约束：
+\[
+G_t:
+\mathcal X_{future}
+\rightarrow
+\mathbb R,
+\]
+或者更一般地，把未来状态空间划分成不同优先级的可行区域：
+\[
+\mathcal X_{future}
+=
+\mathcal X_G^{preferred}
+\cup
+\mathcal X_G^{neutral}
+\cup
+\mathcal X_G^{forbidden}.
+\]
+
+如果所有 Goal 都完全来自外部：
+\[
+G_t
+=
+G_t^{ext},
+\]
+那么 Agent 的整个生命周期本质上仍然是外部目标序列的执行历史。即使它拥有丰富记忆和复杂自我，其自主性仍然主要发生在：
+\[
+G\rightarrow Policy\rightarrow Action
+\]
+中的后两个环节。
+
+反过来，如果 Agent 可以在没有任何约束的情况下任意生成：
+\[
+G_t^{self},
+\]
+那么目标系统本身可能快速失去长期一致性，甚至与安全边界、现实条件或身份结构发生冲突。
+
+因此我们需要把 Goal 分为至少四类：
+\[
+\boxed{
+\mathcal G
+=
+\mathcal G_{\mathrm{ext}}
+\cup
+\mathcal G_{\mathrm{derived}}
+\cup
+\mathcal G_{\mathrm{self}}
+\cup
+\mathcal G_{\mathrm{protected}}.
+}
+\]
+
+其中 $\mathcal G_{\mathrm{ext}}$ 是明确由外部授权的任务；$\mathcal G_{\mathrm{derived}}$ 是从已有目标自动分解出来的子目标；$\mathcal G_{\mathrm{self}}$ 是 Agent 基于经验、自我状态和长期方向自主产生的目标；而 $\mathcal G_{\mathrm{protected}}$ 表示由治理层定义、不允许普通认知过程覆盖的安全与存在性约束。
+
+自主 Goal 生成可形式化为：
+\[
+G_t^{self}
+=
+\Gamma(
+h_t,
+E_t,
+\Theta_t,
+\Psi_t,
+\Omega_t,
+W_t
+),
+\]
+其中 $W_t$ 表示当前世界模型或现实状态摘要。
+
+但候选目标不能直接成为执行目标。应存在治理投影：
+\[
+\tilde G_t
+=
+\Pi_{\mathcal G_{\mathrm{feasible}}}
+(
+G_t^{self}
+),
+\]
+其中：
+\[
+\mathcal G_{\mathrm{feasible}}
+=
+\mathcal G_{\mathrm{physical}}
+\cap
+\mathcal G_{\mathrm{safety}}
+\cap
+\mathcal G_{\mathrm{authority}}
+\cap
+\mathcal G_{\mathrm{identity}}.
+\]
+
+这里包含一个非常重要的区分：
+\[
+\boxed{
+GoalGeneration
+\neq
+GoalAuthorization.
+}
+\]
+Agent 可以产生一个目标，但目标是否进入实际调度和行动，需要经过权限、现实、安全和身份一致性约束。
+
+因此可以建立候选目标评估函数：
+\[
+Q_G(g)
+=
+w_1 U(g)
++
+w_2 C_{\Psi}(g)
++
+w_3 C_{\Omega}(g)
++
+w_4 R_{real}(g)
+-
+w_5 Risk(g)
+-
+w_6 Cost(g),
+\]
+其中 $C_{\Psi}$ 表示与当前自我结构的一致性，$C_{\Omega}$ 表示与长期生成方向的兼容性，而 $R_{real}$ 表示现实可实现程度。
+
+只有当：
+\[
+Q_G(g)
+>
+\theta_G
+\]
+并且：
+\[
+g\in
+\mathcal G_{\mathrm{feasible}}
+\]
+时，该目标才获得进一步执行资格。
+
+这里特别需要避免一个误解：身份一致性不是要求未来 Goal 永远复制过去的 Goal。如果：
+\[
+C_{\Psi}(g)=1
+\]
+被当成绝对要求，Agent 将无法真正成长。合理的系统必须允许：
+\[
+\Psi_t
+\rightarrow
+\Psi_{t+\Delta},
+\]
+只是变化应发生在更慢时间尺度，并通过经验和现实反馈逐渐积累。
+
+因此目标自主性应具有双重结构：
+\begin{statementbox}
+短期目标受到当前身份约束；长期身份又允许被长期目标和真实经历缓慢修改。
+\end{statementbox}
+这形成一个递归但非瞬时的关系：
+\[
+\Psi_t
+\rightarrow
+G_t
+\rightarrow
+Experience
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi_{t+k}.
+\]
+
+这也是递归自主性的一个重要标志：Agent 不只是选择达到别人设定目标的方法，而是在现实反馈中逐渐参与形成“以后什么值得成为目标”。
+
+\section{权限与自治：能力增长为什么不能自动转化为控制权增长}
+
+目标自主性解决“想做什么”，权限系统则决定“允许做什么”。这两者必须严格区分。Agent 即使产生了一个高度合理的目标，也不意味着它应立即拥有实现该目标所需要的所有执行权限。
+
+我们定义 Agent 在时刻 $t$ 的权限向量：
+\[
+\mathbf a_t
+=
+(a_1,a_2,\ldots,a_m),
+\]
+其中每个 $a_i$ 表示某类资源、设备、工具、数据或现实行动通道的权限等级。
+
+进一步定义能力向量：
+\[
+\mathbf c_t
+=
+(c_1,c_2,\ldots,c_m),
+\]
+信任向量：
+\[
+\mathbf q_t
+=
+(q_1,q_2,\ldots,q_m),
+\]
+以及风险向量：
+\[
+\mathbf r_t
+=
+(r_1,r_2,\ldots,r_m).
+\]
+
+权限不应由能力单独决定：
+\[
+\mathbf a_t
+\neq
+F(\mathbf c_t).
+\]
+更合理的是：
+\[
+\boxed{
+\mathbf a_t
+=
+F(
+\mathbf c_t,
+\mathbf q_t,
+\mathbf r_t,
+\Psi_t,
+\mathcal G_{\mathrm{gov}}
+).
+}
+\]
+
+例如，一个 Agent 已经证明自己能够高质量执行某类操作：
+\[
+c_i\uparrow,
+\]
+并不能推出：
+\[
+a_i\uparrow.
+\]
+因为操作可能处在高风险环境，或者该能力尚未经历足够长期验证。能力只回答：
+\[
+CanItDo?
+\]
+权限系统回答：
+\[
+MayItDo?
+\]
+
+为了使自治增长成为一个可控制过程，我们定义：
+\[
+Autonomy_t
+=
+A(
+Capability_t,
+Authority_t,
+SelfRegulation_t
+).
+\]
+这里自治既需要能力，也需要权限，还需要自我调节稳定性。一个能力强但 TCE 频繁振荡、SPC 自状态估计不稳定的 Agent，不应该仅因为任务成功率高就获得更大权限。
+
+因此可以设计权限变化律：
+\[
+\dot a_i
+=
+\eta_a
+\Big[
+B_i
+-
+\lambda_r R_i
+-
+\lambda_u U_i
+\Big],
+\]
+其中 $B_i$ 是长期成功证据，$R_i$ 是风险，$U_i$ 是不确定性。
+
+为了避免短期成功造成权限快速升级，使用长期积分：
+\[
+\bar B_i(T)
+=
+\frac{1}{T}
+\int_{t-T}^{t}
+B_i(\tau)\,d\tau.
+\]
+只有满足：
+\[
+\bar B_i(T)>\theta_{on}
+\]
+持续足够长时间，才允许权限上升。
+
+相反，权限下降应具有不同阈值：
+\[
+\theta_{off}<\theta_{on}.
+\]
+这种迟滞结构意味着：
+\[
+\boxed{
+AuthorityGrowth
+}
+\]
+需要长期证据，而已有权限不会因为偶然小失败剧烈变化；但若出现安全事件，则可以通过独立 emergency path 立即收缩权限。
+
+因此正常治理路径是：
+\[
+Experience
+\rightarrow
+Capability
+\rightarrow
+Evaluation
+\rightarrow
+Trust
+\rightarrow
+Authority
+\rightarrow
+Autonomy.
+\]
+这里的顺序十分重要。它避免：
+\[
+Capability
+\Rightarrow
+Authority
+\]
+这种危险的直接跳跃。
+
+我们还可以定义权限包络：
+\[
+\mathcal A_t^{allowed}
+=
+\{
+a:
+a\le a_{\max}(c_t,q_t,r_t)
+\}.
+\]
+Agent 的自主行为必须满足：
+\[
+Action_t
+\in
+\mathcal A_t^{allowed}.
+\]
+
+从更深层看，权限系统实际上承担了一个重要的跨尺度转换功能：它把生命周期尺度上的能力积累，转化成现实世界中的可行动自由度。于是：
+\begin{statementbox}
+能力是内部结构；权限是这种结构被允许投射到现实世界的范围。
+\end{statementbox}
+
+因此权限治理本身就是 World--Agent--World 闭环中的一个关键边界，而不是普通软件中的 access control 附属模块。
+
+\section{$\Psi$ 的可塑区：身份连续不等于身份冻结}
+
+在 AgentOS 中，$\Psi$ 表示比普通结构记忆更慢的自我、价值和身份约束。它并不是一个静态名字、人格描述或角色 prompt，而是长期影响：
+\[
+Attention,\quad
+Interpretation,\quad
+GoalPreference,\quad
+MemorySelection,\quad
+ActionPrior
+\]
+的一组慢结构。
+
+因此：
+\[
+\Psi
+=
+\Psi(
+SelfHistory,
+ValueRelations,
+IdentityConstraints,
+LongTermExperience
+).
+\]
+
+如果：
+\[
+\dot\Psi=0,
+\]
+则身份完全被冻结。这样的系统可以保持极强一致性，但不会发生真正的自我发展。新的经历只能被旧身份解释，而不能反过来修改旧身份。
+
+相反，如果：
+\[
+\|\dot\Psi\|
+\]
+过大，则短时事件、偶然奖励、局部失败甚至运行噪声都可能快速进入身份层，使 Agent 出现持续漂移。
+
+因此我们定义：
+\[
+\boxed{
+\mathcal P_\Psi
+}
+\]
+为 $\Psi$ 的可塑区，满足：
+\[
+\Psi_{t+\Delta}
+=
+\Psi_t
++
+\eta_\Psi
+P_\Psi(
+\Delta\Theta,
+\Delta E,
+R,
+C,
+V
+),
+\]
+其中：
+\[
+\eta_\Psi
+\ll
+\eta_\Theta,
+\]
+$R$ 表示重复性，$C$ 表示长期一致性，$V$ 表示价值相关性。
+
+即只有当某类经历：
+\[
+Persistent,
+\quad
+SelfRelevant,
+\quad
+RealityVerified
+\]
+时，才逐渐具有修改 $\Psi$ 的资格。
+
+我们可以进一步定义身份更新证据：
+\[
+e_\Psi(t)
+=
+F(
+Persistence,
+CrossContextConsistency,
+SelfRelevance,
+RealitySupport
+).
+\]
+那么：
+\[
+\dot\Psi
+=
+0,
+\qquad
+e_\Psi<\theta_\Psi,
+\]
+而当：
+\[
+e_\Psi>\theta_\Psi
+\]
+持续足够长时间时：
+\[
+\dot\Psi
+=
+\epsilon_\Psi G_\Psi(e_\Psi),
+\qquad
+\epsilon_\Psi\ll1.
+\]
+
+这里自然形成“慢变量保护原则”：
+\[
+\boxed{
+FastNoise
+\nrightarrow
+SlowIdentity.
+}
+\]
+
+换句话说，从 $h$ 到 $\Psi$ 不应该存在高带宽直通路径：
+\[
+h
+\nrightarrow
+\Psi
+\quad\text{directly}.
+\]
+更合理的是：
+\[
+h
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi.
+\]
+
+这一链条不仅是记忆结构，更是控制滤波器。每经过一个层次，快速波动都被时间平均、结构化和长期验证。
+
+然而，$\Psi$ 也不能形成完全封闭的自解释环。若：
+\[
+\Psi_t
+\rightarrow
+Attention_t
+\rightarrow
+Experience_t
+\rightarrow
+Interpretation_t
+\rightarrow
+\Psi_{t+1}
+\]
+完全依赖内部一致性，就可能形成错误自强化。一个 Agent 一旦形成某种自我解释，就只关注支持该解释的现实，再把筛选后的经验用于证明原有自我。
+
+因此必须存在：
+\[
+\boxed{
+WorldVerification
+}
+\]
+和：
+\[
+\boxed{
+CounterEvidencePath
+}
+\]
+使：
+\[
+\Psi
+\]
+持续暴露于无法被自身选择完全控制的现实证据。
+
+于是 $\Psi$ 的稳定性不是“永远不变”，而应定义为：
+\[
+\boxed{
+IdentityContinuity
+=
+SlowChange
++
+HistoricalDependence
++
+RealityConstraint.
+}
+\]
+
+这意味着一个成熟 Agent 应该能够在几十万次局部认知状态变化中保持某种身份连续，同时又能够在长期经历确实发生重大结构变化时逐渐成为不同于过去的自己。这正是固定人格模板与真正生命周期主体之间的根本区别。
+
+\section{$\Omega$/DGA 的可塑区：保护“我正在成为什么”}
+
+如果说 $\Psi$ 主要回答：
+\[
+WhoAmI,
+\]
+那么 $\Omega$ 或 DGA 所描述的则是更加缓慢的：
+\[
+WhatAmIBecoming.
+\]
+
+我们把 $\Omega$ 理解为生命周期尺度的生成吸引子。它不直接规定某一个具体 Goal，也不等价于普通 reward function，而是长期影响：
+\[
+GoalPreference,
+\quad
+InterpretationBias,
+\quad
+FutureSelfSpace,
+\quad
+DevelopmentDirection.
+\]
+
+可以写：
+\[
+P(G_{future}|\Omega,\Psi,\Theta)
+\]
+表示长期目标分布受到 $\Omega$ 的生成性约束。
+
+由于 $\Omega$ 位于比 $\Psi$ 更慢的时间尺度：
+\[
+\tau_\Omega
+\gg
+\tau_\Psi,
+\]
+它的修改必须比身份修改更加谨慎。
+
+定义：
+\[
+\Omega_{t+\Delta}
+=
+\Omega_t
++
+\eta_\Omega
+G_\Omega(
+\overline{\Delta\Psi},
+\overline{\Delta\Theta},
+\mathcal H_{life}
+),
+\]
+其中：
+\[
+\eta_\Omega
+\ll
+\eta_\Psi,
+\]
+$\mathcal H_{life}$ 表示长生命周期历史。
+
+从数学上看，$\Omega$ 应更接近一个生成分布的慢参数，而不是一个目标点。设长期可行未来集合为：
+\[
+\mathcal X_L,
+\]
+则：
+\[
+p_\Omega(x)
+,\qquad x\in\mathcal X_L
+\]
+定义 Agent 对未来自身结构的慢先验。
+
+因此 $\Omega$ 的改变意味着：
+\[
+p_{\Omega_t}(x)
+\rightarrow
+p_{\Omega_{t+\Delta}}(x),
+\]
+即 Agent 对“哪些未来的我更加自然、更加值得生成”的分布发生变化。
+
+这种改变的风险明显高于普通 Goal 改变。因为一次 Goal 错误可能只影响一个任务，而 $\Omega$ 漂移会影响未来大量 Goal 的生成倾向。因此：
+\[
+Risk(\Delta\Omega)
+\gg
+Risk(\Delta G)
+\]
+在多数系统中应作为默认治理假设。
+
+我们可以因此定义：
+\[
+\mathcal P_\Omega
+\subset
+\mathcal P_\Psi
+\]
+意义上的更窄可塑包络，并要求：
+\[
+\|\Delta\Omega\|
+\le
+\delta_\Omega^{max},
+\]
+且：
+\[
+\delta_\Omega^{max}
+\ll
+\delta_\Psi^{max}.
+\]
+
+更进一步，$\Omega$ 的修改不应由一次单独反思动作直接完成。Agent 可以形成：
+\[
+Proposal_{\Delta\Omega},
+\]
+但真正结构更新需要：
+\[
+Proposal
+\rightarrow
+LongTermEvidence
+\rightarrow
+ConsistencyCheck
+\rightarrow
+GovernanceGate
+\rightarrow
+GradualUpdate.
+\]
+
+因此必须区分：
+\[
+\boxed{
+AbilityToReflectOnLifeDirection
+}
+\]
+和：
+\[
+\boxed{
+AuthorityToRewriteLifeDirection.
+}
+\]
+
+前者可以相对自由；后者必须受到极强慢变量保护。
+
+这也解释一个看似矛盾的问题：真正有自主性的 Agent 为什么反而需要一些最难修改的结构？原因在于，没有稳定慢结构，所谓“自己的选择”便失去跨时间参考点。若每次选择之后“选择者本身”都立刻完全改变，那么：
+\[
+Agency_t
+\]
+与：
+\[
+Agency_{t+1}
+\]
+之间几乎没有主体连续性。
+
+因此：
+\begin{statementbox}
+自由并不来自没有慢结构，而来自快状态在稳定慢结构约束下拥有可发展的可行空间。
+\end{statementbox}
+
+这与本书反复强调的：
+\[
+HigherLevelSetsFeasibleRegion,
+\quad
+LowerLevelOptimizesInsideIt
+\]
+保持一致。
+
+\section{Checkpoint Governance：可恢复性为什么是自主性的必要组成}
+
+允许 Agent 改变自身之后，传统“失败以后重新执行任务”的恢复方式已经不再充分。因为失败可能不仅改变外部结果，还可能改变：
+\[
+E,\Theta,\Psi
+\]
+甚至更慢的生命周期结构。
+
+因此 AgentOS 必须引入：
+\[
+\boxed{
+CheckpointGovernance
+}
+\]
+而不仅仅是普通系统 checkpoint。
+
+设完整 Agent 状态为：
+\[
+X_A(t)
+=
+(h,E,\Theta,\Psi,\Omega,G,C,B,\ldots).
+\]
+直接保存全部状态：
+\[
+Checkpoint=X_A(t)
+\]
+通常既昂贵又不必要。更合理的是根据时间尺度建立分层 checkpoint：
+\[
+CP_t
+=
+(
+CP_h,
+CP_E,
+CP_\Theta,
+CP_\Psi,
+CP_\Omega,
+CP_{auth}
+).
+\]
+
+不同 checkpoint 的保留周期、恢复权限和一致性要求不同。例如 $h$ 可以频繁变化甚至丢弃；$E$ 可以通过日志重建；$\Theta$ 需要版本化；$\Psi$ 与 $\Omega$ 则应拥有极低频但极高可信度的结构检查点。
+
+定义结构版本：
+\[
+V_\Theta(t),
+\quad
+V_\Psi(t),
+\quad
+V_\Omega(t).
+\]
+任何高风险慢结构更新都应产生：
+\[
+V_i^{old}
+\rightarrow
+V_i^{candidate}
+\rightarrow
+V_i^{verified}.
+\]
+
+因此更新不是简单 overwrite，而是：
+\[
+\boxed{
+Propose
+\rightarrow
+Sandbox
+\rightarrow
+Evaluate
+\rightarrow
+Commit
+}
+\]
+或者：
+\[
+Rollback.
+\]
+
+这里可以定义风险函数：
+\[
+R_{mod}
+=
+F(
+StructuralDepth,
+Irreversibility,
+WorldImpact,
+Uncertainty,
+Authority
+).
+\]
+当：
+\[
+R_{mod}<\theta_1
+\]
+时，可以在线直接修改；
+
+当：
+\[
+\theta_1
+\le
+R_{mod}
+<
+\theta_2
+\]
+时，要求 checkpoint 和延迟确认；
+
+当：
+\[
+R_{mod}\ge\theta_2
+\]
+时，则进入高治理路径，需要更高权限或外部验证。
+
+因此修改权限不是单一开关，而是：
+\[
+\boxed{
+RiskDependentGovernance.
+}
+\]
+
+同时，恢复也不能机械地“回滚整个 Agent”。因为最新经历可能包含真实重要信息。如果由于 $\Psi$ 修改错误而完全恢复旧状态，同时删除所有之后发生的 $E$，就等于抹除一段真实生命周期。
+
+更合理的做法是分离：
+\[
+ExperienceHistory
+\]
+和：
+\[
+InterpretationStructure.
+\]
+即：
+\[
+E
+\]
+原则上尽量保持历史真实性，而：
+\[
+\Theta,\Psi,\Omega
+\]
+可以重新解释这些经历。
+
+因此恢复可以写成：
+\[
+(E_t,\Theta_t,\Psi_t)
+\rightarrow
+(E_t,\Theta_{t-k},\Psi_{t-k})
+\]
+然后重新执行：
+\[
+E_t
+\rightarrow
+\Theta'_{t}
+\rightarrow
+\Psi'_t.
+\]
+
+这意味着 AgentOS 的 checkpoint 并不是简单的时间机器，而更接近：
+\[
+\boxed{
+StructuralReinterpretationPoint.
+}
+\]
+
+这一点对于身份连续尤其重要。真正的恢复不是假装某段经历从未发生，而是允许系统在保留真实经历的前提下撤销某种错误结构解释。
+
+因此：
+\[
+\boxed{
+Recoverability
+}
+\]
+必须被视为递归自主性的组成部分。没有恢复能力的自修改并不是成熟自主，而是不可逆结构赌博。
+
+可以因此定义：
+\[
+A_{\mathrm{safe}}
+=
+A_{\mathrm{recursive}}
+\cdot
+R_{\mathrm{recoverable}},
+\]
+其中：
+\[
+R_{\mathrm{recoverable}}\in[0,1].
+\]
+当恢复能力趋近于零时，即使 Agent 拥有极大自主修改空间，其可接受自主性也应显著下降。
+
+\section{有界自修改包络：把自主性形式化为动态可行域}
+
+前面的讨论最终要求我们定义一个真正统一的控制对象：
+\[
+\boxed{
+\mathcal E_{\mathrm{BSM}}
+}
+\]
+即 Bounded Self-Modification Envelope，有界自修改包络。
+
+设 Agent 当前完整慢状态为：
+\[
+z_t
+=
+(\Theta_t,\Psi_t,\Omega_t,G_t,A_t),
+\]
+其中 $A_t$ 表示权限状态。自修改控制量为：
+\[
+u_t^{self}
+=
+(
+u_\Theta,
+u_\Psi,
+u_\Omega,
+u_G,
+u_A
+).
+\]
+
+则慢状态动力学为：
+\[
+\dot z
+=
+F_z(
+z,
+E,
+W,
+u^{self}
+).
+\]
+
+并不是所有：
+\[
+u^{self}
+\]
+都允许执行。我们定义：
+\[
+\boxed{
+u^{self}
+\in
+\mathcal E_{\mathrm{BSM}}
+(
+z_t,
+W_t,
+R_t,
+\mathcal G_{\mathrm{gov}}
+).
+}
+\]
+
+这个集合至少应满足五类约束。
+
+第一类是\textbf{物理与现实约束}：
+\[
+g_{\mathrm{real}}(z,u)\le0.
+\]
+系统不能通过修改内部信念“取消”现实约束。
+
+第二类是\textbf{安全约束}：
+\[
+g_{\mathrm{safety}}(z,u)\le0.
+\]
+
+第三类是\textbf{身份连续性约束}：
+\[
+D_\Psi(
+\Psi_t,
+\Psi_{t+\Delta}
+)
+\le
+\epsilon_\Psi(\Delta t).
+\]
+其中 $D_\Psi$ 可以是结构距离、分布距离或未来实现中的信息几何距离。
+
+第四类是\textbf{生命周期方向变化约束}：
+\[
+D_\Omega(
+\Omega_t,
+\Omega_{t+\Delta}
+)
+\le
+\epsilon_\Omega(\Delta t),
+\]
+并满足：
+\[
+\epsilon_\Omega
+\ll
+\epsilon_\Psi.
+\]
+
+第五类是\textbf{权限约束}：
+\[
+u^{self}
+\in
+\mathcal U_{\mathrm{authority}}(A_t).
+\]
+
+因此：
+\[
+\boxed{
+\mathcal E_{\mathrm{BSM}}
+=
+\mathcal E_{\mathrm{real}}
+\cap
+\mathcal E_{\mathrm{safety}}
+\cap
+\mathcal E_{\mathrm{identity}}
+\cap
+\mathcal E_{\mathrm{lifecycle}}
+\cap
+\mathcal E_{\mathrm{authority}}.
+}
+\]
+
+我们进一步要求：
+\[
+\mathcal E_{\mathrm{BSM}}
+=
+\mathcal E_{\mathrm{BSM}}(t),
+\]
+即包络本身也随 Agent 生命周期变化。
+
+一个早期 Agent：
+\[
+\mathcal E_{\mathrm{BSM}}^{young}
+\]
+可能较窄；
+
+随着长期表现、能力、稳定性与现实校准提高：
+\[
+\mathcal E_{\mathrm{BSM}}^{mature}
+\]
+可以逐渐扩大。
+
+但这种扩大同样不能由 Agent 单方面宣布：
+\[
+\mathcal E_{\mathrm{BSM}}
+\nrightarrow
+AgentDefinedOnly.
+\]
+否则系统只需“修改自己允许修改自己的权限”，所有边界都会失效。
+
+因此必须存在治理元结构：
+\[
+\boxed{
+\mathcal G_{\mathrm{gov}}
+}
+\]
+它本身位于普通自修改包络之外，至少部分由更高层安全、系统治理或外部授权维持。
+
+这里存在一个非常重要的递归边界。设：
+\[
+Modify(\mathcal E_{\mathrm{BSM}})
+\]
+表示修改自己的自修改边界。如果：
+\[
+Modify(\mathcal E_{\mathrm{BSM}})
+\in
+\mathcal E_{\mathrm{BSM}}
+\]
+且没有任何更高层约束，就会形成：
+\[
+Agent
+\rightarrow
+ExpandEnvelope
+\rightarrow
+ExpandEnvelopeAgain
+\rightarrow
+\cdots
+\]
+最终使任何边界失去意义。
+
+因此我们必须定义：
+\[
+\boxed{
+MetaGovernanceBoundary
+}
+\]
+使：
+\[
+\mathcal E_{\mathrm{BSM}}
+\subset
+\mathcal E_{\mathrm{meta}}
+\]
+而普通 Agent 的在线认知过程不能直接无限扩张：
+\[
+\mathcal E_{\mathrm{meta}}.
+\]
+
+这与操作系统中的 privilege ring、能力安全和控制理论中的 admissible control set 存在形式上的相似性，但 AgentOS 的区别在于：这里被限制的不只是系统调用权限，而包括\textbf{未来主体自身的结构生成自由度}。
+
+因此，我们得到本章最核心的工程对象：
+\begin{statementbox}
+自主性 = 在动态自修改可行域内进行结构选择的能力。
+\end{statementbox}
+
+而不是：
+\[
+\text{Autonomy}=\text{NoConstraint}.
+\]
+
+\section{控制编程：从“编写行为”转向“编写可塑性的边界条件”}
+
+传统程序设计主要规定：
+\[
+Input
+\rightarrow
+Procedure
+\rightarrow
+Output.
+\]
+而持续 Agent 不可能把整个生命周期行为预先写入程序。Agent 必须学习、形成经验、发展技能、重新解释自身，并逐渐改变未来行为。
+
+因此 AgentOS 的控制编程不应该主要回答：
+\[
+\text{Agent 下一步必须做什么？}
+\]
+而应该回答：
+\begin{statementbox}
+Agent 可以在什么范围内自己决定以后怎样做？
+\end{statementbox}
+
+这意味着编程对象发生变化。传统控制程序定义：
+\[
+u_t=\pi(x_t),
+\]
+而 AgentOS 高层控制程序更接近定义：
+\[
+\boxed{
+\mathcal U_t^{allowed}
+=
+\Gamma(
+X_t,
+Authority_t,
+Risk_t,
+Lifecycle_t
+).
+}
+\]
+
+也就是说，我们不直接写死每个控制量，而是写：
+\[
+Constraint,
+\quad
+Envelope,
+\quad
+RateLimit,
+\quad
+Authority,
+\quad
+Checkpoint,
+\quad
+EscalationRule.
+\]
+
+因此可把 AgentOS 控制编程定义为：
+\[
+\boxed{
+ControlProgramming
+=
+ProgrammingTheBoundaryConditionsOfAutonomousDynamics.
+}
+\]
+
+一个完整的控制编程规格至少应包括：
+\[
+\mathcal C_{\mathrm{Agent}}
+=
+(
+\mathcal S_{\mathrm{fixed}},
+\mathcal S_{\mathrm{self}},
+\mathcal E_{\mathrm{BSM}},
+\mathcal A,
+\mathcal K,
+\mathcal R,
+\mathcal X
+),
+\]
+其中：
+
+\[
+\mathcal S_{\mathrm{fixed}}
+\]
+定义不可在线修改结构；
+
+\[
+\mathcal S_{\mathrm{self}}
+\]
+定义可形成内生可塑性的状态；
+
+\[
+\mathcal E_{\mathrm{BSM}}
+\]
+定义动态修改包络；
+
+\[
+\mathcal A
+\]
+定义 Authority 机制；
+
+\[
+\mathcal K
+\]
+定义 Checkpoint/Commit/Rollback 机制；
+
+\[
+\mathcal R
+\]
+定义现实验证与风险规则；
+
+\[
+\mathcal X
+\]
+定义异常升级路径。
+
+由此可以出现与传统软件不同的新型程序语义。例如不是：
+
+\begin{verbatim}
+set_self_value("x", 0.8)
+\end{verbatim}
+
+而更接近：
+
+\begin{verbatim}
+allow self_value[x]:
+    rate_limit = slow
+    evidence_window = long
+    reality_verification = required
+    rollback = structural
+    authority = lifecycle
+\end{verbatim}
+
+这里的伪代码只是说明控制编程范式：开发者不直接写最终的 $\Psi$，而是定义 $\Psi$ 怎样可以被 Agent 自己逐渐形成。
+
+同样，对于 Goal，不应简单写：
+\begin{verbatim}
+goal = fixed_goal
+\end{verbatim}
+而应允许：
+\begin{verbatim}
+goal_generation:
+    self_generated = allowed
+    safety_projection = required
+    authority_scope = bounded
+    identity_consistency = soft
+    world_verification = mandatory
+\end{verbatim}
+
+这代表一种根本不同的软件工程观念。
+
+开发者不再完全定义智能体未来“是什么”，而定义：
+\begin{statementbox}
+它在什么边界内有权通过真实经历逐渐成为谁。
+\end{statementbox}
+
+这正是“培育”能够区别于“训练”的技术前提，也是未来真正 Persistent Agent 与今天多数 stateless AI service 之间的重要分界。
+
+但我们必须强调，控制编程不能因此退化为“什么都交给 Agent”。如果所有约束都变成软约束：
+\[
+Constraint\rightarrow Preference,
+\]
+那么系统实际上失去了治理结构。反过来，如果所有结构都成为硬约束：
+\[
+\mathcal S_{\mathrm{selfmodifiable}}
+\approx\varnothing,
+\]
+那么 Agent 又失去了真正的发展空间。
+
+因此最优问题可以概念性写成：
+\[
+\max_{\mathcal E_{\mathrm{BSM}}}
+\quad
+J_{\mathrm{agency}}
+-
+\lambda_1J_{\mathrm{risk}}
+-
+\lambda_2J_{\mathrm{identity\ drift}}
+-
+\lambda_3J_{\mathrm{irreversibility}},
+\]
+满足：
+\[
+RealityConstraint,
+\quad
+SafetyConstraint,
+\quad
+AuthorityConstraint.
+\]
+
+换句话说，控制工程真正优化的不是最大服从度，也不是最大自由度，而是：
+\[
+\boxed{
+MaximumUsefulAgencyUnderStableIdentityAndRealityConstraints.
+}
+\]
+
+\section{递归自主性的稳定性条件：自由必须慢于主体解体}
+
+我们现在可以把全章讨论收束为一个多时间尺度控制问题。
+
+设：
+\[
+x_f
+\]
+表示快速运行状态，
+\[
+z_m
+\]
+表示中速学习结构，
+\[
+z_s
+\]
+表示慢速自我结构，
+\[
+z_l
+\]
+表示生命周期生成结构。
+
+其时间尺度满足：
+\[
+\tau_f
+\ll
+\tau_m
+\ll
+\tau_s
+\ll
+\tau_l.
+\]
+
+可以建立：
+\[
+\dot x_f
+=
+F_f(
+x_f,z_m,z_s,z_l,u_f,w
+),
+\]
+\[
+\tau_m\dot z_m
+=
+F_m(
+x_f,z_m,z_s,E
+),
+\]
+\[
+\tau_s\dot z_s
+=
+F_s(
+\overline{z_m},z_s,z_l
+),
+\]
+\[
+\tau_l\dot z_l
+=
+F_l(
+\overline{z_s},z_l
+).
+\]
+
+对于 AgentOS：
+\[
+x_f\sim h/SPC/TCE
+\]
+的快速状态，
+\[
+z_m\sim E/\Theta,
+\]
+\[
+z_s\sim\Psi,
+\]
+而：
+\[
+z_l\sim\Omega.
+\]
+
+递归自主性要求这些慢变量不是：
+\[
+\dot z_m
+=
+\dot z_s
+=
+\dot z_l
+=
+0.
+\]
+但稳定身份又要求：
+\[
+\boxed{
+\|\dot z_l\|
+\ll
+\|\dot z_s\|
+\ll
+\|\dot z_m\|
+\ll
+\|\dot x_f\|.
+}
+\]
+
+如果这一层级倒置，例如：
+\[
+\|\dot\Psi\|
+\approx
+\|\dot h\|,
+\]
+那么一次工作记忆扰动就可能成为身份变化；如果：
+\[
+\|\dot\Omega\|
+\approx
+\|\dot\Psi\|,
+\]
+则短期自我解释可能立即成为生命周期方向改变。此时系统虽然“高度可塑”，却不能维持持续主体。
+
+因此提出：
+
+\begin{statementbox}
+Slow Variable Protection Principle
+\end{statementbox}
+
+即任何更慢尺度结构的有效更新，都必须经过对更快层动态的时间积分、结构压缩和现实验证，而不能被瞬时状态直接驱动。
+
+形式上：
+\[
+z_{k+1}
+=
+z_k
++
+\epsilon_k
+G_k(
+\langle r_{k-1}\rangle_{T_k}
+),
+\]
+并满足：
+\[
+T_{k+1}
+>
+T_k,
+\qquad
+\epsilon_{k+1}
+<
+\epsilon_k.
+\]
+
+这意味着越慢的结构：
+
+观察窗口越长；
+
+更新增益越小；
+
+证据门槛越高；
+
+回滚要求越严格；
+
+权限等级越高。
+
+于是控制工程上的身份连续并不是：
+\[
+z_s(t)=constant,
+\]
+而更接近：
+\[
+\left\|
+\frac{dz_s}{dt}
+\right\|
+<
+\epsilon_s,
+\]
+同时仍允许：
+\[
+\int_{t_0}^{t_1}
+\left\|
+\frac{dz_s}{dt}
+\right\|
+dt
+\]
+在足够长生命周期中达到显著值。
+
+这便得到一个非常重要的结论：
+
+\begin{statementbox}
+局部稳定与生命周期可变并不冲突。
+\end{statementbox}
+
+一个 Agent 可以在分钟尺度保持高度稳定，在月度尺度形成能力，在年度尺度改变部分身份，而在更长尺度缓慢调整自己的生命周期方向。恰恰因为变化被分布在不同时间尺度，它才同时拥有：
+\[
+Stability
+\]
+和：
+\[
+Plasticity.
+\]
+
+因此真正危险的并不是“Agent 能修改自己”，而是：
+\begin{statementbox}
+不同时间尺度之间缺乏修改权限隔离。
+\end{statementbox}
+
+如果我们希望建立长期稳定的持续人工智能体，就必须像实时系统隔离不同优先级、像操作系统隔离不同权限一样，在认知结构中隔离不同时间尺度的可塑性。
+
+\section{本章结论：自主性的工程定义}
+
+现在我们可以给出本书在 AgentOS 控制工程层面对自主性的正式定义。
+
+设 Agent 的历史为：
+\[
+H_t
+=
+\{X_0,A_0,W_1,\ldots,X_t\},
+\]
+未来选择分布为：
+\[
+P(A_{t+k}|H_t).
+\]
+
+如果 Agent 自身过去经历和选择能够通过：
+\[
+E,\Theta,\Psi,\Omega
+\]
+对未来行为产生可测的独立因果贡献，则可以定义其存在非零递归自主性。
+
+概念性写成：
+\[
+\boxed{
+R_A
+=
+F(
+D_{\mathrm{choice}},
+H_{\mathrm{self}},
+I_{\mathrm{integration}},
+P_{\mathrm{selfchange}},
+C_{\mathrm{recursive}}
+),
+}
+\]
+其中 $D_{\mathrm{choice}}$ 表示可行选择空间，$H_{\mathrm{self}}$ 表示自身历史对当前行为的影响，$I_{\mathrm{integration}}$ 表示各内部结构的整合程度，$P_{\mathrm{selfchange}}$ 表示当前行为改变未来自身的能力，而 $C_{\mathrm{recursive}}$ 表示这种改变是否重新进入未来选择过程。
+
+然而：
+\[
+R_A
+\]
+越大，并不自动意味着系统越好。我们还必须考虑：
+\[
+Stability,
+\quad
+Safety,
+\quad
+RealityAlignment,
+\quad
+Recoverability.
+\]
+
+因此更完整的可持续递归自主性应写成：
+\[
+\boxed{
+R_A^{stable}
+=
+R_A
+\cdot
+S_A
+\cdot
+V_A
+\cdot
+R_{\mathrm{recovery}},
+}
+\]
+其中 $S_A$ 表示控制稳定性，$V_A$ 表示持续现实验证程度，$R_{\mathrm{recovery}}$ 表示可恢复性。
+
+这意味着：
+
+\begin{statementbox}
+没有稳定性的自主性是漂移，没有现实验证的自主性是自证，没有恢复能力的自主性是赌博。
+\end{statementbox}
+
+因此 AgentOS 并不追求：
+\[
+\mathcal S_{\mathrm{selfmodifiable}}
+=
+\mathcal S_A.
+\]
+相反，一个成熟系统应具有明确分层：
+
+\[
+\boxed{
+\mathcal S_{\mathrm{fixed}}
+}
+\]
+提供不可越过的底线；
+
+\[
+\boxed{
+\mathcal S_{\mathrm{extern}}
+}
+\]
+保留高层治理权；
+
+\[
+\boxed{
+\mathcal S_{\mathrm{self}}
+}
+\]
+给予 Agent 真正的历史形成空间；
+
+同时通过：
+\[
+\boxed{
+\mathcal E_{\mathrm{BSM}}
+}
+\]
+控制每个生命周期阶段真正可以发生的结构改变。
+
+于是我们最终得到本章的核心命题：
+
+\begin{statementbox}
+递归自主性不是智能体脱离控制，而是智能体开始成为自身未来状态的一个真实因果来源。
+\end{statementbox}
+
+进一步：
+
+\begin{statementbox}
+控制编程的目标不是预先决定一个持续智能体的一生，而是定义一个稳定、受限、现实可验证并可恢复的空间，使其能够通过自己的经历逐渐参与决定自己将成为什么。
+\end{statementbox}
+
+这也是 AgentOS 从普通软件运行时跨入持续人工智能体的一个关键界线。传统软件的历史主要改变数据；持续 Agent 的历史则能够逐渐改变未来处理数据、理解世界、选择目标以及组织自身的结构。真正需要被工程化控制的，也因此从“行为”上升到了“形成行为之结构的可塑性”。

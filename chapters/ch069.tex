@@ -2,7 +2,6 @@
 \label{chap:agentos-on-linux}
 
 \begin{chapteroverviewbox}
-\textbf{【本章总体说明】}
 本章讨论的不是“如何重新实现一个操作系统”，而是回答一个更根本的系统工程问题：当一个长期持续存在的智能体已经具有工作记忆 $h$、情景记忆 $E$、结构记忆 $\Theta$、自我结构 $\Psi$、生命周期生成吸引子 $\Omega$，并通过 SPC、AHC、TCE、CCM、Scheduler、Boundary、Offloading 等机制形成稳定的多尺度认知闭环以后，它应当如何落在现有计算机体系之上。我们的基本立场是：Linux 已经解决了进程、虚拟内存、文件、网络、设备、中断、权限和硬件资源复用问题，AgentOS 不应复制这些能力，而应在其上建立一个新的“智能资源运行时”。因此，本章确立
 \[
 \boxed{
@@ -438,6 +437,7 @@ Linux 所拥有的是 CPU scheduling、memory protection、device arbitration �
 
 若 AgentOS 试图直接重新实现底层 OS，则意味着一个高层认知系统必须同时承担：
 \[
+\fitdisplay{
 PageFault,
 Interrupt,
 FilesystemConsistency,
@@ -446,6 +446,7 @@ DeviceDMA,
 CognitiveGoal,
 SelfMemory,
 BodyPlanning.
+}
 \]
 这不仅没有理论必要性，也违反此前反复建立的复杂度治理原则。一个系统若能够通过稳定接口把某类复杂性沉降到更低层，就不应再次把它提升到 $h$ 或认知内核中。
 
@@ -483,12 +484,14 @@ KernelPrivilege
 
 第三个原因是生态复用。Linux 已经拥有 device driver、container、security、network、storage 与 observability 生态。AgentOS 真正需要建立的竞争优势，应当是：
 \[
+\fitdisplay{
 PersistentIdentity,
 CognitiveScheduling,
 LifecycleMemory,
 BodyAbstraction,
 SkillCompilation,
 AuthorityGovernance,
+}
 \]
 而不是重新实现 ext4、TCP/IP 或 GPU 驱动。
 

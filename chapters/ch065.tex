@@ -2,15 +2,15 @@
 \label{chap:kra}
 
 \begin{chapteroverviewbox}
-\textbf{【本章总体说明】}
-
 在前面的 AgentOS 工程结构中，我们已经完成了一次关键的体系分离：认知核心不再直接面对摄像头、机械臂、浏览器、文件系统或车辆执行机构，而是通过 Body Runtime 接收经过身体语义化之后的世界状态，并向下输出较高层的控制意图。由此形成了一个看似已经充分稳定的接口：
 \[
+\fitdisplay{
 \mathrm{BodyRuntime}
 \longleftrightarrow
 \{SGC,FCS,ControlReference,PredictiveEnvelope,Residual\}
 \longleftrightarrow
 \mathrm{CognitiveCore}.
+}
 \]
 然而，仅仅拥有统一的接口规范，并不能自动保证不同身体与同一个认知核心之间形成稳定、可迁移和可长期学习的动力学关系。相同的 SGC 标签可能具有不同的身体含义；相同的 ``前方两米'' 对轮式机器人、人形机器人和数字桌面 Agent 所对应的可行动空间完全不同；相同的 FCS 威胁强度，也可能来自机械失稳、算力过载、网络中断或环境危险。更进一步，Kernel 与 Body Runtime 本身都在学习，因此二者之间的关系不是一次编译完成的静态映射，而是一个必须长期维持的适应性耦合关系。
 
@@ -717,6 +717,7 @@ LatentMuscle.
 
 其中 Semantic Skeleton 是必须长期稳定、可检查、可测试的硬语义通道，包括：
 \[
+\fitdisplay{
 SGC,\quad
 FCS,\quad
 ControlReference,\quad
@@ -724,6 +725,7 @@ PredictiveEnvelope,\quad
 Residual,\quad
 Exception,\quad
 Capability.
+}
 \]
 这些结构构成 Kernel--Body 关系的长期语义骨架。即使 Body Runtime 内部模型被替换，或者 Kernel 的底层神经架构发生变化，这些语义关系仍然应该尽可能保持。
 
@@ -865,6 +867,7 @@ w_rR_{recovery},
 
 特别值得注意的是 Recovery。对于持续 Agent 来说，不可能要求整个生命周期始终处于最佳标定状态。更现实的工程指标应该是：
 \[
+\fitdisplay{
 Disturbance
 \rightarrow
 TemporaryMismatch
@@ -874,6 +877,7 @@ ResidualRecognition
 Recalibration
 \rightarrow
 CompatibleRegion.
+}
 \]
 因此一个成熟 KRA 的重要能力不是``永不出错''，而是：
 \[

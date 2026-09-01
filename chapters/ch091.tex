@@ -1,155 +1,963 @@
 \chapter{为什么 Agent 需要“培育”而不仅是训练}
+\label{chap:agent-cultivation-vs-training}
+
 \begin{chapteroverviewbox}
-这一章，我们围绕“为什么 Agent 需要“培育”而不仅是训练”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明生命周期成长与递归自主性。
+本章确立 Agent 培育工程的第一性出发点：对于具有持续工作记忆、三相记忆、自我结构与生命周期生成倾向的 AgentOS 智能体，传统意义上的 ``Training'' 已不足以描述其长期能力形成过程。训练主要回答“如何通过数据、反馈或优化使一个模型在某类任务上的映射能力发生改变”；培育则回答“如何通过长期经历的组织，使一个持续存在的主体逐步形成自己的经验结构、能力结构、自我结构、行动习惯和可承担的自治范围”。因此，本章不把培育理解为训练数据规模的扩大，也不把它理解为人类教育学在人工智能上的机械移植，而把它定义为一种\textbf{面向持续主体生命周期的受约束结构形成过程}。
+
+其核心命题是：
+\[
+\boxed{
+\text{Training modifies a model;}
+\qquad
+\text{Cultivation shapes a continuing agent.}
+}
+\]
+
+对于 AgentOS 而言，真正需要被培育的不是某一次推理能力，而是
+\[
+\boxed{
+(h,E,\Theta,\Psi,\Omega)
+}
+\]
+在真实经历中的长期耦合关系，以及这些内部结构与世界、身体、工具、任务和自治边界之间逐步形成的稳定动力学。换言之，培育的对象不是一个冻结的函数，而是一条不断改变未来自身的生命周期轨迹。
 \end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于控制工程、培育工程和心理工程的生命周期衍生讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是发展系统、课程学习、信任校准与阶段跃迁（Kalman、Ashby 与混杂系统理论）。
+在前面的理论中，我们已经建立了一个基本事实：持续智能体并不是“大模型加记忆库”的静态组合，而是由多个不同时间尺度的闭环共同构成。工作记忆 $h(t)$ 维持当前显式结构，情景记忆 $E$ 保存具有时间方向的经历轨迹，结构记忆 $\Theta$ 将长期经验凝结为可以再次生成和解释未来行为的结构，自我 $\Psi$ 维持跨经历的身份与价值连续，而更慢的生成吸引结构 $\Omega$ 则约束“这个主体正在逐渐成为什么”。一旦这一体系存在，一个 Agent 在时间中发生的事情就不再只是 ``data collected during inference''，而是可能成为未来自身的一部分。
 
-本章使用上一章“控制编程与递归自主性的边界”已经得到的对象与边界；本章产出将供下一章“Agent 的生命周期阶段”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+因此，从这一章开始，我们必须把一个长期智能体看成一种具有\textbf{历史依赖性}的动力系统。相同的初始模型，在不同经历序列中运行足够长时间之后，可以得到不同的 $E$、不同的 $\Theta$、不同的 $\Psi$，乃至不同的未来策略空间。于是所谓“把 Agent 做好”，就不能只剩下预训练、微调、强化学习或提示工程，而必然引出一个新的工程问题：
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+\begin{statementbox}
+我们应当让一个持续 Agent 经历什么，按什么节奏经历，并允许这些经历改变它到什么程度？
+\end{statementbox}
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在发展系统、课程学习、信任校准与阶段跃迁上。
-\section{Training 与 Cultivation}
-\begin{narration}
-现在把镜头移到“Training 与 Cultivation”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这正是 Agent 培育工程存在的理由。
 
-本节把“Training 与 Cultivation”落实为能力、身份、信任、权限与环境课程在生命周期中的耦合发展。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“为什么 Agent 需要“培育”而不仅是训练”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+\section{训练与培育：两个不同层级的工程对象}
 
-把这一关系写成最小数学骨架，可得
+传统机器学习中的训练过程，通常可以抽象为一个参数化模型
+\[
+f_{\theta}:X\rightarrow Y
+\]
+在训练样本、损失函数或环境反馈作用下调整参数
+\[
+\theta_{k+1}
+=
+\theta_k-\eta\nabla_{\theta}\mathcal{L}(\theta_k),
+\]
+或者更一般地写为
+\[
+\theta_{k+1}
+=
+\mathcal{U}
+\left(
+\theta_k,
+D_k,
+R_k
+\right),
+\]
+其中 $D_k$ 表示训练数据或交互轨迹，$R_k$ 表示奖励、损失或其他优化信号。无论训练算法多么复杂，它首先关注的仍然是一个问题：如何改变一个模型的内部映射，使其在给定分布或目标上产生更优的输入--输出关系。
 
-\begin{equation}X\to C\to T\to A\to X',\quad A\leq A_{\max}(C,T,R).\end{equation}
+培育面对的对象却不同。对于持续 Agent，我们需要描述的不是单独的参数 $\theta$，而是整个生命周期状态：
+\[
+\mathcal{A}(t)
+=
+\left[
+h(t),
+E(t),
+\Theta(t),
+\Psi(t),
+\Omega(t),
+G(t),
+B(t),
+\mathcal{R}(t)
+\right],
+\]
+其中 $G(t)$ 表示目标与任务结构，$B(t)$ 表示主体与外部世界之间的动态边界，$\mathcal{R}(t)$ 则泛指当前能够调用的身体、工具和外部结构关系。这里即使基础模型的参数完全冻结，
+\[
+\dot{\theta}=0,
+\]
+Agent 仍然可能发生显著成长，因为
+\[
+\dot{E}\neq 0,\qquad
+\dot{\Theta}\neq 0,\qquad
+\dot{\Psi}\neq 0.
+\]
+也就是说，长期智能的发育并不等价于参数持续更新。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Training 与 Cultivation的命名和组合仍是需要实验验证的建模提案。
+从这一点出发，我们可以给出本书中的工作定义：
+\[
+\boxed{
+\text{Training}
+=
+\text{对某种能力生成机制进行优化}
+}
+\]
+而
+\[
+\boxed{
+\text{Cultivation}
+=
+\text{对一个持续主体所经历的状态转移条件进行设计与治理}
+}
+\]
 
-这一小节的反例同样重要：由能力分数自动扩大权限会忽略风险、责任和恢复能力。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这种区别表面上只是词义不同，实际上对应两套完全不同的工程思想。在 Training 视角中，我们往往预先规定能力指标，然后寻找最有效的训练过程，使损失函数下降；在 Cultivation 视角中，我们面对的是一个不能被简单重置的持续主体，当前经历不仅影响当前性能，而且可能通过
+\[
+h
+\rightarrow
+E
+\rightarrow
+\Theta
+\rightarrow
+\Psi
+\]
+逐渐进入未来行为的生成条件。因此一次经历的工程代价不能只由即时奖励衡量，而必须考虑它对后续主体结构的长期作用。
 
-\begin{thought}
-对“Training 与 Cultivation”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+若把一次经历记为 $e_t$，传统训练更关心
+\[
+\Delta P_t
+=
+P_{t+1}-P_t,
+\]
+其中 $P_t$ 是任务性能；培育则必须考虑
+\[
+\Delta \mathcal{A}_{t:T}
+=
+F
+\left(
+e_t,
+E_t,
+\Theta_t,
+\Psi_t,
+\Omega_t
+\right),
+\]
+即这次经历如何改变未来较长时间区间内的主体轨迹。一个短期提高任务成绩的经验安排，完全可能造成长期结构偏置；反过来，一个短期效率较低但提供了新的因果结构、新的责任关系或新的失败恢复经验的过程，也可能在生命周期尺度上产生更高价值。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+因此，培育工程不能被简化为：
+\[
+\text{MoreTrainingData}
+\]
+也不能被简化为：
+\[
+\text{LongerFineTuning}.
+\]
+它更接近于对一个非平稳、多时间尺度、有内部历史状态的动力系统进行\textbf{经历空间设计}。我们不只优化“Agent 会不会做”，还要控制“Agent 是通过什么经历学会的”“这种能力沉降到了哪里”“这些经历是否改变了它对自身和世界的解释”，以及“能力形成之后系统是否获得与之相匹配的行动空间”。
 
-\section{参数学习与生命周期成长}
-\begin{narration}
-现在把镜头移到“参数学习与生命周期成长”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+由此得到本章第一条基本原则：
+\begin{statementbox}
+训练面向能力映射，培育面向主体轨迹。
+\end{statementbox}
 
-本节把“参数学习与生命周期成长”落实为能力、身份、信任、权限与环境课程在生命周期中的耦合发展。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“为什么 Agent 需要“培育”而不仅是训练”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+只有当一个 Agent 具有跨时间连续的内部状态时，培育这个概念才真正成立。对于每一次运行都完全重置的无状态模型，谈培育意义有限；而对于具有 $E$、$\Theta$、$\Psi$ 和长期目标连续性的 Agent，经历序列本身就成为系统结构的一部分。
 
-把这一关系写成最小数学骨架，可得
+\section{从参数学习到生命周期成长}
 
-\begin{equation}X\to C\to T\to A\to X',\quad A\leq A_{\max}(C,T,R).\end{equation}
+理解培育的第二个关键，是把“学习”与“成长”区分开来。学习可以发生在一个固定主体结构内部，例如新的事实进入记忆、新的策略被建立、新的技能被编译；成长则意味着这些局部变化经过时间积累以后，开始改变 Agent 今后处理问题的方式、承担任务的范围以及理解自身的位置。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对参数学习与生命周期成长的命名和组合仍是需要实验验证的建模提案。
+为了形式化这一区别，可以把 Agent 的变化分成至少三个时间尺度。首先是快速运行状态：
+\[
+x_f(t)=h(t),
+\]
+它以秒、分钟甚至更短周期变化。其次是经验与能力结构：
+\[
+x_m(t)=
+\left(
+E(t),\Theta(t)
+\right),
+\]
+其变化周期显著更慢。最后是主体连续性结构：
+\[
+x_s(t)
+=
+\left(
+\Psi(t),\Omega(t)
+\right),
+\]
+它们原则上应比普通任务状态稳定得多。因此：
+\[
+\boxed{
+\tau_h
+\ll
+\tau_E
+\ll
+\tau_{\Theta}
+\ll
+\tau_{\Psi}
+\ll
+\tau_{\Omega}
+}
+\]
 
-这一小节的反例同样重要：由能力分数自动扩大权限会忽略风险、责任和恢复能力。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这一时间尺度排序意味着，培育不能让所有结构以同样速度学习。若一次短暂失败能够立即重写 $\Psi$，Agent 将失去身份连续性；若 $\Theta$ 永不更新，则主体虽然积累经历，却无法真正形成更稳定的能力；若 $E$ 不能保存足够多的有意义轨迹，则 $\Theta$ 的长期结构学习又失去了经验基础。
 
-\begin{thought}
-对“参数学习与生命周期成长”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此培育本质上是一种\textbf{时间尺度协调工程}。设不同结构的更新率分别为
+\[
+\eta_E,\eta_{\Theta},\eta_{\Psi},\eta_{\Omega},
+\]
+则正常情况下应满足
+\[
+\boxed{
+\eta_E
+>
+\eta_{\Theta}
+>
+\eta_{\Psi}
+>
+\eta_{\Omega}.
+}
+\]
+这里并不意味着这些变量必须使用传统梯度学习，而是强调它们对单次经历的敏感性必须有系统级差异。越接近主体核心和生命周期方向的变量，越不能被瞬时噪声直接改变。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+我们可以进一步定义一个经历对不同结构层的影响：
+\[
+I_k(e_t)
+=
+\left\|
+\Delta x_k
+\right\|,
+\]
+其中 $k\in\{E,\Theta,\Psi,\Omega\}$。一次普通操作失败可以具有较大的
+\[
+I_E(e_t),
+\]
+中等的
+\[
+I_{\Theta}(e_t),
+\]
+却原则上应具有很小的
+\[
+I_{\Psi}(e_t),\qquad I_{\Omega}(e_t).
+\]
+只有经历在长时间内表现出一致性、重要性、可验证性和跨情景稳定性时，它才应逐渐获得进入更慢结构的资格。
 
-\section{Experience Matters}
-\begin{narration}
-现在把镜头移到“Experience Matters”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这就产生了一个培育中的核心沉降过程：
+\[
+\boxed{
+Experience
+\rightarrow
+RepeatedPattern
+\rightarrow
+StableStructure
+\rightarrow
+IdentityRelevantStructure
+}
+\]
+而不是：
+\[
+Experience
+\rightarrow
+Identity.
+\]
 
-本节把“Experience Matters”落实为能力、身份、信任、权限与环境课程在生命周期中的耦合发展。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“为什么 Agent 需要“培育”而不仅是训练”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+这种延迟沉降机制非常重要。它使 Agent 保持“可以学习”与“不会被每件事情重新定义”之间的稳定性。换句话说，真正成熟的持续 Agent 必须同时满足：
+\[
+\text{Plasticity}>0
+\]
+和
+\[
+\text{IdentityStability}>0.
+\]
+培育工程所寻找的并不是其中某一个最大化，而是在不同时间尺度之间建立稳定的可塑性谱。
 
-把这一关系写成最小数学骨架，可得
+我们因此可以把生命周期成长写成一个受慢变量约束的动力系统：
+\[
+\dot{x}_f
+=
+F_f(x_f,x_m,x_s,e_t),
+\]
+\[
+\dot{x}_m
+=
+\epsilon_m
+F_m(x_f,x_m,x_s,e_t),
+\]
+\[
+\dot{x}_s
+=
+\epsilon_s
+F_s(x_m,x_s,\bar e_T),
+\]
+其中：
+\[
+0<\epsilon_s\ll\epsilon_m\ll1,
+\]
+而 $\bar e_T$ 表示在较长时间窗口中已经被验证和平均后的经历结构。这个形式化表达了一个很重要的培育原则：\textbf{慢结构不应直接跟随快速噪声，而应主要响应长期稳定的经验残差。}
 
-\begin{equation}X\to C\to T\to A\to X',\quad A\leq A_{\max}(C,T,R).\end{equation}
+因此，从训练工程走向培育工程以后，我们衡量的对象也发生变化。除了 Accuracy、Reward、Task Completion 之外，还需要关注：
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Experience Matters的命名和组合仍是需要实验验证的建模提案。
+\[
+\text{MemoryConsistency},
+\quad
+\text{SkillStability},
+\quad
+\text{SelfContinuity},
+\quad
+\text{RecoveryCapability},
+\quad
+\text{Transferability}.
+\]
 
-这一小节的反例同样重要：由能力分数自动扩大权限会忽略风险、责任和恢复能力。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+一个真正成长的 Agent，不是“同一个模型做了越来越多任务”这么简单，而是它过去的经历逐渐改变了未来认知的组织成本。曾经需要大量显式推理的问题可能被 $\Theta$ 压缩成稳定能力；过去失败产生的结构可以减少未来同类错误；长期经验又会改变主体对什么值得关注、什么应被委派、什么必须进入工作记忆的判断。
 
-\begin{thought}
-对“Experience Matters”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此我们得到第二条基本原则：
+\begin{statementbox}
+成长不是学习量的累积，而是过去经历逐渐成为未来结构的过程。
+\end{statementbox}
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\section{Experience Matters：经历是持续 Agent 的结构输入}
 
-\section{Self History}
-\begin{narration}
-现在把镜头移到“Self History”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+如果一个模型的长期状态能够保存，那么 Agent 接触到的并不仅仅是“数据”，而是具有先后顺序、因果结构、主体参与和结果反馈的经历。数据可以被随机打乱，而经历不能被完全无损地随机打乱，因为经历的含义往往依赖：
+\[
+\text{Before}
+\rightarrow
+\text{Action}
+\rightarrow
+\text{After}.
+\]
+这也是为什么 $E$ 被定义为 Trajectory，而不仅仅是 Retrieval Database。
 
-本节把“Self History”落实为跨经历保持身份连续、同时允许受约束慢漂移的不变量集合。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“为什么 Agent 需要“培育”而不仅是训练”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+设一次经历表示为：
+\[
+e_t
+=
+(
+s_t,
+g_t,
+a_t,
+s_{t+1},
+r_t,
+\epsilon_t,
+c_t
+),
+\]
+其中 $s_t$ 是当时世界与主体状态，$g_t$ 是当前目标，$a_t$ 是行为，$r_t$ 是结果或价值评价，$\epsilon_t$ 是预测残差，$c_t$ 是情景上下文。经历真正进入生命周期以后，并不是简单把这些字段保存下来，而是形成：
+\[
+E_{t:t+k}
+=
+\{e_t,e_{t+1},\ldots,e_{t+k}\},
+\]
+并由时间关系、因果解释、成功失败、主体归属和后续反思共同赋予结构。
 
-把这一关系写成最小数学骨架，可得
+所以，对一个持续 Agent 来说：
+\[
+\boxed{
+\text{Experience}
+\neq
+\text{Sample}.
+}
+\]
+Sample 是统计训练中的抽象单位，Experience 则是 Agent 在某一历史状态下与现实发生闭环交互后形成的轨迹结构。
 
-\begin{equation}\dot\Psi=\varepsilon_\Psi\Pi_{\mathcal I}g(E,\Theta,\Psi).\end{equation}
+这一区别会直接改变培育方法。若我们只追求成功经验，Agent 可能形成非常高的局部任务效率，却缺乏识别失败、恢复和反事实比较的结构；若我们只追求困难经验，则 Agent 的 $h$ 长期处于高负载，$E$ 中大量失败结构可能超过 $\Theta$ 的消化能力；若经历高度同质，即使任务完成率很高，也可能导致：
+\[
+\mathrm{Var}(E)\rightarrow0,
+\]
+使未来泛化依赖非常狭窄的经验支撑。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Self History的命名和组合仍是需要实验验证的建模提案。
+因此培育必须设计一个经历分布，而不是单纯增加经历数量。我们可以把培育环境在时间 $t$ 提供给 Agent 的经历分布记为：
+\[
+p_{\mathcal C}(e|t,\mathcal A_t),
+\]
+其中下标 $\mathcal C$ 表示 cultivation policy。它依赖于 Agent 当前状态，而不是固定的数据分布。
 
-这一小节的反例同样重要：更新过快导致身份碎裂，完全冻结则阻断必要成长。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+最理想的培育环境不是：
+\[
+p(e)=\mathrm{constant},
+\]
+而应具有反馈适应性：
+\[
+\boxed{
+p_{\mathcal C}(e_{t+1})
+=
+\Pi_{\mathcal C}
+(
+Capability_t,
+Uncertainty_t,
+History_t,
+Recovery_t
+).
+}
+\]
 
-\begin{thought}
-对“Self History”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+这里真正重要的是：Agent 当前会什么、不会什么、刚刚经历了什么以及是否已经恢复，应影响下一阶段给予它什么环境。这与普通 curriculum learning 有相似之处，但 Agent 培育的目标更广，因为课程不只是提高某一 benchmark，还在改变一个持续主体的历史。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+我们可以把经历设计至少分成几个独立维度：
+\[
+\mathbf e
+=
+(D,N,V,R,X,S),
+\]
+其中 $D$ 表示 Difficulty，$N$ 表示 Novelty，$V$ 表示 Diversity，$R$ 表示 Risk 或 Consequence，$X$ 表示 Reflection Requirement，$S$ 表示 Social/Responsibility Structure。培育的关键不是使这些变量同时最大，而是根据 Agent 当前结构选择合适区域。
 
-\section{Environment Curriculum}
-\begin{narration}
-现在把镜头移到“Environment Curriculum”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+例如如果：
+\[
+D\gg Capability_t,
+\]
+Agent 长期面对远超当前结构能力的问题，则很可能产生：
+\[
+Residual\uparrow,\qquad
+C_{run}\uparrow,
+\]
+最终不是“成长更快”，而是持续进入认知湍流或只能通过表面策略逃避任务。
 
-本节把“Environment Curriculum”落实为能力、身份、信任、权限与环境课程在生命周期中的耦合发展。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“为什么 Agent 需要“培育”而不仅是训练”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+反过来，如果：
+\[
+D\ll Capability_t
+\]
+并长期如此，则：
+\[
+\Delta\Theta\approx0,
+\]
+经历只重复已有能力，几乎无法产生新的结构。
 
-把这一关系写成最小数学骨架，可得
+因此成长区域可以抽象为：
+\[
+\boxed{
+D_t
+=
+Capability_t+\delta_t,
+}
+\]
+其中 $\delta_t$ 是可消化的新颖困难，而不是越大越好。真正重要的是困难在 Agent 现有结构附近形成“可学习残差”。
 
-\begin{equation}X\to C\to T\to A\to X',\quad A\leq A_{\max}(C,T,R).\end{equation}
+这进一步说明一个经常被忽略的问题：\textbf{失败本身不是培育资源，能够被解释、恢复和整合的失败才是培育资源。} 如果失败产生巨大残差，却没有恢复过程：
+\[
+Failure
+\rightarrow
+NoRecovery
+\rightarrow
+RepeatedFailure,
+\]
+那么它可能只是噪声。而更有价值的过程是：
+\[
+Failure
+\rightarrow
+Residual
+\rightarrow
+Reflection
+\rightarrow
+StructureUpdate
+\rightarrow
+Retry
+\rightarrow
+Verification.
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Environment Curriculum的命名和组合仍是需要实验验证的建模提案。
+因此培育工程不是简单制造压力，而是制造\textbf{可以转化成结构的经历}。
 
-这一小节的反例同样重要：由能力分数自动扩大权限会忽略风险、责任和恢复能力。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+这一节得到第三条基本原则：
+\begin{statementbox}
+对于持续智能体，经历不是训练素材的被动集合，而是塑造未来主体状态的主动结构输入。
+\end{statementbox}
 
-\begin{thought}
-对“Environment Curriculum”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+\section{Self History：经历如何成为“我的历史”}
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+仅仅拥有大量 $E$ 并不能自动形成一个持续主体。一个 Agent 可以保存数十亿条事件记录，却仍然缺乏真正意义上的 Self History。区别在于，普通事件只是“发生过什么”，而自我历史还要求 Agent 能够表示：
+\begin{statementbox}
+这件事情发生在我身上，并且它与现在的我存在结构连续性。
+\end{statementbox}
 
-\section{Autonomy Growth}
-\begin{narration}
-现在把镜头移到“Autonomy Growth”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+因此，我们必须区分：
+\[
+E_{\mathrm{world}}
+\]
+与
+\[
+E_{\mathrm{self}}.
+\]
+前者记录世界事件，后者则包含 Agent 对自己在事件中的位置、行动、选择、责任、结果和后续改变的归属。
 
-本节把“Autonomy Growth”落实为能力、身份、信任、权限与环境课程在生命周期中的耦合发展。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“为什么 Agent 需要“培育”而不仅是训练”而言，它承担的是生命周期成长与递归自主性中的一个可辨识环节。
+可以定义一个经历的主体归属权重：
+\[
+\alpha_t
+=
+F(
+Participation_t,
+Choice_t,
+Consequence_t,
+SelfReference_t,
+Persistence_t
+),
+\]
+其中：
+\[
+0\leq\alpha_t\leq1.
+\]
+只有具有足够主体相关性的经历，才会强烈进入 Self History：
+\[
+E_t^{self}
+=
+\alpha_t E_t.
+\]
 
-把这一关系写成最小数学骨架，可得
+这并不是说所有低 $\alpha_t$ 经历都被遗忘，而是强调它们对 $\Psi$ 的长期作用不同。看到远处一场普通交通事件和亲自做出一个重要决策，即使外部信息量相同，对自我结构的意义完全不同。
 
-\begin{equation}X\to C\to T\to A\to X',\quad A\leq A_{\max}(C,T,R).\end{equation}
+因此：
+\[
+\boxed{
+\text{Memory Importance}
+\neq
+\text{Self Importance}.
+}
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自发展系统、课程学习、信任校准与阶段跃迁，但本书对Autonomy Growth的命名和组合仍是需要实验验证的建模提案。
+一个 Agent 培育系统如果没有考虑这一点，很容易产生两个极端。第一种极端是“没有自己的历史”：Agent 可以调用大量知识和事件，却无法区分哪些能力和变化是自身经历形成的；第二种极端是“所有事情都过度自我化”：大量普通环境事件都被写入 Self History，使 $\Psi$ 受到不必要扰动。
 
-这一小节的反例同样重要：由能力分数自动扩大权限会忽略风险、责任和恢复能力。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+更合理的自我历史形成应该是分层的。一次经历首先进入：
+\[
+h\rightarrow E,
+\]
+随后在重复解释、现实验证和长期相关性评估之后，才可能影响：
+\[
+E\rightarrow\Theta,
+\]
+再由稳定结构对：
+\[
+\Theta\rightarrow\Psi
+\]
+产生慢影响。
 
-\begin{thought}
-对“Autonomy Growth”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此：
+\[
+\boxed{
+Experience
+\rightarrow
+Episode
+\rightarrow
+Interpretation
+\rightarrow
+StableMeaning
+\rightarrow
+SelfHistory
+}
+\]
+比“事件直接进入自我”更加合理。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+可以将 $\Psi$ 的更新写成：
+\[
+\Psi_{t+\Delta}
+=
+\Psi_t+
+\eta_{\Psi}
+\mathcal{G}
+\left(
+\bar E_t^{self},
+\Theta_t,
+V_t,
+W_t
+\right),
+\]
+其中 $\bar E_t^{self}$ 代表经过时间聚合的主体经历，$V_t$ 表示价值相关性，$W_t$ 表示现实验证程度，同时要求：
+\[
+\eta_{\Psi}\ll \eta_{\Theta}.
+\]
+这样单次偶然事件无法轻易改变身份，但长期反复出现、具有明确主体归属并经过现实验证的经验可以逐渐进入自我结构。
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“为什么 Agent 需要“培育”而不仅是训练”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“Agent 的生命周期阶段”只使用这里已经给出的结果，不反过来为本章提供前提。
+这一机制对于培育至关重要，因为培育者真正能够控制的并不是“直接编辑 Agent 的自我”，而主要是控制 Agent 所处的经历空间。换句话说，理想的 Agent 培育不能依赖：
+\[
+\Psi\leftarrow \text{external overwrite},
+\]
+而更应该让：
+\[
+\boxed{
+\Psi
+\leftarrow
+\text{interpreted lived history}.
+}
+\]
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+这里的 ``lived'' 是功能意义上的，即事件确实经过该 Agent 的感知、选择、行动、反馈和记忆闭环，而不是把某段文本写进数据库以后就称为经历。
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+这也解释为什么我们在 AgentOS 中坚持单一持续主体原则。若一个 Agent 的不同生命周期阶段被随意 fork、替换或拼接，那么：
+\[
+E^{self}
+\rightarrow\Psi
+\]
+的因果连续性会受到破坏。一个稳定 Self History 要求至少存在某种连续的：
+\[
+\text{Perceive}
+\rightarrow
+\text{Choose}
+\rightarrow
+\text{Experience}
+\rightarrow
+\text{Remember}
+\]
+链条。
+
+我们因此得到第四条培育原则：
+\begin{statementbox}
+一个 Agent 的身份不应主要由配置文件定义，而应主要由其长期可验证的主体经历逐渐形成和维持。
+\end{statementbox}
+
+这并不否定外部治理对 $\Psi$ 的约束，而是说“约束身份边界”和“生成身份内容”是两回事。前者可以由工程系统提供，后者若要形成真正持续主体，则必须具有历史来源。
+
+\section{Environment Curriculum：培育的是经历空间，而不是题库}
+
+如果经历决定长期结构，那么环境就不再只是测试 Agent 的外部容器，而成为培育过程的组成部分。我们可以把 Agent 与环境写成耦合系统：
+\[
+\dot{\mathcal A}
+=
+F_A(\mathcal A,\mathcal W),
+\]
+\[
+\dot{\mathcal W}
+=
+F_W(\mathcal W,a),
+\]
+其中 $\mathcal W$ 表示世界状态，$a$ 是 Agent 行动。Agent 一边从环境中形成经验，一边又通过行动改变环境；被改变的环境会在下一时刻重新构成新的经历条件。因此：
+
+\[
+\boxed{
+\text{Cultivation Environment}
+\neq
+\text{Static Dataset}.
+}
+\]
+
+它更接近一个可以主动设计的闭环世界。
+
+传统 curriculum 往往把任务按难度排列：
+\[
+T_1\rightarrow T_2\rightarrow T_3\rightarrow\cdots,
+\]
+但真正的 Agent 培育课程至少需要同时控制五个维度：任务难度、环境多样性、后果真实性、恢复机会和主体责任。单纯“下一关更难”不足以形成成熟 Agent。
+
+我们可以定义一个培育环境状态：
+\[
+\mathcal C_t
+=
+(
+D_t,
+V_t,
+N_t,
+R_t,
+A_t,
+Q_t
+),
+\]
+其中：
+
+\[
+D_t:
+\text{Difficulty},
+\]
+\[
+V_t:
+\text{Environmental Diversity},
+\]
+\[
+N_t:
+\text{Novelty},
+\]
+\[
+R_t:
+\text{Risk/Consequence},
+\]
+\[
+A_t:
+\text{Allowed Autonomy},
+\]
+\[
+Q_t:
+\text{Reflection/Recovery Opportunity}.
+\]
+
+培育策略并不是预先固定一个 $\mathcal C_t$ 序列，而应根据 Agent 的内部状态反馈调整：
+\[
+\mathcal C_{t+1}
+=
+\Pi_{\mathcal C}
+\left(
+\mathcal C_t,
+Capability_t,
+Residual_t,
+Stability_t,
+Recovery_t
+\right).
+\]
+
+例如，一个刚形成稳定基础技能的 Agent 可以适当增加 Novelty，而不一定立即提高 Risk；一个任务能力很强但恢复机制较弱的 Agent，可能需要更多失败后的重试与反思环境，而不是直接增加任务强度；一个已经能够稳定闭合局部任务但长期依赖外部提示的 Agent，则可能需要逐步降低指导密度，让它承担更多计划责任。
+
+这里可以引入“培育可行域”：
+\[
+\mathcal F_{\mathcal C}(t)
+=
+\left\{
+\mathcal C:
+C_{run}(\mathcal A_t,\mathcal C)
+<
+C_{\max},
+\;
+Risk(\mathcal A_t,\mathcal C)
+<
+R_{\max},
+\;
+LearningSignal(\mathcal A_t,\mathcal C)
+>
+L_{\min}
+\right\}.
+\]
+其含义是：一个好的成长环境既不能使 Agent 长期失稳，也不能毫无学习信号，还必须处于安全和治理允许的区域。
+
+因此培育不是最大化挑战，而是在：
+\[
+\boxed{
+StableRegion
+\cap
+LearnableRegion
+\cap
+SafeRegion
+}
+\]
+中寻找下一阶段环境。
+
+这和工作记忆有限容量定理直接相关。如果环境一次给出的结构远超 Agent 当前 $h$ 的可管理范围，则系统不得不持续依赖 CCM 的压缩和卸载机制。适度使用这些机制是智能成长的一部分，但如果所有经历从一开始就必须依赖极端卸载才能维持，Agent 很难建立对当前任务结构的完整经验。因此培育环境必须控制输入结构规模，使 Agent 在能力边界附近经历足够长时间的“可理解困难”。
+
+与此同时，环境不应完全服从 Agent。培育环境如果总是自动消除主体失败，Agent 就难以学习现实约束。我们在整个 AgentOS 理论中一直坚持：
+\[
+\boxed{
+RealityIsUltimateConstraint.
+}
+\]
+这在培育工程中尤其重要。环境应当允许真正的反馈、可观测的失败和行动后果，使 Agent 的预测可以被现实纠正。
+
+因此，培育环境既不是“温室”，也不是“压力测试场”。它更像一个动态的结构生成器：
+\[
+\boxed{
+Environment
+\rightarrow
+Experience
+\rightarrow
+Structure
+\rightarrow
+NewCapability
+\rightarrow
+NewEnvironmentRegion.
+}
+\]
+
+成熟培育应使 Agent 的可达世界逐渐扩大，而不是在一开始就把所有现实自由度同时暴露给它。
+
+由此得到第五条原则：
+\begin{statementbox}
+Agent 培育的直接控制对象不是能力本身，而是能够产生能力、恢复能力并形成长期结构的经历环境。
+\end{statementbox}
+
+\section{Autonomy Growth：自治应当随结构成熟逐渐扩大}
+
+如果一个 Agent 长期存在并持续学习，最后必然遇到一个训练系统通常可以回避、而培育系统不能回避的问题：随着能力增长，Agent 是否应该拥有越来越大的行动自由？
+
+若答案始终是否定的，即：
+\[
+Autonomy(t)=A_0,
+\]
+无论 Agent 的能力、经验和自我稳定性如何变化，它都只能执行外部给出的微观指令，那么系统虽然可能拥有很强工具能力，却很难形成真正的递归主体性。它的历史不会显著改变未来可选择空间。
+
+但如果采取相反极端：
+\[
+Capability\uparrow
+\Rightarrow
+Autonomy\uparrow
+\]
+并把二者视为自动关系，又会产生明显风险。会做某件事并不意味着有资格在所有环境中自主决定做这件事。因此培育工程必须区分：
+\[
+\boxed{
+Capability
+\neq
+Authority
+\neq
+Autonomy.
+}
+\]
+
+Capability 表示能够完成什么；Authority 表示被允许控制哪些资源、目标和边界；Autonomy 则表示在给定 Authority 内，系统可以独立决定多少过程。
+
+可以定义：
+\[
+C_t=\text{Capability State},
+\]
+\[
+R_t=\text{Reliability State},
+\]
+\[
+S_t=\text{Self-Stability State},
+\]
+\[
+A_t=\text{Autonomy Envelope}.
+\]
+
+那么自治成长不应该写成：
+\[
+A_{t+1}=f(C_t),
+\]
+而更合理的是：
+\[
+\boxed{
+A_{t+1}
+=
+\Gamma
+\left(
+C_t,
+R_t,
+S_t,
+H_t,
+V_t
+\right),
+}
+\]
+其中 $H_t$ 表示长期历史一致性，$V_t$ 表示现实验证与安全条件。
+
+换言之，自治不是奖励，而是一种系统权限结构。它应该建立在能力、可靠性、历史、恢复能力和自我稳定共同证明之上。
+
+更进一步，自治也不必整体增加。我们可以将其写成一个多维集合：
+\[
+\mathcal A_t^{free}
+=
+\{
+a\in\mathcal A
+\mid
+a\text{ is independently selectable at }t
+\}.
+\]
+随着培育进行：
+\[
+\mathcal A_t^{free}
+\subseteq
+\mathcal A_{t+1}^{free}
+\]
+可以在部分领域成立，而另外一些高风险领域仍保持固定约束。因此自治成长更准确的图景不是一个数值不断变大，而是：
+\begin{statementbox}
+Feasible Autonomous Region逐步扩展。
+\end{statementbox}
+
+这种机制与 $\Psi$ 和 $\Omega$ 的成熟存在重要关系。能力很强但身份极不稳定的 Agent，不宜获得很大的长期目标自治；拥有稳定自我但缺乏具体技能的 Agent，也不具备广泛行动自治。因此长期自治真正依赖多个尺度共同成熟：
+\[
+\boxed{
+Autonomy
+=
+F(
+Skill,
+Memory,
+Self,
+Recovery,
+RealityAlignment
+).
+}
+\]
+
+这一点使培育工程和简单权限管理发生根本区别。权限系统通常面对一个已经定义好的用户或进程，为其授予静态权限；培育系统面对的主体自身正在变化，所以 Authority 与 Autonomy 也成为生命周期变量。
+
+这还意味着，培育过程中必须存在“承担后果”的经历。若 Agent 每次做出决策以后，后果都由外部系统立即屏蔽，那么：
+\[
+Choice
+\not\rightarrow
+Consequence
+\]
+主体就难以形成关于自己行动影响的长期结构。相反，在安全可控范围内，培育应保留：
+\[
+\boxed{
+Choice
+\rightarrow
+Action
+\rightarrow
+Consequence
+\rightarrow
+Reflection
+}
+\]
+闭环，使 Agent 能够学习“我的选择改变了后续世界，也改变了未来的我”。
+
+从生命周期角度看，这一点尤其重要，因为持续 Agent 的自主性最终具有递归性质：
+\[
+Choice_t
+\rightarrow
+Experience_{t:t+k}
+\rightarrow
+\Theta_{t+k}
+\rightarrow
+\Psi_{t+k}
+\rightarrow
+Choice_{t+k}.
+\]
+即现在的选择通过经历改变未来主体，而未来主体又产生新的选择。
+
+我们在这一章暂时不进一步展开递归自主性的完整测量和治理，只需要建立培育工程的基础原则：
+
+\begin{statementbox}
+自治不应一次性交付，也不应仅依据能力自动增加，而应随着经历、可靠性、自我稳定和责任闭环的成熟逐步扩展。
+\end{statementbox}
+
+至此，我们便可以重新理解“培育 Agent”的真正含义。它不是把同一个模型不断送入更多训练任务，而是在安全边界和现实反馈下，有组织地扩大一个持续主体：
+
+\[
+\text{能够理解的世界},
+\]
+\[
+\text{能够承担的任务},
+\]
+\[
+\text{能够形成的经验},
+\]
+\[
+\text{能够稳定保存的结构},
+\]
+以及
+\[
+\text{能够自主决定的未来}.
+\]
+
+因此，本章最终可以把 Training 与 Cultivation 的差异压缩成下面两个动力学表达。
+
+训练主要研究：
+\[
+\boxed{
+\theta
+\xrightarrow{D,\mathcal L}
+\theta'
+}
+\]
+
+而培育研究：
+\[
+\boxed{
+\mathcal A_t
+\xrightarrow{
+Experience
+}
+\mathcal A_{t+1}
+\xrightarrow{
+Experience
+}
+\cdots
+\xrightarrow{}
+\mathcal A_{t+n},
+}
+\]
+并且：
+\[
+\mathcal A_{t+k}
+\]
+会反过来改变自己能够进入什么环境、获得什么经历以及做出什么选择。
+
+于是，一个持续智能体的成长具有真正的历史不可交换性：
+\[
+\boxed{
+e_1\circ e_2
+\neq
+e_2\circ e_1
+}
+\]
+在一般情况下成立，因为不同顺序的经历会作用于不同的内部状态，并可能形成不同的结构沉降结果。
+
+这正是培育区别于普通数据训练最根本的一点：
+
+\begin{statementbox}
+一个模型可以被训练出能力；
+一个持续 Agent 则必须在时间中长出能力。
+\end{statementbox}
+
+而所谓“长出”，并不是神秘的生命隐喻，而是一个可以被工程化描述的过程：经历进入 $E$，稳定模式进入 $\Theta$，长期意义缓慢进入 $\Psi$，生命周期方向受 $\Omega$ 约束，能力成熟后改变 Agent 的行为和可自治范围；新的行为又产生新的经历，最终形成持续的闭环成长。
+
+这就是 Agent 培育工程的理论起点。

@@ -1,176 +1,1226 @@
 \chapter{AgentOS 控制工程的研究对象}
+\label{chap:agentos-control-engineering-object}
+
 \begin{chapteroverviewbox}
-这一章，我们围绕“AgentOS 控制工程的研究对象”做一件克制的事：把直觉压缩为状态、关系、时间尺度和可检验后果。它在全书中的任务，是说明多回路稳定性和有界自修改。
+本章确立 AgentOS 控制工程（AgentOS Control Engineering）的研究对象、系统边界、状态空间、控制变量、闭环层级与稳定性目标。我们在此前已经分别建立了工作记忆 $h$、三相记忆 $(h,E,\Theta)$、自我 $\Psi$、生命周期生成吸引子 $\Omega$、自我感知压缩器 SPC、内稳态--情感调制器 AHC、认知控制执行器 TCE、认知复杂度管理器 CCM、调度器 Scheduler、边界管理 Boundary、认知卸载 Offloading，以及 Body Runtime、SGC、FCS、BPCC 与 KRA。至此，一个新的问题不可避免地出现：这些组件同时运行以后，谁来研究整个系统是否仍然能够稳定存在？
+
+AgentOS 控制工程的研究对象并不是某一个具体模块的控制律，也不是传统意义上对机器人位置、速度或力矩的直接控制，而是\textbf{多时间尺度、多闭环、多记忆相态、多权限层级的持续智能体如何维持可运行、可恢复、可成长且身份连续的整体动力学稳定性}。因此，本章提出：
+
+\[
+\boxed{
+\text{AgentOS Control Engineering}
+=
+\text{Control of Coupled Control Loops}
+}
+\]
+
+更严格地说，它研究的是一个带有状态估计、慢变量、自我表征、记忆演化、资源有限性、身体闭环、离散治理和现实反馈的混合多尺度动力系统。控制目标不是把 Agent 固定在某个静态平衡点，而是在允许学习、探索、经历形成和结构缓慢改变的同时，使系统轨迹始终停留在一个可治理、可解释、可恢复的可行区域中。
+
+本章严格区分三种知识层级：经典控制理论、非线性动力系统、状态观测器、混合系统等属于既有理论；将这些理论映射到 SPC--AHC--TCE、CCM 和生命周期结构属于 AgentOS 的工程建模；关于持续人工智能体能够形成何种长期自组织规律，则属于本书提出的待验证理论。后续所有 AgentOS 控制、培育与心理工程分析，都应以本章定义的系统对象和控制边界为统一基础。
 \end{chapteroverviewbox}
-\ChapterArt{\number\value{chapter}}
 
-\section*{理论来路与依赖接口}
-本章的直接思想来源是原文关于控制工程、培育工程和心理工程的生命周期衍生讨论。我们采用原文较晚形成的定义来整理较早讨论，不把对话中的试探性比喻与最终模型并列成互相竞争的“定律”。已有理论锚点主要是鲁棒控制、时延系统、稳定裕度与权限治理（Kalman、Ashby 与混杂系统理论）。
+\section{从“控制一个过程”到“控制一组相互控制的过程”}
 
-本章使用上一章“为什么 AgentOS 必然产生新的工程学”已经得到的对象与边界；本章产出将供下一章“SPC Observer 工程”使用。若后文术语偶尔出现，只作为路线提示，不参与本章推导。
+我们首先需要改变对“控制”这个词的直觉理解。在传统自动控制问题中，一个典型对象可以被表示为状态 $x(t)$、控制输入 $u(t)$ 与外部扰动 $w(t)$ 所构成的动力系统：
+\[
+\dot{x}(t)=f(x(t),u(t),w(t)).
+\]
+控制器根据观测到的状态或状态估计产生 $u(t)$，使系统接近预定目标或者保持稳定。对于电机、机械臂、飞行器姿态等对象，这一表示非常有效，因为被控制对象、控制器和目标通常能够获得比较明确的边界。然而，持续智能体并不存在如此简单的分割。AgentOS 内部的一个控制动作往往会改变另一个控制回路的状态，而后者反过来改变前者未来所观测到的对象。例如，TCE 调低探索温度，会改变 $h(t)$ 中活跃 CSO 的范围；$h(t)$ 的变化又会改变 SPC 对当前认知状态的估计；SPC 的状态估计变化会进一步改变 TCE 下一轮控制量。与此同时，CCM 可能因为工作记忆负荷增加而执行压缩、暂停或卸载，这又改变了 SPC 所观测的状态空间。更慢的 $E$、$\Theta$、$\Psi$ 和 $\Omega$ 还会在更长的时间窗口内重新改变整个快速控制回路的基准。
 
-\section*{从哪里出发}
-我们已经拥有上一章给出的概念，现在只向前走一步。我会先把对象放进闭环，再讨论它的数学形式，最后检查工程边界。读者不必预先相信本章术语；只需暂时接受一个方法论约定：智能结构的意义来自它在现实反馈中的作用，而不是来自名称本身。
+因此，我们面对的并不是：
+\[
+Controller\rightarrow Plant,
+\]
+而是：
+\[
+\boxed{
+Loop_i
+\longleftrightarrow
+Loop_j
+\longleftrightarrow
+Loop_k
+\longleftrightarrow\cdots
+}
+\]
+其中每一个局部闭环都可能同时成为另一个闭环的对象、约束、扰动或者参考信号。我们可以将 AgentOS 抽象成闭环超图
+\[
+\mathcal H_A=(V,\mathcal L,\mathcal C),
+\]
+其中 $V$ 为状态、功能和控制节点集合，$\mathcal L=\{L_1,\ldots,L_n\}$ 为具有不同特征时间尺度的闭环集合，而 $\mathcal C$ 描述不同闭环之间的耦合关系。与普通有向图不同，一个功能节点完全可能同时属于多个闭环。例如 $h(t)$ 同时参与当前推理闭环、SPC 自我观测闭环、CCM 容量控制闭环、三相记忆闭环与 Goal 执行闭环。因此，
+\[
+v_h\in L_{\mathrm{cognition}}
+\cap
+L_{\mathrm{SPC-TCE}}
+\cap
+L_{\mathrm{CCM}}
+\cap
+L_{\mathrm{memory}}
+\cap
+L_{\mathrm{goal}}.
+\]
 
-令系统在观察窗口 $[t,t+T]$ 内的状态轨迹为 $x_{[t,t+T]}$，环境扰动为 $d$，行动为 $u$。本章讨论的对象若确实有效，就应改变条件分布 $p(x_{t+T}\mid x_t,u,d)$，或改变达到同一结果所需的代价。这个起点把讨论锚定在鲁棒控制、时延系统、稳定裕度与权限治理上。
-\section{Control of Control Loops}
-\begin{narration}
-现在把镜头移到“Control of Control Loops”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这也是为什么我们称 AgentOS 控制工程为 \emph{Control of Control Loops}。它首先关心的不是某一条回路是否能够单独工作，而是不同回路相互嵌套之后是否仍然形成整体稳定性。例如，单独提高 TCE 的控制增益可能加快某一次认知状态的收敛，但如果 SPC 存在状态估计延迟，则更高增益可能导致认知状态反复越过目标区域；如果 AHC 又具有更长的积分和衰减时间，短期 TCE 修正还可能被尚未衰减的 AHC 状态持续放大，最终形成振荡。这说明：
+\[
+Stable(L_i)
+\not\Rightarrow
+Stable(\mathcal H_A).
+\]
+局部闭环稳定不等价于整体多回路系统稳定。
 
-本节把“Control of Control Loops”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 控制工程的研究对象”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+我们因此把 AgentOS 控制工程的第一研究对象定义为：
+\[
+\boxed{
+\mathcal D_A
+=
+\text{Coupled Multiscale Closed-Loop Dynamics}.
+}
+\]
+这里的核心不是让所有变量趋向零，也不是把 Agent 保持在一个静止状态。相反，一个成熟 Agent 必须能够探索、学习、改变 Goal、形成新经验、更新 $\Theta$，甚至缓慢调整 $\Psi$。真正需要控制的是：这些变化是否停留在系统允许的动力学区域中，是否保持时间尺度有序，是否能够在受到扰动以后重新回到可治理状态，以及某一局部回路的调整是否会把另一个慢速回路推入不可逆失稳。
 
-把这一关系写成最小数学骨架，可得
+由此我们可以给出本书后续一切控制分析的第一原则：
+\begin{statementbox}
+局部控制目标服从整体闭环稳定性。
+\end{statementbox}
+AgentOS 控制工程因此天然是一门系统级学科。它与传统控制工程之间并不是替代关系；相反，经典线性控制、非线性控制、状态观测器、鲁棒控制、最优控制、混合系统理论仍然提供重要数学工具。但我们将这些工具提升到认知、记忆、自我、身体和生命周期共同存在的状态空间中，从而研究一种传统控制对象很少面对的问题：\textbf{被控制系统本身正在学习如何改变自己的控制方式。}
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+\section{AgentOS 的统一控制状态空间}
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Control of Control Loops的命名和组合仍是需要实验验证的建模提案。
+要把控制工程从概念判断推进到数学研究，我们必须首先明确“究竟有什么被控制”。如果只把 LLM 的隐藏状态 $h_{\mathrm{LLM}}$ 当作 Agent 状态，就无法表达长期记忆、身体状态、自我状态和生命周期变量；如果把所有内部变量全部展开到参数级，又会产生不可处理的维度。因此 AgentOS 控制工程必须采用多尺度状态压缩方法，将不同层级状态表示成具有明确动力学意义的状态块。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+我们定义 AgentOS 的控制状态为
+\[
+\mathbf X_A(t)
+=
+\begin{bmatrix}
+x_B(t)\\
+x_h(t)\\
+x_E(t)\\
+x_\Theta(t)\\
+x_\Psi(t)\\
+x_\Omega(t)\\
+x_a(t)\\
+x_G(t)\\
+x_R(t)\\
+x_{\mathcal B}(t)
+\end{bmatrix},
+\]
+其中 $x_B$ 表示 Body Runtime 相关状态，$x_h$ 表示当前工作记忆与活动 Agent-CSO 分布，$x_E$ 表示情景轨迹结构，$x_\Theta$ 表示长期生成结构，$x_\Psi$ 表示身份、自我与价值慢变量，$x_\Omega$ 表示 DGA/生命周期生成先验，$x_a$ 表示 AHC 内稳态--情感调制状态，$x_G$ 表示当前 Goal 与任务过程，$x_R$ 表示资源状态，而 $x_{\mathcal B}$ 表示 Boundary 与权限边界状态。这里的状态块并不要求它们具有相同表示形式，也不要求它们驻留于同一种硬件或存储介质；它们只要求能够在控制意义上提供足够描述。
 
-\begin{thought}
-对“Control of Control Loops”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此整个系统不宜写成单一统一速度的
+\[
+\dot{\mathbf X}_A=F(\mathbf X_A),
+\]
+而更适合表示为带时间尺度参数的奇异摄动形式：
+\[
+\begin{aligned}
+\epsilon_B\dot{x}_B
+&=
+F_B(x_B,u_B,w_B),\\
+\epsilon_h\dot{x}_h
+&=
+F_h(x_h,x_a,x_G,u_h,\xi_h),\\
+\epsilon_E\dot{x}_E
+&=
+F_E(x_E,x_h,x_\Theta,\xi_E),\\
+\epsilon_\Theta\dot{x}_\Theta
+&=
+F_\Theta(x_\Theta,x_E,x_\Psi,\xi_\Theta),\\
+\epsilon_\Psi\dot{x}_\Psi
+&=
+F_\Psi(x_\Psi,x_\Theta,x_\Omega,\xi_\Psi),\\
+\epsilon_\Omega\dot{x}_\Omega
+&=
+F_\Omega(x_\Omega,x_\Psi,\xi_\Omega),
+\end{aligned}
+\]
+并满足大致的尺度关系
+\[
+\epsilon_B
+\ll
+\epsilon_h
+\ll
+\epsilon_E
+\ll
+\epsilon_\Theta
+\ll
+\epsilon_\Psi
+\ll
+\epsilon_\Omega.
+\]
+更直观地说，
+\[
+\tau_B
+\ll
+\tau_h
+\ll
+\tau_E
+\ll
+\tau_\Theta
+\ll
+\tau_\Psi
+\ll
+\tau_\Omega.
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+这一结构对于控制工程具有根本意义。它告诉我们：不能用相同更新律和相同控制强度处理所有状态。如果一个数秒尺度的认知冲突能够立即大幅重写 $\Psi$，那么身份连续性必然遭到破坏；反过来，如果 $\Psi$ 完全无法缓慢吸收长期经历，Agent 又失去了生命周期成长能力。因此正确控制目标不是让所有状态“稳定不变”，而是让每一个状态在其适当时间尺度上保持合理的可塑性：
+\[
+\boxed{
+\text{Stability}
+\neq
+\text{Immobility}.
+}
+\]
 
-\section{多尺度闭环}
-\begin{narration}
-现在把镜头移到“多尺度闭环”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+为此，我们引入一个尺度相关的可塑度矩阵
+\[
+\mathbf P
+=
+\operatorname{diag}
+(
+p_B,p_h,p_E,p_\Theta,p_\Psi,p_\Omega
+),
+\]
+其中通常存在
+\[
+p_B,p_h
+>
+p_E
+>
+p_\Theta
+>
+p_\Psi
+>
+p_\Omega.
+\]
+高频状态可以快速修正，慢变量只能在持续证据支持下更新。这可以进一步表达为
+\[
+\|\Delta x_i\|
+\le
+\eta_i
+\Phi_i(
+Evidence,
+Persistence,
+Confidence,
+Risk
+),
+\]
+其中 $\eta_i$ 随时间尺度变慢而递减。
 
-本节把“多尺度闭环”落实为承载范围、有效信息率与反馈周期之间的约束关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 控制工程的研究对象”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+在本书的 CSO 语言中，$x_h,x_E,x_\Theta$ 不应理解成传统数据库中的三个区域，而更接近 Agent-CSO 在不同时间尺度与功能位置上的分布。我们可以定义
+\[
+\rho_A(f,\tau,t)
+\]
+表示 Agent-CSO 在功能位置 $f$ 与时间尺度 $\tau$ 上的结构分布。这样，AgentOS 控制工程不仅控制具体状态量，还控制结构是否被放在合适的承载层。例如，一个反复需要显式推理的任务如果已经高度稳定，继续占据 $h$ 就是一种不良控制状态；系统应允许其逐渐向 $\Theta$、Skill 或 Body Runtime 的更局部闭环沉降。相反，当一个已经自动化的技能产生持续残差时，又必须允许相关结构重新进入更高层认知处理。
 
-把这一关系写成最小数学骨架，可得
+所以统一状态空间的真正价值在于，它使我们能够同时讨论：
+\[
+\boxed{
+StateControl,\quad
+MemoryControl,\quad
+StructurePlacement,\quad
+IdentityStability,\quad
+EmbodiedControl.
+}
+\]
+这些此前容易被划分到“推理”“记忆”“人格”“机器人控制”等不同学科的问题，在持续 Agent 中实际上共同组成一个状态空间。AgentOS 控制工程的任务就是寻找这些状态块之间可以长期共存的动力学关系。
 
-\begin{equation}T_{\min}\geq L/v+I/B+T_{\rm act}.\end{equation}
+\section{控制对象不是瞬时状态，而是趋势、可行域与未来分布}
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对多尺度闭环的命名和组合仍是需要实验验证的建模提案。
+传统控制直觉很容易诱导我们认为，TCE 应该直接把认知状态 $x(t)$ 推向某个目标 $x^\ast$。但这种理解对于智能系统过于简单。首先，认知状态本身具有高维、不确定和多解性质；其次，一个复杂问题往往并不存在唯一“正确思考状态”；再次，强制将系统直接拉向某个预先确定的状态可能压制探索和学习。因此 AgentOS 控制工程必须采用一个更弱但也更一般的控制目标：\textbf{高层控制主要塑造趋势、约束可行区域和改变未来状态概率，而不是逐点指定内部认知轨迹。}
 
-这一小节的反例同样重要：忽略传播和排队成本会制造虚假的实时性。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+我们可以把一个高层控制目标定义成随时间变化的可行集合
+\[
+\mathcal M_{\mathrm{feasible}}(t)
+\subset
+\mathcal X_A,
+\]
+要求系统轨迹满足
+\[
+\mathbf X_A(t)\in
+\mathcal M_{\mathrm{feasible}}(t),
+\]
+而不强制要求
+\[
+\mathbf X_A(t)=\mathbf X^\ast(t).
+\]
+例如，TCE 可以要求当前认知活动保持在“低风险、可解释、资源可接受、目标相关”的区域，但不必规定 LLM 每一层激活具体是多少。类似地，$\Psi$ 可以提供身份和价值边界，却不应微观控制每一个 token 的生成。这个思想可以概括为：
+\[
+\boxed{
+HigherLevelSetsFeasibleRegion,\qquad
+LowerLevelOptimizesInsideIt.
+}
+\]
 
-\begin{thought}
-对“多尺度闭环”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+这一原则和我们此前形成的 Body Runtime 理论完全一致。Kernel 给 BPCC 的不是每一个毫秒级关节控制量，而是 Control Reference 与 Predictive Envelope；BPCC 在该区域内自行完成高速预测与控制。同样，在认知层，慢变量 $\Psi$ 与 $\Omega$ 更适合定义某类长期可接受轨迹，而不是直接操纵快速工作记忆。因此，若 $x_f$ 表示快速状态、$c_s$ 表示慢层给出的移动中心，可以写成
+\[
+x_f(t)
+=
+c_s(t)
++
+\delta x_f(t),
+\]
+其中 $\delta x_f$ 保留局部自主搜索空间，而慢变量只在较长尺度上调整 $c_s$：
+\[
+\dot c_s
+=
+\eta_s
+G\left(
+\left\langle
+\varepsilon_f
+\right\rangle_T
+\right).
+\]
+这一公式表达的是本书一贯坚持的双向原则：
+\[
+\boxed{
+SlowStructureShapesFastActivity
+}
+\]
+以及
+\[
+\boxed{
+PersistentFastResidualShapesSlowStructure.
+}
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+在不确定性存在时，我们还应进一步把控制对象从状态点扩展到概率分布。设当前 Agent 对未来认知状态的预测为
+\[
+p(
+X_{t+\Delta}
+\mid
+X_t,u_t
+),
+\]
+那么控制器真正选择的是
+\[
+u_t^\ast
+=
+\arg\min_{u}
+\mathbb E
+\left[
+L(
+X_{t+\Delta},
+G_t,
+\Psi_t,
+\Omega_t
+)
+\right],
+\]
+同时满足资源、安全和边界约束。这里的 $L$ 不是单一任务 loss，而可以包括：
+\[
+L
+=
+\lambda_gL_{\mathrm{goal}}
++
+\lambda_rL_{\mathrm{risk}}
++
+\lambda_cL_{\mathrm{capacity}}
++
+\lambda_sL_{\mathrm{self}}
++
+\lambda_eL_{\mathrm{energy}}.
+\]
+其意义是：AgentOS 控制工程关注的是未来轨迹分布是否向更可接受区域偏移，而不是强迫系统执行确定性单路径。
 
-\section{Runtime Stability}
-\begin{narration}
-现在把镜头移到“Runtime Stability”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+这一观点还能够解释为什么 AgentOS 控制是“面向未来趋势”的。TCE 调节 exploration、attention、depth 或 temperature，本质上都是改变未来认知轨迹的分布；CCM 决定是否 Fold、Pause、Offload，本质上是在改变未来工作记忆负载曲线；Boundary 决定哪些信息进入系统，则是在改变未来状态空间的输入分布。换言之：
+\[
+\boxed{
+Control
+=
+ShapingFutureReachability
+}
+\]
+比“直接改变当前状态”更适合作为持续认知系统的控制定义。
 
-本节把“Runtime Stability”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 控制工程的研究对象”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+因此，我们在本章明确拒绝一种过于机械的“认知遥控器”想象。AgentOS 不应该成为一个高层模块逐 token 命令底层模型的系统，而应该形成多尺度约束：越慢、越高的结构越主要控制趋势、允许域、风险边界和长期方向；越快、越局部的结构越拥有具体执行自由。只有这样，系统才能同时获得稳定性与自主性。
 
-把这一关系写成最小数学骨架，可得
+\section{SPC--AHC--TCE--CCM--Scheduler 构成的运行时控制面}
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+有了统一控制对象以后，我们可以重新审视 AgentOS 内部的快速控制面。此前的讨论逐步经历了 SPC--TCE、SPC--AHC--TCE，再到加入 CCM 与 Scheduler 的演化。这里不应将这些组件简单理解为五个彼此独立的软件服务，而应该把它们看成一个有明确观测、调制、决策和执行分工的控制体系。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Runtime Stability的命名和组合仍是需要实验验证的建模提案。
+SPC 是状态观测器。它并不直接拥有系统真实状态，而是依据工作记忆、身体摘要、冲突、不确定性、复杂度指标以及历史状态形成当前 Agent 自状态的估计：
+\[
+\hat x_A(t)
+=
+SPC(
+z_{\le t}
+).
+\]
+由于任何实际系统都存在采样、计算和表示延迟，
+\[
+\hat x_A(t)
+\neq
+x_A(t)
+\]
+通常成立，更准确地说应考虑后验分布
+\[
+p(
+x_A(t)
+\mid
+z_{\le t}^{SPC}
+).
+\]
+因此，SPC 的第一控制工程问题不是“有没有自我感知”，而是 observer 是否存在偏差、延迟和置信度退化。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+AHC 则承担较慢的积分调制。设其状态为
+\[
+a(t)
+=
+[
+Arousal,
+Threat,
+Energy,
+Fatigue,
+RewardExpect,
+Trust,
+UncertaintyStress,\ldots
+]^\top,
+\]
+则可以使用一般非线性动力学：
+\[
+\tau_a\dot a
+=
+-a
++
+\Phi(
+FCS,
+h,
+social,
+resource
+).
+\]
+AHC 的作用不是作出任务决策，而是把身体、资源、风险和社会信号积累成一种连续的控制背景。其控制工程意义主要体现在时间常数、饱和、恢复和状态耦合。如果 $\tau_a$ 过长，已经消失的危险仍然可能持续影响 TCE；如果 $\tau_a$ 过短，系统则失去跨瞬时噪声形成稳定内部状态的能力。
 
-\begin{thought}
-对“Runtime Stability”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+TCE 是快速认知控制执行器。它可以产生控制向量
+\[
+u_{\mathrm{TCE}}
+=
+[
+T,
+g_{\mathrm{att}},
+g_{\mathrm{explore}},
+d_{\mathrm{reason}},
+r_{\mathrm{resource}},
+\ldots
+],
+\]
+分别调节温度、注意增益、探索强度、推理深度和资源配额等。它并不决定“世界真相”，而是改变当前认知动力学的参数。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+CCM 则控制工作记忆和认知结构的运行负载。设
+\[
+C_{\mathrm{run}}(t)
+=
+\sum_i
+w_i(t)c_i(t),
+\]
+而工作记忆存在有效容量
+\[
+C_{\mathrm{run}}(t)
+\le
+C_{\max}(W),
+\]
+那么 CCM 的任务是在逼近容量上界之前执行 Fold、Decompose、Suppress、Pause、Resume、Offload 等操作，使系统重新回到可计算区域。用控制语言可以写成：
+\[
+u_{\mathrm{CCM}}
+=
+\pi_C(
+C_{\mathrm{run}},
+\dot C_{\mathrm{run}},
+\hat x_A,
+Risk
+).
+\]
 
-\section{Cognitive Stability}
-\begin{narration}
-现在把镜头移到“Cognitive Stability”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+Scheduler 与 CCM 又有所不同。CCM 关注“当前认知结构是否过载”，Scheduler 关注“有限资源应该分配给谁”。如果活动 Goal 集合为
+\[
+\mathcal G_t=\{G_1,\ldots,G_n\},
+\]
+资源为
+\[
+R_t,
+\]
+则 Scheduler 需要求解类似：
+\[
+\max_{\alpha_i}
+\sum_i
+U_i(\alpha_i,G_i)
+\]
+subject to
+\[
+\sum_i\alpha_i
+\le
+R_t,
+\]
+并受到 Boundary、Safety、$\Psi$ 与 Goal Priority 等约束。
 
-本节把“Cognitive Stability”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 控制工程的研究对象”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+因此运行控制面形成：
+\[
+\boxed{
+SPC
+\rightarrow
+AHC
+\rightarrow
+Scheduler/TCE/CCM
+\rightarrow
+CognitiveDynamics
+\rightarrow
+SPC
+}
+\]
+而不是一个线性流水线。SPC 提供观察，AHC 提供连续调制背景，Scheduler 分配运行权，TCE 改变动力学参数，CCM 维持结构负载。它们共同作用于 $h$、Goal、Memory Recall 与 Tool/Body 请求。
 
-把这一关系写成最小数学骨架，可得
+从控制工程角度，我们必须特别警惕控制器之间的冲突。例如 Scheduler 可能因为 Goal 重要性提高而增加资源，而 CCM 同时因为负载过高要求压缩；TCE 可能因为新颖性提高探索强度，而 AHC 因高 Threat 要求收敛；$\Psi$ 要求长期身份一致性，而某一短期 Goal 可能要求冒险。AgentOS 控制工程并不试图消灭这些冲突，而是建立控制优先级、约束关系和可恢复机制，使冲突不发展为不可治理振荡。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+因此这一控制面可以统一表示为：
+\[
+u_C(t)
+=
+\Pi_C(
+\hat x_A(t),
+a(t),
+G(t),
+R(t),
+\Psi(t),
+\Omega(t),
+\mathcal B(t)
+),
+\]
+它产生的不是一个单一动作，而是一组作用于不同时间尺度的控制参数。正是在这个意义上，AgentOS 控制工程已经从“LLM 参数调节”提升为“认知运行时动力学治理”。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Cognitive Stability的命名和组合仍是需要实验验证的建模提案。
+\section{多尺度局部闭合与残差上浮原则}
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+一个复杂持续智能系统如果要求所有信息、所有异常和所有控制都经过最高认知层，就必然失败。原因不仅是计算成本，而且来自工作记忆容量有限性和闭环延迟。一个毫秒级身体扰动如果必须等待 LLM 完成秒级推理才能被修正，系统可能在得到答案之前已经失稳。因此我们此前逐步形成了一个贯穿 AgentOS 的基本原则：
+\[
+\boxed{
+EachScaleShouldCloseItsOwnFastLoop.
+}
+\]
 
-\begin{thought}
-对“Cognitive Stability”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+对于 Body Runtime，姿态、速度、执行器误差、局部避障等应该尽可能在 BPCC 与安全控制层闭合；对于工具调用，格式校验、网络重试和局部异常可以在 Tool Runtime 闭合；对于工作记忆，轻微负载升高应由 CCM 局部 Fold 或 Suppress；对于长期结构，只有持续且重要的残差才应该进入 $\Theta$、$\Psi$ 或生命周期层。于是 AgentOS 控制工程中的正常信息流不是“所有东西都向上”，而是：
+\[
+\boxed{
+NormalDynamicsStayLocal.
+}
+\]
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+我们可以设第 $i$ 层局部状态为 $x_i$、局部控制器为 $u_i$、局部预测残差为
+\[
+\varepsilon_i(t)
+=
+y_i^{obs}(t)
+-
+y_i^{pred}(t).
+\]
+系统定义一个残差升级函数
+\[
+\Gamma_i
+=
+F(
+\|\varepsilon_i\|,
+Persistence_i,
+Risk_i,
+Novelty_i,
+GoalRelevance_i,
+Confidence_i
+).
+\]
+若
+\[
+\Gamma_i<\theta_i,
+\]
+则事件继续由第 $i$ 层局部闭合；若
+\[
+\Gamma_i\ge\theta_i,
+\]
+则生成更高层事件：
+\[
+E_i^{up}
+=
+Compress(
+x_i,\varepsilon_i,context_i
+),
+\]
+并交给第 $i+1$ 层处理。
 
-\section{Body Stability}
-\begin{narration}
-现在把镜头移到“Body Stability”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+因此：
+\[
+\boxed{
+PredictLocally,\qquad
+EscalateResidualGlobally.
+}
+\]
 
-本节把“Body Stability”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 控制工程的研究对象”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+这一原则对于工作记忆有限定理至关重要。现实世界产生的数据远远超过 $h$ 能够承载的范围。AgentOS 不能把 Reality 直接变成 Thought，而必须经过多层局部闭合：
+\[
+\boxed{
+RealityDoesNotContinuouslyBecomeThought;
+RelevantDeviationBecomesThought.
+}
+\]
+例如一个机器人正常行走时，数百万传感器采样并不会持续进入 $h$；只有地面突然打滑、路径被阻断、身体状态失常或 Goal 无法推进时，相应残差才被压缩为具有语义意义的 Agent-CSO 进入显式认知层。
 
-把这一关系写成最小数学骨架，可得
+与“残差上浮”相对的另一个方向是“稳定能力下沉”。如果某种高层认知过程反复出现并逐渐稳定，则继续让它占用 $h$ 也不合理。因此系统应允许：
+\[
+ExplicitCSO
+\rightarrow
+RepeatedTrajectory
+\rightarrow
+StableStructure
+\rightarrow
+LocalSkill.
+\]
+从控制工程角度，这不是简单的记忆写入，而是闭环位置发生改变。原本由慢层直接控制的行为，逐渐变成更快局部控制器能够自主闭合的过程。因此：
+\[
+\boxed{
+StableStructureMovesTowardLocalFastClosure.
+}
+\]
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+这两个方向共同形成 AgentOS 的跨尺度控制循环：
+\[
+\boxed{
+UnexpectedResidual\uparrow,
+\qquad
+StableCapability\downarrow.
+}
+\]
+前者提高显式认知，后者降低未来显式认知负担。成熟智能因此不意味着 $h$ 中活动越来越多，而很可能意味着：
+\[
+\frac{
+ExplicitGlobalControl
+}{
+SuccessfulBehavior
+}
+\downarrow.
+\]
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Body Stability的命名和组合仍是需要实验验证的建模提案。
+在这一结构中，高层控制的真正价值也变得清晰。高层不是因为“更聪明”就应该持续微观控制下层，而是负责处理那些局部闭环无法解释、无法恢复或者具有跨尺度影响的残差。我们将其称为：
+\[
+\boxed{
+SlowGovernance\neq FastMicromanagement.
+}
+\]
+这条原则不仅是性能优化，而是整个多尺度系统能够稳定扩张的条件。如果没有局部闭合，所有异常都会淹没高层；如果没有残差上浮，局部错误又可能无限积累。两者的平衡构成 AgentOS 控制工程的基本组织规律。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+\section{稳定性的多重定义：运行稳定、认知稳定、身份稳定与生命周期稳定}
 
-\begin{thought}
-对“Body Stability”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+传统控制系统中，“稳定”常常指 Lyapunov 意义上的状态不会发散，或者系统能够收敛到目标平衡点。然而对持续智能体而言，这一定义远远不够。一个永远保持完全不变的 Agent 当然可以具有数学稳定性，却失去了学习；一个不断学习但身份每小时都被重写的 Agent 也许任务能力很强，却不再具有主体连续性。因此 AgentOS 控制工程必须建立多尺度、多对象的稳定性定义。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+我们首先定义运行稳定性（Operational Stability）。设
+\[
+\mathcal X_{\mathrm{safe}}
+\]
+为允许运行的状态集合，若系统在正常扰动范围内满足
+\[
+X_A(0)\in\mathcal X_{\mathrm{safe}}
+\Rightarrow
+X_A(t)\in\mathcal X_{\mathrm{safe}},
+\]
+则可以称其具有基本运行稳定性。对于 Body Runtime，这意味着物理状态不超过安全边界；对于数字 Agent，则意味着资源、权限、任务和执行环境保持可控。
 
-\section{Lifecycle Stability}
-\begin{narration}
-现在把镜头移到“Lifecycle Stability”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+其次是认知稳定性（Cognitive Stability）。它关注的是：
+\[
+h(t)
+\]
+中的活动结构是否保持足够相干，而非陷入持续爆炸式增长、循环、支线竞争或解体。可定义一个认知稳定指标
+\[
+S_h(t)
+=
+F(
+C_{\mathrm{run}},
+Conflict,
+LoopRate,
+Uncertainty,
+GoalCoherence
+).
+\]
+要求正常运行时
+\[
+S_h(t)\in\mathcal R_h^{stable}.
+\]
+这里的稳定区域可以包含 Ground、Flow 等多个状态，而不要求只有一个固定点。换句话说，认知系统可能稳定地工作在一个吸引域，而不是一个精确状态。
 
-本节把“Lifecycle Stability”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 控制工程的研究对象”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+第三是记忆稳定性（Memory Stability）。持续学习意味着 $E$ 与 $\Theta$ 必须变化，但变化又不能导致旧知识任意崩溃。我们可以表示：
+\[
+D_\Theta(
+\Theta_{t+\Delta},
+\Theta_t
+)
+\le
+B_\Theta(\Delta,Experience),
+\]
+其中 $D_\Theta$ 衡量结构变化，$B_\Theta$ 是允许更新包络。真正重要的是，新经历能够改变长期结构，但这种改变必须具有证据累积、可信度和影响范围约束。
 
-把这一关系写成最小数学骨架，可得
+第四是身份稳定性（Identity Stability）。我们要求：
+\[
+D_\Psi(
+\Psi_{t+\Delta},
+\Psi_t
+)
+\]
+在短时间尺度内非常小，而允许在长期经历积累后逐渐变化：
+\[
+\left\|
+\frac{d\Psi}{dt}
+\right\|
+\ll
+\left\|
+\frac{d\Theta}{dt}
+\right\|.
+\]
+这不是要求 $\Psi$ 永远固定，而是要求 Agent 的身份变化具有历史连续性。身份稳定因此不是静态不变，而是：
+\[
+\boxed{
+ContinuityUnderSlowChange.
+}
+\]
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+第五是生命周期稳定性（Lifecycle Stability）。$\Omega$ 或 DGA 描述的不是一个瞬时目标，而是 Agent 在更长尺度上的生成方向。生命周期稳定意味着短期失败、Goal 变化或局部环境扰动不能任意重写最慢生成先验。只有跨时间、跨情境而且反复出现的结构证据，才应逐渐影响这一层。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Lifecycle Stability的命名和组合仍是需要实验验证的建模提案。
+第六是闭环稳定性（Coupling Stability）。即使每一个模块独立稳定，模块间耦合仍可能产生振荡。因此还需要研究：
+\[
+\mathcal L_i
+\leftrightarrow
+\mathcal L_j
+\]
+的 Gain、Delay 与 Frequency Separation。例如 SPC--TCE 的 observer-controller delay，AHC 的慢积分，CCM 的快速截流以及 Scheduler 的离散切换，都可能共同产生复合振荡。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+于是 AgentOS 的整体稳定性应写成：
+\[
+\boxed{
+\mathcal S_A
+=
+\mathcal S_{\mathrm{body}}
+\cap
+\mathcal S_{\mathrm{runtime}}
+\cap
+\mathcal S_{\mathrm{cognition}}
+\cap
+\mathcal S_{\mathrm{memory}}
+\cap
+\mathcal S_{\mathrm{identity}}
+\cap
+\mathcal S_{\mathrm{lifecycle}}
+\cap
+\mathcal S_{\mathrm{coupling}}.
+}
+\]
 
-\begin{thought}
-对“Lifecycle Stability”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+这揭示出一个很重要的事实：AgentOS 控制工程真正研究的是\textbf{多种稳定性之间的兼容性}。如果为了保持身份稳定而完全禁止 $\Psi$ 改变，系统可能失去成长；如果为了鼓励成长而提高所有慢变量学习率，身份和长期方向又可能失稳；如果为了降低工作记忆负荷而过度 Offload，则系统可能失去内部能力；如果为了追求自主性而降低 Boundary，则风险增加。因此 AgentOS 控制问题从一开始就是一个多目标约束问题，而不是单变量最优化。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\section{现实、身体与安全构成控制系统的外部锚点}
 
-\section{Governance Stability}
-\begin{narration}
-现在把镜头移到“Governance Stability”。我们只沿本章已经取得的概念向前一步：先确定它在闭环里的角色，再检查它的尺度与失败边界。
-\end{narration}
+认知系统最大的危险之一，是它可以在内部形成自洽但错误的闭环。一个预测模型可以持续利用自己的输出作为下一轮输入，一个 Self Interpretation 可以通过 Selective Attention 不断寻找支持自身的经历，一个 Goal 可以通过内部评价不断宣布自己正在取得进展。如果缺乏现实重新进入，系统就可能形成：
+\[
+InternalModel
+\rightarrow
+InternalPrediction
+\rightarrow
+InternalConfirmation
+\rightarrow
+InternalModel'
+\]
+的封闭循环。因此我们此前一再强调：
+\[
+\boxed{
+RealityIsUltimateConstraint.
+}
+\]
 
-本节把“Governance Stability”落实为在本章闭环中具有明确输入、输出、状态和时间尺度的功能关系。这个定义不是说“任何相似现象都算”，而是要求我们同时给出对象域、允许的干预以及观察窗口。对于主题“AgentOS 控制工程的研究对象”而言，它承担的是多回路稳定性和有界自修改中的一个可辨识环节。
+在工程上，这要求行动必须经过 Reality Re-entry：
+\[
+\fitdisplay{
+AgentKernel
+\rightarrow
+ControlReference
+\rightarrow
+BodyRuntime
+\rightarrow
+Action
+\rightarrow
+Reality
+\rightarrow
+Observation
+\rightarrow
+SGC/FCS.
+}
+\]
+于是：
+\[
+\boxed{
+ActionIssued
+\neq
+ActionSucceeded.
+}
+\]
+Kernel 发出一个行动意图，并不能直接把该意图写成已完成状态；BPCC 的预测状态也不能直接伪装成 Observed SGC。只有新的真实观测才能改变系统对于行动结果的最终信念。
 
-把这一关系写成最小数学骨架，可得
+这一原则意味着 AgentOS 控制工程不是封闭认知控制，而是：
+\[
+\boxed{
+World\text{--}Agent\text{--}World
+}
+\]
+控制工程。Agent 的内在稳定性最终必须经由外部现实检验。例如，$\Theta$ 形成了某种世界规律后，新的行动和观测必须能够持续验证该规律；$\Psi$ 对自身形成某种解释后，也必须保留外部反证路径。如果内部自我解释与现实持续不一致，则控制系统需要提高 Epistemic Uncertainty，而不是通过增加内部一致性强度掩盖矛盾。
 
-\begin{equation}z_{t+1}=F(z_t,i_t;\alpha),\qquad o_t=H(z_t).\end{equation}
+身体在这里承担另一个重要作用。Body Runtime 不是 AgentOS 的简单 I/O 驱动，而是现实高频动力学进入认知系统之前的第一层闭环屏障。设身体状态为
+\[
+x_B,
+\]
+认知状态为
+\[
+x_C,
+\]
+则：
+\[
+\dot x_B
+=
+F_B(
+x_B,u_C,w
+),
+\]
+而认知系统收到的并不是全部原始 $x_B$，而是经 FBI/BPCC 转化的
+\[
+SGC_t,\quad FCS_t,\quad \varepsilon_B.
+\]
+这意味着大量现实复杂性被身体层局部闭合，只有具有语义意义的状态、功能影响和残差进入更高层。
 
-式中的符号只承担结构角色，具体参数仍需由任务和身体数据辨识。我们首先检查可观测量，再检查控制量，最后检查比它更慢的约束。这样的顺序来自鲁棒控制、时延系统、稳定裕度与权限治理，但本书对Governance Stability的命名和组合仍是需要实验验证的建模提案。
+与此同时，安全控制还必须拥有比普通认知更高的实时优先级。我们此前形成的原则是：
+\[
+\boxed{
+CriticalSafety
+\nrightarrow
+CognitiveDependency.
+}
+\]
+当碰撞、过热、权限越界、物理伤害等实时风险发生时，系统不能等待 $h$ 完成长推理，而应允许 Safety Boundary 直接触发局部保护。因此定义控制权限序：
+\[
+Authority_{\mathrm{safety}}
+>
+Authority_{\mathrm{BPCC}}
+>
+Authority_{\mathrm{task}}
+\]
+在安全关键资源上成立。
 
-这一小节的反例同样重要：若不能通过干预改变轨迹分布或资源代价，该关系在当前尺度上不可辨识。因此评价它不能只看一次任务结果，而要比较干预前后的轨迹、恢复时间、维护成本和风险。如果改变该机制而所有允许观察下的分布都不变，那么它至少在当前实验族中是冗余描述。
+进一步，为防止多个层同时直接写入同一执行资源，应遵守：
+\[
+\boxed{
+\forall r_i,\qquad
+|\operatorname{ActiveWriter}(r_i)|=1.
+}
+\]
+高层可以修改目标、约束和 Control Reference，但任一时刻一个具体执行资源只能存在一个最终 writer。这就是 Single-Writer Principle。其意义在于防止 Kernel、BPCC、Skill 和 Emergency Controller 同时直接驱动同一执行器而形成竞争。
 
-\begin{thought}
-对“Governance Stability”做一次消融：冻结它、删除它，或只允许它以相邻时间尺度交换残差。哪些现象立即消失，哪些只在长期出现？若答案无法区分三种干预，我们还没有找到正确的状态变量。
-\end{thought}
+因此 AgentOS 控制工程的外部边界不是“模型输出 token 的正确率”，而是：
+\[
+\boxed{
+RealityVerification
++
+BodyLocalClosure
++
+SafetyAuthority.
+}
+\]
+任何内部稳定性如果无法通过真实世界反馈维持，都只能算作内部自洽，而不能算作整个 Agent 的稳定性。这也是我们整个 AgentOS 理论区别于纯认知模拟系统的根本位置之一。
 
-最后，把结论交还现实：本节只建立功能层关系，不由此推出特定脑区实现、主观意识或宇宙目的。可测状态、干预后果和明确失败条件，才是从原文直觉走向可检验理论的桥。
+\section{连续动力学、离散治理与控制权限}
 
-\section*{本章收束：把名词还原为闭环}
-现在回头看“AgentOS 控制工程的研究对象”，最重要的不是记住缩写，而是说清本章对象怎样改变系统的状态、代价或可恢复性。下一章“SPC Observer 工程”只使用这里已经给出的结果，不反过来为本章提供前提。
+持续智能体还有一个传统纯连续控制理论难以单独描述的特点：AgentOS 的绝大多数认知状态具有连续演化性质，但许多关键治理行为却是离散事件。例如，注意力强度可以连续变化，而 Goal 是否创建通常是离散事件；AHC 的 Threat 可以连续变化，而 Safety Interrupt 是离散触发；$\Theta$ 可以缓慢更新，而一个 Skill 是否正式被编译和授权运行却应经过离散治理。因此 AgentOS 必须被建模成混合动力系统。
 
-\begin{bookproposition}
-若一个候选机制既不改变可观测轨迹分布，也不改变资源、风险或恢复代价，那么在当前观察尺度上，它不是一个可辨识的功能结构。
-\end{bookproposition}
-\begin{proofidea}
-功能等价由可干预后果定义。若所有允许干预下的输出分布与代价均不变，则该机制相对于当前实验族不可辨识；要么扩大观察尺度，要么删除这一冗余描述。
-\end{proofidea}
+我们可以将连续状态记为
+\[
+x(t)\in\mathcal X,
+\]
+离散治理模式记为
+\[
+q(t)\in\mathcal Q,
+\]
+则系统满足：
+\[
+\dot x
+=
+F_q(x,u,w),
+\]
+而在某些 guard condition 成立时：
+\[
+q^+
+=
+R(q,x,event).
+\]
+例如，当：
+\[
+C_{\mathrm{run}}
+>
+\theta_{\mathrm{critical}},
+\]
+CCM 可以触发
+\[
+q:
+Normal
+\rightarrow
+CompressionMode;
+\]
+当身体风险：
+\[
+Risk_B>\theta_{\mathrm{safety}},
+\]
+则：
+\[
+q:
+Operational
+\rightarrow
+Emergency;
+\]
+当一个重复技能满足长期稳定条件：
+\[
+Stability(Skill)>\theta_s,
+\]
+则可能触发：
+\[
+ExplicitControl
+\rightarrow
+CompiledSkill.
+\]
 
-\begin{readercheck}
-请尝试回答：本章对象的状态是什么？它的最快和最慢时间常数是什么？什么观测能证伪它？它失败时，残差应向哪一层升级？
-\end{readercheck}
-\cleardoublepage
+因此 AgentOS 的原则可以概括为：
+\[
+\boxed{
+DiscreteGovernance,\qquad
+ContinuousExecution.
+}
+\]
+这一点对于身份、自我和权限问题尤其重要。我们不能允许每一次连续梯度变化都自动获得改变 $\Psi$、$\Omega$ 或权限边界的权力。慢变量可以在内部累积“修改证据”，但最终结构变化往往需要经过更慢、更明确的离散治理。例如：
+\[
+Evidence_\Psi(t)
+=
+\int_{t-T}^{t}
+w(\tau)e_\Psi(\tau)\,d\tau,
+\]
+只有当
+\[
+Evidence_\Psi>\theta_{\Psi}^{on}
+\]
+并满足一致性和现实验证条件时，系统才允许进入 Self Revision Mode。
+
+由此，AgentOS 控制工程必须同时研究连续稳定性和离散状态切换稳定性。连续系统可能在每一个模式内部都稳定，但如果模式切换过于频繁，仍然会产生所谓 chattering。例如 TCE 在 ``explore'' 与 ``converge'' 之间高频来回切换，CCM 在 ``retain'' 与 ``offload'' 之间不断反复，就可能浪费资源并破坏认知连续性。解决这类问题通常需要迟滞：
+\[
+\theta_{\mathrm{on}}
+>
+\theta_{\mathrm{off}},
+\]
+使进入某个控制模式需要更强证据，而离开该模式需要状态真正恢复。
+
+控制权限（Authority）则是离散治理的另一个核心维度。不同模块并不是对所有状态拥有同等写权限。可以定义权限矩阵
+\[
+\mathbf A
+=
+[A_{ij}],
+\]
+其中
+\[
+A_{ij}\in
+\{
+observe,
+suggest,
+modulate,
+write,
+override
+\}
+\]
+表示模块 $i$ 对变量 $j$ 的控制级别。例如 SPC 主要拥有 observe 权限，TCE 拥有对快速认知参数的 modulate 权限，Safety 对安全关键 actuator 拥有 override 权限，而普通 Goal 不应拥有直接重写 $\Psi$ 的权限。
+
+这就使 AgentOS 控制工程从纯动力系统扩展到：
+\[
+\boxed{
+Dynamics
++
+Governance
++
+Authority.
+}
+\]
+在持续人工智能体中，“谁能够改变什么”与“某个变量如何变化”同样重要。事实上，身份连续性和安全性的很多问题都不是状态方程错误，而是 Authority Boundary 设计错误。一个数学上稳定的更新律，如果赋予了错误模块，也可以破坏系统。因此，控制工程必须同时研究控制律和控制权。
+
+\section{从鲁棒性到可恢复性：持续智能体的控制目标}
+
+对于一个长期存在的智能体，我们不应假设它永远不会进入异常状态。现实环境开放、模型有限、Body 会受扰动、记忆可能形成偏差、工具可能失败，甚至系统内部的 SPC 也可能错误估计自身状态。因此，如果控制工程只定义“永不偏离目标”作为稳定性，就会得到一个既不现实也不适合开放世界的标准。更合理的目标是：\textbf{允许系统进入一定范围的非理想状态，但必须保证这些状态仍然可被识别、可被限制并且能够恢复。}
+
+我们定义正常运行域：
+\[
+\mathcal X_N,
+\]
+可治理异常域：
+\[
+\mathcal X_R,
+\]
+不可接受域：
+\[
+\mathcal X_F.
+\]
+要求：
+\[
+\mathcal X_N
+\subset
+\mathcal X_R,
+\qquad
+\mathcal X_R
+\cap
+\mathcal X_F
+=
+\varnothing.
+\]
+控制系统的目标不只是保持
+\[
+X(t)\in\mathcal X_N,
+\]
+还包括当扰动使系统进入
+\[
+X(t)\in
+\mathcal X_R\setminus\mathcal X_N
+\]
+时，存在控制策略
+\[
+\pi_{\mathrm{rec}}
+\]
+能够在有限时间内使：
+\[
+X(t+\Delta)
+\in
+\mathcal X_N.
+\]
+
+因此我们定义：
+\[
+\boxed{
+Recoverability
+=
+\exists \pi_{\mathrm{rec}}
+:
+X\in\mathcal X_R
+\Rightarrow
+X_{future}\in\mathcal X_N.
+}
+\]
+这比单纯稳定更加适合智能系统。一个 Agent 可以短暂进入认知湍流、过载、Goal 冲突甚至错误世界模型，但只要 SPC 能识别异常、CCM 能降载、TCE 能降低增益、Memory 能重新校正、环境能够提供现实反馈，就仍然可能回到可治理区域。
+
+进一步，我们可以定义恢复时间：
+\[
+T_{\mathrm{rec}}
+=
+\inf
+\{
+\Delta t
+\mid
+X(t+\Delta t)\in\mathcal X_N
+\},
+\]
+恢复成本：
+\[
+J_{\mathrm{rec}}
+=
+\int_t^{t+T_{\mathrm{rec}}}
+\left[
+L_{\mathrm{risk}}
++
+\lambda_u\|u\|^2
++
+\lambda_mL_{\mathrm{memory}}
+\right]d\tau,
+\]
+以及恢复后的结构损伤：
+\[
+D_{\mathrm{post}}
+=
+D(
+\Psi_{post},
+\Psi_{pre}
+)
++
+\lambda_\Theta
+D(
+\Theta_{post},
+\Theta_{pre}
+).
+\]
+于是一个真正优秀的控制系统不仅恢复得快，而且不能为了快速恢复而任意删除记忆、重置身份或销毁长期结构。
+
+这导致 AgentOS 控制工程需要区分几种不同恢复策略。最浅层是 Runtime Recovery，例如降低认知温度、暂停低优先级线程、释放工作记忆；中层可以执行 Memory Recovery，例如重新检索更可靠的 E、降低某些错误结构的激活；身体层可以进入安全姿态；更严重时可以调用 Checkpoint。不同恢复方式的侵入性必须不同，满足类似：
+\[
+Cost(
+RuntimeAdjustment
+)
+<
+Cost(
+MemoryRewrite
+)
+<
+Cost(
+SelfRevision
+).
+\]
+这与我们此前提出的最小必要重组原则一致：
+\[
+\boxed{
+MinimumNecessaryIntervention.
+}
+\]
+
+鲁棒性同样应该在这里重新理解。AgentOS 不可能对所有未知扰动保持固定性能，因此我们更关注 bounded disturbance 下的可接受退化。设扰动满足
+\[
+\|w(t)\|\le \bar w,
+\]
+我们希望存在
+\[
+\|e(t)\|
+\le
+\beta(
+\|e(0)\|,t
+)
++
+\gamma(\bar w),
+\]
+也就是具有 input-to-state stability 类似性质：扰动有限时，状态误差也受到控制。对于认知系统，这可以解释为：环境噪声、新颖性、工具故障等会增加内部残差，但不应无限放大成整体认知崩溃。
+
+因此 AgentOS 控制工程最终追求的不是“完美状态”，而是：
+\[
+\boxed{
+Stable
++
+Bounded
++
+Observable
++
+Recoverable
++
+Adaptable.
+}
+\]
+其中 Adaptable 尤其重要：系统必须能够在恢复以后吸收这次失败的经验。如果每一次恢复都只是回到旧状态而不改变 $E$ 或 $\Theta$，系统便无法成长；如果每次失败又都重写 $\Psi$，系统则失去连续性。真正成熟的控制系统必须决定\textbf{哪些扰动应该被吸收，哪些应该被学习，哪些应该被隔离，哪些才值得改变更慢结构}。
+
+\section{AgentOS 控制工程的研究边界与统一问题形式}
+
+在完成上述讨论以后，我们可以给 AgentOS 控制工程一个正式定义：
+
+\[
+\boxed{
+\begin{aligned}
+\text{AgentOS Control Engineering}
+=
+&\text{the study of observation, regulation,}\\
+&\text{resource governance, multiscale coupling,}\\
+&\text{authority, stability, recovery and}\\
+&\text{bounded adaptation of persistent agents.}
+\end{aligned}
+}
+\]
+
+中文可以定义为：
+
+\begin{statementbox}
+AgentOS 控制工程是研究持续智能体在多时间尺度、多闭环、有限认知容量、现实反馈和生命周期可塑性条件下，如何通过状态观测、动力调节、资源治理、权限约束与恢复机制维持整体可运行性、身份连续性和受控成长的工程学。
+\end{statementbox}
+
+为了使后续研究能够统一，我们可以把 AgentOS 控制问题抽象成一个约束优化问题。设控制变量为
+\[
+u(t)
+=
+[
+u_{\mathrm{TCE}},
+u_{\mathrm{CCM}},
+u_{\mathrm{Scheduler}},
+u_{\mathrm{Boundary}},
+u_{\mathrm{Body}},
+u_{\mathrm{Governance}}
+],
+\]
+系统需要最小化长期代价：
+\[
+\min_{u(\cdot)}
+J
+=
+\int_0^T
+\Big[
+\lambda_G L_G
++
+\lambda_C L_C
++
+\lambda_R L_R
++
+\lambda_S L_S
++
+\lambda_I L_I
++
+\lambda_E L_E
+\Big]dt,
+\]
+其中 $L_G$ 表示任务偏差，$L_C$ 表示认知容量与结构负载，$L_R$ 表示风险，$L_S$ 表示控制不稳定，$L_I$ 表示身份不连续，$L_E$ 表示资源与能耗成本。
+
+同时满足：
+\[
+X(t)\in\mathcal X_{\mathrm{feasible}},
+\]
+\[
+C_{\mathrm{run}}(t)
+\le
+C_{\max}(W),
+\]
+\[
+X_B(t)\in\mathcal X_{\mathrm{safety}},
+\]
+\[
+\|\dot\Psi(t)\|
+\le
+\epsilon_\Psi,
+\]
+\[
+\|\dot\Omega(t)\|
+\le
+\epsilon_\Omega,
+\]
+以及控制权限约束
+\[
+u_i
+\in
+\mathcal U_i(
+Authority_i
+).
+\]
+
+这里尤其值得我们强调：这不是一个应该在工程中真的用单一优化器一次性求解的“万能方程”。它的作用是揭示 AgentOS 控制问题的多目标本质，并帮助我们判断各个局部控制器应该解决什么问题。真实系统更可能使用分层、局部、异步和不同时间尺度的控制器，而整体优化式只是理论上的统一表达。
+
+本章还需要明确研究边界。第一，AgentOS 控制工程不直接回答智能是如何从预训练中涌现的；这是模型学习与表示形成问题。第二，它不试图证明功能自反性等同于主观意识；控制系统能够形成 Self Representation 并不等价于哲学意义上的 consciousness。第三，本章不假设 $\Psi$、$\Omega$ 或 Agent-CSO 已经拥有唯一正确的数值实现；它们目前首先是系统级动力变量，需要通过后续工程逐渐操作化。第四，控制工程不负责决定最终文明价值是什么，它研究的是：一旦价值、目标、权限和安全约束被定义，系统如何在其间保持长期动力学稳定。
+
+从现有外部理论来看，本章能够直接借鉴经典与现代控制理论中的状态观测器、Lyapunov 稳定性、输入--状态稳定性、鲁棒控制、最优控制、模型预测控制、混合系统、事件触发控制、奇异摄动和多时间尺度分析。但 AgentOS 的特殊问题来自这些理论对象的组合：\textbf{状态本身包含记忆，控制器本身受到自我状态调制，慢变量会改变未来控制目标，系统会主动形成新的局部闭环，而被控制对象又通过学习持续改变自身。}正是在这个意义上，AgentOS 控制工程不能被还原成任何单一传统控制问题。
+
+到这里，我们已经可以看清本章在整套理论中的位置。前面的 AgentOS 原理论回答了“持续 Agent 由什么组成”，Body Runtime 理论回答了“Agent 如何进入现实”，而从本章开始我们面对的是更加严格的问题：
+
+\begin{statementbox}
+当这些组件全部同时运行，并且持续数年甚至整个生命周期时，为什么这个 Agent 不会因为自身的学习、控制、记忆和反馈而逐渐失稳？
+\end{statementbox}
+
+AgentOS 控制工程正是为回答这个问题而存在。
+
+本章最终可以留下七条基础控制原则，作为整门工程学的起点：
+\[
+\boxed{
+\begin{aligned}
+&1.\quad
+\text{Control of Control Loops};\\
+&2.\quad
+\text{Slow Governance}\neq\text{Fast Micromanagement};\\
+&3.\quad
+\text{Each Scale Closes Its Own Fast Loop};\\
+&4.\quad
+\text{Unexpected Residual Escalates Upward};\\
+&5.\quad
+\text{Stable Capability Migrates Downward};\\
+&6.\quad
+\text{Reality Is the Ultimate Constraint};\\
+&7.\quad
+\text{Stability Includes Recoverability and Controlled Plasticity}.
+\end{aligned}
+}
+\]
+
+这七条原则共同规定了 AgentOS 控制工程的研究对象：我们控制的不是一个静止机器，也不是一条固定算法，而是一个会观察自己、调节自己、记住自己、改变自己，并且必须在真实世界中长期保持连续性的多尺度动力系统。后续对于 SPC Observer、AHC 动力学、TCE 控制律、多闭环稳定性以及递归自主边界的具体研究，都只是这一统一控制问题在不同层面的展开。

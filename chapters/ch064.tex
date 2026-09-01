@@ -2,7 +2,6 @@
 \label{chap:body_safety_boundary}
 
 \begin{chapteroverviewbox}
-\textbf{【本章总体说明】}
 本章讨论 AgentOS 具身体系中一个不能由认知智能替代、也不能被认知智能覆盖的基础问题：当智能体已经通过 Body Runtime 进入物理世界或具有现实作用能力的数字世界以后，谁拥有对不可逆危险的最终即时处置权？前文已经建立了 Agent Kernel、SGC、FCS、BPCC 以及 ``Predict Locally, Escalate Residual Globally'' 的多时间尺度体系，但这些机制解决的是\emph{智能如何高效行动}，而不是\emph{当高层认知来不及反应、判断错误、发生阻塞甚至自身失稳时，系统如何仍然保持最低安全性}。因此，本章引入独立于普通认知闭环的 Body Safety Boundary，并确立
 \[
 \boxed{
@@ -81,6 +80,7 @@ RiskReasoning.
 \]
 而 Body Safety Boundary 处理的是已经接近硬物理、硬资源或硬权限边界的状态，例如
 \[
+\fitdisplay{
 Collision,\quad
 OverTemperature,\quad
 OverCurrent,\quad
@@ -88,6 +88,7 @@ LossOfBalance,\quad
 UnsafeVelocity,\quad
 ForbiddenWrite,\quad
 ResourceRunaway.
+}
 \]
 前者需要语义判断，后者首先需要约束执行。
 
