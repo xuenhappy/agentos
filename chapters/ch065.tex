@@ -570,15 +570,14 @@ L_{ctrl}
 \lambda_5 L_{intervention},
 \]
 其中 $L_{goal}$ 测量实际结果与 Kernel 目标之间偏差；$L_{constraint}$ 衡量约束违反；$L_{energy}$ 表示身体资源消耗；$L_{risk}$ 表示风险暴露；$L_{intervention}$ 则衡量 Kernel 不必要进入低层控制的程度。最后一项尤其重要，因为一个成熟 Agent 应当满足：
-\[
-\boxed{
-ExplicitCognitiveIntervention\downarrow
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ExplicitCognitiveIntervention\downarrow
 \quad
 \text{while}
 \quad
-TaskSuccess\uparrow.
-}
-\]
+TaskSuccess\uparrow.\)}
+\end{statementbox}
 
 这也是``能力向下沉降''在 KRA 中的工程表达。一开始 Kernel 可能需要频繁参与某个动作过程。随着 BPCC 与 KRA 逐渐学会稳定映射，高层介入次数应下降。当局部能力足够成熟时：
 \[

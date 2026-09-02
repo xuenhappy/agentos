@@ -66,16 +66,15 @@ nc.
 则系统至少必须采取以下行为之一：停止引入新结构、压缩现有结构、把同时问题转换成时序问题、迁移一部分结构至其他承载体，或者改变问题本身的表示方式。Offloading 对应其中“迁移承载”的基本动作。
 
 这也告诉我们为什么认知卸载不是一个附加优化模块，而是 AgentOS 能够长期存在的必要条件。如果没有 Offloading，一个持续运行的 Agent 面临的最终不是“知识不足”，而是“越来越多历史结构同时要求当前认知负责”。长期智能的成熟方向恰好相反：
-\begin{equation}
-\boxed{
-\frac{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \frac{
 \mathrm{ExplicitProcessingCost}
 }{
 \mathrm{EffectiveCapability}
 }
-\downarrow.
-}
-\end{equation}
+\downarrow.\)}
+\end{statementbox}
 一个越来越成熟的 Agent，应当以更少的当前显式认知承担越来越大的有效能力空间。
 
 \section{$h\rightarrow E$：把当前认知转化为可恢复经历}

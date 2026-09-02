@@ -42,13 +42,12 @@ F^{\mathrm{int}}
 \mathrm{DataType},
 \]
 那么得到的是一个 Hardware Abstraction Layer，而不是 Cognitive Body Interface。一个持续智能体真正需要解决的是另一类问题：
-\[
-\boxed{
-\mathbf z_t
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathbf z_t
 \longrightarrow
-\text{What does this signal mean for the Agent's closed loop?}
-}
-\]
+\text{What does this signal mean for the Agent's closed loop?}\)}
+\end{statementbox}
 换言之，身体接口不能停留在``摄像头像素是什么''，而必须进一步回答``这些变化是在描述外部世界，描述身体自身，还是在表明某种现实状态正在提高当前 Agent 的行动压力、资源压力或安全风险''。
 
 我们可以通过一个简单例子看到传统分类为什么会失效。假设摄像头观察到一团快速接近的火焰。像素本身首先只是：

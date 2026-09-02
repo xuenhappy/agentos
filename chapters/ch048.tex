@@ -891,15 +891,14 @@ Activate(\Theta,C_t),
 
 而只激活与当前情境有关的稀疏子结构。于是学习产生的直接收益并不是“记住更多”，而是：
 
-\[
-\boxed{
-SearchSpace\downarrow,
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SearchSpace\downarrow,
 \qquad
 PredictionQuality\uparrow,
 \qquad
-ExplicitReasoningCost\downarrow.
-}
-\]
+ExplicitReasoningCost\downarrow.\)}
+\end{statementbox}
 
 若现实反馈持续与 $\Theta$ 冲突，则又发生：
 
@@ -2119,9 +2118,9 @@ FutureAgentCSO.\)}
 
 进一步可以把固定拓扑 AgentOS 的统一动力学浓缩成：
 
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 W_t
 &\xrightarrow{Observation}
 h_t                                                     \\
@@ -2145,9 +2144,8 @@ E_{t+1}
 G_{t+k}
 \xrightarrow{Choice}
 W_{t+k+1}.
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 
 并始终满足三个基础条件：
 

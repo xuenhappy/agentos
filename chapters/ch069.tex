@@ -1156,9 +1156,9 @@ ActionFreedomWithinGovernedAuthorityEnvelope.
 
 经过本章，我们可以把整个系统栈压缩成四层：
 
-\[
-\boxed{
-\begin{array}{c}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{array}{c}
 AgentOS:\ CognitiveStructure,\ Identity,\ Goal,\ Memory,\ Authority\\[2mm]
 \downarrow\\[2mm]
 ComputerOS:\ Process,\ File,\ Network,\ Service,\ Resource\\[2mm]
@@ -1166,9 +1166,8 @@ ComputerOS:\ Process,\ File,\ Network,\ Service,\ Resource\\[2mm]
 LinuxKernel:\ Scheduling,\ Memory,\ Driver,\ Security,\ IPC\\[2mm]
 \downarrow\\[2mm]
 Hardware:\ Compute,\ Storage,\ Network,\ Device,\ Energy
-\end{array}
-}
-\]
+\end{array}\)}
+\end{statementbox}
 
 这里真正重要的不是层数，而是每一层拥有不同的原生状态变量与控制责任。
 

@@ -571,13 +571,12 @@ StableStructureMovesTowardLocalFastClosure.
 \end{statementbox}
 
 这两个方向共同形成 AgentOS 的跨尺度控制循环：
-\[
-\boxed{
-UnexpectedResidual\uparrow,
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle UnexpectedResidual\uparrow,
 \qquad
-StableCapability\downarrow.
-}
-\]
+StableCapability\downarrow.\)}
+\end{statementbox}
 前者提高显式认知，后者降低未来显式认知负担。成熟智能因此不意味着 $h$ 中活动越来越多，而很可能意味着：
 \[
 \frac{
@@ -980,17 +979,16 @@ X(t+\Delta)
 \]
 
 因此我们定义：
-\[
-\boxed{
-Recoverability
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Recoverability
 =
 \exists \pi_{\mathrm{rec}}
 :
 X\in\mathcal X_R
 \Rightarrow
-X_{future}\in\mathcal X_N.
-}
-\]
+X_{future}\in\mathcal X_N.\)}
+\end{statementbox}
 这比单纯稳定更加适合智能系统。一个 Agent 可以短暂进入认知湍流、过载、Goal 冲突甚至错误世界模型，但只要 SPC 能识别异常、CCM 能降载、TCE 能降低增益、Memory 能重新校正、环境能够提供现实反馈，就仍然可能回到可治理区域。
 
 进一步，我们可以定义恢复时间：

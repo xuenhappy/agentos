@@ -281,13 +281,12 @@ AgentCSO(C;F_{high},\tau_{slow})
 AgentCSO(C;F_{local},\tau_{fast}).
 \]
 也就是说，同一个任务相关结构原先需要通过 $h$、规划器和高层模型显式处理，经过大量稳定经验后，逐渐迁移到局部闭环。系统成熟的一个重要标志不是 ``每次都想得更多''，而是
-\[
-\boxed{
-\frac{ExplicitCognitiveIntervention}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \frac{ExplicitCognitiveIntervention}
 {SuccessfulRoutineBehavior}
-\downarrow.
-}
-\]
+\downarrow.\)}
+\end{statementbox}
 
 因此，Skill Ecosystem 不能退化成传统意义上的 ``函数商城''。一个真正意义上的 Skill 至少需要具备能力描述、适用条件、状态前提、权限要求、执行接口、成功判定、残差返回、风险边界和版本信息。可以把技能描述为
 \[

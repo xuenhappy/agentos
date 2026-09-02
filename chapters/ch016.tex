@@ -19,11 +19,7 @@ FunctionalTopology\)}
 本章只讨论``CSO流如何塑造拓扑''，至于什么时候已有拓扑已经无法有效承载新的 CSO 流、什么时候应该真正触发拓扑重构，以及如何防止拓扑因短时噪声而频繁改变，将在下一章的``智能结构相变与发育''中进一步处理。
 \end{chapteroverviewbox}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/cognitive-structure-functional-topology.png}
-\caption{长期 CSO 流对功能拓扑的沉降作用}
-\end{figure}
+
 \section{从动态认知过程到稳定功能结构}
 
 当我们观察一个刚刚接触陌生任务的智能体时，会发现大量处理过程必须通过显式认知协调完成。一个新的问题首先进入工作记忆 $h(t)$，系统需要调用不同记忆、工具、规划和预测功能，建立临时关系，再经过多轮反馈才能完成任务。此时，认知活动具有明显的``在线组装''特征：某个 Agent-CSO 并没有一个已经确定的局部处理闭环，而是在多个功能之间不断迁移。
@@ -698,16 +694,15 @@ UnconditionalAdvantage.
 它只在未来任务统计结构与过去具有一定连续性时成立。
 
 从这个角度看，人类专家、成熟企业和长期 Agent 都会表现出类似现象：它们不是因为每一刻都进行更多计算而强大，而是因为过去大量昂贵协调已经被沉积进结构。因此成熟智能的一项重要指标可能不是``单位时间显式推理量''越来越大，而是：
-\[
-\boxed{
-\frac{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \frac{
 ExplicitGlobalCoordinationCost
 }{
 SuccessfulBehavior
 }
-\downarrow.
-}
-\]
+\downarrow.\)}
+\end{statementbox}
 
 这与全书后续所强调的
 \[
@@ -794,15 +789,14 @@ ChangeOfCSORealization,
 }
 \]
 而更深层的：
-\[
-\boxed{
-Development
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Development
 =
 PersistentCSOMigration
 \rightarrow
-FunctionalTopologyEvolution.
-}
-\]
+FunctionalTopologyEvolution.\)}
+\end{statementbox}
 
 从时间尺度上看，这意味着：
 \[

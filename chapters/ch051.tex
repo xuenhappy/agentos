@@ -318,13 +318,12 @@ BodyRuntime
 第四，两者具有不同的持久性。$h(t)$ 是一个稀疏的当前认知表面，其内容会随着任务和注意而快速更替，而许多身体状态必须持续存在，即使 Kernel 当前完全不关注。例如温度、电池、网络连接、关节限制和安全状态并不会因为没有进入工作记忆而消失。Body Runtime 必须独立维护这些状态，并在达到相应触发条件时主动将异常提升给 Kernel。
 
 由此得到一个非常重要的多尺度准入原则：
-\[
-\boxed{
-BodyState
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle BodyState
 \xrightarrow{\text{relevance/residual}}
-h,
-}
-\]
+h,\)}
+\end{statementbox}
 而不是
 \[
 BodyState
@@ -716,13 +715,12 @@ x_B^{obs}
 若这种残差短暂且可恢复，应由局部调整解决；若残差长期存在，则意味着 Kernel 对世界、身体或任务的高层假设可能已经错误，于是必须上浮。
 
 因此：
-\[
-\boxed{
-FastResidual
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastResidual
 \xrightarrow{\text{persistence}}
-SlowModelUpdate.
-}
-\]
+SlowModelUpdate.\)}
+\end{statementbox}
 
 这与本书第一编建立的：
 \[

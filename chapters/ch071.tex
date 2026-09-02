@@ -456,13 +456,12 @@ Kernel 的预测应至少分为两种尺度。高层预测
 \delta\ll\Delta ,
 \]
 覆盖更短未来，却拥有更高局部精度。因此不存在 ``Kernel 与 BPCC 谁负责预测'' 的二选一问题。正确结构是：
-\[
-\boxed{
-BroadSlowPrediction
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle BroadSlowPrediction
 \bowtie
-NarrowFastPrediction .
-}
-\]
+NarrowFastPrediction .\)}
+\end{statementbox}
 
 Kernel 通过 E 检索类似轨迹，通过 $\Theta$ 调用长期生成结构，通过 h 保持当前关键变量，再由 $\Psi/\Omega$ 对未来路径施加身份与生命周期约束。由此得到的不是机械动作序列，而应首先形成一个\textbf{可行未来区域}。这个区域随后才会被压缩成 Body Runtime 可以执行的 Predictive Envelope 和 Control Reference。
 

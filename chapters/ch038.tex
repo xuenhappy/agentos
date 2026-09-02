@@ -1239,9 +1239,9 @@ CCM 应增加语义归一化、结构合并和循环检测强度。
 \mathcal G_s=(V_s,E_s)
 \]
 当前仍然与任务相关，但其内部细节已经暂时不需要显式参与推理。CCM 可以将其转换为：
-\[
-\boxed{
-\mathcal G_s
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathcal G_s
 \longrightarrow
 F_s
 =
@@ -1250,9 +1250,8 @@ Summary,
 Interface,
 State,
 Pointer
-].
-}
-\]
+].\)}
+\end{statementbox}
 
 其中 Summary 是摘要，Interface 描述该子结构与当前认知图的关系，State 表示其求解状态，
 Pointer 则提供未来恢复细节的索引。

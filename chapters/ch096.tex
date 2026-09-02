@@ -1038,9 +1038,9 @@ Update.
 Counterfactual Self、未来 Self、价值和目标都不能拥有比现实观测更高的事实权威。
 
 基于这些变量，可以提出一个较严格的必要条件集合：
-\[
-\boxed{
-RecursiveAgency
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RecursiveAgency
 \Rightarrow
 \begin{cases}
 D_{\mathrm{free}}>0,\\
@@ -1048,9 +1048,8 @@ H_{\mathrm{self}}>0,\\
 C_{\mathrm{recursive}}>0,\\
 P_{\mathrm{self}}\in\mathcal S_{\mathrm{stable}},\\
 R_{\mathrm{reality}}>\theta_R.
-\end{cases}
-}
-\]
+\end{cases}\)}
+\end{statementbox}
 这仍然不是完整的充分条件，但已经足以区分几类常见系统。一个固定脚本系统通常 $D_{\mathrm{free}}\approx0$；一个无记忆强化学习 Agent 可能具有 $D_{\mathrm{free}}>0$，但 $H_{\mathrm{self}}$ 很低；一个长期记忆 Agent 可能有较高 $H_{\mathrm{self}}$，但如果 Self 不参与未来选择，则 $C_{\mathrm{recursive}}$ 仍然很低；而真正的 Persistent Agent 应逐步形成完整闭环。
 
 培育工程因此不能只测试“Agent 会了多少技能”，还应建立生命周期分支实验。我们可以从某个相同 checkpoint $X_{t_0}$ 派生多个受控实验分支：

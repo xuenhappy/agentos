@@ -831,13 +831,12 @@ D_{CB} & D_{CK} & D_{CC}
 \end{bmatrix},
 \]
 其中 $D_{ij}$ 表示第 $j$ 条研究线的变化对第 $i$ 条研究线造成的依赖强度。战略目标不是令所有非对角项为零，因为真正的智能本来就是耦合系统；而是降低不必要的实现耦合，同时保留必要的语义耦合：
-\[
-\boxed{
-ImplementationCoupling\downarrow,
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ImplementationCoupling\downarrow,
 \qquad
-SemanticCoupling=Stable.
-}
-\]
+SemanticCoupling=Stable.\)}
+\end{statementbox}
 
 这也是为何 $3+1+1$ 的早期研发应该优先建设 Reference Simulator。数字身体、模拟机器人、虚拟环境和受控 GUI 可以作为 Reality Proxy，让 Kernel、Body Runtime 与控制算法在没有完整硬件的情况下共享可重复实验。在这样的环境中，可以同时测量：
 \[

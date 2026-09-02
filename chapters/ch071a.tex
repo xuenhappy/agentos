@@ -227,13 +227,12 @@ StateVariable.
 
 两者之间的关系不是简单调用，而是：
 
-\[
-\boxed{
-\mathcal M_{\mathrm{base}}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathcal M_{\mathrm{base}}
 \xrightarrow{\text{multiscale dynamics}}
-\mathcal C_{\mathrm{emergent}}.
-}
-\]
+\mathcal C_{\mathrm{emergent}}.\)}
+\end{statementbox}
 
 因此 AgentOS 的目标不是把所有高级能力逐一物化，而是建立一个足够稳定、可调节、具有正确时间尺度和现实反馈的基础动力系统，使高级认知能力能够在其中形成。
 
@@ -307,16 +306,15 @@ C_t
 
 如果一个 Agent 在大量不同情境中持续表现出类似选择偏向，则可定义一个慢尺度价值结构：
 
-\[
-\boxed{
-\mathcal V_{\mathrm{slow}}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathcal V_{\mathrm{slow}}
 =
 \lim_{T\rightarrow large}
 \mathbb E[
 ChoiceBias\mid Context
-].
-}
-\]
+].\)}
+\end{statementbox}
 
 因此价值观可以理解为：
 

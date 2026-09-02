@@ -946,13 +946,12 @@ Tolerance_i
 因此任何学习过程都不能把纯预测对象直接升级成 observed entity。
 
 Safety Constraint 的 invariant 可以是：
-\[
-\boxed{
-u\notin\mathcal U_{safe}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle u\notin\mathcal U_{safe}
 \Rightarrow
-ExecutionDenied.
-}
-\]
+ExecutionDenied.\)}
+\end{statementbox}
 即便 Kernel 极度确信任务价值，也不能让 KRA 通过重新解释安全语义绕过 Safety Boundary。
 
 Contract Envelope 还需要规定变化速率：
