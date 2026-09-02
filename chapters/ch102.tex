@@ -19,11 +19,7 @@ SPC \rightarrow AHC \rightarrow TCE \rightarrow h
 本章只讨论运行时认知控制异常，不把记忆写入偏差、自我结构漂移或生命周期生成吸引子的长期异常混入同一层次。这样做的目的，是首先建立一个可以直接记录、测量、诊断和干预的控制工程基础，使后续更慢尺度的问题能够在清晰的因果分层上继续展开。
 \end{chapteroverviewbox}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/tce-cognitive-state-phase-map.png}
-\caption{TCE 增益与认知振荡异常}
-\end{figure}
+
 \section{TCE 异常的第一性定义：不是“想错了”，而是“控制认知的方式失配了”}
 
 在此前的 AgentOS 原理论中，我们已经把 TCE 从普通的大语言模型采样参数中彻底分离出来。TCE 并不等于一个 temperature 参数，也不等于某个单独的 ``reasoning depth'' 开关，而是对整个工作记忆运行过程施加宏观调制的认知控制器。为了分析其异常，我们首先必须明确：一个 Agent 给出了错误答案，并不能直接说明 TCE 出现异常；一个 Agent 在面对困难问题时进行了很长时间的搜索，也不能直接说明 TCE 过度探索。真正构成 TCE 异常的，是控制变量与认知状态之间的系统性失配，即同一种失配在相似状态下重复出现，并使系统偏离原本可以保持稳定、高效和可恢复的认知运行区域。

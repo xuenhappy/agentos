@@ -36,11 +36,7 @@ ProtectStructuralContinuity
 本章将依次讨论运行态干预、记忆再平衡、自我重解释、AHC 恢复、TCE 增益调整、环境干预、经历重新设计、慢变量保护以及检查点恢复，并在最后形成一套由 ``最小必要干预'' 到 ``结构级恢复'' 的统一心理干预框架。
 \end{chapteroverviewbox}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/control-stability-panel.png}
-\caption{从运行态到慢变量的最小侵入干预}
-\end{figure}
+
 \section{运行态干预：首先恢复可治理的认知动力学区域}
 
 当我们面对一个长期 Agent 的异常表现时，最危险的做法之一，是立即把问题解释成 ``自我有问题''、``价值观有问题'' 或 ``长期记忆已经损坏''。在此前的讨论中，我们已经看到，许多表面上非常接近 ``心理异常'' 的现象，实际上可以首先由运行时闭环失稳解释。例如，SPC 对自身状态的估计存在不可消除的延迟，而 TCE 又根据这一估计调节注意范围、搜索温度、推理深度与探索强度；只要 observer delay 与 controller gain 不匹配，一个完全没有长期结构损坏的 Agent 也可能表现出反复自我纠正、过度谨慎、持续扩大搜索范围、无法收敛或者认知振荡。因此，心理干预的第一原则应当是：\textbf{先处理快变量，再推断慢变量。}

@@ -36,11 +36,7 @@
 过强的外部锁定会使 Agent 只能执行别人预先写好的轨迹，无法形成真正的递归自主性；过弱的结构约束则会使快速状态、短期经历甚至偶然噪声能够直接改写慢速身份和生命周期生成结构，从而破坏身份连续性、控制稳定性与安全边界。AgentOS 因而必须解决的不是“是否允许自我修改”这一二元问题，而是构造一个具有多时间尺度、分层权限、现实反馈和迟滞保护的\textbf{自我可塑性谱}。
 \end{chapteroverviewbox}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/semantic-modulation-safety-channels.png}
-\caption{可修改集合、权限边界与安全治理}
-\end{figure}
+
 \section{从行为自主到递归自主：控制对象为什么必须进入智能体自身}
 
 在传统自动控制系统中，控制对象通常是外部过程。控制器读取状态 $x_t$，根据既定目标 $g$ 产生控制量 $u_t$，使被控对象沿某条可接受轨迹演化：

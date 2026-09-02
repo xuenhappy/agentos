@@ -1,7 +1,11 @@
 \documentclass[lang=cn,11pt,scheme=chinese]{elegantbook}
 \geometry{a4paper,top=24mm,bottom=24mm,inner=23mm,outer=20mm}
-\IfFontExistsTF{HYZhengYuan}{%
-  \setCJKmainfont[AutoFakeSlant=.15]{HYZhengYuan}%
+\IfFontExistsTF{HYZhengYuan-45W}{%
+  \setCJKmainfont[
+    BoldFont=HYZhengYuan-55W,
+    ItalicFont=HYZhengYuan-35W,
+    ItalicFeatures={FakeSlant=.15}
+  ]{HYZhengYuan-45W}%
 }{%
   \setCJKmainfont{Source Han Serif SC}%
 }
