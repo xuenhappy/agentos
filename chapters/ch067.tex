@@ -19,11 +19,7 @@ World\rightarrow BodyRuntime\rightarrow KRA\rightarrow Kernel
 本章讨论的是一个固定宏观功能拓扑内部的联合学习稳定性问题。这里的 ``Kernel--KRA--BPCC 三体'' 是工程动力系统意义上的三个耦合学习子系统，而非物理学中的三体问题；本章也不预设后续更强的功能拓扑自重构能力。
 \end{chapteroverviewbox}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/control-stability-panel.png}
-\caption{Kernel—KRA—BPCC 联合学习稳定性}
-\end{figure}
+
 \section{三个学习动力系统同时存在时，问题从参数学习转化为关系学习}
 
 当我们只考虑一个固定模型时，持续学习通常被表述为参数更新问题。设模型参数为 $\theta$，经验流为 $\mathcal{D}_t$，则最简单的学习动力学可以写成
