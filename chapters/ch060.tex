@@ -12,11 +12,6 @@ Lower Level Predicts the Executable Future.
 即高层预测未来的可行结构，低层预测未来的可执行轨迹。两者共同服务于同一个 World--Agent--World 闭环，而现实世界始终保有最终验证权。
 \end{chapteroverviewbox}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/global-local-predictive-control.png}
-\caption{Kernel 全局预测与 BPCC 局部预测}
-\end{figure}
 \section{Global Prediction：Agent Kernel 的长时间尺度预测}
 
 在进入双预测系统的具体接口之前，我们首先需要澄清一个容易造成架构混乱的问题：Agent Kernel 的预测究竟应该预测什么。如果我们把 Kernel 简单理解成一个性能更强、推理链更长的预测模型，那么很容易自然地要求 Kernel 对身体的每一个未来状态进行越来越精确的预测。例如对于机器人，我们可能试图要求 Kernel 直接预测未来五十毫秒关节的位置、摩擦力变化和驱动器输出；对于数字 Agent，则可能要求 Kernel 直接预测鼠标下一帧位移、浏览器动画状态乃至每一次网络事件。这种设计从计算意义上并非完全不可能，却违反了我们此前反复建立的多尺度闭环原则：不同时间尺度上的动力学，应当在能够闭合该时间尺度反馈的最低层级完成局部预测与控制。
