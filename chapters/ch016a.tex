@@ -105,13 +105,12 @@ L_B(C\mid M_t^B,B).
 \]
 因此必须明确：
 
-\[
-\boxed{
-\text{CSO本体复杂度}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{CSO本体复杂度}
 \neq
-\text{Agent-CSO条件复杂度}.
-}
-\]
+\text{Agent-CSO条件复杂度}.\)}
+\end{statementbox}
 
 前者关注结构本身可以被多短地描述，后者关注该结构对于某个具体智能体还剩下多少新增描述负担。
 
@@ -400,11 +399,10 @@ L(E\mid\Theta).
 }
 \]
 其中$L(E\mid\Theta)$表示当前生成结构仍无法解释的具体情景残差。因此可以把$E$理解为
-\[
-\boxed{
-\text{结构模型}+\text{时间残差}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{结构模型}+\text{时间残差}\)}
+\end{statementbox}
 中的后者。
 
 长期生成结构$\Theta$的任务则是寻找能够用更短描述解释大量重复经验的生成器：
@@ -463,15 +461,14 @@ ReusableGenerativeCompression.
 H\rightarrow E\rightarrow\Theta
 \]
 可以解释为
-\[
-\boxed{
-\text{实时展开}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{实时展开}
 \rightarrow
 \text{轨迹残差压缩}
 \rightarrow
-\text{可复用生成压缩}.
-}
-\]
+\text{可复用生成压缩}.\)}
+\end{statementbox}
 
 反向过程
 \[
@@ -602,13 +599,12 @@ n
 若某类认知—行动结构重复出现，建立技能的一次性成本有限，并且技能化后单次调用成本严格低于显式执行成本，则必然存在有限重复次数$N_S$，使得当$n>N_S$时，技能化的生命周期累计成本严格低于持续显式推理。
 
 该定理说明，技能编译可以理解为典型的摊销压缩。一个原本必须在工作状态中反复展开的Agent-CSO，被转换成一个更适合快速执行的程序化Agent-CSO：
-\[
-\boxed{
-\operatorname{ACSO}^{\mathrm{explicit}}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \operatorname{ACSO}^{\mathrm{explicit}}
 \longrightarrow
-\operatorname{ACSO}^{\mathrm{procedural}}.
-}
-\]
+\operatorname{ACSO}^{\mathrm{procedural}}.\)}
+\end{statementbox}
 
 因此技能形成并不是增加一个与认知理论无关的新模块，而是CSO改变自身承载形式。其本质效果是使
 \[
@@ -862,13 +858,12 @@ J_{\mathrm{topology}}.
 证毕。
 
 该定理给出了下式的严格成本解释：
-\[
-\boxed{
-PersistentCSOMigration
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PersistentCSOMigration
 \rightarrow
-StableFunctionalCoupling.
-}
-\]
+StableFunctionalCoupling.\)}
+\end{statementbox}
 
 因此可以重新定义
 \[
@@ -993,21 +988,19 @@ C_{\mathrm{risk}}
 其中$\mathcal{R}$是受约束拓扑重写算子，$\Delta L$表示预期MDL收益。
 
 于是形成一个典型的快慢系统：
-\[
-\boxed{
-FastCSOFlow
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastCSOFlow
 \rightarrow
-SlowTopologyLearning
-}
-\]
+SlowTopologyLearning\)}
+\end{statementbox}
 以及
-\[
-\boxed{
-SlowTopology
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SlowTopology
 \rightarrow
-FutureCSOFlow.
-}
-\]
+FutureCSOFlow.\)}
+\end{statementbox}
 
 这与前文多尺度智能动力学中的一般规律完全一致：
 \begin{statementbox}
@@ -1101,17 +1094,16 @@ J_{\mathrm{future}}(a)
 \]
 
 由此可以得到一条一般演化顺序：
-\[
-\boxed{
-RepresentationAdaptation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RepresentationAdaptation
 \rightarrow
 CarrierMigration
 \rightarrow
 FunctionalMigration
 \rightarrow
-TopologyReorganization.
-}
-\]
+TopologyReorganization.\)}
+\end{statementbox}
 
 \section{结构连续性与可逆迁移}
 
@@ -1444,58 +1436,52 @@ OpenWorld.
 
 因此反复出现的结构如果永远停留在高成本在线状态，将持续消耗有限$B_h$。为了维持更大的任务范围，系统必须把不同类型的结构逐渐分配到更适当的承载方式：
 
-\[
-\boxed{
-\text{短时立即需要}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{短时立即需要}
 \rightarrow
-\text{在线展开},
-}
-\]
+\text{在线展开},\)}
+\end{statementbox}
 
-\[
-\boxed{
-\text{尚未完全理解但值得保留}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{尚未完全理解但值得保留}
 \rightarrow
-\text{经验轨迹},
-}
-\]
+\text{经验轨迹},\)}
+\end{statementbox}
 
-\[
-\boxed{
-\text{跨情境重复规律}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{跨情境重复规律}
 \rightarrow
-\text{生成结构},
-}
-\]
+\text{生成结构},\)}
+\end{statementbox}
 
-\[
-\boxed{
-\text{重复行动模式}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{重复行动模式}
 \rightarrow
-\text{技能},
-}
-\]
+\text{技能},\)}
+\end{statementbox}
 
-\[
-\boxed{
-\text{内部长期维持不经济}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{内部长期维持不经济}
 \rightarrow
-\text{外部载体},
-}
-\]
+\text{外部载体},\)}
+\end{statementbox}
 
-\[
-\boxed{
-\text{长期重复功能迁移}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{长期重复功能迁移}
 \rightarrow
-\text{拓扑沉降}.
-}
-\]
+\text{拓扑沉降}.\)}
+\end{statementbox}
 
 因此可以形成一条统一的因果链：
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 &\text{有限实时承载}
 \\
 &\Longrightarrow
@@ -1515,9 +1501,8 @@ OpenWorld.
 \\
 &\Longrightarrow
 \text{拓扑沉降}.
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 
 这说明三相记忆、技能形成、Offloading和拓扑学习虽然在表面上属于完全不同的认知功能，实际上可能源于同一个更加基础的约束：有限智能体必须不断寻找更低的未来条件描述成本。
 
@@ -1562,13 +1547,12 @@ L_h(H_t)\leq B_h
 
 因此，本章最重要的结论不是“智能追求最短描述”，而是：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \textbf{
 有限智能体在任务充分、现实一致、安全和实时性约束下，持续寻找对未来重要认知结构更低成本的承载方式。
-}
-}
-\]
+}\)}
+\end{statementbox}
 
 在这一意义上，
 \begin{statementbox}
@@ -1597,10 +1581,9 @@ PersistentCSOFlowShapesTopology.
 
 因此，可以把本章的核心命题最终写为：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \textbf{
 功能拓扑不是预先给定的永久容器，而是历史认知结构流在更慢时间尺度上的压缩记忆；而学习则是认知结构不断寻找更优表示、时间尺度、功能位置与载体，并在长期重复中逐渐改变承载这些结构的功能拓扑。
-}
-}
-\]
+}\)}
+\end{statementbox}

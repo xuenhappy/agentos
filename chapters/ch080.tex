@@ -86,13 +86,12 @@ EachScaleShouldCloseItsOwnFastLoop
 NormalDynamicsStayLocal.
 \end{statementbox}
 如果一个身体的每次平衡修正、每次触觉补偿、每个局部运动误差都必须经过高层模型进行推理，那么 Agent Kernel 会被大量本来可以局部闭合的 Agent-CSO 占据，工作记忆 $h(t)$ 的有限容量将被身体微观扰动持续消耗。成熟智能的正确方向恰恰相反：稳定、重复、局部可闭合的认知结构应当逐渐下沉到更加快速、更加局部、更加确定的承载层。因此小脑芯片并不是“为了加速大模型”，而是为了物理实现
-\[
-\boxed{
-StableAgentCSO
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle StableAgentCSO
 \rightarrow
-FastLocalCarrier.
-}
-\]
+FastLocalCarrier.\)}
+\end{statementbox}
 
 从外部理论看，这一设计与层级控制、实时嵌入式系统、模型预测控制、适应控制以及生物小脑研究具有明显的形式联系，但本书并不要求人工小脑复制生物小脑的神经结构。我们关心的是功能同构：高层定义意图和可行区域，低层在现实约束内快速闭合控制，并将无法局部消解的残差重新提升。因而 ``Cerebellum Chip'' 在本文中首先是一个计算体系概念，而不是一块必须采用特定神经拟态结构的芯片名称。
 
@@ -276,13 +275,12 @@ AdaptivePrediction.
 这意味着硬件内部也需要对应的隔离。安全中断、紧急制动、限幅、姿态保护等机制，不应与普通推理任务争夺同一条不可控执行队列。
 
 从更深的认知动力学角度看，确定性是“慢层给予快层自治”的前提。高层之所以可以不持续 micromanage 低层，是因为低层能够在一个可验证的闭环包络内稳定执行。如果身体控制时延本身具有巨大不确定性，那么 Agent Kernel 就不得不持续关注底层状态，结果重新把大量局部 CSO 提升到 $h(t)$。因此
-\[
-\boxed{
-LocalDeterminism
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle LocalDeterminism
 \Rightarrow
-HigherLevelCognitiveFreedom.
-}
-\]
+HigherLevelCognitiveFreedom.\)}
+\end{statementbox}
 换句话说，底层确定性不仅提高机器人稳定性，也直接释放高层认知容量。
 
 这一节可以依赖实时系统中的 worst-case execution time、rate-monotonic scheduling、earliest-deadline-first、实时操作系统以及 robust control 等成熟理论；但 AgentOS 的新增问题在于，这些实时约束还必须与认知结构迁移、局部学习和跨尺度残差上浮共同存在。小脑芯片因此既不是传统 MCU，也不是单纯 NPU，而是面向“可学习实时闭环”的新型计算域。
@@ -369,17 +367,16 @@ x_{t+1}
 \tau_{Kernel}^{struct}.
 \]
 这意味着小脑芯片首先适应的是身体的局部动力变化；KRA 随后根据长期统计修正 Kernel 与 Body Runtime 之间的语义和动力关系；只有更持久、更稳定的变化才有资格进入 Agent Kernel 的长期结构学习。这样的层层过滤，本质上就是
-\[
-\boxed{
-FastResidual
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastResidual
 \rightarrow
 LocalAdaptation
 \rightarrow
 PersistentResidual
 \rightarrow
-CrossScaleEscalation.
-}
-\]
+CrossScaleEscalation.\)}
+\end{statementbox}
 
 硬件因此需要的不只是推理阵列，也需要支持持续更新。传统只读权重加载方式并不完全适合 BPCC。芯片应允许一部分参数、状态估计器、局部动力模型、校准系数和残差统计以高频、低代价方式更新。理想情况下，本地适应不需要把完整原始传感数据持续搬运到外部主内存，而应使用片上状态缓存和局部更新通路，从而减少
 \[
@@ -815,27 +812,25 @@ BodySkill.
 最终其主要执行计算可能从 Inference Chip 迁移至 Cerebellum Chip。只有发生异常时，相关 CSO 才再次跨硬件上浮。因此能力成熟不仅是软件参数变化，也是计算负载在物理硬件层的重新分布。
 
 这正是本章硬件理论与本书整体 CSO 迁移理论最重要的结合点：
-\[
-\boxed{
-CognitiveMigration
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CognitiveMigration
 \Rightarrow
-ComputationalPlacementMigration.
-}
-\]
+ComputationalPlacementMigration.\)}
+\end{statementbox}
 当智能真的具有生命周期时，硬件调度也必须能够表达“能力在哪里成熟、在哪里执行、什么时候重新回到高层”这样的长期结构变化。
 
 \section{Computer OS 的硬件调度：从算力管理走向多时间尺度智能资源管理}
 
 Inference Chip 与 Cerebellum Chip 的存在并不意味着 AgentOS 要取代 Linux 或重新设计一套从设备驱动开始的通用操作系统。相反，本书一直坚持
-\[
-\boxed{
-Hardware
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Hardware
 \rightarrow
 ComputerOS
 \rightarrow
-AgentOS.
-}
-\]
+AgentOS.\)}
+\end{statementbox}
 Computer OS 负责物理资源、内存、设备、进程、DMA、中断、电源和隔离；AgentOS 负责 Goal、Task、Agent-CSO、工作记忆、长期记忆、Body Skill 和认知优先级。二者之间真正需要建立的是一个能够表达智能时间尺度的资源契约。
 
 传统 OS 调度问题通常可以抽象成
@@ -910,11 +905,10 @@ d_i.
 \mathcal D_K,
 \]
 分别对应 Safety、Body、Kernel。这里 ``$>$'' 表示调度优先权而非智能层级。即使 Kernel 正在执行极其重要的长期规划，只要身体进入真正的实时危险，安全任务仍然必须拥有立即夺取执行资源的能力。这就是
-\[
-\boxed{
-CriticalSafety\nrightarrow CognitiveDependency
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CriticalSafety\nrightarrow CognitiveDependency\)}
+\end{statementbox}
 在操作系统层的实现。
 
 Linux 可以成为这一架构的第一代工程载体，因为其本身已经具备进程调度、实时调度策略、CPU affinity、device driver、DMA、IOMMU、cgroup、内存管理以及各种硬件加速设备接口。AgentOS 需要做的不是破坏这些基础，而是在其上建立一套 Intelligence Resource Runtime。未来可以通过不同执行队列和设备驱动分别向 Inference Chip 与 Cerebellum Chip 提交任务，并通过实时共享内存、事件队列和 ring buffer 交换状态。Body Runtime 应尽量避免经过高开销的通用 RPC 路径，以降低
@@ -959,21 +953,19 @@ WhatCognitiveStructureDeservesWhichCompute.
 前者不知道某个 Tensor 是否代表“我的目标”，后者也不需要知道某块 SRAM 的 cache line 如何替换。二者通过稳定的资源与实时契约耦合。只有维持这一分层，AgentOS 才能同时运行在服务器、个人计算机、汽车、机器人以及未来不同形态的具身硬件上。
 
 因此，第80章真正提出的硬件路线不是简单的 ``一块大芯片 + 一块小芯片''，而是一套与多尺度智能理论同构的物理计算结构：
-\[
-\boxed{
-InferenceChip
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle InferenceChip
 \leftrightarrow
-AgentKernel
-}
-\]
+AgentKernel\)}
+\end{statementbox}
 负责高维、语义、生成和较慢结构计算；
-\[
-\boxed{
-CerebellumChip
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CerebellumChip
 \leftrightarrow
-BodyRuntime/BPCC
-}
-\]
+BodyRuntime/BPCC\)}
+\end{statementbox}
 负责高速、确定、局部、持续适应的现实闭环；
 而
 \begin{statementbox}

@@ -50,15 +50,14 @@ w_i=w(c_i,\mathcal R_i,\mathcal D_i),
 这一选择不能完全依靠任务创建顺序，也不能简单使用固定优先级。一个刚刚出现的安全相关异常可能比已经执行数小时的长期规划更加紧迫；一个短期收益较低但与身份连续性高度相关的任务，又可能比局部高收益任务具有更高长期价值；一个工具任务虽然已经启动，却可能正在等待外部返回，此时继续为它分配高强度工作记忆没有意义。
 
 因此持续智能必然产生调度问题。其本质可以概括为
-\[
-\boxed{
-\text{有限显式认知资源}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{有限显式认知资源}
 +
 \text{并发认知需求}
 \Rightarrow
-\text{认知调度}
-}
-\]
+\text{认知调度}\)}
+\end{statementbox}
 如果不存在 Scheduler，系统表面上仍然可以拥有记忆、工具和推理能力，但这些能力之间将缺少统一的时间秩序。最终可能出现三类典型退化。第一类是\textbf{认知拥塞}：过多目标同时进入 $h(t)$，使关系结构失去相干性；第二类是\textbf{认知饥饿}：长期重要但短期不紧迫的结构永久得不到资源；第三类是\textbf{认知颠簸}：系统不断在多个任务之间来回切换，切换本身耗尽了可用资源。这三个问题共同说明，Scheduler 不是性能优化的附加组件，而是有限认知系统得以长期存在的结构性条件。
 
 在传统计算机操作系统中，Scheduler 的核心问题通常是 CPU 时间片如何分配，而 AgentOS 面临的资源集合明显更加异质。我们至少必须同时处理
@@ -140,13 +139,12 @@ Existence\neq Activation\neq Scheduling
 一个结构可以存在而未激活，可以激活但仅处于低优先级后台状态，也可以被 Scheduler 提升为当前显式处理对象。
 
 这也说明为什么 Scheduler 不是 Self。长期自我结构 $\Psi$ 可以影响 Scheduler 的优先级函数，但 Scheduler 本身只是一个运行机制。类似地，Goal 不是 Scheduler：目标定义“为什么值得做”，Scheduler 负责“什么时候做以及分配多少资源”。如果把二者混在一起，系统会失去层级分工，任何临时资源争夺都可能反过来改写长期目标。AgentOS 必须保持
-\[
-\boxed{
-Value/Goal\rightarrow SchedulingConstraint,
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Value/Goal\rightarrow SchedulingConstraint,
 \qquad
-Scheduler\nrightarrow UltimateValueDefinition.
-}
-\]
+Scheduler\nrightarrow UltimateValueDefinition.\)}
+\end{statementbox}
 
 从时间尺度上看，Scheduler 处在工作记忆动态与长期结构之间的中快尺度。它必须快于绝大多数任务生命周期，否则无法响应变化；但又不应该像最底层身体控制器那样在毫秒尺度重新规划整个认知资源分配。因此可以粗略写为
 \[
@@ -238,9 +236,9 @@ u_t,
 \end{statementbox}
 
 于是四者形成非常清晰的运行时闭环：
-\[
-\boxed{
-SPC
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SPC
 \rightarrow
 Scheduler
 \rightarrow
@@ -248,9 +246,8 @@ TCE/CCM
 \rightarrow
 CognitiveDynamics
 \rightarrow
-SPC
-}
-\]
+SPC\)}
+\end{statementbox}
 这里的箭头并不表示严格单向调用关系。实际上 Scheduler 在进行资源决策时会使用 TCE 当前给出的全局控制策略，同时可能要求 CCM 对某个进程先进行压缩后再重新评估；TCE 也会依据 Scheduler 当前承载任务的类型修改认知温度。因此更准确地说，这四者构成一个耦合的控制子系统，只是各自的控制变量不同。
 
 我们可以利用一个简单例子理解这种区分。设 Agent 正在执行复杂规划任务 $P_1$，同时收到新的环境事件 $P_2$。SPC 首先发现 $P_2$ 具有高异常度，同时当前 $h$ 已接近容量上限。Scheduler 此时并不能仅凭“异常高”立即把两个任务同时放入 $h$，因为这可能导致系统失稳。于是它可以请求 CCM 将 $P_1$ 当前工作状态压缩成一个恢复检查点
@@ -955,13 +952,12 @@ RiskTolerance.
 快层在这一包络内运行。一旦局部问题无法在包络内闭合，再触发升级。
 
 因此 AgentOS 的多时间尺度调度不是多个独立 Scheduler 的简单堆叠，而是
-\[
-\boxed{
-FastLocalScheduling
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastLocalScheduling
 \leftrightarrow
-SlowConstraintScheduling
-}
-\]
+SlowConstraintScheduling\)}
+\end{statementbox}
 的嵌套结构。这也为持续 Agent 提供一个非常重要的成熟指标：随着能力增长，更多稳定问题应能够在较快、较低层自动闭合，而较慢的显式认知资源逐渐只处理真正新颖、冲突或者需要跨尺度整合的问题。
 
 \section{调度稳定性：饥饿、颠簸、锁死与优先级反转}
@@ -1194,9 +1190,9 @@ RealityIsUltimateConstraint.
 如果外部残差持续增大，原本被压低的事件必须逐渐提高调度势能，最终突破准入阈值。这确保 Scheduler 的选择性不会演变成封闭的认知偏见。
 
 从系统角度，我们最终可以把本章确立的运行闭环浓缩为
-\[
-\boxed{
-World/Memory/Self/Goal
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World/Memory/Self/Goal
 \rightarrow
 SPC
 \rightarrow
@@ -1210,9 +1206,8 @@ CognitiveAction
 \rightarrow
 Feedback
 \rightarrow
-SPC.
-}
-\]
+SPC.\)}
+\end{statementbox}
 其中 SPC 使系统知道自己正在发生什么，Scheduler 决定现在应该把有限资源交给什么，TCE 决定这些活动以怎样的动力状态运行，CCM 负责使进入运行态的结构保持在可处理范围内，而 $h(t)$ 则成为这些治理过程最终汇聚的显式认知表面。
 
 \section{本章结论：Scheduler 是持续智能的时间秩序}

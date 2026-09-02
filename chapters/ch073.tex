@@ -3,15 +3,10 @@
 
 \begin{chapteroverviewbox}
 本章讨论 AgentOS ``3+1+1'' 总体研发路线中第一条独立技术主线——Body Runtime 的工程演进路径。这里的核心问题并不是“如何为大模型增加机器人控制接口”，而是如何构造一个可以长期独立演化、能够接入不同物理身体与数字身体，并在毫秒至秒级时间尺度上自主闭合感知--预测--控制--残差--学习循环的身体运行时。我们将坚持此前建立的基本分工：
-\[
-\boxed{
-AgentKernel=\text{决定做什么与为什么做}
-}
-\qquad
-\boxed{
-BodyRuntime=\text{决定这个身体具体怎样做到}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentKernel=\text{决定做什么与为什么做}\)}
+\end{statementbox}
 因此 Body Runtime 既不是被动设备驱动层，也不是第二个智能主体，而是位于现实世界和认知内核之间的\textbf{快速具身动力学层、现实语义压缩层和局部闭环承载层}。
 
 本章按照工程依赖关系而不是组件罗列顺序展开：首先建立稳定的 Body ABI，使身体成为可替换对象；随后形成 SGC 与 FCS 两个公开现实表示空间；再通过 BPCC 构造快速预测控制闭环；然后分别在仿真、物理机器人和数字身体上验证同一套结构；进一步把反复成功的高层控制沉降为 Body Skill；最终由 Safety 与硬件加速保证这一体系能够进入真实长期运行环境。整个研发过程始终遵守三个原则：
@@ -594,17 +589,16 @@ Action
 当 Body Runtime 能够在数字与物理身体中稳定运行以后，一个新的问题会变得越来越突出：大量已经反复完成的动作仍然由 Agent Kernel 每次重新规划。如果一个 Agent 第一次抓杯子需要显式认知是合理的，但完成一万次之后仍然从高层逐步决定末端轨迹，就说明系统没有真正学习。Body Runtime 的下一研发阶段因此是 Body Skill，即把长期稳定的认知—动作关系沉降为可局部执行的闭环。
 
 我们此前已经得到：
-\[
-\boxed{
-ExplicitCognitiveControl
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ExplicitCognitiveControl
 \rightarrow
 RepeatedTrajectory
 \rightarrow
 StablePolicy
 \rightarrow
-CompiledBodyController.
-}
-\]
+CompiledBodyController.\)}
+\end{statementbox}
 用最新的 Agent-CSO 语言，可以更准确地写成：
 \[
 AgentCSO^{explicit}
@@ -694,13 +688,12 @@ Body Skill 阶段可借鉴 motor primitive、options framework、hierarchical re
 Body Runtime 一旦进入现实，就必须面对一个不可回避的问题：认知系统并不总是来得及判断危险。Agent Kernel 的推理可能需要几百毫秒甚至数秒，而机械碰撞、电气过载、网络权限泄露、车辆失稳等事件可能在更短时间尺度内造成不可逆后果。因此安全不能被设计成一个“让大模型再想一下”的特殊 prompt，而必须成为 Body Runtime 中具有更高执行优先级的独立闭环。
 
 其基本原则是：
-\[
-\boxed{
-CriticalSafety
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CriticalSafety
 \nrightarrow
-CognitiveDependency.
-}
-\]
+CognitiveDependency.\)}
+\end{statementbox}
 对高频危险事件，必须存在
 \[
 E_{critical}
@@ -853,15 +846,14 @@ AcceleratedLocalLoop.
 这实际上使“认知结构沉降”获得了真正的硬件意义：历史上反复进行的高层计算，最终被编译成更快、更局部、更节能的现实控制结构。
 
 从更广义的 AgentOS 理论看，这里出现了一条非常重要的原则：
-\[
-\boxed{
-SemanticTimescale
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SemanticTimescale
 \longrightarrow
 ComputationalTimescale
 \longrightarrow
-PhysicalTimescale.
-}
-\]
+PhysicalTimescale.\)}
+\end{statementbox}
 智能的多尺度结构如果不能映射到真实计算资源的时间尺度，就只是软件概念；只有当不同功能闭环真正拥有与自身动力学相匹配的计算承载以后，AgentOS 才从认知架构进入完整的物理系统工程。
 
 \section{Body Runtime 研发路线的统一收束}
@@ -934,9 +926,9 @@ C@BodyRuntime.
 \]
 
 由此，一条完整 Body Runtime 研发链可以写为：
-\[
-\boxed{
-BodyABI
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle BodyABI
 \rightarrow
 SGC
 \rightarrow
@@ -950,14 +942,13 @@ BodySkill
 \rightarrow
 Safety
 \rightarrow
-HardwareAcceleration.
-}
-\]
+HardwareAcceleration.\)}
+\end{statementbox}
 
 但更深层的结构关系其实是：
-\[
-\boxed{
-RawReality
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RawReality
 \rightarrow
 SemanticReality
 \rightarrow
@@ -965,17 +956,15 @@ LocalPrediction
 \rightarrow
 LocalControl
 \rightarrow
-Reality
-}
-\]
+Reality\)}
+\end{statementbox}
 并在长期运行中不断发生：
-\[
-\boxed{
-ExplicitCognition
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ExplicitCognition
 \rightarrow
-StableLocalClosure.
-}
-\]
+StableLocalClosure.\)}
+\end{statementbox}
 
 因此，我们可以给 Body Runtime 一个比“机器人中间件”更准确的最终定义：
 \begin{definition*}
@@ -983,9 +972,9 @@ Body Runtime 是 Agent 与现实之间的快速动力学承载层：它把异构
 \end{definition*}
 
 这也解释了为什么在 ``3+1+1'' 路线中 Body Runtime 必须成为一条与 Agent Kernel 并行发展的独立研发主线。没有 Body Runtime，AgentOS 只能拥有一个越来越丰富的内部世界；有了 Body Runtime，内部 Agent-CSO 才能够稳定地通过行动重新进入现实，而新的现实又能够重新成为下一轮认知结构形成的来源。于是最基础的 World--Agent--World 闭环第一次获得真正可工程实现的身体层基础：
-\[
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 BodyRuntime
 \rightarrow
@@ -993,6 +982,5 @@ Agent
 \rightarrow
 BodyRuntime
 \rightarrow
-World'.
-}
-\]
+World'.\)}
+\end{statementbox}

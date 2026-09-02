@@ -136,13 +136,12 @@ R_{forget}
 MemorySize\rightarrow\infty,
 \]
 而是
-\[
-\boxed{
-PastStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PastStructure
 \rightarrow
-UsefulConstraintOnPresentAndFuture .
-}
-\]
+UsefulConstraintOnPresentAndFuture .\)}
+\end{statementbox}
 
 Companion Agent 特别适合暴露 ``情景记忆'' 与 ``结构记忆'' 混淆的问题。例如，一个家庭中的儿童曾经在某次暴雨中害怕雷声，这首先是一个具有时间、场景与主体关系的 $E$；如果多年经历以后，Agent 得出 ``在强雷暴条件下应主动降低刺激并提供更温和交互'' 的规律，则该规律已经成为 $\Theta$。如果系统只是把原始对话永久存储并每次全部检索，它并没有真正形成结构学习；而如果系统只保留抽象规律，又完全失去与具体共同经历的联系，它又会丧失陪伴关系中特别重要的历史感。
 
@@ -524,13 +523,12 @@ P(E_i\rightarrow E_{stable})
 Companion Agent 的第八个成熟性条件是安全，而在长期陪伴场景中，安全不能被理解成一个输出过滤器。一个持续进入家庭、数字账户、身体设备甚至物理空间的 Agent 会获得越来越大的 observation space 与 action space，因此它面对的是完整系统意义上的风险。安全必须从认知、权限、身体、实时控制、记忆与生命周期多个时间尺度共同建立。
 
 首先必须坚持
-\[
-\boxed{
-CriticalSafety
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CriticalSafety
 \nrightarrow
-CognitiveDependency .
-}
-\]
+CognitiveDependency .\)}
+\end{statementbox}
 任何需要毫秒级响应的危险都不能等待高层 LLM 完成语言推理。因此 Body Runtime 中必须存在独立于认知核心的实时安全闭环：
 \[
 Risk^{RT}

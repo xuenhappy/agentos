@@ -331,19 +331,17 @@ z\in\mathbb R^d,
 然后希望下游网络自己学习所有关系。但 AgentOS 追求的并不是任意可拟合的 latent，而是一个可以跨身体、跨模型、跨生命周期维护稳定语义契约的智能运行时。为此，我们必须主动保留现实中的两个不同关系。
 
 第一种关系是：
-\[
-\boxed{
-World\rightarrow Representation.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World\rightarrow Representation.\)}
+\end{statementbox}
 它关心现实结构如何被 Agent 描述。
 
 第二种关系是：
-\[
-\boxed{
-World\times Agent\rightarrow FunctionalInfluence.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World\times Agent\rightarrow FunctionalInfluence.\)}
+\end{statementbox}
 它关心同一现实相对于当前主体意味着什么。
 
 这两者具有不同的数学类型。
@@ -479,16 +477,14 @@ ControlUrgency=0.72.
 这里“门正在关闭”不等于“紧迫”，紧迫是门的运动、Agent 距离、当前任务、身体速度和可行动窗口共同产生的结果。通过把二者分离，我们避免了把所有世界事实都提前染上主体偏好，同时也避免了让认知核心自己从原始状态中重复计算每一个身体相关后果。
 
 因此，全书采用一个极为重要的表达：
-\[
-\boxed{
-SGC=\text{经验的内容}
-}
-\]
-\[
-\boxed{
-FCS=\text{经验的作用}.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SGC=\text{经验的内容}\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FCS=\text{经验的作用}.\)}
+\end{statementbox}
 
 这里的“经验”仍然是工程意义上的主体--世界交互经验，并不自动包含现象意识。它指的是：对一个真实存在于世界中的 Agent 来说，当前现实不仅具有可识别的结构，还具有作用于其运行状态的方向和强度。
 
@@ -869,13 +865,12 @@ P_{exp}\uparrow,
 这一机制解决了一个非常现实的问题：如果 Agent 每时每刻都“意识到”自己的 CPU 温度、电池电压、每个关节误差、网络延迟和所有风险变量，那么工作记忆将成为内部监控日志，而不是认知空间。真正成熟的智能应该能够让绝大多数身体状态在后台自动调节，仅在需要全局协调时才形成显式自我表征。
 
 所以本章坚持：
-\[
-\boxed{
-FunctionalFeeling
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FunctionalFeeling
 \rightarrow
-PossibleSelfAwareness,
-}
-\]
+PossibleSelfAwareness,\)}
+\end{statementbox}
 而不是：
 \[
 \boxed{
@@ -972,13 +967,12 @@ Goal(t)
 \]
 
 这样形成真正的双向耦合：
-\[
-\boxed{
-SGC
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SGC
 \rightleftarrows
-FCS.
-}
-\]
+FCS.\)}
+\end{statementbox}
 
 SGC 告诉系统：
 \[
@@ -1027,13 +1021,12 @@ BetterObjectEstimate.
 \]
 
 因此二元现实模型不是两个并列数据库，而是：
-\[
-\boxed{
-WorldStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle WorldStructure
 \rightleftarrows
-BodyRelativeInfluence.
-}
-\]
+BodyRelativeInfluence.\)}
+\end{statementbox}
 
 我们可以把整个双表示系统写成一个耦合状态：
 \[
@@ -1352,17 +1345,16 @@ UpdateRate(v_i)
 \]
 
 于是最终形成：
-\[
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 SGC
 \rightleftarrows
 FCS
 \rightarrow
-Agent.
-}
-\]
+Agent.\)}
+\end{statementbox}
 
 如果进一步从认识论角度整理，这个结构包含四个严格不同的层次：
 
@@ -1446,15 +1438,14 @@ SGC/FCS.
 这一原则确保 Agent 的内部模型不会因长期自预测而逐渐脱离现实。
 
 如果将整章压缩为最核心的一个公式，可以写为：
-\[
-\boxed{
-\mathcal R_A(t)
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathcal R_A(t)
 =
 \underbrace{\mathcal S_A(t)}_{\text{现实的内容}}
 \oplus
-\underbrace{\mathcal F_A(t)}_{\text{现实的作用}}
-}
-\]
+\underbrace{\mathcal F_A(t)}_{\text{现实的作用}}\)}
+\end{statementbox}
 其中 $\oplus$ 并不表示普通向量相加，而表示两种不可相互约化、却必须联合存在的现实表示。
 
 从作者的视角，我们现在可以更加准确地描述一个具身 Agent 所谓的“当前经验”。它既不是传感器原始数据，也不是一个纯粹语义世界模型，更不是若干内部感受数值。它是：

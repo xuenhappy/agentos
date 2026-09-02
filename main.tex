@@ -1,6 +1,10 @@
 \documentclass[lang=cn,11pt,scheme=chinese]{elegantbook}
 \geometry{a4paper,top=24mm,bottom=24mm,inner=23mm,outer=20mm}
-\setCJKmainfont{Source Han Serif SC}
+\IfFontExistsTF{HYZhengYuan}{%
+  \setCJKmainfont{HYZhengYuan}%
+}{%
+  \setCJKmainfont{Source Han Serif SC}%
+}
 \setCJKsansfont{Noto Sans CJK SC}
 \setCJKmonofont{Noto Sans Mono CJK SC}
 \setmainfont{TeX Gyre Pagella}

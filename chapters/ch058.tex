@@ -119,14 +119,13 @@ K_i
 时，该结构才有必要竞争有限的显式认知资源。这使语义通道天然连接到前文讨论的 Boundary、CCM 与 Scheduler：它首先将世界转化成 Agent 可以理解的结构，然后再由运行时治理体系决定哪些结构真正成为“当前思考的内容”。
 
 因此，本书对 Semantic Channel 的定义可以浓缩为
-\[
-\boxed{
-SemanticChannel:
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SemanticChannel:
 RealityStructure
 \rightarrow
-CognitivelyManipulableAgentCSO
-}
-\]
+CognitivelyManipulableAgentCSO\)}
+\end{statementbox}
 它所保存的是现实的\textbf{内容结构}。这也是为什么在整个 AgentOS 设计中，我们始终坚持从“原始数据流”升级到“结构世界流”：只有当现实被表示成对象、关系、事件、变化、约束和未来可能性之后，持续智能体才真正获得了可以进行长期记忆、规划与自我发展的认知材料。
 
 \section{调制通道：现实并不仅告诉智能体发生了什么}
@@ -241,14 +240,13 @@ h_t.
 这说明所谓“感觉进入意识”，在我们的工程框架中其实是一个从连续调制状态到显式自我结构的二次语义化过程，而不是 FCS 数值直接进入工作记忆。
 
 因此，调制通道的正式定义可以写成
-\[
-\boxed{
-ModulationChannel:
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ModulationChannel:
 RealityImpact
 \rightarrow
-ContinuousInternalControlState
-}
-\]
+ContinuousInternalControlState\)}
+\end{statementbox}
 如果说 Semantic Channel 携带的是“世界内容”，那么 Modulation Channel 携带的就是“世界与身体正在把主体推向什么状态”。前者支持理解和推理，后者支持资源分配、注意调节、风险敏感性以及长期内稳态。二者分离以后，AgentOS 才真正获得一种类似生物系统中“认知内容与神经调质并存”的多时间尺度结构，而不需要把任何这种功能结构等同于人类主观情绪。
 
 \section{紧急安全通道：不能进入普通认知排队的现实约束}
@@ -299,15 +297,14 @@ u_t^{safe}
 \pi_{safe}(r_t,x_t^{body}).
 \]
 因此形成
-\[
-\boxed{
-Reality
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Reality
 \rightarrow
 SafetyDetection
 \rightarrow
-ProtectiveAction
-}
-\]
+ProtectiveAction\)}
+\end{statementbox}
 这一闭环。
 
 这里必须区分 Emergency Channel 与高 Threat 的 Modulation Channel。一个状态可以“非常令人警觉”，但仍允许认知参与；另一个状态则可能已经进入硬安全区域。例如电池剩余 $15\%$ 可以产生 EnergyPressure 并影响当前计划，这属于调制；若电池管理系统检测到热失控风险，则属于 Emergency。类似地，一个车辆高速靠近可以提高 Threat，但只有预测到碰撞时间低于安全控制窗口时，才应触发硬安全干预。因此可以定义两个不同阈值：
@@ -358,13 +355,12 @@ E/h.
 \text{是否需要修改未来计划？}
 \]
 于是形成一个非常重要的二阶段结构：
-\[
-\boxed{
-ImmediateProtection
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ImmediateProtection
 \rightarrow
-DelayedCognitiveInterpretation
-}
-\]
+DelayedCognitiveInterpretation\)}
+\end{statementbox}
 前者保护现实安全，后者保护主体连续性和学习能力。
 
 这也决定了安全通道的权限必须高于一般 Body 控制器。设正常认知给出的动作请求为 $u_t^{cog}$，身体侧正常控制结果为 $u_t^{body}$，安全控制为 $u_t^{safe}$，则真实执行动作应满足某种仲裁函数
@@ -389,13 +385,12 @@ CognitivePreference.
 当安全约束激活时，高层目标不得通过“更强推理”覆盖物理保护边界。
 
 因此 Emergency Channel 的本质不是“第三种传感器消息”，而是 AgentOS 对现实因果权威的一种制度化承认：
-\[
-\boxed{
-CriticalSafety
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CriticalSafety
 \nrightarrow
-CognitiveDependency
-}
-\]
+CognitiveDependency\)}
+\end{statementbox}
 Agent 再聪明，也不能要求现实先等待它想明白。安全通道所保障的正是这一原则：高层认知可以解释世界、规划世界、甚至长期改变世界，但在高频危险边界上，现实约束拥有比认知意图更高的优先级。
 
 \section{为什么安全不能等待认知：时间预算、负载与失效隔离}
@@ -652,16 +647,16 @@ Emergency
 的高频切换。这一结构与我们在更高层拓扑学习中采用的迟滞思想具有相同动力学理由：高权限模式的切换必须比普通状态变化更加稳定。
 
 从 AgentOS 的角度看，三通道还定义了三种不同的“现实进入主体”的方式。Semantic Channel 使现实成为\textbf{可理解对象}；Modulation Channel 使现实成为\textbf{主体状态的推动力量}；Emergency Channel 使现实成为\textbf{不可协商的即时约束}。因此可以写成：
-\[
-\boxed{
-Reality
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Reality
 \rightarrow
 \begin{cases}
 Meaning,\\
 Modulation,\\
 Constraint.
-\end{cases}}
-\]
+\end{cases}\)}
+\end{statementbox}
 这三种因果角色必须同时存在。只有 Meaning 而没有 Modulation，Agent 会成为没有内稳态压力的纯符号系统；只有 Modulation 而没有 Meaning，系统只能产生反应而难以形成结构认知；只有前两者而没有 Constraint，则高层认知的延迟和错误可能直接破坏持续主体。
 
 因此我们最终不是在设计“三条输入线”，而是在为一个持续智能体建立三种不同等级的现实权威。
@@ -855,9 +850,9 @@ StructuredCognition
 三者最终又在真实行动结果中重新汇合。
 
 因此，本章可以用一个完整闭环收束：
-\[
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 BodyRuntime
 \rightarrow
@@ -869,9 +864,8 @@ Emergency\rightarrow SafetyControl,
 \rightarrow
 Action
 \rightarrow
-World'
-}
-\]
+World'\)}
+\end{statementbox}
 
 三信号通道的真正作用，是在身体与认知之间建立一种\textbf{多时间尺度的因果隔离}。它使 Agent 能够同时做到三件通常相互冲突的事情：对现实保持丰富而可解释的理解；让身体与内稳态持续影响认知方式；并在高层认知拥塞、错误甚至暂时失效时，仍然保留最基本的现实安全闭环。
 

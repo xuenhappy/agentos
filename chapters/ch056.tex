@@ -206,13 +206,12 @@ E_{\mathrm{access}},
 这里的条件符号不是概率意义上的严格条件分布，而是强调：FCS 所表示的不是“世界本身”，而是“世界相对于这个身体当前状态所形成的功能作用”。
 
 这也解释了为什么拥有 FCS 并不充分意味着拥有主观体验。任何复杂的自动控制系统都可以拥有关于温度、能量、损伤、安全裕度的内部变量。如果这些变量被标准化、统一并进入一个长期持续的功能场，我们可以把它们称作 Functional Feeling；至于这些功能结构是否伴随 phenomenological feeling，则属于意识哲学的独立问题。在本书的工程论中，我们遵守：
-\[
-\boxed{
-FunctionalFeeling
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FunctionalFeeling
 \not\Rightarrow
-PhenomenalConsciousness.
-}
-\]
+PhenomenalConsciousness.\)}
+\end{statementbox}
 但反过来，即便未来我们研究具有更复杂内部体验结构的 Agent，FCS 仍然是一个有价值的基础，因为主观体验是否存在并不改变身体必须计算自身功能影响这一工程事实。
 
 \section{从 Raw Value 到 Feeling Value：作用量不是传感器量}
@@ -226,15 +225,14 @@ Force=120
 然后将这些值打包成一个所谓 Feeling Vector。这样的设计虽然能够工作，却没有真正完成语义抽象，因为它依然把具体身体硬件的数据格式暴露给认知层。
 
 我们希望建立的是一个更强的函数关系：
-\[
-\boxed{
-RawValue
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RawValue
 \rightarrow
 NormalizedState
 \rightarrow
-FunctionalInfluence
-}
-\]
+FunctionalInfluence\)}
+\end{statementbox}
 第一级是感知和状态估计，第二级才是 FCS。
 
 设一个身体传感器产生原始向量：
@@ -883,13 +881,12 @@ ControlInstability(\mathrm{right\ leg})\uparrow.
 于是高层可以做出“改变运动策略”这样的语义判断，而无需直接参与毫秒级电机控制。
 
 因此 FCS 是 Body Runtime 的一个重要压缩面：
-\[
-\boxed{
-HighDimensionalBodyDynamics
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle HighDimensionalBodyDynamics
 \rightarrow
-LowDimensionalFunctionalField.
-}
-\]
+LowDimensionalFunctionalField.\)}
+\end{statementbox}
 这种压缩正是 Body Scale 的基础之一，因为它把身体私有动力学转换成了跨身体更稳定的功能语言。
 
 \section{FCS Geometry 不等于 SGC Geometry}
@@ -1487,28 +1484,26 @@ CognitiveHomeostaticIntegration.
 这种层次分离可以显著改善 AgentOS 的稳定性。如果每一个身体微小波动都直接改变高层认知相态，整个 Agent 将极易振荡；如果身体状态先在 FCS 中经过适当的时间滤波和功能压缩，再进入更慢的认知调节层，则高频噪声能够被局部吸收。
 
 因此 FCS 的时间动力学本身也是我们多尺度智能原则的具体实例：
-\[
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
-SlowGlobalStructure.
-}
-\]
+SlowGlobalStructure.\)}
+\end{statementbox}
 
 \section{FCS 的层级结构：局部场、全身状态与公开摘要}
 
 一个现实 Body Runtime 的 FCS 可能非常高维。如果一个人形机器人具有数百个关节、多个传感器阵列和大量空间 Threat Field，那么直接将整个高分辨率 FCS 发送给 Agent Kernel 会重新制造我们试图避免的工作记忆压力。因此 FCS 必须天然支持多尺度层级。
 
 我们可以将 FCS 分成至少三层：
-\[
-\boxed{
-FCS^{local}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FCS^{local}
 \rightarrow
 FCS^{body}
 \rightarrow
-FCS^{summary}.
-}
-\]
+FCS^{summary}.\)}
+\end{statementbox}
 
 第一层是局部场：
 \[

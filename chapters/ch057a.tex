@@ -6,9 +6,9 @@
 本章给出的答案是：\textbf{群体协调不应该首先表现为一个外部中央系统对本地 AgentOS 的强制命令，而应首先表现为一种新的身体感受。} 为此，我们引入 SFPU（Swarm Field Processing Unit）。在软件架构意义上，单个 SFPU 被严格定义为 AgentOS Body Driver 体系中的一种特殊群体场驱动器；多个 SFPU 通过 Field Plane 互联后共同形成分布式群体场网络；独立于本地 AgentOS 的 SwarmOS 通过 Potential Plane 向 SFPU 提供群体任务势能和目标嵌入；SFPU 再通过局部场重构与势能微分产生物理梯度和语义梯度，并经 Gradient Plane 映射为 FCS 中的一种特殊“群体梯度感受面”。
 
 因此，本章并不试图把群体智能并入单体 AgentOS 内核，而是建立一个严格的跨尺度耦合关系：
-\[
-\boxed{
-SwarmOS
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SwarmOS
 \rightarrow
 Potential
 \rightarrow
@@ -22,9 +22,8 @@ AgentOS
 \rightarrow
 Body
 \rightarrow
-Collective\ Field
-}
-\]
+Collective\ Field\)}
+\end{statementbox}
 其中，群体层提供宏观结构约束，个体层保留本体认知、边界与最终行动决策权。由此，FCS 不再只是“身体内部感受场”，而获得了一种更一般的含义：\textbf{任何能够以本体为参照表达“现实结构对我产生怎样方向性影响”的结构化场，都可以作为一种 FCS 感受面接入 AgentOS。}
 \end{chapteroverviewbox}
 
@@ -61,17 +60,16 @@ MotorCommand_i,
 就等于让群体中央系统绕过本地 AgentOS 的感知、自我、Boundary、安全、记忆和目标系统，直接取得本体执行权。这样做虽然在传统集中式群控中并不罕见，但它破坏了本书始终坚持的单体主体边界。
 
 因此，本章提出另一种结构：
-\[
-\boxed{
-SwarmStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SwarmStructure
 \rightarrow
 SwarmSensation
 \rightarrow
 LocalCognition
 \rightarrow
-LocalAction.
-}
-\]
+LocalAction.\)}
+\end{statementbox}
 群体宏观结构首先被翻译成本地身体能够“感受到”的方向性趋势，再由 AgentOS 将其与视觉、内部状态、任务、自我和其他感受共同处理。
 
 于是 FCS 的概念可以进一步推广为
@@ -676,13 +674,12 @@ V_{\mathrm{shock}}.
 \]
 
 因此，群体“惊奇激波”的本质不是中央控制器向所有机器人广播一条“立即靠近异常点”的硬命令，而是：
-\[
-\boxed{
-Prediction\ Error
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Prediction\ Error
 \rightarrow
-Temporary\ Potential\ Reshaping.
-}
-\]
+Temporary\ Potential\ Reshaping.\)}
+\end{statementbox}
 附近不同机器人仍然可以根据自己的身体条件、任务和本地 AgentOS 状态作出不同响应。
 
 
@@ -947,9 +944,9 @@ g_i^w
 因此，它在 AgentOS 中更类似一种方向性身体感觉。其功能地位可以与平衡感、本体感觉、威胁趋势、社会牵引、资源压力等进行类比。
 
 完整路径应为
-\[
-\boxed{
-Potential
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Potential
 \rightarrow
 Gradient
 \rightarrow
@@ -957,9 +954,8 @@ FCS
 \rightarrow
 AgentOS
 \rightarrow
-Action.
-}
-\]
+Action.\)}
+\end{statementbox}
 
 
 \section{群体梯度如何进入 FCS}
@@ -1121,15 +1117,14 @@ NormalSwarmAuthority.
 \section{SFPU 的内部计算：分布式势能微分器}
 
 从内部算法看，SFPU 并不需要成为通用人工智能处理器。它的核心任务可以压缩为
-\[
-\boxed{
-Potential
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Potential
 \rightarrow
 Field
 \rightarrow
-Gradient.
-}
-\]
+Gradient.\)}
+\end{statementbox}
 
 一个局部 SFPU 的计算流程可以写成：
 
@@ -1475,9 +1470,9 @@ V_k(z).
 否则模型版本切换就可能在没有任何现实事件发生的情况下，让群体突然产生整体转向、振荡或者协作结构崩溃。
 
 因此更合理的更新流程是：
-\[
-\boxed{
-\text{发布}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{发布}
 \rightarrow
 \text{预下载}
 \rightarrow
@@ -1487,9 +1482,8 @@ V_k(z).
 \rightarrow
 \text{监控}
 \rightarrow
-\text{回滚}.
-}
-\]
+\text{回滚}.\)}
+\end{statementbox}
 
 这一机制也说明：公共群体语义流形不是某个节点自己的私有 latent，而是一个必须具有版本治理和语义连续性的共享认知坐标系。
 
@@ -1624,15 +1618,14 @@ W_s
 \]
 
 两个尺度都体现：
-\[
-\boxed{
-Structural\ Constraint
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Structural\ Constraint
 \rightarrow
 Local\ Dynamics
 \rightarrow
-State\ Evolution.
-}
-\]
+State\ Evolution.\)}
+\end{statementbox}
 
 高层控制不一定直接指定每一个微观动作，而可能通过改变动力学中的参数、约束或者势能
 \[
@@ -1643,17 +1636,16 @@ V(X)
 因此，AgentOS 是这一原则在个体生命周期认知尺度上的一种实现；流体群体系统则是在群体空间尺度上的一种实现。
 
 更进一步，两者还形成跨尺度递归：
-\[
-\boxed{
-Swarm
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Swarm
 \rightarrow
 Agent
 \rightarrow
 World
 \rightarrow
-Swarm.
-}
-\]
+Swarm.\)}
+\end{statementbox}
 
 群体层自上而下产生结构约束，个体层保留局部自治；个体行动则自下而上重新塑造群体场。这不是主从覆盖，而是一种典型的分形智能耦合。
 
@@ -1839,9 +1831,9 @@ FIELD\_EMIT
 \]
 
 最终形成完整闭环：
-\[
-\boxed{
-SwarmOS
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SwarmOS
 \rightarrow
 Potential
 \rightarrow
@@ -1853,9 +1845,8 @@ AgentOS
 \rightarrow
 Action
 \rightarrow
-Field.
-}
-\]
+Field.\)}
+\end{statementbox}
 
 
 \section{本章基本命题}
@@ -1863,13 +1854,12 @@ Field.
 经过前述推导，本章可以形成以下基本命题。
 
 第一，群体智能的关键首先不是获得更强的逐体中央控制器，而是完成控制对象从微观个体状态向群体宏观功能状态的转换：
-\[
-\boxed{
-Individual\ State
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Individual\ State
 \rightarrow
-Collective\ Field.
-}
-\]
+Collective\ Field.\)}
+\end{statementbox}
 
 第二，群体场不能只停留在密度场，而应该逐渐发展成定义在物理--关系底空间和公共功能语义流形上的
 \[
@@ -1936,15 +1926,14 @@ LocalAction.
 \]
 
 第九，单体智能和群体智能虽然不能混用软件模块，却可以理解成同一种多尺度智能动力学形式在不同空间尺度上的重复：
-\[
-\boxed{
-MacroStructuralConstraint
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle MacroStructuralConstraint
 +
 MicroAutonomy
 \rightarrow
-CollectiveEmergence.
-}
-\]
+CollectiveEmergence.\)}
+\end{statementbox}
 
 
 \section{本章总结：FCS 作为跨尺度现实作用接口}
@@ -1964,17 +1953,16 @@ S_i^{swarm},
 作为 FCS 的特殊群体感受面进入本地 AgentOS。
 
 因此：
-\[
-\boxed{
-Potential
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Potential
 \not\Rightarrow
-DirectActuation,
-}
-\]
+DirectActuation,\)}
+\end{statementbox}
 而是
-\[
-\boxed{
-Potential
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Potential
 \rightarrow
 Gradient
 \rightarrow
@@ -1982,16 +1970,15 @@ Feeling
 \rightarrow
 Cognition
 \rightarrow
-Action.
-}
-\]
+Action.\)}
+\end{statementbox}
 
 这一结构使我们能够同时保留两个看似冲突的要求：一方面，大规模机器人群需要宏观群体协调；另一方面，每一个本地 AgentOS 又必须保持自己的感知、自我、Boundary、安全和行动主权。
 
 最终，整个体系可以被概括为：
-\[
-\boxed{
-\text{群体结构约束}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{群体结构约束}
 \rightarrow
 \text{个体结构感受}
 \rightarrow
@@ -1999,16 +1986,15 @@ Action.
 \rightarrow
 \text{身体行动}
 \rightarrow
-\text{群体结构再形成}.
-}
-\]
+\text{群体结构再形成}.\)}
+\end{statementbox}
 
 从智能动力学的更高视角看，这意味着个体和群体并不是两个互不相关的智能体系，而是同一种跨尺度闭环原理在不同空间尺度上的递归出现。单体 Agent 以身体为边界形成自身认知闭环；大量单体 Agent 又通过 SFPU 场网络共同形成更大尺度的群体状态；群体宏观状态再通过梯度感受重新进入单体身体。
 
 于是，群体协同最终不再是简单的“中央大脑控制大量机器人”，而成为：
-\[
-\boxed{
-\begin{gathered}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{gathered}
 \textbf{Macro Structural Constraint}
 \rightarrow
 \textbf{Micro Autonomous Dynamics}\\
@@ -2016,8 +2002,7 @@ Action.
 \textbf{Collective Emergence}
 \rightarrow
 \textbf{Structural Learning}
-\end{gathered}
-}
-\]
+\end{gathered}\)}
+\end{statementbox}
 
 这也构成 FCS 理论的一次重要扩展：\textbf{FCS 不仅能够表达身体内部与局部环境如何作用于主体，也能够成为更高尺度智能结构作用于本体的一般跨尺度感受接口。}

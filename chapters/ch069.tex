@@ -3,15 +3,14 @@
 
 \begin{chapteroverviewbox}
 本章讨论的不是“如何重新实现一个操作系统”，而是回答一个更根本的系统工程问题：当一个长期持续存在的智能体已经具有工作记忆 $h$、情景记忆 $E$、结构记忆 $\Theta$、自我结构 $\Psi$、生命周期生成吸引子 $\Omega$，并通过 SPC、AHC、TCE、CCM、Scheduler、Boundary、Offloading 等机制形成稳定的多尺度认知闭环以后，它应当如何落在现有计算机体系之上。我们的基本立场是：Linux 已经解决了进程、虚拟内存、文件、网络、设备、中断、权限和硬件资源复用问题，AgentOS 不应复制这些能力，而应在其上建立一个新的“智能资源运行时”。因此，本章确立
-\[
-\boxed{
-Hardware
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Hardware
 \rightarrow
 Linux/ComputerOS
 \rightarrow
-AgentOS
-}
-\]
+AgentOS\)}
+\end{statementbox}
 这一基本层级，并严格区分“计算资源管理”和“认知结构管理”。Linux 决定一个计算过程能否获得 CPU、内存、文件和设备；AgentOS 则决定一个持续主体在何时激活何种 Agent-CSO、哪些结构进入 $h$、哪些经历沉降为 $E/\Theta$、哪些能力被编译为 Skill、哪些内容应当卸载到外部载体，以及哪些行动拥有现实世界的执行权限。本章由此建立 AgentOS 从理论认知架构进入真实系统软件实现所必须遵循的操作系统边界。
 \end{chapteroverviewbox}
 
@@ -352,9 +351,9 @@ UnixPID.
 Start\rightarrow Execute\rightarrow Exit.
 \]
 AgentOS 主体则应采用：
-\[
-\boxed{
-Persist
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Persist
 \rightarrow
 Act
 \rightarrow
@@ -364,9 +363,8 @@ Consolidate
 \rightarrow
 Recover
 \rightarrow
-Persist.
-}
-\]
+Persist.\)}
+\end{statementbox}
 任务的结束不能等于主体的结束。一次模型调用、一次计划执行、一次工具调用乃至一次认知线程崩溃，都只能被看作生命周期中的局部事件。
 
 因此 AgentOS Runtime 至少需要维护三类连续性。
@@ -934,9 +932,9 @@ MotorCommand.
 \]
 
 这形成：
-\[
-\boxed{
-Hardware
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Hardware
 \leftrightarrow
 LinuxDriver
 \leftrightarrow
@@ -944,9 +942,8 @@ BodyDriver
 \leftrightarrow
 BodyRuntime
 \leftrightarrow
-AgentKernel.
-}
-\]
+AgentKernel.\)}
+\end{statementbox}
 
 Body Driver 的核心价值在于使 Agent Kernel 不依赖具体设备。Agent 应当表达：
 \[
@@ -1135,15 +1132,14 @@ IdentityTransfer.
 \]
 
 在最底层，Linux 仍然拥有最终计算执行权；在身体层，Safety Controller 可以拥有高于普通 BPCC 的实时保护权；在认知层，AgentOS Authority 控制 Goal 与 Agent-CSO 的语义权限。三者形成：
-\[
-\boxed{
-OSSecurity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle OSSecurity
 \rightarrow
 BodySafety
 \rightarrow
-CognitiveAuthority
-}
-\]
+CognitiveAuthority\)}
+\end{statementbox}
 相互嵌套、互不替代的安全结构。
 
 这种设计最终使一个强能力 Agent 的自主性不再等于“获得 root”，而是：
@@ -1216,38 +1212,35 @@ CognitiveStructureScheduling.
 
 这也是为什么 AgentOS 不能被简单理解为“大模型外面的一层框架”。它真正试图建立的是一个新的系统抽象层：
 
-\[
-\boxed{
-Model
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Model
 \rightarrow
 CognitiveProcess
 \rightarrow
-PersistentAgent.
-}
-\]
+PersistentAgent.\)}
+\end{statementbox}
 
 模型负责局部认知计算，Linux 负责底层计算资源，而 AgentOS 负责把这些局部计算组织成一个具有过去、现在和未来的持续主体。
 
 从这个意义上，本章建立的
-\[
-\boxed{
-Hardware
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Hardware
 \rightarrow
 Linux/ComputerOS
 \rightarrow
-AgentOS
-}
-\]
+AgentOS\)}
+\end{statementbox}
 并不是简单的软件技术栈，而是三种不同层次的治理：
 
-\[
-\boxed{
-PhysicalFeasibility
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PhysicalFeasibility
 \rightarrow
 ComputationalFeasibility
 \rightarrow
-CognitiveFeasibility.
-}
-\]
+CognitiveFeasibility.\)}
+\end{statementbox}
 
 只有三者同时闭合，一个 Agent 才真正能够从抽象认知理论进入现实计算环境，并成为可以长期运行、可以被治理、可以恢复、可以成长，同时仍然服从现实约束的持续人工智能体。

@@ -2,9 +2,9 @@
 
 \begin{chapteroverviewbox}
 本章讨论 Agent 培育工程中最关键、也最容易被传统机器学习范式忽略的一条生命周期闭环：一个持续智能体获得更多经验以后，究竟应当如何从“经历过某件事情”逐渐转化为“具有相应能力”，又如何从能力证据进一步获得更大的行动权限与自治空间，并在新的自治空间中接触更困难、更开放的经验，从而开始下一轮成长。我们将这一过程形式化为
-\[
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 Capability
 \rightarrow
@@ -16,9 +16,8 @@ Autonomy
 \rightarrow
 Harder\ Experience
 \rightarrow
-Experience'
-}
-\]
+Experience'\)}
+\end{statementbox}
 并把它理解为 Agent 生命周期中一个比单次任务学习更慢的成长闭环。
 
 这一闭环的核心不是“能力越强，权限越大”这样简单的线性规则。能力属于智能体内部可完成任务的结构性事实，评估属于外部或治理层对能力的有限观测，信任属于对未来行为可靠性的统计估计，权限属于系统显式授予的可操作边界，而自治则是在权限、安全约束、自我结构与现实约束共同作用下，Agent 实际能够自主选择的策略空间。这些变量彼此相关，却具有不同的本体地位、时间尺度和治理逻辑。因此本章特别强调：
@@ -695,13 +694,12 @@ AutonomousTrajectoryGeneration.
 \section{Harder Experience：更大的自治必须转化为结构上更有价值的经历}
 
 能力、评价、信任、权限和自治如果最终只让 Agent 更轻松地完成原有任务，那么成长闭环事实上没有闭合。真正的生命周期成长要求自治扩展以后，Agent 能够接触过去不可达的状态和任务，从而产生新的结构压力。因此：
-\[
-\boxed{
-AutonomyGrowth
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AutonomyGrowth
 \rightarrow
-ExperienceSpaceExpansion.
-}
-\]
+ExperienceSpaceExpansion.\)}
+\end{statementbox}
 
 这里的 ``Harder Experience'' 不应理解成简单提高题目难度。真正有培育价值的困难可以来自至少五个方向：
 \[
@@ -924,9 +922,9 @@ x,\mathcal L_t
 这一结构同时解释了为什么培育不能只有 Capability Benchmark。能力只是螺旋中的一个变量。如果缺乏 Evaluation，系统不知道能力是否真实；如果缺乏 Trust，系统不能估计未来稳定性；如果缺乏 Authority，能力无法受到治理；如果缺乏 Autonomy，权限不能形成真正经验；如果缺乏 Harder Experience，自治又不能形成新的成长压力。
 
 因此，这七个阶段不是任意排列，而形成严格的因果闭环：
-\[
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 InternalChange
 \rightarrow
@@ -936,9 +934,8 @@ GovernanceChange
 \rightarrow
 BehaviorSpaceChange
 \rightarrow
-NewExperience.
-}
-\]
+NewExperience.\)}
+\end{statementbox}
 
 从 CSO 理论看，这个闭环还可以进一步写成：
 \[
@@ -987,9 +984,9 @@ Agent 的成长，是其通过受治理的现实经历不断扩大可稳定承�
 \end{proposition*}
 
 因此，Agent 培育并不是一条从弱到强的直线，而是一系列
-\[
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 Structure
 \rightarrow
@@ -999,7 +996,6 @@ Authority
 \rightarrow
 Autonomy
 \rightarrow
-NewReality
-}
-\]
+NewReality\)}
+\end{statementbox}
 不断向外展开、又始终通过现实反馈重新闭合的生命周期螺旋。

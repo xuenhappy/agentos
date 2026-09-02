@@ -687,9 +687,9 @@ a_i\downarrow.
 此时工作记忆中的状态越来越像过期快照，导致认知行动仍然基于已经失效的世界模型。
 
 因此，我们可以将工作记忆超载后的退化过程概括为
-\[
-\boxed{
-Overload
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Overload
 \rightarrow
 Interference
 \rightarrow
@@ -697,9 +697,8 @@ SelectiveSuppression
 \rightarrow
 CoherenceLoss
 \rightarrow
-DecisionError.
-}
-\]
+DecisionError.\)}
+\end{statementbox}
 这条链解释了为什么“更多信息”并不单调提高智能表现。输入信息只有在系统能够将其组织进相干结构时才有价值；一旦输入增长超过结构承载能力，额外信息反而可能降低决策可靠性。
 
 所以，本章的容量定理不是一个关于“记忆太小”的悲观结论，而是一个关于\textbf{认知组织必须受到资源约束}的现实结论。
@@ -900,9 +899,9 @@ WhatCanStayLocal?
 从这个角度看，工作记忆有限容量并不是 AgentOS 设计中的一个次要参数，而是整个架构产生的根本压力源。正因为全局显式认知是有限的，系统才必须形成记忆分层、结构压缩、局部闭环、外部工具、长期技能与多尺度组织。换言之，有限性不是智能的反面，它反而构成了智能不断产生更高阶组织结构的选择压力。
 
 于是，我们可以用下面这一组关系结束本章：
-\[
-\boxed{
-FiniteWorkingMemory
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FiniteWorkingMemory
 \Rightarrow
 SelectiveAttention
 \Rightarrow
@@ -912,9 +911,8 @@ Hierarchy
 \Rightarrow
 Automation
 \Rightarrow
-Externalization
-}
-\]
+Externalization\)}
+\end{statementbox}
 其最终意义不是说每一种高级智能特征都只能由工作记忆有限性产生，而是指出：\textbf{一旦一个持续智能体必须在有限全局相干容量下长期生存，它就会受到强烈压力，去寻找能够减少当前显式结构负担的认知组织方式。}
 
 这正是 AgentOS 后续原理展开的逻辑起点。下一章我们将不再把 $h(t)$ 仅仅视为一个有限容器，而进一步研究它为什么会成为连接世界、记忆、自我、任务和行动的\textbf{认知总线}。

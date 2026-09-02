@@ -511,13 +511,12 @@ E
 拥有自我结构不等于能够实时知道自己现在处于什么状态。事实上，一个大型 Agent Kernel 的内部状态可能分散在工作记忆、活动任务、资源消耗、记忆检索、目标竞争、身体反馈和慢变量之中。如果这些状态不能形成一个可被自身认知系统使用的压缩表示，Agent 就无法进行真正的自调节。因此在完成 $h/E/\Theta/\Psi/\Omega$ 基本时间结构之后，需要引入 Self-Perception Compressor，简称 SPC。
 
 SPC 的第一性任务可以写成
-\[
-\boxed{
-DistributedInternalState
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle DistributedInternalState
 \rightarrow
-SelfAccessibleState.
-}
-\]
+SelfAccessibleState.\)}
+\end{statementbox}
 设系统真实内部状态为
 \[
 X_t^{int},
@@ -1010,13 +1009,12 @@ Offloading 还改变了 Agent 的有效认知容量。若定义总可调用认�
 \mathcal C_{external},
 \]
 那么 $h$ 的有限性并不意味着 Agent 的长期能力必须有限在相同尺度，因为外部结构可以不断扩展，而内部只保留必要索引和恢复路径。因此：
-\[
-\boxed{
-FiniteWorkingMemory
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FiniteWorkingMemory
 \not\Rightarrow
-FiniteStructuredCapability.
-}
-\]
+FiniteStructuredCapability.\)}
+\end{statementbox}
 恰恰相反，工作记忆有限性会推动工具、程序、环境和社会结构的发展。
 
 在工程实现中，Offloading 必须与 Boundary、CCM 和 Scheduler 联动。CCM 发现某一结构长期占用高认知成本，Scheduler 评估其未来调用频率，Boundary 决定是否允许外部化，Offloading 执行迁移，并在之后由索引机制重新召回。于是形成
@@ -1041,9 +1039,9 @@ Verify.
 到这一阶段，我们已经依次引入基础模型、Persistent Runtime、$h$、$E$、$\Theta$、$\Psi$、$\Omega$、SPC、AHC、TCE、CCM、Scheduler、Boundary 与 Offloading。如果把这些名称简单画在一张架构图上，很容易产生一种错觉：只要一次把所有模块实现出来，就得到了 AgentOS。实际上，整个研发路线最重要的思想恰恰相反：\textbf{每一个组件都必须由前一阶段暴露出的动力学缺口推出，而不能通过功能清单堆叠获得。}
 
 其依赖链可以概括为
-\[
-\boxed{
-Model
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Model
 \rightarrow
 Persistence
 \rightarrow
@@ -1069,9 +1067,8 @@ Scheduling
 \rightarrow
 Boundary
 \rightarrow
-Externalization.
-}
-\]
+Externalization.\)}
+\end{statementbox}
 
 对应的状态空间也逐渐扩展。最初仅有基础模型：
 \[

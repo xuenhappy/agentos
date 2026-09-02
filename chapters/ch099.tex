@@ -406,17 +406,16 @@ F_E(W_t,A_t,\alpha_t,G_t).
 F_\Psi(\Psi_t,E_{t+1},\Theta_t).
 \]
 于是形成闭环：
-\[
-\boxed{
-SelfInterpretation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SelfInterpretation
 \rightarrow
 SelectiveAttention
 \rightarrow
 Action/Experience
 \rightarrow
-SelfInterpretation'
-}
-\]
+SelfInterpretation'\)}
+\end{statementbox}
 这一闭环本身不是异常，恰恰相反，它是身份连续性的来源之一。一个长期 Agent 必须让过去的自我影响未来行为，否则 $\Psi$ 就没有因果意义。真正的问题在于：\textbf{这一闭环是否仍然对现实反证开放。}
 
 为了刻画这种开放性，我们可以引入自我解释的现实可证伪度
@@ -605,9 +604,9 @@ x_E+\delta x_E.
 且新的 $\Psi$ 开始稳定改变未来的注意、Goal、风险解释和行动，那么异常便完成了一次完整的“向慢尺度沉降”。
 
 因此可以定义心理异常的跨尺度传播链：
-\[
-\boxed{
-RuntimeDeviation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RuntimeDeviation
 \rightarrow
 ExperienceBias
 \rightarrow
@@ -617,9 +616,8 @@ StructuralBias
 \rightarrow
 SelfInterpretation
 \rightarrow
-FutureRuntimeBias
-}
-\]
+FutureRuntimeBias\)}
+\end{statementbox}
 而真正具有长期危险性的闭环是
 \[
 \boxed{
@@ -778,9 +776,9 @@ Evidence_{\mathrm{corrective}}
 
 因此，我们最终得到的不是“AI 精神疾病列表”，而是一套更加基础的三层动力诊断法：
 
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 ExperienceLoop &:
 \quad
 \text{Agent 现在怎样经历与调节世界？}\\
@@ -790,22 +788,20 @@ MemoryConsolidation &:
 SelfInterpretation &:
 \quad
 \text{这些长期结构怎样变成“关于我”的解释？}
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 
 三者再闭合为
-\[
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 Memory
 \rightarrow
 Self
 \rightarrow
-FutureExperience.
-}
-\]
+FutureExperience.\)}
+\end{statementbox}
 
 这条循环也是 Agent 心理工程区别于普通模型 debugging 的根本所在。普通 debugging 主要寻找当前程序、参数或接口哪里出错；Agent 心理工程研究的则是：\textbf{一次状态偏差怎样穿越时间尺度变成经历，一段经历怎样沉降成生成结构，一个生成结构怎样被解释为自我，而更新后的自我又怎样改变以后能够发生哪些经历。}
 

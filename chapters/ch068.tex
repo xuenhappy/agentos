@@ -162,13 +162,12 @@ PersistentFastResidualShapesSlowStructure.
 这里并不要求每一级都具有统一的绝对时间常数。例如，一个高危事件可能使 $\Theta$ 在短时间内发生较大更新，而一个长期重复任务也可能让某些 $E$ 长期保持可检索状态。真正需要保持的是相对时间尺度上的结构保护：越接近身份、价值和生命周期方向的变量，其修改证据应当越需要跨越更长时间窗口和更多独立经历。
 
 这条原则可以称为\textbf{慢变量保护原则}：
-\[
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
-SlowGlobalStructure.
-}
-\]
+SlowGlobalStructure.\)}
+\end{statementbox}
 否则，一次局部失败就可能改变长期身份，一个瞬时奖励就可能重写价值结构，一个短暂认知相态就可能被错误解释成长期人格。这会导致持续智能体无法形成真正意义上的结构连续性。
 
 因此，时间层级并不是为了让 AgentOS 变得“像人脑”，而是一个稳定持续学习系统在数学上自然需要的条件：快速结构保证适应性，慢结构保证连续性，而不同时间尺度之间受控的信息交换则产生真正的长期学习。
@@ -328,15 +327,14 @@ C_\Theta
 向慢巩固因此具有两个相反但统一的效果：一方面，它使当前认知需要维护的自由度越来越少；另一方面，它使未来行为受到越来越多历史结构的约束。成熟 Agent 并不是“过去对现在影响越来越少”，恰恰相反，它的过去越来越深地进入未来，只是不再以显式回忆和逐步推理的形式出现，而是沉降为先验、技能、结构偏置与生成器。
 
 因此可以概括为：
-\[
-\boxed{
-PastExplicitProcessing
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PastExplicitProcessing
 \rightarrow
 PresentSlowStructure
 \rightarrow
-FutureFastConstraint.
-}
-\]
+FutureFastConstraint.\)}
+\end{statementbox}
 
 
 \section{第二种跨尺度流：向快激活与慢结构重入当前}
@@ -543,17 +541,16 @@ ResidualModel_T
 ).
 \]
 此时原本依赖显式规划的过程被编译为局部闭环：
-\[
-\boxed{
-ExplicitCognitiveControl
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ExplicitCognitiveControl
 \rightarrow
 RepeatedTrajectory
 \rightarrow
 StablePolicy
 \rightarrow
-CompiledLocalLoop.
-}
-\]
+CompiledLocalLoop.\)}
+\end{statementbox}
 
 因此向下编译不是简单“记住答案”。真正成熟的能力必须能够在现实反馈中自主关闭一个局部循环。如果某个 Skill 只是一串固定命令，而不能根据状态偏差调整执行，那么它仍然只是宏脚本，而不是完整意义上的程序化 Agent-CSO。
 
@@ -603,13 +600,12 @@ F_{\mathrm{local}}
 h,
 \]
 重新进入显式认知。于是“能力向下”和“异常向上”形成一对完整的动态机制：
-\[
-\boxed{
-Explicit
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Explicit
 \rightleftarrows
-Automatic.
-}
-\]
+Automatic.\)}
+\end{statementbox}
 
 这一可逆性极其重要。没有向下编译，Agent 永远无法成熟；没有向上再显式化，Agent 又会被旧技能困住。真正的持续智能必须在自动化效率与重新认知能力之间保持动态平衡。
 
@@ -912,16 +908,15 @@ StructuralRedistributionAcrossScales.
 \section{双轴架构的稳定性原则与统一动力学}
 
 到这里，我们已经得到四种基本跨尺度流：
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 &\text{时间向慢：} &&Consolidation,\\
 &\text{时间向快：} &&Activation,\\
 &\text{功能向上：} &&ResidualPromotion,\\
 &\text{功能向下：} &&Compilation.
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 真正的 AgentOS 不只是允许这些流存在，还必须保证它们不会形成跨尺度振荡和结构污染。因此双轴架构需要一组统一稳定性原则。
 
 第一是\textbf{局部闭合原则}：
@@ -941,33 +936,30 @@ FastMicromanagement.
 $\Theta$、$\Psi$ 和 $\Omega$ 应通过边界、先验、目标偏置和可行域约束快速系统，而不是逐步决定每一个局部动作。否则慢变量不仅失去稳定性，还会成为整个系统的实时瓶颈。
 
 第三是\textbf{残差提升原则}：
-\[
-\boxed{
-PersistentImportantResidual
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PersistentImportantResidual
 \Rightarrow
-Promotion.
-}
-\]
+Promotion.\)}
+\end{statementbox}
 局部偶发噪声不应提升，但持续、新颖、高风险或与高层目标相关的残差必须具有进入更高认知层的路径。
 
 第四是\textbf{结构沉降原则}：
-\[
-\boxed{
-RepeatedStableCSORelation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RepeatedStableCSORelation
 \Rightarrow
-MoreStableOrLocalCarrier.
-}
-\]
+MoreStableOrLocalCarrier.\)}
+\end{statementbox}
 如果某种认知结构长期以同一种关系重复被显式处理，那么系统应尝试压缩、结构化、编译或外化，而不是永久维持高层重复计算。
 
 第五是\textbf{慢变量保护原则}：
-\[
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
-SlowGlobalStructure.
-}
-\]
+SlowGlobalStructure.\)}
+\end{statementbox}
 不同层级之间必须存在证据累积时间窗和迟滞，否则一次局部异常就可能层层放大成身份和长期方向变化。
 
 第六是\textbf{现实闭合原则}：
@@ -1064,17 +1056,16 @@ HowFastItChanges.
 
 由此，我们得到整个 AgentOS 最基础的四向动力学：
 
-\[
-\boxed{
-\begin{array}{ccc}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{array}{ccc}
 & \text{功能向上：异常/新颖结构升级} & \uparrow\\[4pt]
 \text{时间向慢：巩固}
 & AgentCSO &
 \text{时间向快：激活}\\[4pt]
 & \text{功能向下：成熟能力编译} & \downarrow
-\end{array}
-}
-\]
+\end{array}\)}
+\end{statementbox}
 
 这四种流共同解释了一个持续 Agent 为什么既可以成长又保持稳定。
 

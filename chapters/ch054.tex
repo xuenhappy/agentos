@@ -374,22 +374,20 @@ C
 v_i.
 \]
 因此我们可以把 Semantic Tag 理解为：
-\[
-\boxed{
-AgentCSO\text{ 与现实实体之间的一种低成本语义索引。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentCSO\text{ 与现实实体之间的一种低成本语义索引。}\)}
+\end{statementbox}
 
 然而标签不能替代关系。例如“张三是李四的同事”不应简单压缩成两个对象的独立 tags，因为该意义本质是一个二元关系。类似地，“杯子在桌子上”也不应该把 \texttt{on-table} 当成杯子的永久属性。SGC 因此坚持：
-\[
-\boxed{
-IntrinsicMeaning
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle IntrinsicMeaning
 \rightarrow Attribute/Tag,
 \qquad
 RelationalMeaning
-\rightarrow Edge/Hyperedge .
-}
-\]
+\rightarrow Edge/Hyperedge .\)}
+\end{statementbox}
 
 开放标签还带来一个重要风险：语言模型可能生成大量似是而非的语义说明。因此必须把 Semantic Tags 与 Epistemic Metadata 绑定。一个未经现实验证的标签不能自动进入 Observed 状态。可以规定：
 \[
@@ -480,13 +478,12 @@ status=Pending.
 \]
 
 如果不保留这些区分，五种结构可能全部被压缩成语言形式的“事实”，最终使 Agent 的现实模型产生自我污染。因此 SGC 应实施一种严格的信息升级原则：
-\[
-\boxed{
-Predicted/Derived/Pending
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Predicted/Derived/Pending
 \nrightarrow
-Observed
-}
-\]
+Observed\)}
+\end{statementbox}
 除非获得新的现实证据或明确的验证事件。
 
 对于 Derived 状态，还需要保存依赖图。若
@@ -992,17 +989,16 @@ S_{t+\Delta}^{obs},
 ).
 \]
 这个 residual 不仅用于修正 Body Runtime，也为更高层学习提供现实证据。因此：
-\[
-\boxed{
-Prediction
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Prediction
 \rightarrow
 Reality
 \rightarrow
 Residual
 \rightarrow
-Update
-}
-\]
+Update\)}
+\end{statementbox}
 是 SGC 生命周期的重要闭环。
 
 Predicted 的存在也使 Agent 能够清晰地区分“世界当前是什么”和“世界可能怎样发展”。对于长期智能而言，这一认识论边界是防止内部生成模型逐渐把想象当现实的基础结构。
@@ -1166,13 +1162,12 @@ RealityEvidenceDecidesWhatBecomesGrounded.
 \section{Body $\in$ SGC：身体必须成为世界模型中的第一类实体}
 
 SGC 最容易犯的架构错误，是系统维护了一张越来越精细的世界图，却把“自己”排除在图之外。这样的模型可以描述对象，却无法完整描述行动，因为任何行动都隐含：
-\[
-\boxed{
-AgentBody
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentBody
 \leftrightarrow
-World .
-}
-\]
+World .\)}
+\end{statementbox}
 因此本书明确规定：
 \[
 \boxed{

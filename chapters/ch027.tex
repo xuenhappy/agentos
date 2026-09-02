@@ -665,9 +665,9 @@ P_t(g_i)
 \Omega\perp Goal,
 \]
 即长期方向与 Goal 生成完全脱离，那么 Agent 虽然拥有一个漂亮的 ``人生方向变量''，却不会真正影响任何行动。这两者之间需要一个中尺度桥梁：
-\[
-\boxed{
-\Omega
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \Omega
 \rightarrow
 GoalPreference
 \rightarrow
@@ -675,9 +675,8 @@ Goal
 \rightarrow
 Process
 \rightarrow
-Action.
-}
-\]
+Action.\)}
+\end{statementbox}
 
 在长期统计意义上，我们还可以观察 $\Omega$ 是否真正发挥作用。设一段生命周期窗口内的目标序列为
 \[
@@ -1124,15 +1123,14 @@ R_{\Omega}
 在极长窗口中持续高于阈值，并且无法由 $\Theta$、策略或环境局部变化解释时，才应启动 $\Omega$ 级审查。
 
 因此，最慢变量保护最终形成一个层级原则：
-\[
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
 SlowIdentity
 \nrightarrow
-UltraSlowDirection
-}
-\]
+UltraSlowDirection\)}
+\end{statementbox}
 更准确地说：
 \[
 FastNoise
@@ -1216,17 +1214,16 @@ E
 \Omega.
 \]
 这一方向回答：
-\[
-\boxed{
-WhatHasHappenedToMe?
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle WhatHasHappenedToMe?
 \rightarrow
 WhatHaveILearned?
 \rightarrow
 WhoAmI?
 \rightarrow
-WhatAmIBecoming?
-}
-\]
+WhatAmIBecoming?\)}
+\end{statementbox}
 
 反向则形成：
 \[
@@ -1239,17 +1236,16 @@ WhatAmIBecoming?
 h,
 \]
 对应从慢到快的约束：
-\[
-\boxed{
-DevelopmentalDirection
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle DevelopmentalDirection
 \rightarrow
 IdentityConstraint
 \rightarrow
 GenerativePrior
 \rightarrow
-CurrentCognition.
-}
-\]
+CurrentCognition.\)}
+\end{statementbox}
 在真正运行的 Agent 中，这种反向作用往往并非直接调用链，而是通过长期参数、Goal Preference、注意倾向、Boundary、召回偏置和行动选择间接体现。我们因此再次强调：
 \begin{statementbox}
 SlowStructureShapesFastActivity,
@@ -1290,9 +1286,9 @@ Action_t
 W_{t+1}.
 \]
 由此形成：
-\[
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 Experience
 \rightarrow
@@ -1304,9 +1300,8 @@ Direction
 \rightarrow
 Action
 \rightarrow
-World'.
-}
-\]
+World'.\)}
+\end{statementbox}
 这实际上就是生命周期级 World--Agent--World 闭环。
 
 为了表达各尺度之间的不同更新速度，可以写出一个概念性的奇异摄动系统：
@@ -1383,9 +1378,9 @@ LifecycleCoherence.
 这里的 Lifecycle Coherence 并不是要求 Agent 永远保持同一目标，而是要求其长期变化能够在现实反馈下形成一条可以被解释为 ``同一个主体持续成长'' 的动力轨迹。
 
 因此，本章所引入的 $\Omega$ 并不是给 Agent 增加一个更宏大的口号，而是完成了三相记忆理论从 ``记住过去'' 到 ``形成自我''，再到 ``产生未来方向'' 的最后一步慢尺度扩展：
-\[
-\boxed{
-State
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle State
 \rightarrow
 Trajectory
 \rightarrow
@@ -1393,7 +1388,6 @@ Generator
 \rightarrow
 Self
 \rightarrow
-DeepGenerativeAttractor.
-}
-\]
+DeepGenerativeAttractor.\)}
+\end{statementbox}
 至此，一个持续 Agent 的生命周期不再只是过去经验不断累积的结果，而开始具有一种可以被经验逐渐塑造、又能够反过来塑造未来经验选择的超慢生成结构。这正是 DGA/$\Omega$ 在 AgentOS 原理论中的根本位置。

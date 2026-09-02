@@ -517,13 +517,12 @@ PersistentDispersion
 
 因此，本章对 Temperature 的严格定义可以写成：
 
-\[
-\boxed{
-T
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle T
 =
-\text{TCE 对当前认知状态在可行候选结构之间迁移自由度的控制变量。}
-}
-\]
+\text{TCE 对当前认知状态在可行候选结构之间迁移自由度的控制变量。}\)}
+\end{statementbox}
 
 它既不是随机噪声，也不是智慧程度，而是 Agent 在“稳定已有结构”与“允许结构重新组织”之间进行实时调节的一个关键控制维度。
 
@@ -860,13 +859,12 @@ U_Q.
 
 因此 TCE 的探索控制实际上在不断管理一个基本张力：
 
-\[
-\boxed{
-Plasticity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Plasticity
 \leftrightarrow
-Commitment.
-}
-\]
+Commitment.\)}
+\end{statementbox}
 
 探索太弱，系统形成僵化；探索太强，系统无法形成稳定行为。成熟 TCE 的目标不是最大化创新，而是在现实约束、任务阶段和工作记忆容量允许的范围内，维持一种\textbf{受控开放性}。
 
@@ -1058,13 +1056,12 @@ TCE 的保守度 $\kappa$ 描述的是 Agent 在从认知状态进入行动、�
 
 一个 Agent 可以处于高探索状态，却仍然对实际行动保持高度保守。例如在内部模拟中允许大量激进候选，并不意味着立刻执行其中任何一个方案。因此，保守度控制的真正对象是：
 
-\[
-\boxed{
-\text{Representation}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Representation}
 \rightarrow
-\text{Commitment}
-}
-\]
+\text{Commitment}\)}
+\end{statementbox}
 
 之间的阈值。
 
@@ -1619,19 +1616,18 @@ CCM 卸载；
 
 振荡还可能来自不同时间尺度控制器之间的相互干扰。例如 TCE 正在快速调节当前认知，而较慢的 $\Theta$、$\Psi$ 或 $\Omega$ 同时发生显著更新，就等于控制器的 reference 和 plant 同时变化。由此我们再次得到：
 
-\[
-\boxed{
-FastNoise\nrightarrow SlowGlobalStructure.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise\nrightarrow SlowGlobalStructure.\)}
+\end{statementbox}
 
 慢变量必须受到保护。短时的 TCE 振荡不能直接推动 $\Psi$ 或 $\Omega$ 大幅变化，否则短期运行问题会被固化为长期身份问题。
 
 因此，TCE 自己出现不稳定时，最重要的不是立即让慢结构一起调整，而是首先进入受控恢复模式：
 
-\[
-\boxed{
-ReduceGain
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ReduceGain
 \rightarrow
 ReduceConcurrency
 \rightarrow
@@ -1639,9 +1635,8 @@ NarrowActiveSet
 \rightarrow
 Stabilize
 \rightarrow
-Reobserve.
-}
-\]
+Reobserve.\)}
+\end{statementbox}
 
 只有在稳定恢复后仍存在持续、可重复的残差，才应允许更慢层级参与结构学习。
 
@@ -1910,9 +1905,9 @@ RealityAligned.
 
 到这里，我们就可以把第88章的全部内容压缩成一个工程闭环：
 
-\[
-\boxed{
-SPC
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SPC
 \rightarrow
 \hat x_c
 \rightarrow
@@ -1924,9 +1919,8 @@ TCE
 \rightarrow
 CognitiveDynamics
 \rightarrow
-SPC.
-}
-\]
+SPC.\)}
+\end{statementbox}
 
 其中：
 
@@ -1948,14 +1942,13 @@ Scheduler,CCM
 
 因此，本章最核心的结论为：
 
-\[
-\boxed{
-\begin{minipage}{0.90\textwidth}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{minipage}{0.90\textwidth}
 \textbf{TCE 控制器原理：}
 TCE 是 AgentOS 中面向快速认知动力学的多变量反馈控制器。它不直接产生目标、世界模型或行动意义，而是在 SPC 状态估计、AHC 内稳态调制、Scheduler 资源包络、CCM 容量约束以及 $\Psi/\Omega$ 慢结构约束下，动态调节认知温度、激活增益、抑制、注意范围、探索强度、搜索深度、行动保守度、记忆流速与认知节律。其首要目标不是最大化即时认知活动，而是以最小必要干预维持工作记忆有限容量条件下的稳定、可恢复、可学习和现实对齐的认知动力过程。
-\end{minipage}
-}
-\]
+\end{minipage}\)}
+\end{statementbox}
 
 从这一意义上说，TCE 真正控制的不是“思考什么”，而是：
 

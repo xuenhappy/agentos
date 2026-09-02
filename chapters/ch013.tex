@@ -1062,10 +1062,9 @@ StructuralReorganization.
 但这一统一不能被误解为“所有学习机制都完全相同”。梯度下降、记忆写入、程序生成、工具调用和身体技能固化的具体机制当然完全不同。CSO Migration Theory 所提供的是更高层的\textbf{实现无关描述}：我们不要求这些过程共享同一种算法，而要求它们可以被解释为认知结构承载状态的变化。这与热力学并不要求每一种微观分子运动具有同一具体轨迹、但仍然可以使用宏观状态变量描述系统类似。
 
 最后，我们可以得到本章最核心的动力学图景：
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
-CSO
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CSO
 \rightarrow
 AgentCSO
 \rightarrow
@@ -1077,10 +1076,8 @@ Timescale
 \rightarrow
 Carrier
 \rightarrow
-FutureAction.
-}
-$}
-\]
+FutureAction.\)}
+\end{statementbox}
 而每一次行动和现实反馈，又会反过来修改未来 Agent-CSO：
 \[
 World
@@ -1091,9 +1088,9 @@ AgentCSO'
 .
 \]
 因此，学习真正存在于一个持续闭环中：
-\[
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 AgentCSO
 \rightarrow
@@ -1103,9 +1100,8 @@ Action
 \rightarrow
 World'
 \rightarrow
-AgentCSO'.
-}
-\]
+AgentCSO'.\)}
+\end{statementbox}
 
 这一闭环也揭示了为什么学习不能脱离现实。一个 Agent 完全可以在内部形成越来越复杂的结构，但如果这些结构不能在观测、预测和行动中持续经受现实检验，它们就可能形成封闭的内部自洽，而不是有效学习。因此，本书始终保留以下约束：
 \begin{statementbox}

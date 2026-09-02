@@ -31,25 +31,23 @@ C_{\max}(W),
 
 这一条件立即产生一个看似根本性的悖论：
 
-\begin{equation}
-\boxed{
-\text{有限的 }h_t
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{有限的 }h_t
 \quad\Longrightarrow\quad
-\text{是否只能解决有限复杂度的问题？}
-}
-\end{equation}
+\text{是否只能解决有限复杂度的问题？}\)}
+\end{statementbox}
 
 如果答案为肯定，那么一个具有有限工作记忆的 Agent 无论拥有多少长期记忆、工具和外部环境，都无法真正面对开放世界中的复杂任务。然而，人类智能以及成熟的软件系统所展示的现象恰恰相反：局部认知容量是有限的，但系统能够通过分解、记忆、外化、程序化、工具化和时间展开处理远超过单次工作记忆容量的问题。
 
 因此，本章所研究的不是一个无限计算能力的理想主体，而是如下问题：
 
-\begin{equation}
-\boxed{
-\text{在 }C_{\mathrm{run}}(t)\leq C_{\max}(W)
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{在 }C_{\mathrm{run}}(t)\leq C_{\max}(W)
 \text{ 始终成立的条件下，}
-\text{一个持续 Agent 能解决多大的问题类？}
-}
-\end{equation}
+\text{一个持续 Agent 能解决多大的问题类？}\)}
+\end{statementbox}
 
 本章将证明一个条件性的完备性结论：
 
@@ -470,13 +468,12 @@ P_1\rightarrow P_2\rightarrow\cdots\rightarrow P_m
 
 因此：
 
-\begin{equation}
-\boxed{
-SpatialComplexity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SpatialComplexity
 \rightarrow
-TemporalComplexity
-}
-\end{equation}
+TemporalComplexity\)}
+\end{statementbox}
 
 并不减少问题真正需要完成的工作量，但改变了工作量对瞬时认知容量的要求。
 
@@ -970,9 +967,9 @@ x_{t+1},
 
 因此：
 
-\begin{equation}
-\boxed{
-Plan
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Plan
 \rightarrow
 Action
 \rightarrow
@@ -980,9 +977,8 @@ Reality
 \rightarrow
 Observation
 \rightarrow
-Verification
-}
-\end{equation}
+Verification\)}
+\end{statementbox}
 
 构成开放世界任务的最小可验证闭环。
 
@@ -1387,15 +1383,14 @@ C_{\max}(W),
 同时能够沿一条有效求解轨迹完成 $\Pi$。
 
 因此：
-\begin{equation}
-\boxed{
-\Pi\in\mathscr P_A
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \Pi\in\mathscr P_A
 \quad\Longrightarrow\quad
 \Pi
 \text{ 对 }\mathfrak A^\star
-\text{ 可解。}
-}
-\end{equation}
+\text{ 可解。}\)}
+\end{statementbox}
 \end{theorem}
 
 \begin{proof}
@@ -1598,13 +1593,12 @@ CurrentGoal.
 
 因此：
 
-\begin{equation}
-\boxed{
-AgentOS
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentOS
 \text{ 不违反计算复杂度下界，
-而是改变复杂度在计算体系中的承载位置。}
-}
-\end{equation}
+而是改变复杂度在计算体系中的承载位置。}\)}
+\end{statementbox}
 
 这一点必须贯穿全书。
 
@@ -1865,9 +1859,9 @@ ExpansionAndRestructuringOfTheReachableProblemSpace.
 
 将前述机制合并，可以把完整问题求解循环写成：
 
-\begin{equation}
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 Boundary
 \rightarrow
@@ -1885,9 +1879,8 @@ Plan
 \rightarrow
 Action
 \rightarrow
-World
-}
-\end{equation}
+World\)}
+\end{statementbox}
 
 并同时运行慢循环：
 
@@ -1937,9 +1930,9 @@ Output,
 \end{equation}
 而是：
 
-\begin{equation}
-\boxed{
-Problem
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Problem
 \rightarrow
 Representation
 \rightarrow
@@ -1953,9 +1946,8 @@ Memory
 \rightarrow
 Learning
 \rightarrow
-NewCapability.
-}
-\end{equation}
+NewCapability.\)}
+\end{statementbox}
 
 \section{为什么完整 Agent 的能力不是模型能力的简单加和}
 
@@ -2083,13 +2075,12 @@ EnvironmentStructure.
 \end{equation}
 
 因此：
-\begin{equation}
-\boxed{
-PastComputation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PastComputation
 \rightarrow
-FutureStructure.
-}
-\end{equation}
+FutureStructure.\)}
+\end{statementbox}
 
 这意味着过去付出的认知成本可以降低未来的认知宽度和执行成本。
 
@@ -2155,13 +2146,12 @@ R(\Pi),
 Solve(\Pi),
 \end{equation}
 而是：
-\begin{equation}
-\boxed{
-Transform(\Pi)
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Transform(\Pi)
 \rightarrow
-Solve(\Pi').
-}
-\end{equation}
+Solve(\Pi').\)}
+\end{statementbox}
 
 这就是此前“复杂度重构”在 CSO 理论中的更严格表达。
 
@@ -2434,40 +2424,36 @@ E
 从前述证明可以把 AgentOS 对复杂问题的处理压缩为四种基本转化。
 
 第一种是空间到时间：
-\begin{equation}
-\boxed{
-ConcurrentStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ConcurrentStructure
 \rightarrow
-SequentialProcess.
-}
-\end{equation}
+SequentialProcess.\)}
+\end{statementbox}
 
 第二种是显式认知到长期记忆：
-\begin{equation}
-\boxed{
-ActiveStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ActiveStructure
 \rightarrow
-PersistentStructure.
-}
-\end{equation}
+PersistentStructure.\)}
+\end{statementbox}
 
 第三种是内部结构到外部载体：
-\begin{equation}
-\boxed{
-InternalCSO
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle InternalCSO
 \rightarrow
-ExternalCSO.
-}
-\end{equation}
+ExternalCSO.\)}
+\end{statementbox}
 
 第四种是重复认知到程序化闭环：
-\begin{equation}
-\boxed{
-ExplicitReasoning
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ExplicitReasoning
 \rightarrow
-CompiledSkill.
-}
-\end{equation}
+CompiledSkill.\)}
+\end{statementbox}
 
 因此所谓“解决复杂度”并不是让复杂度消失，而是：
 
@@ -2708,9 +2694,9 @@ DynamicsOfTopology.
 
 把全部数学结果压缩，可以得到：
 
-\begin{equation}
-\boxed{
-\text{有限工作记忆}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{有限工作记忆}
 +
 \text{可扩展持久记忆}
 +
@@ -2722,9 +2708,8 @@ DynamicsOfTopology.
 +
 \text{工具闭包}
 +
-\text{现实反馈}
-}
-\end{equation}
+\text{现实反馈}\)}
+\end{statementbox}
 
 使得：
 \begin{equation}
@@ -2911,14 +2896,13 @@ ReachableClosureOfItsAccumulatedStructure.
 
 本章从工作记忆有限容量定理出发，得到一个看似反直觉但对于持续智能至关重要的结论：
 
-\begin{equation}
-\boxed{
-\textbf{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \textbf{
 一个 Agent 不需要在任何时刻理解整个复杂问题，
 只需要在每一个时刻正确承载下一步必须理解的部分。
-}
-}
-\end{equation}
+}\)}
+\end{statementbox}
 
 因此，AgentOS 解决复杂问题的基本原理并不是：
 
@@ -2958,61 +2942,56 @@ $\Theta$、$\Psi$ 与 $\Omega$ 则使成功和失败不只是一次任务结果�
 \end{statementbox}
 而是：
 
-\begin{equation}
-\boxed{
-\textbf{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \textbf{
 把任意规模但具有可执行结构的复杂问题，
 转化为一个跨时间、跨记忆、跨工具、跨身体和跨环境展开的有限局部闭环序列。
-}
-}
-\end{equation}
+}\)}
+\end{statementbox}
 
 从而：
 
-\begin{equation}
-\boxed{
-FiniteCognition
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FiniteCognition
 +
 PersistentStructure
 +
 ExternalWorld
 \quad\Longrightarrow\quad
-OpenEndedProblemSolving.
-}
-\end{equation}
+OpenEndedProblemSolving.\)}
+\end{statementbox}
 
 这也给出了固定拓扑 AgentOS 最深层的意义。
 
 它不是通过取消认知有限性而获得通用性，而是把有限性本身变成智能组织结构产生的原因：
 
-\begin{equation}
-\boxed{
-\textbf{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \textbf{
 正因为工作记忆有限，
 智能才需要记忆、抽象、技能、工具、身体、社会、组织与结构沉降；
 而这些机制的共同出现，
 最终使有限主体获得处理远超自身瞬时容量问题的能力。
-}
-}
-\end{equation}
+}\)}
+\end{statementbox}
 
 因此，真正的通用智能不应被定义成一个能够在内部同时拥有全部知识和全部计算的无限模型，而更适合定义为：
 
-\begin{equation}
-\boxed{
-\textbf{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \textbf{
 一个能够持续改变“问题由何种结构、在何处、以何种时间尺度被承载”，
 从而不断扩大自身可解问题空间的有限而开放的动力系统。
-}
-}
-\end{equation}
+}\)}
+\end{statementbox}
 
 这正是从固定拓扑持续学习理论走向下一阶段
-\begin{equation}
-\boxed{
-DynamicsOnTopology
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle DynamicsOnTopology
 \rightarrow
-DynamicsOfTopology
-}
-\end{equation}
+DynamicsOfTopology\)}
+\end{statementbox}
 的理论分界点。

@@ -231,22 +231,21 @@ M_i(t)>M_i^{\min}
 Conf_i(t)>Conf_i^{\min},
 \end{equation}
 其中 $M_i$ 表示控制裕度，$Conf_i$ 表示局部模型可信度。当 $Q_i=1$ 时，层级 $L_i$ 不需要产生认知中断，只需要维持压缩后的周期状态报告。这种设计意味着系统的信息流并不是高频地``向上广播一切''，而是呈现稀疏事件驱动形式：
-\begin{equation}
-\boxed{
-\text{Dense Local Dynamics}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Dense Local Dynamics}
 \rightarrow
-\text{Sparse Global Events}.
-}
-\end{equation}
+\text{Sparse Global Events}.\)}
+\end{statementbox}
 
 这一结构对于真正长期运行的 Agent 至关重要。一个生活在现实世界中的智能体每天会经历海量变化，如果它把每一个微小变化都解释成值得思考的事件，那么工作记忆永远处于湍流状态，也就不可能形成稳定的长期目标、反思和自我。因此，真正成熟的认知系统并不是更加敏感地显式处理一切，而是拥有越来越准确的能力判断：\textbf{什么仍然属于正常世界，什么才真正值得成为思想。}
 
 \section{局部闭合原则：Local Closure}
 
 正常动力学停留在局部，还不足以说明一个层级是否真正具有自治能力。一个模块可能不上传数据，但它实际上仍需要高层持续给出细粒度命令。这种结构只是通信减少，而不是局部智能。所谓 Local Closure，要求某一尺度真正形成一个可重复的完整闭环：
-\begin{equation}
-\boxed{
-Perception
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Perception
 \rightarrow
 Prediction
 \rightarrow
@@ -256,9 +255,8 @@ Observation
 \rightarrow
 Residual
 \rightarrow
-LocalUpdate.
-}
-\end{equation}
+LocalUpdate.\)}
+\end{statementbox}
 只有当这个闭环能够在自己的时间尺度上完成，低层才具有真正的功能自治。
 
 设第 $i$ 层的局部动力学为
@@ -546,13 +544,12 @@ ExplicitAgentCSO.
 \end{equation}
 
 这实际上给出了一个十分重要的双向学习结构：
-\begin{equation}
-\boxed{
-Explicit
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Explicit
 \rightleftarrows
-Automatic.
-}
-\end{equation}
+Automatic.\)}
+\end{statementbox}
 向右代表熟练化和沉降，向左代表在异常情况下重新认知。成熟能力不是永远不再被思考，而是在绝大多数正常情况下无需被思考，同时保留现实迫使其重新成为认知对象的路径。
 
 例如，一个机器人已经熟练掌握使用电钻。正常情况下，握持力、姿态修正、转速适配和局部振动补偿都可以由身体层闭合。但如果钻头突然进入未知高硬度材料，BPCC 发现实际反作用力与局部预测长期不一致，同时 FCS 中的负载压力快速升高，那么真正应该提升到 Kernel 的不是每一个电流样本，而是：
@@ -657,11 +654,10 @@ F(x_f,z_s),
 0<\epsilon\ll 1.
 \end{equation}
 这里慢结构只根据快速残差的长期统计量变化，而不是跟随每个瞬时噪声。这正是
-\[
-\boxed{
-FastNoise\nrightarrow SlowGlobalStructure
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise\nrightarrow SlowGlobalStructure\)}
+\end{statementbox}
 的数学表达。
 
 因此合理的向上流不是：
@@ -858,25 +854,23 @@ AgentCSO(C)@L_{i+1}.
 \end{equation}
 
 因此，多尺度智能的垂直方向不是简单的信息上传和命令下发，而是两种完全不同的结构流：
-\begin{equation}
-\boxed{
-\begin{array}{rcl}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{array}{rcl}
 \text{向下} &:&
 Constraint,\ Prediction,\ StableStructure,\ Capability,\\[4pt]
 \text{向上} &:&
 Residual,\ Novelty,\ Risk,\ Uncertainty,\ UnresolvedStructure.
-\end{array}
-}
-\end{equation}
+\end{array}\)}
+\end{statementbox}
 
 最终我们得到本章最核心的统一命题：
-\begin{equation}
-\boxed{
-\textbf{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \textbf{
 成熟智能通过局部闭环消化正常世界，通过残差升级重新认识异常世界；
 通过结构沉降把反复思考变成能力，通过高层约束而非高层微操维持整体方向。
-}
-}
-\end{equation}
+}\)}
+\end{statementbox}
 
 这使 AgentOS 不再是一座所有信息都汇入中央认知的金字塔，而成为一个由不同时间尺度闭环共同构成的动力系统：\textbf{每一层尽可能完成自己能够完成的世界，只有尚未被这一层理解和控制的部分才继续成为更高层的认知对象。}与此同时，一旦高层认知通过经验把某类问题真正解决，它又应逐渐离开显式工作记忆，沉降为新的局部能力。正是在这两股方向相反但相互依赖的结构流之间，有限认知容量才能获得近乎无限扩展的长期能力。

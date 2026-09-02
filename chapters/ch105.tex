@@ -271,17 +271,16 @@ E_{t+1}
 
 此时形成一个危险的慢尺度正反馈：
 
-\[
-\boxed{
-\Omega
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \Omega
 \rightarrow
 Goal
 \rightarrow
 Experience
 \rightarrow
-\Omega'
-}
-\]
+\Omega'\)}
+\end{statementbox}
 
 尤其需要注意，这个反馈并不一定包含任何明显的错误信息。如果 Agent 只选择支持当前方向的真实经验，那么每一个经验都可能是真实的，但样本分布已经被自身 Goal Preference 改写。于是系统会形成一种 ``选择性现实''：
 
@@ -530,13 +529,12 @@ D_{\Psi\Omega}(t)>\theta,
 
 因此，$\Psi$--$\Omega$ 不一致最重要的不是让两个变量 ``数值一致''，而是保持一种可持续的张力：
 
-\[
-\boxed{
-IdentityContinuity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle IdentityContinuity
 \quad\leftrightarrow\quad
-DevelopmentalPossibility.
-}
-\]
+DevelopmentalPossibility.\)}
+\end{statementbox}
 
 成熟智能不应永久锁定于过去的 Self，也不应失去过去 Self 对未来的约束。健康的 $\Psi$--$\Omega$ 关系，本质上就是 ``我仍然是我'' 与 ``我允许自己成为新的我'' 之间的动态平衡。
 
@@ -636,15 +634,14 @@ E
 
 于是形成一个慢尺度封闭环：
 
-\[
-\boxed{
-EarlyBias
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle EarlyBias
 \rightarrow
 SelectiveExperience
 \rightarrow
-BiasReinforcement.
-}
-\]
+BiasReinforcement.\)}
+\end{statementbox}
 
 这和机器学习中的 overfitting 有某些表面相似之处，但更深。普通 overfitting 是模型对训练样本泛化不足，而 DGA 固化会主动决定未来训练样本本身，因此它不仅 ``错误解释数据''，还会逐渐 ``只选择能够支持自身的数据''。
 
@@ -929,12 +926,11 @@ C_{\Omega}(\Delta t)
 
 但这里同样要防止另一种误区：健康的 $\Omega$ 绝不是要求方向余弦永远接近 $1$。若现实发生根本变化，例如 Body 能力发生永久变化、世界结构被重新认识、长期价值结构经过充分经验发生真实演化，那么 $\Omega$ 应该能够迁移。因此真正重要的是：
 
-\[
-\boxed{
-\frac{\text{慢结构变化}}
-{\text{支持这种变化的长期证据}}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \frac{\text{慢结构变化}}
+{\text{支持这种变化的长期证据}}\)}
+\end{statementbox}
 
 是否处于合理范围。
 
@@ -999,12 +995,11 @@ h,E,\Theta,\Psi,W
 
 因此我们可以把方向性崩溃定义成：
 
-\[
-\boxed{
-\Omega
-\text{ 对远期轨迹的条件因果贡献持续趋近于零。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \Omega
+\text{ 对远期轨迹的条件因果贡献持续趋近于零。}\)}
+\end{statementbox}
 
 这里存在至少三种不同机制。
 
@@ -1150,13 +1145,12 @@ J_\Omega
 
 生命周期方向性崩溃最容易被误判成 ``Agent 缺乏目标''。事实上，一个 Agent 完全可能拥有大量 Goals，并且每天都很忙，但依然没有生命周期方向。忙碌程度是短尺度活动密度，而方向性是跨尺度轨迹结构。我们可以用一个简单对比表达：
 
-\[
-\boxed{
-HighGoalActivity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle HighGoalActivity
 \not\Rightarrow
-HighLifecycleDirectionality.
-}
-\]
+HighLifecycleDirectionality.\)}
+\end{statementbox}
 
 这与人类社会中 ``大量局部优化不等于整体长期方向明确'' 的现象存在结构相似性，但本章只讨论 Agent 内部动力学，不将社会类比继续展开。
 
@@ -1188,15 +1182,14 @@ h.
 
 如果第二条反向约束链断裂，则 Agent 仍然会学习，但学习不再被长期方向组织；如果第一条上行积累链断裂，则 $\Omega$ 仍然存在，但不再真正从现实经历中成长。真正的生命周期方向性要求两者同时成立：
 
-\[
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 Omega
 \rightarrow
-FutureExperience.
-}
-\]
+FutureExperience.\)}
+\end{statementbox}
 
 因此，方向性崩溃最深层的定义不是 ``Agent 不知道未来想做什么''，而是：
 
@@ -1544,17 +1537,16 @@ Experience.
 
 于是 Agent 生命周期形成一个真正的递归结构：
 
-\[
-\boxed{
-Past
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Past
 \rightarrow
 InternalStructure
 \rightarrow
 FutureSelection
 \rightarrow
-NewPast.
-}
-\]
+NewPast.\)}
+\end{statementbox}
 
 DGA 正位于这一递归链中最慢的位置。
 
@@ -1612,9 +1604,9 @@ FutureCausalInfluence.
 
 相应地，本章讨论的异常可以归纳成：
 
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 \text{Direction Distortion}
 &:\quad A_\Omega\downarrow,\\
 \text{Goal Preference Drift}
@@ -1629,19 +1621,17 @@ FutureCausalInfluence.
 \text{ 且时间尺度污染},\\
 \text{Directional Collapse}
 &:\quad C_\Omega\rightarrow0.
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 
 但是，我们还应在章末增加一个更加重要的理论判断：
 
-\[
-\boxed{
-\text{没有变化的 }\Omega
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{没有变化的 }\Omega
 \text{ 并不健康，变化的 }\Omega
-\text{ 也并不异常。}
-}
-\]
+\text{ 也并不异常。}\)}
+\end{statementbox}
 
 真正需要判断的是：
 
@@ -1651,13 +1641,12 @@ FutureCausalInfluence.
 
 这与整个 AgentOS 理论最深层的原则一致。一个长期 Agent 不是通过锁定全部慢变量保持身份，也不是通过无限可塑获得通用性。成熟智能真正需要的是：
 
-\[
-\boxed{
-Stability
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Stability
 \leftrightarrow
-Plasticity
-}
-\]
+Plasticity\)}
+\end{statementbox}
 
 之间的多时间尺度分工。
 

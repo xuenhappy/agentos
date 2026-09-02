@@ -891,13 +891,12 @@ d_k(t)>0,\quad t\in[t_0,t_0+T]
 则可能逐渐累积成重要的运行约束。因此 Functional Influence 本身就天然具有时间动力学，而不是一次性的分类标签。
 
 这里也出现一个重要的层级保护原则：
-\[
-\boxed{
-FastInternalSignal
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastInternalSignal
 \nrightarrow
-DirectSlowSelfChange.
-}
-\]
+DirectSlowSelfChange.\)}
+\end{statementbox}
 也就是说，电量低、温度高、CPU 满载等身体状态不能直接修改 $\Psi$ 或长期身份结构。它们首先进入身体功能影响层，然后再通过较慢的整合机制影响当前认知控制。这样才能防止：
 \[
 FastNoise
@@ -992,13 +991,12 @@ S_3:
 不同 Agent、不同历史和不同任务可能形成不同 $S$，但它们都应锚定同一个或高度相似的 $P$。
 
 因此我们需要坚持：
-\[
-\boxed{
-RealityAnchoredState
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RealityAnchoredState
 \rightarrow
-ContextDependentSemantics,
-}
-\]
+ContextDependentSemantics,\)}
+\end{statementbox}
 而不是：
 \[
 RawSignal
@@ -1400,13 +1398,12 @@ SignalRoutingPolicy.
 一个 $P^{ext}$ 状态通常进入 semantic route，但在满足硬危险条件时也可以触发 emergency route；一个 $F^{int}$ 状态通常进入 modulation route，但当达到临界阈值时同样能够产生 emergency event。
 
 从外部理论看，这种设计可以与 real-time interrupt、functional safety、runtime assurance、control barrier methods 等联系起来。关键原则始终是：
-\[
-\boxed{
-CriticalSafety
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CriticalSafety
 \nrightarrow
-CognitiveDependency.
-}
-\]
+CognitiveDependency.\)}
+\end{statementbox}
 安全不应该依赖一个正在复杂推理、可能过载甚至处于认知湍流状态的高层系统及时作出正确判断。
 
 \section{四象限统一模型：从 Raw Signal 到 Agent 可使用的具身现实}
@@ -1560,13 +1557,12 @@ persistence
 \mathcal E_B,
 \]
 那么认知内核就不必为每种身体重新学习全部世界意义。它可以重用相当一部分已经形成的 Agent-CSO，只需要重新学习：
-\[
-\boxed{
-NewBody
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle NewBody
 \rightarrow
-SharedEmbodiedSemantics.
-}
-\]
+SharedEmbodiedSemantics.\)}
+\end{statementbox}
 这正是 Body Scale 原理能够成立的底层条件之一。
 
 从 CSO 理论看，我们还可以给这一结构一个更深的解释。外部 Universe-CSO 首先通过观测形成：
@@ -1584,13 +1580,12 @@ F^{ext},
 F^{int}.
 \]
 因此四象限实际上完成了：
-\[
-\boxed{
-RealityStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RealityStructure
 \rightarrow
-AgentRelativeEmbodiedStructure.
-}
-\]
+AgentRelativeEmbodiedStructure.\)}
+\end{statementbox}
 也就是说，它是 Universe-CSO 进入 Agent-CSO 世界之前最靠近现实的一次功能性重编码。
 
 我们因此可以把本章最终原则写成：
@@ -1666,9 +1661,9 @@ Feeling\neq Exception.
 
 由此我们获得了一条完整但仍保持最小依赖的输入链：
 
-\[
-\boxed{
-Reality
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Reality
 \rightarrow
 RawInteraction
 \rightarrow
@@ -1679,16 +1674,15 @@ F^{ext},
 F^{int}
 \right]
 \rightarrow
-HigherCognitiveProcessing.
-}
-\]
+HigherCognitiveProcessing.\)}
+\end{statementbox}
 
 在下一层工程中，我们可以进一步研究这些状态如何被组织成稳定、可检查、身体中心的现实语义结构，以及 Functional Influence 如何形成统一的连续场表示。但在进入那些具体数据结构之前，本章已经完成最重要的本体工作：\textbf{我们第一次明确规定了 Agent 的身体究竟应该把什么样的``现实''交给认知系统。}
 
 这也使整个 AgentOS 的世界—身体—认知闭环获得一个清楚的起点：
-\[
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 Body
 \rightarrow
@@ -1698,7 +1692,6 @@ Cognition
 \rightarrow
 Action
 \rightarrow
-World'.
-}
-\]
+World'.\)}
+\end{statementbox}
 只有当中间的 Embodied State 被正确分层以后，高层智能才可能既保持对现实的忠实，又保持对自身有限性的持续感知，并最终在不让有限工作记忆承担全部底层动力学的条件下实现真正可持续的具身智能。

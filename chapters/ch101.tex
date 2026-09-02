@@ -398,13 +398,12 @@ Feeling\neq Exception
 }
 \]
 与
-\[
-\boxed{
-CriticalSafety
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CriticalSafety
 \nrightarrow
-CognitiveDependency
-}
-\]
+CognitiveDependency\)}
+\end{statementbox}
 即即使 AHC 的 Threat 低估了危险，真正的紧急安全通道仍然必须能够独立触发保护；反过来，即使 AHC Threat 过高，也不能因此拥有无限制覆盖现实安全系统的权限。AHC 负责认知调制，Safety Boundary 负责硬安全权威，两者必须在系统架构中严格分离。
 
 \section{Arousal饱和：调节维度失去分辨率}
@@ -877,9 +876,9 @@ w_6I_{\mathrm{instability}},
 Reality\ Condition
 \]
 是否仍支持当前状态；然后检查 FCS 是否准确；再检查 AHC 状态动力学；最后才检查 TCE 是否存在二次放大。由此形成诊断顺序：
-\[
-\boxed{
-Reality
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Reality
 \rightarrow
 FCS
 \rightarrow
@@ -887,9 +886,8 @@ AHC
 \rightarrow
 SPC/TCE
 \rightarrow
-h.
-}
-\]
+h.\)}
+\end{statementbox}
 
 如果确定异常来自 AHC，本地干预可以分为几个层次。最轻的干预是调整当前负荷和恢复条件，例如降低任务并发、降低 TCE 温度或开放恢复窗口。第二层是动态参数调整，例如暂时提高衰减率：
 \[
@@ -933,13 +931,12 @@ W_{TU}\downarrow
 就能重新恢复局部稳定，而不必同时修改所有变量。这里体现的是此前已经提出的最小必要重组原则：优先使用较局部、较快速、较可逆的干预，避免一开始就修改 $\Theta$、$\Psi$ 或 $\Omega$ 这样的慢结构。
 
 我们还必须再次强调硬安全与 AHC 的分离。AHC 是认知调制系统，它可以影响风险敏感度，却不是最终安全权威。真正紧急危险必须经过独立安全通道：
-\[
-\boxed{
-Emergency
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Emergency
 \rightarrow
-SafetyController
-}
-\]
+SafetyController\)}
+\end{statementbox}
 而不是等待
 \[
 FCS\rightarrow AHC\rightarrow TCE\rightarrow Cognition.

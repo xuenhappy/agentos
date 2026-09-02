@@ -15,9 +15,9 @@ not Internal Intelligence
 
 由此，AgentOS 的开放标准不是试图制造一个巨大的统一数据结构，而是在世界、身体、认知和行动之间建立一套稳定的``语义骨架''：
 
-\[
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 SGC/FCS
 \rightarrow
@@ -27,9 +27,8 @@ ControlReference
 \rightarrow
 BodyRuntime
 \rightarrow
-World
-}
-\]
+World\)}
+\end{statementbox}
 
 并在这一主闭环周围建立 BPCC、Skill、Agent Communication、Capability、Safety 等公共契约。
 
@@ -1002,13 +1001,12 @@ UnderWhatAuthority.
 
 本书在 Body Runtime 中已经建立：
 
-\[
-\boxed{
-CriticalSafety
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CriticalSafety
 \nrightarrow
-CognitiveDependency
-}
-\]
+CognitiveDependency\)}
+\end{statementbox}
 
 以及：
 
@@ -1130,9 +1128,9 @@ UndefinedBehavior.
 
 至此我们可以看到，AgentOS 的开放标准体系并不是十个互相独立的 API，而是一张逐层闭合的公共语义网：
 
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 &SGC &&:\quad \text{世界是什么以及在哪里},\\
 &FCS &&:\quad \text{世界如何作用于我},\\
 &BodyABI &&:\quad \text{身体如何成为可替换执行载体},\\
@@ -1143,9 +1141,8 @@ UndefinedBehavior.
 &SkillPackage &&:\quad \text{成熟能力如何被封装和重新升级},\\
 &CapabilityDescriptor &&:\quad \text{系统现在实际上能做什么},\\
 &SafetyGovernance &&:\quad \text{哪些边界始终高于普通学习与执行}.
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 
 它们共同体现同一个标准化原则：
 

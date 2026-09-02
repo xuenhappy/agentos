@@ -3,12 +3,11 @@
 
 在前面的讨论中，工作记忆有限容量定理给出了 AgentOS 最基本的运行约束：任意时刻能够进入全局显式认知表面 $h(t)$ 的有效认知结构是有限的。因此，AgentOS 必须持续回答一个资源问题：
 
-\[
-\boxed{
-\text{当前哪些认知结构应当进入 } h(t)，
-\text{以何种形式进入，并占用多少认知资源？}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{当前哪些认知结构应当进入 } h(t)，
+\text{以何种形式进入，并占用多少认知资源？}\)}
+\end{statementbox}
 
 围绕这一问题，前文逐步形成了 CCM、Scheduler、Boundary 与 Offloading，并将复杂度治理概括为截流、压缩、时序展开、迁移和重构五种基本动作。
 
@@ -69,13 +68,12 @@ C_{\max}(W),
 
 这一约束首先产生复杂度治理问题：
 
-\[
-\boxed{
-\text{如何使 }C_{\mathrm{run}}(t)
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{如何使 }C_{\mathrm{run}}(t)
 \leq
-C_{\max}(W)?
-}
-\]
+C_{\max}(W)?\)}
+\end{statementbox}
 
 但进一步观察可以发现，$C_{\mathrm{run}}(t)$ 并不是凭空产生的。大量工作记忆占用来自当前激活的 Goal、Subgoal、Plan、Hypothesis、Constraint 与尚未闭合的 Task。
 
@@ -107,11 +105,10 @@ C_{\mathrm{coord}}(t),
 
 这意味着，认知过载不仅可能来自``问题太复杂''，也可能来自：
 
-\[
-\boxed{
-\text{想同时完成的事情太多。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{想同时完成的事情太多。}\)}
+\end{statementbox}
 
 因此，工作记忆有限性实际上同时推出两个治理问题：
 
@@ -357,14 +354,13 @@ GoalFeasibleRegion
 
 而不是：
 
-\[
-\boxed{
-Goal
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Goal
 \rightarrow
 \Psi,\Omega
-\quad\text{immediately}.
-}
-\]
+\quad\text{immediately}.\)}
+\end{statementbox}
 
 慢变量定义目标可以活动的长期区域；短期目标在这一约束区域中获得局部自由度。
 
@@ -715,23 +711,21 @@ C_{\mathrm{goal-conflict}}.
 
 因此复杂度治理与目标治理发生直接耦合：
 
-\[
-\boxed{
-GoalSet
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle GoalSet
 \rightarrow
-CognitiveLoad.
-}
-\]
+CognitiveLoad.\)}
+\end{statementbox}
 
 反过来：
 
-\[
-\boxed{
-CognitiveCapacity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CognitiveCapacity
 \rightarrow
-AllowedGoalConcurrency.
-}
-\]
+AllowedGoalConcurrency.\)}
+\end{statementbox}
 
 二者形成闭环，而不是上下级关系。
 
@@ -756,19 +750,17 @@ Reorganize
 
 对应中文分别为：
 
-\[
-\boxed{
-截流、压缩、时序展开、迁移、重构。
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle 截流、压缩、时序展开、迁移、重构。\)}
+\end{statementbox}
 
 截流解决的是：
 
-\[
-\boxed{
-\text{哪些结构根本不应进入 }h.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{哪些结构根本不应进入 }h.\)}
+\end{statementbox}
 
 压缩解决：
 
@@ -833,11 +825,10 @@ Reframe
 
 分别可以译为：
 
-\[
-\boxed{
-准入、聚合、阶段化、委派、重解释。
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle 准入、聚合、阶段化、委派、重解释。\)}
+\end{statementbox}
 
 它们与复杂度治理存在结构对应关系：
 
@@ -1003,11 +994,10 @@ GoalStaging.
 
 有限工作记忆并不意味着 Agent 无法完成高复杂度任务，而意味着：
 
-\[
-\boxed{
-\text{很多复杂问题必须通过时间展开才能被有限主体完成。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{很多复杂问题必须通过时间展开才能被有限主体完成。}\)}
+\end{statementbox}
 
 
 \section{目标委派：把未来约束交给其他载体}
@@ -1060,16 +1050,15 @@ Forget(G_i).
 
 更准确地：
 
-\[
-\boxed{
-ExecutionAuthority
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ExecutionAuthority
 \rightarrow
 ExternalCarrier,
 \qquad
 ClosureAuthority
-\ \text{may remain internal}.
-}
-\]
+\ \text{may remain internal}.\)}
+\end{statementbox}
 
 这为后续 Agent 间协作和组织智能提供了重要基础。
 
@@ -1426,15 +1415,14 @@ Subgoal
 
 于是复杂目标规划实际上形成：
 
-\[
-\boxed{
-GoalGraph
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle GoalGraph
 \rightarrow
 ProcessGraph
 \rightarrow
-Action.
-}
-\]
+Action.\)}
+\end{statementbox}
 
 目标治理因而与前文 CSO 图理论天然兼容：Goal 本身就是一种特殊 CSO。
 
@@ -1589,11 +1577,10 @@ Boundary 原本决定：
 
 从目标治理角度，Boundary 还必须决定：
 
-\[
-\boxed{
-\text{哪些外部要求有资格成为内部承诺。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{哪些外部要求有资格成为内部承诺。}\)}
+\end{statementbox}
 
 例如：
 
@@ -1688,13 +1675,12 @@ Convergence\uparrow.
 
 因此：
 
-\[
-\boxed{
-GoalGovernance
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle GoalGovernance
 \rightarrow
-TCEOperatingRegime.
-}
-\]
+TCEOperatingRegime.\)}
+\end{statementbox}
 
 但 TCE 仍然只是调节认知动力学，不拥有创建、修改或授权高层 Goal 的最终治理权。
 
@@ -2043,11 +2029,10 @@ C_{\max},
 
 而更一般地是：
 
-\[
-\boxed{
-\text{在可行治理区域中寻找可接受未来轨迹。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{在可行治理区域中寻找可接受未来轨迹。}\)}
+\end{statementbox}
 
 可以写成：
 
@@ -2116,13 +2101,12 @@ G^{lifecycle}.
 
 快 Goal 应当服从慢 Goal 的可行域约束：
 
-\[
-\boxed{
-SlowGoal
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SlowGoal
 \rightarrow
-FeasibleRegion(FastGoal).
-}
-\]
+FeasibleRegion(FastGoal).\)}
+\end{statementbox}
 
 但慢 Goal 不应逐步控制每个快动作：
 
@@ -2248,9 +2232,9 @@ Verification.
 
 因此：
 
-\[
-\boxed{
-Goal
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Goal
 \rightarrow
 Process
 \rightarrow
@@ -2258,19 +2242,17 @@ Action
 \rightarrow
 Verify
 \rightarrow
-Closure
-}
-\]
+Closure\)}
+\end{statementbox}
 
 构成此前 L4 Goal--Process 闭环的理论来源。
 
 这说明 Process 并不是 Goal 本身，也不是 Complexity 本身，而是：
 
-\[
-\boxed{
-\text{目标结构在有限认知容量和现实约束下的可执行展开。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{目标结构在有限认知容量和现实约束下的可执行展开。}\)}
+\end{statementbox}
 
 
 \section{从双轴治理到 AgentOS 的运行时总循环}
@@ -2365,9 +2347,9 @@ Achieved/Failed/Revised/Suspended/Aborted.
 
 整个循环可以概括为：
 
-\[
-\boxed{
-GoalGovernance
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle GoalGovernance
 \rightarrow
 ComplexityGovernance
 \rightarrow
@@ -2375,9 +2357,8 @@ Execution
 \rightarrow
 RealityVerification
 \rightarrow
-GoalGovernance'.
-}
-\]
+GoalGovernance'.\)}
+\end{statementbox}
 
 其中没有任何一环能够独立构成完整 Agent。
 
@@ -2607,11 +2588,10 @@ N_{\mathrm{claimed\ closure}}
 
 一个系统如果拥有很高的内部 Goal Completion Rate，却拥有很低的 Reality Verified Completion Rate，则意味着：
 
-\[
-\boxed{
-\text{系统正在越来越善于宣布自己成功，而不是真的越来越善于完成目标。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{系统正在越来越善于宣布自己成功，而不是真的越来越善于完成目标。}\)}
+\end{statementbox}
 
 因此 Reality Verified Goal Closure 应成为持续 Agent 的核心评价指标之一。
 
@@ -2664,13 +2644,12 @@ Goal Decomposition 方法。
 
 但由于时间尺度分离：
 
-\[
-\boxed{
-SingleFailure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SingleFailure
 \nrightarrow
-ImmediateSelfRewrite.
-}
-\]
+ImmediateSelfRewrite.\)}
+\end{statementbox}
 
 只有持续、重要且经过现实验证的结构模式，才应逐渐进入更慢层。
 
@@ -2829,11 +2808,10 @@ Experience.
 
 这种区别的核心在于：
 
-\[
-\boxed{
-\text{外部请求不再直接等价于内部目标。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{外部请求不再直接等价于内部目标。}\)}
+\end{statementbox}
 
 只有当 Agent 拥有：
 
@@ -2941,9 +2919,9 @@ ExternalCarrier.
 
 现在可以把本章核心压缩成一张双轴表：
 
-\[
-\boxed{
-\begin{array}{c|c|c}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{array}{c|c|c}
 &
 \text{复杂度治理}
 &
@@ -2979,9 +2957,8 @@ ExternalCarrier.
 \text{重构}
 &
 \text{重解释}
-\end{array}
-}
-\]
+\end{array}\)}
+\end{statementbox}
 
 二者进一步共同受到：
 
@@ -2999,15 +2976,14 @@ Reality
 
 由此形成：
 
-\[
-\boxed{
-\text{双五治理动作}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{双五治理动作}
 +
 \text{慢约束}
 +
-\text{现实验证}
-}
-\]
+\text{现实验证}\)}
+\end{statementbox}
 
 这一 AgentOS 运行时治理骨架。
 
@@ -3083,15 +3059,14 @@ GovernanceOfFutureConstraintCSOs.
 
 \textbf{目标--复杂度双治理原则}
 
-\[
-\boxed{
-PersistentIntelligence
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PersistentIntelligence
 \Rightarrow
 ComplexityGovernance
 +
-GoalGovernance.
-}
-\]
+GoalGovernance.\)}
+\end{statementbox}
 
 持续智能不仅必须控制认知负载，也必须控制目标集合。
 
@@ -3139,26 +3114,24 @@ ActiveGoal.
 
 \textbf{有限目标并发原则}
 
-\[
-\boxed{
-WorkingMemoryCapacity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle WorkingMemoryCapacity
 \Rightarrow
-FiniteEffectiveGoalConcurrency.
-}
-\]
+FiniteEffectiveGoalConcurrency.\)}
+\end{statementbox}
 
 目标数量和目标冲突都会消耗有效认知容量。
 
 
 \textbf{现实闭合原则}
 
-\[
-\boxed{
-GoalClosure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle GoalClosure
 \Rightarrow
-RealityVerification.
-}
-\]
+RealityVerification.\)}
+\end{statementbox}
 
 Agent 内部认为任务完成并不足以证明 Goal 已经闭合。
 
@@ -3178,13 +3151,12 @@ AutomaticResponsibilityRemoval.
 
 \textbf{慢变量保护原则}
 
-\[
-\boxed{
-FastGoalNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastGoalNoise
 \nrightarrow
-ImmediateChange(\Psi,\Omega).
-}
-\]
+ImmediateChange(\Psi,\Omega).\)}
+\end{statementbox}
 
 短期 Goal 不应直接改写身份与生命周期先验。
 
@@ -3267,9 +3239,9 @@ PersistentAgency.
 
 二者共同形成：
 
-\[
-\boxed{
-Goal
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Goal
 \rightarrow
 Process
 \rightarrow
@@ -3281,21 +3253,19 @@ Reality
 \rightarrow
 Verification
 \rightarrow
-Goal'
-}
-\]
+Goal'\)}
+\end{statementbox}
 
 这一闭环为后续内部/外部记忆、社会性外部承载、连续--离散治理、多层 AgentOS 循环以及最终的 Agent 培育工程奠定了直接基础。
 
 从更深的 CSO 视角看，本章真正提出的是：
 
-\[
-\boxed{
-\textbf{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \textbf{
 一个持续智能体不仅必须决定如何承载认知结构，还必须决定哪些关于未来的认知结构值得成为自身的持续承诺。
-}
-}
-\]
+}\)}
+\end{statementbox}
 
 因此，复杂度治理解决的是：
 

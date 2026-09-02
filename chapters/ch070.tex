@@ -931,13 +931,12 @@ ReindexPolicy.
 
 从系统架构上看，Offloading 是 AgentOS 克服有限工作记忆的关键机制之一。
 它使智能能力增长不再等价于内部模型无限膨胀，而转向：
-\[
-\boxed{
-\text{有限内部认知}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{有限内部认知}
 +
-\text{可管理外部结构}
-}
-\]
+\text{可管理外部结构}\)}
+\end{statementbox}
 共同组成持续智能。
 
 
@@ -964,9 +963,9 @@ Status
 Goal 不应被缩成自然语言字符串，因为真正可治理的目标还需要可行域、成功标准、时间范围和权限来源。
 
 目标执行过程可以形成闭环：
-\[
-\boxed{
-Goal
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Goal
 \rightarrow
 Plan
 \rightarrow
@@ -974,9 +973,8 @@ Action
 \rightarrow
 Verify
 \rightarrow
-Closure
-}
-\]
+Closure\)}
+\end{statementbox}
 其中 Verify 尤其关键，因为
 \[
 ActionIssued\neq ActionSucceeded.
@@ -1595,20 +1593,18 @@ Futureh.
 
 这两组循环并不是两个独立系统。
 快循环不断围绕慢结构给出的可行域运行，而持续的快层残差又可以经过经验积累逐渐改变慢结构：
-\[
-\boxed{
-SlowStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SlowStructure
 \rightarrow
-FastConstraint,
-}
-\]
-\[
-\boxed{
-PersistentFastResidual
+FastConstraint,\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PersistentFastResidual
 \rightarrow
-SlowUpdate.
-}
-\]
+SlowUpdate.\)}
+\end{statementbox}
 
 因此 AgentOS Kernel 的真正统一对象不是任何一个模块，而是
 \begin{statementbox}

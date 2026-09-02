@@ -50,9 +50,9 @@ x^B_t,
 获得有限、带噪声且受身体边界约束的观测，其中 $\nu_t$ 表示传感噪声、观测遗漏和认识论不确定性。
 
 由此，我们得到 AgentOS 最基础的闭环：
-\[
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 Observation
 \rightarrow
@@ -60,9 +60,8 @@ Agent
 \rightarrow
 Action
 \rightarrow
-World'
-}
-\]
+World'\)}
+\end{statementbox}
 
 这个闭环看似简单，却决定了后续所有层级的认识论边界。一个预测结果无论多么可信，都不能直接成为新的现实状态；一个已经发出的动作，也不能直接被内部系统登记为 ``已经成功''。必须经过
 \[
@@ -205,9 +204,9 @@ C_{\max}(h).
 且接近容量边界时，CCM 不应等待系统崩溃，而应执行 Fold、抑制、分页、压缩、分解、外化、延迟或者委派。
 
 由此 $L_1$ 可以概括成：
-\[
-\boxed{
-SPC
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SPC
 \rightarrow
 Scheduler
 \rightarrow
@@ -217,9 +216,8 @@ CCM
 \rightarrow
 CognitiveDynamics
 \rightarrow
-SPC
-}
-\]
+SPC\)}
+\end{statementbox}
 
 需要注意，这并非严格的线性串行流水线。实际上它是一个多输入、多反馈的快速闭环。SPC 可以直接触发 Scheduler；CCM 的负载判断可以反向影响 Scheduler；TCE 可以改变 CCM 的激进程度；Scheduler 可以限制 TCE 的可用资源。因此更准确的形式是：
 \[
@@ -342,13 +340,12 @@ h\rightarrow ExternalMemory.
 \]
 
 因此，$h$ 的成熟并不表现为内容越来越多，而表现为：
-\[
-\boxed{
-\frac{\text{显式认知负载}}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \frac{\text{显式认知负载}}
 {\text{成功行为能力}}
-\downarrow.
-}
-\]
+\downarrow.\)}
+\end{statementbox}
 一个成熟 Agent 不应该把所有低层状态、所有记忆和所有熟练技能长期放入 $h$。相反，只有新颖、冲突、重大、不确定或者需要跨功能协调的结构才值得进入。
 
 我们也应看到 $L_1$ 与 $L_2$ 的明确区别。$L_2$ 中的 Agent-CSO 是认知内容；$L_1$ 则观察和调节这些内容的运行状态。因此：
@@ -495,11 +492,10 @@ E=\text{WhatHappened},
 \]
 
 因此，$L_3$ 的本质不是 memory storage，而是：
-\[
-\boxed{
-Experience\rightarrow Structure\rightarrow FutureCognition.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience\rightarrow Structure\rightarrow FutureCognition.\)}
+\end{statementbox}
 它使过去第一次能够以压缩结构的方式进入未来，并成为后续目标、判断与行动的生成条件。
 
 \section{$L_4$：目标与任务闭环——未来结构如何进入当前因果链}
@@ -523,9 +519,9 @@ FutureConstraintOnPresentDynamics.
 \end{statementbox}
 
 标准 $L_4$ 闭环写成：
-\[
-\boxed{
-Goal
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Goal
 \rightarrow
 Process
 \rightarrow
@@ -535,9 +531,8 @@ Verify
 \rightarrow
 Closure
 \rightarrow
-Goal'
-}
-\]
+Goal'\)}
+\end{statementbox}
 
 首先，根据 Goal 和当前状态生成过程/计划：
 \[
@@ -628,9 +623,9 @@ E\rightarrow\Theta.
 如果一个 Agent 永远只能执行预先授予的固定任务、固定权限和固定认知边界，那么即使其记忆不断增长，也仍然很难称为真正具有生命周期的发展性主体。$L_5$ 所研究的，就是比单次任务和知识学习更慢的变化：\textbf{Agent 在长期经验中如何获得新的能力、怎样被评价、如何获得新的权限，并由此进入新的经验域。}
 
 我们把这一闭环写成：
-\[
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 Capability
 \rightarrow
@@ -640,9 +635,8 @@ Authority
 \rightarrow
 Autonomy
 \rightarrow
-NewExperience.
-}
-\]
+NewExperience.\)}
+\end{statementbox}
 
 这一层首先需要区分三个常被混淆的变量：
 \[
@@ -709,15 +703,14 @@ Autonomy_t
 ExperienceDistribution_{t+\Delta}.
 \]
 一个被允许独立完成复杂任务的 Agent，会获得与只能接受固定指令的 Agent 完全不同的经历；这些经历又继续改变其 $E$、$\Theta$ 以及更慢的 $\Psi$。因此：
-\[
-\boxed{
-CurrentAuthority
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CurrentAuthority
 \rightarrow
 FutureExperience
 \rightarrow
-FutureSelf.
-}
-\]
+FutureSelf.\)}
+\end{statementbox}
 
 这意味着治理并不只是限制 Agent 的外部措施，而直接参与 Agent 的发育动力学。
 
@@ -776,9 +769,9 @@ D_{\max}(t)
 表示更慢的生命周期生成吸引子，即某些未来发展方向在长期经验积累后逐渐形成的生成偏置。
 
 于是 $L_6$ 可以抽象成：
-\[
-\boxed{
-\Psi
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \Psi
 \rightarrow
 GoalPreference
 \rightarrow
@@ -786,9 +779,8 @@ GoalPreference
 \rightarrow
 SelfConsistency
 \rightarrow
-\Psi'
-}
-\]
+\Psi'\)}
+\end{statementbox}
 
 这一层不应该被误解成 ``一个永久不变的 system prompt''。真正的 $\Psi$ 应当是跨经历、跨任务和跨时间保持相对稳定，同时又允许非常缓慢修正的结构场。可以写成：
 \[
@@ -959,13 +951,12 @@ Agent_i
 Agent_j
 \]
 经过长期沉降后可以形成 Role、Protocol、Procedure 和 Institution。于是：
-\[
-\boxed{
-RepeatedInterAgentCSOFlow
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RepeatedInterAgentCSOFlow
 \rightarrow
-OrganizationalStructure.
-}
-\]
+OrganizationalStructure.\)}
+\end{statementbox}
 这意味着组织本身可以被理解成更慢、更稳定的外部认知结构。
 
 需要特别说明的是，早期一些体系图曾把社会与组织单独编号为 $L_6$。在本章定稿结构中，我们不再这样做，因为那会把 ``Agent 内部时间尺度层级'' 与 ``跨 Agent 系统尺度'' 混在同一轴上。正式定义中：
@@ -1086,11 +1077,10 @@ L_0.
 这种相邻耦合减少跨尺度控制振荡，也使每一层保有可解释的责任边界。
 
 跨层关系还必须满足慢变量保护：
-\[
-\boxed{
-FastNoise\nrightarrow SlowGlobalStructure.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise\nrightarrow SlowGlobalStructure.\)}
+\end{statementbox}
 只有经过时间平均、证据积累和结构验证的快层残差才能修改慢层：
 \[
 \Delta x_{k+1}
@@ -1226,13 +1216,12 @@ x^{life}
 其中 $\mathcal Q$ 表示离散治理状态，$\mathcal R$ 表示事件触发的状态重置或结构变化。
 
 因此，全系统的运行可以理解为：
-\[
-\boxed{
-ContinuousDynamics
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ContinuousDynamics
 \leftrightarrow
-DiscreteGovernance.
-}
-\]
+DiscreteGovernance.\)}
+\end{statementbox}
 
 在这一统一结构中，我们尤其不应该再问：``到底哪个模块才是真正的智能？'' 因为答案是没有单一模块。$h$ 没有 E 和 $\Theta$ 就没有历史；$\Theta$ 没有现实残差就会形成封闭模型；SPC 没有 TCE 就只是观察器；TCE 没有 SPC 就成为盲控制；Goal 没有 $\Psi/\Omega$ 就缺少长期方向；$\Psi/\Omega$ 没有 $L_0$ 的现实反证又可能自我封闭。
 
@@ -1300,9 +1289,9 @@ $L_5$ 解决长期经验如何转变成能力、权限与自治；
 $L_6$ 则解决身份、价值和生成方向如何在极慢尺度保持连续而又能够成长。
 
 因此我们得到统一序列：
-\[
-\boxed{
-Reality
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Reality
 \leftrightarrow
 Runtime
 \leftrightarrow
@@ -1314,9 +1303,8 @@ Goal
 \leftrightarrow
 Lifecycle
 \leftrightarrow
-Self/GenerativePrior.
-}
-\]
+Self/GenerativePrior.\)}
+\end{statementbox}
 
 而在这条纵向序列之外，还存在：
 \[
@@ -1413,28 +1401,26 @@ ControlOfControlLoops.
 State\rightarrow BetterParameters,
 \]
 那么 AgentOS 所研究的是：
-\[
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 BetterStructure
 \rightarrow
 BetterControl
 \rightarrow
-DifferentFutureExperience.
-}
-\]
+DifferentFutureExperience.\)}
+\end{statementbox}
 
 而如果普通软件系统主要追求当前任务完成，那么持续 Agent 进一步面对：
-\[
-\boxed{
-PresentAction
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PresentAction
 \rightarrow
 FutureCapability
 \rightarrow
-FutureSelf.
-}
-\]
+FutureSelf.\)}
+\end{statementbox}
 
 这一点使多层循环理论成为 AgentOS 原理论的真正汇合点：三相记忆、自我、SPC、AHC、TCE、CCM、Scheduler、Goal、生命周期以及现实闭环不再是彼此平行的概念，而被重新理解为同一个持续主体在不同时间尺度上的动力学截面。
 

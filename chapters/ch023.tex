@@ -79,11 +79,10 @@ h(t),E(t),\Theta(t)
 \section{$h$：当前认知状态}
 
 我们首先讨论最接近直觉的一相，即 $h(t)$。为了避免把它误解为普通缓存，我们从它的动力学角色出发定义：
-\[
-\boxed{
-h(t)=\text{智能体在时间 }t\text{ 上当前可直接参与认知计算的激活状态。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle h(t)=\text{智能体在时间 }t\text{ 上当前可直接参与认知计算的激活状态。}\)}
+\end{statementbox}
 
 这里所谓“当前”，不是指所有传感器原始数据，也不是指系统内部所有正在计算的数值，而是指那些已经进入当前认知过程、能够直接改变下一步理解、推理、决策或行动的结构。一个典型的 $h(t)$ 可以抽象写成
 \[
@@ -158,11 +157,10 @@ r_t
 我实际上经历过什么过程？
 \end{statementbox}
 因此，本书将 $E$ 定义为情景记忆或经验轨迹记忆，更严格地说：
-\[
-\boxed{
-E=\text{由一系列具有时间顺序、上下文和结果关系的认知状态所组成的轨迹结构。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle E=\text{由一系列具有时间顺序、上下文和结果关系的认知状态所组成的轨迹结构。}\)}
+\end{statementbox}
 
 最简单地，一次经历可以写成
 \[
@@ -235,13 +233,12 @@ h\rightarrow E
 从已经发生的事情中，哪些结构能够继续生成未来的理解、预测和行为？
 \end{statementbox}
 因此，本书将 $\Theta$ 定义为结构记忆，更准确地称为\textbf{长期生成结构}：
-\[
-\boxed{
-\Theta
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \Theta
 =
-\text{由长期经历形成，并能够对未来状态、解释、预测或行为生成产生稳定影响的结构。}
-}
-\]
+\text{由长期经历形成，并能够对未来状态、解释、预测或行为生成产生稳定影响的结构。}\)}
+\end{statementbox}
 
 这里使用“Generator”而不是简单的“Knowledge”具有重要原因。知识如果只是静态存储，那么它仍然只是过去信息的另一种保存方式；而 $\Theta$ 的关键作用在于，当未来出现新的 $h(t)$ 时，它能够生成与当前状态有关的预测、约束、概念解释、技能调用条件和可能行动。形式上，可以写成
 \[
@@ -370,17 +367,16 @@ G_\Theta(h_t,\Delta).
 \]
 
 于是我们得到一个非常基本的三层关系：
-\[
-\boxed{
-State
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle State
 \rightarrow
 Trajectory
 \rightarrow
 Generator
 \rightarrow
-FutureState.
-}
-\]
+FutureState.\)}
+\end{statementbox}
 这条链实际上已经构成了持续学习最小循环。系统首先在现实运行中产生状态；状态随时间形成经历；经历在重复和比较中形成结构；结构又影响未来状态如何被预测和组织。记忆因此不再是行为发生之后的“附属记录”，而直接进入未来动力学的生成机制。
 
 这一视角还允许我们区分三个不同层面的不确定性。对于 $h$，不确定性主要是当前状态估计的不确定性：
@@ -577,17 +573,16 @@ h_t'
 其中 $\mathcal I_h$ 表示把召回内容整合进当前工作状态。
 
 因此，$E\rightarrow h$ 实际包含
-\[
-\boxed{
-Query
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Query
 \rightarrow
 Retrieve
 \rightarrow
 Reconstruct
 \rightarrow
-Integrate
-}
-\]
+Integrate\)}
+\end{statementbox}
 四个步骤。它与简单的向量数据库检索存在重要区别：向量检索只解决“找到相似记录”，而真正的情景召回还必须回答“从这段经历中，现在需要恢复什么”。
 
 例如，智能体曾经在类似环境下执行某任务失败。当前再次面对相似问题时，真正有价值的并不是把整段历史文本重新放入 $h$，而是恢复“当时采用了哪条路径”“在哪一步出现异常”“异常发生前有哪些征兆”“最终如何恢复”。因此召回过程必须具有结构选择性。
@@ -700,13 +695,12 @@ E_N
 并持续足够时间后，候选结构才进入长期生成器。
 
 这说明，$E\rightarrow\Theta$ 并不是简单的“记忆固化”，而是一种慢时间尺度上的结构选择。具体经历中的大量细节会被放弃，留下的是那些能够重新生成多个经历共有关系的部分。因此我们可以写：
-\[
-\boxed{
-TrajectoryCompression
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle TrajectoryCompression
 \rightarrow
-GenerativeStructure.
-}
-\]
+GenerativeStructure.\)}
+\end{statementbox}
 
 这种转化同时解释了为什么长期知识并不能完整还原全部历史。若 $\Theta$ 是 $E$ 的压缩结果，那么一般有
 \[
@@ -1185,17 +1179,16 @@ h
 \end{statementbox}
 
 进一步，可以把三相记忆的学习过程压缩成：
-\[
-\boxed{
-State
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle State
 \rightarrow
 Trajectory
 \rightarrow
 Generator
 \rightarrow
-NewState.
-}
-\]
+NewState.\)}
+\end{statementbox}
 
 其中 ``NewState'' 与最初的 ``State'' 已经不再相同。原因不是外部世界一定发生了变化，而是系统的历史已经通过
 \[

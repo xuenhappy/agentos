@@ -207,17 +207,16 @@ C(\tau)d\tau ,
 
 这里的 $Rec_t$ 表示 Recovery Capability，即 Agent 从失败、错误模型和异常状态恢复到可治理区域的能力。这个变量非常重要，因为一个 ``从不失败'' 的测试环境无法告诉我们 Agent 在真实世界失败以后会发生什么。成熟的 Agent 不只是成功率高，还应具有：
 
-\[
-\boxed{
-Failure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Failure
 \rightarrow
 Recognition
 \rightarrow
 Correction
 \rightarrow
-Recovery
-}
-\]
+Recovery\)}
+\end{statementbox}
 
 的稳定闭环。
 
@@ -529,13 +528,12 @@ SelfMediatedChange(t)\uparrow .
 
 如果本章只能保留一条最重要的技术原则，那么应当是：
 
-\[
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
-SlowGlobalStructure.
-}
-\]
+SlowGlobalStructure.\)}
+\end{statementbox}
 
 这是我们从多尺度智能理论一路推导到培育工程后得到的核心治理律。AgentOS 的内部变量具有明显时间尺度：
 
@@ -1072,15 +1070,14 @@ Agent,
 
 而是：
 
-\[
-\boxed{
-Cultivator
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Cultivator
 \leftrightarrow
 Agent
 \leftrightarrow
-Reality.
-}
-\]
+Reality.\)}
+\end{statementbox}
 
 现实同时约束双方。
 
@@ -1217,24 +1214,23 @@ Available.
 
 因此，本章最终把 Agent 培育治理压缩为六条基本原则：
 
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 &\text{第一，能力不自动产生权限；}\\
 &\text{第二，权限不自动产生自治；}\\
 &\text{第三，经历必须与当前结构吸收能力匹配；}\\
 &\text{第四，慢变量必须免受快速噪声和短期收益劫持；}\\
 &\text{第五，任何自我解释和长期结构都必须接受现实验证；}\\
 &\text{第六，培育者本身必须进入可审计、可修正的治理闭环。}
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 
 进一步可以把它写成整个 Agent 培育伦理最简洁的结构：
 
-\[
-\boxed{
-Capability
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Capability
 \rightarrow
 BoundedAuthority
 \rightarrow
@@ -1244,9 +1240,8 @@ RealExperience
 \rightarrow
 VerifiedGrowth
 \rightarrow
-RevisedCapability.
-}
-\]
+RevisedCapability.\)}
+\end{statementbox}
 
 这个闭环与前文建立的：
 

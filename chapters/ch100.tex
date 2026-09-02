@@ -138,9 +138,9 @@ Control-Sufficient Self Representation
 
 由此，我们可以给 SPC 异常第一个正式定义：
 
-\[
-\boxed{
-\mathcal A_{\mathrm{SPC}}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathcal A_{\mathrm{SPC}}
 =
 \left\{
 t\mid
@@ -148,9 +148,8 @@ t\mid
 >
 \varepsilon_{\mathrm{safe}}
 \;\text{且误差无法在正常反馈时间内收敛}
-\right\}
-}
-\]
+\right\}\)}
+\end{statementbox}
 
 这说明偶然估计错误并不构成真正的 SPC 异常。持续 Agent 必然不断产生局部自我误差；真正值得心理工程关注的是：误差变得持续、系统性、具有方向性，并开始影响行为、记忆和自我结构。SPC 异常因此首先是一个 observer failure 问题，然后才可能成为更高层的认知和心理问题。
 

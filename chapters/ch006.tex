@@ -77,9 +77,9 @@ y_i
 x_i',
 \]
 其中 $P_i$ 表示预测，$C_i$ 表示控制或选择，$\mathcal{W}_i$ 表示该层所作用的局部世界或受控对象，$O_i$ 表示反馈观测。由此得到本书反复使用的统一闭环形式：
-\[
-\boxed{
-\text{Prediction}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Prediction}
 \rightarrow
 \text{Action}
 \rightarrow
@@ -87,9 +87,8 @@ x_i',
 \rightarrow
 \text{Residual}
 \rightarrow
-\text{Update}
-}
-\]
+\text{Update}\)}
+\end{statementbox}
 不同尺度具有相似的闭环形式，但状态空间、动作空间和时间尺度完全不同。身体伺服回路的状态可能是关节角度与速度；工作认知回路的状态可能是当前目标、假设和活动关系；结构学习回路的状态则可能是长期规则、生成模型或能力结构。
 
 于是，所谓“智能频谱”可以初步定义为：
@@ -287,13 +286,12 @@ GoalRelevance
 }
 \]
 但同时：
-\[
-\boxed{
-\text{Fourier Intuition}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Fourier Intuition}
 \rightarrow
-\text{Multiscale Dynamical Insight}.
-}
-\]
+\text{Multiscale Dynamical Insight}.\)}
+\end{statementbox}
 我们保留“频率、相位、振幅、中心”等直觉，因为它们帮助理解不同认知过程的速度与状态波动；但在形式化时，我们必须把这些直觉重新嵌入非线性的快--慢动力系统之中。
 
 \section{快循环与慢循环}
@@ -688,13 +686,12 @@ r_{\mathrm{skill}}\uparrow,
 于是上层介入率下降。这并不意味着智能体“失去了关于技能的结构”，而是能力已经被沉降到更快、更局部的闭环中。
 
 因此，频谱理论中的自由半径最终描述了稳定与灵活之间的核心张力：
-\[
-\boxed{
-Stability
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Stability
 \leftrightarrow
-LocalFreedom.
-}
-\]
+LocalFreedom.\)}
+\end{statementbox}
 慢层真正成熟的表现，不是控制更多，而是知道哪些地方可以不控制。
 
 \section{快循环的长期残差推动慢中心移动}
@@ -835,25 +832,23 @@ E/\Theta
 也需要更长时间的统计积累。
 
 因此，本节提出的不是一个局部学习规则，而是贯穿整个智能生命周期的一般原则：
-\[
-\boxed{
-PersistentFastResidual
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PersistentFastResidual
 \rightarrow
-SlowStructuralChange.
-}
-\]
+SlowStructuralChange.\)}
+\end{statementbox}
 与上一节的慢约束结合：
-\[
-\boxed{
-SlowStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SlowStructure
 \rightarrow
 FastDynamics
 \rightarrow
 Residual
 \rightarrow
-SlowStructure'.
-}
-\]
+SlowStructure'.\)}
+\end{statementbox}
 这构成一个跨尺度闭环，而不是层级树。
 
 \section{时间平均与慢变量学习}
@@ -1112,13 +1107,12 @@ x_s(t)
 1,
 \]
 时间尺度分离破坏，系统会失去清晰的层级组织。因此我们后来提出：
-\[
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
-SlowGlobalStructure.
-}
-\]
+SlowGlobalStructure.\)}
+\end{statementbox}
 
 然而绝热近似并非永远成立。当环境突然发生巨大变化，或者快速层长期残差累积到足够程度时，原来的慢流形可能不再能够承载快速轨迹。例如：
 \[

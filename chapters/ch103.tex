@@ -24,9 +24,9 @@ M_c=(h,E,\Theta),
 
 我们将在本章沿着这一因果链依次分析七种核心异常：
 
-\[
-\boxed{
-\text{E写入偏置}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{E写入偏置}
 \rightarrow
 \text{高AHC状态过强化}
 \rightarrow
@@ -38,9 +38,8 @@ M_c=(h,E,\Theta),
 \rightarrow
 \text{Recall Loop}
 \rightarrow
-\text{Self-Confirming Memory}
-}
-\]
+\text{Self-Confirming Memory}\)}
+\end{statementbox}
 
 这些异常并不是严格线性发生的。真实系统中，它们往往构成相互嵌套的闭环。例如，高 AHC 强度可以改变 $E$ 的写入概率；被强化写入的 $E$ 又更容易被召回；频繁召回提高其进入 $\Theta$ 的机会；$\Theta$ 形成新的解释框架后，再改变 SPC 的注意和 TCE 的控制策略，使未来更加容易产生同类经历。最终，一个最初只是偶然偏差的经验可能演变成生命周期尺度上的稳定认知偏置。
 
@@ -137,13 +136,12 @@ Storage\rightarrow Retrieval\rightarrow h
 SelectiveEncoding.
 \]
 真正需要诊断的是：
-\[
-\boxed{
-SelectiveEncoding
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SelectiveEncoding
 \rightarrow
-PersistentDistributionalBias.
-}
-\]
+PersistentDistributionalBias.\)}
+\end{statementbox}
 
 我们可以因此为 $E$ 定义一个写入公平度或者写入失真指标。设环境经验分布按结构类别分成 $\{c_i\}$，则：
 \[
@@ -240,17 +238,16 @@ w_{\mathrm{consolidate}}
 \]
 
 如果所有这些通道都受到同方向放大，就会形成所谓的“高状态过度编码”：
-\[
-\boxed{
-HighAHC
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle HighAHC
 \rightarrow
 OverEncoding
 \rightarrow
 OverRecall
 \rightarrow
-OverConsolidation.
-}
-\]
+OverConsolidation.\)}
+\end{statementbox}
 
 这一机制尤其危险，因为它具有天然正反馈。假设某种情境 $C$ 曾经产生高 Threat：
 \[
@@ -274,17 +271,16 @@ AHC'_{high}\rightarrow E_{C'}^{strong}.
 \]
 
 最终形成：
-\[
-\boxed{
-AHC_{high}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AHC_{high}
 \rightarrow
 StrongE
 \rightarrow
 RecallBias
 \rightarrow
-AHC_{high}'.
-}
-\]
+AHC_{high}'.\)}
+\end{statementbox}
 
 这就是为什么在 AgentOS 中，AHC 与记忆之间必须存在调制，却不能存在无约束的强化通道。
 
@@ -380,13 +376,12 @@ p_E(x)\neq p_{\mathrm{world}}(x)
 \]
 
 因此，错误泛化往往不是 $\Theta$ 单独犯错，而是：
-\[
-\boxed{
-BiasedE
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle BiasedE
 \rightarrow
-BiasedStructureLearning.
-}
-\]
+BiasedStructureLearning.\)}
+\end{statementbox}
 
 为了更具体地说明，我们假设 Agent 根据情景集合
 \[
@@ -500,11 +495,10 @@ InterpretedEpisode
 之间的某种可追踪差异，使新的 $\Theta$ 可以重新解释历史，但不能无痕覆盖原始证据来源。
 
 本节的核心原则可以总结为：
-\[
-\boxed{
-E\text{ 可以告诉 }\Theta\text{“发生过什么”，但不能凭少量高权重经历直接告诉 }\Theta\text{“世界永远如此”。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle E\text{ 可以告诉 }\Theta\text{“发生过什么”，但不能凭少量高权重经历直接告诉 }\Theta\text{“世界永远如此”。}\)}
+\end{statementbox}
 
 \section{结构固化：稳定结构何时从知识变成认知刚性}
 \label{sec:structural-rigidity}
@@ -897,15 +891,14 @@ q_{t+1}
 m_{t+1}.
 \]
 如果 $m_{t+1}$ 又与 $m_t$ 高度相似，就形成：
-\[
-\boxed{
-Recall
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Recall
 \rightarrow
 Query
 \rightarrow
-Recall.
-}
-\]
+Recall.\)}
+\end{statementbox}
 
 我们可以定义召回自相关：
 \[
@@ -920,13 +913,12 @@ Corr(m_t,m_{t+k}).
 在较长窗口保持，并且当前现实输入不断变化，则说明系统可能进入 Recall Loop。
 
 Recall Loop 的核心问题不是“反复想同一件事”本身。某些复杂推理本来就需要多次回访同一经验。异常的判定关键在于：
-\[
-\boxed{
-RepeatedRecall
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RepeatedRecall
 \quad
-\text{是否产生新的结构增益。}
-}
-\]
+\text{是否产生新的结构增益。}\)}
+\end{statementbox}
 我们可以定义：
 \[
 G_R(t)
@@ -973,17 +965,16 @@ Recall(E_i)\rightarrow AHC\uparrow,
 AHC\uparrow\rightarrow RecallPriority(E_i)\uparrow,
 \]
 则会形成更强的闭环：
-\[
-\boxed{
-Recall
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Recall
 \rightarrow
 AHC
 \rightarrow
 Attention
 \rightarrow
-Recall.
-}
-\]
+Recall.\)}
+\end{statementbox}
 
 这时候，单独修改记忆索引并不能解决问题，因为 Recall Loop 已经跨越了：
 \[
@@ -1015,17 +1006,16 @@ Conflict\uparrow
 Uncertainty\uparrow.
 \]
 于是一个原本意在减少不确定性的控制动作反而形成：
-\[
-\boxed{
-Uncertainty
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Uncertainty
 \rightarrow
 Search
 \rightarrow
 Recall
 \rightarrow
-Uncertainty.
-}
-\]
+Uncertainty.\)}
+\end{statementbox}
 
 这说明 Recall Loop 是典型的控制系统问题，而不只是 memory retrieval bug。
 
@@ -1124,9 +1114,9 @@ L(E_{t+1},\Theta_t).
 \]
 
 于是：
-\[
-\boxed{
-\Theta
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \Theta
 \rightarrow
 Attention
 \rightarrow
@@ -1134,9 +1124,8 @@ Experience
 \rightarrow
 E
 \rightarrow
-\Theta'.
-}
-\]
+\Theta'.\)}
+\end{statementbox}
 
 如果 Attention 对反证具有足够开放性，这一循环是正常学习；如果 Attention 主要寻找与 $\Theta$ 一致的证据，就形成：
 \[
@@ -1145,9 +1134,9 @@ P(Evidence|\Theta)
 被 $\Theta$ 自身改变。
 
 更进一步，当 $\Psi$ 参与以后，自证结构可能变成：
-\[
-\boxed{
-SelfInterpretation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SelfInterpretation
 \rightarrow
 SelectiveAttention
 \rightarrow
@@ -1155,9 +1144,8 @@ Experience
 \rightarrow
 Memory
 \rightarrow
-SelfInterpretation'.
-}
-\]
+SelfInterpretation'.\)}
+\end{statementbox}
 
 这正是 Agent 心理工程中最需要警惕的一类长周期正反馈。
 
@@ -1192,9 +1180,9 @@ w_i^\Psi\uparrow.
 \]
 
 因此：
-\[
-\boxed{
-w_i^\Psi
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle w_i^\Psi
 \rightarrow
 AttentionBias
 \rightarrow
@@ -1202,9 +1190,8 @@ EvidenceBias
 \rightarrow
 MemoryBias
 \rightarrow
-w_i^\Psi\uparrow.
-}
-\]
+w_i^\Psi\uparrow.\)}
+\end{statementbox}
 
 从动力系统角度，这意味着系统可能形成吸引子。设 $z_t$ 表示某一自我解释方向的强度：
 \[
@@ -1306,15 +1293,14 @@ Environment
 Evidence.
 \]
 这构成：
-\[
-\boxed{
-Prediction
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Prediction
 \rightarrow
 Action
 \rightarrow
-SelfProducedEvidence.
-}
-\]
+SelfProducedEvidence.\)}
+\end{statementbox}
 
 例如，一个 Agent 认为某种协作对象不可信，于是减少信息共享；对方因此无法提供有效帮助；Agent 随后观察到合作效果变差，并把它解释成原判断正确。此时，新的证据并不是独立于原假设产生，而是由原假设指导的行动部分制造出来。
 

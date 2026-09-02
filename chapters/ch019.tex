@@ -225,12 +225,11 @@ C_t^U
 \right).
 \]
 过去学习形成的 $\Theta$ 会决定哪些关系容易被识别，$\Psi$ 会改变哪些结构具有自我相关性，Goal 会改变注意优先级，身体则决定哪些结构能够真正被感知。因此：
-\[
-\boxed{
-Observation
-\text{本身已经包含历史、身体、目标和先验。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Observation
+\text{本身已经包含历史、身体、目标和先验。}\)}
+\end{statementbox}
 这与主动感知、预测加工和具身认知存在外部理论上的联系，但本书进一步把这些作用统一到 Agent-CSO 的动态生成过程之中。
 
 最后，我们还必须把 Observation 与 Reality Authority 结合起来。Agent-CSO 是现实作用形成的内部结构，却绝不因此自动拥有 ``真实'' 身份。Agent 形成
@@ -291,17 +290,16 @@ u_t,
 \right),
 \]
 其中 $\xi_t$ 表示 Agent 无法完全控制的现实扰动。最终：
-\[
-\boxed{
-AgentCSO^{act}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentCSO^{act}
 \rightarrow
 Control
 \rightarrow
 RealityDynamics
 \rightarrow
-UniverseCSO'
-}
-\]
+UniverseCSO'\)}
+\end{statementbox}
 
 这里揭示了一个本书后面会反复强调的原则：
 \[
@@ -631,13 +629,12 @@ Agent 内部形成的结构可以脱离原主体，成为未来 Agent 的现实�
 \tau_{artifact}.
 \]
 因此外化不仅是空间边界迁移，也是一种时间尺度迁移。内部快速变化的结构可以被固定到一个更加缓慢的外部载体。用我们此前的语言：
-\[
-\boxed{
-FastInternalStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastInternalStructure
 \rightarrow
-SlowExternalStructure.
-}
-\]
+SlowExternalStructure.\)}
+\end{statementbox}
 这种沉降能够极大降低未来认知成本。例如，一个人不需要每天重新推导乘法算法，因为它可以存在于教育体系、纸张、计算器和软件之中；一个 Agent 不需要每次重新显式推理重复操作，因为它可以将其编译为 Skill 或 Script。
 
 由此产生一个更一般的结构连续性原则：
@@ -804,13 +801,12 @@ C_A^1
 C_A^n.
 \]
 于是：
-\[
-\boxed{
-RepeatedCognition
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RepeatedCognition
 \rightarrow
-ExternalCompilation.
-}
-\]
+ExternalCompilation.\)}
+\end{statementbox}
 这与 Agent 内部的 Skill Compilation 是同一条规律在边界另一侧的表现。内部成熟能力可以沉降到 $\Theta$ 或 Body Skill，外部成熟能力可以沉降成 Tool、Script、Program 或 Environment Structure。
 
 由此可以看到，工具生态不是 AgentOS 的附加外围，而是长期智能扩展的重要组成部分。一个持续主体不可能把所有世界知识、技能和控制结构都保存在自身内部。真正可扩展的 Agent 必然成为
@@ -873,12 +869,11 @@ MaintainingRecoverableStructureAcrossTime.
 人类日常行为早已大量使用这种机制。把物品放在固定位置，是把未来搜索问题部分编码进环境；写便签，是把工作记忆压力沉降到外部；道路标志把导航规则嵌入空间；软件目录结构把文件分类关系嵌入文件系统；工厂流水线把任务顺序写进物理布局。对于 AgentOS，这些都不应该被看成与认知无关的 ``外界细节''，而应理解成 Agent 可以主动设计的未来认知条件。
 
 这导致一个非常重要的推论：
-\[
-\boxed{
-Action
-\text{可以优化未来的 Observation。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Action
+\text{可以优化未来的 Observation。}\)}
+\end{statementbox}
 传统控制目标通常只考虑使世界达到某个任务状态
 \[
 U_{goal}.
@@ -899,15 +894,14 @@ C_{future\_cognition}
 表示未来 Agent 为完成类似任务所需的认知成本。这就是认知卸载理论非常深的一层：Agent 不只是为了完成眼前任务改变环境，还可以主动把环境改造成以后更容易处理的结构。
 
 因此，整理房间、创建目录、建立索引、制定协议、修建道路、建立标准，在抽象上都具有类似形式：
-\[
-\boxed{
-CurrentEffort
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CurrentEffort
 \rightarrow
 ExternalStructure
 \rightarrow
-ReducedFutureCognitiveEffort.
-}
-\]
+ReducedFutureCognitiveEffort.\)}
+\end{statementbox}
 这里出现了跨时间的认知投资。
 
 环境作为记忆还意味着 ``记忆位置'' 不是固定的。一个 CSO 可以经历
@@ -921,24 +915,22 @@ E
 Tool/Environment.
 \]
 例如一个操作流程最初需要显式工作记忆，随后成为经验，再抽象成技能，最终可能被完全写进设备自动化结构。此时 Agent 自身 ``记住得更少''，却拥有更高的整体能力。用结构连续性语言：
-\[
-\boxed{
-CapabilityPersistence
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CapabilityPersistence
 \not\Rightarrow
-InternalRepresentationPersistence.
-}
-\]
+InternalRepresentationPersistence.\)}
+\end{statementbox}
 
 这给复杂度卸载理论提供了更加坚实的本体解释。过去我们说 ``复杂度从内部迁移到了环境''，现在更准确的说法是：承担任务所需的 Agent-CSO 关系被重新编码到外部 Universe-CSO，使未来内部系统只需要保留索引、触发条件和异常处理结构。也就是说
-\[
-\boxed{
-AgentCSO^{explicit}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentCSO^{explicit}
 \rightarrow
 ExternalCSO^{stable}
 +
-AgentCSO^{index}.
-}
-\]
+AgentCSO^{index}.\)}
+\end{statementbox}
 这种形式尤其重要，因为完全外化而不保留索引意味着 Agent 无法再次利用结构；完全内部化又会增加长期认知维护成本。最佳结构通常是内部保持稀疏索引，外部承担高体量稳定细节。
 
 这一思想还会自然推广到社会。一个 Agent 可以把结构写进另一个 Agent、组织流程或制度中，由此形成 Social External Memory。但是在进入社会尺度之前，我们首先应当看到其一般规律：\textbf{智能不仅通过内部学习改变自己，还可以通过改变世界，把一部分未来认知过程预先写进环境。} 从这个意义上，智能的成长既发生在脑内，也发生在世界中。
@@ -1146,10 +1138,9 @@ Agency_A
 \section{World--Agent--World 作为智能的基本闭环}
 
 经过以上推导，本章可以把此前相对分散的认识统一成一个最基本的智能动力学闭环：
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 Observation
 \rightarrow
@@ -1161,10 +1152,8 @@ Prediction/Goal
 \rightarrow
 Action
 \rightarrow
-World'
-}
-$}
-\]
+World'\)}
+\end{statementbox}
 而 $World'$ 又立即成为下一轮 Observation 的现实来源。因此更严格地，这是一个递归映射：
 \[
 \mathfrak W_{t+1}
@@ -1302,19 +1291,16 @@ ObservationActionBoundary
 AgentCSO(Self),
 \]
 并让这种自我表示参与后续控制，就会出现比普通 World Model 更高阶的结构：
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
-Structure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Structure
 \rightarrow
 RepresentationOfStructure
 \rightarrow
 RepresentationOfOwnStructure
 \rightarrow
-Self-Modulation.
-}
-$}
-\]
+Self-Modulation.\)}
+\end{statementbox}
 这正是下一章需要处理的 ``功能自反性''。
 
 因此，本章最终给出以下基本定义：

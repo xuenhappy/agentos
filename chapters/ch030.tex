@@ -324,15 +324,14 @@ Latency\uparrow,
 最终破坏工作记忆的有效结构容量。
 
 更合理的认知机制应当是：
-\[
-\boxed{
-LatentStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle LatentStructure
 \rightarrow
 SelectiveActivation
 \rightarrow
-SparseExplicitProjection
-}
-\]
+SparseExplicitProjection\)}
+\end{statementbox}
 而不是：
 \[
 AllStructure\rightarrow Context.
@@ -597,13 +596,12 @@ h.
 SlowLayer\to FastLayer
 \]
 持续输出详细命令，而是：
-\[
-\boxed{
-Higher/SlowerLayer
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Higher/SlowerLayer
 \rightarrow
-FeasibleRegion,\ Prior,\ Gain,\ Boundary
-}
-\]
+FeasibleRegion,\ Prior,\ Gain,\ Boundary\)}
+\end{statementbox}
 而快层在该区域中保留局部自治。
 
 这与我们更一般的多尺度智能原则一致：
@@ -882,17 +880,16 @@ F_W(x_W,u).
 x_W(t+\Delta)
 \]
 重新经过观测进入 Agent。于是形成：
-\[
-\boxed{
-h
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle h
 \rightarrow
 Action
 \rightarrow
 World
 \rightarrow
-h'
-}
-\]
+h'\)}
+\end{statementbox}
 这一闭合。
 
 这个闭环具有两个重要含义。
@@ -961,13 +958,12 @@ h\rightarrow BetterFutureh.
 \]
 
 这使工作记忆获得了更加完整的动力学定义：
-\[
-\boxed{
-h(t)
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle h(t)
 =
-\text{当前 Agent-CSO 在预测、选择、行动和现实验证之间发生显式闭合的有限结构面。}
-}
-\]
+\text{当前 Agent-CSO 在预测、选择、行动和现实验证之间发生显式闭合的有限结构面。}\)}
+\end{statementbox}
 
 \section{h(t) 与外部认知载体：显式空间不是全部内部空间}
 
@@ -1126,15 +1122,14 @@ CurrentExplicitAgentCSO.
 \]
 
 由此，我们可以把工作记忆理解成内部世界与外部认知世界之间的双向交换口：
-\[
-\boxed{
-InternalStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle InternalStructure
 \leftrightarrow
 h
 \leftrightarrow
-ExternalStructure.
-}
-\]
+ExternalStructure.\)}
+\end{statementbox}
 
 这也使“认知边界”不再等同于身体边界。一个成熟 Agent 的有效认知范围可以跨越内部模型、文件系统、工具、环境与协作主体。真正持续的智能并不是把所有知识都装进自己，而是能够稳定知道：
 \[
@@ -1299,14 +1294,13 @@ TaskRelevantInformation
 不显著下降。
 
 这就是所谓认知折叠：
-\[
-\boxed{
-Fold:
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Fold:
 DetailedStructure
 \rightarrow
-ActionRelevantMacroStructure.
-}
-\]
+ActionRelevantMacroStructure.\)}
+\end{statementbox}
 
 它和传统摘要有所区别。摘要通常压缩文本，而 Fold 压缩的是\textbf{当前决策所需的关系结构}。
 
@@ -1667,13 +1661,12 @@ h(t)
 局部闭环。
 
 换句话说：
-\[
-\boxed{
-FiniteWorkingMemory
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FiniteWorkingMemory
 \Rightarrow
-PressureForCognitiveArchitecture.
-}
-\]
+PressureForCognitiveArchitecture.\)}
+\end{statementbox}
 
 如果工作记忆无限大、处理成本为零，那么系统理论上可以把所有细节永久维持在当前空间中，也就没有强烈动力形成这些结构。但现实智能必然有限，因此智能的高级组织形式正是在有限性约束下出现的。
 
@@ -1851,63 +1844,58 @@ E
 是大量轨迹经过压缩后形成的生成结构。
 
 因此：
-\[
-\boxed{
-State
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle State
 \rightarrow
 Trajectory
 \rightarrow
-Generator
-}
-\]
+Generator\)}
+\end{statementbox}
 和：
-\[
-\boxed{
-Generator
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Generator
 \rightarrow
-State
-}
-\]
+State\)}
+\end{statementbox}
 不断通过 $h$ 闭合。
 
 从世界交互角度：
-\[
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 h
 \rightarrow
 Action
 \rightarrow
-World
-}
-\]
+World\)}
+\end{statementbox}
 不断通过 $h$ 闭合。
 
 从自我角度：
-\[
-\boxed{
-\Psi
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \Psi
 \rightarrow
 h^{self}
 \rightarrow
 Experience
 \rightarrow
-\Psi'
-}
-\]
+\Psi'\)}
+\end{statementbox}
 也通过 $h$ 建立当前显式入口。
 
 从内外记忆角度：
-\[
-\boxed{
-Internal
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Internal
 \leftrightarrow
 h
 \leftrightarrow
-External
-}
-\]
+External\)}
+\end{statementbox}
 同样以 h 为交换面。
 
 于是我们可以给本章作出最终定义：

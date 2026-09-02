@@ -17,17 +17,16 @@ Prediction\neq Observation,\qquad
 ActionIssued\neq ActionSucceeded,
 \]
 以及更重要的现实重入原则：
-\[
-\boxed{
-Control
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Control
 \rightarrow
 Reality
 \rightarrow
 BodyRuntime
 \rightarrow
-SGC^{obs},FCS^{obs}
-}
-\]
+SGC^{obs},FCS^{obs}\)}
+\end{statementbox}
 
 这一原则构成 AgentOS 防止模型自证、预测覆盖观测、虚假动作完成、记忆闭环漂移以及自我解释脱离世界的认识论地基。我们将看到，一个成熟智能系统真正需要的不是一个``永远正确的世界模型''，而是一套\textbf{即使模型错误，也能够重新被现实纠正的结构}。
 \end{chapteroverviewbox}
@@ -134,12 +133,11 @@ C_A(t)
 \right).
 \]
 真正智能的系统并不是令 $\varepsilon_C(t)\equiv0$，这是对有限 Agent 不现实的要求，而是要求：
-\[
-\boxed{
-\varepsilon_C(t)
-\text{能够通过新的 World--Agent 闭环持续受到约束。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \varepsilon_C(t)
+\text{能够通过新的 World--Agent 闭环持续受到约束。}\)}
+\end{statementbox}
 
 由此我们得到本章第一条原则：
 
@@ -274,9 +272,9 @@ Observation+Verification
 Perception\rightarrow Reasoning\rightarrow Action.
 \]
 但对于持续 Agent，这条链必须闭合：
-\[
-\boxed{
-Perception
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Perception
 \rightarrow
 Reasoning
 \rightarrow
@@ -284,9 +282,8 @@ Action
 \rightarrow
 World
 \rightarrow
-Perception'.
-}
-\]
+Perception'.\)}
+\end{statementbox}
 行动不是认知流程的终点，而是下一轮现实观测的起点。
 
 这同时解释了为什么 AgentOS 不能只保存``我做了什么''，而必须保存：
@@ -358,9 +355,9 @@ h\rightarrow E\rightarrow\Theta\rightarrow\Psi
 
 既然行动发出并不意味着行动成功，那么 AgentOS 必须进一步规定：\textbf{行动之后的世界状态不能通过内部捷径写回认知系统，而必须经过现实重入。}我们将这一要求称为 Reality Re-entry Principle：
 
-\[
-\boxed{
-Control
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Control
 \rightarrow
 Reality
 \rightarrow
@@ -368,9 +365,8 @@ BodyRuntime
 \rightarrow
 SGC^{obs},FCS^{obs}
 \rightarrow
-AgentKernel.
-}
-\]
+AgentKernel.\)}
+\end{statementbox}
 
 这条原则是本章最重要的系统架构约束之一。
 
@@ -401,21 +397,19 @@ NewPrediction
 的封闭链，而现实只在偶尔异常时才重新介入。随着模型精度提高，这种设计甚至可能看起来越来越稳定，因为绝大多数情况下预测与现实接近；但它同时失去了一个关键能力：发现自己什么时候已经脱离现实。
 
 因此，AgentOS 必须严格规定：
-\[
-\boxed{
-\hat{SGC}^{pred}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \hat{SGC}^{pred}
 \not\rightarrow
-SGC^{obs}
-}
-\]
+SGC^{obs}\)}
+\end{statementbox}
 以及：
-\[
-\boxed{
-\hat{FCS}^{pred}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \hat{FCS}^{pred}
 \not\rightarrow
-FCS^{obs}.
-}
-\]
+FCS^{obs}.\)}
+\end{statementbox}
 预测状态只能进入对应的 predicted layer：
 \[
 SGC^{pred},\qquad FCS^{pred},
@@ -1029,13 +1023,12 @@ RealitySupport
 ).
 \]
 因此：
-\[
-\boxed{
-SingleObservation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SingleObservation
 \nrightarrow
-StableWorldRule.
-}
-\]
+StableWorldRule.\)}
+\end{statementbox}
 一个事件不能因为印象强烈就直接升级成长期世界规律。
 
 这对于自我 $\Psi$ 更为关键。假设 Agent 在一次任务失败以后产生：
@@ -1054,13 +1047,12 @@ OneEvent
 IdentityChange,
 \]
 那么长期主体将极度不稳定。因此必须要求：
-\[
-\boxed{
-SlowSelfStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SlowSelfStructure
 \leftarrow
-PersistentCrossContextEvidence.
-}
-\]
+PersistentCrossContextEvidence.\)}
+\end{statementbox}
 
 我们可以将 $\Psi$ 的更新写成：
 \[
@@ -1275,11 +1267,10 @@ O_{t+1}
 }
 \]
 这就是：
-\[
-\boxed{
-World\rightarrow Agent\rightarrow World.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World\rightarrow Agent\rightarrow World.\)}
+\end{statementbox}
 
 因此，对一个持续智能体而言，真正封闭的系统边界不是 Agent 自身，而是：
 \[
@@ -1344,15 +1335,14 @@ ActionSucceeded.
 \]
 
 第三，\textbf{现实重入公理}：
-\[
-\boxed{
-Action
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Action
 \rightarrow
 Reality
 \rightarrow
-Observation
-}
-\]
+Observation\)}
+\end{statementbox}
 不能被纯内部模拟替代。
 
 第四，\textbf{慢结构可纠正公理}：

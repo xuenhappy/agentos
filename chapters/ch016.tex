@@ -4,15 +4,14 @@
 在前两章中，我们已经分别建立了智能系统的两个基本结构对象：一方面，认知内容及其关系构成认知结构图 $\mathcal{G}_{C}$；另一方面，承担感知、推理、控制、记忆、规划、行动等作用的功能关系构成功能拓扑 $\mathcal{G}_{F}$。二者通过随时间变化的承载映射 $\mu_t$ 联系起来。由此，一个尚未回答的根本问题自然出现：\textbf{功能拓扑为什么会形成现在的样子？为什么某些功能之间存在稳定直接连接，而另一些认知过程必须经过漫长、昂贵的中间协调？}
 
 本章给出的回答是：\textbf{功能拓扑不是与认知活动相互独立的静态容器，而是长期认知结构流动历史的结构沉降。}当某类 Agent-CSO 长期、稳定、重复地在特定功能之间迁移，并且这种迁移具有持续任务价值时，系统具有把原本需要临时协调的动态关系固化为稳定功能耦合的动力学理由。因此：
-\[
-\boxed{
-RepeatedCSOMigration
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RepeatedCSOMigration
 \longrightarrow
 StableFunctionalCoupling
 \longrightarrow
-FunctionalTopology
-}
-\]
+FunctionalTopology\)}
+\end{statementbox}
 这一过程称为\textbf{拓扑沉降（Topological Sedimentation）}。
 
 需要特别强调，本章并不把``复杂度''视为一种能够像能量一样流动的本体。早期讨论中的``复杂度迁移''在这里被重新解释为：具有具体语义与功能关系的 Agent-CSO 改变自身的表示方式、时间尺度、功能位置和承载位置，而其中长期稳定的功能迁移会进一步改变承载这些结构的功能拓扑。因此，拓扑学习并不是与 CSO 迁移平行的第五种迁移，而是\textbf{长期功能迁移在更慢时间尺度上的结构性积分结果}。
@@ -368,19 +367,16 @@ w_{ij},
 这个方程表达了一个很简单但非常重要的原则：当大量有价值 CSO 长期稳定地在 $F_i$ 和 $F_j$ 之间迁移，而两者之间现有协调成本较高时，系统有动力增加直接耦合；反之，如果一条功能连接长期几乎没有产生有价值的结构流，或者不断引入残差与冲突，它就应该逐渐衰减。
 
 于是拓扑沉降可以概括为：
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
-DynamicCoordination
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle DynamicCoordination
 \rightarrow
 RepeatedCoordination
 \rightarrow
 PredictableCoordination
 \rightarrow
-DirectFunctionalCoupling.
-}
-$}
-\]
+DirectFunctionalCoupling.\)}
+\end{statementbox}
 
 这里存在一个关键认识：\textbf{学习不一定表现为``系统知道更多''，也可能表现为``系统以后不必再为同样的问题进行这么多全局协调''。}例如一个新任务最初可能需要：
 \[
@@ -418,13 +414,12 @@ CognitiveStructureChangedCarrier.
 \end{statementbox}
 
 这与人类技能自动化有明显相似性。初学驾驶时，大量动作必须进入显式工作记忆；熟练之后，很多感知—动作关系转移到快速、局部和程序化闭环。类似现象也存在于软件工程：高频函数调用会被缓存、内联、编译、建立索引；组织中反复出现的协作关系会形成岗位和制度。但本理论试图把这些现象统一到一个更抽象的形式：
-\[
-\boxed{
-RepeatedUsefulStructureFlow
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RepeatedUsefulStructureFlow
 \rightarrow
-StableCarrierRelation.
-}
-\]
+StableCarrierRelation.\)}
+\end{statementbox}
 
 因此，我们可以把拓扑理解为``过去认知活动的压缩结果''。它不是传统意义上的 episodic memory，也不是 $\Theta$ 中某个纯粹世界知识结构，而是一种更深的\textbf{系统组织记忆}：系统通过自己的连接方式记住``哪些功能过去长期值得直接合作''。
 
@@ -511,13 +506,12 @@ T_{1/2}^{ij}
 \frac{\ln 2}{\lambda_{ij}},
 \]
 不同功能边可以具有不同的稳定程度。安全关键的基础闭环可能具有极长半衰期，实验性技能通路则可以具有较短半衰期。这与 AgentOS 的慢变量保护原则一致：
-\[
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
-SlowGlobalStructure.
-}
-\]
+SlowGlobalStructure.\)}
+\end{statementbox}
 
 更进一步，我们还可以把拓扑看成一种第二阶记忆。第一阶记忆保存的是``发生了什么''：
 \[
@@ -556,15 +550,14 @@ RepeatedFunctionalCSOFlow
 其中前两者主要改变认知内容，第三者开始改变承载认知内容的系统结构。
 
 这使学习出现了一个非常重要的层级：
-\[
-\boxed{
-LearningWhat
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle LearningWhat
 \rightarrow
 LearningHow
 \rightarrow
-LearningHowToOrganizeLearning.
-}
-\]
+LearningHowToOrganizeLearning.\)}
+\end{statementbox}
 $E$ 更多保存``经历了什么''，$\Theta$ 更多沉降``世界和技能如何运作''，而拓扑学习开始沉降``我应该由哪些功能关系来处理这些问题''。这也是为什么拓扑学习在理论上比普通参数学习更慢、更危险，但同时也可能带来更深层的发育能力。
 
 这里与控制理论中的慢参数自适应、机器学习中的 meta-learning、编译器中的 profile-guided optimization，以及组织理论中的 routine formation 都存在可比较之处。但本理论要求这些现象共享一个更加基础的结构解释：\textbf{稳定的快过程统计结构，能够被慢变量吸收，从而改变未来快过程的可行路径。}
@@ -826,23 +819,21 @@ FunctionalTopologyEvolution.
 这种时间尺度分离并非数学装饰，而是系统稳定性的基础。如果拓扑与当前状态一样快速变化，那么系统会失去对自己结构的可靠估计：一个控制器刚刚学习到某功能关系，下一时刻该关系已经被重写；Memory 还没有完成对上一阶段经验的结构化，承载这些经验的功能结构又发生变化。最终整个系统会成为没有稳定参考系的共同漂移系统。
 
 因此我们提出：
-\[
-\boxed{
-SlowVariableProtectionPrinciple:
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SlowVariableProtectionPrinciple:
 \qquad
 FastNoise
 \nrightarrow
-SlowGlobalStructure.
-}
-\]
+SlowGlobalStructure.\)}
+\end{statementbox}
 
 拓扑学习必须通过统计积累、价值验证和慢时间尺度门控实现，而不能对每一次局部残差直接响应。
 
 这一点也与 AgentOS 第一代``固定功能拓扑''设计形成连续关系。第一代 AgentOS 并不要求系统在线修改核心结构，它首先通过 $h/E/\Theta/\Psi/\Omega$、SPC、AHC、TCE、CCM、Boundary 和 Offloading 实现高度丰富的\textbf{拓扑内适应}。只有当这些低成本调整长期无法解决结构失配时，才有必要进一步进入拓扑学习。因此本章并不是推翻固定拓扑 AgentOS，而是说明它在更长生命周期之后可能自然进入下一层发育阶段：
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
-StateAdaptation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle StateAdaptation
 \rightarrow
 RepresentationAdaptation
 \rightarrow
@@ -850,10 +841,8 @@ TimescaleMigration
 \rightarrow
 FunctionalMigration
 \rightarrow
-TopologyEvolution.
-}
-$}
-\]
+TopologyEvolution.\)}
+\end{statementbox}
 
 下一章我们还会进一步把这一序列扩展成``最小必要重组原则''，使系统始终优先使用较浅、较可逆、较低成本的适应机制，而把拓扑修改保留为真正的慢结构变化。
 
@@ -906,15 +895,14 @@ Z_i
 a_{ij}\uparrow,
 \]
 未来类似 CSO 就更容易沿着该路径流动。于是过去的历史形成拓扑，拓扑又成为未来认知活动的先验：
-\[
-\boxed{
-PastInteraction
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PastInteraction
 \rightarrow
 PresentTopology
 \rightarrow
-FutureInteraction.
-}
-\]
+FutureInteraction.\)}
+\end{statementbox}
 
 这使智能系统产生真正意义上的历史依赖性。两个初始架构完全相同的 Agent，如果长期经历不同环境，其 CSO 流分布不同，就可能形成不同功能拓扑：
 \[
@@ -1351,15 +1339,14 @@ J_{ij}^{C}
 描述结构在功能节点之间的有效通量。随后指出，单次迁移不构成拓扑，只有长期、重复、有价值、低残差、现实可验证的 CSO 流，才具有沉降为稳定功能耦合的资格。
 
 因此：
-\[
-\boxed{
-RepeatedCSOMigration
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RepeatedCSOMigration
 \rightarrow
 StableFunctionalCoupling
 \rightarrow
-FunctionalTopology.
-}
-\]
+FunctionalTopology.\)}
+\end{statementbox}
 
 进一步，我们把功能拓扑理解为 CSO 流的慢时间尺度积分：
 \[

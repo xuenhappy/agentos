@@ -440,13 +440,12 @@ Body\in SGC.
 值得注意的是，SGC 并不要求 FBI 完成全部高级语义理解。FBI 可以负责将底层身体状态稳定落入标准语义槽位，而更复杂的对象身份、社会意义、因果关系可以由更高层模型进一步补充。这样形成的是一个逐层丰富的结构，而不是要求接口层一次解决整个世界模型问题。
 
 因此从 FBI 角度看，SGC 最重要的意义是：
-\[
-\boxed{
-BodySpecificPerception
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle BodySpecificPerception
 \rightarrow
-AgentStableActionableReality.
-}
-\]
+AgentStableActionableReality.\)}
+\end{statementbox}
 它使一个 Agent 换身体以后，不必重新学习“世界存在对象、关系、位置、状态和可行动性”这些高层结构，只需要重新学习新的身体如何把现实投影进这一公共空间。
 
 
@@ -802,13 +801,12 @@ Status
 真正重要的是，这个 ABI 必须满足一组接口不变量。第一是\textbf{语义不变量}：更换身体以后，同一公共字段的功能意义不能任意改变。第二是\textbf{时间不变量}：所有公共状态必须具备明确的时间语义、延迟和有效期。第三是\textbf{来源不变量}：观测状态、推导状态与预测状态不能无标记混合。第四是\textbf{控制不变量}：Control Reference 表示目标和约束，而不把某个具体执行器的私有动作泄漏到高层。第五是\textbf{能力真实性不变量}：FBI 不得声明身体当前实际上不具有的能力。第六是\textbf{现实再进入不变量}：执行结果必须通过现实观测重新进入 FBI，而不能由“命令已发出”直接推断“动作已成功”。
 
 特别是最后一点，可以写为：
-\[
-\boxed{
-ActionIssued
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ActionIssued
 \not\Rightarrow
-ActionSucceeded.
-}
-\]
+ActionSucceeded.\)}
+\end{statementbox}
 若发出控制参考 \(r_t\)，真正的状态更新必须经过：
 \[
 r_t

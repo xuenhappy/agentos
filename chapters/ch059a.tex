@@ -333,13 +333,12 @@ Performance(I_K)\ge P_{\min},
 
 因此：
 
-\[
-\boxed{
-MoreObservation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle MoreObservation
 \not\Rightarrow
-BetterHighLevelIntelligence.
-}
-\]
+BetterHighLevelIntelligence.\)}
+\end{statementbox}
 
 对高层认知而言，适度缺失反而可以成为促进内部建模的重要结构条件。
 
@@ -463,17 +462,16 @@ SGC_{observed,t}
 
 因此高层形成与 BPCC 类似的基本预测循环：
 
-\[
-\boxed{
-Prediction
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Prediction
 \rightarrow
 Observation
 \rightarrow
 Residual
 \rightarrow
-Update.
-}
-\]
+Update.\)}
+\end{statementbox}
 
 不同的是，BPCC 处理的是高速局部物理状态，而 Kernel 处理的是更慢、更广泛的语义与任务状态。
 
@@ -639,17 +637,16 @@ ExperiencedWorldTrajectories.
 
 于是：
 
-\[
-\boxed{
-PartialObservation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PartialObservation
 \rightarrow
 Prediction
 \rightarrow
 Experience
 \rightarrow
-GenerativeStructure.
-}
-\]
+GenerativeStructure.\)}
+\end{statementbox}
 
 因此 SGC Foveation 可以被理解为：
 
@@ -807,13 +804,12 @@ SafetyChannel,
 
 因此：
 
-\[
-\boxed{
-SGCFoveation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SGCFoveation
 \nRightarrow
-FCSFoveation.
-}
-\]
+FCSFoveation.\)}
+\end{statementbox}
 
 尤其高风险、高强度 FCS 应具有：
 
@@ -849,15 +845,14 @@ GripForce(t+\delta).
 
 正确关系应当是：
 
-\[
-\boxed{
-Kernel
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Kernel
 \rightarrow
 PredictiveEnvelope
 \rightarrow
-BPCC.
-}
-\]
+BPCC.\)}
+\end{statementbox}
 
 Kernel 预测：
 
@@ -1010,9 +1005,9 @@ BPCCFastControl.
 
 即：
 
-\[
-\boxed{
-SGC_{full}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SGC_{full}
 \rightarrow
 SGC_{view}
 \rightarrow
@@ -1024,9 +1019,8 @@ h
 \rightarrow
 PredictiveEnvelope
 \rightarrow
-BPCC
-}
-\]
+BPCC\)}
+\end{statementbox}
 
 而 BPCC 行动重新作用现实：
 
@@ -1042,9 +1036,9 @@ SGC_{full}'.
 
 整个闭环为：
 
-\[
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 SGC_{full}
 \rightarrow
@@ -1056,9 +1050,8 @@ PredictiveEnvelope
 \rightarrow
 BPCC
 \rightarrow
-World'.
-}
-\]
+World'.\)}
+\end{statementbox}
 
 这表明 SGC Foveation 不是感知系统的附属功能，而是 Kernel—BPCC 多尺度闭环中决定信息抽象梯度的重要机制。
 
@@ -1359,9 +1352,9 @@ React
 
 转变成：
 
-\[
-\boxed{
-Predict
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Predict
 \rightarrow
 ChooseWhereToLook
 \rightarrow
@@ -1369,9 +1362,8 @@ Observe
 \rightarrow
 Compare
 \rightarrow
-Learn.
-}
-\]
+Learn.\)}
+\end{statementbox}
 
 例如 Agent 认为杯子仍然位于桌面：
 
@@ -1455,37 +1447,33 @@ E
 
 总体趋势是：
 
-\[
-\boxed{
-Detail
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Detail
 \rightarrow
-Structure,
-}
-\]
+Structure,\)}
+\end{statementbox}
 
-\[
-\boxed{
-Fast
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Fast
 \rightarrow
-Slow,
-}
-\]
+Slow,\)}
+\end{statementbox}
 
-\[
-\boxed{
-Local
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Local
 \rightarrow
-General,
-}
-\]
+General,\)}
+\end{statementbox}
 
-\[
-\boxed{
-Observation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Observation
 \rightarrow
-Model.
-}
-\]
+Model.\)}
+\end{statementbox}
 
 反方向则是：
 
@@ -1503,53 +1491,48 @@ Actuator.
 
 总体趋势是：
 
-\[
-\boxed{
-Structure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Structure
 \rightarrow
-Constraint,
-}
-\]
+Constraint,\)}
+\end{statementbox}
 
-\[
-\boxed{
-Slow
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Slow
 \rightarrow
-Fast,
-}
-\]
+Fast,\)}
+\end{statementbox}
 
-\[
-\boxed{
-General
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle General
 \rightarrow
-LocalRealization.
-}
-\]
+LocalRealization.\)}
+\end{statementbox}
 
 因此整个 AgentOS 可以进一步抽象成一个双向多尺度结构流：
 
-\[
-\boxed{
-Upward:
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Upward:
 RealityDetail
 \rightarrow
-CognitiveStructure
-}
-\]
+CognitiveStructure\)}
+\end{statementbox}
 
 以及：
 
-\[
-\boxed{
-Downward:
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Downward:
 CognitiveStructure
 \rightarrow
 FutureConstraint
 \rightarrow
-PhysicalAction.
-}
-\]
+PhysicalAction.\)}
+\end{statementbox}
 
 SGC Foveation 正处在第一条流的关键入口，而 BPCC 位于第二条流的最后快速闭环。
 
@@ -1797,9 +1780,9 @@ CCM.
 
 认知闭环：
 
-\[
-\boxed{
-SGC_{full}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SGC_{full}
 \rightarrow
 SEA
 \rightarrow
@@ -1811,17 +1794,16 @@ WorldPrediction
 \rightarrow
 AttentionReference
 \rightarrow
-SEA
-}
-\]
+SEA\)}
+\end{statementbox}
 
 其中 Kernel 根据当前内部世界模型主动决定下一步需要观察什么。
 
 身体快速闭环：
 
-\[
-\boxed{
-SGC_{control}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SGC_{control}
 +
 FCS
 +
@@ -1833,9 +1815,8 @@ Action
 \rightarrow
 World
 \rightarrow
-SGC_{control}'.
-}
-\]
+SGC_{control}'.\)}
+\end{statementbox}
 
 两者之间通过高层预测和异常残差交互：
 
@@ -1871,9 +1852,9 @@ E
 
 因此完整结构为：
 
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 World
 &\rightarrow
 SGC_{full}
@@ -1891,9 +1872,8 @@ BPCC\\
 Action
 \rightarrow
 World'.
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 
 同时：
 
@@ -1941,21 +1921,19 @@ BPCC 当前高速局部控制必须知道的现实。
 
 第一，\textbf{完整现实维护原则}：
 
-\[
-\boxed{
-BodyRuntime
-\text{应尽可能维持广泛的身体相关现实状态。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle BodyRuntime
+\text{应尽可能维持广泛的身体相关现实状态。}\)}
+\end{statementbox}
 
 第二，\textbf{认知输入有限原则}：
 
-\[
-\boxed{
-Kernel
-\text{默认不直接获得完整高分辨率 }SGC_{full}.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Kernel
+\text{默认不直接获得完整高分辨率 }SGC_{full}.\)}
+\end{statementbox}
 
 第三，\textbf{有益感知稀缺原则}：
 
@@ -1975,21 +1953,19 @@ NotExisting.
 
 第五，\textbf{预测优先原则}：
 
-\[
-\boxed{
-Kernel
-\text{应通过有限观测形成并维护世界预测，而不是持续依赖实时重读。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Kernel
+\text{应通过有限观测形成并维护世界预测，而不是持续依赖实时重读。}\)}
+\end{statementbox}
 
 第六，\textbf{高层结构优先原则}：
 
-\[
-\boxed{
-h
-\text{主要维持对象、关系、目标、事件和未来结构，而非高频局部控制细节。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle h
+\text{主要维持对象、关系、目标、事件和未来结构，而非高频局部控制细节。}\)}
+\end{statementbox}
 
 第七，\textbf{认知注意—控制注意分离原则}：
 
@@ -2003,53 +1979,48 @@ Attention_{control}.
 
 第八，\textbf{FCS独立调制原则}：
 
-\[
-\boxed{
-SGCFoveation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SGCFoveation
 \nRightarrow
-CriticalFCSFoveation.
-}
-\]
+CriticalFCSFoveation.\)}
+\end{statementbox}
 
 第九，\textbf{反微操原则}：
 
-\[
-\boxed{
-Kernel
-\text{定义未来状态约束，而不是持续规定身体高速轨迹。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Kernel
+\text{定义未来状态约束，而不是持续规定身体高速轨迹。}\)}
+\end{statementbox}
 
 第十，\textbf{预测包络原则}：
 
-\[
-\boxed{
-Kernel
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Kernel
 \rightarrow
 PredictiveEnvelope
 \rightarrow
-BPCC.
-}
-\]
+BPCC.\)}
+\end{statementbox}
 
 第十一，\textbf{局部现实权威原则}：
 
-\[
-\boxed{
-BPCC
-\text{必须使用自己的实时局部现实状态完成闭环。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle BPCC
+\text{必须使用自己的实时局部现实状态完成闭环。}\)}
+\end{statementbox}
 
 第十二，\textbf{异常升级原则}：
 
-\[
-\boxed{
-LocalResidual
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle LocalResidual
 \rightarrow
-GlobalCognitiveEscalation
-}
-\]
+GlobalCognitiveEscalation\)}
+\end{statementbox}
 
 只在局部模型不能解决问题时发生。
 
@@ -2059,17 +2030,16 @@ GlobalCognitiveEscalation
 
 如果系统永远拥有完整即时现实，高层最容易学习的是：
 
-\[
-\boxed{
-Look\rightarrow React.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Look\rightarrow React.\)}
+\end{statementbox}
 
 而如果现实以有限、高分辨率局部窗口进入高层，同时外围保持粗摘要和异常哨兵，则系统被迫学习：
 
-\[
-\boxed{
-Observe
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Observe
 \rightarrow
 Remember
 \rightarrow
@@ -2079,9 +2049,8 @@ ChooseWhatToObserve
 \rightarrow
 Compare
 \rightarrow
-Update.
-}
-\]
+Update.\)}
+\end{statementbox}
 
 由此 $h(t)$ 才真正成为世界状态的主动维持面，$E$ 才积累跨时间事件结构，$\Theta$ 才能形成稳定世界生成规律。更重要的是，高层输出也因此自然从低层动作微操上升为：
 
@@ -2122,13 +2091,12 @@ z_{BPCC}
 
 进一步浓缩为 AgentOS 的一条核心多尺度原则：
 
-\[
-\boxed{
-\begin{gathered}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{gathered}
 \textbf{Upward:}\quad Detail\rightarrow Structure,\\
 \textbf{Downward:}\quad Structure\rightarrow Constraint
-\end{gathered}
-}
-\]
+\end{gathered}\)}
+\end{statementbox}
 
 其中 SGC 认识孔径负责把现实细节逐步压缩成高层可理解结构，而 Kernel 的 Predictive Envelope 则把高层结构重新投影成 BPCC 可以实现的局部未来约束。二者共同构成从现实到认知、再从认知回到现实的双向结构梯度，也使 BPCC 不再只是一个快速控制器，而成为 AgentOS 多尺度认知—身体系统中承接高层预测并在现实中将其连续实现的身体动力学闭环。

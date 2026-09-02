@@ -4,13 +4,12 @@
 在前述 AgentOS 理论中，我们已经逐步得到一个越来越清晰的结论：持续智能体既不能被描述为一个纯粹的离散程序，也不能被描述为一个完全连续的神经动力系统。工作记忆 $h$、AHC 内稳态状态、SPC 估计、TCE 调节、CCM 负载变化以及 Body Runtime 中的快速预测控制，本质上表现为连续变化的动力过程；而 Goal 的建立与撤销、任务切换、认知相态跃迁、Skill 编译、Checkpoint、权限变化、安全中断以及长期结构修改，又具有明显的离散事件性质。因此，一个能够长期运行、保持身份连续并同时具备适应能力的 AgentOS，必须被研究为一个\textbf{多时间尺度、连续动力学与离散治理相互耦合的混杂智能系统（Hybrid Intelligent System）}。
 
 本章不再增加新的认知模块，而是把此前已经建立的 $h/E/\Theta/\Psi/\Omega$、SPC--AHC--TCE、CCM、Scheduler、Boundary、Body Runtime、BPCC 与 Reality Authority 统一放入一个控制工程框架中。我们将依次讨论快速连续动力学、慢速结构学习、混杂控制、运行相态识别、稳定性、权限治理、Checkpoint、自修改边界以及未来受控拓扑可塑性。其核心原则可以浓缩为：
-\[
-\boxed{
-\text{Continuous Dynamics}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Continuous Dynamics}
 \;\leftrightarrow\;
-\text{Discrete Governance}
-}
-\]
+\text{Discrete Governance}\)}
+\end{statementbox}
 亦即：
 \begin{statementbox}
 连续执行，离散治理；局部自治，跨尺度约束；现实反馈，慢结构保护。

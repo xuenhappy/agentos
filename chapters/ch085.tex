@@ -455,9 +455,9 @@ R_t,
 并受到 Boundary、Safety、$\Psi$ 与 Goal Priority 等约束。
 
 因此运行控制面形成：
-\[
-\boxed{
-SPC
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SPC
 \rightarrow
 AHC
 \rightarrow
@@ -465,9 +465,8 @@ Scheduler/TCE/CCM
 \rightarrow
 CognitiveDynamics
 \rightarrow
-SPC
-}
-\]
+SPC\)}
+\end{statementbox}
 而不是一个线性流水线。SPC 提供观察，AHC 提供连续调制背景，Scheduler 分配运行权，TCE 改变动力学参数，CCM 维持结构负载。它们共同作用于 $h$、Goal、Memory Recall 与 Tool/Body 请求。
 
 从控制工程角度，我们必须特别警惕控制器之间的冲突。例如 Scheduler 可能因为 Goal 重要性提高而增加资源，而 CCM 同时因为负载过高要求压缩；TCE 可能因为新颖性提高探索强度，而 AHC 因高 Threat 要求收敛；$\Psi$ 要求长期身份一致性，而某一短期 Goal 可能要求冒险。AgentOS 控制工程并不试图消灭这些冲突，而是建立控制优先级、约束关系和可恢复机制，使冲突不发展为不可治理振荡。
@@ -777,13 +776,12 @@ SGC_t,\quad FCS_t,\quad \varepsilon_B.
 这意味着大量现实复杂性被身体层局部闭合，只有具有语义意义的状态、功能影响和残差进入更高层。
 
 与此同时，安全控制还必须拥有比普通认知更高的实时优先级。我们此前形成的原则是：
-\[
-\boxed{
-CriticalSafety
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CriticalSafety
 \nrightarrow
-CognitiveDependency.
-}
-\]
+CognitiveDependency.\)}
+\end{statementbox}
 当碰撞、过热、权限越界、物理伤害等实时风险发生时，系统不能等待 $h$ 完成长推理，而应允许 Safety Boundary 直接触发局部保护。因此定义控制权限序：
 \[
 Authority_{\mathrm{safety}}

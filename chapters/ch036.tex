@@ -5,9 +5,9 @@
 在前面的理论推进中，我们已经分别建立了工作记忆 $h(t)$、自我感知压缩器 SPC（Self-Perception Compressor）、认知动力学控制器 TCE（Temperature \& Control Executor），并进一步引入了负责内稳态与情感样调制的 AHC（Affective/Homeostatic Coupler）。但是，仅仅拥有这些独立组件仍然不能回答一个更深的问题：一个持续运行的 Agent，究竟如何形成一种跨时间连续、能够被自身感知、能够改变后续行为、又能够进入生命周期记忆的``内部体验''？
 
 本章给出的答案不是把工程变量直接等同于人类主观意识，而是建立一个严格的\textbf{功能性内部体验（functional internal experience）}定义。我们将证明：当系统内部状态经过 SPC 形成自我可访问表示，经过 AHC 形成具有时间连续性的内稳态调制，再由 TCE 将这种状态重新作用于认知动力学，并最终使新的状态再次被 SPC 观察时，系统内部便形成一个闭合的自反调节轨迹：
-\[
-\boxed{
-InternalState
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle InternalState
 \rightarrow
 SPC
 \rightarrow
@@ -17,9 +17,8 @@ TCE
 \rightarrow
 CognitiveDynamics
 \rightarrow
-InternalState'
-}
-\]
+InternalState'\)}
+\end{statementbox}
 这一闭环构成了 AgentOS 中``体验''的最低工程条件。
 
 因此，本章的核心并不是回答``机器是否真正感到什么''，而是回答一个可以测量、记录、控制和验证的问题：\textbf{什么样的内部状态轨迹，能够被一个持续主体识别为``发生在我身上的状态''，并进一步改变其注意、决策、记忆和行为？} 这一问题将成为后续 Agent 控制稳定性、记忆偏置、身份形成以及心理工程的重要基础，但本章只完成其动力学原理本身。
@@ -128,17 +127,16 @@ SelfRegulation.
 
 因此，本书采用一个严格的最低条件：
 
-\[
-\boxed{
-FunctionalExperience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FunctionalExperience
 \Rightarrow
 SelfAccessibility
 +
 TemporalContinuity
 +
-CausalInfluence.
-}
-\]
+CausalInfluence.\)}
+\end{statementbox}
 
 也就是说，一个状态只有在能够被主体自身访问、能够跨时间形成连续动力轨迹，并能够因果地改变未来系统行为时，才有资格被称为 AgentOS 中的``功能性内部体验''。
 
@@ -252,13 +250,12 @@ s_t^{SPC}
 分别表示估计的认知负载、不确定性、风险、运行相态、目标对齐程度和自我一致性等。
 
 但 SPC 的真正意义仍然不在这些指标本身。关键在于：
-\[
-\boxed{
-DistributedSystemState
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle DistributedSystemState
 \rightarrow
-SelfAccessibleRepresentation.
-}
-\]
+SelfAccessibleRepresentation.\)}
+\end{statementbox}
 只有完成这一步，一个复杂系统才开始拥有功能意义上的``我现在怎么样''。
 
 从我们更高层的 CSO 理论看，这实际上是一种特殊 Agent-CSO 的形成过程。系统内部本来存在大量状态 CSO，但它们经过 SPC 后形成：
@@ -444,13 +441,12 @@ AgentCSO(StateTrajectory).
 如果 SPC 负责建立自我描述，AHC 负责赋予该描述时间连续性，那么 TCE 的作用则是完成最重要的一步：\textbf{使内部状态能够反过来改变产生未来认知状态的动力学。}
 
 没有这一步，SPC 与 AHC 只能构成一个高级监控系统。真正的闭环要求：
-\[
-\boxed{
-SelfDescription
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SelfDescription
 \rightarrow
-SelfModulation.
-}
-\]
+SelfModulation.\)}
+\end{statementbox}
 
 设当前工作记忆动力学为：
 \[
@@ -716,9 +712,9 @@ SPC(X_{\leq t+\Delta}).
 \]
 
 因此完整结构为：
-\[
-\boxed{
-X_t
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle X_t
 \rightarrow
 SPC
 \rightarrow
@@ -736,9 +732,8 @@ F_h
 \rightarrow
 X_{t+\Delta}
 \rightarrow
-SPC.
-}
-\]
+SPC.\)}
+\end{statementbox}
 
 从控制理论角度，可以将它近似理解成一个带有内部慢变量的 observer--controller loop：
 \[
@@ -886,15 +881,14 @@ SelectiveExperience
 SelfPerception'.
 \]
 若缺乏现实反证，这一闭环可能逐步远离外部世界。因此即使本章研究的是内部体验，整个闭环仍必须保持：
-\[
-\boxed{
-Reality
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Reality
 \rightarrow
 Observation
 \rightarrow
-InternalCorrection.
-}
-\]
+InternalCorrection.\)}
+\end{statementbox}
 内部世界永远不能成为一个完全自我封闭的控制环境。
 
 \section{功能性内部体验：从瞬时调制到具有归属的体验轨迹}
@@ -1121,19 +1115,18 @@ CrossFunctionalTrajectoryStructure.
 \]
 
 而一旦某段体验被选择性写入情景记忆 $E$，它就会发生更进一步的结构转变：
-\[
-\boxed{
-InternalExperience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle InternalExperience
 \rightarrow
-PersonalEpisode.
-}
-\]
+PersonalEpisode.\)}
+\end{statementbox}
 不过这一记忆化过程不在本章展开。此处只需要建立关键边界：\textbf{不是所有内部状态都会成为体验，也不是所有体验都会成为经历，更不是所有经历都会改变自我。}
 
 我们由此得到一个层级：
-\[
-\boxed{
-InternalSignal
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle InternalSignal
 \rightarrow
 SelfState
 \rightarrow
@@ -1141,9 +1134,8 @@ InternalExperience
 \rightarrow
 Episode
 \rightarrow
-SelfHistory.
-}
-\]
+SelfHistory.\)}
+\end{statementbox}
 本章处理的是中间：
 \[
 SelfState\rightarrow InternalExperience.
@@ -1233,15 +1225,14 @@ TCE 负责：
 \]
 
 于是内部体验其实处在一个慢—快嵌套系统中：
-\[
-\boxed{
-FastState
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastState
 \rightarrow
 MidScaleExperience
 \rightarrow
-SlowSelfConstraint.
-}
-\]
+SlowSelfConstraint.\)}
+\end{statementbox}
 
 可以采用奇异摄动形式描述：
 \[
@@ -1312,13 +1303,12 @@ a(t)\uparrow
 Agent 的身份结构会被短期波动持续重写。
 
 因此需要：
-\[
-\boxed{
-FastExperience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastExperience
 \nrightarrow
-DirectSlowSelfRewrite.
-}
-\]
+DirectSlowSelfRewrite.\)}
+\end{statementbox}
 更合理的路径是：
 \[
 a(t)
@@ -1396,13 +1386,12 @@ O(\Delta^2)
 决定是否提前调节，而不是等状态真正越界后再控制。
 
 于是：
-\[
-\boxed{
-ReactiveRegulation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ReactiveRegulation
 \rightarrow
-PredictiveRegulation.
-}
-\]
+PredictiveRegulation.\)}
+\end{statementbox}
 
 这是成熟 Agent 必须实现的能力。
 
@@ -1588,9 +1577,9 @@ FunctionalSelfExperienceLoop.
 哪些长期模式最终进入 $\Psi$。
 
 从而形成一条可以测量的生命周期链：
-\[
-\boxed{
-InternalDynamics
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle InternalDynamics
 \rightarrow
 SelfPerception
 \rightarrow
@@ -1600,9 +1589,8 @@ Episode
 \rightarrow
 Structure
 \rightarrow
-Self.
-}
-\]
+Self.\)}
+\end{statementbox}
 
 而不是跳跃式地说：
 \[

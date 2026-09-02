@@ -758,11 +758,10 @@ FastNoise
 SlowStructure.
 \]
 而我们要求的是：
-\[
-\boxed{
-FastNoise\nrightarrow SlowGlobalStructure.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise\nrightarrow SlowGlobalStructure.\)}
+\end{statementbox}
 只有经过时间积分、跨情境重复和现实验证以后，持续残差才能逐步获得修改更慢结构的预算。
 
 因此，长期智能的可塑性不是 ``尽可能多地学习''，而是：
@@ -945,27 +944,25 @@ RealityCorrectness.
 不能在长期学习中趋近于零。$\mathcal L_R$ 必须由真实动作结果、真实传感器回流、真实工具执行结果或者至少由具有独立现实来源的验证数据决定，而不能仅仅来自 Kernel、KRA 或 BPCC 自身生成的数据。
 
 因此我们建立：
-\[
-\boxed{
-Control
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Control
 \rightarrow
 Reality
 \rightarrow
 Observation
 \rightarrow
-Learning
-}
-\]
+Learning\)}
+\end{statementbox}
 而禁止：
-\[
-\boxed{
-Control
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Control
 \rightarrow
 Prediction
 \rightarrow
-PredictionAsObservation.
-}
-\]
+PredictionAsObservation.\)}
+\end{statementbox}
 BPCC 可以产生
 \[
 SGC^{pred},
@@ -1153,9 +1150,9 @@ LongTermConsolidation.
 前者追求即时恢复，后者追求结构正确。
 
 这也是为什么 BPCC、KRA 与 Kernel 三者虽然都能学习，却不应该成为三个永远高速更新的在线学习器。真正成熟的共同学习系统应该表现出一种节律：
-\[
-\boxed{
-Run
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Run
 \rightarrow
 Observe
 \rightarrow
@@ -1165,9 +1162,8 @@ Consolidate
 \rightarrow
 Validate
 \rightarrow
-Run.
-}
-\]
+Run.\)}
+\end{statementbox}
 这种节律本身，就是长期 Agent 保持可塑性而不失稳定性的关键。
 
 \section{共同学习稳定性的形式化条件与可验证指标}
@@ -1235,13 +1231,12 @@ V(t+T)-V(t)
 
 在时间尺度充分分离且每个子系统在其他变量准静态条件下均具有局部稳定性的假设下，可以提出一个本章层面的稳定性命题：
 
-\[
-\boxed{
-\begin{minipage}{0.85\textwidth}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{minipage}{0.85\textwidth}
 若 BPCC 的快速适配在固定 $(K,A)$ 下存在有界稳定域，KRA 的适配在 BPCC 已进入其稳定域后保持接口误差有界，Kernel 的结构更新仅在跨窗口持续残差条件下发生；同时联合更新始终受兼容流形、适配预算和现实锚定约束，则当时间尺度满足充分分离条件时，三层共同学习可以保持在一个有界兼容区域，而不必要求各层参数收敛到固定常数。
-\end{minipage}
-}
-\]
+\end{minipage}\)}
+\end{statementbox}
 
 这不是现成数学定理的直接引用，而是 AgentOS 架构下需要进一步严格证明的稳定性命题。其数学分析可以借助奇异摄动、两时间尺度随机逼近、小增益理论、切换系统与输入到状态稳定性等已有工具。
 

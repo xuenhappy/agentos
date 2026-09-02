@@ -152,13 +152,12 @@ RealtimeSafetyController,
 Threat(t)
 \]
 在 AHC 中超过某个认知阈值。由此得到 AgentOS 的一条基本控制原则：
-\[
-\boxed{
-CriticalSafety
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CriticalSafety
 \nrightarrow
-CognitiveDependency
-}
-\]
+CognitiveDependency\)}
+\end{statementbox}
 AHC 可以改变风险敏感度，却不能成为硬安全的唯一控制路径。
 
 从读者的角度，这一点非常值得反复强调：AHC 所处理的是\textbf{调制意义上的危险、疲劳、信任和亲和}，而不是所有危险本身。一个机器人即使 AHC 因软件异常错误地认为环境安全，硬安全控制器仍然必须能够阻止执行器进入物理危险区。这是 ``functional feeling'' 与 ``exception/safety'' 之间必须保持的工程边界。
@@ -530,13 +529,12 @@ E,
 a_i(s)\,ds.
 \]
 只有持续的、反复出现的结构性偏差才允许推动基线改变。这样就符合整套 AgentOS 的多尺度原则：
-\[
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
-SlowGlobalStructure
-}
-\]
+SlowGlobalStructure\)}
+\end{statementbox}
 
 例如，一个长期处在低资源环境中的 Agent，其 EnergyDrive 与 Fatigue 的平衡点可能需要适当重新标定；一个与某位长期稳定合作对象反复互动的 Agent，其 Trust 基线可能逐渐提高。但这里必须谨慎区分：
 \[
@@ -927,13 +925,12 @@ Arousal
 \]
 
 这里必须坚持一条原则：
-\[
-\boxed{
-AHC\rightarrow Bias,
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AHC\rightarrow Bias,
 \qquad
-AHC\nrightarrow DirectCognitiveConclusion.
-}
-\]
+AHC\nrightarrow DirectCognitiveConclusion.\)}
+\end{statementbox}
 Threat 高不意味着 ``这个对象一定危险''；它只意味着系统当前应提高风险敏感度。Trust 高不意味着 ``该主体的话一定正确''；它只是改变初始证据权重。RewardExpect 高也不意味着 ``必须执行该 Goal''；它只改变目标竞争背景。
 
 这种设计可以避免把 AHC 变成隐藏的决定论决策器。真正的显式决策仍然需要经过 $h(t)$ 中的当前世界模型、目标、约束、规划和验证。AHC 只是改变：
@@ -1371,17 +1368,16 @@ FastNoise\nrightarrow SlowBaseline.
 只有长期、重复、具有置信度的结构性经验才允许改变 AHC baseline 或更慢主体结构。
 
 最终，我们可以把 AHC 的理论位置浓缩为：
-\[
-\boxed{
-\mathrm{Instantaneous\ Influence}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathrm{Instantaneous\ Influence}
 \rightarrow
 \mathrm{AHC\ Temporal\ Integration}
 \rightarrow
 \mathrm{Persistent\ Modulatory\ State}
 \rightarrow
-\mathrm{Cognitive\ Control\ Bias}
-}
-\]
+\mathrm{Cognitive\ Control\ Bias}\)}
+\end{statementbox}
 
 中文表述就是：
 

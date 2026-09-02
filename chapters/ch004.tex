@@ -542,9 +542,9 @@ A\leftrightarrow B
 \quad\text{逐步同步}
 \]
 变成：
-\[
-\boxed{
-A
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle A
 \rightarrow
 ConstraintEnvelope
 \rightarrow
@@ -552,9 +552,8 @@ B
 \rightarrow
 MacroOutcome
 \rightarrow
-A.
-}
-\]
+A.\)}
+\end{statementbox}
 
 这就是我们最早提出的“非实时宏观对齐协议”的基本形式。
 
@@ -757,25 +756,23 @@ h\leftrightarrow E\leftrightarrow\Theta
 的认识论前身。一个系统之所以需要不同记忆层，并不是简单因为“存储时间不同”，而是因为不同时间尺度之间不能直接共享原始状态，必须逐层完成结构压缩。
 
 因此，跨尺度通信最一般的规律可以写成：
-\[
-\boxed{
-FastState
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastState
 \rightarrow
 Event
 \rightarrow
-SlowStructure
-}
-\]
+SlowStructure\)}
+\end{statementbox}
 以及反方向：
-\[
-\boxed{
-SlowStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SlowStructure
 \rightarrow
 Constraint
 \rightarrow
-FastDynamics.
-}
-\]
+FastDynamics.\)}
+\end{statementbox}
 
 前者是自下而上的信息凝聚，后者是自上而下的约束展开。
 

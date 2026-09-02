@@ -43,12 +43,11 @@ $$
 
 发生改变。当新的 $x_{t+1}^{D}$ 再次通过观察接口进入 Agent 时，一个完整的
 
-$$
-\boxed{
-World\rightarrow Body\rightarrow AgentKernel
-\rightarrow Body\rightarrow World
-}
-$$
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World\rightarrow Body\rightarrow AgentKernel
+\rightarrow Body\rightarrow World\)}
+\end{statementbox}
 
 闭环便已经成立。这里世界可以是网页、操作系统、文件系统、应用程序、网络服务甚至一个大型软件工程环境，并不要求它必须由三维物理空间构成。
 
@@ -107,13 +106,12 @@ $$
 
 因此，本书把数字 Body 放在真实机器人之前，并不是因为数字任务更容易，而是因为数字世界提供了一个可以精确拆解 AgentOS 理论假设的实验场。只有当 Persistent Agent 能够在数字身体中保持长期身份、稳定工作记忆、执行跨任务规划、形成可重用技能、识别自身错误并接受现实反证之后，我们才有理由增加身体动力学这一更昂贵的自由度。具身路线由此遵循的不是“模型能力最大化”，而是：
 
-$$
-\boxed{
-\text{ClosedLoopCorrectness}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{ClosedLoopCorrectness}
 \rightarrow
-\text{BodyComplexityExpansion}.
-}
-$$
+\text{BodyComplexityExpansion}.\)}
+\end{statementbox}
 
 \section{Browser Body：从网页工具调用到可持续的数字感知--行动闭环}
 
@@ -317,13 +315,12 @@ $$
 
 第一步把原始数字状态变成语义状态，第二步选择当前任务相关区域，第三步再根据工作记忆容量压缩进入显式认知面的结构。于是：
 
-$$
-\boxed{
-DesktopScale\uparrow
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle DesktopScale\uparrow
 \not\Rightarrow
-hScale\uparrow
-}
-$$
+hScale\uparrow\)}
+\end{statementbox}
 
 反而越成熟的 Desktop Agent，越应该让绝大多数数字世界状态停留在低层或外部结构中。
 
@@ -518,12 +515,11 @@ $$
 
 而新的数字世界又通过输出和文件状态重新进入 Agent。于是：
 
-$$
-\boxed{
-Mind\rightarrow Program\rightarrow World
-\rightarrow Observation\rightarrow Mind
-}
-$$
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Mind\rightarrow Program\rightarrow World
+\rightarrow Observation\rightarrow Mind\)}
+\end{statementbox}
 
 已经在 Shell 环境中形成了和物理具身完全同构的结构闭环。
 
@@ -852,11 +848,10 @@ $$
 
 Vehicle Body 因而必须严格贯彻：
 
-$$
-\boxed{
-CriticalSafety\nrightarrow CognitiveDependency.
-}
-$$
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CriticalSafety\nrightarrow CognitiveDependency.\)}
+\end{statementbox}
 
 设 Safety Controller 为 $C_S$，BPCC 为 $C_B$，Kernel 为 $C_K$。正常情况下：
 
@@ -1180,15 +1175,14 @@ $$
 
 这使身体发生改变时难以确定哪些结构应该保留，哪些应该重新接地。AgentOS 的路线则希望形成：
 
-$$
-\boxed{
-CSOOntology
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CSOOntology
 \rightarrow
 AgentCSO
 \rightarrow
-BodyGrounding.
-}
-$$
+BodyGrounding.\)}
+\end{statementbox}
 
 “杯子是什么”和“这只机械手如何抓杯子”应该属于不同尺度。前者可以跨身体复用，后者由 KRA、BPCC 和具体 Body Runtime 学习。只有这样，Body Scale 才真正存在。
 
@@ -1250,9 +1244,9 @@ $$
 
 基于以上原因，本章所提出的路线：
 
-$$
-\boxed{
-DigitalBody
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle DigitalBody
 \rightarrow
 Browser
 \rightarrow
@@ -1264,9 +1258,8 @@ CompanionRobot
 \rightarrow
 Vehicle
 \rightarrow
-Humanoid
-}
-$$
+Humanoid\)}
+\end{statementbox}
 
 不应机械理解成每一个商业产品都必须严格按此顺序开发。它更重要的含义是一个\textbf{能力依赖偏序}。设身体平台集合为 $\mathcal B$，若平台 $B_j$ 的稳定实现依赖平台 $B_i$ 已验证的一组能力，则定义：
 

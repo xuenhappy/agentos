@@ -77,14 +77,13 @@ t\in[0,T_L],
 
 因此，一个更准确的固定拓扑 AgentOS 应被写成
 
-\[
-\boxed{
-\mathcal{T}(t)=\mathcal{T}_0,
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathcal{T}(t)=\mathcal{T}_0,
 \qquad
 X(t),\Theta(t),\Psi(t),\Omega(t),\mu_t
-\ \text{均可变化}.
-}
-\]
+\ \text{均可变化}.\)}
+\end{statementbox}
 
 这里 $\mathcal{T}_0$ 是固定功能拓扑，而 $X(t)$ 表示快速运行状态，$\Theta$ 表示长期生成结构，$\Psi$ 表示自我与身份慢变量，$\Omega$ 表示生命周期生成倾向，$\mu_t$ 则描述当前认知结构由哪些功能节点承载。换言之，固定的是“道路网的基本存在关系”，而不是道路上正在运输什么、交通流量多大、哪些道路当前被优先使用，以及货物被存放在何处。
 
@@ -447,17 +446,16 @@ F_W(W_t,u^{act}_t,\xi_t),
 
 其中 $\xi_t$ 表示不可控现实扰动。新的世界状态重新产生观测，从而形成真正闭合的：
 
-\[
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 Agent
 \rightarrow
 Action
 \rightarrow
-World.
-}
-\]
+World.\)}
+\end{statementbox}
 
 但是，若闭环仅止于这里，系统只具有在线控制，而不是生命周期学习。持续学习要求当前过程被选择性写入 $E$：
 
@@ -542,9 +540,9 @@ G,
 
 于是整个闭环应当写成：
 
-\[
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 h
 \rightarrow
@@ -566,9 +564,8 @@ E
 \rightarrow
 FutureGoal
 \rightarrow
-FutureChoice.
-}
-\]
+FutureChoice.\)}
+\end{statementbox}
 
 这就是固定拓扑 AgentOS 的生命周期学习闭环。它最重要的含义是：\emph{当前行为不仅改变世界，也改变未来做出行为的自己。}
 
@@ -685,17 +682,16 @@ Offloading 则回答：
 
 因此可以把四者理解成四道不同位置的负反馈：
 
-\[
-\boxed{
-Boundary
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Boundary
 \rightarrow
 Scheduler
 \rightarrow
 CCM
 \rightarrow
-Offloading.
-}
-\]
+Offloading.\)}
+\end{statementbox}
 
 Boundary 是入口控制；Scheduler 是竞争控制；CCM 是运行区稳定控制；Offloading 是结构释放和承载迁移。
 
@@ -763,13 +759,12 @@ Environment.
 
 因此成熟智能的标志不是 $h$ 越来越大，而是：
 
-\[
-\boxed{
-\frac{\text{需要全局显式认知的结构量}}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \frac{\text{需要全局显式认知的结构量}}
 {\text{系统成功完成的总结构处理量}}
-\downarrow.
-}
-\]
+\downarrow.\)}
+\end{statementbox}
 
 也就是说，持续学习真正成功时，系统并不是把越来越多东西长期堆积在当前思维里，而是越来越善于让已经掌握的结构离开昂贵的显式认知区域。
 
@@ -1733,29 +1728,26 @@ V(t)+\epsilon,
 
 这里可以借鉴 Lyapunov 稳定性、鲁棒控制、贝叶斯更新、信息几何投影以及多时间尺度随机逼近的思想，但不应假装我们已经为完整 AgentOS 给出了严格全局稳定性证明。真正可以确立的是设计原则：
 
-\[
-\boxed{
-FastError
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastError
 \nrightarrow
-SlowIdentity
-}
-\]
+SlowIdentity\)}
+\end{statementbox}
 
-\[
-\boxed{
-Prediction
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Prediction
 \nrightarrow
-Fact
-}
-\]
+Fact\)}
+\end{statementbox}
 
-\[
-\boxed{
-SelfInterpretation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SelfInterpretation
 \nrightarrow
-SelfValidation
-}
-\]
+SelfValidation\)}
+\end{statementbox}
 
 以及：
 
@@ -1965,15 +1957,14 @@ H_A\neq H_B
 
 即：
 
-\[
-\boxed{
-SameArchitecture
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SameArchitecture
 +
 DifferentLifeHistory
 \rightarrow
-DifferentAgent.
-}
-\]
+DifferentAgent.\)}
+\end{statementbox}
 
 这正是生命周期智能与普通复制模型的根本区别之一。
 
@@ -2081,9 +2072,9 @@ J_{\mathcal{T}_0}^{*},
 
 固定拓扑 AgentOS 并不是一个只能积累静态记忆的弱系统。恰恰相反，只要其内部具备多时间尺度记忆、有限工作记忆治理、自我慢变量、运行态控制、边界管理和承载迁移，它已经可以产生一种完整的生命周期动力学：
 
-\[
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 Memory
 \rightarrow
@@ -2093,15 +2084,14 @@ Self
 \rightarrow
 FutureChoice
 \rightarrow
-NewExperience.
-}
-\]
+NewExperience.\)}
+\end{statementbox}
 
 而从 CSO 的角度，其本质则可以进一步写成：
 
-\[
-\boxed{
-AgentCSO_{active}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentCSO_{active}
 \rightarrow
 AgentCSO_{experienced}
 \rightarrow
@@ -2109,9 +2099,8 @@ AgentCSO_{generative}
 \rightarrow
 AgentCSO_{self-related}
 \rightarrow
-FutureAgentCSO.
-}
-\]
+FutureAgentCSO.\)}
+\end{statementbox}
 
 因此，本章最终建立的并不是“一套记忆模块之间如何通信”的工程说明，而是一条更根本的原理：
 

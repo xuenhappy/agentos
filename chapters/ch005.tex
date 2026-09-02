@@ -104,9 +104,9 @@ Dynamics\ Of\ Structure.
 \section{预测---行动---观测---残差---更新：智能的基本闭环形式}
 
 为了讨论跨尺度结构同构，我们首先需要寻找一个足够简单、又能够覆盖大量智能现象的基本动力学形式。本书采用的最小闭环是：
-\[
-\boxed{
-Prediction
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Prediction
 \rightarrow
 Action
 \rightarrow
@@ -114,9 +114,8 @@ Observation
 \rightarrow
 Residual
 \rightarrow
-Update.
-}
-\]
+Update.\)}
+\end{statementbox}
 这个闭环并不是对所有智能机制的穷尽描述，而是一种基础动力模板。它表达了这样一个事实：一个持续智能系统不能只根据过去状态产生输出，它还必须利用现实反馈判断自己的预测和行动是否有效，并让这种差异影响未来状态。
 
 设智能系统在时刻 $t$ 的内部状态为 $x_t$，根据当前状态生成对下一状态或感知结果的预测：
@@ -177,21 +176,20 @@ x_{t+1}.
 Reality\rightarrow Thought,
 \]
 更准确的结构是
-\[
-\boxed{
-RelevantDeviation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RelevantDeviation
 \rightarrow
-HigherLevelProcessing.
-}
-\]
+HigherLevelProcessing.\)}
+\end{statementbox}
 这一思想将在后面的 AgentOS 中发展成“异常向上”的原则：正常动态尽可能局部闭合，而持续、重要、无法解释的残差才逐步上浮。
 
 这一闭环可以在多个尺度重复出现。对于机器人关节，Prediction 是局部动力预测，Action 是电机输出，Observation 是编码器状态，Residual 是位置或力误差，Update 是局部控制器修正。对于任务层 Agent，Prediction 是计划结果预测，Action 是调用工具或执行步骤，Observation 是任务反馈，Residual 是预期与实际结果之间的偏差，Update 是计划和工作状态调整。对于更慢的生命周期过程，Prediction 可以表现为“如果继续这样做，我会成为什么”，Action 是长期选择，Observation 是经过数周甚至数年的经验，Residual 则表现为现实人生轨迹与长期目标、自我结构之间的偏差。
 
 因此，所谓结构同构并不是说机器人关节和人生选择“本质上一样”，而是说它们都可以抽象成：
-\[
-\boxed{
-State
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle State
 \rightarrow
 Prediction
 \rightarrow
@@ -201,9 +199,8 @@ Reality
 \rightarrow
 Residual
 \rightarrow
-StateChange.
-}
-\]
+StateChange.\)}
+\end{statementbox}
 状态空间可以完全不同，闭环频率也可以相差十几个数量级，但反馈结构具有相似形式。
 
 这里需要特别强调 Reality 的地位。一个系统可以拥有极复杂的内部模型，却不能让预测直接替代真实观测。如果系统形成
@@ -494,13 +491,12 @@ PersistentFastResidualShapesSlowStructure
 “涌现”因而不应该被当成一个神秘词。至少在本书的工程框架中，我们更希望将其拆解成几个可以研究的过程：低层活动产生统计稳定模式；系统建立对这些模式的压缩表示；压缩结构具有预测价值；该结构获得更长时间常数；随后反过来参与未来低层动力学。如果这些条件能够被测量，那么“涌现”就从哲学描述逐渐变成可工程研究的多尺度结构形成机制。
 
 值得注意的是，自下而上并不意味着低层“决定一切”。如果系统只有自下而上的聚合，没有更慢尺度的约束，那么高层状态会不断被短期噪声推动。成熟智能必须保护慢变量：
-\[
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
-SlowGlobalStructure.
-}
-\]
+SlowGlobalStructure.\)}
+\end{statementbox}
 后续我们将在身份、自我、DGA 以及功能拓扑学习中反复看到这一原则。越慢、越全局的结构，修改阈值应当越高，需要越长的证据窗口。这是智能稳定性的重要来源。
 
 与本节有关的外部理论包括 emergence、coarse-graining、renormalization 的思想、synergetics、complex adaptive systems 以及统计学习。但本书不声称智能的所有高层结构都可以通过现有物理粗粒化数学直接导出；我们借鉴的是“从大量微观自由度提取慢变量和有效变量”的方法论。真正适用于认知系统的结构抽取算子 $\Pi$ 应当同时考虑语义、目标、价值和功能相关性，这一点将由后续 CSO 理论补充。
@@ -690,13 +686,12 @@ ResidualEscalation
 ExplicitReasoning.
 \]
 于是智能具有：
-\[
-\boxed{
-Fold
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Fold
 \leftrightarrow
-Unfold
-}
-\]
+Unfold\)}
+\end{statementbox}
 这一动态过程。
 
 从这个角度看，“成熟”并不是永远使用更复杂的高层推理，而是越来越多熟悉结构已经被折叠进局部闭环，只有新颖、冲突和异常问题才重新展开。我们可以定义某种显式认知占比：
@@ -721,15 +716,14 @@ KnowingLess.
 结构可能只是改变了承载位置和时间尺度。
 
 这一思想后来会成为 CSO Migration、技能编译、Body Runtime、Offloading 乃至组织制度沉降的共同理论根。个体把重复计算变成习惯，软件系统把重复流程变成程序，组织把反复协调变成制度，这些过程在功能上都可以被视为“动态协调被压缩为结构”。因此，一个非常重要的长期关系是：
-\[
-\boxed{
-PastComputation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PastComputation
 \rightarrow
 PresentStructure
 \rightarrow
-FutureDynamics.
-}
-\]
+FutureDynamics.\)}
+\end{statementbox}
 
 这里也可以看到“分形”概念与传统模块化设计之间的差别。传统模块化往往是工程师事先决定边界，而动力学分形理论更关注一个模块为什么会在历史中形成：如果某种闭环长期稳定重复，它就有可能逐渐成为新的结构单元。因此，模块化在成熟智能中不只是设计原则，也可能是学习和发育的结果。
 
@@ -860,13 +854,12 @@ z_H
 传统情况下，$\Pi$ 主要由人类和制度实现，因此更新速度、覆盖范围和结构复杂度受到限制。
 
 AI 可以强化的第一项能力，就是这种跨尺度状态压缩：
-\[
-\boxed{
-DistributedState
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle DistributedState
 \rightarrow
-StructuredGlobalRepresentation.
-}
-\]
+StructuredGlobalRepresentation.\)}
+\end{statementbox}
 例如大量设备、员工、市场和环境数据可以被压缩成较少的异常、趋势、风险和结构变化，使更高层认知不需要读取全部原始信息。这与以后 AgentOS 中 SPC 的一般功能具有某种结构同构：分散状态被压缩成可供更高层访问的状态表示。但这里仍然只是类比，组织并不存在与 AgentOS SPC 一一对应的单一模块。
 
 第二项能力是跨尺度残差发现。过去，许多局部问题只有在积累成明显危机后才被高层发现。AI 可以帮助估计：

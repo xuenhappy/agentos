@@ -2,9 +2,9 @@
 
 \begin{chapteroverviewbox}
 本章给出 AgentOS 从理论结构进入可实现系统时的六阶段实施路线。这里的“阶段”不是按照模块数量递增进行的软件功能堆叠，也不是把最终 AgentOS 架构机械拆成六个版本，而是按照\textbf{动力学闭环能否被独立验证、长期状态是否具有明确归属、前一阶段是否已经形成后一阶段所依赖的稳定承载条件}所建立的工程依赖序列。六阶段依次为：
-\[
-\boxed{
-\mathrm{Persistent\ Runtime}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathrm{Persistent\ Runtime}
 \rightarrow
 \mathrm{Lifecycle\ Memory}
 \rightarrow
@@ -14,9 +14,8 @@
 \rightarrow
 \mathrm{Body\ Runtime\ Integration}
 \rightarrow
-\mathrm{KRA\ \&\ Lifecycle\ Adaptation}
-}
-\]
+\mathrm{KRA\ \&\ Lifecycle\ Adaptation}\)}
+\end{statementbox}
 
 其核心工程原则是：\textbf{先证明主体能够持续存在，再证明经历能够跨时间形成结构；先形成稳定的内部认知闭环，再扩大认知边界；先建立清晰的身体语义接口，再允许 Kernel 与 Body Runtime 共同适应。}因此，每一个阶段都必须形成自己的最小可验证闭环，并在进入下一阶段之前保持前一阶段已经建立的身份连续性、现实可验证性、状态可追踪性和控制可恢复性。
 
@@ -555,9 +554,9 @@ C_{\max}(W).
 
 于是第三阶段首次形成：
 
-\[
-\boxed{
-SPC
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SPC
 \rightarrow
 Scheduler
 \rightarrow
@@ -567,9 +566,8 @@ CCM
 \rightarrow
 CognitiveDynamics
 \rightarrow
-SPC
-}
-\]
+SPC\)}
+\end{statementbox}
 
 并由 AHC 作为连续调制层参与其中。
 
@@ -1406,13 +1404,12 @@ Authority_{k+1}
 
 这体现了本书此前提出的：
 
-\[
-\boxed{
-ContinuousDynamics
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ContinuousDynamics
 \leftrightarrow
-DiscreteGovernance.
-}
-\]
+DiscreteGovernance.\)}
+\end{statementbox}
 
 这些跨阶段不变量共同构成 AgentOS 的工程“宪法层”。一个项目即使第六阶段功能全部存在，如果它在适应新身体以后丢失了身份连续，或者外部 Skill 可以绕过安全权限，或者预测状态能够直接污染观测状态，那么该系统仍然没有真正通过六阶段路线。AgentOS 的成熟度应按照闭环完整性评价，而不是按照模块清单评价。
 
@@ -1551,9 +1548,9 @@ CanAllTheseRelationsChangeWithoutDestroyingTheSubject?
 
 因此，这六个阶段不是六种产品功能，而是持续人工智能体从“运行”走向“生命周期”的六次工程跃迁：
 
-\[
-\boxed{
-Execution
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Execution
 \rightarrow
 Continuity
 \rightarrow
@@ -1565,9 +1562,8 @@ ExtendedCognition
 \rightarrow
 Embodiment
 \rightarrow
-Development
-}
-\]
+Development\)}
+\end{statementbox}
 
 如果从 CSO 理论重新解释，它们又可以写成认知结构承载能力的逐级扩展。
 
@@ -1585,9 +1581,9 @@ Development
 
 于是六阶段路线最终完成的是：
 
-\[
-\boxed{
-\text{State Persistence}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{State Persistence}
 \rightarrow
 \text{Structural Persistence}
 \rightarrow
@@ -1597,9 +1593,8 @@ Development
 \rightarrow
 \text{Embodied Persistence}
 \rightarrow
-\text{Adaptive Persistence}.
-}
-\]
+\text{Adaptive Persistence}.\)}
+\end{statementbox}
 
 这最后一个 ``Adaptive Persistence'' 尤其重要。普通在线学习系统强调：
 
@@ -1623,11 +1618,10 @@ IdentityContinuity(Agent_t,Agent_{t+1})=1.
 
 所以，本章的最终工程判断为：
 
-\[
-\boxed{
-\begin{minipage}{0.88\textwidth}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{minipage}{0.88\textwidth}
 \centering
 AgentOS 的正确实施顺序不是先追求一个功能最完整的智能体，而是逐级建立不能被后续能力破坏的稳定闭环：先有持续主体，再有生命周期记忆；先有自我调节，再扩大认知边界；先建立现实可验证的身体闭环，再允许 Kernel、KRA 与 Body Runtime 共同适应。只有当能力增长始终发生在身份连续、现实权威、慢变量保护、有限工作记忆和可恢复治理所定义的可行域中，AgentOS 才真正从一个长期运行的软件系统转化为一个能够持续发育的人工智能体。
-\end{minipage}
-}
-\]
+\end{minipage}\)}
+\end{statementbox}

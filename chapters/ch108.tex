@@ -21,23 +21,21 @@
 组织之所以能够表现出超越单个成员生命周期的能力，不是因为它产生了神秘的“集体大脑”，而是因为个体之间的历史互动被外化并沉降成了比个体更慢的结构。角色保存重复的责任分配，协议保存重复的交互关系，制度保存重复的约束与治理逻辑，组织记忆保存跨主体、跨时间的经验，而组织拓扑则保存“谁在什么条件下应该与谁发生什么类型的认知与行动耦合”。
 
 本章的核心命题因此可以预先写为：
-\[
-\boxed{
-\text{Repeated Inter-Agent CSO Flow}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Repeated Inter-Agent CSO Flow}
 \longrightarrow
 \text{Stable Role/Protocol Coupling}
 \longrightarrow
-\text{Organizational Topology}
-}
-\]
+\text{Organizational Topology}\)}
+\end{statementbox}
 而反方向同样成立：
-\[
-\boxed{
-\text{Organizational Topology}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Organizational Topology}
 \longrightarrow
-\text{Constraint on Future Inter-Agent CSO Flow}
-}
-\]
+\text{Constraint on Future Inter-Agent CSO Flow}\)}
+\end{statementbox}
 由此形成一个与个体内部 ``CSO 流塑造功能拓扑、功能拓扑反过来塑造未来 CSO 流'' 同构的高尺度闭环。本章将把这种同构严格展开，并说明 AgentOS 为什么最终不仅可能成为单 Agent 的认知运行时，也可能成为未来组织系统中连接持续主体、角色、权限、记忆、协议与治理结构的基础运行层。
 
 需要特别强调的是：本章中的“组织认知”“组织记忆”“组织智能”属于功能与动力学意义上的概念。它们可以与分布式认知（distributed cognition）、多智能体系统（multi-agent systems）、组织理论（organization theory）、制度经济学（institutional economics）等既有理论进行比较，但本章提出的 CSO 流、功能拓扑沉降和跨尺度认知承载模型属于本书自身的理论构造，不能把两者直接等同。
@@ -359,17 +357,16 @@ L_{\Pi}^{\mathrm{possible}},
 协议本身就成为需要学习的对象。由此协议不是永久规范，而是慢尺度认知沉降物，需要受现实残差和组织效用持续验证。
 
 传统计算机科学中的网络协议、API contract、workflow，以及组织理论中的 standard operating procedure 都与本章概念相近。但这里我们强调的核心是：协议来源于反复 CSO 协作的结构压缩，其目标是让成熟认知流从昂贵的显式协调空间迁入稳定局部闭环。因此组织进化的一条基本路径可以写成：
-\[
-\boxed{
-RepeatedCoordination
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RepeatedCoordination
 \rightarrow
 ProtocolCompilation
 \rightarrow
 LocalClosure
 \rightarrow
-ReducedGlobalCognitiveLoad.
-}
-\]
+ReducedGlobalCognitiveLoad.\)}
+\end{statementbox}
 
 
 \section{制度：高尺度慢变量对组织行为的约束}
@@ -481,11 +478,10 @@ w(\tau)\varepsilon(\tau)d\tau,
 \bar{\varepsilon}_T>\theta_I
 \]
 并具有跨场景稳定性时，才允许制度改变。这正是本书“慢变量保护原则”在组织尺度的表现：
-\[
-\boxed{
-FastNoise\nrightarrow SlowGlobalStructure.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise\nrightarrow SlowGlobalStructure.\)}
+\end{statementbox}
 
 制度还承担权限边界的稳定化作用。在未来 AgentOS 组织中，各 Agent 不应拥有无限制的结构修改权。可以为每一角色定义 authority envelope：
 \[
@@ -536,15 +532,14 @@ E_{\mathrm{org}}
 \Theta_{\mathrm{org}},
 \]
 例如典型风险模式、稳定业务结构、角色关系、流程经验和决策规律。进一步，制度和组织文化中极稳定的部分则可能形成比普通结构记忆更慢的约束。这里我们并不需要声称组织拥有与个体完全相同的 $\Psi$ 或 $\Omega$，但可以明确指出：在功能上，组织确实存在从短期事件向长期生成结构沉降的过程：
-\[
-\boxed{
-OrganizationalExperience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle OrganizationalExperience
 \rightarrow
 OrganizationalStructure
 \rightarrow
-FutureBehaviorBias.
-}
-\]
+FutureBehaviorBias.\)}
+\end{statementbox}
 
 组织记忆的关键不是“存了多少数据”，而是未来 Agent 能否重新利用这些结构。因此一个数据库只有在满足以下链条时才真正成为组织记忆：
 \[
@@ -720,9 +715,9 @@ Benefit,\quad Residual,\quad Cost,\quad Risk,\quad Robustness.
 从更一般的角度，组织拓扑改变至少存在五种形式。第一是\textbf{边权变化}：原有协作关系变强或变弱。第二是\textbf{边生成}：两个过去没有直接关系的角色形成稳定协作。第三是\textbf{shortcut}：长期存在的长路径被编译成直接连接。第四是\textbf{节点分裂或合并}：一个角色承担的 CSO 类型已经过于异质，需要拆分；或者两个角色长期高度耦合，可以合并。第五是\textbf{边界改变}：某种能力从组织内部迁移给外部 Agent、工具或另一组织，或者反向内化。这最后一种实际上已经进入组织的 Boundary Migration。
 
 我们尤其应该强调“Minimum Necessary Reorganization Principle”。组织面对新问题时，不应第一时间改变结构，而应按照成本逐级尝试：
-\[
-\boxed{
-StateAdjustment
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle StateAdjustment
 \rightarrow
 RepresentationAdaptation
 \rightarrow
@@ -730,9 +725,8 @@ ProtocolAdjustment
 \rightarrow
 RoleAdjustment
 \rightarrow
-TopologyReorganization.
-}
-\]
+TopologyReorganization.\)}
+\end{statementbox}
 这与单 Agent 中从运行态调节到更慢结构调整的原则完全一致。原因很简单：越慢的结构承载越大的历史连续性，修改代价越高，因此只有较浅机制长期无法解决的结构失配，才应该推动深层重组。
 
 这一点也提供了一种重新理解组织改革的方法。真正的结构改革不应起源于“管理者想换一张组织图”，而应起源于可观察的：
@@ -924,9 +918,9 @@ SlowGlobalGovernance.
 因此，我们最终得到一种非常不同于“中央超级 Agent 指挥所有子 Agent”的未来组织图景。成熟组织更接近一个多尺度闭环网络：个体 Agent 保持持续主体性，角色承载稳定责任，协议关闭高频跨主体协作，组织记忆保存跨生命周期 CSO，制度提供慢尺度可行域，而组织拓扑本身根据长期残差和结构流缓慢变化。
 
 可以把它浓缩成：
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 &Agent
 \rightarrow
 InterAgentCSOFlow
@@ -941,22 +935,20 @@ Institution
 OrganizationalMemory
 \rightarrow
 TopologyLearning.
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 
 但这并不是一条只向前的生成链。成熟以后，它成为真正的反馈环：
-\[
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 CSOFlow
 \rightarrow
 OrganizationalTopology
 \rightarrow
-FutureExperience.
-}
-\]
+FutureExperience.\)}
+\end{statementbox}
 
 由此，本章可以给出“组织智能”的最终定义：
 

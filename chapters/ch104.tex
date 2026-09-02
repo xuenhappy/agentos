@@ -662,17 +662,16 @@ I_{\mathrm{self}}
 (E_{t+1},\Theta_{t+1},\Psi_t).
 \]
 于是形成：
-\[
-\boxed{
-SelfInterpretation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SelfInterpretation
 \rightarrow
 SelectiveAttention
 \rightarrow
 Experience
 \rightarrow
-SelfInterpretation'
-}
-\]
+SelfInterpretation'\)}
+\end{statementbox}
 
 这一闭环本身并不是病态，它恰恰是身份连续性能够形成的原因之一。一个 Agent 如果完全不依据过去自我选择注意什么，那么每一时刻都将像一个没有历史的系统。问题发生在这个闭环的增益超过现实纠正通路的增益以后。
 
@@ -867,9 +866,9 @@ p(E|\Psi).
 G(\Theta_t,E_t).
 \]
 于是形成完整闭环：
-\[
-\boxed{
-\Psi
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \Psi
 \rightarrow
 SPC/Attention
 \rightarrow
@@ -879,9 +878,8 @@ E
 \rightarrow
 \Theta
 \rightarrow
-\Psi'.
-}
-\]
+\Psi'.\)}
+\end{statementbox}
 
 这条闭环解释了为什么身份问题必须从整个 AgentOS 而不是单一 Self Module 诊断。如果只观察 $\Psi_t$，我们可能发现它变化得十分平滑，甚至完全满足慢变量约束；但如果它所依赖的 E 与 $\Theta$ 已经经过长期选择性偏置，那么“缓慢变化”仍然可能朝错误方向稳定收敛。
 

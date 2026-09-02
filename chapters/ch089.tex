@@ -5,9 +5,9 @@
 本章确立一个贯穿 AgentOS 控制工程的基本判断：一个持续智能体并不是由一个统一控制器直接控制全部认知过程，而是由大量具有不同状态空间、不同闭环频率、不同控制权限和不同学习速度的局部闭环共同组成。工作记忆 $h$、三相记忆 $h\leftrightarrow E\leftrightarrow\Theta$、Body Runtime、目标任务、自我 $\Psi$ 与生命周期生成吸引子 $\Omega$ 分别形成不同尺度的闭环；SPC、AHC、TCE、CCM 与 Scheduler 则构成对这些闭环运行状态的观测、调制和治理结构。因此，AgentOS 的稳定性不能被简化为 ``LLM 是否给出稳定输出''，也不能被简化为任一单模块的局部稳定，而必须研究不同闭环耦合之后是否仍然存在有界运行区域、是否会因为时延和增益累积产生跨尺度共振、局部异常是否会向更慢结构传播，以及系统进入湍流态、临界态等运行相态以后能否重新返回可治理区域。
 
 本章由此采用多时间尺度动力系统、反馈控制、奇异摄动、小增益思想、时延系统、混合动力系统以及相变与迟滞等现有数学理论作为形式化工具，但这些理论在此承担的是 AgentOS 动力学的分析语言，而不是把认知过程简单等同于经典机械控制对象。本章重点建立的是一套工程上可计算的稳定性框架：
-\[
-\boxed{
-\text{局部闭环稳定}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{局部闭环稳定}
 +
 \text{跨层耦合有界}
 +
@@ -17,9 +17,8 @@
 +
 \text{相变可识别}
 +
-\text{系统可恢复}
-}
-\]
+\text{系统可恢复}\)}
+\end{statementbox}
 只有六者同时成立，我们才可以说一个长期运行的 AgentOS 处于真正意义上的可治理稳定状态。
 \end{chapteroverviewbox}
 
@@ -619,13 +618,12 @@ Action
 逐层产生影响。这种相邻尺度传播能够防止极慢变量直接进入快速控制造成尺度混叠，同时也确保真正长期的价值和发展方向能够持续约束短期行为。
 
 因此 DGA/$\Omega$ 的稳定性最终可以概括成：
-\[
-\boxed{
-\text{方向稳定而非终点固定，}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{方向稳定而非终点固定，}
 \quad
-\text{长期可塑而非短期可改。}
-}
-\]
+\text{长期可塑而非短期可改。}\)}
+\end{statementbox}
 它是整个 AgentOS 内部时间结构的最慢端，也是多回路系统中最必须受到时间尺度保护的一层。
 
 \section{跨回路耦合、增益累积与共振条件}

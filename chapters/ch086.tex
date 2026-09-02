@@ -279,13 +279,12 @@ I(S;X_{t+\Delta}),
 或者更直观地表达为：在尽可能压缩内部状态的同时，保留对未来状态预测和控制最有价值的信息。这与信息瓶颈思想具有形式上的联系，但这里的目标不是通用表示学习，而是构造一个可用于长期闭环控制的自我状态。
 
 因此，我们最终可以把 SPC 的状态估计任务概括为：
-\begin{equation}
-\boxed{
-HighDimensionalCognitiveDynamics
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle HighDimensionalCognitiveDynamics
 \longrightarrow
-LowDimensionalControlRelevantSelfState.
-}
-\end{equation}
+LowDimensionalControlRelevantSelfState.\)}
+\end{statementbox}
 这一步是整个 AgentOS 自我控制能够成立的前提，因为没有稳定的状态估计，上层控制只能对一个不断变化而又不可见的内部动力系统进行盲目调节。
 
 \section{自我状态估计：从“系统状态”到“这是我的状态”}
@@ -902,17 +901,16 @@ SPC 再根据这些偏置证据继续确认原状态：
 \mathrm{FalseSelfState}'.
 \end{equation}
 最终形成：
-\begin{equation}
-\boxed{
-FSS
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FSS
 \rightarrow
 AttentionBias
 \rightarrow
 EvidenceBias
 \rightarrow
-FSS'.
-}
-\end{equation}
+FSS'.\)}
+\end{statementbox}
 
 这个结构与我们此前在 Self Interpretation 中讨论的正反馈高度一致，但这里必须保持尺度区分：SPC 的 False Self-State 是运行时 Observer 层问题，尚未必发展为 $\Psi$ 层身份异常。只有当错误自我状态被反复写入 E，并逐渐影响 $\Theta$ 与 $\Psi$ 时，它才可能发展成更慢的结构性问题。因此，系统必须在快层设置保护，避免
 \begin{equation}
@@ -1006,13 +1004,12 @@ SPCValidation
 的闭环自证。
 
 因此我们要求存在至少一种相对独立的验证路径：
-\begin{equation}
-\boxed{
-ObserverCalibration
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ObserverCalibration
 \rightarrow
-ExternalOrDelayedGrounding.
-}
-\end{equation}
+ExternalOrDelayedGrounding.\)}
+\end{statementbox}
 
 SPC 的校准可以分成三个时间尺度。最快层是 bias correction，用于纠正短期系统偏差：
 \begin{equation}
@@ -1402,11 +1399,10 @@ ObserverDrift.
 
 因此，本章真正建立的并不是一个孤立的 SPC 模块，而是一条更基本的 AgentOS 原则：
 
-\begin{equation}
-\boxed{
-\textbf{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \textbf{
 持续智能体不能以“透明访问自身”为前提；
 它必须像认识外部世界一样，通过有限观测、预测、置信度和现实校准，持续认识自己。
-}
-}
-\end{equation}
+}\)}
+\end{statementbox}

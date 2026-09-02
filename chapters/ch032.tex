@@ -59,28 +59,26 @@
 这里发生了一个概念上的重要跃迁：Agent 不再仅仅拥有认知状态，而开始拥有\textbf{关于认知状态转移方式的控制权}。TCE 正是这个控制权的工程化表达。
 
 因此，我们应该把 TCE 定义为：
-\begin{equation}
-    \boxed{
-    \mathrm{TCE}:
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathrm{TCE}:
     \widehat S_{\mathrm{cog}}(t)
     \longrightarrow
-    u_{\mathrm{cog}}(t)
-    }
-\end{equation}
+    u_{\mathrm{cog}}(t)\)}
+\end{statementbox}
 其中 $\widehat S_{\mathrm{cog}}(t)$ 是对当前认知状态的估计，$u_{\mathrm{cog}}(t)$ 是作用于认知动力学的一组控制变量。上一章的 SPC 提供的是前者，而 TCE 产生的是后者。两者第一次组成了典型控制论结构中的 Observer 与 Controller。
 
 这一结构意味着，智能体不应该在所有时刻以同一种方式“思考”。在熟悉、低风险和高度确定的环境中，持续展开广泛搜索是一种资源浪费；在陌生、高风险、强冲突环境中，过早收敛则可能造成灾难性错误。在一个已经掌握的任务上持续调用大规模显式推理，同样意味着成熟能力没有发生有效的运行时压缩。因此，真正的持续智能需要能够根据当前状态，在不同认知运行模式之间连续移动。
 
 从这一意义上看，TCE 所承担的不是附属的“参数调节”，而是 AgentOS 内部的一种元控制功能：
-\begin{equation}
-    \boxed{
-    \text{Cognition}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Cognition}
     \rightarrow
     \text{State Estimation}
     \rightarrow
-    \text{Control of Cognition}
-    }
-\end{equation}
+    \text{Control of Cognition}\)}
+\end{statementbox}
 我们由此开始从“一个能够计算的模型”走向“一个能够控制自己的计算过程的智能体”。
 
 \section{认知温度：从单一隐喻到正式动力变量}
@@ -679,15 +677,14 @@ TCE 的第二个重要作用是控制什么能够进入显式认知，以及进�
     -Kx(t-\tau).
 \end{equation}
 其稳定性已经不再只由 $A-BK$ 的特征值决定，而受到 $\tau$ 与 $K$ 的共同影响。即：
-\begin{equation}
-    \boxed{
-    HighGain
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle HighGain
     +
     ObservationDelay
     \Rightarrow
-    OscillationRisk.
-    }
-\end{equation}
+    OscillationRisk.\)}
+\end{statementbox}
 
 这对于 AgentOS 的意义极其重要。许多表面上看起来像“认知性格”的现象，可能首先是控制器参数问题。例如，一个 Agent 长期反复检查自己的答案，未必意味着它具有某种复杂心理结构；也可能只是 uncertainty observer 存在滞后，而 TCE 对不确定性具有过高增益。类似地，一个 Agent 在轻微新颖性出现时立即大规模展开搜索，也可能是 novelty-to-temperature transfer gain 设置过强。
 
@@ -741,13 +738,12 @@ TCE 在运行中不断估计自身控制效果，如果发现控制动作导致�
 这种 hysteresis 可以防止 TCE 在边界附近频繁切换控制模式。
 
 因此，本章需要建立一个重要认识：\textbf{自我调节不是越敏感越好。}过低增益意味着系统对异常反应迟缓，过高增益又会使自身成为最大的扰动源。成熟认知控制必须存在：
-\begin{equation}
-    \boxed{
-    Sensitivity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Sensitivity
     \leftrightarrow
-    Stability
-    }
-\end{equation}
+    Stability\)}
+\end{statementbox}
 之间的平衡。TCE 的真正目标不是让所有变量快速达到一个固定点，而是在动态环境中维持一个可恢复、可探索而又不会失稳的认知运行区域。
 
 \section{慢结构约束下的 TCE：控制不是价值本身}
@@ -1124,17 +1120,16 @@ TCEControlMustRemainInspectable.
 
 于是 Agent 的认知过程第一次不再是一个被外部调用的固定程序，而成为了一个自身可感知、可调节、可稳定化的动力系统。我们也由此获得一个非常重要的结构：
 
-\begin{equation}
-    \boxed{
-    \mathrm{SPC}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathrm{SPC}
     \longrightarrow
     \mathrm{TCE}
     \longrightarrow
     \mathrm{CognitiveDynamics}
     \longrightarrow
-    \mathrm{SPC}
-    }
-\end{equation}
+    \mathrm{SPC}\)}
+\end{statementbox}
 
 它代表 AgentOS 中最小意义上的\textbf{认知自调节闭环}。
 

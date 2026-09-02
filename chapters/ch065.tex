@@ -222,13 +222,12 @@ r,
 其中 $\Gamma_{BK}$ 表示 KRA 将 Body 侧状态转换成 Kernel 可吸收结构的过程，$\Gamma_{KB}$ 表示 Kernel 意图转化为 Body Runtime 可执行控制参考的过程，而 $F_A$ 则描述 KRA 根据现实反馈不断修正这种双向关系。
 
 由此我们得到 KRA 的第一性定义：
-\[
-\boxed{
-\mathrm{KRA}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathrm{KRA}
 =
-\text{维持 Cognitive Core 与 Body Runtime 在语义、时间和控制意义上长期兼容的自适应关系系统。}
-}
-\]
+\text{维持 Cognitive Core 与 Body Runtime 在语义、时间和控制意义上长期兼容的自适应关系系统。}\)}
+\end{statementbox}
 
 这里特别需要强调``关系''二字。传统深度学习通常将适配理解为寻找一个参数集合 $\phi^{*}$：
 \[
@@ -442,21 +441,19 @@ TerminationCondition
 Body Runtime 在该包络内保持局部自治。
 
 于是 KRA 时间耦合的核心原则可以概括为：
-\[
-\boxed{
-SlowIntent
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SlowIntent
 \rightarrow
-FastLocalClosure
-}
-\]
+FastLocalClosure\)}
+\end{statementbox}
 以及
-\[
-\boxed{
-PersistentFastResidual
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PersistentFastResidual
 \rightarrow
-SlowCognitivePromotion.
-}
-\]
+SlowCognitivePromotion.\)}
+\end{statementbox}
 
 这正是我们此前多尺度智能频谱理论在 AgentOS 工程中的具体落地。慢层不进行快层微操，快层也不因为自己运行得快就获得长期目标定义权。二者通过 KRA 形成邻尺度耦合，使每一层只处理其时间尺度上真正需要处理的问题。
 
@@ -736,13 +733,12 @@ x_t^B
 \right),
 \]
 用于传递那些难以完全离散化、但对高性能控制和预测有帮助的连续结构。但是该通道必须满足两个约束。第一：
-\[
-\boxed{
-LatentChannel
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle LatentChannel
 \not\Rightarrow
-SemanticAuthority.
-}
-\]
+SemanticAuthority.\)}
+\end{statementbox}
 也就是说，latent 可以补充语义，却不能覆盖硬语义事实。例如 BPCC latent 不能因为``认为''某对象已经被抓住，就覆盖 SGC 的实际观测状态。
 
 第二：
@@ -780,11 +776,10 @@ z^{KRA}
 也就是说，KRA 对快速内部表示漂移进行低通滤波，使 Kernel 看到的是较稳定的功能意义而非每一次低层参数波动。
 
 这与整个 AgentOS 的多尺度原则完全一致：
-\[
-\boxed{
-FastNoise\nrightarrow SlowGlobalStructure.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise\nrightarrow SlowGlobalStructure.\)}
+\end{statementbox}
 BPCC 可以快速适应；KRA 比 BPCC 慢；认知核心的长期结构又应比 KRA 更慢。这样才能防止身体局部学习噪声直接污染长期身份与世界模型。
 
 因此 Semantic Skeleton + Latent Muscle 不是折衷方案，而是一条体系原则：\textbf{用稳定语义保存长期兼容性，用受治理的 latent 保存局部性能。} KRA 正是在两者之间建立阻尼、校准和功能一致性的那一层。
@@ -1127,9 +1122,9 @@ x^B_t
 \]
 
 于是完整闭环就是：
-\[
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 BodyRuntime
 \rightarrow
@@ -1141,9 +1136,8 @@ KRA
 \rightarrow
 BodyRuntime
 \rightarrow
-World.
-}
-\]
+World.\)}
+\end{statementbox}
 
 我们应当特别注意，这个闭环中不存在任何一条可以跳过现实验证的 ``认知捷径''。Kernel 可以预测，KRA 可以估计，BPCC 可以模拟，但：
 \[

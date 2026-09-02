@@ -23,13 +23,12 @@ SGC \neq World
 }
 \]
 而更准确地说：
-\[
-\boxed{
-SGC
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SGC
 =
-\text{Agent 对当前可行动现实的持续、空间化、语义化和认识论标注后的结构表示}
-}
-\]
+\text{Agent 对当前可行动现实的持续、空间化、语义化和认识论标注后的结构表示}\)}
+\end{statementbox}
 
 在整个 AgentOS 理论中，SGC 所承担的是 Universe-CSO 与 Agent-CSO 之间极其关键的一层现实落地：它使抽象认知结构能够重新绑定到“这个对象现在在哪里”“这个关系现在发生在谁之间”“这个预测对应现实中的哪一部分”“这个身体当前能够做什么”这些具体问题上。换句话说，SGC 是内部认知结构重新触碰现实的坐标面。
 \end{chapteroverviewbox}
@@ -369,13 +368,12 @@ P(G_t|O_i).
 持续实体身份对于 AgentOS 的意义远不止 tracking。因为情景记忆 \(E\)、结构记忆 \(\Theta\) 以及更高层 Agent-CSO 都需要稳定引用现实对象。如果世界中的同一个人今天叫 ``object\_173''，下一分钟又变成 ``object\_628''，那么长期记忆中的很多结构都将失去现实绑定。
 
 因此，应建立：
-\[
-\boxed{
-PersistentWorldIdentity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PersistentWorldIdentity
 \leftrightarrow
-PersistentMemoryReference.
-}
-\]
+PersistentMemoryReference.\)}
+\end{statementbox}
 
 例如情景记忆可以保存：
 \[
@@ -530,13 +528,12 @@ Observation_b
 ).
 \]
 这类结构可以进一步触发重新观察：
-\[
-\boxed{
-EpistemicConflict
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle EpistemicConflict
 \rightarrow
-ActiveReobservation.
-}
-\]
+ActiveReobservation.\)}
+\end{statementbox}
 
 于是 SGC 不只是融合传感器结果，也可以反过来驱动感知行为。系统发现关键实体置信度不足，就可以转头、移动或调用其他传感器重新确认。这使感知从：
 \[
@@ -630,24 +627,22 @@ r_{AB}^{tracking}(t).
 \]
 
 这里可以定义一个 grounding operator：
-\[
-\boxed{
-\gamma_t:
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \gamma_t:
 AgentCSO
 \rightarrow
-SGCSubgraph.
-}
-\]
+SGCSubgraph.\)}
+\end{statementbox}
 
 反方向则存在：
-\[
-\boxed{
-\eta_t:
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \eta_t:
 SGCSubgraph
 \rightarrow
-AgentCSO.
-}
-\]
+AgentCSO.\)}
+\end{statementbox}
 
 前者把抽象认知落到现实，后者把现实结构提升为认知对象。
 
@@ -1143,14 +1138,13 @@ Friend.
 \]
 
 所以更准确地：
-\[
-\boxed{
-\Gamma_t:
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \Gamma_t:
 AgentCSO
 \leftrightarrow
-SGC.
-}
-\]
+SGC.\)}
+\end{statementbox}
 
 这条映射也是动态的：
 \[
@@ -1178,15 +1172,14 @@ UniverseCSO'.
 \]
 
 于是 SGC 位于一个非常特殊的位置：
-\[
-\boxed{
-Reality
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Reality
 \leftrightarrow
 SGC
 \leftrightarrow
-AgentCSO.
-}
-\]
+AgentCSO.\)}
+\end{statementbox}
 
 它既不是现实，也不是完整认知，而是二者之间的当前空间—语义接触面。
 
@@ -1237,12 +1230,11 @@ SemanticTraceability.
 SGC 不是为了消灭 latent，而是在 Agent 与现实之间保留一层稳定、可校准、可追溯的公共语义结构。
 
 从更一般的观点看，我们甚至可以把 SGC 理解成：
-\[
-\boxed{
-AgentCSO
-\text{ 在当前可行动现实上的 grounded projection.}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentCSO
+\text{ 在当前可行动现实上的 grounded projection.}\)}
+\end{statementbox}
 
 这使此前抽象的 CSO 理论真正落到身体与现实之中。
 
@@ -1334,9 +1326,9 @@ SGC_{t+1}.
 \]
 
 我们可以把这一闭环写成：
-\[
-\boxed{
-Reality
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Reality
 \rightarrow
 Observation
 \rightarrow
@@ -1346,9 +1338,8 @@ Prediction/Action
 \rightarrow
 Reality'
 \rightarrow
-Observation'
-}
-\]
+Observation'\)}
+\end{statementbox}
 
 这正是本书更大范围的 World--Agent--World 闭环在身体语义层的具体实现。
 
@@ -1496,9 +1487,9 @@ SGC 是 Agent-CSO 与 Universe-CSO 当前发生现实绑定的空间—语义界
 
 因此，从 Scene Graph 到 SGC 的变化并不是一次普通的数据结构升级，而是一次认识论上的变化：
 
-\[
-\boxed{
-Image
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Image
 \rightarrow
 Scene
 \rightarrow
@@ -1506,9 +1497,8 @@ PersistentWorld
 \rightarrow
 BodyCenteredReality
 \rightarrow
-ActionableReality.
-}
-\]
+ActionableReality.\)}
+\end{statementbox}
 
 从这一刻开始，我们构建的不再只是一个“能够识别世界”的视觉系统，而是一个能够回答：
 

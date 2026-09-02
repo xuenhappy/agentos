@@ -380,13 +380,12 @@ D_{\mathrm{semantic}}
 其中 $\Phi_{n\rightarrow n+1}$ 是版本迁移映射。如果不存在合理映射，就应把该变化视为 major semantic transition，而不是普通版本升级。对于具有生命周期的 Agent，这一点尤其重要，因为所谓``breaking change''可能等价于认知世界接口突然发生结构断裂。
 
 中立 ABI 还有第二层价值：它允许智能体内部模型独立于基础设施演化。今天的 Kernel 可能使用 Transformer，未来可能采用混合神经符号系统；今天的 BPCC 可能是神经控制器，未来可能使用专用硬件；但只要公共功能语义稳定：
-\[
-\boxed{
-InternalEvolution
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle InternalEvolution
 \not\Rightarrow
-EcosystemBreakage,
-}
-\]
+EcosystemBreakage,\)}
+\end{statementbox}
 整个生态就能保持长期可持续。
 
 由此，AgentOS 的开放策略应该非常明确：最应该公共化的是决定互操作和长期连续性的那一层，而不是强制所有创新都开源。这样既保留市场竞争，也避免把智能体的身体、记忆和社会关系锁死在单一供应商之中。这正是 AgentOS 从一般平台工程进入``持续智能基础设施治理''以后必须增加的一条制度原则。
@@ -622,13 +621,12 @@ FeasibleGovernanceRegion
 ),
 \]
 其中 $\mathcal S$ 是参与方集合，$\mathcal R$ 是角色关系，$\mathcal P$ 是提案与版本演进机制，$\mathcal V$ 是表决/共识规则，$\mathcal A$ 是最终 authority 边界。这里最重要的不是照搬某种基金会模板，而是保证：
-\[
-\boxed{
-NoSingleStakeholder
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle NoSingleStakeholder
 \rightarrow
-UnboundedProtocolAuthority.
-}
-\]
+UnboundedProtocolAuthority.\)}
+\end{statementbox}
 
 一个适合 AgentOS 的多方体系至少应包含技术实现者、Body/设备生态、研究社区、企业与个人使用方、安全与治理专家等不同角色，并通过不同问题类型形成不同的决策权重。例如一个 SGC 字段增加可能主要属于技术标准委员会；一个涉及身份迁移和 Memory Portability 的规范则需要更广泛生态参与；一个涉及实时安全的底层要求还必须受到严格工程验证。也就是说：
 \[

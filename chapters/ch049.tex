@@ -273,13 +273,12 @@ Agent
 而不同 Body 可以在不同时间拥有不同的有效控制权和感知权。
 
 但是，这并不意味着主体也随 Body 分裂。我们此前已经建立了单一持续主体原则。因此：
-\[
-\boxed{
-OnePersistentSubject
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle OnePersistentSubject
 \not\Rightarrow
-OnePhysicalBody.
-}
-\]
+OnePhysicalBody.\)}
+\end{statementbox}
 同一个 Agent 可以拥有多个身体，却仍维持单一的 $h/E/\Theta/\Psi/\Omega$ 生命周期结构。真正连续的是主体，而不是某一套具体传感器或执行器。
 
 这一理论转变还有一个更深的含义：Body 实际上定义了 Agent 的现实边界。没有身体时，“世界”只是一个输入集合；有了 Body 后，世界出现了可达性结构。一扇门对于具有机械臂的机器人与没有机械臂的机器人不是同一个功能世界；文件系统对于能够执行文件操作的数字 Agent 与只能阅读文本的 Agent 也不是同一个功能世界。因此，Body 不只是输入输出接口，而是在事实上决定：
@@ -438,15 +437,14 @@ BodyIdentity,
 }
 \]
 同时：
-\[
-\boxed{
-BodyHistory
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle BodyHistory
 \rightarrow
 Experience
 \rightarrow
-SelfDevelopment.
-}
-\]
+SelfDevelopment.\)}
+\end{statementbox}
 
 物理 Body 因此不是认知内核的外围执行器，而是 Agent 生命周期的因果组成部分。一个真正长期存在的具身智能体，其自我、能力和经验必然在与具体身体的长期耦合中逐渐形成。这也解释了为什么未来 AgentOS 不能只研究“怎样让模型控制机器人”，而必须研究身体状态、认知状态、局部控制与长期记忆之间如何形成稳定的多尺度动力系统。
 
@@ -494,17 +492,16 @@ u_D(t),
 其中 $\eta_t$ 表示其他程序、用户、网络和外部服务造成的环境变化。
 
 从这一形式看，数字环境与物理环境在 Agent 的抽象层上具有完全相同的结构：
-\[
-\boxed{
-Observe
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Observe
 \rightarrow
 Model
 \rightarrow
 Act
 \rightarrow
-NewState.
-}
-\]
+NewState.\)}
+\end{statementbox}
 区别主要在于具体动力学。物理世界通常具有连续状态、惯性和力学约束；数字世界更多表现为混合离散--连续状态、协议约束、权限边界和事务逻辑。但是这并不削弱数字环境的现实性。对于一个数字 Agent 来说，删除一个文件、发送一封邮件、修改数据库记录、提交一段代码，都是具有真实因果后果的行动。
 
 因此，我们不能把“数字 Agent”理解为一个没有身体的 Agent。更准确地说，它具有：
@@ -822,15 +819,14 @@ WorldStateChange
 在功能结构上高度一致。
 
 这并不意味着 GUI 控制和机械控制具有相同动力学，而意味着它们共享：
-\[
-\boxed{
-HighLevelIntent
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle HighLevelIntent
 \rightarrow
 EmbodiedActionCoordinates
 \rightarrow
-RealityTransition
-}
-\]
+RealityTransition\)}
+\end{statementbox}
 这一抽象结构。
 
 Cursor 的例子特别有助于说明 AgentOS 为什么需要将“认知动作”与“身体动作”分离。认知层适合表示：
@@ -928,9 +924,9 @@ x'_{GUI}
 ).
 \]
 于是完整结构为：
-\[
-\boxed{
-Intent
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Intent
 \rightarrow
 CursorAction
 \rightarrow
@@ -938,9 +934,8 @@ GUIReality
 \rightarrow
 Observation
 \rightarrow
-Verification.
-}
-\]
+Verification.\)}
+\end{statementbox}
 
 这与我们在整个 AgentOS 理论中反复坚持的：
 \begin{statementbox}
@@ -1099,28 +1094,25 @@ Everything
 Kernel,
 \]
 而应该满足：
-\[
-\boxed{
-LocalNormalDynamics
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle LocalNormalDynamics
 \rightarrow
-LocalClosure,
-}
-\]
-\[
-\boxed{
-PersistentRelevantResidual
+LocalClosure,\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PersistentRelevantResidual
 \rightarrow
-GlobalCognition.
-}
-\]
+GlobalCognition.\)}
+\end{statementbox}
 反方向则是：
-\[
-\boxed{
-StableHighLevelSkill
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle StableHighLevelSkill
 \rightarrow
-LowerLevelExecution.
-}
-\]
+LowerLevelExecution.\)}
+\end{statementbox}
 
 这使 Agent 形成一个双向结构流：
 \[
@@ -1176,17 +1168,16 @@ AdaptiveBodyCoupling.
 
 现在我们可以给出本章的完整定义：
 
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 \text{Agent}
 =
 &\text{一个在时间上保持主体连续性的认知动力系统，}\\
 &\text{它通过一个或多个可感知、可控制的 Body Runtime}\\
 &\text{持续嵌入某一现实环境，并使观察、认知、行动与现实反馈形成闭环。}
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 
 这个定义具有几个重要推论。
 

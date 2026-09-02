@@ -1145,9 +1145,9 @@ SGC_{t+1}.
 
 由此形成一条与动作闭环不同的局部循环：
 
-\[
-\boxed{
-SGC_t
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SGC_t
 \rightarrow
 PerceptualQuestion
 \rightarrow
@@ -1155,9 +1155,8 @@ u_t^{obs}
 \rightarrow
 NewObservation
 \rightarrow
-SGC_{t+1}.
-}
-\]
+SGC_{t+1}.\)}
+\end{statementbox}
 
 这条闭环极其重要，因为它使 SGC 从 ``被动生成的场景表示'' 转变成 ``可以被身体主动探索的现实语义空间''。
 

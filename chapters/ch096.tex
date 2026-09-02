@@ -231,13 +231,12 @@ E_1,E_2,\ldots,E_n
 \Theta_{\mathrm{rule}}.
 \]
 在这个意义上，学习是一种结构压缩：
-\[
-\boxed{
-Trajectory
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Trajectory
 \rightarrow
-Generator.
-}
-\]
+Generator.\)}
+\end{statementbox}
 过去发生的具体历史被压缩成能够影响未来的生成结构。只有当 Choice 引发的经历真正影响了这一生成器，当前选择才开始穿越时间，对未来行动产生稳定作用。
 
 我们可以定义一次经历对长期结构的\textbf{结构沉降量}：
@@ -523,15 +522,14 @@ P(a_{t+k}\mid W_{t+k}),
 其中 $H_{self}$ 是主体自身过去选择形成的历史结构。
 
 这就是我们所说的“主体连续性”真正具有因果意义的地方。一个持续身份不是数据库里存在相同的 UUID，而是：
-\[
-\boxed{
-PastSelf
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PastSelf
 \longrightarrow
 PresentStructure
 \longrightarrow
-FutureChoice.
-}
-\]
+FutureChoice.\)}
+\end{statementbox}
 过去的 Agent 通过记忆、自我和结构学习继续存在于现在，并实际参与未来行动。这种跨时间因果连续性，是递归自主性区别于普通自主控制器的核心。
 
 \section{自身历史对当前选择的因果贡献}
@@ -558,14 +556,13 @@ E_{\le t},
 \right\}
 \]
 概括了当前 Agent 在生命周期中积累的自身历史。递归自主性的一个核心判据就是：
-\[
-\boxed{
-H_t
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle H_t
 \text{ 对 }
 A_t
-\text{ 的因果贡献不可忽略。}
-}
-\]
+\text{ 的因果贡献不可忽略。}\)}
+\end{statementbox}
 
 如果我们复制一个刚初始化的 Agent $A^{(0)}$ 和一个已经经历长期生活的 Agent $A^{(H)}$，将二者放入相同现实状态 $W$，若
 \[
@@ -832,9 +829,9 @@ O(W_{t:t+k}^{cf})
 它回答：“那些不同的经历最终会把我塑造成什么样的主体？”
 
 于是完整链为：
-\[
-\boxed{
-AlternativeChoice
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AlternativeChoice
 \rightarrow
 AlternativeWorld
 \rightarrow
@@ -842,9 +839,8 @@ AlternativeExperience
 \rightarrow
 AlternativeStructure
 \rightarrow
-AlternativeSelf.
-}
-\]
+AlternativeSelf.\)}
+\end{statementbox}
 仅仅做到第一步的是普通 model-based planning；能够模拟前三步的是 developmental planning；能够进一步比较 Alternative Self 的，才真正进入本章意义上的 Reflective Agency。
 
 我们可以定义两个候选历史分支之间的总反事实距离：
@@ -938,15 +934,14 @@ AlternativeSelf.
 \section{Recursive Agency 的工程判据}
 
 到这里，我们已经可以把递归自主性从一个哲学概念转换成可工程测量的系统属性。一个 Agent 是否具备 Recursive Agency，不能依赖它自我报告“我有自由意志”“这些决定是我做的”，而必须检查真实因果结构。换句话说，我们不测试语言叙事，而测试：
-\[
-\boxed{
-CurrentChoice
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CurrentChoice
 \rightarrow
 FutureSelf
 \rightarrow
-FutureChoice
-}
-\]
+FutureChoice\)}
+\end{statementbox}
 是否真实存在。
 
 首先定义 Agent 在观察时间区间 $[0,T]$ 内的递归自主性指标：
@@ -1071,13 +1066,12 @@ R_{\mathrm{reality}}>\theta_R.
 \pi^{(i)}(a\mid\mathcal W^\ast).
 \]
 如果不同历史稳定地产生不同能力、自我解释和未来选择，而差异能够被对应历史解释，则我们第一次拥有了实验意义上的：
-\[
-\boxed{
-LifeHistory
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle LifeHistory
 \rightarrow
-FutureAgency.
-}
-\]
+FutureAgency.\)}
+\end{statementbox}
 
 但本章最终必须强调一个边界：递归自主性并不等于无限制自我修改。一个系统可以具有高度 Recursive Agency，同时仍然运行在：
 \begin{statementbox}
@@ -1087,18 +1081,17 @@ BoundedSelfModificationEnvelope
 
 因此，我们可以给出本章的最终定义：
 
-\[
-\boxed{
-\begin{minipage}{0.88\textwidth}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{minipage}{0.88\textwidth}
 \textbf{递归自主性，是一个持续智能体通过自身当前选择改变未来经历，通过经历改变长期认知结构，通过长期结构改变自我，再由改变后的自我重新参与未来选择，从而使自身历史成为未来行为真实因果来源的能力。}
-\end{minipage}
-}
-\]
+\end{minipage}\)}
+\end{statementbox}
 
 如果把整个过程压缩为一条最核心的动力学链，它就是：
-\[
-\boxed{
-Choice_t
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Choice_t
 \rightarrow
 Experience
 \rightarrow
@@ -1112,9 +1105,8 @@ FutureChoice
 \rightarrow
 FutureExperience
 \rightarrow
-\cdots
-}
-\]
+\cdots\)}
+\end{statementbox}
 
 于是，Agent 的一生不再是一个固定策略面对不同输入产生的大量输出，而成为一个更深的递归过程：
 \begin{statementbox}

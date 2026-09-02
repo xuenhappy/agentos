@@ -283,13 +283,12 @@ N_t
 N_{\mathrm{integration}},
 \]
 Agent 会连续遭遇无法进入已有结构框架的事件。此时情景记忆可能只是不断累积孤立异常点，而没有机会形成稳定抽象。极端情况下，$\Theta$ 甚至会不断追逐近期异常，使慢结构被快速噪声拖动。这违背了我们在智能多时间尺度理论中反复强调的原则：
-\[
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
-SlowGlobalStructure.
-}
-\]
+SlowGlobalStructure.\)}
+\end{statementbox}
 
 因此，新颖经历应通过“局部陌生、整体可解释”的方式引入。最理想的结构不是完全陌生世界，而是
 \[
@@ -799,17 +798,16 @@ RepairLevelSelection.
 最低层可以局部修正控制参数；如果重复失败，则进入 $E$ 形成稳定模式；若模式跨情境持续存在，才推动 $\Theta$ 修改；只有长期、稳定、跨领域证据才应影响 $\Psi$。
 
 这体现最小必要重组原则：
-\[
-\boxed{
-StateAdjustment
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle StateAdjustment
 \rightarrow
 RepresentationAdaptation
 \rightarrow
 SkillRevision
 \rightarrow
-StructuralRevision.
-}
-\]
+StructuralRevision.\)}
+\end{statementbox}
 换句话说，系统不应该因为一个局部错误就重新解释整个自己。
 
 失败的培育价值还取决于可恢复性。一个不可恢复失败可能具有极高现实成本，却并不一定具有更高学习价值。因此我们需要区分
@@ -1091,21 +1089,20 @@ Task_2
 Task_3,
 \]
 而 Agent 培育真正安排的是：
-\[
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 InternalChange
 \rightarrow
-NewExperienceEligibility.
-}
-\]
+NewExperienceEligibility.\)}
+\end{statementbox}
 下一段经历是否应该发生，不由预先固定的课程表单独决定，而取决于上一段经历之后 Agent 已经成为什么状态。
 
 因此一个真正的 Agent 培育系统必须是闭环的：
-\[
-\boxed{
-Assess
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Assess
 \rightarrow
 SelectExperience
 \rightarrow
@@ -1115,9 +1112,8 @@ Observe
 \rightarrow
 Consolidate
 \rightarrow
-Assess'.
-}
-\]
+Assess'.\)}
+\end{statementbox}
 其“课程”本身也是一个随 Agent 成长不断重计算的策略。
 
 我们由此可以给经历设计一个最终定义：

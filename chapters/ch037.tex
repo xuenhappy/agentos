@@ -174,16 +174,15 @@ L_x\tau_o
 并让控制器根据 $\chi_o$ 自适应调整控制强度。当自状态置信度下降时，合理的策略通常不是提高 TCE 增益，而是减缓控制、增加观测、缩短控制步长或主动调用更直接的状态来源。
 
 这里也揭示了 SPC 为什么必须是 Compressor，而不能只是 Monitor。完全展开所有内部状态虽然理论上似乎能降低信息丢失，却会重新把工作记忆推向有限容量边界。因此 SPC 面临一个不可消除的估计—压缩矛盾：
-\[
-\boxed{
-Compression\uparrow
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Compression\uparrow
 \Rightarrow
 CognitiveLoad\downarrow,
 \qquad
 but\quad
-EstimationDetail\downarrow.
-}
-\]
+EstimationDetail\downarrow.\)}
+\end{statementbox}
 反之，过度细致的自我监控会导致
 \[
 SelfMonitoringLoad\uparrow
@@ -204,15 +203,14 @@ J_{\max}.
 这一形式与充分统计量、信息瓶颈和状态观察理论存在明显联系，但在 AgentOS 中，它具有更加直接的认知意义：Agent 不需要知道自己的所有内部细节，只需要知道那些足以判断“当前动力学是否应该继续、减速、扩张、收敛或恢复”的结构。
 
 因此，本章对 SPC 给出一条稳定性约束：
-\[
-\boxed{
-ObserverConfidence
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ObserverConfidence
 \downarrow
 \Rightarrow
 ControllerAggressiveness
-\downarrow.
-}
-\]
+\downarrow.\)}
+\end{statementbox}
 也就是说，当 Agent 对自己究竟处于何种状态都缺乏把握时，TCE 不应做激进的大幅调节。这条原则将在后面的 gain margin 与 delay margin 中转化为更严格的稳定条件。
 
 \section{控制延迟与多时间尺度错配：今天的控制可能已经针对昨天的认知状态}
@@ -974,13 +972,12 @@ E_r\downarrow,
 对于普通短期扰动尤其如此。换言之，**快变量异常不应该轻易污染慢变量**。
 
 因此这里重新得到此前多尺度理论中的 Slow Variable Protection：
-\[
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
-SlowIdentityStructure.
-}
-\]
+SlowIdentityStructure.\)}
+\end{statementbox}
 如果一次短时任务失败就大幅改变 Agent 的长期自我结构，说明系统缺乏尺度隔离；如果无数长期持续失败都无法改变 $\Theta$ 或 $\Psi$，又说明系统过度僵化。因此需要基于扰动持续时间和一致性进行积分：
 \[
 I_d(T)
@@ -1123,20 +1120,18 @@ v_{\mathrm{track}},
 我们由此得到四个重要结论。
 
 第一，
-\[
-\boxed{
-TCE
-\text{主要控制趋势、允许区域和动力学参数，而非直接替换认知状态。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle TCE
+\text{主要控制趋势、允许区域和动力学参数，而非直接替换认知状态。}\)}
+\end{statementbox}
 
 第二，
-\[
-\boxed{
-CognitiveControl
-\text{天然面向未来状态和未来轨迹。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CognitiveControl
+\text{天然面向未来状态和未来轨迹。}\)}
+\end{statementbox}
 
 第三，
 \begin{statementbox}

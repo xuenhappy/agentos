@@ -44,17 +44,16 @@ E(t)
 \]
 
 本章的核心目标不是再提出一个新的“记忆模块”，而是把此前已经建立的三相记忆理论具体化为一个连续神经动力学系统。换言之，本章要完成的是从
-\[
-\boxed{
-\text{State}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{State}
 \rightarrow
 \text{Trajectory}
 \rightarrow
 \text{Generator}
 \rightarrow
-\text{Self}
-}
-\]
+\text{Self}\)}
+\end{statementbox}
 到可计算形式的转换。
 
 需要首先强调，本章中的 $h(t)$ 不等于上下文 Token 缓存。前文已经指出，Transformer 的真实工作记忆瓶颈并不只是被动存储多少 Token，而更接近前向传播过程中能够稳定维持多少有效关系结构。相干容量理论同样强调，Transformer 的真实推理边界由内部关系结构的稳定承载能力决定，而不是简单由 Context Length 决定。:contentReference[oaicite:0]{index=0} 因此，本章将 $h(t)$ 明确定义为基础模型内部表示空间上的状态分布，而不是外部文本序列本身。
@@ -96,13 +95,12 @@ h(t)
 \right\}.
 \]
 因此，$h(t)$ 的本体不再是离散 Token 列表，而是
-\[
-\boxed{
-h(t)
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle h(t)
 =
-\text{基础模型当前全部层级表示状态的分布集合}.
-}
-\]
+\text{基础模型当前全部层级表示状态的分布集合}.\)}
+\end{statementbox}
 
 这一重新定义具有直接的理论意义。即使输入文本完全相同，只要当前召回的情景不同、自我状态不同、目标不同或者长期结构记忆不同，模型内部每层的表示分布仍可能发生显著变化。因此
 \[
@@ -539,13 +537,12 @@ Database,
 }
 \]
 而应定义成
-\[
-\boxed{
-\Theta
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \Theta
 =
-\text{由长期情景经历慢速塑形的生成动力结构}.
-}
-\]
+\text{由长期情景经历慢速塑形的生成动力结构}.\)}
+\end{statementbox}
 
 设基础预训练模型参数为
 \[
@@ -1523,15 +1520,14 @@ GenerativeParameterField.
 }
 \]
 因此三相记忆真正描述的是
-\[
-\boxed{
-State
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle State
 \rightarrow
 Trajectory
 \rightarrow
-Generator,
-}
-\]
+Generator,\)}
+\end{statementbox}
 而不是
 \[
 FastStorage
@@ -1546,13 +1542,12 @@ SlowStorage.
 CrossPhaseSelfCondition.
 \end{statementbox}
 它改变 h 中哪些状态更容易形成，E 中哪些经历更容易保存，以及 $\Theta$ 中哪些结构更容易稳定。因此，更准确的描述是：
-\[
-\boxed{
-\Psi
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \Psi
 =
-\text{三相记忆共同的慢边界条件与内部坐标原点}.
-}
-\]
+\text{三相记忆共同的慢边界条件与内部坐标原点}.\)}
+\end{statementbox}
 
 \section{工程最小实现}
 
@@ -1716,51 +1711,47 @@ F_\Psi
 \]
 
 正向沉降方向为
-\[
-\boxed{
-FastState
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastState
 \rightarrow
 Episode
 \rightarrow
 Structure
 \rightarrow
-Self,
-}
-\]
+Self,\)}
+\end{statementbox}
 反向约束方向为
-\[
-\boxed{
-Self
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Self
 \rightarrow
 Structure
 \rightarrow
 EpisodeSelection
 \rightarrow
-CurrentState.
-}
-\]
+CurrentState.\)}
+\end{statementbox}
 
 \section{稳定性条件与身份连续性}
 
 本系统是否能够真正成为持续智能的记忆基础，取决于若干必须满足的稳定条件。
 
 第一，瞬时噪声不得直接改写慢结构：
-\[
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
-SlowStructure.
-}
-\]
+SlowStructure.\)}
+\end{statementbox}
 
 第二，重复经验应逐渐推动慢结构改变：
-\[
-\boxed{
-RepeatedExperience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RepeatedExperience
 \rightarrow
-SlowLearning.
-}
-\]
+SlowLearning.\)}
+\end{statementbox}
 
 第三，自我可以改变注意、重要度和结构稳定性，但不得覆盖现实反馈：
 \[
@@ -1845,39 +1836,36 @@ BoundedSlowDrift,
 本章完成了三相记忆与自我从概念结构向纯神经向量动力学实现的第一次完整转换。其最重要的结果，是明确了四个对象并非四种同类存储，而是四种不同数学结构。
 
 工作记忆
-\[
-\boxed{
-h(t)
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle h(t)
 =
-\text{LLM 当前全部层级激活在表示空间中的状态分布}
-}
-\]
+\text{LLM 当前全部层级激活在表示空间中的状态分布}\)}
+\end{statementbox}
 回答的是
 \begin{statementbox}
 WhatIsActiveNow?
 \end{statementbox}
 
 情景记忆
-\[
-\boxed{
-E(t)
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle E(t)
 =
-\text{固定容量的时间--因果多关系情景向量图}
-}
-\]
+\text{固定容量的时间--因果多关系情景向量图}\)}
+\end{statementbox}
 回答的是
 \begin{statementbox}
 WhatHappenedAlongMyTrajectory?
 \end{statementbox}
 
 结构记忆
-\[
-\boxed{
-\Theta(t)
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \Theta(t)
 =
-\text{由长期情景巩固形成的慢速结构生成 LLM}
-}
-\]
+\text{由长期情景巩固形成的慢速结构生成 LLM}\)}
+\end{statementbox}
 回答的是
 \[
 \boxed{

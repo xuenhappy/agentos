@@ -420,13 +420,12 @@ Kernel 并不应该每 $5$ 毫秒计算一次肩部电机的控制电流。后�
 k^m.
 \]
 对于连续自由度，这一问题更加严重。真正成熟的智能架构必须通过低层闭环把大量微观自由度折叠成少量高层可行动结构。也就是说：
-\[
-\boxed{
-LowLevelControl
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle LowLevelControl
 \rightarrow
-HighLevelAffordance.
-}
-\]
+HighLevelAffordance.\)}
+\end{statementbox}
 
 于是 Kernel 所面对的不再是“第几个电机应该输出多少电流”，而是“抓取”“移动”“查看”“打开”“输入”“等待”“退出”等已经由 Body Runtime 可实现的行动空间。这本质上就是复杂度从高层显式控制向低层稳定闭环沉降的一种形式，也是前文 CSO 承载迁移理论在具身系统中的体现。
 
@@ -573,13 +572,12 @@ StableLocalPolicy.
 这时同样的动作可以在更低层完成，Kernel 只需要监视结果和异常。
 
 因此：
-\[
-\boxed{
-MatureAbility
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle MatureAbility
 \Rightarrow
-ReducedHighLevelIntervention.
-}
-\]
+ReducedHighLevelIntervention.\)}
+\end{statementbox}
 熟练不是“系统知道得更少”，而是过去需要显式展开的结构已经被更稳定的载体承载。
 
 Body Runtime 还必须承担局部异常判断。如果每一个极小残差都上传到 Kernel，则 Agent 会处于持续认知惊扰状态。因此设局部残差为
@@ -1033,13 +1031,12 @@ NormalDynamicsStayLocal.
 能够由 Body Runtime 稳定解决的问题，不应持续占据 Kernel。
 
 第三是\textbf{残差升级原则}：
-\[
-\boxed{
-PersistentRelevantResidual
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PersistentRelevantResidual
 \rightarrow
-HigherLevelCognition.
-}
-\]
+HigherLevelCognition.\)}
+\end{statementbox}
 只有无法在当前尺度解释或解决的结构才逐渐向上提升。
 
 第四是\textbf{慢结构约束原则}：
@@ -1127,14 +1124,13 @@ RealityFeedback.
 
 最终，本章可以浓缩为一条 AgentOS 的身体分离原理：
 
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 &\textbf{持续主体保存意义，具体身体承担动力学；}\\
 &\textbf{高层决定可接受的未来，低层负责把现实稳定地推入其中；}\\
 &\textbf{正常过程留在局部，不能解释的残差重新成为认知。}
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 
 也正因为这一边界被确立，后续才能进一步讨论：不同 Body 如何通过统一的功能身体接口向 Kernel 暴露现实、现实如何被转换成身体中心的语义结构，以及 Body Runtime 如何获得自己的快速预测控制能力。这里我们暂时停在职责边界本身，不提前展开这些接口的具体表示。

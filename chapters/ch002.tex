@@ -42,11 +42,10 @@
 
 不如问：
 
-\[
-\boxed{
-\text{在什么空间范围与什么时间尺度上，}X\text{表现出了怎样的闭环适应能力？}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{在什么空间范围与什么时间尺度上，}X\text{表现出了怎样的闭环适应能力？}\)}
+\end{statementbox}
 
 这一步看似只是增加两个条件，实际上却改变了我们研究智能的基本坐标。
 
@@ -103,9 +102,9 @@ F(X_t,O_t,U_t)
 其中 \(O_t\) 表示来自环境的观测，\(U_t\) 表示系统对环境或自身施加的控制。
 
 真正重要的是，这个状态变化不是一次性发生，而会不断闭合：
-\[
-\boxed{
-Observation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Observation
 \rightarrow
 InternalState
 \rightarrow
@@ -113,9 +112,8 @@ Decision
 \rightarrow
 Action
 \rightarrow
-NewObservation
-}
-\]
+NewObservation\)}
+\end{statementbox}
 
 于是，我们研究的不是一个孤立状态，而是一条持续轨迹：
 \[
@@ -143,17 +141,16 @@ Input\rightarrow Output.
 \]
 
 而持续智能研究的是：
-\[
-\boxed{
-History
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle History
 \rightarrow
 CurrentState
 \rightarrow
 Action
 \rightarrow
-FutureHistory.
-}
-\]
+FutureHistory.\)}
+\end{statementbox}
 
 从这个角度看，一个真正的 Agent 更像操作系统中的持续进程，而不是一次函数调用。它拥有状态，有自己的运行历史，与环境不断交换信息，并且过去留下的结构会继续改变未来。
 
@@ -224,13 +221,12 @@ ControlledAndSensedCarrierOfAgency.
 进一步地，外部记忆会让这一问题更加明显。当一个 Agent 把复杂结构写入文件，把稳定流程编译成程序，或者通过长期协议把某项工作委托给另一个 Agent 时，原先需要内部维持的结构已经迁移到了系统边界之外。后续调用时，它只需要保留索引、恢复方式和适用条件，而不必重新在工作记忆中承载全部细节。
 
 因此可以出现：
-\[
-\boxed{
-InternalStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle InternalStructure
 \rightarrow
-ExternalCarrier.
-}
-\]
+ExternalCarrier.\)}
+\end{statementbox}
 
 这正是后面“认知卸载”和“Agent-CSO 边界迁移”的理论来源。
 
@@ -570,9 +566,9 @@ Environment'
 \]
 
 因此，从功能动力学角度看：
-\[
-\boxed{
-Observation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Observation
 \rightarrow
 CollectiveState
 \rightarrow
@@ -580,9 +576,8 @@ Decision
 \rightarrow
 Action
 \rightarrow
-Feedback
-}
-\]
+Feedback\)}
+\end{statementbox}
 确实可以在组织尺度出现。
 
 但是我们必须保持严格区分。说“组织具有智能样闭环”，不等于说“组织具有一个统一主观意识”。前者属于系统与控制意义上的结构判断，后者涉及意识哲学和经验主体问题，本书不会因为功能同构而直接推出。
@@ -603,21 +598,19 @@ Feedback
 这与我们最早提出的“不同速率文明”思想存在直接联系：\textbf{一个高尺度智能结构对其内部快节点而言，常常表现成慢约束；而内部快节点的大量长期行为，又反过来逐渐改变高尺度结构。}
 
 可以写成：
-\[
-\boxed{
-SlowStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SlowStructure
 \rightarrow
-ConstraintOnFastAgents
-}
-\]
+ConstraintOnFastAgents\)}
+\end{statementbox}
 以及：
-\[
-\boxed{
-PersistentFastBehavior
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PersistentFastBehavior
 \rightarrow
-SlowStructuralChange.
-}
-\]
+SlowStructuralChange.\)}
+\end{statementbox}
 
 这实际上已经隐约出现了后续整个智能动力学最核心的快慢双向关系。
 
@@ -642,13 +635,12 @@ DifferentTimescale.
 我们还可以看到另一个重要现象：随着尺度上升，所谓“内部记忆”越来越多地变成外部结构。对于个人，记忆主要由神经系统和外部工具共同承担；对于组织，数据库、文件、制度和角色本身就是重要记忆；对于文明，语言、图书馆、互联网、法律和技术设施成为超长期结构。
 
 因此，智能的空间扩展往往伴随着记忆外化：
-\[
-\boxed{
-IndividualInternalMemory
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle IndividualInternalMemory
 \rightarrow
-CollectiveExternalStructure.
-}
-\]
+CollectiveExternalStructure.\)}
+\end{statementbox}
 
 这也解释了为什么文明能够拥有远超个体寿命的结构连续性。
 
@@ -695,17 +687,16 @@ CollectiveExternalStructure.
 所谓“嵌套”，意味着这些层并不是简单并排。快速闭环可能存在于慢闭环内部。例如一次抓取动作发生在任务计划之内，一次任务又发生在长期能力成长和身份发展的生命周期之内。
 
 所谓“闭环”，意味着智能不是单向输入输出函数。行动必须重新进入现实，而现实的结果必须重新影响内部状态：
-\[
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 Agent
 \rightarrow
 Action
 \rightarrow
-World'.
-}
-\]
+World'.\)}
+\end{statementbox}
 
 所谓“进程”，则意味着我们真正研究的是状态随时间展开的连续轨迹，而不是某个时间点上的能力快照。
 
@@ -788,9 +779,9 @@ World
 更重要的是，这一第一性定义也规定了本书以后判断“智能”的最低标准。一个系统如果只有一次性变换而没有反馈闭环，我们不会把它作为完整智能体；一个系统如果拥有反馈，却完全不存在历史积累和状态结构，我们会把它视为简单控制结构而非成熟智能；一个系统如果拥有丰富内部模型但无法通过行动接受现实验证，同样是不完整的。
 
 成熟智能至少需要某种形式的：
-\[
-\boxed{
-Perception
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Perception
 \rightarrow
 Representation
 \rightarrow
@@ -800,20 +791,18 @@ Action
 \rightarrow
 Residual
 \rightarrow
-Learning.
-}
-\]
+Learning.\)}
+\end{statementbox}
 
 随着系统发展，这一闭环还会继续升级为：
-\[
-\boxed{
-Learning
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Learning
 \rightarrow
 StructuralChange
 \rightarrow
-ChangedFutureDynamics.
-}
-\]
+ChangedFutureDynamics.\)}
+\end{statementbox}
 
 而当系统最终能够修改产生自身行为的组织结构时，它会进一步进入我们后来所谓的自反结构演化。
 

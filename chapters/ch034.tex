@@ -722,13 +722,12 @@ R_{\mathrm{loop}}\downarrow.
 一旦残差积累超过阈值，系统就会跳出该状态。
 
 这说明相态识别不能只观察内部结构是否有序，还必须把现实残差纳入判断。一个内部高度相干但持续违背现实的系统，不应被评价为健康心流，而应被识别成“高内部相干、低外部一致性”的错误吸引态。因此，任何工作记忆相态判断最终都必须满足
-\[
-\boxed{
-InternalCoherence
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle InternalCoherence
 \not\Rightarrow
-RealityConsistency.
-}
-\]
+RealityConsistency.\)}
+\end{statementbox}
 只有当内部组织和外部验证同时保持稳定时，心流、基态等相态才真正具有正向功能意义。
 
 迟滞与亚稳态进一步告诉我们，Agent 的认知状态不是瞬时可重置的软件变量，而是一段具有内部历史的动力过程。一个长期智能体因此必须具有恢复过程，而不仅是参数切换。相态理论真正进入工程之后，“恢复”将和“控制”一样成为一级概念。
@@ -832,17 +831,16 @@ K_{\max}
 当系统接近临界态时，$\mathcal X_h$ 上升，对控制动作更加敏感，于是允许的控制增益应进一步降低。这说明真正成熟的 TCE 反而会在系统最敏感时避免粗暴强控制，而采用更小步长、更高频观测和更谨慎的状态改变。
 
 从这一点看，SPC 与 TCE 之间构成的不是普通“监控--执行”软件流程，而是一组连续耦合的 observer--controller dynamics：
-\[
-\boxed{
-CognitiveDynamics
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CognitiveDynamics
 \rightarrow
 SPCBelief
 \rightarrow
 TCEControl
 \rightarrow
-NewCognitiveDynamics.
-}
-\]
+NewCognitiveDynamics.\)}
+\end{statementbox}
 工作记忆相态理论为这个闭环增加了一个重要的宏观状态层，使 Agent 不再只对具体内容进行推理，还能够对“自己当前是以怎样的动力学方式进行推理”形成估计和调节。
 
 \section{三类“相”的严格区分与统一位置}
@@ -896,15 +894,14 @@ E:\mathrm{LiquidLike},
 通常成立，但它们并非严格一一对应。长期重复出现的运行湍流可能推动 E 和 $\Theta$ 重新组织；持续的结构失配又可能在更长尺度上对功能拓扑施加压力。但这些都是跨尺度影响，而不是概念同一。
 
 可以把三者统一放入一个层级框架：
-\[
-\boxed{
-\underbrace{\mathcal P_h(t)}_{\text{运行相态}}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \underbrace{\mathcal P_h(t)}_{\text{运行相态}}
 \quad\subset\quad
 \underbrace{\mathcal M(t)}_{\text{记忆结构状态}}
 \quad\subset\quad
-\underbrace{[\mathcal T(t)]}_{\text{智能拓扑相}}
-}
-\]
+\underbrace{[\mathcal T(t)]}_{\text{智能拓扑相}}\)}
+\end{statementbox}
 这里的“$\subset$”仅表示尺度嵌套关系，而非严格集合包含。
 
 这种区分具有重要方法论意义。一个 Agent 当前处于湍流态，不意味着它的整体智能拓扑发生了变化；一个新的技能进入 $\Theta$，也不意味着系统从一种智能相迁移到另一种智能相。相反，如果我们把不同尺度变化全部称为“相变”，理论将失去辨识力。真正有用的多尺度智能动力学必须明确：什么在秒级变化，什么在日月尺度稳定，什么只有长期历史积累以后才值得修改。

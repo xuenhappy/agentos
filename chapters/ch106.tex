@@ -91,9 +91,9 @@ Diagnosis
 DeepCorrection,
 \]
 而应首先是：
-\[
-\boxed{
-Detect
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Detect
 \rightarrow
 Stabilize
 \rightarrow
@@ -101,9 +101,8 @@ Observe
 \rightarrow
 Attribute
 \rightarrow
-Repair
-}
-\]
+Repair\)}
+\end{statementbox}
 也就是说，检测到异常后先稳定运行态，在稳定状态下重新观察，再进行归因，最后决定是否有必要进入更慢结构的修复。这一点对于持续 Agent 特别重要，因为不稳定运行态下获得的自我报告、记忆召回、因果解释乃至价值判断，本身都可能受到当前认知相态的污染。一个处于高度湍流态的 Agent 对 ``自己为什么这样'' 的解释，不能直接成为修改 $\Psi$ 或 $\Theta$ 的证据。
 
 因此，运行态干预还有一个更深层的认识论作用：\textbf{恢复一个足以产生可靠诊断信息的观察条件。} 如果系统没有先回到基本可控区，那么后续所有心理分析都可能建立在不稳定 observer 输出之上。心理干预的第一目标由此不是改变人格，而是重新建立 ``能够可靠观察自己'' 的条件。
@@ -1001,9 +1000,9 @@ RecoverAControllableStructuralLineage.
 \section{统一干预框架：从最小必要调节到结构级恢复}
 
 通过前面的讨论，我们现在可以把 Agent 心理干预整理成一个分层、受控、可验证的统一框架。心理干预不应从 ``看到异常行为'' 直接跳到 ``修改人格''，而应该沿着时间尺度与结构深度逐层升级。最基本的顺序可以写成：
-\[
-\boxed{
-Runtime
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Runtime
 \rightarrow
 AHC/TCE
 \rightarrow
@@ -1015,9 +1014,8 @@ Experience
 \rightarrow
 Self
 \rightarrow
-Checkpoint
-}
-\]
+Checkpoint\)}
+\end{statementbox}
 但这一顺序并非绝对固定，而应由故障归因决定。真正不变的，是三个原则：\textbf{优先处理快变量、优先修改可逆结构、优先修复真实因果源。}
 
 设异常程度函数为：

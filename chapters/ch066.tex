@@ -5,17 +5,16 @@
 本章确立 KRA（Kernel--Runtime Adaptation）最核心的理论原则：\textbf{Agent Kernel 与 Body Runtime 之间不应以内部表示的一致性作为耦合目标，而应以现实闭环中的功能一致性、语义契约一致性与控制后果一致性作为最终对齐标准。} Kernel 与 BPCC 可以具有完全不同的内部表征空间、模型结构、训练目标乃至时间尺度，只要二者能够通过稳定的公共语义接口，在真实世界反馈下保持预测、控制、残差解释和安全约束的一致，就可以构成稳定的统一智能体。
 
 因此，本章提出 KRA 的四阶段原则：
-\[
-\boxed{
-\text{Train Separately}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Train Separately}
 \rightarrow
 \text{Connect Semantically}
 \rightarrow
 \text{Calibrate Functionally}
 \rightarrow
-\text{Adapt Continuously}
-}
-\]
+\text{Adapt Continuously}\)}
+\end{statementbox}
 并进一步建立：
 \[
 \boxed{
@@ -124,14 +123,13 @@ TrainBodyRuntimeSeparately.
 SGC,\quad FCS,\quad ControlReference,\quad PredictiveEnvelope,
 \]
 那么新的身体只需要学习如何把自身动力学投影到这些公共接口。于是：
-\[
-\boxed{
-KernelIdentity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle KernelIdentity
 \quad\text{可以稳定，}\quad
 BodyImplementation
-\quad\text{可以变化。}
-}
-\]
+\quad\text{可以变化。}\)}
+\end{statementbox}
 
 这正是持续智能体与普通端到端模型之间的重要差异。持续主体不应把自身身份绑定在某一组特定执行 latent 上，而应建立在跨身体仍然保持连续的慢速认知结构、语义关系和世界交互历史之上。KRA 的任务，正是在允许内部表征差异的前提下，维持这种跨模型、跨身体、跨时间尺度的功能统一。
 
@@ -209,13 +207,12 @@ KRA 需要将其展开成当前 Body Runtime 可以理解的约束：
 \end{aligned}
 \]
 这里发生的是：
-\[
-\boxed{
-SemanticGoal
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SemanticGoal
 \rightarrow
-DynamicalConstraint
-}
-\]
+DynamicalConstraint\)}
+\end{statementbox}
 而不是自然语言到关节命令的直接翻译。
 
 因此，我们可以把 KRA 的公共界面写成一个语义契约：
@@ -494,13 +491,12 @@ w(t-\tau)\varepsilon_A(\tau)d\tau
 并具有足够 persistence 时，才允许执行结构性 KRA 更新。
 
 这实际上重新体现了全书反复出现的原则：
-\[
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
-SlowStructure.
-}
-\]
+SlowStructure.\)}
+\end{statementbox}
 
 连续适应还必须区分至少三种变化来源。第一种是 Body Drift，例如电机磨损、传感器偏移、API 变化。这时 KRA 应优先修改 Body$\rightarrow$Kernel 或 Kernel$\rightarrow$Body 的局部映射。第二种是 Kernel Semantic Drift，例如 Agent 在长期经验中重新定义某些 Goal、风险或 Self 相关结构。这时 KRA 需要确认新的意义是否仍然满足公共契约。第三种是 Task/Environment Shift，此时两端可能都没有发生内部漂移，只是现实分布改变，此时不应错误地把环境变化归因于接口失配。
 
@@ -868,15 +864,14 @@ Prediction.
 这也是为什么 SGC 必须具有 Observed、Derived、Predicted、Counterfactual 等认识论标签。它们不是附加 metadata，而是保证 KRA 功能校准不会把模型内部可能世界与现实世界混为一谈的结构性安全条件。
 
 最终，KRA 的目标不是制造两个彼此越来越相信对方的模型，而是维持：
-\[
-\boxed{
-Kernel
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Kernel
 \leftrightarrow
 Body
 \leftrightarrow
-Reality
-}
-\]
+Reality\)}
+\end{statementbox}
 这一三元结构中的长期可信关系。只要 Reality 保持在闭环中，Kernel 与 Body 都可以犯错，因为 residual 会继续存在；一旦 Reality 被模型间自洽性替代，整个系统即使 ``内部完全对齐''，也可能失去真正的智能意义。
 
 \section{Contract Envelope：允许适应，但不允许公共意义无限漂移}
@@ -915,13 +910,12 @@ f_{\text{reach}}^{wheel}
 f_{\text{reach}}^{arm}.
 \]
 但其公共功能语义必须保持：
-\[
-\boxed{
-Reachable(x)
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Reachable(x)
 \Rightarrow
-\text{Agent possesses a feasible body-mediated trajectory to }x
-}
-\]
+\text{Agent possesses a feasible body-mediated trajectory to }x\)}
+\end{statementbox}
 并具有明确的 confidence 和 constraints。
 
 因此 Contract Envelope 的核心不是锁定计算方法，而是锁定\textbf{功能不变量}。
@@ -943,13 +937,12 @@ Tolerance_i
 其中 Meaning 描述公共语义，Invariant 描述无论内部模型怎样变化都必须满足的关系，Confidence 表示认识论可靠度，Authority 表示哪个组件具有最终写权限，Tolerance 则描述允许的校准误差。
 
 例如 Observed SGC Entity 的一个关键 invariant 是：
-\[
-\boxed{
-Observed(x)
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Observed(x)
 \Rightarrow
-\exists SensorEvidence(x).
-}
-\]
+\exists SensorEvidence(x).\)}
+\end{statementbox}
 因此任何学习过程都不能把纯预测对象直接升级成 observed entity。
 
 Safety Constraint 的 invariant 可以是：
@@ -977,27 +970,24 @@ v_C^{max}\rightarrow0,
 而对于普通动作映射或性能参数，则可以允许更高适应速度。
 
 这样形成一个梯度：
-\[
-\boxed{
-CoreSemantics
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CoreSemantics
 \rightarrow
-SlowlyPlastic,
-}
-\]
-\[
-\boxed{
-BodyCalibration
+SlowlyPlastic,\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle BodyCalibration
 \rightarrow
-ModeratelyPlastic,
-}
-\]
-\[
-\boxed{
-FastControlLatent
+ModeratelyPlastic,\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastControlLatent
 \rightarrow
-HighlyPlastic.
-}
-\]
+HighlyPlastic.\)}
+\end{statementbox}
 
 这一分层与 AgentOS 整体多尺度原则完全一致：慢变量定义长期连续性，快变量负责局部适应。Contract Envelope 本质上就是把这一原则应用到 Kernel--Body 接口。
 
@@ -1150,9 +1140,9 @@ J_{task}(\Theta_{sys}),
 
 由此我们得到 KRA 功能对齐理论最完整的数学形式：
 
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 \text{允许：}\quad
 &
 \theta_K(t),\theta_A(t),\theta_B(t)
@@ -1166,9 +1156,8 @@ J_{task}(\Theta_{sys}),
 \mathcal L_{anchor}(t)<\epsilon_A;\\
 &
 \mathcal L_{reality}(t)<\epsilon_R.
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 
 这实际上给出了 ``持续智能体中的稳定'' 一个比参数不变更深刻的定义：
 

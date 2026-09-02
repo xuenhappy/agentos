@@ -98,17 +98,16 @@ C_W
 \widetilde C_A
 \]
 重新激活内部结构。于是一次完整的环境记忆循环成为
-\[
-\boxed{
-AgentCSO
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentCSO
 \rightarrow
 EnvironmentCSO
 \rightarrow
 FutureObservation
 \rightarrow
-AgentCSO'.
-}
-\]
+AgentCSO'.\)}
+\end{statementbox}
 
 这一过程与简单的``把东西放在外面''有本质区别。真正构成外部记忆，需要至少满足四个条件。第一，外部结构必须具有一定的\textbf{持续性}，即其寿命不能明显短于需要调用它的任务周期；第二，它必须具有\textbf{可寻址性}，Agent 必须知道什么时候、在哪里以及通过什么观测方式能够重新获得它；第三，它必须具有\textbf{功能恢复性}，重新观察该结构后能够恢复一部分原本需要内部维持的认知关系；第四，它必须具有\textbf{未来行为效应}，即该外部结构确实能够改变之后的判断、计划或动作。由此可以定义环境结构成为外部记忆的充分功能条件：
 \[
@@ -272,15 +271,14 @@ C_{result}.
 只有异常、冲突或能力边界被突破时，该结构才重新上浮到高层显式认知。
 
 由此可以把工具形成过程理解为一种承载迁移：
-\[
-\boxed{
-ExplicitAgentCSO
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ExplicitAgentCSO
 \rightarrow
 StableProcedure
 \rightarrow
-ExternalToolCSO.
-}
-\]
+ExternalToolCSO.\)}
+\end{statementbox}
 如果该工具以后又被智能体频繁调用，那么它在 Agent 的内部不需要保留完整实现，而只需要保留一个较小的工具模型：
 \[
 M_A(T)
@@ -326,17 +324,16 @@ AccessToSedimentedHistoricalCognition.
 这并不意味着工具本身必然是智能体，而意味着它可以成为智能体功能拓扑之外的一个稳定认知承载节点。
 
 从这一点出发，我们可以重新理解 AgentOS 中 Skill、Program 与 Tool 的关系。Skill 更接近主体内部或身体层已经编译的局部闭环，Program 是以数字符号系统外化的稳定过程结构，Tool 则是具有明确能力接口、能够被主体调用的外部功能结构。三者之间没有绝对本体边界，它们更像同一 Agent-CSO 在不同承载位置上的实现：
-\[
-\boxed{
-AgentCSO
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentCSO
 \rightarrow
 Skill
 \rightarrow
 Program
 \rightarrow
-Tool
-}
-\]
+Tool\)}
+\end{statementbox}
 并且在需要重新分析时又可以沿反方向被重新显式化。我们因此不再把工具使用看成 Agent 智能之外的附加能力，而把它理解为长期智能扩张其有效结构边界的基本机制之一。
 
 \section{其他 Agent 作为社会性认知载体}
@@ -796,13 +793,12 @@ C_{individual}\downarrow
 C_{group}\downarrow.
 \]
 更准确的关系是：
-\[
-\boxed{
-InternalLoad
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle InternalLoad
 \rightarrow
-DistributedStructuralLoad.
-}
-\]
+DistributedStructuralLoad.\)}
+\end{statementbox}
 我们早期使用``复杂度迁移''语言描述这一现象，而在当前 CSO 本体中应解释为 Agent-CSO 承载位置发生改变。
 
 这里还必须强调现实验证。群体系统容易产生一种特殊风险：同一错误结构可能通过信任边快速传播，最终形成大规模自我强化。因此社会性结构稳定不能仅依赖重复出现：
@@ -810,15 +806,14 @@ DistributedStructuralLoad.
 Frequency\neq Truth.
 \]
 一个结构即使在所有主体之间广泛传播，也不能因此被视为现实正确。群体认知仍然必须保持：
-\[
-\boxed{
-Reality
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Reality
 \rightarrow
 Observation
 \rightarrow
-Evidence
-}
-\]
+Evidence\)}
+\end{statementbox}
 这一外部校准通路。否则社会性记忆就可能从提高认知能力的基础设施，转化为错误结构的放大器。
 
 所以，群体认知的成熟并不体现在``所有主体思想一致''，而体现在能够保持多样局部模型、清晰分工、有限耦合、现实验证以及稳定的冲突解决机制。一个高质量群体系统应该使必要结构能够跨主体流动，又不要求每一个主体同步拥有全部结构。这正是多尺度智能原则在社会维度上的一次重新出现。
@@ -846,29 +841,27 @@ P_{ij}(C),
 P_{ij}
 \]
 执行。此时：
-\[
-\boxed{
-RepeatedCoordination
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RepeatedCoordination
 \rightarrow
-Protocol.
-}
-\]
+Protocol.\)}
+\end{statementbox}
 进一步，当多个协议围绕稳定功能形成角色集合
 \[
 R_1,R_2,\ldots,R_k,
 \]
 便产生组织结构：
-\[
-\boxed{
-RepeatedSocialCSOFlow
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RepeatedSocialCSOFlow
 \rightarrow
 Role
 \rightarrow
 Protocol
 \rightarrow
-Institution.
-}
-\]
+Institution.\)}
+\end{statementbox}
 
 这与前文提出的功能拓扑沉降具有高度一致的形式。个体 Agent 内部：
 \[
@@ -984,15 +977,14 @@ History
 Constraint(FutureAction).
 \]
 这与 Agent 内部 $\Theta$ 的作用存在明显同构：$\Theta$ 由过去经验形成，但并不只是过去的记录，而是未来状态生成与行动选择的结构约束。我们不能因此把制度简单等同于 $\Theta$，但可以说二者在不同尺度上都体现：
-\[
-\boxed{
-PastInteraction
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PastInteraction
 \rightarrow
 SlowStructure
 \rightarrow
-FutureConstraint.
-}
-\]
+FutureConstraint.\)}
+\end{statementbox}
 
 这使我们能够重新理解社会传承。当一个新 Agent 进入一个已有组织时，它并不从零开始发现全部协作规律，而是首先进入一个已经存在的协议—角色—制度场：
 \[
@@ -1021,9 +1013,9 @@ PersistentAgentResidualShapesInstitution.
 \section{个体、组织与文明的多尺度外化}
 
 现在我们可以把前几节整合成一个更加完整的多尺度图景。一个认知结构最初可能存在于个体工作记忆中，随后进入个体长期结构，再外化成工具和环境，进一步通过其他 Agent 被分布式承载，最终沉降成组织制度。于是认知结构存在一条可能的尺度迁移链：
-\[
-\boxed{
-h
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle h
 \rightarrow
 E
 \rightarrow
@@ -1035,9 +1027,8 @@ Tool/Environment
 \rightarrow
 SocialCarrier
 \rightarrow
-Institution.
-}
-\]
+Institution.\)}
+\end{statementbox}
 这不是每一个 CSO 必然经历的固定流水线，而是说明一个结构可以在不同时间尺度和功能边界上寻找更稳定、更低成本的承载位置。
 
 设第 $k$ 个承载层具有状态空间 $\mathcal X_k$、特征时间尺度 $\tau_k$、修改成本 $C_k^{mod}$ 与检索成本 $C_k^{ret}$。一般而言，越慢、越外部、越制度化的结构往往具有：
@@ -1159,13 +1150,12 @@ CivilizationalCapability
 \downarrow.
 \]
 相反，它可能意味着：
-\[
-\boxed{
-HistoricalCognition
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle HistoricalCognition
 \rightarrow
-StableExternalStructure.
-}
-\]
+StableExternalStructure.\)}
+\end{statementbox}
 
 当然，这一过程存在一个反向风险：如果个体对外部结构形成过度依赖，却失去了索引、验证和恢复能力，那么：
 \[
@@ -1287,11 +1277,10 @@ Carrier
 Process\rightarrow CPU,
 \]
 而 AgentOS 更深层的任务是：
-\[
-\boxed{
-CSO\rightarrow Carrier.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CSO\rightarrow Carrier.\)}
+\end{statementbox}
 系统需要判断某一结构当前应当：
 
 保持在 $h$；

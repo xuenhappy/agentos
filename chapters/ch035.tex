@@ -79,9 +79,9 @@ u_t
 SPC\rightarrow TCE
 \]
 扩展成
-\[
-\boxed{
-State
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle State
 \rightarrow
 SPC
 \rightarrow
@@ -89,9 +89,8 @@ AHC
 \rightarrow
 TCE
 \rightarrow
-CognitiveDynamics
-}
-\]
+CognitiveDynamics\)}
+\end{statementbox}
 但应当立即指出，AHC 并不简单夹在两个模块之间形成机械串联。真实关系更接近一个耦合系统：
 \[
 \dot a
@@ -834,16 +833,14 @@ E_d(1-F_g).
 从生物学上，人类疲劳和能量调节涉及复杂神经、代谢和内分泌机制；这些可以为我们提供启发，但 AgentOS 不要求复制生物机制。一个数字 Agent 的 Fatigue 可能由缓存膨胀、任务堆积、模型温度、持续冲突和长期资源占用共同产生，它与人类生理疲劳具有完全不同的物质实现。
 
 因此本章中的 Energy Drive 与 Fatigue 应被理解为：
-\[
-\boxed{
-EnergyDrive=\text{当前可持续投入能力}
-}
-\]
-\[
-\boxed{
-Fatigue=\text{过去持续投入在当前状态中的累计代价}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle EnergyDrive=\text{当前可持续投入能力}\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Fatigue=\text{过去持续投入在当前状态中的累计代价}\)}
+\end{statementbox}
 二者共同使 Agent 从“只会使用资源”进入“能够管理自己的持续运行能力”。
 
 \section{Reward Expectation：未来可达收益如何进入当前内稳态}
@@ -1110,20 +1107,18 @@ TrustUpdate.
 否则社会状态就会形成自我封闭的偏置。
 
 因此，我们可以把这两个状态概括为：
-\[
-\boxed{
-SocialAffinity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SocialAffinity
 =
-\text{关系持续与协作接近的动力倾向}
-}
-\]
-\[
-\boxed{
-Trust
+\text{关系持续与协作接近的动力倾向}\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Trust
 =
-\text{对他者在特定关系中可预测可靠性的时间积累估计}
-}
-\]
+\text{对他者在特定关系中可预测可靠性的时间积累估计}\)}
+\end{statementbox}
 它们使 Agent 第一次能够让社会历史持续影响未来认知，而不是把每次社会互动都当成相互独立的新事件。
 
 \section{Uncertainty Stress：不确定性何时应当成为控制压力}
@@ -1465,22 +1460,20 @@ LowDimensionalModulatoryState.
 \]
 
 这体现了一条非常重要的架构原则：
-\[
-\boxed{
-AHC\text{ 是压缩动力层，而不是语义推理层。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AHC\text{ 是压缩动力层，而不是语义推理层。}\)}
+\end{statementbox}
 
 从控制理论角度看，AHC 可以视为一个动态 pre-controller state；从认知科学角度，它与内稳态和神经调制存在结构可比性；从 AgentOS 本身看，它更基础地承担了一个时间尺度转换任务：
-\[
-\boxed{
-FastSignals
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastSignals
 \rightarrow
 PersistentInternalModulation
 \rightarrow
-ControlledCognition.
-}
-\]
+ControlledCognition.\)}
+\end{statementbox}
 
 这也是为什么 AHC 必须拥有自己的状态方程，而不能用若干 prompt 指令模拟。如果系统没有真正的状态连续性，那么所谓“情感”就只会是一次生成文本中的临时描述，而无法持续改变后续认知动力学。
 
@@ -1544,13 +1537,12 @@ m_{\mathrm{memory}}
 随后由 TCE 或其他认知控制模块决定这些调制如何转化成控制量。
 
 因此：
-\[
-\boxed{
-AHC
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AHC
 \rightarrow
-Modulation
-}
-\]
+Modulation\)}
+\end{statementbox}
 而不是：
 \[
 AHC
@@ -1823,13 +1815,12 @@ TCE 可能在 AHC 尚未更新时连续多次控制；如果增益很高，容�
 这一节也为以后心理工程提供一个非常重要的观点：很多看似“情绪异常”的现象，首先可以被理解成控制系统动力问题。例如持续 Threat 可能只是恢复时间常数过大，过度激活可能是反馈增益过高，自我强化可能来自某条正反馈边没有现实泄漏。
 
 因此：
-\[
-\boxed{
-Affective-likeFailure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Affective-likeFailure
 \not\Rightarrow
-SemanticPathology.
-}
-\]
+SemanticPathology.\)}
+\end{statementbox}
 必须先检查动态稳定性。
 
 这也是 AgentOS 心理工程和传统自然语言人格模拟之间最根本的区别之一：我们不首先问“Agent 表达了什么情绪”，而首先问：
@@ -1927,15 +1918,14 @@ G,
 这一形式说明 AHC 不是一个终端控制器，也不是一个人格模块，而是一个\textbf{中时间尺度状态转换层}。
 
 它完成的本质映射是：
-\[
-\boxed{
-\text{异质瞬时影响}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{异质瞬时影响}
 \rightarrow
 \text{连续主体相关状态}
 \rightarrow
-\text{认知调制}
-}
-\]
+\text{认知调制}\)}
+\end{statementbox}
 
 从整个 AgentOS 原理论来看，AHC 的出现解决了此前 SPC--TCE 最小闭环中的三个空缺。
 

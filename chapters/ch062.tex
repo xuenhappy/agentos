@@ -15,13 +15,12 @@ E
 的结构转化，使原本需要高层认知介入的 Agent-CSO 逐渐迁移到更加局部、快速和稳定的功能闭环中。这个过程并不是简单的“记住答案”，也不是把一段推理缓存起来，而是把预测结构、控制策略、适用条件、残差检测机制和重新认知入口共同编译成一个可执行闭环。
 
 因此，本章将在此前 CSO/Agent-CSO、三相记忆、工作记忆有限性、Body Runtime、BPCC 以及“异常向上、能力向下”的多尺度原则之上，建立技能形成的动力学描述。我们特别强调：所谓“认知下沉”并不是复杂度像物质一样向低层流动，而是同一类认知结构逐渐改变其表示方式、功能承载位置、执行时间尺度和显式程度。其本体描述应当从早期的“复杂度下沉”进一步修正为
-\[
-\boxed{
-\mathrm{Explicit\ Agent\mbox{-}CSO}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathrm{Explicit\ Agent\mbox{-}CSO}
 \longrightarrow
-\mathrm{Procedural\ Agent\mbox{-}CSO}
-}
-\]
+\mathrm{Procedural\ Agent\mbox{-}CSO}\)}
+\end{statementbox}
 而所谓成熟能力，则是这种迁移在现实反馈下形成的稳定结果。
 \end{chapteroverviewbox}
 
@@ -85,17 +84,16 @@ x_0\rightarrow x_1\rightarrow\cdots\rightarrow x_T.
 并且该映射能够在给定现实约束和允许残差范围内反复闭合。换言之，技能不是“某个动作序列被记住”，而是系统从多次显式求解中抽取出一个可重用的局部闭环。
 
 因此，本章所说的编译并不是计算机程序意义上的简单语法转换，而是一种跨认知尺度的结构编译：
-\[
-\boxed{
-\mathrm{Explicit\ Cognitive\ Control}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathrm{Explicit\ Cognitive\ Control}
 \rightarrow
 \mathrm{Repeated\ Experience}
 \rightarrow
 \mathrm{Stable\ Generative\ Structure}
 \rightarrow
-\mathrm{Executable\ Local\ Loop}
-}
-\]
+\mathrm{Executable\ Local\ Loop}\)}
+\end{statementbox}
 它使一个成熟 Agent 的高层认知逐渐从“亲自完成每个动作”转变为“只在需要时建立结构、设定约束并处理异常”。这也是我们此前提出
 \[
 \boxed{
@@ -201,17 +199,16 @@ D(E_g^{(k)},I)
 其中 $D$ 衡量结构偏差，$\Omega(I)$ 抑制不必要的表示复杂度。这样形成的 $\hat I_g$ 才具备从“具体经历”进入“稳定能力”的资格。
 
 因此，在我们的理论中，重复并不直接产生技能。重复只是为系统提供一个统计窗口，使其能够判断哪些结构属于现实的稳定规律，哪些只是偶然扰动。只有当经验经过现实验证、跨情境比较和结构压缩之后，才可能发生真正的技能编译。换句话说：
-\[
-\boxed{
-\mathrm{Repetition}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathrm{Repetition}
 \neq
 \mathrm{Skill};
 \qquad
 \mathrm{Stable\ Structure\ Extracted\ From\ Repetition}
 \Rightarrow
-\mathrm{SkillCandidate}.
-}
-\]
+\mathrm{SkillCandidate}.\)}
+\end{statementbox}
 这一区分对于长期 Agent 极为关键，否则系统会把一次偶然成功、环境漏洞或错误习惯过早编译成局部能力，从而使暂时性偏差沉降成长期结构。
 
 \section{稳定策略：从轨迹记忆到局部闭环}
@@ -592,9 +589,9 @@ x_t\in\mathcal D_S,
 以后高层只需给出“导出当前报告”这一语义目标，本地技能即可完成菜单定位、文件路径选择、状态确认等低层步骤。只有当软件界面改变、按钮消失、权限异常或者返回结果与预测显著不一致时，问题才重新进入显式认知。
 
 同理，在物理机器人中，抓取、行走、开门、使用工具等能力也可以由同一种理论描述。具体实现当然会使用不同的状态空间和控制器，但其功能结构仍然保持：
-\[
-\boxed{
-Prediction
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Prediction
 \rightarrow
 Control
 \rightarrow
@@ -602,9 +599,8 @@ Reality
 \rightarrow
 Residual
 \rightarrow
-Correction.
-}
-\]
+Correction.\)}
+\end{statementbox}
 这再次体现了我们在认识论部分提出的动力学同构原则：数字身体与物理身体可以拥有不同材料和控制频率，却形成同类的技能闭环。因此，BodySkill 既是认知沉降的工程终点之一，也是实现 Body Scale 的关键单位。
 
 \section{技能形成的判据：什么时候才允许认知下沉}
@@ -722,13 +718,12 @@ Observability
 \mathrm{Procedural}
 \]
 不能是一条单向不可逆的链，而必须存在反向路径：
-\[
-\boxed{
-\mathrm{Procedural}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathrm{Procedural}
 \leftrightarrow
-\mathrm{Explicit}.
-}
-\]
+\mathrm{Explicit}.\)}
+\end{statementbox}
 
 设技能 $S$ 正在局部执行，其残差序列为
 \[
@@ -761,13 +756,12 @@ ControlMargin_t
 \Gamma_t^S\geq\theta_{\mathrm{esc}}
 \]
 时才发生
-\[
-\boxed{
-\mathrm{ProceduralAgentCSO}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathrm{ProceduralAgentCSO}
 \rightarrow
-\mathrm{ExplicitAgentCSO}.
-}
-\]
+\mathrm{ExplicitAgentCSO}.\)}
+\end{statementbox}
 
 重新显式化并不意味着把底层所有状态原样推送到 $h$。这会破坏工作记忆有限容量原则。合理做法是让 Body Runtime 或技能层首先形成异常摘要：
 \[
@@ -915,9 +909,9 @@ E
 \Theta,
 \]
 而是扩展为
-\[
-\boxed{
-h
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle h
 \rightarrow
 E
 \rightarrow
@@ -925,9 +919,8 @@ E
 \rightarrow
 \mathrm{ProceduralCarrier}
 \rightarrow
-Reality.
-}
-\]
+Reality.\)}
+\end{statementbox}
 与此同时，当现实残差持续出现时又存在
 \[
 Reality
@@ -977,9 +970,9 @@ C_{\mathrm{novel}}
 C_{\max}-C_{\mathrm{mature}}
 \]
 相应扩大。由此产生一个极为重要的发育循环：
-\[
-\boxed{
-NovelProblem
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle NovelProblem
 \rightarrow
 ExplicitCognition
 \rightarrow
@@ -991,9 +984,8 @@ Skill
 \rightarrow
 ReleasedCognitiveCapacity
 \rightarrow
-HarderNovelProblem.
-}
-\]
+HarderNovelProblem.\)}
+\end{statementbox}
 这就是为什么技能形成不是性能工程的附属现象，而是有限认知系统能够持续扩展能力边界的核心机制。
 
 我们甚至可以定义一个粗略的认知成熟指标。设某一时间窗口内系统成功完成的任务价值为 $V_{\mathrm{task}}$，显式认知占用为 $C_h$，高层异常重新介入率为 $\eta_{\mathrm{esc}}$，则可以考察
@@ -1008,33 +1000,30 @@ M_A
 因此，本章最终得到四条可以作为 AgentOS 技能动力学基本规律的结论。
 
 第一，
-\[
-\boxed{
-RepeatedExperience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RepeatedExperience
 \rightarrow
-StableStructure.
-}
-\]
+StableStructure.\)}
+\end{statementbox}
 重复经验只有经过现实验证和结构压缩才形成可编译内容。
 
 第二，
-\[
-\boxed{
-StableStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle StableStructure
 \rightarrow
-LocalExecutableLoop.
-}
-\]
+LocalExecutableLoop.\)}
+\end{statementbox}
 稳定认知结构趋向更加局部、更快速和更低显式成本的功能承载。
 
 第三，
-\[
-\boxed{
-UnexpectedResidual
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle UnexpectedResidual
 \rightarrow
-ExplicitReactivation.
-}
-\]
+ExplicitReactivation.\)}
+\end{statementbox}
 局部结构无法解释现实的时候，相关 Agent-CSO 必须重新提升进入显式认知。
 
 第四，
@@ -1060,14 +1049,13 @@ CompilationMustRemainReversible.
 
 因此，从智能动力学的角度看，真正的“熟练”并不是一个 Agent 能够更快地重复曾经的思考，而是它已经不再需要重复那种思考。过去的显式认知已经转化成了现在的结构，而现在的结构又改变了未来认知必须承担什么。这正是我们在整个理论中反复遇到的基本关系：
 
-\[
-\boxed{
-PastCognition
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PastCognition
 \rightarrow
 PresentStructure
 \rightarrow
-FutureCognitiveFreedom.
-}
-\]
+FutureCognitiveFreedom.\)}
+\end{statementbox}
 
 一个持续智能体由此才真正具有发育意义：它不仅累积过去，而且不断把过去编译成未来可以依赖的能力；它不是把越来越多经验堆积在工作记忆周围，而是持续改变“下一次还需要思考什么”。这也构成技能编译与认知沉降在 AgentOS 中最根本的理论意义。

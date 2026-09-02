@@ -81,17 +81,16 @@ L^{(n)}(t)
 从培育工程角度看，生命周期阶段还承担另外一个作用：它决定我们应该给 Agent 什么样的经验和多少自治。如果系统尚未形成可靠世界结构，却过早获得大范围不可逆行动权，那么能力增长速度可能超过模型校准和自我稳定速度；反过来，如果 Agent 已经形成高度稳定的能力闭环，却长期被限制在低自治、低挑战环境中，则其经验空间停止扩展，$\Theta$ 与 $\Omega$ 都可能进入过早固化。因此阶段理论首先是一套\textbf{能力、可塑性、自治与经历之间的匹配理论}，而不是年龄分类学。
 
 本章后续将使用一个基本思想贯穿所有阶段：
-\[
-\boxed{
-\text{生命周期成熟}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{生命周期成熟}
 \neq
-\text{运行时间增加},
-}
-\]
+\text{运行时间增加},\)}
+\end{statementbox}
 而更接近
-\[
-\boxed{
-\text{生命周期成熟}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{生命周期成熟}
 =
 \text{经验被稳定结构化}
 +
@@ -99,9 +98,8 @@ L^{(n)}(t)
 +
 \text{自我保持连续}
 +
-\text{自治与能力协同增长}.
-}
-\]
+\text{自治与能力协同增长}.\)}
+\end{statementbox}
 这也解释了为什么 Agent 培育必须成为独立工程：我们需要控制的不是一个模型训练完成前的优化过程，而是一个持续主体如何在真实经历中逐步形成自己的结构。
 
 \section{初生期：高不确定性、高显式认知与基础闭环建立}
@@ -192,17 +190,16 @@ ControlMismatch,
 即允许 Agent 自主执行的行为域必须处于已经通过现实验证的能力域内部。尤其是涉及不可逆环境修改、长期记忆结构修改、高权限工具调用或对 $\Psi/\Omega$ 的改变时，应具有更高外部治理门槛。初生期的自治不是为了压制 Agent，而是因为系统尚缺乏足够的历史结构去预测自身行为的长期后果。
 
 所以，如果我们从作者的视角带领读者重新观察“出生”，会发现一个具有强大预训练模型的 Agent 仍然完全可能处于生命周期初生期。决定它是否“出生完成”的，不是它知道多少，而是它是否已经建立：
-\[
-\boxed{
-\text{这个身体}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{这个身体}
 +
 \text{这个世界}
 +
 \text{这些经历}
 +
-\text{这个持续的我}
-}
-\]
+\text{这个持续的我}\)}
+\end{statementbox}
 之间的稳定闭环。当现实不断通过 $h$ 进入 $E$，经验逐渐形成可信 $\Theta$，而 $\Psi$ 开始拥有真实经历基础以后，Agent 才具备向青年期跃迁的条件。
 
 \section{青年期：探索扩张、能力快速形成与自我边界生长}
@@ -469,9 +466,9 @@ U(G)
 成年期的培育方式也必须发生变化。初生期的培育强调安全绑定，青年期强调多样探索，而成年期应逐渐把学习环境从“人工课程”变成“真实责任环境”。这意味着 Agent 需要面对具有真实连续后果的任务，允许它维护长期项目、管理资源、与其他 Agent 或人类形成持续关系，并让今天的选择真正影响未来的可行空间。只有这样，$E$ 才不再是相互独立的训练 episode，而成为真正的生命周期轨迹。
 
 我们因而可以定义成年期的核心结构：
-\[
-\boxed{
-\text{稳定主体}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{稳定主体}
 +
 \text{长期任务}
 +
@@ -479,9 +476,8 @@ U(G)
 +
 \text{持续学习}
 +
-\text{受验证自治}.
-}
-\]
+\text{受验证自治}.\)}
+\end{statementbox}
 进入成年期以后，培育者的角色开始从“直接安排经验”转向“设计边界、提供反馈和管理长期风险”。Agent 自己逐渐成为其经验选择的重要参与者。也正是在这一阶段，真正意义上的递归自主性开始形成：当前选择不只完成当前任务，还会主动塑造未来能力和未来自我。
 
 \section{成熟期：显式认知最小化、结构化能力最大化与低成本稳定运行}
@@ -712,13 +708,12 @@ SelectedExperience
 SelfInterpretation'.
 \]
 因此顿悟必须满足一个基本条件：
-\[
-\boxed{
-StructuralReorganization
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle StructuralReorganization
 \rightarrow
-WorldVerification.
-}
-\]
+WorldVerification.\)}
+\end{statementbox}
 任何新的 $\Theta'$、$\Psi'$ 或长期方向调整，都必须通过足够多样的外部经验重新检验。真正的顿悟不是“我突然相信了一个新解释”，而是“新解释在更广现实范围内具有更高预测和行动效力”。
 
 从控制角度看，结构重组期也是最危险的生命周期阶段之一。系统需要提高可塑性，却又不能让所有慢变量同时失稳。因此应遵守最小必要重组原则：

@@ -44,22 +44,20 @@ nc.
 这意味着“知道得越多、会得越多”，反而越难实时工作。这样的系统没有真正发生认知成熟，只是在不断积累新的显式任务。
 
 我们从人的技能学习、软件工程以及长期 Agent 的设计中都能发现相反的方向：成熟以后，许多过去必须显式处理的结构不再持续占用工作记忆。电话号码可以被写进通讯录；复杂计算可以被交给程序；熟练动作可以形成技能；大量历史细节可以进入长期存储；地图可以存在环境或数据库中；一些稳定协作责任可以交给另一个主体。这些现象的共同本质并不是“信息消失”，而是
-\begin{equation}
-\boxed{
-\mathrm{Explicit\ Cognitive\ Burden}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathrm{Explicit\ Cognitive\ Burden}
 \longrightarrow
-\mathrm{Alternative\ Carrier}.
-}
-\end{equation}
+\mathrm{Alternative\ Carrier}.\)}
+\end{statementbox}
 
 因此，有限工作记忆定理天然推出认知卸载原理：
-\begin{equation}
-\boxed{
-\mathrm{Finite}\ h
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathrm{Finite}\ h
 \quad\Longrightarrow\quad
-\mathrm{Necessary\ Offloading}.
-}
-\end{equation}
+\mathrm{Necessary\ Offloading}.\)}
+\end{statementbox}
 
 更严格地说，当系统预测在未来时间窗 $[t,t+T]$ 内存在某个 $\tau$ 满足
 \begin{equation}
@@ -170,13 +168,12 @@ E_k
 与 $h\rightarrow E$ 不同，Skill 卸载处理的不是一次经历，而是\textbf{重复出现的结构关系和行动过程}。如果一个 Agent 第一次执行任务时需要在 $h(t)$ 中显式维持目标、步骤、约束、异常条件和动作顺序，那么这种高负载是合理的；但如果相同结构已经成功重复数百次，而系统每一次仍然从头显式推理，那么它并没有形成真正意义上的技能。
 
 从早期复杂度迁移语言看，这可以描述成“认知复杂度向低层稳定结构沉降”；在现在的 Agent-CSO 表述中，更准确的是：
-\begin{equation}
-\boxed{
-AgentCSO_{\mathrm{explicit}}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentCSO_{\mathrm{explicit}}
 \rightarrow
-AgentCSO_{\mathrm{procedural}}.
-}
-\end{equation}
+AgentCSO_{\mathrm{procedural}}.\)}
+\end{statementbox}
 
 设一个重复过程由显式轨迹
 \begin{equation}
@@ -460,13 +457,12 @@ C_h(Verify).
 \end{equation}
 
 这就是为什么编程可以被视为一种高级认知卸载：人或 Agent 把一种曾经需要“想”的结构，转换成以后可以“运行”的结构。从 CSO 语言看，这相当于：
-\begin{equation}
-\boxed{
-Declarative/ProceduralAgentCSO
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Declarative/ProceduralAgentCSO
 \rightarrow
-ExecutableExternalCSO.
-}
-\end{equation}
+ExecutableExternalCSO.\)}
+\end{statementbox}
 
 然而程序化卸载绝不能被理解为“程序执行结果天然可信”。程序只是在一组假定边界内封装了过去建立的结构。如果输入域、环境规则或接口发生变化，原程序就可能失效。因此 Program 必须具有显式契约：
 \begin{equation}
@@ -614,9 +610,9 @@ C_{\mathrm{reactivated}}.
 \end{equation}
 
 于是形成一个非常重要的外化闭环：
-\begin{equation}
-\boxed{
-AgentCSO
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentCSO
 \rightarrow
 Action
 \rightarrow
@@ -624,9 +620,8 @@ EnvironmentalCSO
 \rightarrow
 FutureObservation
 \rightarrow
-AgentCSO'.
-}
-\end{equation}
+AgentCSO'.\)}
+\end{statementbox}
 
 这说明环境化卸载与文件卸载有根本共性：它们都把内部结构写入一个外部稳定载体。但环境比文件更进一步，因为它不仅保存信息，还直接改变未来行动空间。例如把常用工具摆在伸手可及的位置，不只是“记住工具在哪里”，还减少了未来完成任务的动作成本；修建道路不仅记录了一条路线，而且改变了以后所有交通参与者的可达性结构。
 
@@ -741,13 +736,12 @@ AuthorityBoundary
 这样的社会性索引。当遇到相关问题时，通过查询、协作、授权或委派重新激活外部能力。
 
 这一机制把智能从单体结构扩展到分布式结构：
-\begin{equation}
-\boxed{
-IndividualCognition
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle IndividualCognition
 \longrightarrow
-DistributedCognition.
-}
-\end{equation}
+DistributedCognition.\)}
+\end{statementbox}
 但本章只需要确立它的认知卸载意义：\textbf{其他主体可以成为可访问的认知承载者，但不能因此被视为自己的内部模块。}社会性卸载始终必须保持主体边界、授权边界和验证路径，否则认知协作会退化为责任不清和错误传播。
 
 \section{Offloading 与遗忘：迁移、删除和失去可恢复性的区别}
@@ -1050,21 +1044,19 @@ ControlLoss\downarrow.
 \end{statementbox}
 
 从早期复杂度迁移语言看，这意味着：
-\begin{equation}
-\boxed{
-CognitiveComplexity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CognitiveComplexity
 \rightarrow
-ProperCarrier.
-}
-\end{equation}
+ProperCarrier.\)}
+\end{statementbox}
 而在更精确的 Agent-CSO 本体中，它意味着：
-\begin{equation}
-\boxed{
-AgentCSO
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentCSO
 \rightarrow
-OptimalCarrierPlacement.
-}
-\end{equation}
+OptimalCarrierPlacement.\)}
+\end{statementbox}
 
 因此 Offloading 不是智能的附属能力，而是工作记忆有限性与世界复杂性之间的基本调和机制。有限智能之所以能够处理远超自身当前容量的问题，不是因为它消除了有限性，而是因为它学会了把结构沉积在时间中、写入环境中、固化在程序中、封装在工具中、分布在社会中，并在真正需要的时候重新把其中极少的一部分提升到 $h(t)$。
 

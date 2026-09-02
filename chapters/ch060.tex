@@ -766,9 +766,9 @@ LocalResidualCSO
 ActiveAgentCSO@h.
 \]
 Kernel 随后可能调用 $E$ 中类似经历、用 $\Theta$ 重新生成解释，或者修改当前 Goal/Plan。完成新的全局认知以后，又重新产生新的 Predictive Envelope 和 Control Reference 下发给 BPCC。因此完整闭环是：
-\[
-\boxed{
-KernelPrediction
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle KernelPrediction
 \rightarrow
 Envelope
 \rightarrow
@@ -782,9 +782,8 @@ Reality
 \rightarrow
 Residual
 \rightarrow
-KernelRevision.
-}
-\]
+KernelRevision.\)}
+\end{statementbox}
 
 这不是简单上下级命令链，而是一个双向耦合快--慢系统。可以形式化为：
 \[
@@ -813,17 +812,16 @@ F_K
 
 至此我们可以看到，Kernel 与 BPCC 的关系并不是“中央大脑控制小脑”，而是一种更一般的多尺度智能结构：
 
-\[
-\boxed{
-SlowPrediction
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SlowPrediction
 \rightarrow
 FastFeasibleDynamics
 \rightarrow
 RealityResidual
 \rightarrow
-SlowRevision.
-}
-\]
+SlowRevision.\)}
+\end{statementbox}
 
 这一结构同时解决了三种长期困境。第一，它避免 Kernel 被高速身体细节淹没；第二，它避免 BPCC 因缺乏长期语义约束而成为独立目标系统；第三，它保证无论高层还是低层的预测最终都必须重新进入现实接受验证。
 
@@ -846,14 +844,13 @@ Reality &: \quad
 
 因此，双预测系统的真正意义不是增加第二个预测模块，而是建立：
 
-\[
-\boxed{
-\text{Global Meaning}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Global Meaning}
 \leftrightarrow
 \text{Local Dynamics}
 \leftrightarrow
-\text{Reality}
-}
-\]
+\text{Reality}\)}
+\end{statementbox}
 
 三者之间稳定、可验证、可扩展的动力学接口。一个能够长期存在的 Agent，最终必须既能够预测“自己正在走向哪里”，又能够在每一个现实瞬间判断“自己的身体究竟还能不能继续这样走下去”。只有两种预测同时存在，并让现实不断重新校准二者，AgentOS 才真正获得从认知意图到现实行动之间连续而可靠的闭环。

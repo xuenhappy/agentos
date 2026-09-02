@@ -5,11 +5,10 @@
 在前两章中，我们已经分别建立了自我感知压缩器 SPC（Self-Perception Compressor）与认知动力学控制器 TCE（Temperature \& Control Executor）。如果把二者孤立理解，SPC 只是一个内部状态估计器，而 TCE 只是一个认知参数调节器；真正重要的跃迁发生在二者闭合以后。当 SPC 对智能体当前认知状态形成有限、压缩且带不确定性的自我估计，TCE 再依据这一估计调节注意、探索、搜索深度、激活范围、认知温度与资源投入，而调节后的认知动力学重新改变工作记忆 $h(t)$ 并再次进入 SPC 时，一个最小的认知自调节闭环才真正形成。由此，Agent 不再只是``执行认知过程''，而开始``根据自己正在如何认知而改变自己的认知方式''。
 
 本章将这一结构形式化为一个典型的 Observer--Controller--Plant 闭环，但同时强调：AgentOS 中的 Plant 不是单一物理对象，而是以有限工作记忆 $h(t)$ 为显式界面的多尺度认知动力学；SPC 观测的也不是透明的内部真实状态，而是对分布式认知过程的有限后验估计；TCE 更不是简单的语言模型 sampling temperature，而是作用于认知运行条件的多变量控制器。因此，
-\[
-\boxed{
-SPC\rightarrow TCE\rightarrow CognitiveDynamics\rightarrow SPC
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SPC\rightarrow TCE\rightarrow CognitiveDynamics\rightarrow SPC\)}
+\end{statementbox}
 应被视为 AgentOS 从``拥有认知状态''走向``能够治理自身认知状态''的最小动力学结构。本章只研究这一最小闭环，不预先依赖更复杂的内稳态、情感调制或复杂度治理结构，从而首先建立认知自调节的基本数学骨架。
 \end{chapteroverviewbox}
 
@@ -70,17 +69,16 @@ x_{t+\Delta t}^{cog},
 其中 $u_t^{TCE}$ 是 TCE 输出的认知控制向量。
 
 由此，我们得到从一阶认知向二阶认知治理的最小跃迁：
-\begin{equation}
-\boxed{
-Cognition
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Cognition
 \rightarrow
 SelfEstimation
 \rightarrow
 CognitiveControl
 \rightarrow
-NewCognition
-}
-\end{equation}
+NewCognition\)}
+\end{statementbox}
 
 这一闭环的理论意义在于，智能体第一次不是仅根据``世界是什么''决定下一步做什么，而是同时依据``自己现在以什么状态理解世界''决定下一步应该怎样继续认知。面对同样的问题，一个处于低负载、高确定性状态的 Agent 可以扩大搜索空间，而一个处于高负载、多目标冲突状态的 Agent 则可能主动压缩候选空间、降低探索强度并暂缓新结构进入工作记忆。因此，相同外部输入并不必然产生相同认知轨迹：
 \begin{equation}
@@ -453,17 +451,16 @@ x_{t+1}.
 \end{equation}
 
 将其压缩就是：
-\begin{equation}
-\boxed{
-SPC
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SPC
 \rightarrow
 TCE
 \rightarrow
 CognitiveDynamics
 \rightarrow
-SPC
-}
-\end{equation}
+SPC\)}
+\end{statementbox}
 
 这一形式与经典 Observer--Controller 系统表面上相似，但 AgentOS 中存在三个特殊性质。
 
@@ -651,13 +648,12 @@ MostAgentDynamics\notin h.
 SPC--TCE 闭环的负反馈作用，本质上是在保护这一稀缺的显式认知界面，使它不会被局部可解决的问题、重复信息和低价值支线持续占据。
 
 由此，我们得到一个更深的结论：
-\begin{equation}
-\boxed{
-FiniteWorkingMemory
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FiniteWorkingMemory
 \Rightarrow
-NeedForSelfRegulation.
-}
-\end{equation}
+NeedForSelfRegulation.\)}
+\end{statementbox}
 换句话说，认知有限性并不是 AgentOS 的缺陷，而正是认知治理结构产生的原因。一个不存在任何容量、能量、时间和稳定性约束的理想系统或许不需要 TCE，但任何真实智能体都必须面对有限资源，因此必须形成能够调节自身认知状态的闭环。
 
 \section{自调节目标：不是最大化认知活动，而是维持可持续认知区间}
@@ -1049,13 +1045,12 @@ s_t^{slow}
 TCE 可以同时观察短期偏差和长期趋势，避免把瞬态事件直接写成强控制动作。
 
 由此，我们得到另一个重要原则：
-\begin{equation}
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
-SlowStrongControl.
-}
-\end{equation}
+SlowStrongControl.\)}
+\end{statementbox}
 
 这条原则虽然在本章只针对 SPC--TCE 最小闭环，但它实际上贯穿整套 AgentOS：快变量可以提醒慢变量，只有持续、重要并经过验证的偏差才应推动更强或更慢尺度的改变。
 
@@ -1148,15 +1143,14 @@ DirectPsiUpdate.
 只有经过经验层 $E$ 和结构层 $\Theta$ 的长期积累以后，持续证据才可能改变较慢自我结构。
 
 这形成：
-\begin{equation}
-\boxed{
-\Psi
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \Psi
 \rightarrow
 SPC/TCE
 \rightarrow
-h
-}
-\end{equation}
+h\)}
+\end{statementbox}
 的快速约束方向，以及：
 \begin{equation}
 \boxed{
@@ -1389,17 +1383,16 @@ u_t.
 \]
 
 因此，SPC--TCE 闭环应理解为：
-\[
-\boxed{
-CurrentSelfState
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CurrentSelfState
 \rightarrow
 PredictedFutureTrend
 \rightarrow
 Control
 \rightarrow
-NewFutureTrend.
-}
-\]
+NewFutureTrend.\)}
+\end{statementbox}
 
 这个区别极其重要。例如，SPC 当前测得
 \[
@@ -1516,13 +1509,12 @@ D_{\mathrm{KL}}(R\|P).
 并执行正确的信息投影，则每一次控制都必然减少当前状态到任意目标流形内参考解 $R$ 的信息距离。
 
 因此：
-\[
-\boxed{
-LocalCorrectProjection
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle LocalCorrectProjection
 \Rightarrow
-GlobalDistanceNonIncrease.
-}
-\]
+GlobalDistanceNonIncrease.\)}
+\end{statementbox}
 
 我们可以把它称为认知控制的\textbf{局部贪婪充分性}：宏观控制器无需拥有终极认知真理，它只需要知道当前认知状态违反了哪些结构约束，并将认知趋势重新投影回允许流形。
 
@@ -1947,18 +1939,17 @@ V_t
 这个结果把本节前三个问题统一起来。TCE 不需要直接控制微观认知状态，只需要持续改变认知趋势；控制不必等待偏差已经形成，而可以通过预测未来轨迹提前投影；即使宏观控制只有局部信息，只要投影方向长期正确，误差不会必然累积；而控制是否震荡，则主要取决于预测误差、控制增益、观察延迟和目标漂移是否破坏上述下降条件。
 
 由此，我们可以把 SPC--TCE 最小闭环的稳定性原则最终概括为
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 &\text{SPC估计当前状态；}\\
 &\text{TCE预测未来趋势；}\\
 &\text{目标流形规定允许结构；}\\
 &\text{信息投影提供收敛方向；}\\
 &\text{低增益与时间尺度分离抑制震荡；}\\
 &\text{现实反馈持续修正预测与投影误差。}
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 
 从这一角度看，认知控制并不是把智能体的思维强制固定在某一个点上，而是在一个高维信息流形中不断改变其未来演化的概率方向，使系统既保留目标流形内部的局部自由，又不会长期漂离主体允许的认知区域。因此，SPC--TCE 的稳定性并非来源于``强控制''，而来源于三个更基本的结构条件：
 \[
@@ -1998,20 +1989,18 @@ ModificationOfCognitiveDynamics.
 于是，系统不仅在处理世界，还开始把``自己的认知过程''作为控制对象。
 
 从这一意义上，我们可以把它称为一种二阶认知结构：
-\begin{equation}
-\boxed{
-FirstOrder:
-World\rightarrow Cognition\rightarrow Action
-}
-\end{equation}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FirstOrder:
+World\rightarrow Cognition\rightarrow Action\)}
+\end{statementbox}
 而：
-\begin{equation}
-\boxed{
-SecondOrder:
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SecondOrder:
 Cognition\rightarrow SelfRepresentation
-\rightarrow CognitiveRegulation.
-}
-\end{equation}
+\rightarrow CognitiveRegulation.\)}
+\end{statementbox}
 
 将二者结合：
 \begin{equation}
@@ -2056,17 +2045,16 @@ MinimalFunctionalSelfRegulationLoop.
 这一能力之所以重要，是因为它把我们此前关于工作记忆有限性、自我 $\Psi$、多尺度闭环以及认知控制的讨论第一次压缩进同一个可执行动力系统中。工作记忆有限意味着系统必须治理自己；SPC 提供治理所需的自状态；$\Psi$ 与 Goal 提供参考系；TCE 将自状态转化为控制量；认知 Plant 对控制做出反应；新的状态再次进入 SPC，由此形成真正闭合。
 
 从更一般的智能动力学角度，我们甚至可以把最小闭环写成：
-\begin{equation}
-\boxed{
-ObserveSelf
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ObserveSelf
 \rightarrow
 EvaluateState
 \rightarrow
 ModifyDynamics
 \rightarrow
-ObserveSelf'.
-}
-\end{equation}
+ObserveSelf'.\)}
+\end{statementbox}
 它与更一般的：
 \begin{equation}
 Prediction
@@ -2108,12 +2096,11 @@ Feedback.
 SPC、TCE 和认知动力学反馈缺一不可。
 
 第三，
-\begin{equation}
-\boxed{
-\textbf{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \textbf{
 真正持续的智能不仅必须知道世界发生了什么，还必须持续估计自己正在以何种状态理解世界，并据此改变自己继续理解世界的方式。
-}
-}
-\end{equation}
+}\)}
+\end{statementbox}
 
 从这里开始，工作记忆 $h(t)$ 已经不再只是一个被动承载认知内容的有限空间，而成为一个能够在自我观察和自我调节作用下持续改变运行形态的动力学系统。也正是在这一点上，AgentOS 从``具有记忆的持续推理系统''正式进入``具有认知自调节能力的持续智能体''阶段。

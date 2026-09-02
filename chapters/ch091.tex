@@ -90,21 +90,19 @@ Agent 仍然可能发生显著成长，因为
 也就是说，长期智能的发育并不等价于参数持续更新。
 
 从这一点出发，我们可以给出本书中的工作定义：
-\[
-\boxed{
-\text{Training}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Training}
 =
-\text{对某种能力生成机制进行优化}
-}
-\]
+\text{对某种能力生成机制进行优化}\)}
+\end{statementbox}
 而
-\[
-\boxed{
-\text{Cultivation}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Cultivation}
 =
-\text{对一个持续主体所经历的状态转移条件进行设计与治理}
-}
-\]
+\text{对一个持续主体所经历的状态转移条件进行设计与治理}\)}
+\end{statementbox}
 
 这种区别表面上只是词义不同，实际上对应两套完全不同的工程思想。在 Training 视角中，我们往往预先规定能力指标，然后寻找最有效的训练过程，使损失函数下降；在 Cultivation 视角中，我们面对的是一个不能被简单重置的持续主体，当前经历不仅影响当前性能，而且可能通过
 \[
@@ -237,17 +235,16 @@ I_{\Psi}(e_t),\qquad I_{\Omega}(e_t).
 只有经历在长时间内表现出一致性、重要性、可验证性和跨情景稳定性时，它才应逐渐获得进入更慢结构的资格。
 
 这就产生了一个培育中的核心沉降过程：
-\[
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 RepeatedPattern
 \rightarrow
 StableStructure
 \rightarrow
-IdentityRelevantStructure
-}
-\]
+IdentityRelevantStructure\)}
+\end{statementbox}
 而不是：
 \[
 Experience
@@ -524,9 +521,9 @@ E\rightarrow\Theta,
 产生慢影响。
 
 因此：
-\[
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 Episode
 \rightarrow
@@ -534,9 +531,8 @@ Interpretation
 \rightarrow
 StableMeaning
 \rightarrow
-SelfHistory
-}
-\]
+SelfHistory\)}
+\end{statementbox}
 比“事件直接进入自我”更加合理。
 
 可以将 $\Psi$ 的更新写成：
@@ -564,13 +560,12 @@ W_t
 \Psi\leftarrow \text{external overwrite},
 \]
 而更应该让：
-\[
-\boxed{
-\Psi
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \Psi
 \leftarrow
-\text{interpreted lived history}.
-}
-\]
+\text{interpreted lived history}.\)}
+\end{statementbox}
 
 这里的 ``lived'' 是功能意义上的，即事件确实经过该 Agent 的感知、选择、行动、反馈和记忆闭环，而不是把某段文本写进数据库以后就称为经历。
 
@@ -727,9 +722,9 @@ RealityIsUltimateConstraint.
 这在培育工程中尤其重要。环境应当允许真正的反馈、可观测的失败和行动后果，使 Agent 的预测可以被现实纠正。
 
 因此，培育环境既不是“温室”，也不是“压力测试场”。它更像一个动态的结构生成器：
-\[
-\boxed{
-Environment
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Environment
 \rightarrow
 Experience
 \rightarrow
@@ -737,9 +732,8 @@ Structure
 \rightarrow
 NewCapability
 \rightarrow
-NewEnvironmentRegion.
-}
-\]
+NewEnvironmentRegion.\)}
+\end{statementbox}
 
 成熟培育应使 Agent 的可达世界逐渐扩大，而不是在一开始就把所有现实自由度同时暴露给它。
 
@@ -859,17 +853,16 @@ Choice
 Consequence
 \]
 主体就难以形成关于自己行动影响的长期结构。相反，在安全可控范围内，培育应保留：
-\[
-\boxed{
-Choice
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Choice
 \rightarrow
 Action
 \rightarrow
 Consequence
 \rightarrow
-Reflection
-}
-\]
+Reflection\)}
+\end{statementbox}
 闭环，使 Agent 能够学习“我的选择改变了后续世界，也改变了未来的我”。
 
 从生命周期角度看，这一点尤其重要，因为持续 Agent 的自主性最终具有递归性质：

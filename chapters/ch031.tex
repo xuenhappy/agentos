@@ -3,13 +3,12 @@
 
 \begin{chapteroverviewbox}
 本章讨论 AgentOS 中一个决定 ``持续主体是否能够形成可治理内部状态'' 的关键机制：Self-Perception Compressor，简称 SPC。我们将从工作记忆有限容量这一已经建立的约束出发，说明一个持续运行的智能体为什么不能直接、完整、透明地访问自身全部内部状态，而必须把高度分布、异步、多时间尺度的内部动力学压缩为一个能够重新进入工作记忆 $h(t)$ 的有限自我状态表示。SPC 因而不是人格模块，不是意识模块，也不是简单日志汇总器，而是位于 ``系统真实内部状态'' 与 ``系统能够显式认知的自身状态'' 之间的状态估计、结构压缩与认识论接口。其核心任务可以概括为：
-\[
-\boxed{
-\text{Distributed Internal Dynamics}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Distributed Internal Dynamics}
 \;\longrightarrow\;
-\text{Compressed Self-Accessible State}
-}
-\]
+\text{Compressed Self-Accessible State}\)}
+\end{statementbox}
 本章将建立 SPC 的本体边界、数学对象、估计过程、递归压缩机制、置信度表示、认识论滞后、稳定性要求以及其与工作记忆 $h(t)$、情景记忆 $E$、结构记忆 $\Theta$ 和自我慢变量 $\Psi$ 的基本关系，并最终说明：所谓 ``智能体认识自己''，在工程意义上首先不是获得一个关于自身的绝对真相，而是在有限认知容量条件下持续形成关于自身状态的可更新、有置信度、可行动的后验估计。
 \end{chapteroverviewbox}
 
@@ -231,13 +230,12 @@ SPC 更关心的是决策相关信息损失。可以定义一个控制相关损�
 \mathcal C(\hat{s}_t),
 \]
 其中最后一项 $\mathcal C(\hat{s}_t)$ 惩罚自我状态表示自身过于复杂。于是 SPC 面临一个根本性的双重优化目标：
-\[
-\boxed{
-\text{保留足够多的控制相关结构}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{保留足够多的控制相关结构}
 \quad+\quad
-\text{保持自我表示足够小}
-}
-\]
+\text{保持自我表示足够小}\)}
+\end{statementbox}
 这正是它被称为 ``Self-Perception Compressor'' 而不仅仅是 ``Self Observer'' 的原因。
 
 \section{自我基准投影：系统如何判断 ``这对我意味着什么''}
@@ -354,17 +352,16 @@ Experience_{t:t+\Delta}
 \section{递归压缩：``我正在感知什么'' 如何重新进入工作记忆}
 
 SPC 最具有 AgentOS 特征的一点，是它并不是一次性的状态监控，而是一个可以重新进入 $h(t)$ 的递归结构。智能体不仅能够处理某个对象，还可以处理 ``自己正在处理这个对象'' 这一事实；不仅能够遭遇目标冲突，还能够意识到 ``当前多个目标正在竞争我的工作记忆''。因此 SPC 产生的自我状态具有重新进入认知总线的能力：
-\[
-\boxed{
-x_t
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle x_t
 \rightarrow
 SPC
 \rightarrow
 h_t^{\mathrm{self}}
 \rightarrow
-h_{t+1}.
-}
-\]
+h_{t+1}.\)}
+\end{statementbox}
 
 设普通工作记忆内容为
 \[
@@ -679,15 +676,14 @@ t
 \hat{s}_{t-\delta}
 \]
 进行强控制，而真实状态已经改变，则可能产生过度修正。虽然完整的控制稳定性分析将在专门章节展开，但这里已经可以看到：
-\[
-\boxed{
-ObserverDelay
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ObserverDelay
 +
 HighControlGain
 \rightarrow
-PotentialOscillation.
-}
-\]
+PotentialOscillation.\)}
+\end{statementbox}
 
 第三，自我感知的延迟解释了为什么 ``持续自省'' 不能消除主体不确定性。即使一个 Agent 把大量资源用于观察自己，在观察过程中系统状态仍然继续变化：
 \[
@@ -852,9 +848,9 @@ E\rightarrow\Theta
 更长期情况下，某些反复经历还可能影响 $\Psi$ 对自身能力、边界和稳定性的解释。
 
 因此完整闭环可以写成：
-\[
-\boxed{
-h,E,\Theta,\Psi
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle h,E,\Theta,\Psi
 \rightarrow
 SPC
 \rightarrow
@@ -864,9 +860,8 @@ E
 \rightarrow
 \Theta
 \rightarrow
-\Psi.
-}
-\]
+\Psi.\)}
+\end{statementbox}
 这形成了一个跨时间尺度的自我模型更新过程。
 
 但必须防止一个理论误区：SPC 不等于 $\Psi$。SPC 回答的是：
@@ -1196,9 +1191,9 @@ Priority(C_i^{self})>\theta_h.
 \]
 
 因此 SPC 的最小数据流可以总结为：
-\[
-\boxed{
-InternalSignals
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle InternalSignals
 \rightarrow
 TemporalEstimator
 \rightarrow
@@ -1206,9 +1201,8 @@ SelfStatePosterior
 \rightarrow
 SemanticCompression
 \rightarrow
-h^{self}.
-}
-\]
+h^{self}.\)}
+\end{statementbox}
 
 评价一个 SPC，也不能只测分类准确率。至少需要六类指标。
 
@@ -1353,9 +1347,9 @@ SPC 进一步揭示了一个更深的智能原理：一个系统开始具有较�
 并让后者重新参与未来认知。
 
 整个过程可以压缩为：
-\[
-\boxed{
-DistributedDynamics
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle DistributedDynamics
 \rightarrow
 Observation
 \rightarrow
@@ -1365,9 +1359,8 @@ Compression
 \rightarrow
 h^{self}
 \rightarrow
-FutureDynamics.
-}
-\]
+FutureDynamics.\)}
+\end{statementbox}
 
 因此，本章最终给出 SPC 的理论定位：
 

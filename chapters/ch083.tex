@@ -67,15 +67,14 @@ Lifecycle
 \]
 
 这里必须特别强调：把 AgentOS 称为 ``OS'' 并不意味着它应该重新实现 Linux 内核。相反，我们一直坚持
-\[
-\boxed{
-Hardware
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Hardware
 \rightarrow
 ComputerOS
 \rightarrow
-AgentOS
-}
-\]
+AgentOS\)}
+\end{statementbox}
 这一分层结构。Linux 负责计算现实的稳定抽象，例如进程、虚拟内存、设备、文件和网络；AgentOS 则建立在这些抽象之上，把它们重新组织成对长期智能体有意义的认知资源。因此，可以作如下功能区分：
 \[
 \boxed{
@@ -349,13 +348,12 @@ SafetyCompatibility
 因此，每个 Skill 的加入本质上也是权限和主体能力边界的扩张。
 
 由此，Skill Ecosystem 的基础设施意义可以明确表述为：它使文明中已经被某些 Agent 高成本学习完成的认知过程，能够被编译、封装、验证并迁移给其他 Agent。其结果不是简单的软件复用，而是
-\[
-\boxed{
-PastCognition
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PastCognition
 \rightarrow
-SharedExecutableCapability.
-}
-\]
+SharedExecutableCapability.\)}
+\end{statementbox}
 这使 AgentOS 的成长机制第一次突破单一主体的生命周期限制：个体经验可以沉降为技能，技能可以进入生态，生态又成为后来 Agent 的初始能力空间。由此，技能不再只是产品功能，而成为智能社会中的可积累基础资本。
 
 \section{Body Ecosystem：让同一个主体进入不同现实}
@@ -480,13 +478,12 @@ KernelInternalRepresentation.
 一旦这一结构成立，同一个持续主体就可能从 Computer Use 身体逐渐扩展到移动操作平台，再进入家庭机器人、车辆甚至人形身体，而不需要每一次重新建立新的 ``自我''。这正是 Body Ecosystem 的基础设施价值：它把现实世界中异构设备转化为 Agent 可继承、可学习、可比较的身体能力空间。
 
 因此，未来 AgentOS 的生态竞争不会只是 ``支持多少设备''，而会逐渐转变成 ``有多少身体能够以统一语义被长期智能主体安全接入''。在这一层面上，Body Driver 与传统 Device Driver 的区别是根本性的：Device Driver 解决硬件访问，而 Body Driver 解决的是
-\[
-\boxed{
-HardwareCapability
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle HardwareCapability
 \rightarrow
-AgencyCapability.
-}
-\]
+AgencyCapability.\)}
+\end{statementbox}
 
 \section{Agent Communication：从消息交换到认知结构协作}
 
@@ -571,13 +568,12 @@ Agent Communication 的基础设施意义由此超越聊天协议。它需要定
 Machine\leftrightarrow Machine
 \]
 的信息交换，而 Agent Communication 试图进一步解决
-\[
-\boxed{
-PersistentAgency
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PersistentAgency
 \leftrightarrow
-PersistentAgency
-}
-\]
+PersistentAgency\)}
+\end{statementbox}
 之间的协作。前者传输数据，后者则开始传输任务、能力和认知责任。这是 AgentOS 从个人系统进入社会基础设施所必需的一步。
 
 \section{Organization Runtime：从多 Agent 协作到可持续组织结构}
@@ -724,13 +720,12 @@ ActionableTransition.
 它们的底层实现可以完全不同，但都可以进入同一个 Goal—Plan—Action—Verify 闭环。于是数字世界和物理世界第一次可能在 AgentOS 层获得相对统一的 ``行动语义''。
 
 因此，未来软件生态的核心转变可以概括为：
-\[
-\boxed{
-ApplicationCentric
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ApplicationCentric
 \rightarrow
-AgentCentric.
-}
-\]
+AgentCentric.\)}
+\end{statementbox}
 传统 App 仍然存在，Linux 仍然存在，云服务仍然存在，但它们逐渐成为持续主体调用的功能结构，而不再始终是用户认知的最高组织单位。
 
 这里也能解释为什么 AgentOS 有可能 ``吞并'' Memory、Skill、MCP、Tool 和 Harness 等今天分散的生态。所谓吞并不是技术垄断，而是这些组件逐渐被统一到
@@ -822,15 +817,14 @@ IntelligenceResourceRuntime.
 其核心任务是在一个持续主体的生命周期内，维护认知结构、显式认知带宽、记忆稳定度、技能、身体能力、工具、权限和外部认知资源之间的动态配置。
 
 可以把整个系统分成三层：
-\[
-\boxed{
-Hardware
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Hardware
 \rightarrow
 ComputerResourceRuntime
 \rightarrow
-IntelligenceResourceRuntime.
-}
-\]
+IntelligenceResourceRuntime.\)}
+\end{statementbox}
 底层硬件提供计算、存储、通信和执行能力；Computer OS 把它们抽象成 CPU、Memory、Process、File、Socket 和 Device；AgentOS 再将这些资源重新组合成
 \[
 h,E,\Theta,\Psi,\Omega,
@@ -912,9 +906,9 @@ WhereAndHowShouldCognitiveStructureLive?
 什么应该现在思考；什么应该记住；什么应该形成规则；什么应该变成技能；什么应该写到外部；什么应该交给身体；什么应该委派给他者；什么必须重新进入高层认知；什么又必须受到更慢的身份、安全与治理结构约束。传统计算机操作系统不会回答这些问题，而持续智能系统最终必须回答。
 
 由此，本章可以给出 AgentOS 从产品到基础设施演化的最终结构：
-\[
-\boxed{
-AgentProduct
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentProduct
 \rightarrow
 PersistentRuntime
 \rightarrow
@@ -924,9 +918,8 @@ AgentNetwork
 \rightarrow
 OrganizationRuntime
 \rightarrow
-IntelligenceInfrastructure.
-}
-\]
+IntelligenceInfrastructure.\)}
+\end{statementbox}
 这不是一个必然的商业时间表，而是一条由理论依赖决定的系统演化链。只有在持续主体、记忆、技能、身体和安全边界已经建立后，生态才具有稳定语义；只有在稳定语义存在以后，跨 Agent 协作和组织结构才不会退化成临时工作流；只有这些能力都能在开放标准上运行，AgentOS 才真正具有基础设施属性。
 
 最后，我们可以把本章的结论压缩成三个层次。第一，传统 Computer OS 管理的是计算世界中的稀缺资源：

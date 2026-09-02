@@ -56,9 +56,9 @@ R_h
 
 因此，AgentOS 的核心问题并不是如何无限提高 $\mathcal C_{\max}$，而是如何主动改变进入 $\mathcal G_h$ 的结构，使系统能够在有限容量中持续完成开放世界任务。我们将在本章看到，截流、压缩、时序展开、迁移和重构分别作用于五个不同的位置：
 
-\[
-\boxed{
-\text{进入什么}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{进入什么}
 \rightarrow
 \text{如何表示}
 \rightarrow
@@ -66,9 +66,8 @@ R_h
 \rightarrow
 \text{在哪里处理}
 \rightarrow
-\text{以什么问题结构处理}
-}
-\]
+\text{以什么问题结构处理}\)}
+\end{statementbox}
 
 它们共同形成 AgentOS 最基础的认知治理算子集合
 
@@ -534,13 +533,12 @@ J_K
 
 它解决的核心问题可以概括为：
 
-\[
-\boxed{
-SimultaneousComplexity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SimultaneousComplexity
 \rightarrow
-TemporalDepth.
-}
-\]
+TemporalDepth.\)}
+\end{statementbox}
 
 考虑一个认知任务图
 
@@ -613,15 +611,14 @@ D(\mathcal G_T).
 
 这就是一种典型的“空间复杂度向时间复杂度迁移”，但按照本书后期的本体语言，更准确地说，它是：
 
-\[
-\boxed{
-AgentCSOActivationStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentCSOActivationStructure
 :
 Parallel
 \rightarrow
-Sequential.
-}
-\]
+Sequential.\)}
+\end{statementbox}
 
 也就是说，我们改变的是认知结构的同时激活关系，而不是让某种复杂度物质从空间流向时间。
 
@@ -953,15 +950,14 @@ LostInformation,
 
 而应该是：
 
-\[
-\boxed{
-InternalStructure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle InternalStructure
 \rightarrow
 ExternalizedStructure
 +
-InternalIndex.
-}
-\]
+InternalIndex.\)}
+\end{statementbox}
 
 可以将迁移代价定义为：
 
@@ -1353,9 +1349,9 @@ StableStructureShouldRemainStableUntilPersistentEvidenceRequiresChange.
 
 因此形成一条由浅入深的治理阶梯：
 
-\[
-\boxed{
-Admission
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Admission
 \rightarrow
 Compression
 \rightarrow
@@ -1363,9 +1359,8 @@ Temporalization
 \rightarrow
 Migration
 \rightarrow
-Reorganization.
-}
-\]
+Reorganization.\)}
+\end{statementbox}
 
 这不是一个必须机械执行的固定流水线，而是一种认知治理优先级。系统原则上应该首先采用代价更低、可逆性更强、对长期结构扰动更小的手段，只有在低层治理不足以保持系统可运行时，才逐步升级。
 
@@ -1387,23 +1382,22 @@ MinimumNecessaryCognitiveReorganizationPrinciple.
 
 因此，本章可以用下面的统一表达式收束：
 
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 \mathcal A &: \text{改变进入认知的结构集合},\\
 \mathcal K &: \text{改变结构的表示自由度},\\
 \mathcal T &: \text{改变结构的同时激活关系},\\
 \mathcal M &: \text{改变结构的功能与承载位置},\\
 \mathcal R &: \text{改变产生认知负载的问题结构本身}.
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 
 从 CSO 的角度看，它们实际上对应：
 
-\[
-\boxed{
-Selection
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Selection
 \rightarrow
 Representation
 \rightarrow
@@ -1411,9 +1405,8 @@ ActivationSchedule
 \rightarrow
 Carrier
 \rightarrow
-ProblemStructure.
-}
-\]
+ProblemStructure.\)}
+\end{statementbox}
 
 而从 AgentOS 的角度看，这五种动作共同服务于同一个核心目标：
 

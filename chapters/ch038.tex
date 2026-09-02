@@ -16,13 +16,12 @@ CCM 正是对这一问题的回答。它不是新的推理主体，也不是第�
 需要特别说明的是，本章继续使用 ``复杂度'' 一词，是因为 CCM 面向的是工程意义上的运行负载与结构压力。
 在本书已经建立的 CSO 本体论中，复杂度并不是一种独立流动的实体。真正被管理的是 Agent-CSO 及其关系、
 耦合、激活范围、时间尺度和承载方式。因此，本章可以被更严格地理解为：
-\[
-\boxed{
-\mathrm{CCM}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathrm{CCM}
 =
-\text{有限工作记忆约束下的 Agent-CSO 运行态结构治理}
-}
-\]
+\text{有限工作记忆约束下的 Agent-CSO 运行态结构治理}\)}
+\end{statementbox}
 复杂度只是描述这种结构状态是否超出当前认知承载能力的一组可测工程量。
 
 本章的理论目标不是让 Agent ``永远保持简单''，而是建立一个更重要的原则：
@@ -230,11 +229,10 @@ $C_X$ 表示与当前结构之间的冲突，$C_N$ 则表示新颖性导致的�
 例如，一个与当前任务高度相关但完全陌生的输入，即使文字长度很短，也可能具有很高的 $C_N$ 和 $C_E$；
 相反，一大段已经高度熟悉、能够直接映射到现有 $\Theta$ 模式中的信息，其原始数据规模很大，
 但有效认知成本可能很低。这说明：
-\[
-\boxed{
-\text{数据量}\neq\text{认知复杂度}.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{数据量}\neq\text{认知复杂度}.\)}
+\end{statementbox}
 
 更进一步地，输入复杂度必须是条件性的：
 \[
@@ -357,13 +355,12 @@ F(h_t,x),
 预测如果当前结构被完全激活，未来若干认知步可能出现什么。
 
 这里的关键是区分：
-\[
-\boxed{
-\text{认知模拟}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{认知模拟}
 \neq
-\text{认知执行}.
-}
-\]
+\text{认知执行}.\)}
+\end{statementbox}
 完整执行可能需要大量工作记忆空间，而预模拟只需要估计宏观结构量，例如：
 \[
 \widehat N_{\mathrm{branch}},
@@ -945,13 +942,12 @@ C(\mathcal G_j)<C_{\max}.
 \]
 
 这实际上是把空间上的同时复杂度转换成时间上的序列复杂度：
-\[
-\boxed{
-SpatialComplexity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SpatialComplexity
 \longrightarrow
-TemporalComplexity.
-}
-\]
+TemporalComplexity.\)}
+\end{statementbox}
 
 这种转换构成持续智能能够解决远超瞬时容量问题的关键机制。一个有限工作记忆系统之所以能够处理大型工程，
 不是因为它在某一时刻 ``装下了整个工程''，而是因为它能够保持宏观索引，然后在不同时间激活不同局部。
@@ -1152,11 +1148,10 @@ c_i+c_j
 这样既减少工作记忆占用，又避免把多个独立来源误认为只有一个来源。
 
 这一点极为重要，因为：
-\[
-\boxed{
-\text{表示去重}\neq\text{证据去重}.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{表示去重}\neq\text{证据去重}.\)}
+\end{statementbox}
 如果两个不同传感器独立报告相同事实，它们的语义内容可以合并，但证据独立性仍应保留。
 否则系统可能错误丢失置信度信息。
 
@@ -1917,12 +1912,11 @@ MostAgentCSOs\notin h(t).
 \]
 
 从这一角度看，成熟智能的标志甚至不是工作记忆中 ``内容丰富''，而是：
-\[
-\boxed{
-h(t)
-\text{足够稀疏，却恰好包含当前决策所需结构。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle h(t)
+\text{足够稀疏，却恰好包含当前决策所需结构。}\)}
+\end{statementbox}
 
 CCM 的微卸载功能正是保证这种稀疏性的最后一道运行时机制。
 
@@ -2029,9 +2023,9 @@ I_{\min}.
 这里第三个约束非常关键：任何 CCM 操作都不能为了降低复杂度而删除当前安全、目标或关键现实判断所依赖的结构。
 
 进一步地，CCM 应与 SPC 和 TCE 构成分工明确的闭环：
-\[
-\boxed{
-SPC
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SPC
 \rightarrow
 TCE
 \rightarrow
@@ -2039,9 +2033,8 @@ CCM
 \rightarrow
 h
 \rightarrow
-SPC.
-}
-\]
+SPC.\)}
+\end{statementbox}
 
 其中 SPC 提供状态估计：
 \[
@@ -2076,11 +2069,10 @@ u_C
 \]
 
 这里隐藏着一个非常重要的理论区别：
-\[
-\boxed{
-TCE\text{主要改变认知动力学参数，CCM主要改变当前认知结构。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle TCE\text{主要改变认知动力学参数，CCM主要改变当前认知结构。}\)}
+\end{statementbox}
 
 例如 TCE 可以降低探索温度，却不直接决定哪条支线被折叠；
 CCM 可以暂停某支线，却不决定系统总体应该更探索还是更收敛。
@@ -2273,9 +2265,9 @@ C_{\mathrm{run}}\downarrow.
 
 最后，我们可以用一个完整关系概括本章：
 
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 &\text{有限工作记忆}
 \\
 &\Downarrow
@@ -2302,9 +2294,8 @@ C_{\mathrm{run}}\downarrow.
 &\Downarrow
 \\
 &\text{有限瞬时认知支持无限期持续任务}
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 
 因此，本章最终给出 CCM 的正式定义：
 

@@ -238,15 +238,14 @@ s_i>\theta_{\mathrm{critical}}
 这里的 Interrupt 并不意味着最终必须由 $h$ 完成安全控制；真正实时的安全闭环可以留在更低层。它所表达的是：某些事件具有改变当前认知和任务优先级的权力。
 
 所以，一个成熟 Boundary 的准入过程更接近：
-\[
-\boxed{
-\text{Candidate Structure}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Candidate Structure}
 \rightarrow
 \text{Contextual Valuation}
 \rightarrow
-\text{Admission Action}
-}
-\]
+\text{Admission Action}\)}
+\end{statementbox}
 而不是：
 \[
 \text{Input}
@@ -289,12 +288,11 @@ R(C)=\mathrm{constant},
 其中 $W_t$ 表示当前外部世界和任务环境。
 
 例如，一辆停在路边的车辆对于正在阅读文档的数字 Agent 完全无关；对于正在驾驶汽车的具身 Agent 却可能是高相关结构；对于正在研究汽车设计的 Agent，又可能由于完全不同的语义关系而具有高相关性。因此，所谓“相关”实际意味着：
-\[
-\boxed{
-C
-\ \text{与当前主体的某个高权重闭环产生了可行动关系。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle C
+\ \text{与当前主体的某个高权重闭环产生了可行动关系。}\)}
+\end{statementbox}
 
 进一步，我们可以把相关性拆成多个不同来源：
 \[
@@ -337,13 +335,12 @@ P_{\mathrm{open}}(\mathrm{Admit}\mid C),
 其中 $\epsilon_t$ 是开放探索比例。它不应该无限大，否则 Boundary 失去过滤作用；也不能严格为零，否则系统会陷入由既有目标和既有模型构成的认知封闭。
 
 这实际上提出了 Boundary 的第二个重要张力：
-\[
-\boxed{
-Selectivity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Selectivity
 \leftrightarrow
-Openness.
-}
-\]
+Openness.\)}
+\end{statementbox}
 选择性过弱，系统被世界淹没；选择性过强，系统被自己的既有结构封闭。
 
 因此成熟 Agent 的认知边界不能只是“过滤无关信息”，而需要不断解决：
@@ -439,13 +436,12 @@ Novel\Rightarrow Admit,\qquad
 Familiar\Rightarrow Ignore,
 \]
 而应更接近：
-\[
-\boxed{
-Novelty
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Novelty
 \rightarrow
-\text{Model Adequacy Question}
-}
-\]
+\text{Model Adequacy Question}\)}
+\end{statementbox}
 即新颖性主要告诉系统：\textbf{当前生成结构可能不够。}
 
 这一点与后续学习机制具有自然联系，但 Boundary 本章无需预先展开全部记忆更新过程。我们只需要指出：当一个高相关、高可信、高持续性的新颖 CSO 被提升进入当前认知，它会获得被进一步解释、验证和可能写入长期结构的资格。Boundary 决定的是这个过程是否值得启动。
@@ -658,13 +654,12 @@ t_i^{\mathrm{deadline}},
 第二种是\textbf{无限延迟偏置}：为了保持当前稳定，所有困难、冲突或高成本问题都持续被推迟，最终形成大量未闭合 CSO，反过来增加长期负担。
 
 因此 Boundary 需要维持：
-\[
-\boxed{
-ImmediateResponsiveness
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ImmediateResponsiveness
 \leftrightarrow
-LongHorizonClosure.
-}
-\]
+LongHorizonClosure.\)}
+\end{statementbox}
 
 可以定义一个延迟可接受条件：
 \[
@@ -681,15 +676,14 @@ P_{\mathrm{recover}}(C_i)>\theta_P,\\
 这里 $P_{\mathrm{recover}}$ 表示未来重新找到、恢复和处理该结构的可靠性。没有可靠恢复机制，Defer 就等价于丢失。
 
 从更深的认知动力学角度说，“延迟”是智能超越有限瞬时容量的重要机制。一个 Agent 无法同时思考整个世界，但可以依靠时间把一个大问题拆成连续轨迹：
-\[
-\boxed{
-FiniteInstantaneousCapacity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FiniteInstantaneousCapacity
 +
 PersistentTime
 \Rightarrow
-PotentiallyLargeProblemSolving.
-}
-\]
+PotentiallyLargeProblemSolving.\)}
+\end{statementbox}
 
 因此，Boundary 对 Immediate / Deferred 的管理不仅是一种任务调度技巧，而是有限认知系统获得长期复杂问题求解能力的基础机制之一。
 
@@ -818,21 +812,19 @@ E
 这样的多尺度沉降路径。这样，短时刺激不会直接冲击慢速身份，但持续、高可信、反复出现的现实残差又最终能够改变自我。
 
 从这一角度看，Boundary 实际参与实现了一个极其重要的多尺度保护原则：
-\[
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
-SlowIdentity,
-}
-\]
+SlowIdentity,\)}
+\end{statementbox}
 同时又必须保证：
-\[
-\boxed{
-PersistentRealityResidual
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PersistentRealityResidual
 \rightarrow
-SlowIdentityUpdate.
-}
-\]
+SlowIdentityUpdate.\)}
+\end{statementbox}
 
 因此 Self 并不是被藏在一堵固定墙里面，而是在一个\textbf{可调渗透、带时间尺度隔离的认知膜}中维持连续性。
 
@@ -935,21 +927,19 @@ o_{\mathrm{social}}
 这一点在长期 Agent 中尤其关键，因为真正危险的不是“有边界”或“没边界”，而是\textbf{不同通道的开放程度和权限等级不匹配}。例如，如果外部社会输入可以极低成本直接改变慢速 Self，而现实证据却受到强过滤，那么系统就容易发生身份劫持；如果行动通道极度开放，而内部预测仍高度不确定，则会放大错误的现实后果。
 
 所以 Boundary 必须满足一种方向性稳定条件：
-\[
-\boxed{
-PerceptualOpenness
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PerceptualOpenness
 \not\Rightarrow
-UnrestrictedAction,
-}
-\]
+UnrestrictedAction,\)}
+\end{statementbox}
 以及：
-\[
-\boxed{
-ExternalInfluence
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ExternalInfluence
 \not\Rightarrow
-DirectSlow-StateWrite.
-}
-\]
+DirectSlow-StateWrite.\)}
+\end{statementbox}
 
 它本质上是在设计：\textbf{世界能够以多大的速度改变 Agent，Agent 又能够以多大的速度改变世界。}
 

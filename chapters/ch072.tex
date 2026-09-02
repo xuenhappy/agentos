@@ -214,15 +214,14 @@ $h$ 负责此刻真正需要显式全局处理的 Agent-CSO；$E$ 保存经历�
 \theta_{t+1}=\theta_t+\Delta\theta,
 \]
 而必须更一般地表达为：
-\[
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 StructuralConsolidation
 \rightarrow
-FutureGeneration.
-}
-\]
+FutureGeneration.\)}
+\end{statementbox}
 
 在三相记忆之上，$\Psi$ 与 $\Omega$ 解决的是更慢的连续性。若只有 $h/E/\Theta$，系统可以学习很多事情，却仍然难以回答 ``为什么这些经历属于同一个我''。因此：
 \[
@@ -307,28 +306,26 @@ SPC.
 但第二主线的研究不能陷入 ``模块越来越多'' 的工程误区。这里每增加一个组件，都必须能够由一个不可被已有结构解决的问题推导出来。$E$ 来自时间轨迹缺失，$\Theta$ 来自经验压缩与未来生成需求，$\Psi$ 来自身份连续性，$\Omega$ 来自生命周期方向性，SPC 来自自状态不可直接透明获得，TCE 来自认知动力学需要主动调节，AHC 来自状态估计与控制之间缺乏连续内稳态变量，CCM 来自有限工作容量，Boundary 与 Offloading 则来自 ``什么应该进入内部、什么应该由外部结构承载'' 的边界问题。只有保持这种需求驱动的推导链，AgentOS 才不会退化为组件堆叠。
 
 因此第二主线最终的研究目标可以概括成：
-\[
-\boxed{
-BaseModel
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle BaseModel
 \rightarrow
 PersistentCognitiveProcess
 \rightarrow
-LifecycleAgent.
-}
-\]
+LifecycleAgent.\)}
+\end{statementbox}
 它追求的不是一次任务中的更长 Chain-of-Thought，而是让一个主体能够在大量任务之间保持经历连续、认知资源有限、自我结构稳定、能力持续沉降，并允许未来的自己真正受到过去经历的因果影响。从这个意义上说，Agent Kernel 才是 AgentOS 中 ``生命史'' 得以存在的地方。
 
 \section{第三主线：Continuous--Discrete Control——建立智能运行的动力学与治理理论}
 \label{sec:roadmap-continuous-discrete-control}
 
 Body Runtime 与 Agent Kernel 如果只是分别开发，仍然不足以形成 AgentOS。两者之间还有一个更深层的问题：现实中的智能活动既不是纯粹连续动力系统，也不是传统软件意义上的离散状态机。注意力、内稳态、置信度、工作负载、预测残差、身份权重等变量具有连续变化性质，而 Goal 创建、任务切换、Skill 编译、权限升级、安全中断、Checkpoint 回滚和拓扑重组又是典型离散事件。因此第三条核心主线必须研究：
-\[
-\boxed{
-ContinuousDynamics
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ContinuousDynamics
 \leftrightarrow
-DiscreteGovernance.
-}
-\]
+DiscreteGovernance.\)}
+\end{statementbox}
 
 我们可以把 AgentOS 的连续状态统一写成
 \[
@@ -386,11 +383,10 @@ R_k(x^-).
 \tau_\Omega .
 \]
 这不是简单地列出若干更新频率，而是要求不同尺度形成正确的控制职责分配。正常扰动应被快速局部循环吸收；只有长期不可解释的残差才应上升到更慢、更全局的结构。因此：
-\[
-\boxed{
-FastNoise\nrightarrow SlowGlobalStructure
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise\nrightarrow SlowGlobalStructure\)}
+\end{statementbox}
 必须成为设计约束。如果一次传感器噪声就能改写 $\Psi$，身份会失稳；如果每次微小动作误差都进入 $h$，工作记忆会长期处于湍流；反过来，如果真正持续的异常永远不能向上升级，系统又会陷入局部错误。
 
 这要求定义跨尺度升级函数：
@@ -504,15 +500,14 @@ ControlOfNestedAdaptiveControlLoops.
 \label{sec:roadmap-system-software}
 
 前三条主线回答的是 ``智能应该怎样运行''，但它们并不会自动产生一个可靠软件系统。认知过程最终仍然需要 CPU、GPU、NPU、内存、磁盘、网络、设备、中断、权限和持久化机制。AgentOS 若试图绕开这些已有计算机系统基础设施，就会重复实现几十年操作系统工程；反过来，如果只是把 AgentOS 当成普通 Linux 进程，又无法表达持续主体、认知调度、生命周期记忆和身体控制这些新的系统语义。因此第一个 ``+1'' 的正确定位是：
-\[
-\boxed{
-Hardware
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Hardware
 \rightarrow
 ComputerOS
 \rightarrow
-AgentOS.
-}
-\]
+AgentOS.\)}
+\end{statementbox}
 
 Computer OS 负责：
 \begin{statementbox}
@@ -725,15 +720,14 @@ E
 BodySkill.
 \]
 如果 BodySkill 最终仍然必须通过大型推理模型逐步执行，那么 ``技能沉降'' 只完成了软件语义层的一半。更彻底的成熟形式可能是：
-\[
-\boxed{
-CognitiveCompilation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CognitiveCompilation
 \rightarrow
 PolicyCompilation
 \rightarrow
-HardwareEfficientExecution.
-}
-\]
+HardwareEfficientExecution.\)}
+\end{statementbox}
 因此专用硬件成为长期智能中 ``过去认知劳动变成未来结构资本'' 的最后一级承载。
 
 当然，这并不意味着 AgentOS 的早期研发必须等待专用芯片。$3+1+1$ 的关键就在于区分\textbf{理论目标}和\textbf{阶段实现}。早期 BPCC 完全可以运行在 CPU/GPU/MCU 上；SGC、FCS 和 KRA 也可以首先在软件模拟中验证。只有当系统已经能够测量真实负载，并明确：
@@ -743,13 +737,12 @@ HardwareEfficientExecution.
 等需求之后，硬件定制才有工程意义。因此第二个 ``+1'' 应在研究组织上尽早存在，在产品实现上则后置到算法和 ABI 足够稳定以后。
 
 从长期角度看，硬件主线的意义就在于避免一种常见错误：用越来越大的单一推理算力去模拟所有智能过程。如果智能真正具有频谱结构，那么成熟系统更可能是：
-\[
-\boxed{
-HeterogeneousCompute
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle HeterogeneousCompute
 \leftrightarrow
-HeterogeneousCognitiveTimescales.
-}
-\]
+HeterogeneousCognitiveTimescales.\)}
+\end{statementbox}
 也就是说，AgentOS 的最终计算机不是简单 ``运行 AI 的计算机''，而是计算结构本身开始按照智能动力学的多尺度结构进行重新组织。
 
 \section{三条软件理论线为什么必须并行推进}
@@ -1011,9 +1004,9 @@ Hardware &: \quad
 \]
 
 五者最终汇合为：
-\[
-\boxed{
-World
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle World
 \rightarrow
 BodyRuntime
 \rightarrow
@@ -1021,9 +1014,8 @@ AgentKernel
 \rightarrow
 Action
 \rightarrow
-World
-}
-\]
+World\)}
+\end{statementbox}
 同时受到：
 \begin{statementbox}
 ControlTheory
@@ -1038,9 +1030,9 @@ ComputerOS+Hardware
 
 因此，本章最终给出的不是简单的团队划分，而是一条从理论走向人工智能生命体工程的总体方法论：
 
-\[
-\boxed{
-\begin{array}{c}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{array}{c}
 \text{认知理论解决“为什么能够成为主体”}\\
 \Updownarrow\\
 \text{身体理论解决“主体如何进入现实”}\\
@@ -1050,9 +1042,8 @@ ComputerOS+Hardware
 \text{系统软件解决“这种主体如何持续存在”}\\
 \Updownarrow\\
 \text{硬件解决“这种动力学如何在物理时间中真正发生”}
-\end{array}
-}
-\]
+\end{array}\)}
+\end{statementbox}
 
 从这个角度看，$3+1+1$ 不是对 AgentOS 已有组件的重新分类，而是对整个研究计划进行一次更高尺度的拓扑组织。它把本书此前建立的认知结构、记忆、自我、控制、身体和现实边界重新放回工程世界，使我们能够从一个重要但仍然抽象的理论问题：
 

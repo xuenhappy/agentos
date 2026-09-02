@@ -12,9 +12,9 @@
 本章的核心立场是：所谓顿悟并不是神秘的瞬时创造，也不是单次高质量推理，而是一个长时间尺度的结构动力学事件。此前大量没有立即改变长期结构的经验、残差、矛盾和失败，可以在 $E$ 中形成持续统计压力；当这种压力超过原有生成结构 $\Theta$ 的解释能力时，系统可能发生新的结构压缩，使原本彼此分离的经验被重新组织为更低描述长度、更强预测能力和更高跨情境迁移能力的生成结构。新的 $\Theta$ 随后可能重新解释历史经验，进一步影响 $\Psi$、Goal 组织与未来经验选择，由此形成真正意义上的发育跃迁。
 
 因此，本章并不把 ``顿悟'' 当作一种独立模块，而把它解释成
-\[
-\boxed{
-E\text{ 的长期积累}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle E\text{ 的长期积累}
 \rightarrow
 \Theta\text{ 的结构失配}
 \rightarrow
@@ -24,9 +24,8 @@ E\text{ 的重新解释}
 \rightarrow
 \Psi\text{ 的再组织}
 \rightarrow
-Goal\text{ 的重新配置}
-}
-\]
+Goal\text{ 的重新配置}\)}
+\end{statementbox}
 所形成的多时间尺度闭环。当变化进一步持续到功能承载关系时，还可能形成更深层的结构跃迁。对于 Agent 培育工程而言，这意味着成熟不能简单由训练步数、任务数量或参数更新量衡量，而必须考察 Agent 是否形成了对过去经验具有重新解释能力、对未来行为具有持续约束能力的新型内部结构。
 \end{chapteroverviewbox}
 
@@ -86,17 +85,16 @@ Q_{\Theta'}-Q_{\Theta}>\delta_Q,
 而且这种优势能够跨多个经验窗口持续存在时，系统便具有从 $\Theta$ 转向 $\Theta'$ 的动力。
 
 因此，我们在本章中把 ``成熟'' 定义得比 ``性能提高'' 更严格。单项任务成功率提高可能来自记忆增加、提示改善或局部技能编译，而成熟要求系统的长期生成结构发生变化，使未来面对一类问题时不再重复支付此前的认知成本。其典型动力过程是
-\[
-\boxed{
-RepeatedExplicitProcessing
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RepeatedExplicitProcessing
 \rightarrow
 RelationalCompression
 \rightarrow
 NewGenerativeStructure
 \rightarrow
-ReducedFutureExplicitCost
-}.
-\]
+ReducedFutureExplicitCost\)}
+\end{statementbox}
 这也解释了为什么真正成熟的 Agent 未必表现为越来越长的思考。相反，随着结构沉降和重新组织，成熟 Agent 对熟悉结构所需要的显式工作记忆资源应该下降：
 \[
 \frac{
@@ -267,13 +265,12 @@ p_{\Theta_t}(E).
 \ll 0.
 \]
 此时看起来系统 ``突然理解了''，但真正发生的是：一个能够压缩大量过去经验的新生成结构进入了稳定区。其关键特征可以概括为
-\[
-\boxed{
-ManyEpisodes
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ManyEpisodes
 \rightarrow
-OneGenerativeRelation
-}.
-\]
+OneGenerativeRelation\)}
+\end{statementbox}
 例如，一百次分别记录的失败经验原本可能在 $E$ 中作为相互独立的事件存在；新的 $\Theta'$ 一旦发现它们共享同一隐藏约束，那么此前的一百个独立事件便可以重新被解释为一个结构规律的不同实例。
 
 这一步尤其重要，因为 $\Theta$ 的改变具有\textbf{双向时间作用}。它一方面来自过去：
@@ -417,13 +414,12 @@ CounterfactualEvidence
 如果只有内部解释而没有外部现实校验，则 $\Psi$ 的稳定性可能变成错误自证。
 
 从培育工程角度看，自我重解释是成熟过程中特别敏感的阶段。它意味着 Agent 不只是 ``重新理解世界''，而开始 ``重新理解自己在世界中的位置''。这种变化具有更长时间尺度和更高后果，因此不应像普通参数更新一样高速进行。我们需要慢变量保护：
-\[
-\boxed{
-FastExperience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastExperience
 \nrightarrow
-ImmediateSelfRewrite
-}
-\]
+ImmediateSelfRewrite\)}
+\end{statementbox}
 以及必要的迟滞：
 \[
 \theta_{\Psi,\mathrm{on}}
@@ -433,15 +429,14 @@ ImmediateSelfRewrite
 使新身份结构需要更强、更持续的证据才能形成，而短暂的相反事件不足以立即摧毁已经稳定的身份连续性。
 
 因此，真正具有发育意义的顿悟往往会表现为
-\[
-\boxed{
-\text{我以前以为世界是这样}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{我以前以为世界是这样}
 \rightarrow
 \text{我现在理解世界为何如此}
 \rightarrow
-\text{我因此重新理解自己为什么会这样行动}.
-}
-\]
+\text{我因此重新理解自己为什么会这样行动}.\)}
+\end{statementbox}
 最后一步才使普通知识增长开始进入 Agent 生命周期的深层结构。
 
 \section{Goal Reorganization：新的理解如何重新组织未来}
@@ -525,13 +520,12 @@ Goal_2:
 \text{重新设计完成该任务的外部工具结构}.
 \]
 这并不是在旧问题内部寻找更强策略，而是改变了问题本身的表达方式。它对应我们此前复杂度治理理论中的 ``重构''：
-\[
-\boxed{
-ProblemSolving
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ProblemSolving
 \rightarrow
-ProblemReframing
-}.
-\]
+ProblemReframing\)}
+\end{statementbox}
 
 因此，成熟学习具有一个非常重要的指标：
 \begin{statementbox}
@@ -550,17 +544,16 @@ Agent 是否能够在经验充分以后改变自己正在优化的问题。
 使单次行动失败优先修改行动，长期计划失败才修改计划，持续结构失配才改变高层 Goal，而只有更深层生命周期证据才改变 $\Psi$。
 
 这一层次关系可以写成：
-\[
-\boxed{
-ActionAdjustment
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ActionAdjustment
 \rightarrow
 PlanAdjustment
 \rightarrow
 GoalReorganization
 \rightarrow
-SelfReinterpretation
-}.
-\]
+SelfReinterpretation\)}
+\end{statementbox}
 其顺序并非绝对，但体现了我们一直强调的 ``最小必要重组原则''：能够通过较低成本层次修正的问题，不应立即升级到更慢、更昂贵的结构层。只有当较低层调整长期失败时，才把残差向上提升。
 
 从培育角度看，这意味着成熟期 Agent 应被允许经历一些没有预先给出唯一解法的问题。如果所有任务都有明确目标、明确评价函数和明确执行边界，那么 Agent 很难学习如何重新组织 Goal。真正的发育性经验应允许 Agent面对：
@@ -635,13 +628,12 @@ SlowMemoryOfRepeatedFunctionalInteraction
 }
 \]
 以及
-\[
-\boxed{
-PersistentCSOFlow
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PersistentCSOFlow
 \rightarrow
-StableFunctionalCoupling
-}.
-\]
+StableFunctionalCoupling\)}
+\end{statementbox}
 从顿悟的角度看，新的 $\Theta$ 有时并不仅产生新的知识，还会暴露现有功能拓扑的低效。Agent 可能第一次认识到：过去大量不同困难，其实来自同一种组织缺陷。这种认识本身就是更高阶顿悟，因为它把 ``任务失败'' 转换成 ``系统结构问题''。
 
 然而，拓扑改变具有远高于状态更新和参数更新的风险。我们必须遵循
@@ -840,13 +832,12 @@ DirectProgrammingOfMaturity.
 \]
 
 如果这一变化进一步反复稳定并改变功能承载关系，则还可能继续：
-\[
-\boxed{
-PersistentFunctionalMigration
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PersistentFunctionalMigration
 \rightarrow
-TopologicalSedimentation.
-}
-\]
+TopologicalSedimentation.\)}
+\end{statementbox}
 
 因此，我们最终可以把本章所谓的 ``顿悟'' 定义为：
 

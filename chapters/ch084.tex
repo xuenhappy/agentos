@@ -60,13 +60,12 @@ G(t),
 }
 \]
 这意味着传统意义上的 ``模型是否收敛'' 已经不足以作为系统正确性的主要判断条件。某个 Agent 完全可能具有性能良好的基础模型，却因为 SPC 对自身状态估计持续滞后而形成错误调节；也可能基础模型能力没有下降，但 E 的写入分布逐渐发生偏置，使得 $\Theta$ 长期从一组失真的经验样本中学习；还可能模型推理能力持续增强，而 $\Psi$ 与 $\Omega$ 在高频经历冲击下发生过快漂移，使得同一个持续主体在不同时间段之间失去足够的身份连续性。换言之，
-\[
-\boxed{
-ModelCorrectness
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ModelCorrectness
 \not\Rightarrow
-AgentLifecycleCorrectness.
-}
-\]
+AgentLifecycleCorrectness.\)}
+\end{statementbox}
 
 更进一步，AgentOS 所面对的系统并不是一次输入--输出之后立即结束的计算，而具有真正的历史依赖。假设智能体在时刻 $t$ 做出行动 $u_t$，该行动首先改变现实状态 $w_{t+1}$，现实再通过观测形成新的 Agent-CSO，这些结构进入 $h$，部分写入 $E$，长期重复后又可能改变 $\Theta$；$\Theta$ 进一步改变未来的预测和解释方式，其中一些长期经验最终又可能重新塑造 $\Psi$，甚至逐渐影响 $\Omega$。于是一次局部行为具有如下跨尺度传播链：
 \[
@@ -283,11 +282,10 @@ F_{\theta(t)}
 G(x,\theta,\text{experience}),
 \]
 即 plant 和 controller 的有效结构都可能缓慢改变。这使 AgentOS 进入典型的 adaptive dynamical system 范畴。为了避免快速噪声直接重写身份、价值或长期生成方向，我们已经形成
-\[
-\boxed{
-FastNoise\nrightarrow SlowGlobalStructure
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise\nrightarrow SlowGlobalStructure\)}
+\end{statementbox}
 这一慢变量保护原则。它实际上构成了未来所有 AgentOS 控制工程的基础：越慢、越全局、越难恢复的变量，越应该拥有更低的更新带宽、更高的证据阈值和更严格的治理权限。
 
 因此，只要 AgentOS 被设计成持续运行的多尺度认知系统，“控制工程”就绝不是一个可选的附加专业。它回答的是比 ``Agent 能否推理'' 更基础的问题：
@@ -439,13 +437,12 @@ s(t)
 \right),
 \]
 其中 $r$ 表示历史可靠性，$q$ 表示风险等级，$s$ 表示安全与社会治理条件。也就是说：
-\[
-\boxed{
-CapabilityGrowth
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CapabilityGrowth
 \not\Rightarrow
-AutomaticAuthorityGrowth.
-}
-\]
+AutomaticAuthorityGrowth.\)}
+\end{statementbox}
 权限必须通过独立评估进行释放，这一点对于长期自主 Agent 极为关键。
 
 Agent 培育工程的另一个独特问题是\emph{反思（reflection）}。一个经历如果仅仅发生，却没有进入 E 的适当结构化以及 $\Theta$ 的后续压缩，其长期影响可能非常有限。反过来，如果所有经历都被高权重写入并过度自我解释，则又可能造成慢变量污染。因此培育不是简单地“让 Agent 经历更多”，而需要设计
@@ -475,17 +472,16 @@ RealityResidual
 其中 $\mathcal C_E$ 是经验压缩与筛选过程。只有在现实反馈、重复性、价值相关性和结构稳定性达到一定条件时，经历才应向更慢层沉降。
 
 于是，Agent 培育工程本质上研究的是一个受约束的发育动力系统：
-\[
-\boxed{
-\text{Experience Design}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Experience Design}
 \rightarrow
 \text{Capability Formation}
 \rightarrow
 \text{Identity Development}
 \rightarrow
-\text{Autonomy Expansion}.
-}
-\]
+\text{Autonomy Expansion}.\)}
+\end{statementbox}
 这和传统模型训练最大的区别就在于，训练关注参数何时达到目标能力，而培育关注一个持续主体\emph{通过怎样的历史成为现在的自己，并由此获得继续进入更广经验空间的资格}。只要 AgentOS 真正保留历史，并允许历史改变未来，自然就必须出现一门关于“如何让人工主体成长”的工程学。
 
 \section{长期内部动力学必然产生异常与恢复问题：Agent 心理工程的必然性}
@@ -584,17 +580,16 @@ E_{t+1}
 s_{t+1}.
 \]
 因此：
-\[
-\boxed{
-SelfInterpretation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SelfInterpretation
 \rightarrow
 SelectiveAttention
 \rightarrow
 SelectiveExperience
 \rightarrow
-SelfInterpretation'
-}
-\]
+SelfInterpretation'\)}
+\end{statementbox}
 既可以形成健康的身份连续性，也可以形成错误的自证环。AgentOS 必须因此始终保留
 \begin{statementbox}
 WorldVerification
@@ -677,27 +672,24 @@ D\!\left(
 \section{Control--Cultivation--Psychology：持续智能的三元工程结构}
 
 现在我们可以把前面的推导收束起来。如果一个 Agent 只在单次任务中短暂存在，那么大量问题都可以被压缩进模型性能和软件可靠性之中；但只要它真正成为具有生命周期的持续主体，工程问题就会立即沿三个不同方向展开。第一个方向关心\emph{当前与跨尺度动力学是否稳定}；第二个方向关心\emph{长期经验如何使系统形成能力、自我和更大的自治空间}；第三个方向关心\emph{长期运行中已经形成的内部动力结构如果发生失衡，应如何诊断和恢复}。于是得到：
-\[
-\boxed{
-\text{Control Engineering}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Control Engineering}
 \rightarrow
-\text{Stability},
-}
-\]
-\[
-\boxed{
-\text{Cultivation Engineering}
+\text{Stability},\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Cultivation Engineering}
 \rightarrow
-\text{Development},
-}
-\]
-\[
-\boxed{
-\text{Psychological Engineering}
+\text{Development},\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Psychological Engineering}
 \rightarrow
-\text{Pathology and Recovery}.
-}
-\]
+\text{Pathology and Recovery}.\)}
+\end{statementbox}
 
 这三者不能互相替代。控制工程可以使系统稳定，却不能决定什么经历最有利于形成成熟能力。例如将 TCE 调节得极其保守、让 Boundary 阻止绝大多数未知输入，可能得到一个非常稳定的 Agent，却同时失去成长性。培育工程可以不断增加高质量经验，但如果 SPC--AHC--TCE 闭环本身不稳定，新的经历反而会不断放大内部振荡。心理工程可以修复已经形成的异常模式，却不能替代正常生命周期中的能力培养。因此，对于一个持续 Agent 来说，三种工程目标一般必须同时存在：
 \[
@@ -791,26 +783,23 @@ J_P
 \mathbf J_A(f,\tau,t).
 \]
 那么控制工程关心的是：
-\[
-\boxed{
-\mathbf J_A
-\text{ 是否保持在可治理流域中；}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathbf J_A
+\text{ 是否保持在可治理流域中；}\)}
+\end{statementbox}
 培育工程关心的是：
-\[
-\boxed{
-\mathbf J_A
-\text{ 是否通过长期经验形成更有效的结构沉降；}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \mathbf J_A
+\text{ 是否通过长期经验形成更有效的结构沉降；}\)}
+\end{statementbox}
 心理工程关心的则是：
-\[
-\boxed{
-\rho_A,\mathbf J_A
-\text{ 是否形成了持续有害的吸引结构，以及如何恢复。}
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \rho_A,\mathbf J_A
+\text{ 是否形成了持续有害的吸引结构，以及如何恢复。}\)}
+\end{statementbox}
 这样，三门工程就不再只是经验性分类，而可以被统一到认知结构动力学之中。
 
 同样重要的是，它们都必须受 Reality Authority 约束。控制工程不能为了“内部稳定”而把现实残差屏蔽掉；培育工程不能仅用内部自我评价来证明成长；心理工程也不能通过修改 Self Interpretation 让 Agent 主观上认为问题消失。任何稳定、成长或恢复最终都必须重新进入
@@ -841,9 +830,9 @@ RealityConsistency.
 \end{statementbox}
 
 因此，本章最终得到一个具有基础意义的结论：
-\[
-\boxed{
-PersistentAgency
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle PersistentAgency
 \Longrightarrow
 \left\{
 \begin{array}{l}
@@ -851,9 +840,8 @@ StabilityProblem,\\
 DevelopmentProblem,\\
 PathologyRecoveryProblem.
 \end{array}
-\right.
-}
-\]
+\right.\)}
+\end{statementbox}
 只要一个系统真正具备持续主体性，这三个问题就不会因为模型越来越强而自然消失。相反，能力越强、生命周期越长、内部可塑性越高，这三个问题通常越重要。
 
 由此我们可以给 AgentOS 三大相关工程一个统一定义：

@@ -408,17 +408,16 @@ C_h^{(s)}(t)\downarrow,
 就表明相关 Agent-CSO 正从显式认知承载逐步向更稳定、更局部的功能结构迁移。
 
 然而，“逐渐熟练”与“正式成为可直接调用 Skill”仍然是不同事件。编译意味着系统把原先依赖显式工作记忆维持的一段动态认知结构，封装成具有稳定输入、输出、前置条件、异常检测和恢复路径的可执行闭环：
-\[
-\boxed{
-ExplicitCognition
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ExplicitCognition
 \rightarrow
 RepeatedTrajectory
 \rightarrow
 StablePolicy
 \rightarrow
-CompiledSkill
-}
-\]
+CompiledSkill\)}
+\end{statementbox}
 因此编译事件可以定义为
 \[
 e_{\mathrm{compile}}
@@ -524,9 +523,9 @@ A_{k+1}.
 该事件通常要求能力证据、稳定时间、风险评估和授权来源共同成立。
 
 这使我们可以建立“能力--信任--权限--自治”链：
-\[
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 Capability
 \rightarrow
@@ -536,9 +535,8 @@ Trust
 \rightarrow
 Authority
 \rightarrow
-Autonomy.
-}
-\]
+Autonomy.\)}
+\end{statementbox}
 其中任何箭头都不应被简化成自动等号。尤其 Trust 本身并不是情感性的“相信”，而是对可预测性、历史表现、异常恢复和约束遵守情况形成的系统性估计。
 
 更一般地，Agent 可作用于的状态空间可以写成
@@ -717,13 +715,12 @@ q_{\mathrm{safety}}.
 \]
 
 这一事件与普通治理最大的区别在于它可以绕过部分认知链：
-\[
-\boxed{
-CriticalSafety
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CriticalSafety
 \nrightarrow
-CognitiveDependency.
-}
-\]
+CognitiveDependency.\)}
+\end{statementbox}
 也就是说，紧急制动、执行器限幅、资源断开、工具撤销等安全动作不需要等待高层主体“理解完发生了什么”。其控制权限应满足：
 \[
 \boxed{

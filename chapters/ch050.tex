@@ -86,13 +86,12 @@ Body Scale 真正关注的不是
 能够在足够大的结构子集上保持任务相关语义、预测关系与控制意义。换句话说，Body Scale 测量的是\textbf{身体发生变化时，智能结构能够保持多少，而不是身体能够塞进多少传感器。}
 
 因此可以给出本章的第一性定义：
-\[
-\boxed{
-BodyScale(A)
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle BodyScale(A)
 =
-\text{Agent }A\text{ 在身体变化下保持认知与行动结构连续性的能力}
-}
-\]
+\text{Agent }A\text{ 在身体变化下保持认知与行动结构连续性的能力}\)}
+\end{statementbox}
 它本质上是一种跨身体泛化能力，也是一种特殊的 Agent-CSO 承载迁移能力。参数规模描述“智能体内部能够装多少”，Body Scale 描述“智能体能够进入多少不同的现实闭环而仍然保持自己”。对于追求长期存在和通用性的 AgentOS，后者具有与参数规模完全不同、甚至在某些阶段更加根本的意义。
 
 

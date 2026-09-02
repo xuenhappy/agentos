@@ -418,23 +418,21 @@ E
 
 以后完成同样任务时，系统所需要的实时显式负担会下降。即使核心功能拓扑完全没有改变，系统的有效行为组织已经发生了巨大变化。这正说明：
 
-\[
-\boxed{
-\text{Topology Stability}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Topology Stability}
 \not\Rightarrow
-\text{Behavioral Rigidity}.
-}
-\]
+\text{Behavioral Rigidity}.\)}
+\end{statementbox}
 
 反过来说：
 
-\[
-\boxed{
-\text{Internal Structural Plasticity}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Internal Structural Plasticity}
 \not\Rightarrow
-\text{Topological Plasticity}.
-}
-\]
+\text{Topological Plasticity}.\)}
+\end{statementbox}
 
 这两个概念必须在整本书中严格区分。
 
@@ -643,15 +641,14 @@ E
 
 但在这一章，我们首先建立其一般形式：
 
-\[
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 PersistentStructure
 \rightarrow
-FutureConstraint.
-}
-\]
+FutureConstraint.\)}
+\end{statementbox}
 
 这就是生命周期连续性的最小动力学。
 
@@ -946,17 +943,16 @@ IntelligenceResourceRuntime.
 
 二者并不是竞争关系，而是分层关系：
 
-\[
-\boxed{
-Hardware
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Hardware
 \rightarrow
 ComputerOS
 \rightarrow
 AgentOS
 \rightarrow
-Task/Experience.
-}
-\]
+Task/Experience.\)}
+\end{statementbox}
 
 Linux 仍然负责 CPU 调度、内存保护、设备驱动、文件系统、网络和进程隔离。AgentOS 使用这些已有能力，但建立更高一层的认知资源抽象。例如，Linux 可以告诉我们某个进程占用了多少 RAM，却不能回答：
 
@@ -1008,9 +1004,9 @@ Cognitive Governance.
 
 运行时需要持续执行一个近似无限循环：
 
-\[
-\boxed{
-Observe
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Observe
 \rightarrow
 Admit
 \rightarrow
@@ -1024,9 +1020,8 @@ Verify
 \rightarrow
 Consolidate
 \rightarrow
-Observe.
-}
-\]
+Observe.\)}
+\end{statementbox}
 
 它没有传统 request-response 系统那样天然的“调用结束点”。任务会结束，但主体不结束；一次认知会停止，但运行时继续观察环境；一个 Goal 完成以后，新的 Goal 可以出现；外部世界也可能在没有用户 prompt 的时候发生变化。
 
@@ -1450,15 +1445,14 @@ Generator.
 
 于是：
 
-\[
-\boxed{
-State
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle State
 \rightarrow
 Trajectory
 \rightarrow
-Generator
-}
-\]
+Generator\)}
+\end{statementbox}
 
 自然出现。
 
@@ -1540,15 +1534,14 @@ Offloading.
 
 所以本书不会把 AgentOS 写成“先画一个完整架构，然后逐一解释模块”。我们的推导方向恰恰相反：
 
-\[
-\boxed{
-\text{Persistent Agent Requirement}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \text{Persistent Agent Requirement}
 \rightarrow
 \text{Structural Contradiction}
 \rightarrow
-\text{Necessary Functional Mechanism}.
-}
-\]
+\text{Necessary Functional Mechanism}.\)}
+\end{statementbox}
 
 也就是说，每一个新模块都必须由前一个结构无法解决的问题逼出来。
 
@@ -1570,17 +1563,16 @@ Offloading.
 
 因此，我们可以用本章最终命题作为第二编真正的起点：
 
-\[
-\boxed{
-\begin{minipage}{0.86\textwidth}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{minipage}{0.86\textwidth}
 \textbf{AgentOS 第一性工程命题：}
 
 一个能够形成生命周期的人工智能体，首先需要一个稳定的核心功能骨架，使单一主体在其上维持连续的内部状态、任务治理、世界交互与现实验证；与此同时，系统必须允许认知结构在多个时间尺度上持续变化，而不能要求核心功能拓扑与内部状态同时无约束地改变。
 
 因此，AgentOS 的第一阶段不是让智能体“自由重写自己”，而是建立一个足够稳定的认知运行时，使它第一次拥有可以被称为“自己的过去、自己的现在以及由过去塑造的未来”的持续动力学轨迹。
-\end{minipage}
-}
-\]
+\end{minipage}\)}
+\end{statementbox}
 
 从这个起点出发，我们下一步必须回答的，就是长期智能最基本的记忆问题：
 

@@ -43,13 +43,12 @@ x_{t+1}=F(x_t,\eta_t),
 m_t=M(x_{\leq t}),
 \]
 其中 \(m_t\) 不只是原始状态的一部分，而是对系统某些状态、关系或历史进行选择、压缩和重编码后形成的\textbf{结构表示}。在本书的本体语言中，这意味着：
-\[
-\boxed{
-CSO
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CSO
 \longrightarrow
-AgentCSO(CSO)
-}
-\]
+AgentCSO(CSO)\)}
+\end{statementbox}
 开始发生。
 
 例如，外部现实中存在一个对象 \(C\)。它本身属于 Universe-CSO。当 Agent 的感知、世界建模和结构压缩过程将其转化为内部对象 \(C_A\) 时，
@@ -233,13 +232,12 @@ L_{\mathrm{prediction}}(m)
 在 AgentOS 的具体架构中，SPC 被定义为 Self-Perception Compressor。最初引入 SPC 的直接原因，是工作记忆 \(h(t)\) 不可能持续容纳整个系统的内部状态。AgentOS 内部同时存在任务状态、记忆激活、身体状态、目标竞争、认知负载、风险、工具执行、AHC 状态以及大量局部过程。如果这些变量全部原样进入 \(h(t)\)，工作记忆有限容量定理将迅速被违反。
 
 因此 SPC 的本质操作是：
-\[
-\boxed{
-DistributedInternalDynamics
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle DistributedInternalDynamics
 \rightarrow
-CompressedSelfAccessibleState.
-}
-\]
+CompressedSelfAccessibleState.\)}
+\end{statementbox}
 
 设 Agent 的内部真实状态为
 \[
@@ -285,13 +283,12 @@ AgentCSO_A(SelfState).
 \]
 
 换句话说，SPC 不只是“读取状态”，而是在功能上执行：
-\[
-\boxed{
-Dynamics
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Dynamics
 \rightarrow
-RepresentableStructure.
-}
-\]
+RepresentableStructure.\)}
+\end{statementbox}
 
 这也是为什么我们将 SPC 放在功能自反性的核心位置。如果没有类似 SPC 的机制，系统当然仍然可以拥有无数局部反馈回路，但这些回路之间缺乏一个能够将分布式状态压缩成可由高层使用的自描述接口。系统会“运行”，却未必能够形成关于“自己怎样运行”的结构。
 
@@ -358,13 +355,12 @@ Uncertainty
 仅有自描述还不足以构成功能自反。如果系统能够准确形成关于自身状态的模型，但这个模型不参与任何后续决策，那么该系统更接近被动监测系统，而不是自调节主体。
 
 因此功能自反的第二个必要条件是：
-\[
-\boxed{
-SelfRepresentation
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SelfRepresentation
 \rightarrow
-FutureDynamics.
-}
-\]
+FutureDynamics.\)}
+\end{statementbox}
 
 在 AgentOS 中，这一功能主要由 TCE，即 Temperature \& Control Executor 承担。TCE 接受 SPC 提供的自状态估计，同时受到 Goal、\(\Psi\)、\(\Omega\)、AHC 以及当前任务约束影响，并输出对认知动力学的调节信号。
 
@@ -876,13 +872,12 @@ Agent 不仅观察实际轨迹，还构造未发生轨迹：
 \]
 
 于是：
-\[
-\boxed{
-SelfReflexivity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SelfReflexivity
 \rightarrow
-CounterfactualSelfEvaluation
-}
-\]
+CounterfactualSelfEvaluation\)}
+\end{statementbox}
 成为可能。
 
 这也是后面递归自主性的重要基础：当前 Agent 可以估计不同选择如何改变未来世界，也可以估计不同选择如何改变未来的自己。
@@ -1199,19 +1194,16 @@ U_A
 X_A(t+\Delta t),
 \]
 就出现了一个新的回路：
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
-LocalUniverse
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle LocalUniverse
 \rightarrow
 Self/WorldRepresentation
 \rightarrow
 RepresentationDependentAction
 \rightarrow
-LocalUniverse'.
-}
-$}
-\]
+LocalUniverse'.\)}
+\end{statementbox}
 
 在纯粹的结构动力学意义上，这与 AgentOS 内部：
 \[
@@ -1339,13 +1331,12 @@ X',
 存在。
 
 因此：
-\[
-\boxed{
-FunctionalReflexivity
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FunctionalReflexivity
 \nRightarrow
-PhenomenalConsciousness.
-}
-\]
+PhenomenalConsciousness.\)}
+\end{statementbox}
 
 反过来，我们在本理论中也不讨论：
 \[
@@ -1491,9 +1482,9 @@ FutureChoice
 影响未来。
 
 于是产生：
-\[
-\boxed{
-Choice_t
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Choice_t
 \rightarrow
 Experience
 \rightarrow
@@ -1501,9 +1492,8 @@ Structure
 \rightarrow
 Self_{future}
 \rightarrow
-Choice_{future}.
-}
-\]
+Choice_{future}.\)}
+\end{statementbox}
 
 这是一种比 SPC--TCE 快循环更深的功能自反。
 
@@ -1639,9 +1629,9 @@ StructureChangesHowItChangesItself.
 \end{statementbox}
 
 于是，我们得到一条逐级增强的结构序列：
-\[
-\boxed{
-\begin{aligned}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{aligned}
 &Structure\\
 &\rightarrow SelfMaintainingStructure\\
 &\rightarrow SensingStructure\\
@@ -1650,9 +1640,8 @@ StructureChangesHowItChangesItself.
 &\rightarrow RepresentationDrivenControl\\
 &\rightarrow MetaAdaptiveStructure\\
 &\rightarrow SelfReorganizingStructure.
-\end{aligned}
-}
-\]
+\end{aligned}\)}
+\end{statementbox}
 
 从本书的宇宙 CSO 视角看，这个过程具有一个非常特殊的含义。
 
@@ -1686,19 +1675,16 @@ LocalStructureRepresentingItsOwnLocalState.
 \]
 
 而当这一模型参与行动：
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
-UniverseLocalState
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle UniverseLocalState
 \rightarrow
 InternalRepresentation
 \rightarrow
 RepresentationDependentAction
 \rightarrow
-UniverseLocalState'.
-}
-$}
-\]
+UniverseLocalState'.\)}
+\end{statementbox}
 
 这就是“宇宙局部看见自己并改变自己”的严格动力学版本。
 
@@ -1743,22 +1729,21 @@ ChangingHowItChangesWhatWillHappen.
 \end{definition*}
 
 在 AgentOS 中，其最小工程实例是：
-\[
-\boxed{
-SPC
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SPC
 \rightarrow
 TCE
 \rightarrow
 CognitiveDynamics
 \rightarrow
-SPC.
-}
-\]
+SPC.\)}
+\end{statementbox}
 
 在长期生命周期中，它扩展为：
-\[
-\boxed{
-Choice
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Choice
 \rightarrow
 Experience
 \rightarrow
@@ -1768,22 +1753,20 @@ Experience
 \rightarrow
 \Omega
 \rightarrow
-FutureChoice.
-}
-\]
+FutureChoice.\)}
+\end{statementbox}
 
 在 World--Agent--World 层面，则扩展为：
-\[
-\boxed{
-UniverseCSO
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle UniverseCSO
 \rightarrow
 AgentCSO
 \rightarrow
 RepresentationDrivenAction
 \rightarrow
-UniverseCSO'.
-}
-\]
+UniverseCSO'.\)}
+\end{statementbox}
 
 这三个闭环分别对应：
 \[

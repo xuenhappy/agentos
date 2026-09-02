@@ -101,29 +101,26 @@ AgentOS
 这一区分具有重要的方法论意义。如果理论只能解释自己设计的组件，那么它仍然属于软件架构设计；如果理论能够解释不同实现中反复出现的动力学结构，例如为什么稳定能力会从昂贵的显式处理迁向快速局部闭环，为什么异常会沿时间尺度向上传递，为什么慢变量不能被快噪声任意修改，那么它才可能逐渐成为一种一般理论。
 
 因此，本书最后并不试图证明“AgentOS 是唯一正确的智能架构”。恰恰相反，我们希望建立一种足够抽象的坐标，使未来完全不同于 AgentOS 的智能体系也可以被描述、比较和验证。真正需要保留的不是组件名称，而是组件背后所表达的动力关系：
-\begin{equation}
-\boxed{
-State
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle State
 \leftrightarrow
 Trajectory
 \leftrightarrow
-Generator,
-}
-\end{equation}
-\begin{equation}
-\boxed{
-FastDynamics
+Generator,\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastDynamics
 \leftrightarrow
-SlowStructure,
-}
-\end{equation}
-\begin{equation}
-\boxed{
-InternalRepresentation
+SlowStructure,\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle InternalRepresentation
 \leftrightarrow
-Reality,
-}
-\end{equation}
+Reality,\)}
+\end{statementbox}
 以及
 \begin{equation}
 \boxed{
@@ -228,13 +225,12 @@ C(t)
 
 从这一点开始，智能动力学可以被定义为：
 
-\begin{equation}
-\boxed{
-\textbf{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \textbf{
 智能动力学研究认知结构在时间中如何生成、激活、变换、迁移、稳定、外化，并如何通过这些过程持续改变承载它们的功能结构以及与其耦合的现实环境。
-}
-}
-\end{equation}
+}\)}
+\end{statementbox}
 
 这一研究对象同时包含“智能的状态”和“智能的成长”。如果只研究
 \begin{equation}
@@ -312,15 +308,14 @@ BodySkill
 或外部程序。整个过程中，任务能力没有消失，但其主要承载位置发生了改变。
 
 因此，本书早期所说的“复杂度下沉”在更严格语言中应写为
-\begin{equation}
-\boxed{
-ExplicitAgentCSO
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle ExplicitAgentCSO
 \rightarrow
 StableGenerativeAgentCSO
 \rightarrow
-ProceduralAgentCSO.
-}
-\end{equation}
+ProceduralAgentCSO.\)}
+\end{statementbox}
 
 如果我们令 $\rho_{CSO}(f,\omega,t)$ 表示在功能位置 $f$、时间尺度 $\omega$ 附近的 Agent-CSO 有效分布，并令
 \begin{equation}
@@ -361,13 +356,12 @@ Stable,\ Local,\ FastClosedLoops.
 \end{equation}
 
 第三，认知卸载不再是一种附属技巧，而成为载体迁移：
-\begin{equation}
-\boxed{
-AgentCSO_{internal}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle AgentCSO_{internal}
 \rightarrow
-AgentCSO_{externalized}.
-}
-\end{equation}
+AgentCSO_{externalized}.\)}
+\end{statementbox}
 
 这也使 Skill、Program、File、Tool、Environment 和 Other Agent 能够进入同一个理论框架。一个程序并不是“非认知对象”，如果它保存了智能体未来可调用、可恢复、可执行的结构关系，它就构成 Agent-CSO 的一种外部稳定承载。
 
@@ -598,13 +592,12 @@ StableTopologicalCondensate.
 \tau_{topology}.
 \end{equation}
 这就是慢变量保护原则：
-\begin{equation}
-\boxed{
-FastNoise
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FastNoise
 \nrightarrow
-SlowGlobalStructure.
-}
-\end{equation}
+SlowGlobalStructure.\)}
+\end{statementbox}
 
 进一步，可以设置形成和删除连接的双阈值
 \begin{equation}
@@ -615,9 +608,9 @@ SlowGlobalStructure.
 产生拓扑迟滞。一个新结构必须在长期证据超过 $\theta_{on}$ 后才形成；已经成熟的结构则不会因为短暂低使用率立即删除，而只有长期低于 $\theta_{off}$ 才逐渐衰减。其意义与成熟技能和长期组织制度类似：形成需要持续经验，消失也需要长期反证。
 
 拓扑改变还必须服从“最小必要重组原则”。面对误差，智能系统不应直接修改最深结构，而应依照近似顺序：
-\begin{equation}
-\boxed{
-StateAdjustment
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle StateAdjustment
 \rightarrow
 RepresentationAdaptation
 \rightarrow
@@ -627,9 +620,8 @@ FunctionalMigration
 \rightarrow
 TopologicalReorganization
 \rightarrow
-BoundaryMigration.
-}
-\end{equation}
+BoundaryMigration.\)}
+\end{statementbox}
 只有当前层次长期不能闭合残差时，才应该升级到更昂贵、更不可逆的结构调整。
 
 因此可以定义结构失配压力
@@ -792,17 +784,16 @@ A_t,\pi_t,\mathcal{W}_t
 World\rightarrow Agent,
 \end{equation}
 而成为
-\begin{equation}
-\boxed{
-Agent
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Agent
 \rightarrow
 Choice
 \rightarrow
 Experience
 \rightarrow
-FutureAgent.
-}
-\end{equation}
+FutureAgent.\)}
+\end{statementbox}
 Agent 的选择开始参与塑造未来的自己。这就是本书所说的递归自主性的一种可操作定义。
 
 进一步，如果 Agent 能够构造反事实
@@ -826,13 +817,12 @@ ControlOfFutureSelf.
 
 因此，Developmental Intelligence 可以定义为：
 
-\begin{equation}
-\boxed{
-\textbf{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \textbf{
 发育型智能是其经验历史能够持续改变认知结构的表示、承载、时间尺度、自我解释、行动能力以及功能组织，并在保持必要连续性的同时扩大未来可达状态空间的智能。
-}
-}
-\end{equation}
+}\)}
+\end{statementbox}
 
 它不同于单纯持续学习，因为持续学习只要求知识增长或参数更新；发育要求系统“长成不同于初始化时的结构”，却仍保持可追踪的历史连续性。也正因此，Agent 培育工程、控制工程和心理工程并不是附属应用，而是发育型智能一旦存在便自然产生的工程问题。
 
@@ -882,15 +872,14 @@ A_{t+1}.
 \widehat{U}_{t+\Delta}
 \end{equation}
 成为当前现实中的物理/计算状态，并参与决定当前行动。于是：
-\begin{equation}
-\boxed{
-RepresentationOfPossibleFuture
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle RepresentationOfPossibleFuture
 \rightarrow
 PresentAction
 \rightarrow
-ActualFuture.
-}
-\end{equation}
+ActualFuture.\)}
+\end{statementbox}
 
 普通物理动力系统当然一直在改变自身状态，因此不能说 Agent 出现以前“宇宙不会改变自己”。真正不同的是，在智能系统中出现了
 \begin{statementbox}
@@ -992,9 +981,9 @@ ActiveExternalCognition.
 从这个尺度看，人类文明的发展可以被理解为一种自反结构能力的增长：能够观察的尺度扩大，能够建立的模型越来越精细，能够预测的未来越来越长，能够修改的现实范围越来越大，同时社会还在通过法律、制度、科学和技术改变“自己怎样做出改变”。这并不意味着整个宇宙拥有统一意识，也不意味着宇宙存在预设目的；它表达的是一个更有限但可分析的事实模式：宇宙中的某些局部结构已经产生了表示世界、表示自身并利用这些表示改变现实的能力。
 
 因此，我们可以提出一个理论性的演化序列：
-\begin{equation}
-\boxed{
-Structure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Structure
 \rightarrow
 SelfMaintenance
 \rightarrow
@@ -1006,9 +995,8 @@ SelfRepresentation
 \rightarrow
 RepresentationGuidedAction
 \rightarrow
-MetaSelfReorganization.
-}
-\end{equation}
+MetaSelfReorganization.\)}
+\end{statementbox}
 
 我们把最后几步概括为
 \begin{statementbox}
@@ -1032,17 +1020,16 @@ UniverseCSO_{t+1}.
 }
 \end{equation}
 而在长期尺度上：
-\begin{equation}
-\boxed{
-Experience
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Experience
 \rightarrow
 CSOMigration
 \rightarrow
 Topology
 \rightarrow
-FutureExperience.
-}
-\end{equation}
+FutureExperience.\)}
+\end{statementbox}
 
 两个闭环相互嵌套，便形成了我们所说的自反结构演化。
 
@@ -1231,9 +1218,9 @@ Reality
 我们在全书最初提出的问题其实非常朴素：如果智能不是一个脱离物理世界存在的抽象能力，那么它是否具有尺度？一旦承认智能具有空间范围、时间尺度和有限承载，许多后来问题几乎顺势产生。大尺度智能为什么必然存在慢闭环？为什么快过程与慢过程必须分离？为什么工作记忆不能无限扩大？为什么熟练以后显式认知反而减少？为什么经验能够逐渐沉降成技能？为什么自我必须比普通工作状态变化更慢？为什么身体需要局部预测控制，而高层认知只给出目标和约束？为什么现实反馈必须拥有最终权威？
 
 这些问题最终汇聚到同一个结构中：
-\begin{equation}
-\boxed{
-Structure
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Structure
 \rightarrow
 Representation
 \rightarrow
@@ -1241,9 +1228,8 @@ Control
 \rightarrow
 Experience
 \rightarrow
-Structure'.
-}
-\end{equation}
+Structure'.\)}
+\end{statementbox}
 
 从内部看，它表现为
 \begin{equation}
@@ -1315,13 +1301,12 @@ UniverseCSO'.
 这些公式表面上处于完全不同的尺度，却共享同一种动力逻辑：快速过程在慢结构给出的边界内运行，持续残差推动慢结构改变；过去的动态过程经过重复和压缩变成未来的结构，而未来结构又决定新的动态过程如何展开。
 
 因此，本书最终给出的智能定义，不再是“能够解决很多任务的系统”，也不是“能够进行复杂推理的模型”，而是：
-\begin{equation}
-\boxed{
-\textbf{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \textbf{
 智能是在有限承载条件下，通过多尺度闭环生成、表示、迁移和稳定认知结构，并利用这些结构预测、选择和改变现实，同时让长期经验反过来改变自身未来组织方式的自反动力过程。
-}
-}
-\end{equation}
+}\)}
+\end{statementbox}
 
 如果进一步用 CSO 语言压缩，可以写成：
 \begin{equation}
@@ -1405,13 +1390,12 @@ Of Intelligence Dynamics.
 
 因此，本书最终从 AgentOS 回到最初的问题，却得到了一个比出发时更加具体的答案：
 
-\begin{equation}
-\boxed{
-\textbf{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \textbf{
 智能不是一块已经完成的结构，而是一条结构不断形成未来结构的轨迹。
-}
-}
-\end{equation}
+}\)}
+\end{statementbox}
 
 过去的活动沉降为现在的结构，
 \begin{equation}
@@ -1433,9 +1417,9 @@ NewStructure.
 \end{equation}
 
 于是整个生命周期可以最终压缩成：
-\begin{equation}
-\boxed{
-\begin{gathered}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \begin{gathered}
 \textbf{Dynamics}
 \rightarrow
 \textbf{Structure}
@@ -1445,9 +1429,8 @@ NewStructure.
 \textbf{Structure}^{\prime}
 \rightarrow
 \cdots
-\end{gathered}
-}
-\end{equation}
+\end{gathered}\)}
+\end{statementbox}
 
 而智能之所以特殊，就在于这个过程最终形成了能够表示自身、调节自身，并逐渐重组自身产生方式的结构。
 

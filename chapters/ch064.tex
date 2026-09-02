@@ -3,11 +3,10 @@
 
 \begin{chapteroverviewbox}
 本章讨论 AgentOS 具身体系中一个不能由认知智能替代、也不能被认知智能覆盖的基础问题：当智能体已经通过 Body Runtime 进入物理世界或具有现实作用能力的数字世界以后，谁拥有对不可逆危险的最终即时处置权？前文已经建立了 Agent Kernel、SGC、FCS、BPCC 以及 ``Predict Locally, Escalate Residual Globally'' 的多时间尺度体系，但这些机制解决的是\emph{智能如何高效行动}，而不是\emph{当高层认知来不及反应、判断错误、发生阻塞甚至自身失稳时，系统如何仍然保持最低安全性}。因此，本章引入独立于普通认知闭环的 Body Safety Boundary，并确立
-\[
-\boxed{
-CriticalSafety\nrightarrow CognitiveDependency
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CriticalSafety\nrightarrow CognitiveDependency\)}
+\end{statementbox}
 以及
 \[
 \boxed{
@@ -134,11 +133,10 @@ U_{\mathrm{model}}
 事件必须越过普通认知调度，直接进入实时安全通道。
 
 由此形成本章第一条工程定律：
-\[
-\boxed{
-CriticalSafety\nrightarrow CognitiveDependency.
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle CriticalSafety\nrightarrow CognitiveDependency.\)}
+\end{statementbox}
 它并不意味着安全系统不需要认知信息，而意味着\emph{关键安全动作不得把认知层成功工作作为前提条件}。Kernel 可以提前修改安全包络，可以根据任务语义降低允许速度，可以解释危险原因，可以在危险结束后修改 $\Theta$、$\Psi$ 或策略；但在真正接近边界的瞬间，是否停止、制动、隔离、降级或切断执行权，必须由更快、更局部、更确定的机制保证。这正是多尺度智能体系中 ``每一个尺度关闭自己的快速闭环'' 在安全问题上的最严格表现。
 
 从外部理论看，这一思想与实时控制、functional safety、runtime assurance、fail-safe system 以及 control barrier function 所解决的问题具有明显亲缘关系。然而我们在 AgentOS 中进一步强调：安全边界不仅包围传统执行器，还包围一个能够自主学习、预测、改变策略并长期形成 Self 的认知主体，因此安全设计的对象不再只是单个控制器是否稳定，而是\emph{整个多尺度智能系统是否始终被约束在一个现实允许的可行域中}。这也是为什么安全边界必须成为 Body Runtime 与 Agent Kernel 共同服从的上位约束，而不能仅仅作为某个任务规划器中的一个 penalty term。
@@ -495,21 +493,19 @@ LearnedSafetyAdaptation.
 安全事件向上升级，本质上就是把局部残差中的\emph{结构性异常}转换成新的 Agent-CSO。
 
 因此，Body Safety Boundary 并不是一个封闭的紧急停车器，而是一种具有双向意义的边界结构：
-\[
-\boxed{
-Cognition
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Cognition
 \rightarrow
-SafeActionConstraint
-}
-\]
+SafeActionConstraint\)}
+\end{statementbox}
 以及
-\[
-\boxed{
-SafetyResidual
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SafetyResidual
 \rightarrow
-CognitiveLearning.
-}
-\]
+CognitiveLearning.\)}
+\end{statementbox}
 前者让高层目标不能突破现实安全边界，后者又让现实危险能够重新塑造 Agent 的内部世界。这与本书一贯坚持的 World--Agent--World 闭环完全一致：安全不是阻止智能与世界互动，而是保证互动能够长期持续，并把失败转化为可以继续成长的经验。
 
 \section{Safety Authority：为什么安全权限必须高于 BPCC 权限}
@@ -990,15 +986,14 @@ r_t
 C_{\mathrm{semantic}},
 \]
 例如 ``附近存在儿童，降低速度与加速度上限''。BPCC 接收到这一约束后主动在更保守区域运行，而无需等到 RSC 真正触发。于是形成三个安全层次：
-\[
-\boxed{
-SemanticPrecaution
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SemanticPrecaution
 \rightarrow
 PredictiveConstraint
 \rightarrow
-RealtimeOverride.
-}
-\]
+RealtimeOverride.\)}
+\end{statementbox}
 第一层来自认知语义，第二层由 BPCC 在局部预测中提前实施，第三层由 RSC 在边界处强制保证。这种层次结构比 ``危险发生才急停'' 更接近成熟智能体的安全行为。
 
 因此，本节最重要的结论是：安全并不要求高层拥有更细粒度控制，反而要求各尺度保持正确的控制抽象。真正稳定的 AgentOS 应使高层越来越擅长定义合理的可行区域，使低层越来越擅长在区域内部自主解决问题，而 Safety Boundary 则确保无论两者怎样学习，它们都不能把现实系统推入不可接受区域。这种
@@ -1132,17 +1127,16 @@ BPCC 应提前降低探索和动态激进度；若
 m_S<0,
 \]
 表示状态已经进入安全包络之外，RSC 必须立即进入 Recovery Mode。由此安全控制不再是二值系统，而形成：
-\[
-\boxed{
-FreeRegion
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle FreeRegion
 \rightarrow
 CautionRegion
 \rightarrow
 ConstraintRegion
 \rightarrow
-RecoveryRegion.
-}
-\]
+RecoveryRegion.\)}
+\end{statementbox}
 
 这与 FCS 之间存在非常自然的关系。FCS 可以把安全余量压缩成对 Agent 有功能意义的连续影响状态，例如
 \[
@@ -1165,25 +1159,23 @@ AHC
 SPC/TCE.
 \]
 此链负责让认知系统 ``感受到'' 安全边界正在收缩，而 RSC 则负责即使认知尚未完成解释，也能够直接保护现实。由此形成两条并行路径：
-\[
-\boxed{
-SafetyEnvelope
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SafetyEnvelope
 \rightarrow
 FCS
 \rightarrow
-Cognition
-}
-\]
+Cognition\)}
+\end{statementbox}
 与
-\[
-\boxed{
-SafetyEnvelope
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SafetyEnvelope
 \rightarrow
 RSC
 \rightarrow
-Execution.
-}
-\]
+Execution.\)}
+\end{statementbox}
 前者慢而语义丰富，后者快而确定。它们共同体现了此前建立的 ``内容—作用—安全'' 三通道思想。
 
 Safety Envelope 还必须处理模型不确定性。如果系统对环境预测非常不确定，就不应仍然使用与高置信状态相同的安全边界。因此可以定义风险膨胀项：
@@ -1293,9 +1285,9 @@ SGC_{t+1},FCS_{t+1},
 ).
 \]
 其中普通残差首先由 BPCC 局部处理，而具有持久性、新颖性、重要性或模型失配意义的残差再向 Kernel 提升。这最终形成：
-\[
-\boxed{
-Kernel
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle Kernel
 \rightarrow
 ControlReference
 \rightarrow
@@ -1307,9 +1299,8 @@ Reality
 \rightarrow
 Residual
 \rightarrow
-Body/Kernel.
-}
-\]
+Body/Kernel.\)}
+\end{statementbox}
 
 在这个结构中，安全并不是串在系统末尾的 ``保险丝''，而是一种贯穿执行过程的现实可行域约束。它既决定什么控制能够真正写入现实，又通过安全余量和异常残差反向进入 Agent 的认知体系。因此可以把 Body Safety Boundary 更完整地定义为：
 \[
@@ -1373,12 +1364,11 @@ DynamicFeasibleFreedom,
 
 本章因此确立了七条可以直接进入 AgentOS 工程规范的原则：
 
-\[
-\boxed{
-\textbf{Principle 1:}\quad
-CriticalSafety\nrightarrow CognitiveDependency
-}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle \textbf{Principle 1:}\quad
+CriticalSafety\nrightarrow CognitiveDependency\)}
+\end{statementbox}
 
 关键实时安全不能依赖 Kernel 正常运行。
 
@@ -1444,15 +1434,14 @@ Body Safety Boundary 是包围具身智能行动链的实时可行域治理结�
 \end{definition*}
 
 如果把这一结论放回整部《智能动力学与 AgentOS》的多尺度理论中，我们会发现一个非常重要的结构关系：
-\[
-\boxed{
-SlowGoal
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle SlowGoal
 \rightarrow
 FastControl
 \rightarrow
 FasterSafetyConstraint
 \rightarrow
-Reality.
-}
-\]
+Reality.\)}
+\end{statementbox}
 智能越向现实深入，越不能让最慢、最抽象的认知层直接承担最快、最不可逆的控制责任。真正成熟的系统恰恰相反：它让每一个时间尺度拥有自己的闭环，让高层定义意义与方向，让低层承担熟练执行，让安全边界守住现实不可逆条件，再让异常通过残差重新回到高层学习。于是安全不再与智能相对立，而成为持续智能能够长期存在的动力学前提。
