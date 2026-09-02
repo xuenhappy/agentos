@@ -28,7 +28,6 @@
 \end{statementbox}
 KRA 正是 AgentOS 对这一问题给出的系统级回答。
 \end{chapteroverviewbox}
-\ChapterArt{65}
 
 \section{为什么统一的 Body ABI 仍然不足}
 \label{sec:kra-why-abi-insufficient}
@@ -384,11 +383,9 @@ x^B(\tau)
 \right)_{\tau\in[t-T,t]},
 \]
 其中 $\mathcal A_T$ 可以包含时间平均、事件检测、变化率估计、异常保留和结构摘要。正常高频波动应当在 Body Runtime 内部消化：
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal.
-}
-\]
+\end{statementbox}
 只有当某种残差具有足够的新颖性、持续性、风险性或 Goal relevance 时，才需要提升到 Kernel：
 \[
 \Gamma_t
@@ -653,11 +650,9 @@ y_t^K,
 其中最后一项特别重要，它给 KRA 变化本身设置成本，从而避免映射层因短期异常频繁重构。
 
 KRA 的学习必须遵守一个基本原则：
-\[
-\boxed{
+\begin{statementbox}
 AdaptRelationBeforeRewritingIdentity.
-}
-\]
+\end{statementbox}
 当新的身体表现与 Kernel 预期不一致时，我们首先应该怀疑当前身体映射和局部动力学模型是否需要校准，而不是立即修改 $\Psi$、$\Theta$ 等慢结构。例如，一个刚刚更换机械臂的 Agent 连续抓取失败，并不意味着它``已经失去抓取能力''，更不能直接被解释为长期能力退化。KRA 必须首先建立：
 \[
 \mathrm{BodyChanged}

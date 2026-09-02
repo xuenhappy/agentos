@@ -15,8 +15,12 @@ $$
 先验证统一的主体动力学，再逐步扩大身体；先闭合低风险现实，再进入高代价现实。
 \end{statementbox}
 \end{chapteroverviewbox}
-\ChapterArt{77}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/multi-body-evolution-loop.png}
+\caption{多身体环境中的现实闭环与进化搜索}
+\end{figure}
 \section{数字 Body 先行：以低风险环境验证统一智能主体}
 
 从 AgentOS 的整体工程路线来看，数字 Body 并不是物理机器人出现以前的一种临时替代品，而是完整 Body 理论中的第一类合法身体。只要一个环境能够向 Agent 提供持续可观察状态，并允许 Agent 通过一组动作改变该环境，使动作结果重新成为下一时刻的观察，那么它就在功能意义上构成一个身体--世界闭环。对于某个 Agent $A$，设数字环境状态为 $x_t^{D}$，Agent 通过数字身体获得观察
@@ -293,11 +297,9 @@ $$
 
 因此在 Desktop SGC 中必须显式表示：
 
-$$
-\boxed{
+\begin{statementbox}
 SelfInDigitalWorld
-}
-$$
+\end{statementbox}
 
 而不只是 World。当前鼠标指针可以被视为最基础的 Digital End Effector，键盘焦点则是另一种动作通道；当前选区、拖拽对象和 active window 都属于身体与环境的接触关系。这也是为什么我们此前把 Cursor 视为数字身体末端执行器，而不是一个普通 UI 辅助符号。
 
@@ -615,11 +617,9 @@ $$
 
 于是“桌上的杯子”真正意味着身体与杯子之间存在一个可达几何关系，而不仅是视觉标签。对于轮式机器人，楼梯可能是 Obstacle；对于有足机器人，同一楼梯可能是 Traversable。SGC 因而必须始终是：
 
-$$
-\boxed{
+\begin{statementbox}
 BodyCenteredActionableReality
-}
-$$
+\end{statementbox}
 
 而不是抽象的客观世界数据库。
 
@@ -1148,11 +1148,9 @@ $$
 
 如果这些信号全部转成文本或 token 进入 LLM，系统实际上把本来应该在 Body Runtime 局部闭合的问题提升成全局认知问题。这不仅成本高，而且破坏了：
 
-$$
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal.
-}
-$$
+\end{statementbox}
 
 成熟智能的方向恰恰相反：越稳定、越高频、越重复的结构越应该下沉，只有异常才占用稀缺工作记忆。
 

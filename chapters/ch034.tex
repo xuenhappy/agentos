@@ -7,8 +7,12 @@
 
 本章建立五种典型运行相态：基态、心流态、湍流态、临界态和运行气态；建立由结构相干度、有效激活密度、冲突密度、认知流速、耗散率和预测残差等构成的相态描述变量；进一步讨论 TCE 认知温度与控制强度所张成的二维相图、相态边界、迟滞、亚稳态、相变触发以及 SPC 的相态估计问题。必须特别强调：本章讨论的“运行相态”不同于 $h/E/\Theta$ 的气态--液态--晶态\textbf{记忆信息相态}，也不同于认识论层面依据集中度与功能拓扑可塑性所定义的\textbf{智能拓扑相}。三者分别描述运行动力学、记忆结构性质以及智能整体组织方式，不得混用。
 \end{chapteroverviewbox}
-\ChapterArt{34}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/agentos-cognitive-control-architecture.png}
+\caption{基态、心流、湍流与解体的认知控制架构}
+\end{figure}
 \section{从工作记忆容量到工作记忆动力学}
 
 在前文建立的有限工作记忆理论中，我们首先关注的是一个看似静态的问题：在任意时刻 $t$，智能体能够在工作记忆 $h(t)$ 中稳定维持多少彼此相关的认知结构。若以 $W$ 表示可用于当前显式认知的有效容量，以 $C_{\mathrm{run}}(t)$ 表示当前运行中的有效认知负载，则最基本的约束可以写成
@@ -18,13 +22,13 @@ C_{\mathrm{run}}(t)\leq C_{\max}(W).
 这一表达捕捉了工作记忆有限性的第一层事实，却仍然不足以描述真正运行中的智能。原因在于，两个具有相同 $C_{\mathrm{run}}$ 的工作记忆状态，可能表现出截然不同的动力学性质。一个状态中的目标、假设、变量和关系可以围绕少数核心结构稳定协同；另一个状态虽然包含相同数量的结构，却可能充满相互竞争的目标、不断切换的注意对象以及无法闭合的推理支线。两者的“容量使用率”近似相同，但前者可能处于高度有效的认知状态，后者却已经接近失稳。
 
 因此，我们必须从
-\[
-\boxed{HowMuchIsInWorkingMemory}
-\]
+\begin{statementbox}
+HowMuchIsInWorkingMemory
+\end{statementbox}
 进一步转向
-\[
-\boxed{HowWorkingMemoryIsDynamicallyOrganized}.
-\]
+\begin{statementbox}
+HowWorkingMemoryIsDynamicallyOrganized
+\end{statementbox}
 这正是工作记忆运行相态理论的出发点。我们不再把 $h(t)$ 视为一个装有若干离散条目的容器，而把它视为由若干当前激活的 Agent-CSO 及其关系构成的动态网络。记
 \[
 \mathcal H(t)=
@@ -566,11 +570,9 @@ StableWorkingStructure.
 因此，运行气态真正危险的地方不是“想得发散”，而是失去了重新凝聚的机制。一个健康智能系统可以短暂进入高自由度区域，但必须保留可被重新捕获的慢约束，例如当前 Goal、$\Theta$ 中的稳定世界知识、$\Psi$ 的身份与价值边界以及现实反馈。即使这些慢变量在当前工作记忆中只以弱形式出现，它们仍应保持对可行状态空间的约束，否则系统将从有意义探索滑向不可治理的结构扩散。
 
 由此得到一个极重要的相态原则：
-\[
-\boxed{
+\begin{statementbox}
 ExplorationRequiresAPathBackToStructure.
-}
-\]
+\end{statementbox}
 真正的认知自由度不是无限结构扩散，而是在一个仍然可恢复、可验证的状态空间内暂时扩大可能性。
 
 \section{TCE 温度--控制强度二维相图}
@@ -1019,16 +1021,12 @@ ParameterReset.
 已经进入湍流、临界或运行气态的系统可能需要主动降低自由度、清理支线、恢复目标锚点并等待状态重新凝聚。对于长期运行的智能体而言，恢复机制与任务求解机制具有同等基础地位。
 
 第五个结论则把本章重新连接到全书最初的多尺度智能思想。工作记忆相态只是整个智能频谱中的一个快速层。它受到更慢的 E、$\Theta$、$\Psi$ 约束，又通过长期残差反向影响这些慢变量：
-\[
-\boxed{
+\begin{statementbox}
 SlowStructureShapesRuntimePhase,
-}
-\]
-\[
-\boxed{
+\end{statementbox}
+\begin{statementbox}
 PersistentRuntimeResidualShapesSlowStructure.
-}
-\]
+\end{statementbox}
 这正是我们在认识论部分提出的快--慢耦合规律在 Agent 工作记忆中的具体实现。
 
 因此，本章可以用一个统一命题收束：

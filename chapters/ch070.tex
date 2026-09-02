@@ -43,7 +43,6 @@ AgentOS Kernel 的可信核心，其余能力通过明确 ABI、异步事件和�
 其目标不是让每一次推理更长，而是使一个有限认知容量的主体能够在长期运行中保持
 \textbf{连续、有限、可恢复、可调节、可扩展并最终可成长}。
 \end{chapteroverviewbox}
-\ChapterArt{70}
 
 
 \section{Persistent Subject Manager：持续主体管理器}
@@ -1089,11 +1088,9 @@ ResidualModel.
 这样 Skill 不只告诉系统``怎么做''，还知道正常执行时应该看到什么，以及什么时候需要重新求助高层。
 
 Skill Runtime 的关键原则是：
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal.
-}
-\]
+\end{statementbox}
 熟练能力应尽量在局部闭环中运行，而只有
 \[
 Residual>\theta_{\mathrm{skill}}
@@ -1347,11 +1344,9 @@ Agent 很难形成深层自主学习；
 \]
 则主体身份、安全和治理边界都可能失去稳定性。
 因此系统真正需要的是
-\[
-\boxed{
+\begin{statementbox}
 BoundedSelfModificationEnvelope.
-}
-\]
+\end{statementbox}
 
 Governance Interface 至少应控制：
 主体级 Authority；
@@ -1387,11 +1382,9 @@ Policy(ChangeRequest)=Permit
 
 Governance 并不意味着外部系统逐步微操 Agent。
 恰恰相反，一个成熟治理面应遵循：
-\[
-\boxed{
+\begin{statementbox}
 ConstraintRatherThanMicromanagement.
-}
-\]
+\end{statementbox}
 治理层定义哪些区域不可越界、哪些慢变量需要额外验证、哪些行为需要授权，
 而在可行域内部仍然保留 Agent 的快速自治。
 

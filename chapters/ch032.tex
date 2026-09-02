@@ -10,8 +10,12 @@
 
 本章仍然限定在固定功能拓扑下的运行时调节。TCE 可以改变状态、增益和资源分布，但原则上不直接改写长期记忆结构、自我结构或系统功能拓扑。这样的边界非常重要，因为它使我们能够先研究一个比自我重构更基本的问题：\textbf{在系统组织结构暂时不变的条件下，智能是否可以仅通过对自身认知动力学进行闭环控制，而显著提高稳定性、效率与适应能力？}
 \end{chapteroverviewbox}
-\ChapterArt{32}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/tce-cognitive-state-phase-map.png}
+\caption{TCE 温度与控制强度的运行相图}
+\end{figure}
 \section{从“产生答案”到“控制认知过程”}
 
 传统的大语言模型通常表现为一种近似单次映射：
@@ -244,11 +248,9 @@ TCE 就是调节这两者平衡的运行时控制器。
 认知状态 $h(t)$ 在这个动态改变的有效势能面上运动。因此，即便底层生成模型和长期知识 $\Theta$ 完全相同，不同 TCE 控制也可以产生完全不同的推理轨迹。
 
 这也是本书强调“智能运行时”的原因。模型参数提供能力空间，但能力空间并不会自动决定每个时刻应该调用多少能力。一个持续智能体必须拥有一种运行时机制，在有限资源下主动决定：
-\begin{equation}
-    \boxed{
-    \text{当前什么值得被展开，展开多远，又应该在什么时候停止。}
-    }
-\end{equation}
+\begin{statementbox}
+当前什么值得被展开，展开多远，又应该在什么时候停止。
+\end{statementbox}
 TCE 正是这一问题的动力学回答。
 
 \section{探索、收敛与认知可塑性的动态平衡}
@@ -529,11 +531,9 @@ TCE 的第二个重要作用是控制什么能够进入显式认知，以及进�
 \end{equation}
 
 因此，TCE 不是让 Agent “尽可能多思考”的模块，而恰恰是在不断回答：
-\begin{equation}
-    \boxed{
-    \text{现在值得为这个问题投入多少认知？}
-    }
-\end{equation}
+\begin{statementbox}
+现在值得为这个问题投入多少认知？
+\end{statementbox}
 这也是持续智能与离线大模型推理之间最重要的差异之一。
 
 \section{TCE 作为状态依赖控制律}
@@ -1050,11 +1050,9 @@ TCE 的成熟并不是让 Agent 越来越坚定，而是让它能够根据现实
 例如比较“继续深度推理”“暂停并检索记忆”“提高探索宽度”“直接执行后通过现实验证”几种认知策略的预测成本。
 
 但无论采用规则控制、优化控制还是学习控制，TCE 都应保持一个最核心的工程原则：
-\begin{equation}
-    \boxed{
-    TCEControlMustRemainInspectable.
-    }
-\end{equation}
+\begin{statementbox}
+TCEControlMustRemainInspectable.
+\end{statementbox}
 系统至少应该能够回答：为什么提高了温度、为什么扩大了搜索、为什么延长了推理、为什么降低了资源投入。否则一旦 Agent 长期运行出现异常，我们将无法区分究竟是模型内容错误、自我状态估计错误，还是控制器本身错误。
 
 因此，TCE 最适合被工程化成一个具有明确输入、显式状态、受限输出和持续日志的认知控制服务，而不是一个不可检查的“神秘元智能模块”。
@@ -1116,17 +1114,13 @@ TCE 的成熟并不是让 Agent 越来越坚定，而是让它能够根据现实
 并在必要时主动改变该区域内部的运行方式。
 
 从更一般的智能动力学角度，我们可以把本章最重要的结论写成：
-\begin{equation}
-    \boxed{
-    \text{智能不仅需要状态，还需要关于状态的控制变量。}
-    }
-\end{equation}
+\begin{statementbox}
+智能不仅需要状态，还需要关于状态的控制变量。
+\end{statementbox}
 进一步：
-\begin{equation}
-    \boxed{
-    \text{成熟智能不是始终进行最强认知，而是能够根据自身与现实状态决定应该以何种强度、范围、深度和节奏进行认知。}
-    }
-\end{equation}
+\begin{statementbox}
+成熟智能不是始终进行最强认知，而是能够根据自身与现实状态决定应该以何种强度、范围、深度和节奏进行认知。
+\end{statementbox}
 
 于是 Agent 的认知过程第一次不再是一个被外部调用的固定程序，而成为了一个自身可感知、可调节、可稳定化的动力系统。我们也由此获得一个非常重要的结构：
 

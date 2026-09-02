@@ -10,7 +10,6 @@ Discrete Governance,\qquad Continuous Execution
 \end{statementbox}
 离散治理规定智能体此刻被允许处于什么制度状态、拥有什么目标和权限、哪些结构能够被修改以及哪些过程必须立即停止；连续动力学则负责在这些约束形成的可行域内部完成实时认知、学习、预测和行动。二者共同保证 AgentOS 同时具有连续适应能力与长期结构稳定性。
 \end{chapteroverviewbox}
-\ChapterArt{45}
 
 \section{Agent 运行为什么不是纯程序状态机}
 
@@ -122,11 +121,9 @@ R
 其中 \(O_W\) 是现实观测，\(M\) 是来自 E、\(\Theta\) 等记忆结构的激活，\(G\) 是当前有效 Goal 集合，\(R\) 是当前资源与身体条件。下标 \(q\) 非常重要：同一个 Agent 在普通运行模式、安全模式、反思模式或恢复模式下，其连续动力学并不相同。离散治理通过选择 \(F_q\) 或改变其可行域，决定系统“允许以什么方式继续运行”。
 
 连续认知动力学还必须体现本书此前反复建立的一条原则：
-\[
-\boxed{
+\begin{statementbox}
 SlowStructureShapesFastDynamics
-}
-\]
+\end{statementbox}
 即较慢的结构并不持续微操快速状态，而是定义快速活动的中心、先验、边界和增益。例如 \(\Psi\) 不需要在每一个推理 token 中发出离散指令，却可以改变某类信息被认为与“我”相关的程度；\(\Theta\) 不需要替代工作记忆完成当前任务，却持续提供结构化预测和技能先验；AHC 不需要决定具体动作，却通过紧迫性、能量状态和威胁水平改变 TCE 的控制参数。这种关系更适合表示为参数调制：
 \[
 \dot x_f
@@ -140,11 +137,9 @@ x_f;
 其中 \(\lambda_s(t)\) 是由慢变量提供的控制背景。
 
 反方向同样成立。快速状态的长期残差不能永远被慢层忽略：
-\[
-\boxed{
+\begin{statementbox}
 PersistentFastResidualShapesSlowStructure.
-}
-\]
+\end{statementbox}
 如果在窗口 \(T\) 内存在
 \[
 \left\langle
@@ -169,11 +164,9 @@ G
 这正是三相记忆循环、技能形成以及长期自我更新背后的共同动力形式。
 
 因此，连续认知动力学的关键不是“永不跳变”，而是任何跳变都必须嵌入一条持续状态轨迹中。Goal 可以被关闭，但关闭前后仍然存在同一主体；Task 可以失败，但失败会进入 E；认知策略可以改变，但其改变具有可追溯原因；TCE 可以快速调整增益，但调整结果又会被 SPC 重新观察。连续性真正保护的是
-\[
-\boxed{
+\begin{statementbox}
 CausalContinuityOfTheAgent
-}
-\]
+\end{statementbox}
 即当前状态必须能够从此前状态、现实输入和合法治理事件共同解释，而不能无理由地凭空出现。
 
 从工程上看，这意味着 AgentOS 必须把模型调用看成连续动力系统中的“状态转移算子”，而不是把一次模型调用本身当成整个 Agent。一个 LLM request 可以被表示成
@@ -478,11 +471,9 @@ ThinkingLess\neq KnowingLess.
 }
 \]
 很多情况下，
-\[
-\boxed{
+\begin{statementbox}
 StructureChangedCarrier.
-}
-\]
+\end{statementbox}
 原来由工作记忆承担的 Agent-CSO 被迁移到了更局部、更快速和更低成本的闭环中。只有异常发生时：
 \[
 \varepsilon_s>\theta_s,

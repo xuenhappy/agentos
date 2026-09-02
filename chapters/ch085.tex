@@ -18,8 +18,12 @@ AgentOS 控制工程的研究对象并不是某一个具体模块的控制律，
 
 本章严格区分三种知识层级：经典控制理论、非线性动力系统、状态观测器、混合系统等属于既有理论；将这些理论映射到 SPC--AHC--TCE、CCM 和生命周期结构属于 AgentOS 的工程建模；关于持续人工智能体能够形成何种长期自组织规律，则属于本书提出的待验证理论。后续所有 AgentOS 控制、培育与心理工程分析，都应以本章定义的系统对象和控制边界为统一基础。
 \end{chapteroverviewbox}
-\ChapterArt{85}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/control-stability-panel.png}
+\caption{控制工程面对的多尺度稳定性对象}
+\end{figure}
 \section{从“控制一个过程”到“控制一组相互控制的过程”}
 
 我们首先需要改变对“控制”这个词的直觉理解。在传统自动控制问题中，一个典型对象可以被表示为状态 $x(t)$、控制输入 $u(t)$ 与外部扰动 $w(t)$ 所构成的动力系统：
@@ -272,17 +276,13 @@ G\left(
 \right).
 \]
 这一公式表达的是本书一贯坚持的双向原则：
-\[
-\boxed{
+\begin{statementbox}
 SlowStructureShapesFastActivity
-}
-\]
+\end{statementbox}
 以及
-\[
-\boxed{
+\begin{statementbox}
 PersistentFastResidualShapesSlowStructure.
-}
-\]
+\end{statementbox}
 
 在不确定性存在时，我们还应进一步把控制对象从状态点扩展到概率分布。设当前 Agent 对未来认知状态的预测为
 \[
@@ -491,18 +491,14 @@ R(t),
 \section{多尺度局部闭合与残差上浮原则}
 
 一个复杂持续智能系统如果要求所有信息、所有异常和所有控制都经过最高认知层，就必然失败。原因不仅是计算成本，而且来自工作记忆容量有限性和闭环延迟。一个毫秒级身体扰动如果必须等待 LLM 完成秒级推理才能被修正，系统可能在得到答案之前已经失稳。因此我们此前逐步形成了一个贯穿 AgentOS 的基本原则：
-\[
-\boxed{
+\begin{statementbox}
 EachScaleShouldCloseItsOwnFastLoop.
-}
-\]
+\end{statementbox}
 
 对于 Body Runtime，姿态、速度、执行器误差、局部避障等应该尽可能在 BPCC 与安全控制层闭合；对于工具调用，格式校验、网络重试和局部异常可以在 Tool Runtime 闭合；对于工作记忆，轻微负载升高应由 CCM 局部 Fold 或 Suppress；对于长期结构，只有持续且重要的残差才应该进入 $\Theta$、$\Psi$ 或生命周期层。于是 AgentOS 控制工程中的正常信息流不是“所有东西都向上”，而是：
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal.
-}
-\]
+\end{statementbox}
 
 我们可以设第 $i$ 层局部状态为 $x_i$、局部控制器为 $u_i$、局部预测残差为
 \[
@@ -571,11 +567,9 @@ StableStructure
 LocalSkill.
 \]
 从控制工程角度，这不是简单的记忆写入，而是闭环位置发生改变。原本由慢层直接控制的行为，逐渐变成更快局部控制器能够自主闭合的过程。因此：
-\[
-\boxed{
+\begin{statementbox}
 StableStructureMovesTowardLocalFastClosure.
-}
-\]
+\end{statementbox}
 
 这两个方向共同形成 AgentOS 的跨尺度控制循环：
 \[
@@ -670,11 +664,9 @@ D_\Psi(
 \right\|.
 \]
 这不是要求 $\Psi$ 永远固定，而是要求 Agent 的身份变化具有历史连续性。身份稳定因此不是静态不变，而是：
-\[
-\boxed{
+\begin{statementbox}
 ContinuityUnderSlowChange.
-}
-\]
+\end{statementbox}
 
 第五是生命周期稳定性（Lifecycle Stability）。$\Omega$ 或 DGA 描述的不是一个瞬时目标，而是 Agent 在更长尺度上的生成方向。生命周期稳定意味着短期失败、Goal 变化或局部环境扰动不能任意重写最慢生成先验。只有跨时间、跨情境而且反复出现的结构证据，才应逐渐影响这一层。
 
@@ -722,11 +714,9 @@ InternalConfirmation
 InternalModel'
 \]
 的封闭循环。因此我们此前一再强调：
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\]
+\end{statementbox}
 
 在工程上，这要求行动必须经过 Reality Re-entry：
 \[
@@ -1061,11 +1051,9 @@ SelfRevision
 ).
 \]
 这与我们此前提出的最小必要重组原则一致：
-\[
-\boxed{
+\begin{statementbox}
 MinimumNecessaryIntervention.
-}
-\]
+\end{statementbox}
 
 鲁棒性同样应该在这里重新理解。AgentOS 不可能对所有未知扰动保持固定性能，因此我们更关注 bounded disturbance 下的可接受退化。设扰动满足
 \[

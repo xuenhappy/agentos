@@ -31,9 +31,13 @@ CCM 正是对这一问题的回答。它不是新的推理主体，也不是第�
 \end{statementbox}
 这一区分构成 AgentOS 处理长期复杂任务、持续认知与认知稳定性的关键基础。
 \end{chapteroverviewbox}
-\ChapterArt{38}
 
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/complexity-migration-tree.png}
+\caption{复杂度分解、折叠和表示重构}
+\end{figure}
 \section{工作记忆有限性为何必然要求主动复杂度治理}
 
 我们首先回到前文已经建立的工作记忆有限容量定理。设智能体在时刻 $t$ 的显式工作记忆状态为
@@ -1180,11 +1184,9 @@ Result(c_i)=Result(c_j)
 A\to B\to C\to A.
 \]
 如果系统多次经过这一结构，却没有新的外部信息、状态变化或者置信度更新，那么这不是有效闭环，而是：
-\[
-\boxed{
+\begin{statementbox}
 CognitiveLoopWithoutStateProgress.
-}
-\]
+\end{statementbox}
 可以定义进展量：
 \[
 \Delta S_k
@@ -1256,11 +1258,9 @@ Pointer
 Pointer 则提供未来恢复细节的索引。
 
 折叠因此要求：
-\[
-\boxed{
+\begin{statementbox}
 Recoverability.
-}
-\]
+\end{statementbox}
 如果一个结构被 ``压缩'' 后无法恢复，而且未来可能需要其细节，那么这更接近不可逆遗忘，而不是 CCM Fold。
 
 可以定义折叠操作：
@@ -1465,11 +1465,9 @@ ResumeCondition
 即第一个可行方案被立即锁定，导致系统失去更优可能。
 
 CCM 因此必须维持一个：
-\[
-\boxed{
+\begin{statementbox}
 ExplorationBandwidth
-}
-\]
+\end{statementbox}
 即允许同时高激活的探索宽度。
 
 可以定义：
@@ -1564,11 +1562,9 @@ E_i
 这里与传统计算机上下文切换存在重要区别。CPU 保存寄存器就可以准确恢复进程，
 而认知状态具有语义性和生成性，因此无法保证逐比特恢复。
 CCM 所追求的是：
-\[
-\boxed{
+\begin{statementbox}
 FunctionalResume
-}
-\]
+\end{statementbox}
 而不是：
 \[
 ExactStateRestore.
@@ -1661,11 +1657,9 @@ Agent 可以同时拥有成百上千个潜在任务，而在任一时刻只激�
 前述分解、合并、折叠等操作都在已有表示结构上工作。但有些问题之所以超出工作记忆容量，
 并不是因为其本体结构必然如此复杂，而是因为当前表达方式制造了不必要的认知负担。
 因此 CCM 必须具有更加高级的操作：
-\[
-\boxed{
+\begin{statementbox}
 RepresentationReconstruction.
-}
-\]
+\end{statementbox}
 
 设原始 Agent-CSO 表示为：
 \[

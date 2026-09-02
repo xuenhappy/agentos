@@ -40,8 +40,12 @@ Dynamics of the Topology Itself.
 任何未来允许拓扑自重组的系统，都首先必须能够在拓扑不变时稳定运行，否则所谓结构可塑性只会把
 运行时不稳定进一步放大。
 \end{chapteroverviewbox}
-\ChapterArt{48}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/agentos-continuous-learning-architecture.png}
+\caption{固定拓扑持续学习的统一闭环}
+\end{figure}
 \begin{introduction}[本章导航]
   \item 固定拓扑持续学习的严格定义
   \item 生命周期统一状态空间与核心闭环
@@ -1067,11 +1071,9 @@ SelfInterpretation'.
 
 如果 Agent 认为“我不擅长某类任务”，这一解释可能降低相关探索，导致其获得更多失败或者更少成功经验，进而再次强化原解释。于是自我结构不能只根据“自己怎么看自己”更新，而必须长期受到：
 
-\[
-\boxed{
+\begin{statementbox}
 WorldVerification
-}
-\]
+\end{statementbox}
 
 约束。
 
@@ -1268,11 +1270,9 @@ RecoveryTime.
 
 固定拓扑 AgentOS 能够获得远超固定内部容量的长期能力，还有一个重要原因：认知结构不必永久由 Agent 内部同一层级承载。我们此前把这种机制称作复杂度卸载，现在用 CSO 理论可以更准确地理解为：
 
-\[
-\boxed{
+\begin{statementbox}
 CarrierMigrationOfAgentCSO.
-}
-\]
+\end{statementbox}
 
 设某个 Agent-CSO 当前状态为：
 
@@ -1484,11 +1484,9 @@ Trap(D_1).
 
 因此 AgentOS 更适合采用：
 
-\[
-\boxed{
+\begin{statementbox}
 AsynchronousCognitiveRequest
-}
-\]
+\end{statementbox}
 
 模型。Task 提交需要全局处理的 CSO，请求进入 Scheduler，只有经过 Boundary、Priority 和 Capacity 判断后，才有资格进入 h。
 
@@ -1913,11 +1911,9 @@ FutureSelf(a_t'),
 
 这形成：
 
-\[
-\boxed{
+\begin{statementbox}
 BoundedRecursiveAgency.
-}
-\]
+\end{statementbox}
 
 它允许 Agent 通过自己过去的选择改变未来自我，却仍然把这种自我塑造限制在一个可验证的功能框架内。
 

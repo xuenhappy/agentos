@@ -14,8 +14,12 @@
 
 这里的“固定拓扑”仅指第一阶段保持 AgentOS 核心功能角色及其基本因果关系稳定，并不意味着模型参数、工作状态、记忆内容、技能、目标、自我结构或外部工具集合保持不变。相反，AgentOS 的目标恰恰是在稳定的系统骨架上容纳持续的状态演化、记忆塑形、技能沉降与生命周期成长。未来的功能拓扑学习，应建立在这一稳定基线已经成立之后，而不是取代这一基线。
 \end{chapteroverviewbox}
-\ChapterArt{22}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/agentos-fixed-topology-architecture.png}
+\caption{固定拓扑 AgentOS 的最小工程框架}
+\end{figure}
 \begin{introduction}[本章导航]
   \item 固定功能拓扑的研究边界
   \item 持续主体与可塑内部动力学
@@ -710,13 +714,9 @@ How do multiple computational agents cooperate on a task?
 
 而 AgentOS 首先研究：
 
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
-\text{How does one persistent subject manage many simultaneous cognitive processes without losing identity continuity?}
-}
-$}
-\]
+\begin{statementbox}
+How does one persistent subject manage many simultaneous cognitive processes without losing identity continuity?
+\end{statementbox}
 
 两者表面上都可能出现多个 worker，但系统本体完全不同。
 
@@ -974,11 +974,9 @@ Linux 仍然负责 CPU 调度、内存保护、设备驱动、文件系统、网
 
 这些问题都不属于传统计算资源调度，而属于：
 
-\[
-\boxed{
+\begin{statementbox}
 Cognitive Governance.
-}
-\]
+\end{statementbox}
 
 因此 Cognitive Runtime 是 AgentOS 更准确的工程名称。所谓 Runtime，意味着 AgentOS 始终位于“正在发生的智能过程”之中，而不只是训练模型或保存知识。
 
@@ -1034,19 +1032,15 @@ Observe.
 
 因此我们必须把：
 
-\[
-\boxed{
+\begin{statementbox}
 AgentLifetime
-}
-\]
+\end{statementbox}
 
 与：
 
-\[
-\boxed{
+\begin{statementbox}
 TaskLifetime
-}
-\]
+\end{statementbox}
 
 严格分离。
 
@@ -1209,11 +1203,9 @@ Action
 
 这一闭环必须遵守我们整个理论中极重要的一条原则：
 
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\]
+\end{statementbox}
 
 也就是说，Agent 内部可以生成预测：
 
@@ -1592,13 +1584,9 @@ Offloading.
 
 从这个起点出发，我们下一步必须回答的，就是长期智能最基本的记忆问题：
 
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
-\text{一个持续存在的主体，怎样把正在发生的现在，转化为自己的过去，并进一步把过去转化为生成未来的结构？}
-}
-$}
-\]
+\begin{statementbox}
+一个持续存在的主体，怎样把正在发生的现在，转化为自己的过去，并进一步把过去转化为生成未来的结构？
+\end{statementbox}
 
 这将把我们带入三相记忆：
 

@@ -8,8 +8,12 @@
 
 本章仍然属于固定功能拓扑 AgentOS 的原理论。这里所谓“重构”，首先指问题表示、任务结构、环境关系和局部认知组织方式的改变，并不预设智能体已经拥有任意修改自身核心功能拓扑的能力。更深层的拓扑发育问题将在本书更高层的结构动力学中讨论。
 \end{chapteroverviewbox}
-\ChapterArt{42}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/complexity-migration-tree.png}
+\caption{认知复杂度治理的五类动作}
+\end{figure}
 AgentOS 的工作记忆有限容量定理给出了本章的直接出发点。设时刻 $t$ 进入显式认知面的 Agent-CSO 构成图
 
 \[
@@ -213,19 +217,15 @@ Discarded
 
 因此我们可以得到一个非常重要的成熟智能原则：
 
-\[
-\boxed{
+\begin{statementbox}
 MostDynamicsShouldRemainLocal
-}
-\]
+\end{statementbox}
 
 而：
 
-\[
-\boxed{
+\begin{statementbox}
 RelevantDeviationBecomesExplicitCognition.
-}
-\]
+\end{statementbox}
 
 如果定义局部动力学产生的残差为 $\varepsilon_i(t)$，那么一种典型事件触发准入形式可以写为
 
@@ -291,19 +291,15 @@ h.
 
 我们首先把压缩与截流严格区分。截流改变的是
 
-\[
-\boxed{
+\begin{statementbox}
 WhetherAStructureEnters
-}
-\]
+\end{statementbox}
 
 而压缩改变的是
 
-\[
-\boxed{
+\begin{statementbox}
 HowTheStructureIsRepresentedAfterItEnters.
-}
-\]
+\end{statementbox}
 
 假设原始 Agent-CSO 子图为
 
@@ -778,11 +774,9 @@ J_T
 
 这也说明，在多时间尺度智能系统中，工作记忆容量限制会自然催生“过程”。过程并非外部项目管理强加给智能体的一套行政规则，而是有限认知系统处理超出瞬时承载能力问题时的一种基础动力学机制。很多复杂任务之所以需要计划、阶段、里程碑、检查点和子目标，根本原因之一就在于：
 
-\[
-\boxed{
+\begin{statementbox}
 WholeProblemCannotExistExplicitlyAtOnce.
-}
-\]
+\end{statementbox}
 
 因此第三条治理原则可以写成：
 
@@ -1017,11 +1011,9 @@ Cost_M
 
 因此真正需要优化的是：
 
-\[
-\boxed{
+\begin{statementbox}
 CarrierAllocation.
-}
-\]
+\end{statementbox}
 
 不同类型结构应该存在于修改代价、访问速度、可靠性和持续性不同的载体。
 
@@ -1090,21 +1082,17 @@ RealityTruth.
 
 但在某些情况下，无论怎样进行这些操作，问题仍然反复造成高认知负载。这往往说明真正的问题并不是“系统资源还不够”，而是：
 
-\[
-\boxed{
+\begin{statementbox}
 TheProblemIsRepresentedInTheWrongWay.
-}
-\]
+\end{statementbox}
 
 于是第五种，也是最深层的治理动作出现：重构。
 
 本章中的重构主要指 representation、task decomposition、environment arrangement 和 local functional organization 的改变。它首先不是未来意义上的任意核心拓扑自修改，而是一种：
 
-\[
-\boxed{
+\begin{statementbox}
 ProblemReformulation.
-}
-\]
+\end{statementbox}
 
 假设某个问题在表示空间 $\mathcal R_1$ 中形成认知结构
 
@@ -1305,11 +1293,9 @@ $C_{failure}$ 表示现有结构造成的失败代价。
 
 真正成熟的智能恰恰相反：
 
-\[
-\boxed{
+\begin{statementbox}
 StableStructureShouldRemainStableUntilPersistentEvidenceRequiresChange.
-}
-\]
+\end{statementbox}
 
 因此重构应具备迟滞。可以设置：
 
@@ -1385,11 +1371,9 @@ Reorganization.
 
 我们可以将这一思想称为：
 
-\[
-\boxed{
+\begin{statementbox}
 MinimumNecessaryCognitiveReorganizationPrinciple.
-}
-\]
+\end{statementbox}
 
 即：
 

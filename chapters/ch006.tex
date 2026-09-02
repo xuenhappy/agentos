@@ -17,8 +17,12 @@ Persistent Fast Residual Shapes Slow Structure.
 
 这两个方向共同构成多尺度智能能够既保持稳定、又保持学习能力的基本机制。后续三相记忆、工作记忆、SPC--TCE 调节、AHC、CCM、Body Runtime、BPCC 以及更高层的生命周期结构，都可以被重新放置在这一频谱坐标中理解。因此，本章不是一个独立的数学插曲，而是后续 AgentOS 多时间尺度设计的动力学基础。
 \end{chapteroverviewbox}
-\ChapterArt{6}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/functional-temporal-axis.png}
+\caption{快慢循环组成的智能频谱}
+\end{figure}
 \section{从“两个循环”到多频闭环谱}
 
 当我们第一次讨论智能的时间结构时，一个自然的出发点是把系统划分为“快循环”和“慢循环”。快速循环负责处理当前扰动，慢速循环负责长期学习和结构调整。这种二分具有重要启发意义，因为它已经打破了“整个智能体以同一速度运行”的直觉。但是，一旦我们把视角扩展到真实智能体，就会发现二循环模型仍然过于粗糙。一个具身智能体至少可能同时包含身体姿态控制、感知融合、当前认知、工作记忆维护、任务规划、经验积累、结构学习、自我保持以及生命周期方向变化。它们并不存在一个唯一的“快”和“慢”，而是分布在一系列连续或准连续的特征时间尺度上。
@@ -312,11 +316,9 @@ J_f
 那么它可以在一个有限状态空间内迅速求得近似最优控制。身体姿态、鼠标轨迹、局部软件操作、当前一句话中的语法完成，都可以具有这种性质。快速闭环的根本价值不是“聪明”，而是\textbf{能够把大量常规扰动在局部直接闭合，而不向全局认知扩散}。
 
 因此我们提出：
-\[
-\boxed{
+\begin{statementbox}
 EachScaleShouldCloseItsOwnFastLoop.
-}
-\]
+\end{statementbox}
 如果一个本可以在毫秒层解决的问题必须等待秒级甚至分钟级的高级认知，那么系统将产生巨大的协调成本。反过来，如果一个涉及长期目标、身份、一致性或环境结构改变的问题完全由快速局部层解决，又会产生短视行为。
 
 慢循环的优势恰好相反。它牺牲即时响应速度，换取更大的时间窗口、更广的状态聚合与更稳定的结构。设慢变量为 $x_s$，其演化满足
@@ -1343,11 +1345,9 @@ w_i
 i=1,\ldots,N.
 \]
 其中 $x_{i-1}$ 表示更快层反馈，$x_{i+1}$ 表示更慢层约束。为了避免所有尺度直接全连接，我们进一步提出相邻尺度耦合原则：
-\[
-\boxed{
+\begin{statementbox}
 AdjacentScaleCouplingPrinciple.
-}
-\]
+\end{statementbox}
 即在通常情况下，信息应优先通过相邻时间尺度逐层传播，而不是让最快层直接持续改变最慢层。
 
 于是：

@@ -5,7 +5,7 @@ MAIN := main
 BUILD_DIR := build
 PDF := $(BUILD_DIR)/$(MAIN).pdf
 RELEASE_PDF := 智能动力学与AgentOS.pdf
-TEX_SOURCES := $(MAIN).tex includes.tex preface.tex appendices.tex references.tex chapter-art.tex $(wildcard chapters/*.tex)
+TEX_SOURCES := $(MAIN).tex includes.tex preface.tex appendices.tex references.tex $(wildcard chapters/*.tex)
 IMAGE_SOURCES := $(shell find images -type f 2>/dev/null)
 
 .PHONY: all pdf quick release check clean distclean

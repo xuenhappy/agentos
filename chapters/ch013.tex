@@ -23,18 +23,18 @@ S_A
 
 因此，本章的研究对象不是单一模型的梯度下降，而是一个更广义的问题：
 
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
-\text{一个认知结构在一个智能体的一生中，究竟以什么形式、由什么功能、在什么时间尺度、通过什么载体继续存在？}
-}
-$}
-\]
+\begin{statementbox}
+一个认知结构在一个智能体的一生中，究竟以什么形式、由什么功能、在什么时间尺度、通过什么载体继续存在？
+\end{statementbox}
 
 后续关于三相记忆、工作记忆、认知卸载、技能编译、Body Runtime 和功能拓扑学习的讨论，都将在这一迁移理论之上获得统一解释。
 \end{chapteroverviewbox}
-\ChapterArt{13}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/cognitive-structure-functional-topology.png}
+\caption{CSO 在表示、功能、尺度和载体间迁移}
+\end{figure}
 \section{表示迁移：同一认知结构可以改变其内部编码}
 
 我们首先从最容易被传统机器学习理解的一类变化开始，即表示迁移（representation migration）。当我们说一个 Agent “学会”了某个对象、关系、规则或任务时，最直观的理解往往是其内部表示发生了变化。然而，在本书所采用的 CSO 本体论中，我们必须严格区分“结构本身”与“结构在某个 Agent 内部的表示”。如果 $C$ 表示一个认知结构对象，那么智能体 $A$ 对它的具体实现是
@@ -153,11 +153,9 @@ KnowingLess
 }
 \]
 而是
-\[
-\boxed{
+\begin{statementbox}
 StructureChangedFunctionalCarrier.
-}
-\]
+\end{statementbox}
 
 从这个角度看，熟练化（automatization）本质上是一种功能位置下降过程。一个原先需要高层全局闭环处理的 CSO，逐渐迁向更加局部、更快速、更确定的功能闭环：
 \[
@@ -556,11 +554,9 @@ MigrationOfRepeatedCSOsTowardStableLocalClosedLoops.
 \section{迁移的可逆性：成熟不是永久下沉，异常可以重新进入认知}
 
 如果我们只讨论“显式结构不断向更低层沉降”，整个理论就会成为一个不可逆的自动化模型。但真实智能并不是这样。成熟能力必须能够在环境变化、结构失配或失败发生时重新进入高层认知。因此，CSO 迁移的另一个核心原则是
-\[
-\boxed{
+\begin{statementbox}
 MigrationIsConditionallyReversible.
-}
-\]
+\end{statementbox}
 
 例如，一个成年人熟练驾驶时，大部分车道保持、速度控制和常规操作不需要显式语言推理。但遇到异常冰面、车辆故障或陌生交通规则以后，原本自动化的动作会重新进入注意和显式规划。类似地，一个 Agent 已经将某项网页操作编译成脚本，但网页结构改变、权限异常或返回结果不符合预期时，该 Skill 必须被暂停，其内部假设重新转化成可检查的 Agent-CSO。
 
@@ -1112,10 +1108,8 @@ AgentCSO'.
 \]
 
 这一闭环也揭示了为什么学习不能脱离现实。一个 Agent 完全可以在内部形成越来越复杂的结构，但如果这些结构不能在观测、预测和行动中持续经受现实检验，它们就可能形成封闭的内部自洽，而不是有效学习。因此，本书始终保留以下约束：
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\]
+\end{statementbox}
 
 至此，我们已经把“学习”从参数变化扩展为认知结构生命周期中的多维迁移。下一步理论问题自然出现：如果某种功能迁移长期重复，那么原本固定的功能关系是否还应该保持不变？换句话说，\textbf{当 CSO 流持续塑造同样的功能路径时，动态关系是否会进一步沉降成新的功能拓扑？}这将把我们从“拓扑上的学习”进一步带向“拓扑本身的学习”，并最终连接到智能的结构发育理论。

@@ -22,8 +22,12 @@ SemanticInterfaceStable,\quad FastDynamicsLocal,\quad RealityAuthoritative
 \]
 即语义接口应尽量稳定，高频动力学应尽量在身体局部闭合，而任何内部预测最终都必须重新经过现实观测验证。本章给出的不是单个机器人产品的开发顺序，而是一条从“身体接口”逐步走向“可迁移身体运行时”的系统工程路线。
 \end{chapteroverviewbox}
-\ChapterArt{73}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/cognitive-kernel-body-runtime.png}
+\caption{Body Runtime 的研发组件与接口关系}
+\end{figure}
 \section{Body ABI：首先固定身体与认知之间的契约}
 
 Body Runtime 的研发不能从某一种具体机器人的电机、摄像头或者浏览器 API 开始。若研发起点就是某个具体身体，那么认知系统最终会把身体特有的坐标系、控制命令、传感器格式和状态变量吸收到自己的内部表示之中，从而形成一种隐性的结构锁定：
@@ -193,11 +197,9 @@ Suggested
 由传感器直接确认的“门已关闭”和 BPCC 推测的“门下一秒仍会关闭”，虽然语义对象相同，却具有完全不同的现实权威。如果系统不保留这种区别，预测状态很容易逐渐污染现实状态，使 Agent 进入内部模型自我验证的闭环。SGC 因此不仅是语义地图，也是 Agent 对自身“知道什么、为什么知道、知道得有多确定”的显式边界。
 
 从研发角度，SGC 不应该一开始追求覆盖世界所有语义类型，而应该按照 Body Runtime 的动作闭环逐层扩大。初始版本只需要实现 Persistent Entity、Body Pose、Geometry、基本关系和 Observation Confidence；第二阶段再加入 Affordance；第三阶段加入预测对象和事件；进一步才加入复杂语义标签与关系结构。其目标不是建立百科全书式世界模型，而是获得
-\[
-\boxed{
+\begin{statementbox}
 MinimalSufficientActionableRepresentation.
-}
-\]
+\end{statementbox}
 若某个语义信息既不能改变局部预测、控制、安全判断，也不能帮助高层推理，那么它没有必要进入实时 SGC。
 
 在数字身体上，同样的原则仍然成立。一个 Browser Body 的 SGC 可以包含页面区域、按钮、输入框、菜单、当前焦点、可滚动区域和可点击关系；一个 Desktop Body 可以包含窗口、文件、应用、光标和活动进程。此时所谓“空间”不必局限为欧氏三维空间，而是可行动坐标空间
@@ -222,11 +224,9 @@ FCS=FixedTypedMultilayerFeelingField.
 \]
 
 这里的 Feeling 始终是工程功能概念，而不是关于主观体验的判断。FCS 表达的是
-\[
-\boxed{
+\begin{statementbox}
 HowRealityAndBodyAreAffectingMe.
-}
-\]
+\end{statementbox}
 一个基本 FCS 可以形式化成
 \[
 F_t
@@ -390,17 +390,13 @@ PredictLocally,\ EscalateResidualGlobally.
 \]
 
 Simulator 阶段应专门测试模型失配，而不是只测试控制成功率。例如人为改变摩擦系数、执行器延迟、传感遮挡、质量分布、UI 布局或 API 响应时间，观察 BPCC 是否能够通过局部在线适应吸收小变化，并在变化过大时主动上报，而不是继续“自信执行”。一个成熟的 BPCC 不是永远局部解决问题，而是能够判断：
-\[
-\boxed{
+\begin{statementbox}
 IStillKnowHowToControl
-}
-\]
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
 MyLocalModelIsNoLongerTrustworthy
-}
-\]
+\end{statementbox}
 之间的边界。
 
 这一阶段还必须严格区分 BPCC 私有 latent 与系统公共状态。为了性能，我们允许：
@@ -434,11 +430,9 @@ Adaptation.
 \section{Physical Robot：把 Body Runtime 放回不可欺骗的现实}
 
 当 Body ABI、SGC、FCS 与 BPCC Simulator 已能够形成稳定闭环以后，下一阶段必须进入真实物理机器人。此时研究对象发生根本变化：Simulator 中所有状态都由我们定义，而现实具有不可完全建模、不可任意重置和不可预测的扰动。因此真实机器人阶段不是“把仿真代码部署到硬件”，而是第一次真正检验
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\]
+\end{statementbox}
 
 真实 Body 的动力学可以写成：
 \[
@@ -548,11 +542,9 @@ x_{cursor}
 点击、拖动、键盘输入等则成为数字动作空间。
 
 FCS 在数字 Body 中同样存在。例如页面突然变化带来 UncertaintyPressure，网络延迟形成 ControlInstability，登录失效形成 CapabilityLoss，资源不足形成 ResourcePressure。这样一个重要的理论结果得到工程验证：
-\[
-\boxed{
+\begin{statementbox}
 FeelingFunctionalState
-}
-\]
+\end{statementbox}
 并不依赖生物内感受或机械躯体，它描述的是现实条件对 Agent 当前行动能力的功能性影响。
 
 数字 Body 是 Body Runtime 研发中的极佳早期平台，因为它同时具备复杂现实结构和低物理风险。浏览器环境仍然存在动态页面、隐藏状态、权限、不确定反馈和操作失败，但可以快速记录、回放和重置。因此我们能够高频测试：

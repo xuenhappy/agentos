@@ -6,8 +6,12 @@
 
 Scheduler 正是这一问题的回答者。本章将其形式化为一个受容量、安全、身份连续性、时间约束和长期价值结构共同约束的在线资源配置过程。它不直接完成推理，也不直接判断世界真伪，而是在多个竞争认知进程之间持续建立一个随时间变化的可执行秩序。Scheduler 的最终目标不是使每个任务都最快完成，而是维持整个持续智能体在有限资源条件下的\textbf{可运行性、响应性、连续性与长期有效性}。从这个意义上说，Scheduler 所调度的并不只是计算时间，而是智能体在每一个时刻“允许什么成为现在”的权利。
 \end{chapteroverviewbox}
-\ChapterArt{39}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/cognitive-task-scheduling-architecture.png}
+\caption{任务、注意、记忆与工具的认知调度}
+\end{figure}
 \section{从有限工作记忆到认知调度问题}
 
 我们已经知道，持续智能系统不可能把当前所有可能相关的信息、目标、任务、推理支线、身体状态、记忆内容和工具返回结果同时维持在显式工作空间中。若以 $h(t)$ 表示当前工作记忆状态，那么其有限性并不仅表现为一个简单的存储容量约束，而表现为能够同时保持相干关系的结构上界。早期形式可以写为
@@ -894,11 +898,9 @@ B_{\mathrm{background}}
 这意味着 Scheduler 不需要在每一个快速认知周期重新评估所有生命周期任务。长期任务可以只保留低频状态，每隔较大时间窗口重新评价其优先级；只有当产生显著事件时才提前唤醒。
 
 这种设计体现
-\[
-\boxed{
+\begin{statementbox}
 AdjacentScaleCouplingPrinciple.
-}
-\]
+\end{statementbox}
 高频变化首先影响相邻层，而不应每次直接修改最慢变量。比如一个工具失败通常只需要重新规划当前任务，不应该直接导致长期自我结构变化。相反，如果同类失败在较长时间内持续出现，则中层统计结构才可能逐步影响长期能力判断。
 
 Scheduler 可以维护多尺度积分量：
@@ -1186,11 +1188,9 @@ h(t).
 这意味着智能体的“现在”并非世界的完整当前状态，而是一个经过选择的结构切面。对于同一个外部世界，不同的 Scheduler、不同的 Goal 和不同的 Self 会形成不同的当前认知世界。由此可以理解为什么调度并不是一个纯工程细节，它实际上是智能体认识论的一部分：系统能够知道什么，不仅取决于它拥有多少传感器和记忆，也取决于什么被允许在正确的时间进入显式认知。
 
 但这一选择必须始终接受现实校验。Scheduler 可以决定暂时忽略一个低优先级事件，却不能使事件本身从现实中消失；它可以延迟处理记忆，却不能把预测状态冒充现实观测。因此其最终边界仍然是
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\]
+\end{statementbox}
 如果外部残差持续增大，原本被压低的事件必须逐渐提高调度势能，最终突破准入阈值。这确保 Scheduler 的选择性不会演变成封闭的认知偏见。
 
 从系统角度，我们最终可以把本章确立的运行闭环浓缩为
@@ -1281,11 +1281,9 @@ Waiting\neq Thinking.
 }
 \]
 
-\[
-\boxed{
+\begin{statementbox}
 RelevantDeviationBecomesThought.
-}
-\]
+\end{statementbox}
 
 \[
 \boxed{

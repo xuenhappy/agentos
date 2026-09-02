@@ -17,8 +17,12 @@
 \end{statementbox}
 这一研究路线的目的不是把 AgentOS 强制改写成传统控制器，而是建立一套能够描述、分析和验证长期人工智能主体运行稳定性的统一动力学语言。
 \end{chapteroverviewbox}
-\ChapterArt{75}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/control-stability-panel.png}
+\caption{连续—离散控制的稳定性研究面板}
+\end{figure}
 \section{快速连续动力学：智能运行时首先是一个流动过程}
 
 我们首先从一个容易被传统软件工程忽略的问题开始：一个持续智能体在大部分时间里，并不是不断执行``进入状态 A、跳转状态 B、执行状态 C''这样的离散状态机，而是在一个高维状态空间中持续变化。注意焦点的权重不会在两个值之间突然跳跃，认知压力不会瞬间从零变成最大，AHC 中的威胁、疲劳、资源压力与社会可信度也不会天然呈现二值变化；Body Runtime 中的位置、速度、控制误差、感知置信度和局部预测残差更明显地属于连续变量。因此，在 AgentOS 的运行理论中，我们应当首先定义一个连续状态向量
@@ -164,11 +168,9 @@ G(z_s,\bar{x}_f,\bar{\varepsilon}),
 \varepsilon(\tau)d\tau.
 \]
 这正对应我们此前得到的原则：
-\[
-\boxed{
+\begin{statementbox}
 PersistentFastResidualShapesSlowStructure.
-}
-\]
+\end{statementbox}
 单次异常不应直接改变身份；重复异常才可能推动结构学习。一次任务失败可能改变 $h$，连续几次同类失败可能形成新的 $E$，长期可重复规律才应改变 $\Theta$；只有当大量长期结构重解释不断指向同一方向时，$\Psi$ 乃至 $\Omega$ 才有理由更新。
 
 这一时间尺度保护原则可以进一步写成一个结构更新阈值模型。设第 $k$ 个慢层的结构更新量为
@@ -558,11 +560,9 @@ C_h(x),
 就能够至少建立局部意义上的输入--状态稳定性。
 
 但 AgentOS 的稳定性目标不应是让所有状态趋向一个固定点。一个智能体如果永远回到唯一固定状态，就失去了学习与探索能力。因此我们的稳定性更接近：
-\[
-\boxed{
+\begin{statementbox}
 BoundedAdaptiveStability.
-}
-\]
+\end{statementbox}
 即状态可以变化、目标可以变化、能力可以学习，但系统应长期保持在一个可恢复的可治理区域
 \[
 x(t)\in\mathcal X_{\mathrm{governable}}
@@ -668,11 +668,9 @@ Authority 还决定了递归自主性的边界。如果所有核心变量都完�
 \approx\mathcal S,
 \]
 则身份连续、安全边界和长期可验证性都会受到威胁。因此真正需要的是：
-\[
-\boxed{
+\begin{statementbox}
 BoundedAuthorityGrowth.
-}
-\]
+\end{statementbox}
 权限应随着能力、长期稳定性、历史表现和风险等级逐步变化，而不是一次性完全开放。
 
 因此，在 AgentOS 中，控制工程最终必须回答两类问题：
@@ -781,11 +779,9 @@ C_2
 而不是只能看到一个当前模型快照。
 
 因此 Checkpoint 在 AgentOS 中具有三个功能：故障恢复、结构学习保护和生命周期可追溯。它将传统计算机系统中的 Recovery 概念提升为：
-\[
-\boxed{
+\begin{statementbox}
 LifecycleRecoverability.
-}
-\]
+\end{statementbox}
 对于能够持续自我修改的智能体，这不是附加功能，而是允许其安全成长的基础条件。
 
 \section{有限自修改：Agent 应能够成长，但不能任意重写自身}
@@ -819,11 +815,9 @@ Agent 只能在设计者给定的结构中调整参数，它能够学习任务�
 那么安全机制、权限体系、身份约束甚至 checkpoint 规则都可能被自身重写，系统将失去外部治理锚点。
 
 因此我们提出：
-\[
-\boxed{
+\begin{statementbox}
 BoundedSelfModificationEnvelope.
-}
-\]
+\end{statementbox}
 更形式化地，定义允许结构空间
 \[
 \mathcal E_{\mathrm{self}}
@@ -1062,17 +1056,13 @@ Consolidation.
 因此，未来的拓扑可塑 Agent 不是一个``可以随意重写自己代码的 AI''，而是一个能够在极慢尺度上，以现实证据、长期收益和结构稳定性为依据，对自身功能组织进行受控发育的系统。
 
 这也使我们能够准确区分两类持续学习。第一类是在既有结构内部学习：
-\[
-\boxed{
+\begin{statementbox}
 LearningWithinTopology.
-}
-\]
+\end{statementbox}
 第二类则是学习如何改变承载学习本身的结构：
-\[
-\boxed{
+\begin{statementbox}
 LearningOfTopology.
-}
-\]
+\end{statementbox}
 后者才构成真正意义上的 Development。
 
 因此，本章所建立的连续--离散控制研究路线最终形成一个完整的时间尺度阶梯：

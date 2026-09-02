@@ -8,8 +8,12 @@
 
 三通道并不是把同一个世界切成三个互不联系的世界，而是在同一现实事件之上建立三个不同时间尺度、不同表达形式、不同调度权限和不同失效后果的投影。它们共同构成 Body Runtime 与 Agent Kernel 之间最基本的路由层，并保证 AgentOS 同时具备可理解性、连续内稳态调节能力以及不依赖高层推理的实时安全性。
 \end{chapteroverviewbox}
-\ChapterArt{58}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/semantic-modulation-safety-channels.png}
+\caption{语义、调制与紧急安全三信号通道}
+\end{figure}
 \section{语义通道：将现实转换为可认知的结构内容}
 \label{sec:semantic-channel}
 
@@ -493,19 +497,15 @@ x_{t+k}\in\mathcal X_{recoverable}.
 一旦恢复，就把控制权重新交还更高层。
 
 因此安全闭环真正追求的并不是“代替认知”，而是\textbf{维持认知继续有机会工作的现实条件}。这可以表述成
-\[
-\boxed{
+\begin{statementbox}
 SafetyPreservesTheFeasibleFutureOfCognition
-}
-\]
+\end{statementbox}
 如果一个高层 Agent 因为没有及时避障而被永久损坏，再完美的长期记忆、自我和推理结构也失去意义。安全因此不是智能之外附加的一套规则，而是持续主体得以存在的最低层现实条件。
 
 从这个角度看，AgentOS 的多尺度原则在这里获得了非常具体的工程形式：
-\[
-\boxed{
+\begin{statementbox}
 HigherIntelligenceDoesNotEliminateLowerLevelClosure.
-}
-\]
+\end{statementbox}
 智能越成熟，越不应该让最高级认知负责所有毫秒级事件；相反，成熟意味着越来越多确定、稳定、可验证的局部问题能够在适当尺度独立闭合，而真正异常、模糊和具有长期意义的问题才被提升进入显式认知。
 
 \section{三通道的优先级：不是三条并列数据流，而是三种不同的因果权限}

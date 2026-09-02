@@ -12,7 +12,6 @@ SPC\rightarrow TCE\rightarrow CognitiveDynamics\rightarrow SPC
 \]
 应被视为 AgentOS 从``拥有认知状态''走向``能够治理自身认知状态''的最小动力学结构。本章只研究这一最小闭环，不预先依赖更复杂的内稳态、情感调制或复杂度治理结构，从而首先建立认知自调节的基本数学骨架。
 \end{chapteroverviewbox}
-\ChapterArt{33}
 
 \section{从认知过程到认知自调节：为什么 SPC 与 TCE 必须闭合}
 
@@ -465,11 +464,9 @@ SPC
 F=F_t.
 \end{equation}
 因此 TCE 实际面对的是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 TimeVaryingNonlinearCognitivePlant
-}
-\end{equation}
+\end{statementbox}
 而不是一个已知线性系统。
 
 第二，SPC 与 Plant 并非完全分离。SPC 的运行本身也需要认知资源，因此：
@@ -635,11 +632,9 @@ J_{TCE}
 \end{equation}
 
 这一点揭示了 SPC--TCE 闭环与普通限流器的根本不同：它不是单纯压低认知活动，而是在有限容量条件下动态决定：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 WhatDeservesCognitiveBandwidthNow?
-}
-\end{equation}
+\end{statementbox}
 
 进一步地，工作记忆有限性意味着任何成熟 Agent 都不可能让全部认知过程持续保持显式状态。大量低层能力必须保持局部闭合，只有需要跨模块协调、存在异常残差或需要重新规划时才提升进入显式工作记忆。因此：
 \begin{equation}
@@ -688,11 +683,9 @@ x_t\in\mathcal R_{cog}^{*}.
 \end{equation}
 
 这使我们可以把认知自调节理解成一种动态稳态：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 CognitiveHomeorhesis
-}
-\end{equation}
+\end{statementbox}
 即系统维持的并不是一个静态认知状态，而是一类能够持续完成任务并保持恢复能力的认知流形。
 
 例如，在熟悉任务中，最优状态可能具有：
@@ -852,17 +845,13 @@ TCEUnableToAct
 仍然不能形成自调节。
 
 因此，一个最小 SPC--TCE 系统至少必须满足：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 RelevantStatesAreObservable
-}
-\end{equation}
+\end{statementbox}
 和：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 RelevantDynamicsAreControllable.
-}
-\end{equation}
+\end{statementbox}
 
 为了适应复杂认知系统，我们可以进一步定义任务相关可观测性：
 \begin{equation}
@@ -2052,11 +2041,9 @@ MinimalFunctionalSelfRegulationLoop.
 \end{equation}
 
 它赋予 Agent 的不是神秘意义上的``自我意识''，而是：
-\begin{equation}
-\boxed{
-\text{形成关于自身认知状态的可操作表示，并依据该表示改变自身后续认知动力学的能力。}
-}
-\end{equation}
+\begin{statementbox}
+形成关于自身认知状态的可操作表示，并依据该表示改变自身后续认知动力学的能力。
+\end{statementbox}
 
 这一能力之所以重要，是因为它把我们此前关于工作记忆有限性、自我 $\Psi$、多尺度闭环以及认知控制的讨论第一次压缩进同一个可执行动力系统中。工作记忆有限意味着系统必须治理自己；SPC 提供治理所需的自状态；$\Psi$ 与 Goal 提供参考系；TCE 将自状态转化为控制量；认知 Plant 对控制做出反应；新的状态再次进入 SPC，由此形成真正闭合。
 

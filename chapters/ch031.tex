@@ -12,8 +12,12 @@
 \]
 本章将建立 SPC 的本体边界、数学对象、估计过程、递归压缩机制、置信度表示、认识论滞后、稳定性要求以及其与工作记忆 $h(t)$、情景记忆 $E$、结构记忆 $\Theta$ 和自我慢变量 $\Psi$ 的基本关系，并最终说明：所谓 ``智能体认识自己''，在工程意义上首先不是获得一个关于自身的绝对真相，而是在有限认知容量条件下持续形成关于自身状态的可更新、有置信度、可行动的后验估计。
 \end{chapteroverviewbox}
-\ChapterArt{31}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/spc-state-observer.png}
+\caption{SPC 对分布式内部状态的压缩观察}
+\end{figure}
 \section{为什么持续智能体必须具有自我状态估计}
 
 在前面的讨论中，我们已经把工作记忆 $h(t)$ 从一个普通的信息存储区域提升为有限的显式认知总线。所有当前需要被全局比较、推理、计划和决策的结构，都必须以某种形式进入 $h(t)$；与此同时，一个成熟智能系统的大部分动力学却不应该长期驻留在 $h(t)$ 中。身体局部控制、长期结构记忆、已经形成的技能、后台任务、外部工具状态以及大量内部统计过程，都应当在各自的局部闭环中运行。这意味着持续智能体天然处于一种结构矛盾之中：它必须对自己的整体运行状态具有足够认识，否则无法进行资源调节、自我修正和长期稳定控制；但它又不可能把自己的全部内部状态同时送入工作记忆，因为这样恰恰会破坏工作记忆有限性所要求的局部闭合原则。
@@ -866,17 +870,13 @@ E
 这形成了一个跨时间尺度的自我模型更新过程。
 
 但必须防止一个理论误区：SPC 不等于 $\Psi$。SPC 回答的是：
-\[
-\boxed{
+\begin{statementbox}
 WhatStateAmIInNow?
-}
-\]
+\end{statementbox}
 而 $\Psi$ 更接近：
-\[
-\boxed{
+\begin{statementbox}
 WhoAmIAcrossTime?
-}
-\]
+\end{statementbox}
 前者是快速自状态估计，后者是慢速身份结构。若把两者混为一谈，短期状态就会过度修改身份；例如一次任务失败立即变成 ``我是一个无能力 Agent''。因此必须保持：
 \[
 \boxed{
@@ -939,11 +939,9 @@ I(S;X)
 是否发生异常升级。
 
 因此自我表示的价值不能按照描述长度评价，而应按照：
-\[
-\boxed{
+\begin{statementbox}
 ControlRelevantInformationPerUnitWorkingMemory
-}
-\]
+\end{statementbox}
 评价。
 
 我们可以定义一个概念性效率指标：
@@ -1094,11 +1092,9 @@ SelfInterpretiveConsistency.
 }
 \]
 这与全书已经建立的
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint
-}
-\]
+\end{statementbox}
 完全一致。
 
 我们还可以定义 SPC 的校准指标。例如对于某种风险判断：

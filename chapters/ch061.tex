@@ -17,7 +17,6 @@ Stable Ability Moves Downward,\ Unexpected Residual Moves Upward
 
 本章的目标，是把这一原则从工程直觉形式化为一个可用于 AgentOS、Body Runtime、具身控制以及一般多尺度智能系统的动力学原理。这里讨论的``向上''和``向下''首先指功能与时间尺度上的迁移，而非固定软件调用栈或物理空间方向。
 \end{chapteroverviewbox}
-\ChapterArt{61}
 
 \section{局部预测原则：Predict Locally}
 
@@ -83,11 +82,9 @@ AgentCSO@L_i,
 AgentCSO@L_{i+1}.
 \]
 因此成熟智能与幼稚智能之间一个极重要的区别，不是前者``思考更多''，而是前者拥有更多能够独立闭合的局部结构。我们由此得到本章第一条基本原则：
-\begin{equation}
-\boxed{
-\text{Each Scale Should Predict and Close What It Can Locally.}
-}
-\end{equation}
+\begin{statementbox}
+Each Scale Should Predict and Close What It Can Locally.
+\end{statementbox}
 
 这也是多尺度智能能够扩展的前提。如果每增加一个身体自由度、工具或环境变量都要求中央认知层同步处理，那么系统规模增加最终必然导致中央认知过载。只有把预测和闭合能力分布到适当尺度，有限的工作记忆和高层推理能力才能保留给那些真正需要跨域、跨时间尺度和跨功能协调的问题。
 
@@ -362,11 +359,9 @@ Rec_i
 \section{稳定能力向下迁移：Stable Ability Moves Downward}
 
 多尺度智能体系中存在一个重要但常被忽略的方向：知识和能力并不总是向``更高层''发展。恰恰相反，一个智能体真正成熟的标志之一，是越来越多已经掌握的能力从昂贵、缓慢、显式的高层认知迁移到快速、局部、低成本的闭环之中。因此我们提出：
-\begin{equation}
-\boxed{
-\text{Stable Ability Moves Downward.}
-}
-\end{equation}
+\begin{statementbox}
+Stable Ability Moves Downward.
+\end{statementbox}
 这里的``向下''不是能力退化，而是\textbf{认知结构承载位置的成熟迁移}。
 
 设某项能力 $C$ 在学习早期需要工作记忆中的显式处理：
@@ -594,11 +589,9 @@ Attention is partly a policy for promoting unresolved structure across scales.
 \section{相邻尺度耦合原则：Adjacent Scale Coupling}
 
 一个自然问题随之出现：既然残差可以向上，约束和技能可以向下，是否应该允许任意两个层级直接通信？例如毫秒级 servo 是否可以直接向生命周期 $\Psi$ 层发送事件，或者 DGA 是否可以直接修改某个电机 PWM 值？从理论上这些跨越式路径并非绝对不可构造，但如果把它们作为常规机制，多尺度结构就会迅速失去可解释性、稳定性与时间尺度隔离。因此本书提出：
-\begin{equation}
-\boxed{
-\text{Adjacent Scale Coupling Principle}
-}
-\end{equation}
+\begin{statementbox}
+Adjacent Scale Coupling Principle
+\end{statementbox}
 即正常情况下，不同尺度的结构迁移和控制应优先通过相邻或近邻尺度逐级完成。
 
 设系统具有层级链

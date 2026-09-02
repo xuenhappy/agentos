@@ -42,9 +42,13 @@
 
 需要特别强调的是：本章中的“组织认知”“组织记忆”“组织智能”属于功能与动力学意义上的概念。它们可以与分布式认知（distributed cognition）、多智能体系统（multi-agent systems）、组织理论（organization theory）、制度经济学（institutional economics）等既有理论进行比较，但本章提出的 CSO 流、功能拓扑沉降和跨尺度认知承载模型属于本书自身的理论构造，不能把两者直接等同。
 \end{chapteroverviewbox}
-\ChapterArt{108}
 
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/cognitive-cosmos-artwork.png}
+\caption{角色、协议、制度和共享记忆形成的组织智能}
+\end{figure}
 \section{Agent 间 CSO 流：组织智能的第一性动力对象}
 \label{sec:inter-agent-cso-flow}
 
@@ -116,11 +120,9 @@ A_i,A_j\in\mathcal A
 \mathbb E_T[J^C_{ij}]>0,
 \]
 说明某类结构在固定主体之间长期反复迁移。第二是\textbf{方向稳定性}，即 $A_i\rightarrow A_j$ 和 $A_j\rightarrow A_i$ 在功能上可能并不对称。第三是\textbf{功能闭合性}：结构从 $A_i$ 迁移到 $A_j$ 后，是否经过处理重新进入世界或其他 Agent，并产生可验证的结果。我们因此仍然保持本书的一条基本原则：
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\]
+\end{statementbox}
 组织内部传播得再广的结构，如果始终不能通过行动和外部现实完成验证，也只能说明它具有组织内部传播力，而不能证明其认知有效性。
 
 现在我们便能看见组织智能形成的真正起点。一个临时团队可能只有随机的 CSO 流；随着某种任务长期重复，例如“客户问题由前端人员识别，再由技术人员判断，再由工程人员实现，最后由质量人员验证”，某些跨主体流会反复出现：
@@ -306,11 +308,9 @@ C_h^{\mathrm{coord}}
 \downarrow.
 \]
 这就是为什么成熟组织能够在大量成员并行运行的情况下保持可操作性。组织并不是让每个人实时理解整个组织，而是把大量重复关系预先编译成局部闭环。由此，我们得到与 AgentOS 中 ``Normal Dynamics Stay Local'' 完全一致的组织原则：
-\[
-\boxed{
+\begin{statementbox}
 NormalOrganizationalDynamicsStayLocal.
-}
-\]
+\end{statementbox}
 只有当协议内无法消化的残差超过阈值时，问题才向更高尺度提升：
 \[
 \Gamma_{\mathrm{org}}
@@ -832,11 +832,9 @@ C,
 (A_i,R_\alpha,\Pi_{\alpha\beta}),
 \]
 其中输入包括当前 CSO 类型 $C$、可用主体集合 $\mathcal A$、角色集合 $\mathcal R$、协议集合 $\mathcal P$ 与组织记忆 $\mathcal M$，输出则决定哪个持续主体以什么角色、通过什么协议承担该结构。这已经不再是简单 CPU scheduling，而是：
-\[
-\boxed{
+\begin{statementbox}
 Organizational Cognitive Structure Scheduling.
-}
-\]
+\end{statementbox}
 
 组织层的 Boundary 同样需要正式工程化。某一 CSO 可以由当前 Agent 自己处理，可以转移给同组织其他 Agent，可以调用工具，可以外包给其他组织，也可以写入长期组织记忆。因此对每个待处理结构 $C$，都存在一个承载选择：
 \[

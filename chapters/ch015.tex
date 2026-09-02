@@ -40,8 +40,12 @@ Dynamics\ Of\ Topology
 
 需要特别说明的是，本章借用了图论、多层网络、超图、动态网络、双部图、图映射以及控制系统中的状态--实现分离思想，但“双图理论”在本书中的具体含义，是为CSO、Agent-CSO及AgentOS长期智能动力学服务的理论构造，不应与任何一种现成图神经网络或知识图谱模型直接等同。
 \end{chapteroverviewbox}
-\ChapterArt{15}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/cognitive-structure-functional-topology.png}
+\caption{CSO 图、功能图与多对多承载映射}
+\end{figure}
 \section{为什么一张图不足以描述智能}
 
 在构造智能理论时，一个极易出现的错误，是试图用同一张结构图同时表示“世界中的认知对象”和“处理这些对象的系统结构”。这种做法在简单系统中并不会立刻暴露问题。例如，我们可以画出“视觉模块$\rightarrow$规划模块$\rightarrow$动作模块”，并在每个模块内部附上当前处理的信息，看上去似乎已经完整描述了智能过程。然而，一旦系统进入持续学习、多尺度记忆、技能迁移、外部工具使用以及长期身份连续的场景，这种表示很快失效。
@@ -1324,11 +1328,9 @@ R_{ij}
 否则短期噪声就可能导致整个功能结构频繁重写。
 
 这与此前提出的：
-\[
-\boxed{
+\begin{statementbox}
 SlowVariableProtection
-}
-\]
+\end{statementbox}
 完全一致。
 
 进一步，为防止边频繁建立和删除，可以引入迟滞：
@@ -1348,18 +1350,14 @@ Evidence<\theta_{\text{off}}
 时发生。
 
 这形成：
-\[
-\boxed{
+\begin{statementbox}
 TopologicalHysteresis.
-}
-\]
+\end{statementbox}
 
 如果一条稳定功能连接长期形成，它就成为一种：
-\[
-\boxed{
+\begin{statementbox}
 TopologicalCapital.
-}
-\]
+\end{statementbox}
 因为未来同类CSO不再需要重复进行高成本全局协调。
 
 可以定义长期总代价：
@@ -1410,11 +1408,9 @@ Cost(\dot{\mathcal G}_F)
 这就解释了为什么成熟系统不会把每一种短期行为都编译成永久模块，也不会永远让一切重新进入中央推理。
 
 可以进一步提出：
-\[
-\boxed{
+\begin{statementbox}
 MinimumNecessaryReorganizationPrinciple.
-}
-\]
+\end{statementbox}
 
 即当出现问题时，优先尝试：
 \[
@@ -1472,11 +1468,9 @@ T>T_{\min},
 这使“自修改架构”从一个危险而模糊的概念，变成一个可以被慢变量、阈值、迟滞和现实验证约束的动力学过程。
 
 从外部理论看，这一部分与adaptive network、structural plasticity、graph rewiring、neural architecture adaptation以及组织结构演化有明显形式相似性。但本书强调的不同之处在于：拓扑变化的驱动力不是离线benchmark，也不是任意结构搜索，而是整个Agent生命周期中的：
-\[
-\boxed{
+\begin{statementbox}
 PersistentCSOFlow.
-}
-\]
+\end{statementbox}
 
 因此我们得到本书后续发育理论最重要的命题之一：
 \begin{proposition*}
@@ -1549,11 +1543,9 @@ B(t)
 \dot{\mathcal G}_F\neq0,
 \]
 系统则从持续学习进入：
-\[
-\boxed{
+\begin{statementbox}
 DevelopmentalIntelligence.
-}
-\]
+\end{statementbox}
 
 因此我们可以把智能成长分为三个层级。
 

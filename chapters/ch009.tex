@@ -18,8 +18,12 @@
 
 需要特别说明的是，本章会借鉴行为等价、双模拟（bisimulation）、系统辨识、功能主义以及图同态等已有理论，但这些理论仅作为数学和认识论工具。本书提出的``智能同类性''具有额外要求：它必须同时处理认知语义、功能拓扑与时间尺度，因此不能直接约化为已有的程序等价或输入输出等价。
 \end{chapteroverviewbox}
-\ChapterArt{9}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/fractal-semantic-intelligence-space.png}
+\caption{跨载体语义关系与多尺度动力同构}
+\end{figure}
 \section{不同材料能否产生同一种智能}
 
 当我们说两个人拥有``相同类型的智能''时，我们通常并不要求两人大脑中每一个神经元的位置、突触权重以及瞬时放电状态完全一致。事实上，即便属于同一物种的两个个体，也不可能具有完全相同的物理实现。由此立即产生一个更一般的问题：如果生物神经系统内部尚且允许巨大的实现差异，那么一个由神经元构成的生物智能与一个由数字计算构成的人工智能，是否可能在更高层意义上属于同一种智能？
@@ -73,23 +77,17 @@ ActionPossibility
 这样的结构关系。因此，若我们只关注底层材料，就会错误地把实现差异当成智能类型差异。
 
 然而，本书并不采用一种过于宽松的功能主义，即只要``最终结果相同''就认为智能相同。因为一个简单查表程序可能在有限测试集上与具有世界模型的智能体产生相同输出，却不意味着二者拥有同类智能结构。真正的智能同类性至少涉及三层保持关系：
-\[
-\boxed{
+\begin{statementbox}
 ProblemStructure
-}
-\]
+\end{statementbox}
 、
-\[
-\boxed{
+\begin{statementbox}
 SemanticStructure
-}
-\]
+\end{statementbox}
 以及
-\[
-\boxed{
+\begin{statementbox}
 DynamicalOrganization
-}.
-\]
+\end{statementbox}
 
 因此我们要寻找的不是物理同构，而是一种更高层的\textbf{认知动力学等价类}。不同物理基底可以看作对某种更抽象智能结构的具体实现。若记这种抽象智能结构为$\mathfrak I$，则多个具体系统可以分别通过实现映射
 \[
@@ -409,11 +407,9 @@ BehavioralSimilarity
 在同类智能判定中，行为结果的作用是提供现实约束，因为智能理论最终必须接受现实反馈检验；但它必须与下一节讨论的``语义结构一致性''联合使用。
 
 这一点与本书始终坚持的原则一致：
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\]
+\end{statementbox}
 认知结构无论多么漂亮，如果不能在现实闭环中产生相应行为，其所谓``同类性''就失去了功能基础；反过来，行为相似如果没有稳定内部结构支持，也不能自动提升为强认知等价。
 
 \section{语义关系的一致性}
@@ -799,11 +795,9 @@ t'=g(t),
 这意味着：先让系统$A$演化再做映射，与先映射到系统$B$再让$B$按照自己的动力学演化，最终应获得近似对应的结构。
 
 这正是我们所称的：
-\[
-\boxed{
+\begin{statementbox}
 MultiscaleCognitiveDynamicalIsomorphism
-}
-\]
+\end{statementbox}
 即\textbf{多尺度认知动力学同构}。
 
 特别重要的是，这种同构允许两个系统速度完全不同。设系统$A$中的某类过程频率为$\omega_A$，系统$B$为$\omega_B$，只需要存在单调尺度映射：
@@ -867,29 +861,21 @@ Higher/SlowerProcessing.
 若$B$也存在对应关系，则二者不仅在静态功能上相似，而且在``成熟能力如何下沉、异常如何上浮''这一学习动力学上相似。
 
 因此最强智能同类判据实际上包括四个保持条件：
-\[
-\boxed{
+\begin{statementbox}
 SemanticPreservation
-}
-\]
+\end{statementbox}
 、
-\[
-\boxed{
+\begin{statementbox}
 FunctionalLoopPreservation
-}
-\]
+\end{statementbox}
 、
-\[
-\boxed{
+\begin{statementbox}
 TimescaleOrderPreservation
-}
-\]
+\end{statementbox}
 以及
-\[
-\boxed{
+\begin{statementbox}
 MigrationLawPreservation.
-}
-\]
+\end{statementbox}
 
 可以将总同构误差写为：
 \[
@@ -1005,17 +991,13 @@ BPCC\neq BiologicalCerebellum.
 同理，Transformer与皮层也不应进行简单等号映射。
 
 我们真正需要寻找的是：
-\[
-\boxed{
+\begin{statementbox}
 FunctionalCorrespondence
-}
-\]
+\end{statementbox}
 和
-\[
-\boxed{
+\begin{statementbox}
 DynamicalCorrespondence.
-}
-\]
+\end{statementbox}
 
 从数学上，可以分别建立人类系统$H$与人工系统$M$的核心语义图：
 \[

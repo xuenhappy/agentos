@@ -30,8 +30,12 @@ BodyRuntime:\ How\ this\ body\ does\ it
 
 这一分离是后续身体语义接口、SGC、FCS、快速预测控制以及 Kernel--Body 自适应耦合能够成立的前提。本章只建立职责边界及其动力学原因，不提前展开后续具体接口的数据结构与算法。
 \end{chapteroverviewbox}
-\ChapterArt{51}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/cognitive-kernel-body-runtime.png}
+\caption{Kernel 与 Body Runtime 的状态空间分工}
+\end{figure}
 \section{认知状态空间：Agent Kernel 所维护的不是身体状态，而是主体状态}
 
 如果我们希望构造的不是一次性完成任务的模型，而是一个在长期运行过程中保持身份、记忆、目标和行为连续性的智能体，那么首先必须明确：Agent Kernel 所维护的状态，不应被理解为外部世界状态的简单副本，更不应被理解为机器人关节、屏幕坐标或 API 返回值的集合。Kernel 所维护的是\textbf{对主体未来认知与行为具有跨任务、跨身体和跨时间影响的认知状态空间}。
@@ -216,11 +220,9 @@ $\mathcal C_B$ 表示当前身体约束。Body Runtime 的目标不是最大化�
 这一设计与机器人中的 hierarchical control、model predictive control、real-time operating systems、subsumption architecture 等已有工程思想存在明显关联。但 AgentOS 在此基础上增加了一个关键要求：Body Runtime 不只是机器人控制层，它必须同时服务于\textbf{数字身体、物理身体以及未来任意行动载体}。因此它承担的是一种更一般的“主体--现实运行时”角色。
 
 这使得 Body Runtime 成为 AgentOS 的第一道现实复杂度屏障。现实产生的大量快速扰动如果可以在局部闭合，就不应该全部升级到 Kernel。其基本原则是：
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal.
-}
-\]
+\end{statementbox}
 只有那些无法由当前身体闭环解释、预测或解决的残差，才有理由成为更高层认知问题。
 
 \section{为什么 BodyState 不等于工作记忆状态}
@@ -1025,11 +1027,9 @@ Observation.
 内部 prediction 不能直接代替实际 observation。
 
 第二是\textbf{局部闭合原则}：
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal.
-}
-\]
+\end{statementbox}
 能够由 Body Runtime 稳定解决的问题，不应持续占据 Kernel。
 
 第三是\textbf{残差升级原则}：
@@ -1068,11 +1068,9 @@ FastRealityCouplingSystem.
 \]
 
 这里的“Slow”与“Fast”是相对的。Kernel 内部本身存在从 $h$ 到 $\Omega$ 的多级时间尺度，Body Runtime 内部也存在从 servo 到语义身体状态的多级尺度。因此严格地说，我们面对的是：
-\[
-\boxed{
+\begin{statementbox}
 NestedMultiscaleCoupling.
-}
-\]
+\end{statementbox}
 Kernel--Body 划分只是这个多频智能系统中最重要的一条功能边界。
 
 从外部理论上看，这一结构可以同时吸收 hierarchical control、singular perturbation、model predictive control、robotics middleware、global workspace 和 operating-system abstraction 的若干思想。但 AgentOS 的理论贡献不应被描述成这些理论的简单拼装。本章提出的更一般问题是：

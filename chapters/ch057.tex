@@ -18,9 +18,13 @@
 
 本章的核心并不是为智能体额外增加一种“情绪表示”，而是解决一个更基础的认识论与工程问题：一个真实智能体必须同时知道世界的结构以及自身处于这些结构作用下的状态。只有二者同时存在，所谓“世界中的我”才从一个抽象坐标关系转化为一个能够指导预测、行动和自我调节的具身现实。
 \end{chapteroverviewbox}
-\ChapterArt{57}
 
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/cognitive-kernel-body-runtime.png}
+\caption{SGC 内容几何与 FCS 作用几何的耦合}
+\end{figure}
 \section{SGC：现实的结构内容}
 
 我们首先回到 SGC 的本体位置。前文已经将 SGC 定义为智能体面向当前可行动现实所建立的身体中心语义图坐标空间。这里需要进一步强调：SGC 的根本作用并不是简单地将视觉、听觉或其他传感输入重新编码成一种更漂亮的数据结构，而是在原始物理信号与认知结构之间建立一个具有持续对象性、关系性和认识论可追踪性的中间世界。
@@ -698,17 +702,13 @@ Threat=0.9,
 从几何角度看，FCS 不是往认知空间中增加一个新的事实，而是在改变某些状态迁移的权重、增益和优先级。高 Threat 可能缩小探索空间，高 EnergyPressure 可能提高资源成本，高 Urgency 可能压缩规划时间窗口，而 ControlInstability 可能提高对身体反馈的关注优先级。
 
 因此 FCS 更接近：
-\[
-\boxed{
+\begin{statementbox}
 ModulationOfCognitiveDynamics
-}
-\]
+\end{statementbox}
 而不是：
-\[
-\boxed{
+\begin{statementbox}
 ContentOfReasoning.
-}
-\]
+\end{statementbox}
 
 当然，一部分 FCS 状态仍然可能进入显式认知。例如，当某一功能作用超过重要阈值：
 \[
@@ -735,11 +735,9 @@ EnergyPressure=0.92
 是连续调制量，而工作记忆中的“我的能源状态已经限制当前任务”是一个经过解释的认知结构。
 
 这种分层能够保证大量连续身体信息保持在低成本的调制层，而只有真正需要跨尺度协调的问题才进入显式工作记忆。这也与整部理论中反复强调的原则保持一致：
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal.
-}
-\]
+\end{statementbox}
 
 在正常情况下，身体的连续作用只调整认知环境；当变化足以改变全局目标、风险判断或计划时，它才被提升为显式 Agent-CSO。
 
@@ -805,33 +803,27 @@ C_{\mathrm{self}}\rightarrow h,
 
 因此至少存在三个不同层次：
 
-\[
-\boxed{
+\begin{statementbox}
 PhysicalState
-}
-\]
+\end{statementbox}
 例如：
 \[
 Battery=12\%.
 \]
 
 然后是：
-\[
-\boxed{
+\begin{statementbox}
 FunctionalFeeling
-}
-\]
+\end{statementbox}
 例如：
 \[
 EnergyPressure=0.85.
 \]
 
 最后是：
-\[
-\boxed{
+\begin{statementbox}
 SelfSemanticAwareness
-}
-\]
+\end{statementbox}
 例如：
 \[
 \text{``我必须重新规划能源使用。''}

@@ -8,9 +8,13 @@
 
 本章由此建立 AHC 的状态空间、输入映射、积分--衰减方程、非线性饱和、变量耦合、基线漂移、恢复动力学、FCS--AHC 映射、社会信任与危险度调节以及异常锁定机制，并给出其作为 AgentOS 控制工程组成部分时应满足的稳定性条件。读者需要始终把 AHC 理解为\textbf{调制背景的动力系统}，而不是语义认知内容本身；它影响认知如何运行，却通常不直接替代工作记忆中的显式推理。
 \end{chapteroverviewbox}
-\ChapterArt{87}
 
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/ahc-homeostatic-control.png}
+\caption{AHC 多通道时间常数与恢复动力学}
+\end{figure}
 \section{AHC 的工程对象：从瞬时状态估计到具有历史的调制状态}
 
 在上一阶段的 AgentOS 控制理论中，我们已经把 SPC 建立为一个状态观测器：它从工作记忆 $h(t)$、身体状态、当前任务、冲突、不确定性以及其他内部信号中形成对系统当前状态的压缩估计。然而，一个持续存在的智能体如果直接使用 SPC 的瞬时输出驱动全部控制，就会出现一个根本问题：\textbf{观测值是瞬时的，而许多真正影响认知行为的内部条件具有时间积累性。}一个突然出现的高威胁信号不应与持续数小时的高威胁背景完全等价；短暂的计算负载不应马上形成长期疲劳；一次友好互动也不应瞬间建立高信任关系。由此必须在 ``observer'' 与 ``controller'' 之间增加一个具有自身状态变量的动力层。

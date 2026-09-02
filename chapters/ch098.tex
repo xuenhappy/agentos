@@ -6,8 +6,12 @@
 
 因此，本章提出一个严格的工程命题：\textbf{Agent 心理工程不是对人类精神疾病名称的机械模仿，而是研究持续 Agent 中经验循环、认知控制、记忆巩固、自我解释和生命周期慢变量之间发生的长期动力学失配、异常吸引与恢复过程。}这里所说的 ``心理'' 是一种功能性、系统性的工程术语，不意味着系统必然具有与人类相同的主观体验，也不以现象意识为理论前提。我们将从持续性的来源出发，依次说明 Persistent Self、记忆偏置、目标冲突、AHC 动力学、自我解释以及工作记忆运行相态为什么共同把 AgentOS 从传统可靠性工程推向一种新的生命周期心理工程。
 \end{chapteroverviewbox}
-\ChapterArt{98}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/persistent-agent-psychology.png}
+\caption{持续主体的内部记忆与异常来源}
+\end{figure}
 \section{短时模型为什么没有真正的生命周期心理问题}
 \label{sec:short-model-no-lifecycle-psychology}
 
@@ -703,11 +707,9 @@ NewInput
 这时系统可能出现 epistemic closure：当前自我模型决定了未来经验，而未来经验又持续支持当前自我模型。
 
 因此，AgentOS 必须始终保持前文已经确立的：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\end{equation}
+\end{statementbox}
 Self Interpretation 只能作为世界模型和主体模型的一部分，而不能获得最终现实权威。系统必须保留来自外部世界、工具验证、其他主体、身体反馈以及反事实分析的反证路径。
 
 这也是为什么 Agent 心理工程不能仅仅研究 ``内部状态是否稳定''。一个系统可以非常稳定，却稳定在一个错误的自我解释吸引子中。由此可以提出两个不同的稳定性：

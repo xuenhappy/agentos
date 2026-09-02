@@ -33,7 +33,6 @@ SGC
 
 在整个 AgentOS 理论中，SGC 所承担的是 Universe-CSO 与 Agent-CSO 之间极其关键的一层现实落地：它使抽象认知结构能够重新绑定到“这个对象现在在哪里”“这个关系现在发生在谁之间”“这个预测对应现实中的哪一部分”“这个身体当前能够做什么”这些具体问题上。换句话说，SGC 是内部认知结构重新触碰现实的坐标面。
 \end{chapteroverviewbox}
-\ChapterArt{55}
 
 \section{为什么 SGC 不是传统意义上的 Scene Graph}
 
@@ -104,17 +103,13 @@ q_i(t),
 其中 \(id_i\) 是跨时间身份，\(g_i\) 是几何状态，\(a_i\) 是相对稳定属性，\(s_i\) 是动态语义状态，\(q_i\) 是置信度或认识论质量，而 \(\chi_i\) 表示该实体与智能体当前目标和身体能力之间的功能关系。
 
 因此，传统 Scene Graph 所回答的是：
-\[
-\boxed{
+\begin{statementbox}
 WhatRelationsAreVisibleInThisObservation?
-}
-\]
+\end{statementbox}
 而 SGC 要回答的是：
-\[
-\boxed{
+\begin{statementbox}
 WhatPersistentStructuredRealityDoesTheAgentCurrentlyActWithin?
-}
-\]
+\end{statementbox}
 
 这是本章第一个关键区别。
 
@@ -279,11 +274,9 @@ World + MeInWorld.
 \section{持续实体身份：现实不能在每一帧重新出生}
 
 一个持续智能系统如果不能维持对象跨时间的一致身份，就无法真正形成世界。它得到的只能是一系列互不相关的感知快照。因此，SGC 与普通图像语义分析之间最深的差异之一，是它必须实现：
-\[
-\boxed{
+\begin{statementbox}
 PersistentEntityIdentity.
-}
-\]
+\end{statementbox}
 
 考虑某个现实实体 \(O\)。在不同时间 \(t_1,t_2,\ldots,t_n\)，系统得到观测
 \[
@@ -796,11 +789,9 @@ mode_i
 \end{quote}
 
 这使 SGC 从一个普通语义地图升级为：
-\[
-\boxed{
+\begin{statementbox}
 EpistemicallyTypedWorldModel.
-}
-\]
+\end{statementbox}
 
 这也是长期 Agent 必须拥有的能力。因为现实不是只存在“不知道”和“知道”两种状态，而是大量存在：
 \[
@@ -908,11 +899,9 @@ NetworkEndpoint
 及其空间或逻辑位置和可操作关系。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
 ActionableReality
-}
-\]
+\end{statementbox}
 是一个比 physical reality 更一般的概念。
 
 我们甚至可以定义当前 Agent 的局部行动图：
@@ -952,11 +941,9 @@ AffordanceMustBeRegrounded.
 这是一条非常重要的具身智能原则。
 
 另一方面，可行动性还给 SGC 引入了选择性。现实世界包含极其庞大的细节，但 Agent 当前真正需要显式表示的通常只是与可能行动有关的结构。因此 SGC 并不追求建立整个宇宙的无限精度数字复制，而是建立：
-\[
-\boxed{
+\begin{statementbox}
 ActionSufficientRealityRepresentation.
-}
-\]
+\end{statementbox}
 
 也就是说：
 \[
@@ -1004,18 +991,14 @@ Prediction.
 一个人在这种界面中并不是简单被识别为 ``person''，而会进一步与身份、社会关系、行为历史、当前风险状态等联系起来。不同摄像头里的同一个人物也被视为持续存在的同一个实体，而不是每个视频流中的独立检测对象。
 
 这已经非常接近：
-\[
-\boxed{
+\begin{statementbox}
 PersistentSemanticEntity.
-}
-\]
+\end{statementbox}
 
 与此同时，剧中的 Machine View 经常把人与人之间的关系、某个对象属于谁、某个事件是否可能导致危险等结构叠加到视觉现实中。这进一步接近：
-\[
-\boxed{
+\begin{statementbox}
 RelationalSGC.
-}
-\]
+\end{statementbox}
 
 更值得注意的是，它并不只显示已经发生的事件，还经常显示路径推断、行为预测和风险估计。这意味着界面中实际上混合存在：
 \[
@@ -1065,11 +1048,9 @@ WhatWillAffectMe?
 如果系统只是观察城市，而自身不能直接通过某个身体进行空间行动，那么它更接近全局 surveillance world model，而不是完整的 embodied SGC。
 
 这一差异反而帮助我们进一步明确 SGC 的理论位置。《疑犯追踪》的 Machine View 最像的是：
-\[
-\boxed{
+\begin{statementbox}
 HumanInspectableSGCFrontend.
-}
-\]
+\end{statementbox}
 也就是 SGC 的一个可视化层，而不是 SGC 全部内部实现。
 
 真实工程中，SGC 并不需要真的以屏幕 HUD 形式存在。其内部可以是图数据库、连续空间结构、概率状态、稀疏张量和语义索引的组合。可视化界面只是把其中一部分投影给人类：
@@ -1115,11 +1096,9 @@ C_1=
 这个结构可以存在于长期知识、语言描述或过去情景中，但当前时刻这个杯子是否仍在厨房、在哪里、是否可达，并不能仅从该 Agent-CSO 本身得到。
 
 因此，需要：
-\[
-\boxed{
+\begin{statementbox}
 Grounding.
-}
-\]
+\end{statementbox}
 
 设 Agent 内部存在认知结构集合：
 \[
@@ -1232,11 +1211,9 @@ ObservationEvidence.
 \]
 
 这形成一种现实可追溯性：
-\[
-\boxed{
+\begin{statementbox}
 SemanticTraceability.
-}
-\]
+\end{statementbox}
 
 对于长期 AgentOS，这一点非常重要。因为如果内部所有认知都只存在于不可检查 latent 中，我们就很难区分：
 
@@ -1409,35 +1386,27 @@ Body\in SGC.
 智能体自身必须作为可行动世界中的一个实体存在。
 
 第五，
-\[
-\boxed{
+\begin{statementbox}
 WorldEntitiesMustPersistAcrossObservations.
-}
-\]
+\end{statementbox}
 现实不能随着摄像头帧刷新而重新出生。
 
 第六，
-\[
-\boxed{
+\begin{statementbox}
 RelationsAreFirstClassRealityStructures.
-}
-\]
+\end{statementbox}
 对象之间的关系与对象本身同样重要。
 
 第七，
-\[
-\boxed{
+\begin{statementbox}
 ActionabilityIsBodyRelative.
-}
-\]
+\end{statementbox}
 现实的行动意义取决于身体能力。
 
 第八，
-\[
-\boxed{
+\begin{statementbox}
 SGCShouldBeInspectableAndTraceable.
-}
-\]
+\end{statementbox}
 至少公共现实层必须能够追溯到观测、推导和预测来源。
 
 因此，本章最终可以给出一个比上一章更加完整的 SGC 定义：

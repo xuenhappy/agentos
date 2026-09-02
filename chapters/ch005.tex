@@ -13,7 +13,6 @@ Same Dynamic Form,\ Different State Space,\ Different Timescale
 
 本章仍属于认识论与基础动力学层。此处出现的 ``层级''、``闭环''、``结构'' 和 ``残差'' 均为一般概念，不预设后文 AgentOS 中的具体模块实现。后续关于 $h/E/\Theta$、$\Psi$、SPC、TCE、Body Runtime、组织智能以及 CSO 的讨论，都可以被视为这一多尺度闭环原理在不同层次上的具体化。
 \end{chapteroverviewbox}
-\ChapterArt{5}
 
 \section{智能不是一张平面结构图}
 
@@ -216,11 +215,9 @@ Reality
 Residual
 \]
 的反馈路径，就会形成封闭自洽而非现实智能。因此，本书后续一直坚持：
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\]
+\end{statementbox}
 这一原则不仅适用于物理机器人，同样适用于软件 Agent、自我模型和社会智能。理论、计划、自我解释以及长期生成结构都只能拥有条件性权威，现实反馈保留最终修正权。
 
 在外部理论上，本节与经典 feedback control、predictive processing、model-based control、active inference 等存在形式上的交集，但本书此时不把自身等同于其中任何一种理论。我们仅抽取一个更一般的动力学结构：预测并不重要到可以脱离行动，行动也不能脱离观测，观测的价值又在于产生可以修正结构的残差。这个基础闭环随后会成为不同尺度智能之间建立同构关系的公共语言。
@@ -386,11 +383,9 @@ w_i\varepsilon_i
 \Theta_{global},
 \]
 就需要更高尺度过程介入。这里出现了一个非常重要的原则：
-\[
-\boxed{
+\begin{statementbox}
 LocalClosureBeforeGlobalIntervention.
-}
-\]
+\end{statementbox}
 即能够在低层闭合的问题，尽量不要占用高层全局认知资源。
 
 这一原则以后会直接演化成 AgentOS 的工作记忆有限性理论。工作记忆 $h$ 不应该成为整个智能系统全部状态的镜像，而只应该承载当前真正需要跨尺度协调的少量结构。换言之：
@@ -485,11 +480,9 @@ G
 \right).
 \]
 这便是我们后面所谓
-\[
-\boxed{
+\begin{statementbox}
 PersistentFastResidualShapesSlowStructure
-}
-\]
+\end{statementbox}
 的最初动力学形式。
 
 “涌现”因而不应该被当成一个神秘词。至少在本书的工程框架中，我们更希望将其拆解成几个可以研究的过程：低层活动产生统计稳定模式；系统建立对这些模式的压缩表示；压缩结构具有预测价值；该结构获得更长时间常数；随后反过来参与未来低层动力学。如果这些条件能够被测量，那么“涌现”就从哲学描述逐渐变成可工程研究的多尺度结构形成机制。
@@ -602,16 +595,12 @@ G(z_{high}),
 \neq0,
 \]
 高层结构必须具备重新学习的可能。这就形成完整双向关系：
-\[
-\boxed{
+\begin{statementbox}
 SlowStructureShapesFastActivity,
-}
-\]
-\[
-\boxed{
+\end{statementbox}
+\begin{statementbox}
 PersistentFastResidualShapesSlowStructure.
-}
-\]
+\end{statementbox}
 
 这一结构与 hierarchical control、predictive coding 中 top-down prior、Bayesian hierarchical models、supervisory control 等理论具有形式联系。但本书进一步把它提升为智能的一般原则，并将在后续使用它解释记忆、自我、技能、身体以及组织制度。
 

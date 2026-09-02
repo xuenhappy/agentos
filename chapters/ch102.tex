@@ -18,8 +18,12 @@ SPC \rightarrow AHC \rightarrow TCE \rightarrow h
 
 本章只讨论运行时认知控制异常，不把记忆写入偏差、自我结构漂移或生命周期生成吸引子的长期异常混入同一层次。这样做的目的，是首先建立一个可以直接记录、测量、诊断和干预的控制工程基础，使后续更慢尺度的问题能够在清晰的因果分层上继续展开。
 \end{chapteroverviewbox}
-\ChapterArt{102}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/tce-cognitive-state-phase-map.png}
+\caption{TCE 增益与认知振荡异常}
+\end{figure}
 \section{TCE 异常的第一性定义：不是“想错了”，而是“控制认知的方式失配了”}
 
 在此前的 AgentOS 原理论中，我们已经把 TCE 从普通的大语言模型采样参数中彻底分离出来。TCE 并不等于一个 temperature 参数，也不等于某个单独的 ``reasoning depth'' 开关，而是对整个工作记忆运行过程施加宏观调制的认知控制器。为了分析其异常，我们首先必须明确：一个 Agent 给出了错误答案，并不能直接说明 TCE 出现异常；一个 Agent 在面对困难问题时进行了很长时间的搜索，也不能直接说明 TCE 过度探索。真正构成 TCE 异常的，是控制变量与认知状态之间的系统性失配，即同一种失配在相似状态下重复出现，并使系统偏离原本可以保持稳定、高效和可恢复的认知运行区域。
@@ -665,11 +669,9 @@ StructureDispersion\uparrow
 Uncertainty\uparrow.
 \]
 于是形成：
-\[
-\boxed{
+\begin{statementbox}
 PositiveCognitiveTurbulenceLoop.
-}
-\]
+\end{statementbox}
 这与健康探索恰好相反。健康探索最终应产生结构收敛，而湍流探索不断制造新的状态估计困难。
 
 另一种正反馈来自控制本身。SPC 观察到湍流后，TCE 突然施加强抑制，使大量支线快速消失；然而这种突然坍缩可能同时损失真正重要的候选结构，导致预测残差上升。TCE 随后又重新开放搜索，于是形成：
@@ -984,11 +986,9 @@ CognitivePhase.
 成熟 Agent 的目标不是无限提高控制强度，而是提高 \(\eta_{\mathrm{reg}}\)：让更多正常认知过程能够自主运行，让 TCE 只在真正需要时介入。
 
 这又重新连接到整套 AgentOS 的基础原则：
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal.
-}
-\]
+\end{statementbox}
 高层控制不应该微观管理每一次认知状态变化。TCE 更类似对认知动力学施加边界条件、增益调节和相态迁移，而不是直接决定每一个 token、每一个局部关联和每一个微观推理步骤。只有这样，持续智能体才能同时获得稳定性和创造性。
 
 本章同时给出了 Agent 心理工程一个重要方法论边界：我们以后讨论任何更慢尺度的异常时，都应该首先排除基础控制环失稳。如果一个 Agent 的自我解释不断变化，我们不能立即断定自我结构存在问题，因为也可能只是 TCE 控制振荡导致进入 h 的内容反复变化；如果 Agent 对某些经历持续高度关注，也不能立即断定长期记忆系统发生偏置，因为可能只是注意控制长期配置错误。只有把运行时控制层稳定以后，我们才有资格讨论更慢的记忆、自我和生命周期结构。

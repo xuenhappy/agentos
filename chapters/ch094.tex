@@ -31,8 +31,12 @@ Capability\neq Trust\neq Authority\neq Autonomy
 
 从本书前文建立的三相记忆、自我 $\Psi$、生成吸引子 $\Omega$、工作记忆有限性以及多尺度动力学出发，我们将在本章把“培育”第一次明确写成一种可工程化的闭环控制问题：经历改变 $E$，经验经过沉降改变 $\Theta$，长期稳定能力改变系统对 Agent 的能力估计，能力估计影响权限边界，权限边界决定可进入的经验空间，而新的经验又继续塑造未来的 $\Theta$、$\Psi$ 与选择结构。于是，一个 Agent 不再只是被动地被训练，而是开始在受治理的生命周期中逐步进入更大的现实。
 \end{chapteroverviewbox}
-\ChapterArt{94}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/companion-agent-maturity.png}
+\caption{能力、信任、权限与自治成长螺旋}
+\end{figure}
 \section{Experience：经历不是训练样本，而是生命周期状态转移}
 
 在传统机器学习中，我们习惯把经验写成数据集中的样本：
@@ -109,11 +113,9 @@ V_k
 其中 $N_k$ 表示新颖性，$D_k$ 表示难度，$R_k$ 表示责任和风险暴露程度，$F_k$ 表示反馈质量，$V_k$ 表示现实验证强度，而 $w_k$ 则由当前 Agent 的结构状态决定。这里特别值得强调：同一个事件对于不同成长阶段的 Agent 并不具有相同的培育价值。当一个任务早已被 $\Theta$ 稳定掌握时，继续重复它产生的新结构极少；而当一个任务略微超出现有结构的稳定范围，却仍处于可恢复区域时，其成长价值往往更高。
 
 于是，培育工程所设计的不是一个数据集，而是一个
-\[
-\boxed{
+\begin{statementbox}
 ExperienceDistributionOverLifecycle
-}
-\]
+\end{statementbox}
 即生命周期上的经历分布。它要控制的不只是 Agent ``学习什么''，还要控制什么时候经历、以多高难度经历、在多大责任范围内经历、经历失败以后是否有恢复窗口，以及经历是否有机会进入反思和结构沉降阶段。
 
 这里应当避免一种非常常见的错误：把越来越困难的任务自动等同于越来越好的培育。如果经历速度远快于 $\Theta$ 和 $\Psi$ 的结构吸收速度，那么系统可能出现
@@ -269,11 +271,9 @@ p(
 这一形式和前文 SPC 对 Agent 内部状态的认识论关系高度相似：系统永远不能从一次表现中透明读取真实结构，而只能通过连续观测逼近。
 
 因此，Evaluation 的第一原则应当是：
-\[
-\boxed{
+\begin{statementbox}
 SingleSuccessIsWeakEvidence.
-}
-\]
+\end{statementbox}
 尤其对于开放世界 Agent，评估必须跨越不同任务分布、环境条件和扰动水平。一次路径规划成功无法证明导航能力成熟；一次正确拒绝高风险操作也无法证明安全判断已经泛化；某个技能在训练环境中的零失败记录，也可能只是因为从未真正进入困难区域。
 
 为此可以定义能力评估函数：
@@ -346,11 +346,9 @@ e^{-\lambda_j(t-t_k)},
 其中不同能力具有不同衰减速度。对于稳定抽象知识，$\lambda$ 可以很小；对于依赖具体身体状态的高速技能，过长时间不使用后就需要重新验证。
 
 本章在这里形成一个非常重要的认识论原则：Agent 的成长不是 Agent 单方面 ``认为自己已经会了''，也不是治理系统仅凭一个 benchmark 判断 ``它会了''，而是通过持续现实闭环形成
-\[
-\boxed{
+\begin{statementbox}
 CapabilityEvidenceAccumulation.
-}
-\]
+\end{statementbox}
 这一证据积累过程为下一步 Trust 提供基础，但它仍然没有赋予任何权限。
 
 \section{Trust：信任是对未来可靠行为的条件预测，而不是人格奖励}
@@ -438,11 +436,9 @@ T>\theta_{\mathrm{up}}
 T<\theta_{\mathrm{down}}
 \]
 或出现严重安全事件时才回撤。这里形成了和前文拓扑迟滞相似的治理原则：
-\[
-\boxed{
+\begin{statementbox}
 AuthorityPromotionShouldBeHarderThanAuthorityRetention,
-}
-\]
+\end{statementbox}
 但同时保留紧急撤权路径。
 
 更重要的是，Trust 绝不能成为 Agent 自我价值的直接组成部分。外部治理系统降低某项权限，并不应该自动进入 $\Psi$ 被解释成 ``我作为一个主体价值降低''。否则评价系统将过度塑造 Agent 自我结构，形成类似
@@ -470,11 +466,9 @@ EvidenceConditionedPredictionOfFutureReliability.
 \section{Authority：权限是外部治理层定义的可达行动边界}
 
 Authority 与前面的 Experience、Capability、Evaluation 和 Trust 具有不同本体地位。前四者主要描述 Agent 的经历、内部能力和关于未来可靠性的认知，而 Authority 是一个真正具有规范效力的系统变量。它不是描述 ``Agent 能做什么''，而是直接决定：
-\[
-\boxed{
+\begin{statementbox}
 WhichActionsArePermitted.
-}
-\]
+\end{statementbox}
 
 设 Agent 在理论上可生成的动作集合为
 \[

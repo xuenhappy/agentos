@@ -17,8 +17,12 @@ Functional\ Dynamics
 \]
 它把“结构是什么”“结构如何被某个智能体承载”和“这些承载如何参与动力学”三个问题第一次严格分开。
 \end{chapteroverviewbox}
-\ChapterArt{11}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/cognitive-structure-functional-topology.png}
+\caption{CSO 本体与 Agent-CSO 承载的分离}
+\end{figure}
 \section{CSO 不等于智能体内部的 Representation}
 
 在讨论智能系统时，一个极其常见而又容易被忽略的概念错误，是把“某个对象在智能体内部的表示”直接等同于“该对象本身”。在现代人工智能系统中，这种等同尤其容易发生，因为我们几乎总是通过某种具体数据结构来接触所谓“知识”：token 序列、embedding、hidden state、key--value memory、knowledge graph node、vector database entry、neural activation pattern，甚至某段自然语言描述。于是，一个未经严格区分的理论很容易默认：
@@ -891,11 +895,9 @@ C_{\text{stairs}}^{human}
 C_{\text{stairs}}^{wheel}
 \]
 至少在可行动关系层上如此。因此，一个智能体内部世界从一开始就是：
-\[
-\boxed{
+\begin{statementbox}
 RealityRelativeToThisAgent.
-}
-\]
+\end{statementbox}
 
 这说明：
 \[
@@ -1218,11 +1220,9 @@ Structural\ Generality.
 N_{\text{tasks}}\rightarrow\text{large},
 \]
 而更应该观察：
-\[
-\boxed{
+\begin{statementbox}
 AbilityToConstructAndReorganizeAgentCSO
-}
-\]
+\end{statementbox}
 是否足够强。换句话说，通用性不是简单拥有一个巨大的已有能力集合，而是能够在新现实中形成新的结构，并找到适当的 representation、function、timescale 和 carrier。
 
 至此，我们可以给本章一个最终总结。CSO 代表认知结构层的对象：

@@ -15,7 +15,6 @@ How is reality affecting this agent?
 
 本章只解决 FCS 自身是什么以及应如何表示。关于 FCS 如何与 SGC 构成完整的二元现实接口，以及它如何进一步进入更高层认知调制结构，将在后续相关章节中系统处理。本章只在必要处指出这些接口，而不提前展开其后续机制。
 \end{chapteroverviewbox}
-\ChapterArt{56}
 
 \section{FCS 的问题起源：为什么 ``世界是什么'' 仍然不够}
 
@@ -501,11 +500,9 @@ C_A
 ).
 \]
 例如同样 $10\mathrm{~N}$ 的外部冲击，对最大承载能力 $1000\mathrm{~N}$ 与 $15\mathrm{~N}$ 的机器人完全不同。这意味着 FCS 强度本质上应归一化到：
-\[
-\boxed{
+\begin{statementbox}
 StateRelativeToCapability
-}
-\]
+\end{statementbox}
 而不是绝对物理量。
 
 这使我们能够建立 Capability Margin：
@@ -1278,11 +1275,9 @@ Cost
 FCS 则刻意保留两个原始维度，让上层控制器根据当前 Goal、价值、安全规则和时间尺度动态决定权重。
 
 因此 FCS 的设计哲学不是尽早把所有影响压缩成一个“最优行动值”，而是：
-\[
-\boxed{
+\begin{statementbox}
 Preserve the smallest useful set of independent functional dimensions.
-}
-\]
+\end{statementbox}
 只有这样，Agent Kernel 才真正拥有重新组织自身行为的自由度，而不是被 Body Runtime 的某个隐含 reward function 提前替它完成价值判断。
 
 \section{Arousal、SensoryLoad 与 ControlInstability：运行能力本身也会成为 Feeling}
@@ -1368,11 +1363,9 @@ ControlMargin
 \]
 
 当 ControlInstability 持续提高时，Body Runtime 应首先尝试局部适应；只有当局部控制无法恢复时，相关异常才需要进一步升级。这样就与全书的多尺度原则一致：
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal.
-}
-\]
+\end{statementbox}
 
 这三个通道共同说明了一个重要事实：FCS 不只描述“世界对身体造成什么”，也描述“身体自身处理世界的能力正在处于什么功能状态”。因此 FCS 是 World--Body coupling 的状态，而不是单向外部刺激记录。
 
@@ -1478,11 +1471,9 @@ FeelingState.
 \tau_{Integrity}
 \]
 可能在某类身体中成立，但这不是普适固定顺序。真正原则是：
-\[
-\boxed{
+\begin{statementbox}
 Different functional effects require different persistence constants.
-}
-\]
+\end{statementbox}
 
 这与后续更高层 AHC 的时间积分也必须区分。FCS 的时间动力学主要描述身体与现实作用的持续性；AHC 则会进一步把身体、资源、社会和认知压力整合成更高层调制状态。因此不能因为 AHC 有时间常数，就把 FCS 简化成完全瞬时信号。两层分别承担：
 \[
@@ -1594,21 +1585,17 @@ JointGroup_{R3}
 而不需要接收所有电机电流和应变计数据。
 
 这一层级结构与 h 的有限容量定理高度一致。Body Runtime 的职责之一就是：
-\[
-\boxed{
+\begin{statementbox}
 Keep micro-complexity below the cognitive boundary.
-}
-\]
+\end{statementbox}
 正常身体动力学应该在局部闭合，只有结构性变化、持续异常或者对高层决策重要的状态才上浮。
 
 因此 FCS 不只是身体感受的表达标准，也是一个认知复杂度屏障。它把数千甚至数百万维的 raw body state 压缩成少数具有可行动意义的 typed states。
 
 这种压缩必须遵循一个原则：
-\[
-\boxed{
+\begin{statementbox}
 CompressionWithoutLosingControlRelevantStructure.
-}
-\]
+\end{statementbox}
 如果压缩过强，上层无法判断风险来自哪里；如果压缩不足，则 Kernel 被低层数据淹没。因此 FCS 的 summary operator 应根据：
 \[
 Risk,
@@ -1632,11 +1619,9 @@ SemanticSummary
 的分层接口，而不要让所有模块订阅同一个巨大 Feeling tensor。
 
 这也意味着 FCS 不应该被理解成一张固定大小的“身体情绪图片”，而是：
-\[
-\boxed{
+\begin{statementbox}
 A typed, multiresolution, temporally persistent functional field.
-}
-\]
+\end{statementbox}
 这一表达比单纯称为 Feeling Vector 更准确地反映了我们最终的设计目标。
 
 \section{FCS 的主体相对性：Feeling 是世界--身体关系而非世界属性}
@@ -1874,11 +1859,9 @@ Outcome_{real}
 第十是\textbf{非拟人化可迁移性}。FCS 的核心词汇必须能够同时用于人形机器人、轮式机器人、车辆和数字 Body。一个标准如果只在“像人一样的身体”上成立，就不满足 AgentOS 的 Body Scale 原则。
 
 因此，一个好的 FCS 并不是“让机器拥有更多情绪变量”，而是建立：
-\[
-\boxed{
+\begin{statementbox}
 A stable semantic contract for embodied functional influence.
-}
-\]
+\end{statementbox}
 
 这一点是本章必须牢牢记住的中心。我们不是从心理词汇向机器人强行投影，而是从持续主体的控制需求反向推导出一组功能状态，再寻找尽可能直观的名称。
 
@@ -1902,41 +1885,31 @@ PhenomenalExperience
 
 因此本书采用以下严格分层：
 
-\[
-\boxed{
+\begin{statementbox}
 RawSignal
-}
-\]
+\end{statementbox}
 只是物理或数字测量；
 
-\[
-\boxed{
+\begin{statementbox}
 Perception
-}
-\]
+\end{statementbox}
 是关于世界或身体状态的表示；
 
-\[
-\boxed{
+\begin{statementbox}
 FunctionalFeeling
-}
-\]
+\end{statementbox}
 是这些状态对主体功能影响的表示；
 
-\[
-\boxed{
+\begin{statementbox}
 AwarenessOfFeeling
-}
-\]
+\end{statementbox}
 则要求这种 Feeling 被更高层自我结构访问、归属和解释；
 
 而：
 
-\[
-\boxed{
+\begin{statementbox}
 PhenomenalFeeling
-}
-\]
+\end{statementbox}
 是否随之出现，本理论不作证明。
 
 所以：
@@ -1953,19 +1926,15 @@ PhenomenalFeeling.
 这一分层具有重要工程意义。它使我们可以严肃研究机器内部功能状态，而不必在每次使用 ``feeling'' 一词时都陷入意识争论。同时它也避免另一个极端，即因为无法证明机器具有主观体验，就拒绝研究它显然存在的内部调节状态。
 
 FCS 与生物学 homeostasis、allostasis、interoception 存在有意义的外部理论依赖。生物体会持续监测内部能量、温度、组织完整性以及环境威胁，这些状态会改变注意、学习和行动。但 AgentOS 不要求按照人脑神经机制逐一复制这些结构。我们的目标是寻找：
-\[
-\boxed{
+\begin{statementbox}
 ImplementationIndependentFunctionalStructure.
-}
-\]
+\end{statementbox}
 如果不同材料的系统都需要维持自身、预测风险、调节资源并改变行动，那么它们可能需要某种功能上同类的影响表示。
 
 同样，FCS 与机器人领域的 potential field、cost map、constraint map 也有交叉，但不应简单等同。Cost map 通常面向某一规划器；FCS 则是长期主体公开身体状态的一部分，可以被规划、记忆、自我状态估计以及认知调节多个系统共同使用。因此它更接近：
-\[
-\boxed{
+\begin{statementbox}
 Embodied Functional State ABI
-}
-\]
+\end{statementbox}
 而不仅是某个算法的内部数据结构。
 
 我们还必须警惕把 FCS 变成一个隐藏的价值系统。如果 Body Runtime 自行决定“高 Pressure 必须被最小化”，那么它就在不知不觉中拥有了高层 Goal Authority。这违反了 Agent Kernel 与 Body Runtime 的职责分离。FCS 应表达：
@@ -2021,17 +1990,13 @@ FCS 是一个面向具体 Agent、由 Body Runtime 维护的固定类型、多�
 \end{definition*}
 
 如果我们把 SGC 看作现实在 Agent 内部形成的“结构地图”，那么 FCS 就不是第二张世界地图，而是一张主体条件化的“作用地图”。前者告诉 Agent：
-\[
-\boxed{
+\begin{statementbox}
 WhatIsThere?
-}
-\]
+\end{statementbox}
 后者告诉 Agent：
-\[
-\boxed{
+\begin{statementbox}
 WhatIsItDoingToMe?
-}
-\]
+\end{statementbox}
 
 两者只有在下一阶段被放到同一个公开现实接口中时，才形成真正完整的具身语义世界。但在进入那一步之前，我们必须先牢固地建立本章结论：
 

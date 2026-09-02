@@ -7,8 +7,12 @@
 
 序论的任务，是把读者从“模型智能”的传统视角带到“持续智能体”的问题空间，使后续关于三相记忆、工作记忆有限性、SPC、AHC、TCE、CCM、Body Runtime、SGC、FCS、BPCC 与 KRA 的讨论，都能够被理解为解决同一个问题的不同尺度结构，而不是彼此孤立的模块设计。
 \end{chapteroverviewbox}
-\ChapterArt{1}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/agentos-theory-system-map.png}
+\caption{从模型能力到持续主体的 AgentOS 理论全景}
+\end{figure}
 \section{模型智能与主体智能的区别}
 
 我们首先需要改变一个几乎已经成为默认前提的观察方式。过去十余年人工智能最显著的进展，大多可以用“模型能力增长”来描述：模型能够处理更多模态，能够维持更长上下文，能够完成更复杂的推理，能够调用工具，能够操作计算机，也能够在越来越广泛的任务上表现出迁移能力。在这一框架中，我们通常询问的是：模型拥有多少参数，它的训练数据有多大，它的上下文有多长，它在某个测试集上的准确率是多少，它能否在一次交互中完成某个复杂任务。这些问题当然重要，因为一个长期智能体仍然需要一个足够强大的基础认知模型。但如果我们的目标从“完成一次任务”转向“构造一个持续存在的人工智能主体”，这些指标很快就会显得不够。
@@ -249,17 +253,13 @@ C_{\max}.
 当外部世界复杂度远高于这一容量时，智能不能靠把全部世界复制进工作记忆解决问题，而必须进行选择、压缩、时序展开、迁移和结构重构。这一认识后来发展成 CCM、Boundary 和 Offloading。
 
 因此 AgentOS 的第一项职责不是“让模型思考得更多”，而是管理什么值得进入显式认知。熟悉、稳定、低风险的过程应当尽可能在局部闭环关闭；异常、冲突、新颖、高风险的结构才应该向上升级。由此形成：
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal
-}
-\]
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
 UnexpectedResidualEscalatesGlobally
-}
-\]
+\end{statementbox}
 两条重要原则。
 
 第二项职责是管理记忆的相变。工作记忆中的当前结构不能原样永久保存；经历需要形成轨迹，轨迹需要被压缩为规律，规律又要能够重新生成当前理解。于是三相记忆不是三个数据库，而是一套相互转换机制：
@@ -311,13 +311,9 @@ DynamicsOfTopology.
 
 因此，AgentOS 的问题最终可以压缩成一句话：
 
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
-\text{如何让一个有限的智能系统，在现实闭环中长期管理自身认知结构，并使过去经验逐渐改变未来认知的组织方式？}
-}
-$}
-\]
+\begin{statementbox}
+如何让一个有限的智能系统，在现实闭环中长期管理自身认知结构，并使过去经验逐渐改变未来认知的组织方式？
+\end{statementbox}
 
 后面的每一个模块，都必须能够回到这个问题找到自己的存在理由。如果某个组件无法解释它解决了哪个动力学矛盾，那么它就不应该因为“像人脑”或者“当前 Agent 框架流行”而被加入 AgentOS。
 

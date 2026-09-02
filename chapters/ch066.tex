@@ -27,14 +27,11 @@ RepresentationAlignment
 这一基本准则。所谓 ``$>$'' 并非表示表示对齐没有价值，而是表示在 Kernel--Body Runtime 的跨模型长期耦合中，\textbf{功能正确性具有比内部坐标一致性更高的系统优先级。}
 
 KRA 的最终锚点不是 Kernel，也不是 BPCC，更不是任何一个学习模型，而是现实：
-\[
-\boxed{
+\begin{statementbox}
 RealityIsTheUltimateAlignmentAnchor
-}
-\]
+\end{statementbox}
 只有能够持续通过真实观测重新闭合的功能关系，才能被认为是有效的 Kernel--Body 耦合关系。本章由此建立 Semantic Contract、Contract Envelope 与 Functional Anchor 三个工程对象，为异构认知内核、异构身体运行时以及未来跨身体迁移提供统一的功能对齐理论基础。
 \end{chapteroverviewbox}
-\ChapterArt{66}
 
 \section{Train Separately：为什么 Kernel 与 Body Runtime 不应被迫共享一种内部表示}
 
@@ -96,17 +93,13 @@ z_B
 要求 Kernel 理解这些变量不仅没有意义，还会让有限的工作记忆 $h(t)$ 被身体微观动力学占据；反过来，要求 BPCC 直接拥有 ``杯子属于某人的纪念品，因此应更加谨慎'' 这样的高层语义，也会让快速控制器承担它不应该承担的认知结构。
 
 因此，KRA 的第一原则是：
-\[
-\boxed{
+\begin{statementbox}
 TrainKernelSeparately
-}
-\]
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
 TrainBodyRuntimeSeparately.
-}
-\]
+\end{statementbox}
 
 所谓 ``Separately'' 并不意味着两个系统永远独立，而是指\textbf{允许它们分别形成适合自身功能空间与时间尺度的内部表示}。Kernel 可以形成适合长期语义推理的 Agent-CSO 表示，BPCC 可以形成适合快速动力预测的私有 latent。KRA 不试图取消这种差异，而是负责建立二者之间稳定、可解释、可适应的作用关系。
 
@@ -269,11 +262,9 @@ LatentMuscle
 \section{Calibrate Functionally：不比较内部向量，而比较真实闭环中的功能后果}
 
 当 Kernel 与 Body Runtime 已经通过公共语义接口连接以后，我们仍然不能认为二者已经 ``对齐''。一个字段名称相同，并不意味着两个系统对其拥有相同功能理解。例如 Kernel 将 ``可达'' 理解为成功概率高于 $0.9$，而某一新 Body Runtime 只要运动学上存在轨迹就标记为 reachable，那么接口虽然语义名称一致，Agent 在现实中仍会不断做出错误决策。因此 KRA 的第三原则不是 Semantic Matching，而是：
-\[
-\boxed{
+\begin{statementbox}
 CalibrateFunctionally.
-}
-\]
+\end{statementbox}
 
 功能校准的对象不是内部 representation，而是由输入、预测、行动和真实反馈共同构成的闭环行为关系。设 Kernel 通过 KRA 产生控制意图 $u_K$，Body Runtime 执行后产生实际状态转移：
 \[
@@ -550,11 +541,9 @@ AtTheAppropriateTimescale.
 \]
 
 由此，KRA 更像一个长期关系维护系统。它维护的不是固定参数，而是：
-\[
-\boxed{
+\begin{statementbox}
 RelationshipContinuity.
-}
-\]
+\end{statementbox}
 参数可以换，身体可以换，Kernel 可以成长，但只要语义契约、功能后果和现实校验关系持续存在，Agent 对身体的 ``熟悉'' 与 ``拥有'' 就可以保持连续。这也为后续跨身体学习、技能迁移和长期共同适应建立了必要基础。
 
 \section{Functional Alignment $>$ Representation Alignment：跨实现智能的核心原则}
@@ -644,11 +633,9 @@ GoalState
 SharedLatent,
 \]
 而是：
-\[
-\boxed{
+\begin{statementbox}
 SharedFunctionalSemantics.
-}
-\]
+\end{statementbox}
 
 这一原则进一步具有非常重要的认识论意义。它说明 Agent-CSO 的统一性不应该由底层载体决定。同一个 CSO：
 \[
@@ -733,11 +720,9 @@ RealityConsistency.
 \]
 
 因此 KRA 必须遵循全书最重要的现实原则：
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\]
+\end{statementbox}
 
 行动路径必须形成：
 \[
@@ -897,11 +882,9 @@ Reality
 \section{Contract Envelope：允许适应，但不允许公共意义无限漂移}
 
 Continuous Adaptation 带来的直接风险是语义漂移。如果每一个接口变量都可以在长期学习中自由改变，那么最终 KRA 虽然仍然存在，但 ``reachable''、``danger''、``contact''、``body''、``observed'' 等公共概念的实际含义可能已经发生不可追踪的变化。为了在适应性和稳定性之间建立明确边界，我们引入：
-\[
-\boxed{
+\begin{statementbox}
 ContractEnvelope.
-}
-\]
+\end{statementbox}
 
 设 KRA 的公共契约参数为：
 \[
@@ -1041,22 +1024,18 @@ ContractViolationEvent.
 \]
 
 这样，长期适应就不再是一种无边界参数漂移，而成为：
-\[
-\boxed{
+\begin{statementbox}
 AdaptationInsideStableMeaning.
-}
-\]
+\end{statementbox}
 
 这个思想对于长期 Agent 尤其重要。一个持续主体可以越来越熟练地使用身体，却不能因为 ``学习'' 而让 ``现实观察'' 逐渐变成 ``模型猜测''；可以重新学习不同身体的控制方式，却不能让 ``安全'' 在接口层慢慢被重新解释成 ``高价值任务允许忽略''。因此 Contract Envelope 是 KRA 中连接适应性、身份连续性和系统治理的核心结构。
 
 \section{Functional Anchors：用少量稳定功能关系维持长期 Kernel--Body 连续性}
 
 Contract Envelope 给出了 ``允许变化的区域''，但一个长期学习系统还需要更积极的参照物：当 Kernel、KRA 和 Body Runtime 都发生变化之后，我们如何判断它们之间的基本关系仍然是同一个关系？为此，本章进一步引入：
-\[
-\boxed{
+\begin{statementbox}
 FunctionalAnchor.
-}
-\]
+\end{statementbox}
 
 Functional Anchor 并不是固定参数，也不是某一组 latent vector，而是一组在长期演化中应保持稳定的\textbf{可验证功能关系}。它们充当 Kernel--Body 联合学习中的参照坐标。
 

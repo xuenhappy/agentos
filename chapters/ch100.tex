@@ -25,8 +25,12 @@ Self-Perception Is an Estimation Process, Not Privileged Access
 
 即：\textbf{自我感知是一种状态估计，而不是主体对自身状态的特权式直接读取。}
 \end{chapteroverviewbox}
-\ChapterArt{100}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/spc-state-observer.png}
+\caption{SPC 偏差、延迟与过度监控异常}
+\end{figure}
 \section{SPC异常的基本对象：真实内部状态与自我感知状态的分离}
 
 我们首先需要澄清 SPC 异常研究的对象。一个持续运行的 AgentOS 在任意时刻 $t$ 都具有一个高维内部状态。为了避免把这一状态错误地等同于工作记忆 $h(t)$，可以定义完整内部状态向量：
@@ -126,11 +130,9 @@ x_{t,k}^{\mathrm{rel}},
 
 只要 $\varepsilon_t^{\mathrm{SPC}}$ 很小，Agent 就能够使用一个足够正确的自我近似完成控制。这里没有必要要求 Self Model 与真实内部状态完全同构。正如 Agent-CSO 不需要复制 Universe-CSO 的全部底层细节一样，SPC 也没有必要完整复制整个 Agent。一个有效 SPC 的目标不是最大信息保真，而是形成：
 
-\[
-\boxed{
+\begin{statementbox}
 Control-Sufficient Self Representation
-}
-\]
+\end{statementbox}
 
 即足以支持当前认知控制、自我解释和长期学习的自我表示。
 
@@ -502,27 +504,21 @@ p(c_i\mid o_t,x_t),
 
 因此我们需要区分三个层次：
 
-\[
-\boxed{
+\begin{statementbox}
 Value Error
-}
-\]
+\end{statementbox}
 
 状态值错误；
 
-\[
-\boxed{
+\begin{statementbox}
 Structural Error
-}
-\]
+\end{statementbox}
 
 变量关系错误；
 
-\[
-\boxed{
+\begin{statementbox}
 Attribution Error
-}
-\]
+\end{statementbox}
 
 结果的因果归属错误。
 
@@ -664,11 +660,9 @@ C_{\mathrm{task}}^{\mathrm{available}}\downarrow.
 
 我们可以把这种现象定义为：
 
-\[
-\boxed{
+\begin{statementbox}
 Self-Monitoring Capture
-}
-\]
+\end{statementbox}
 
 即自我监控结构开始捕获有限全局工作空间。
 
@@ -740,19 +734,15 @@ SPC 可以持续估计自己，但不意味着 Agent 必须持续 ``思考自己
 
 这种区分对于持续智能尤其重要。我们可以把 SPC 理解成身体内部大量自动感觉过程的工程对应：许多内部状态一直被监测，却只有异常才进入显式注意。这样：
 
-\[
-\boxed{
+\begin{statementbox}
 NormalSelfDynamicsStayLocal
-}
-\]
+\end{statementbox}
 
 而：
 
-\[
-\boxed{
+\begin{statementbox}
 UnexpectedSelfResidualEscalates
-}
-\]
+\end{statementbox}
 
 就成为与 Body Runtime ``Normal Dynamics Stay Local''完全同构的认知原则。
 
@@ -1500,11 +1490,9 @@ z_t
 
 这与我们早期频谱理论的核心关系完全一致：
 
-\[
-\boxed{
+\begin{statementbox}
 PersistentFastResidualShapesSlowStructure
-}
-\]
+\end{statementbox}
 
 而不是：
 
@@ -2233,19 +2221,15 @@ x_t^{int}.
 
 同时满足：
 
-\[
-\boxed{
+\begin{statementbox}
 ControlSufficiency
-}
-\]
+\end{statementbox}
 
 与：
 
-\[
-\boxed{
+\begin{statementbox}
 RealityConsistency.
-}
-\]
+\end{statementbox}
 
 换句话说，SPC 的目标不是最大化自我信息量，而是：
 

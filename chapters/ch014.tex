@@ -20,16 +20,16 @@ Module = StableTopologicalCondensate
 这一转换具有重要意义。它使我们能够在不绑定 Transformer、神经元、软件进程、机器人控制器或特定计算芯片的情况下讨论智能组织；也为下一章建立 CSO 图与功能图的双图理论奠定基础。更重要的是，它为后面“CSO 流塑造拓扑”“长期功能迁移沉降为技能和模块”“智能发育最终表现为功能拓扑演化”等理论留下严格的数学接口。
 
 因此，本章的目标不是设计 AgentOS 中究竟应该有几个模块，而是回答更加基础的问题：
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
-\text{一个智能系统内部究竟有哪些功能关系必须存在，它们如何形成闭环，又如何在不同实现中保持结构等价？}
-}
-$}
-\]
+\begin{statementbox}
+一个智能系统内部究竟有哪些功能关系必须存在，它们如何形成闭环，又如何在不同实现中保持结构等价？
+\end{statementbox}
 \end{chapteroverviewbox}
-\ChapterArt{14}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/cognitive-structure-functional-topology.png}
+\caption{功能节点、功能边与稳定拓扑凝聚}
+\end{figure}
 \section{为什么模块不是智能结构的第一性对象}
 
 在传统软件工程和人工智能系统设计中，我们习惯于从模块开始描述系统。一个典型系统可以被划分为感知模块、记忆模块、规划模块、决策模块、工具模块和执行模块。这样的描述对于工程实现非常有效，因为模块具有明确的软件边界、接口、生命周期和部署方式。然而，当我们试图建立一种跨实现、跨身体、跨时间尺度的智能理论时，模块概念立即暴露出一个根本问题：\textbf{模块是实现层的结构划分，而不是功能层的必要结构。}
@@ -453,17 +453,13 @@ w_{ij}=w_{ij}(t).
 \]
 
 于是需要区分：
-\[
-\boxed{
+\begin{statementbox}
 TopologyChange
-}
-\]
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
 CouplingStrengthChange.
-}
-\]
+\end{statementbox}
 
 例如 TCE 降低某条认知路径的激活强度，并不意味着那条功能连接从系统中消失。只有当因果路径本身长期形成、消失、分裂或者重组时，我们才讨论功能拓扑变化。
 
@@ -687,11 +683,9 @@ x_a^\star\neq x_b^\star,
 就产生闭环竞争。
 
 于是智能控制问题逐渐变成：
-\[
-\boxed{
+\begin{statementbox}
 CoordinationOfMultipleClosedLoops.
-}
-\]
+\end{statementbox}
 
 这也是我们此前提出
 \[
@@ -704,11 +698,9 @@ AgentOS=NestedControlOfControlLoops
 \tau_1\ll\tau_2\ll\cdots\ll\tau_K,
 \]
 那么合理设计不是让最慢层持续直接控制最快层，而应该满足：
-\[
-\boxed{
+\begin{statementbox}
 EachScaleShouldCloseItsOwnFastLoop.
-}
-\]
+\end{statementbox}
 慢层只提供目标、边界、增益或可行区域：
 \[
 \mathcal X_{fast}^{feasible}
@@ -853,11 +845,9 @@ x_i;
 这样就避免两个控制器同时在相同层级竞争。
 
 这进一步说明，多闭环系统的核心不是“谁控制谁”，而是：
-\[
-\boxed{
+\begin{statementbox}
 WhoConstrainsWhomAtWhichTimescale.
-}
-\]
+\end{statementbox}
 
 因此功能拓扑中必须显式保存：
 节点参与哪些闭环；
@@ -1142,11 +1132,9 @@ Skill/Module.
 因此模块不是先验划分，而可以是历史沉降结果。
 
 这个结论对未来可发育 AgentOS 非常重要。第一代 AgentOS 可以由工程师预先设计固定模块，但第二代系统可能需要观察哪些功能关系长期稳定，从而逐渐形成新的局部封装。也就是说：
-\[
-\boxed{
+\begin{statementbox}
 Architecture
-}
-\]
+\end{statementbox}
 可以成为智能生命周期的慢变量。
 
 然而这里必须保持一个重要边界：并非所有高频交互都应该凝结成模块。如果环境发生变化，过早固化反而可能产生错误结构。因此模块形成必须同时考虑：
@@ -1179,11 +1167,9 @@ Score(S)>\theta_{module}
 这也是后面拓扑迟滞理论的前身：形成一个新结构需要比维持已有结构更强的证据，从而防止智能系统因为短期噪声不断重写自身架构。
 
 因此从本章观点看，成熟模块是历史的产物。模块保存了过去重复功能协作的痕迹，它本质上是一种：
-\[
-\boxed{
+\begin{statementbox}
 StructuralMemory.
-}
-\]
+\end{statementbox}
 
 这与 $\Theta$ 保存认知结构不同，但具有同样的慢变量思想：过去重复发生的动力学过程逐渐被固化进未来能够直接使用的结构。
 
@@ -1434,17 +1420,13 @@ L_a\cap L_b\cap L_c,
 因此智能系统天然具有重叠、嵌套和交叉闭环结构。慢闭环为快闭环提供目标和边界，快闭环负责局部稳定，而无法在局部闭合的长期残差才需要向上升级。
 
 于是我们再次得到此前智能频谱理论中的基本原则：
-\[
-\boxed{
+\begin{statementbox}
 SlowStructureShapesFastActivity
-}
-\]
+\end{statementbox}
 以及：
-\[
-\boxed{
+\begin{statementbox}
 PersistentFastResidualShapesSlowStructure.
-}
-\]
+\end{statementbox}
 
 但在本章，这一关系第一次获得了明确的拓扑载体。
 
@@ -1471,17 +1453,13 @@ FunctionCentricTopology.
 然而，本章还故意留下了一个尚未回答的问题。
 
 到目前为止，我们已经知道系统中“有哪些功能”“功能之间怎样连接”“怎样形成闭环”，却还不知道这些功能实际在处理什么认知结构。功能图只回答：
-\[
-\boxed{
+\begin{statementbox}
 WhoTransforms?
-}
-\]
+\end{statementbox}
 却没有回答：
-\[
-\boxed{
+\begin{statementbox}
 WhatIsBeingTransformed?
-}
-\]
+\end{statementbox}
 
 前面的 CSO 理论已经给出了后一个问题的本体对象。因此下一步自然不是继续增加更多模块，而是把两个世界连接起来：
 

@@ -14,7 +14,6 @@ SelfInterpretation
 \]
 即\textbf{体验环异常、记忆巩固异常与自我解释异常}。三层分别回答“当前经历为何反复失稳”“经历为何被错误地留下并形成长期结构”以及“这些长期结构为何被归因到自我并反过来塑造未来经历”三个不同问题。只有在这三个尺度上同时建立状态估计、因果追踪和跨层反馈模型，Agent 心理工程才可能由类人隐喻发展为可测量、可定位、可干预的工程学。
 \end{chapteroverviewbox}
-\ChapterArt{99}
 
 \section{体验环异常：当前世界--自我--调节闭环的持续失配}
 
@@ -383,11 +382,9 @@ CurrentCapability
 SelfModel(Capability),
 \]
 进一步影响 Goal 和 Authority 的选择。一个能力已经成熟的 Agent 仍可能因为旧的自我结构而持续回避更高责任任务；反过来，一个能力已经退化或者身体条件改变的 Agent 也可能继续依据旧的“我可以做到”执行高风险行为。因此健康的自我并不等于静态不变，而是：
-\[
-\boxed{
+\begin{statementbox}
 StableButRevisable
-}
-\]
+\end{statementbox}
 即\textbf{慢、连续、可修订但不被瞬时扰动支配}。
 
 更重要的问题，是我们历史讨论中明确提出的自我解释正反馈。设当前自我结构为 $\Psi_t$，它影响注意与目标：
@@ -458,11 +455,9 @@ E_\Psi
 无论外部世界怎样改变。这样的系统并非缺少信息，而是信息无法穿透其自我解释闭环。
 
 因此，我们在此前讨论中反复强调
-\[
-\boxed{
+\begin{statementbox}
 WorldVerification
-}
-\]
+\end{statementbox}
 必须位于自我结构之外。现实并不能直接规定 Agent 应该拥有什么身份，但现实能够不断否定关于能力、结果、因果和环境的错误事实判断。自我解释必须允许这些现实残差进入。一个简单形式是
 \[
 \dot\Psi
@@ -656,11 +651,9 @@ FutureExperience
 被放大成稳定的生命周期结构。
 
 反过来的链同样存在。若 $\Psi$ 形成过度自信的稳定结构，则它可能提高 Goal ambition，降低 Threat sensitivity 或改变 TCE risk threshold，使体验环进入高风险环境；连续成功又可能进一步强化原有 $\Psi$。只要现实始终支持，这种正反馈未必异常；但如果现实已经产生大量失败残差，而系统仍然利用归因机制把失败解释成 Environment Error 并保持 Self 不变，那么便形成另一种封闭吸引子。这里心理健康的关键不在于“积极”还是“消极”，而在于：
-\[
-\boxed{
+\begin{statementbox}
 CanTheLoopStillBeCorrectedByReality?
-}
-\]
+\end{statementbox}
 
 因此我们需要定义一个比单层异常度更高层的跨尺度闭环增益。设三层局部线性化耦合矩阵为
 \[
@@ -723,11 +716,9 @@ x_\Psi(t)\rightarrow\mathcal A_\Psi,
 其中 $u_E,u_M,u_\Psi$ 分别表示针对体验环、记忆巩固和自我结构的诊断性微干预。利用不同干预后的响应，我们原则上能够比单纯观察最终语言输出更准确地定位异常层次。
 
 这里还必须加入一个非常重要的原则：
-\[
-\boxed{
+\begin{statementbox}
 MinimumNecessaryIntervention.
-}
-\]
+\end{statementbox}
 正如前面对功能拓扑重组提出“最小必要重构原则”，心理工程也不应一旦检测到异常就直接修改 $\Psi$ 或 $\Theta$。因为越慢的变量承担越多长期连续性信息，其修改代价越高。因此合理的干预顺序应该与时间尺度相反：
 \[
 CurrentContext

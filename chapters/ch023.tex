@@ -26,8 +26,12 @@ h\leftrightarrow E\leftrightarrow\Theta
 
 本章的目标不是给出某一具体神经网络或数据库实现，而是建立一个实现无关的动力学母型。后续无论使用 Transformer、状态空间模型、符号系统、神经数据库还是其他计算结构，只要试图实现长期持续智能，都必须回答本章所提出的三个问题：当前状态如何成为经历，经历如何形成长期生成结构，以及长期结构又如何重新进入当前状态并重新解释过去。
 \end{chapteroverviewbox}
-\ChapterArt{23}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/memory-phase-transition.png}
+\caption{工作、情景与结构记忆的相变解释}
+\end{figure}
 \section{为什么传统短期记忆与长期记忆二分不足}
 
 我们首先从一个非常朴素的问题开始。假设一个智能体正在完成一项持续数小时、数天乃至数年的任务，它在任意时刻都至少面对三种性质明显不同的信息。第一类信息是此刻正在使用的目标、变量、约束、假设、感知结果和行动计划；第二类信息是此前发生过的事件序列，例如某个行动为什么失败、某个对象在什么时候出现、某项任务经过了哪些步骤；第三类信息则是从大量事件中逐渐稳定下来的知识、规则、预测关系和技能结构。传统的“短期记忆--长期记忆”二分可以粗略区分第一类与后两类，却无法充分解释第二类和第三类之间的本体差别。

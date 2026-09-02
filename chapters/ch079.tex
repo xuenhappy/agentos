@@ -39,8 +39,12 @@
 \]
 其中符号 $\bowtie$ 表示这些能力不是可以彼此独立打分后简单求和的模块，而是存在强耦合、相互制约和最低短板效应的联合成熟条件。只要其中任一关键闭环不能长期成立，系统即使拥有极强的基础模型能力，也不能被视为一个成熟的 Companion Agent。
 \end{chapteroverviewbox}
-\ChapterArt{79}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/companion-agent-maturity.png}
+\caption{Companion Agent 的多维成熟度覆盖}
+\end{figure}
 \section{长期身份：持续主体必须比会话更长寿}
 
 我们首先需要明确 Companion Agent 最难验证的并不是语言能力，而是\textbf{同一主体能否在时间上持续存在}。传统聊天系统的基本对象是一次调用、一段上下文或一个 session，其内部状态可以随着上下文结束而自然消失；而陪伴型智能体所面对的是完全不同的问题。一个家庭中的 Companion Agent 今天与使用者共同经历了一件事情，数周以后再次遇到相似场景时，它不仅需要检索相关记录，更需要以 ``这是我过去经历过的事情'' 的方式把过去结构归属于同一主体。因而，长期身份并不是数据库中存在一个固定 \texttt{agent\_id}，而是当前决策、历史经历、长期结构、自我解释和未来倾向之间保持连续的因果关系。

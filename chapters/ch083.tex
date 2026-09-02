@@ -3,8 +3,12 @@
 \begin{chapteroverviewbox}
 本章讨论 AgentOS 从单一智能体产品、开发框架与运行时系统，进一步演化为通用智能基础设施的理论条件与工程边界。这里的“基础设施”并不意味着 AgentOS 替代 Linux、云计算平台、数据库或基础模型，而是意味着：当持续智能体成为一种长期运行的软件主体以后，传统计算机操作系统仅管理 CPU、内存、设备、文件和网络已经不足以覆盖新的系统对象；还必须有一层长期负责认知状态、生命周期记忆、技能、身体、工具、权限、身份、跨 Agent 协作以及智能资源调度的运行时。因此，本章把 AgentOS 定义为一种 \emph{Intelligence Resource Runtime}，并进一步研究它如何通过 Memory Ecosystem、Skill Ecosystem、Body Ecosystem、Agent Communication、Organization Runtime 与开放标准形成新的软件基础设施。本章仍然以此前确定的固定核心功能拓扑 AgentOS 为主要工程对象，不把任意自修改拓扑作为既定工程能力；所有生态扩展都必须服从单一持续主体、现实验证、权限边界、安全治理以及 ``Computer OS 管理计算资源，AgentOS 管理智能资源'' 的基本分层原则。
 \end{chapteroverviewbox}
-\ChapterArt{83}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/global-local-predictive-control.png}
+\caption{从 AgentOS 产品到智能资源运行时}
+\end{figure}
 \section{从应用框架到持续智能运行时}
 
 我们首先需要澄清一个容易被工程实现掩盖的问题：AgentOS 最初看起来很容易被理解成一种 ``Agent Framework''。如果仅观察它的表面接口，这种理解并非毫无根据。AgentOS 同样需要调用基础模型、管理工具、维护 Memory、执行任务、响应事件，并与数字世界或物理身体交互。从传统软件工程视角看，这些能力似乎完全可以被组织成若干 SDK、服务组件和工作流。因此，一个最自然的问题是：为什么还需要使用 ``OS'' 这一名称，而不能把它归入普通 Agent Framework、Workflow Engine 或 Application Runtime？
@@ -309,11 +313,9 @@ ActionIssued\neq ActionSucceeded
 }
 \]
 以及
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\]
+\end{statementbox}
 因此，Skill 执行后的实际结果必须重新通过 Body Runtime、工具返回值或者其他 Reality Interface 进入 AgentOS，再由 SGC、FCS 或相应数字语义接口形成真实观测。只有这样，Skill 才不会成为一个把预测状态偷偷写回现实状态的封闭环。
 
 Skill Ecosystem 还提供了跨 Agent 共享能力的基础。设 Agent $A$ 已经学习某 Skill $k_A$，Agent $B$ 若具有相容身体能力和接口，则可以尝试把该 Skill 迁移为
@@ -418,11 +420,9 @@ Affordance
 EpistemicMetadata,
 \]
 回答
-\[
-\boxed{
+\begin{statementbox}
 WhatIsThere?
-}
-\]
+\end{statementbox}
 而 FCS 提供世界与身体对主体的功能影响：
 \[
 FCS
@@ -430,11 +430,9 @@ FCS
 TypedInfluenceField,
 \]
 回答
-\[
-\boxed{
+\begin{statementbox}
 HowIsRealityAffectingMe?
-}
-\]
+\end{statementbox}
 两者共同构成公开的具身语义状态。BPCC 则保留高频局部预测控制：
 \[
 BPCC
@@ -605,11 +603,9 @@ PersistentAgency
 \tau_{\mathrm{organization}}.
 \]
 个体可能在分钟、小时内完成任务，而组织角色、制度、信誉和治理结构通常变化更慢。正因为如此，组织能够把大量个体的短期波动压缩成相对稳定的长期约束。这与我们此前提出的慢变量原则完全一致：
-\[
-\boxed{
+\begin{statementbox}
 SlowStructureShapesFastDynamics.
-}
-\]
+\end{statementbox}
 组织协议、权限和流程不需要逐步控制每一个 Agent 的内部推理，而是定义可行域：
 \[
 Action_i(t)\in\mathcal F_O(t),
@@ -617,11 +613,9 @@ Action_i(t)\in\mathcal F_O(t),
 其中 $\mathcal F_O$ 是组织层给出的权限、职责和安全约束集合。
 
 与此同时，组织也不能是完全冻结的。大量个体持续出现的残差、冲突和低效协调会反向作用于组织结构：
-\[
-\boxed{
+\begin{statementbox}
 PersistentFastResidualShapesSlowStructure.
-}
-\]
+\end{statementbox}
 例如，如果两个角色之间长期存在高频重复协调，则可能形成直接协议；如果某个中间环节长期制造延迟，则组织拓扑可能缩短；如果某类任务长期需要新的专业能力，则可能形成新角色。因此：
 \[
 RepeatedInterAgentCSOFlow
@@ -740,11 +734,9 @@ AgentCentric.
 传统 App 仍然存在，Linux 仍然存在，云服务仍然存在，但它们逐渐成为持续主体调用的功能结构，而不再始终是用户认知的最高组织单位。
 
 这里也能解释为什么 AgentOS 有可能 ``吞并'' Memory、Skill、MCP、Tool 和 Harness 等今天分散的生态。所谓吞并不是技术垄断，而是这些组件逐渐被统一到
-\[
-\boxed{
+\begin{statementbox}
 PersistentAgentLifecycle
-}
-\]
+\end{statementbox}
 这一更高层语义框架下。只要它们仍然围绕单次模型调用设计，就彼此割裂；一旦围绕一个持续主体重新定义，就自然变成同一运行时的不同资源类别。
 
 \section{开放标准、生态中立与基础设施的治理边界}
@@ -824,11 +816,9 @@ SemanticGovernance.
 \section{Intelligence Resource Runtime：AgentOS 的最终基础设施定位}
 
 经过前面的推导，我们现在可以给 AgentOS 一个比 ``智能体操作系统'' 更精确的工程定义。它不是 Linux 的替代者，也不是一个大型 Agent Framework，而是位于传统计算资源层之上的
-\[
-\boxed{
+\begin{statementbox}
 IntelligenceResourceRuntime.
-}
-\]
+\end{statementbox}
 其核心任务是在一个持续主体的生命周期内，维护认知结构、显式认知带宽、记忆稳定度、技能、身体能力、工具、权限和外部认知资源之间的动态配置。
 
 可以把整个系统分成三层：
@@ -910,19 +900,15 @@ L_{\mathrm{goal}}
 尽可能小。这里 $L_{\mathrm{goal}}$ 表示任务未闭合损失，$L_h$ 表示有限工作记忆压力，$L_{\mathrm{residual}}$ 表示预测和控制偏差，$L_{\mathrm{coordination}}$ 表示不同功能、Tool 和 Agent 之间协调成本，$L_{\mathrm{safety}}$ 表示安全风险，$L_{\mathrm{identity}}$ 则表示过快慢变量变化导致的身份连续性损失。
 
 这样一来，三相记忆、CCM、Offloading、Boundary、Skill Compilation、Body Runtime 和 Organization Runtime 不再是若干平行功能，而统一成为
-\[
-\boxed{
+\begin{statementbox}
 CognitiveStructurePlacement
-}
-\]
+\end{statementbox}
 问题的不同解法。$h$ 解决当前显式承载，$E$ 解决经验轨迹，$\Theta$ 解决稳定结构，Skill 解决程序化执行，Tool 和 Environment 解决外部承载，Other Agent 解决社会性承载，Body Runtime 解决现实闭环，而 Organization Runtime 解决跨主体慢结构。
 
 因此，从理论上看，AgentOS 基础设施的真正核心不是 ``拥有很多模块''，而是存在一个贯穿整个生命周期的统一调度问题：
-\[
-\boxed{
+\begin{statementbox}
 WhereAndHowShouldCognitiveStructureLive?
-}
-\]
+\end{statementbox}
 什么应该现在思考；什么应该记住；什么应该形成规则；什么应该变成技能；什么应该写到外部；什么应该交给身体；什么应该委派给他者；什么必须重新进入高层认知；什么又必须受到更慢的身份、安全与治理结构约束。传统计算机操作系统不会回答这些问题，而持续智能系统最终必须回答。
 
 由此，本章可以给出 AgentOS 从产品到基础设施演化的最终结构：
@@ -956,11 +942,9 @@ Attention,\ Memory,\ Skill,\ Body,\ Tool,\ Authority,\ CognitiveStructure.
 }
 \]
 第三，当这些资源可以跨应用、跨设备、跨 Agent 和跨生命周期稳定迁移时，AgentOS 才从一个具体产品变成
-\[
-\boxed{
+\begin{statementbox}
 InfrastructureForPersistentIntelligence.
-}
-\]
+\end{statementbox}
 
 因此，AgentOS 最终并不是试图成为 ``所有软件之上的超级应用''。更准确地说，它试图成为这样一个基础运行层：\textbf{让一个持续智能主体能够在不断变化的模型、工具、设备、身体、应用和组织环境中，仍然保持自己的记忆、能力、身份、现实闭环和生命周期连续性。}
 

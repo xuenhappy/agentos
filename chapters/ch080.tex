@@ -3,8 +3,12 @@
 \begin{chapteroverviewbox}
 本章讨论的不是传统意义上的“为大模型再设计一块更快的加速芯片”，而是从本书已经建立的多尺度智能动力学出发，回答一个更基础的工程问题：当一个持续智能体同时包含毫秒级身体闭环、秒级工作记忆认知、分钟至小时级经验整合以及更慢的结构学习时，是否仍然可以把这些不同时间尺度、不同确定性要求、不同学习方式的计算统一压缩到同一种推理硬件之中。我们的结论是否定的。AgentOS 的硬件体系应当继承其软件体系已经确立的快慢分层原则：高层 Agent Kernel 依赖高吞吐、强表达、适合大规模生成模型计算的推理硬件；Body Runtime 中的 BPCC 则需要低时延、低抖动、确定性、持续在线适应和现实闭环优先的“小脑式”计算硬件。二者不是主芯片与协处理器的简单性能分工，而是两种不同智能动力学的物理承载。由此，本章提出 ``Inference Chip + Cerebellum Chip'' 的异构智能计算路线，并进一步讨论其与 KRA、Body Runtime、Linux/Computer OS 以及 AgentOS 调度体系之间的接口关系。
 \end{chapteroverviewbox}
-\ChapterArt{80}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/agentos-fixed-topology-architecture.png}
+\caption{推理硬件与身体快速控制硬件的层级}
+\end{figure}
 \section{为什么 BPCC 不是一块缩小的大模型推理芯片}
 
 当我们从软件层面建立
@@ -74,17 +78,13 @@ AgentSystem=AgentKernel+BodyRuntime
 两者当然可以共享部分张量运算基础，但不应该因为二者都可以包含神经网络，就把它们理解成同一计算体系的大小版本。
 
 从本书前面建立的多尺度动力学看，这种硬件分化具有更深的理论原因。我们已经反复强调
-\[
-\boxed{
+\begin{statementbox}
 EachScaleShouldCloseItsOwnFastLoop
-}
-\]
+\end{statementbox}
 以及
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal.
-}
-\]
+\end{statementbox}
 如果一个身体的每次平衡修正、每次触觉补偿、每个局部运动误差都必须经过高层模型进行推理，那么 Agent Kernel 会被大量本来可以局部闭合的 Agent-CSO 占据，工作记忆 $h(t)$ 的有限容量将被身体微观扰动持续消耗。成熟智能的正确方向恰恰相反：稳定、重复、局部可闭合的认知结构应当逐渐下沉到更加快速、更加局部、更加确定的承载层。因此小脑芯片并不是“为了加速大模型”，而是为了物理实现
 \[
 \boxed{
@@ -424,11 +424,9 @@ Novelty
 时，将问题提升到 KRA 或 Agent Kernel，而不是继续无限修改 BPCC。
 
 这一设计直接连接适应控制、在线系统辨识、递推估计、模型预测控制、元学习和两时间尺度随机逼近等外部理论。AgentOS 的独特要求在于：局部学习的目的不是让每一层都成为独立智能体，而是在保持单一持续主体的前提下，使身体低层拥有足够的适应自治。因此小脑芯片应被理解成
-\[
-\boxed{
+\begin{statementbox}
 AdaptiveLocalClosureHardware,
-}
-\]
+\end{statementbox}
 而不是独立自主的第二 Agent。
 
 \section{Cerebellum Chip：面向局部预测控制闭环的专用计算域}
@@ -978,11 +976,9 @@ BodyRuntime/BPCC
 \]
 负责高速、确定、局部、持续适应的现实闭环；
 而
-\[
-\boxed{
+\begin{statementbox}
 ComputerOS
-}
-\]
+\end{statementbox}
 负责在物理资源层维持它们的时间、内存、带宽、能量与安全隔离。
 
 由此，本书在软件层已经建立的原则

@@ -18,8 +18,12 @@
 
 需要特别说明的是，本章同时区分三个层次：动力系统、控制论和复杂系统关于过程、反馈和尺度的研究属于已有科学基础；我们用这些理论重新组织“智能”概念属于理论综合；而将这一认识进一步发展为后续 AgentOS 的多尺度架构，则属于本书提出的工程理论。三者在后文中将始终保持区分。
 \end{chapteroverviewbox}
-\ChapterArt{2}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/multiscale-intelligence-flow.png}
+\caption{有限观察窗口中的异速率智能}
+\end{figure}
 \section{为什么不存在脱离时空尺度的“泛在智能”}
 
 当我们第一次讨论智能时，人们往往习惯提出类似的问题：“这个系统有没有智能？”“一个模型比另一个模型聪明多少？”“人类和一个组织相比，谁更智能？”这些问题看似自然，但其中隐藏着一个经常被忽略的前提：我们似乎假设存在一种可以脱离观察尺度独立测量的“智能量”，仿佛温度、质量或者长度一样，只要找到合适的标尺，就可以把任何对象放到同一个轴上进行比较。
@@ -388,11 +392,9 @@ StructuralContinuity.
 时间边界还决定我们如何理解死亡、重启和复制。一个 Agent 如果进程被完全销毁，之后重新从相同参数启动，它是否仍然是原来的 Agent？如果所有长期记忆和内部历史都被完整恢复，答案是否不同？如果一个 Agent 被复制成两个完全相同的副本，两者是否仍然属于同一个主体？
 
 这些问题无法通过模型参数直接回答，因为它们涉及：
-\[
-\boxed{
+\begin{statementbox}
 TrajectoryContinuity.
-}
-\]
+\end{statementbox}
 
 本书后续因此会坚持单一持续主体原则，并把 Checkpoint、Recovery 和 Memory Continuity 视为 AgentOS 内核问题，而不是普通应用状态保存。
 
@@ -620,11 +622,9 @@ SlowStructuralChange.
 如果我们把一个组织的制度看成慢变量，把员工的实时行为看成快变量，那么制度规定可行行为范围，而员工长期积累的实践又可能推动制度改变。类似结构以后会在 AgentOS 内部再次出现：\(\Psi\) 约束 \(h\)，但长期 \(E\) 又改变 \(\Theta\) 和 \(\Psi\)；Kernel 约束 Body Runtime，但持续 residual 又可能促使高层学习。
 
 因此，组织、文明和 Agent 并不是因为“长得相似”而可以共同讨论，而是因为它们可能存在某种：
-\[
-\boxed{
+\begin{statementbox}
 DynamicalStructuralIsomorphism.
-}
-\]
+\end{statementbox}
 
 也就是：
 \[

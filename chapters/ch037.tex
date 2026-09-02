@@ -4,8 +4,12 @@
 \begin{chapteroverviewbox}
 本章研究 AgentOS 从“能够调节自身认知状态”走向“能够长期稳定地调节自身认知状态”时所必须解决的控制论问题。前文已经建立了 SPC--AHC--TCE 闭环：SPC 对分布式认知状态进行压缩和估计，AHC 对身体、资源、风险与内稳态信号进行连续积分，TCE 则依据这些估计调节认知温度、探索强度、注意范围、推理深度、激活增益以及资源分配。然而，只要自我感知、内稳态积分和控制执行具有非零时间常数，这一闭环就不可能等价于理想瞬时控制器。状态估计滞后、控制增益过高、目标流形快速切换、慢变量受到高速噪声污染，都可能产生过冲、振荡、迟滞甚至长期身份漂移。因此，本章不再把“稳定”理解为某一时刻的认知状态保持不变，而将其定义为：在现实扰动、任务切换、模型误差和内部延迟共同存在时，Agent 的认知轨迹仍能被限制在可治理区域内，并能够在扰动后重新回到与目标、自我和现实约束一致的可行轨迹族。我们将依次讨论 observer delay、controller delay、TCE gain、overshoot、oscillation、delay margin、gain margin、settling time 与 recovery time，并进一步证明 AgentOS 的控制对象并非直接操纵某一个瞬时认知状态，而是通过改变趋势、结构、允许区域和未来轨迹分布来实现稳定控制。
 \end{chapteroverviewbox}
-\ChapterArt{37}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/control-stability-panel.png}
+\caption{观察延迟、控制增益与稳定裕度}
+\end{figure}
 \section{稳定性问题的重新定义：控制的不是一个状态，而是一族未来轨迹}
 
 当我们在前文中建立
@@ -299,11 +303,9 @@ TargetDynamicsTimescale.
 \kappa_i\gg 1
 \]
 时，该控制层原则上不应承担这个变量的实时闭环。由此自然得到 AgentOS 的跨尺度控制原则：
-\[
-\boxed{
+\begin{statementbox}
 EachScaleShouldCloseItsOwnFastLoop.
-}
-\]
+\end{statementbox}
 高层不是因为“更聪明”就应该持续干预低层，高层真正的职责是定义约束、目标包络、资源上限和异常升级策略。快速波动由快速层局部关闭，只有持续残差、风险、无法解释的新颖性或者目标相关性超过阈值以后才向上提升。
 
 认知控制中的延迟还会产生一种特别值得注意的现象：**调节方向正确，但调节时机错误。**假设 Agent 在时刻 $t_0$ 检测到工作记忆负载过高，于是 TCE 开始降低认知温度并抑制支线。然而在控制真正生效以前，CCM 已经完成分解并释放了一部分 h；若 TCE 继续按照旧状态执行强抑制，就可能使系统从过载直接进入过度收缩。随后 SPC 又观察到探索不足，再反向提高温度，如此就产生
@@ -484,11 +486,9 @@ StableControl.
 }
 \]
 真正成熟的认知控制应追求：
-\[
-\boxed{
+\begin{statementbox}
 MinimumSufficientIntervention.
-}
-\]
+\end{statementbox}
 即只施加足以让轨迹回到可治理区域的最小控制，而不是不断把内部状态拖向某个预设中心。这也与此前整个 AgentOS 的局部自治原则一致：正常动力学尽量局部闭合，高层只在必要时改变约束与趋势。
 
 \section{过冲与恢复：为什么正确的控制也可能把系统带过目标区域}
@@ -884,11 +884,9 @@ R_{\mathrm{margin}}
 其中还可以加入工作记忆容量余量 $C_{\mathrm{margin}}$ 和安全风险余量 $R_{\mathrm{margin}}$。一个真正健康的认知运行态，不是恰好压在线性稳定边缘，而应该保留足够的“恢复空间”。
 
 这也重新解释了为什么成熟智能看起来往往比脆弱智能更加从容。所谓“从容”在本理论中并不是心理修辞，而可能对应：
-\[
-\boxed{
+\begin{statementbox}
 LargeStabilityMargin.
-}
-\]
+\end{statementbox}
 系统拥有足够工作记忆余量、可替代计划、低增益控制、缓冲时间以及对异常的局部处理能力，因此无需对每一个扰动都进行全局性剧烈调整。
 
 \section{Settling Time 与 Recovery Time：稳定不仅是没有崩溃，更是能够回来}
@@ -1141,11 +1139,9 @@ CognitiveControl
 \]
 
 第三，
-\[
-\boxed{
+\begin{statementbox}
 ErrorDoesNotNecessarilyAccumulate,
-}
-\]
+\end{statementbox}
 但这一性质依赖现实重新观测、重新投影和闭环收缩，而不是无条件成立。
 
 第四，如果投影步长、增益和目标流形变化过快，仍然会产生：
@@ -1260,11 +1256,9 @@ Rigidity.
 }
 \]
 如果 TCE 把 Agent 永远限制在一个极窄状态区域中，确实可以降低短期波动，却也会消灭学习、探索和适应能力。真正的持续智能需要的是：
-\[
-\boxed{
+\begin{statementbox}
 StablePlasticity.
-}
-\]
+\end{statementbox}
 即允许快变量广泛变化，中变量逐步整合，慢变量缓慢更新，同时整个系统保持在一组更高层可治理边界之内。
 
 因此，我们最终可以把 AgentOS 的控制目标表达为：

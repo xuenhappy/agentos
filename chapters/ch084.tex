@@ -3,7 +3,6 @@
 \begin{chapteroverviewbox}
 当人工智能由一次性的模型调用逐步转化为具有工作记忆、长期经验、结构记忆、自我连续性、身体闭环、环境交互和生命周期的持续智能体时，原有的 ``Model Training + Inference'' 工程范式便不再足以描述其全部工程问题。AgentOS 所引入的并非单纯的软件模块增量，而是一类新的持续动力系统：它同时具有快尺度认知状态、中尺度经验积累、慢尺度结构学习、极慢尺度身份与生命周期方向结构，并通过 Body Runtime 持续接受现实反馈。因此，一个真正长期运行的 Agent 不仅存在``能不能完成任务''的问题，还必然出现三个彼此不可还原的问题：系统在多闭环耦合下能否保持稳定；智能体如何在受控经历中形成能力、自我与自治；当长期内部动力学发生失衡时如何诊断、干预并恢复。本文将这三个问题分别称为 \emph{AgentOS 控制工程（AgentOS Control Engineering）}、\emph{Agent 培育工程（Agent Cultivation Engineering）} 与 \emph{Agent 心理工程（Agent Psychological Engineering）}。本章的目的不是提前展开后三门工程的具体技术，而是证明：只要接受前文关于持续主体、三相记忆、$\Psi$、$\Omega$、SPC--AHC--TCE、CCM、Boundary、Body Runtime 与多尺度闭环的基本结构，这三门工程就不是可选附件，而是持续人工智能系统自然产生的工程必然。
 \end{chapteroverviewbox}
-\ChapterArt{84}
 
 \section{模型工程无法覆盖生命周期智能体的问题空间}
 
@@ -213,17 +212,13 @@ CrossLoopCoupling.
 \]
 
 更复杂的问题来自不同尺度闭环之间的相互作用。快层必须足够自治，否则上层会被高频噪声淹没；但快层又不能完全独立，否则真正重要的长期偏差无法进入高层。我们此前由此形成
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal
-}
-\]
+\end{statementbox}
 和
-\[
-\boxed{
+\begin{statementbox}
 PersistentResidualEscalates.
-}
-\]
+\end{statementbox}
 若用数学形式描述，可以为第 $i$ 层定义残差统计量
 \[
 R_i(t)
@@ -601,11 +596,9 @@ SelfInterpretation'
 }
 \]
 既可以形成健康的身份连续性，也可以形成错误的自证环。AgentOS 必须因此始终保留
-\[
-\boxed{
+\begin{statementbox}
 WorldVerification
-}
-\]
+\end{statementbox}
 和外部反证路径。现实并不是 Agent 自我叙事的一部分，而是最终约束。
 
 记忆本身也会产生独特异常。例如 E 的写入函数可以表示为

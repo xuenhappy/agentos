@@ -21,8 +21,12 @@ AdaptiveLearning
 
 本章特别坚持三个边界。第一，BPCC 可以拥有复杂的内部潜在状态，但它不拥有独立的长期身份、生命周期记忆与主体自治，因此不能被视为第二主体。第二，BPCC 的预测永远不能取得现实权威；真正的身体状态必须重新经过现实、传感和 Body Runtime 的观测链路确认。第三，BPCC 的学习主要发生在快速局部动力学与控制映射上，它不得未经治理地修改 Agent 的长期目标、自我结构和价值结构。由此，BPCC 成为本书多尺度原则在身体层的一个具体实现：\textbf{正常快速动力学留在局部闭环中解决，只有持续、重要而无法局部消解的残差才应向更高认知尺度升级。}
 \end{chapteroverviewbox}
-\ChapterArt{59}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/agentos-fixed-topology-architecture.png}
+\caption{BPCC 的局部预测控制位置}
+\end{figure}
 \section{为什么 Body Runtime 需要自己的智能}
 
 如果把一个长期 Agent 看成传统的软件调用链，一个最直接的设计方式似乎是：传感器把全部状态送入认知内核，认知内核完成理解、规划和推理，然后把动作指令直接发送给执行机构。从抽象功能图上看，这条链路非常简洁：
@@ -669,11 +673,9 @@ b_j-g_j(x,u)
 当 $m_B\rightarrow0$ 时，说明动作正在逼近约束边界。Residual 则反映模型与现实之间的不一致。
 
 这些变量的意义在于，高层真正需要的不是低层如何计算，而是：
-\[
-\boxed{
+\begin{statementbox}
 CanTheBodyStillReliablyDoWhatIAsked?
-}
-\]
+\end{statementbox}
 例如一个机器人举起物体时，Kernel 不需要每毫秒读取每个关节电流；但它应该知道 ``当前抓取稳定、剩余力矩裕量很低、预测置信度正在下降''。这是一种语义压缩：
 \[
 RawBodyDynamics
@@ -1041,19 +1043,15 @@ ControlStatus.
 
 前面的快速控制主要讨论了 BPCC 如何把高层控制参考转换成连续或高频的身体动作。然而，如果我们只保留这一类 ``Action Control''，就仍然隐含了一个传统感知系统的假设：现实首先被动进入传感器，随后 Body Runtime 把已经得到的感知结果组织成 SGC，BPCC 只负责在这个世界表示上执行动作。对于真正具有主动身体的 Agent，这个假设并不充分。身体不仅能够改变现实，还能够主动改变自己观察现实的方式。因此，在 BPCC 中还必须存在一类与直接动作控制平行、但认识论性质不同的控制过程：
 
-\[
-\boxed{
+\begin{statementbox}
 PerceptualControl
-}
-\]
+\end{statementbox}
 
 或者在 SGC 接口层更加具体地称为
 
-\[
-\boxed{
+\begin{statementbox}
 SGCReadOnlyControl.
-}
-\]
+\end{statementbox}
 
 所谓 ``只读'' 并不意味着控制过程中没有任何物理或数字状态发生变化，而是指该操作的主要意图不是修改当前任务世界中被观察对象的语义状态，而是改变 Agent 获取、选择、组织或验证现实信息的方式。我们可以把身体控制空间划分为两个基本子空间：
 
@@ -1087,19 +1085,15 @@ u_t^{obs}
 
 这种区分对于物理身体和数字身体都成立。对于物理机器人，转动摄像头、调整焦距、改变传感器方向、选择深度相机感兴趣区域、改变某区域采样频率，都可以属于感知控制。对于数字身体，同一结构则更加明显：移动观察视口、选择屏幕区域、放大某个界面、选择特定 UI 元素进行只读检查、读取某个对象的 accessibility 属性、查询一个菜单当前可提供但尚未执行的功能、获取光标当前位置附近的语义对象，原则上都不应立即被解释成对任务现实的修改。这些操作首先改变的是
 
-\[
-\boxed{
+\begin{statementbox}
 ObservationState
-}
-\]
+\end{statementbox}
 
 而不是
 
-\[
-\boxed{
+\begin{statementbox}
 TaskWorldState.
-}
-\]
+\end{statementbox}
 
 因此，我们需要在身体状态中进一步区分
 

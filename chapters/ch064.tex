@@ -16,8 +16,12 @@ SafetyAuthority > BPCCAuthority > CognitiveExecutionAuthority
 \]
 两条核心原则。这里的 ``Safety'' 不是 Agent 的价值判断，也不是 $\Psi$、AHC 或 TCE 中的风险偏好，而是对身体、环境及受保护对象所施加的\emph{不可被普通认知绕过的实时可行域约束}。我们将依次建立实时危险为什么不能等待认知、Realtime Safety Controller 的动力学位置、安全事件如何向认知层升级、Safety Authority 的优先级体系、Single Writer Principle、多层控制引用以及 Safety Envelope，并最终把安全边界形式化为一个包围 BPCC 与 Agent Kernel 的最外层可执行约束结构。
 \end{chapteroverviewbox}
-\ChapterArt{64}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/semantic-modulation-safety-channels.png}
+\caption{实时身体安全包络与权限旁路}
+\end{figure}
 \section{实时危险为何不能依赖认知闭环}
 
 在前面的 AgentOS 结构中，我们始终坚持一个多时间尺度原则：不同层级应当关闭属于自己的快速闭环，而不应把所有变化都升级到工作记忆 $h(t)$ 中显式处理。Body Runtime 的意义正是在于，将毫秒至百毫秒尺度上的身体状态、局部预测和控制活动留在身体侧，而由 Agent Kernel 在更慢的时间尺度上处理目标、语义、规划、长期预测和认知结构。安全问题把这一原则推到了最严格的极限：某些现实变化的时间常数短于任何可靠的认知决策时间，因此，若安全动作必须等待 Kernel 完成观察、语义化、工作记忆准入、SPC 状态评估、TCE 调节、规划以及控制引用生成，则系统在结构上已经失去了对这类危险进行实时保护的能力。
@@ -396,11 +400,9 @@ h.
 这里虽然 KRA 的完整机制将在相邻工程章节进一步展开，但本章只需要把它视为 Body Runtime 与 Kernel 之间的语义—动力适配边界即可。
 
 这一结构解决了一个经常被忽略的问题：\emph{安全系统的每次动作是否都应该打断智能体？}答案是否定的。成熟系统应该具备
-\[
-\boxed{
+\begin{statementbox}
 SafetyWithoutContinuousCognitiveInterruption.
-}
-\]
+\end{statementbox}
 例如机器人在崎岖地面行走时，低层控制器可能每秒进行大量姿态修正。如果每一次纠偏都进入工作记忆，那么 Agent 的 $h$ 将完全被身体细节占满，无法继续完成高层任务。只有当低层残差出现异常模式，例如
 \[
 \mathbb E_T[\varepsilon_B]
@@ -613,11 +615,9 @@ NotIntention.
 安全层可以阻止动作，却不应该偷偷把 Agent 的长期 Goal 改写成另一个 Goal。动作为什么被阻止、后续是否重新规划，仍然交给认知层处理。
 
 这一权限关系还要求一个重要性质：
-\[
-\boxed{
+\begin{statementbox}
 SafetyNonBypassability.
-}
-\]
+\end{statementbox}
 如果 Agent Kernel 或 BPCC 能够在运行时直接调用低层驱动绕过 RSC，那么所谓 Safety Boundary 只是一个软件建议，而不是安全边界。因此执行路径必须满足：
 \[
 \forall u_{\mathrm{act}},
@@ -651,21 +651,17 @@ Authority.
 BPCC 可能比 Safety Controller 更精细地理解身体局部动力学；Kernel 可能比 BPCC 更理解任务目的；但``谁知道得更多''与``谁在发生硬冲突时拥有最终执行权''是不同问题。长期智能体如果没有 Capability--Authority 分离，就很容易把模型置信度误当成控制合法性。正因为 AgentOS 是一个能够持续成长的系统，权限结构必须独立于能力增长而明确存在。
 
 因此，安全优先级的本质不是削弱智能，而是给智能自由建立边界：
-\[
-\boxed{
+\begin{statementbox}
 IntelligenceActsFreelyInsideFeasibleSafetyRegion.
-}
-\]
+\end{statementbox}
 在边界内部，Kernel 与 BPCC 应获得尽可能充分的自治；在边界上，则由 Safety Authority 保护不可逆条件。真正成熟的 AgentOS 不是所有动作都需要安全模块批准，而是绝大多数情况下安全层处于透明状态，只有当现实约束与目标行为发生真正冲突时，才利用更高权限进行最小必要干预。
 
 \section{Single Writer Principle：同一现实资源只能有一个即时写入者}
 
 多尺度 AgentOS 中同时存在 Kernel、BPCC、技能控制器、设备驱动以及安全控制器。如果这些组件都能够向同一个执行资源直接写入命令，那么即使每一个控制器单独都稳定，组合系统仍然可能出现竞态、冲突和不可分析行为。典型情况是：Kernel 要求 ``向左''，BPCC 为补偿扰动产生 ``稍向右''，安全控制器又要求 ``制动并保持中立''。如果三组命令同时作用于同一 actuator，那么最终现实动作不再对应任何一个控制器所分析的闭环模型。因此本章引入：
-\[
-\boxed{
+\begin{statementbox}
 SingleWriterPrinciple.
-}
-\]
+\end{statementbox}
 
 形式上，对每个受保护现实资源 $r_i$，定义时刻 $t$ 的活动写入集合
 \[
@@ -825,11 +821,9 @@ KernelGoal.
 \section{多级 Control Reference：高层约束低层，而不是跨尺度微操}
 
 建立 Single Writer 后，一个新的问题出现：如果 Kernel 不能直接写 actuator，那么它究竟如何控制身体？答案是通过分层的
-\[
-\boxed{
+\begin{statementbox}
 ControlReference
-}
-\]
+\end{statementbox}
 而不是直接动作值。这里再次回到本书关于多尺度智能的基本原则：
 \[
 \boxed{
@@ -1016,11 +1010,9 @@ Constraint\rightarrow LocalAutonomy
 \section{Safety Envelope：把安全定义为动态可行域}
 
 到目前为止，我们已经得到实时安全控制、权限优先级、单写者和多级控制引用。最后还需要一个统一对象，把这些机制聚合起来。这个对象就是
-\[
-\boxed{
+\begin{statementbox}
 SafetyEnvelope.
-}
-\]
+\end{statementbox}
 Safety Envelope 不是一组互不关联的 if--else 规则，而是 Agent 在当前身体、环境、任务和不确定性条件下允许进入的状态—动作区域。其核心思想是：安全首先不是判断 ``某个动作是否叫做危险动作''，而是判断\emph{当前状态下，这个动作是否仍然使未来轨迹保持在可恢复区域内}。
 
 定义扩展状态
@@ -1368,11 +1360,9 @@ Safety,\quad Recoverability,\quad MinimalIntervention
 AgentCanDoAnything.
 \]
 真正的自治应表示：
-\[
-\boxed{
+\begin{statementbox}
 AgentCanChooseFreelyInsideItsAuthorizedAndSafeReachableSet.
-}
-\]
+\end{statementbox}
 随着能力提高，Agent 的安全可达集合可以扩大；随着环境恶化或不确定性上升，它也应主动收缩。于是：
 \[
 Autonomy

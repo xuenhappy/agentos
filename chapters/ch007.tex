@@ -8,8 +8,12 @@
 
 因此，本章所建立的二维相空间，应被视为连接前面“智能时空尺度—智能频谱”理论与后面“CSO—Agent-CSO—功能拓扑—拓扑学习”理论的桥梁。其核心问题不是“哪个智能更高级”，而是：\textbf{一个智能系统当前依靠什么组织形式维持自身，它允许自身结构以多大程度参与未来能力的形成。}
 \end{chapteroverviewbox}
-\ChapterArt{7}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/intelligence-phase-map.png}
+\caption{集中度与拓扑可塑度构成的智能相图}
+\end{figure}
 \section{为什么需要“智能相”这一概念}
 \label{sec:why_intelligence_phase}
 
@@ -458,11 +462,9 @@ SPC,\quad AHC,\quad TCE,\quad CCM,\quad Scheduler
 
 这类结构最明显的优势在于\textbf{局部闭合}。一个扰动如果能够被相关子系统独立解决，就不需要进入全局协调过程。因而系统可以实现：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal
-}
-\end{equation}
+\end{statementbox}
 
 从全书后续理论看，这一原则实际上非常重要。成熟 AgentOS 虽然并不属于纯粹的低集中固定相，但其 Body Runtime、BPCC、技能控制器和大量工具闭环都会有意采用这一结构。原因很简单：如果一个机器人每一次姿态微调、鼠标移动、API 重试甚至传感器噪声都必须进入中央工作记忆，那么智能系统将立即被大量微观事件淹没。
 
@@ -571,19 +573,15 @@ E_{\mathrm{history}}
 
 这意味着系统同时存在两种动力学：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 DynamicsOnTopology
-}
-\end{equation}
+\end{statementbox}
 
 与
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 DynamicsOfTopology.
-}
-\end{equation}
+\end{statementbox}
 
 前者是系统在当前结构上如何运行，后者是长期运行历史如何改变结构本身。
 
@@ -1148,11 +1146,9 @@ PersistentMigrationChangingFunctionalTopology.
 
 这正好回到本书最初的第一性命题：
 
-\begin{equation}
-\boxed{
-\text{智能是多时空尺度上的多层嵌套闭环进程。}
-}
-\end{equation}
+\begin{statementbox}
+智能是多时空尺度上的多层嵌套闭环进程。
+\end{statementbox}
 
 因此，智能相不能脱离尺度存在。我们真正应该问的永远不是：
 

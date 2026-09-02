@@ -22,7 +22,6 @@ BodyRuntime,\qquad AgentKernel,\qquad Continuous\text{-}DiscreteControl
 
 因此，本章的任务，是为后续工程实践建立一张总体研究地图：明确每一条主线解决什么不可替代的问题、彼此怎样交换状态和约束、哪些接口必须尽早固定、哪些内部实现必须保持可塑，以及为什么只有三条软件理论线与两个基础设施层同时成熟，才可能从 ``一个会调用工具的大模型'' 走向真正具有持续身份、身体闭环、长期学习与生命周期的人工智能体。
 \end{chapteroverviewbox}
-\ChapterArt{72}
 
 \section{第一主线：Body Runtime——建立智能体与真实世界之间的快速闭环}
 \label{sec:roadmap-body-runtime}
@@ -125,11 +124,9 @@ ActionableSemanticReality
 AgentKernel.
 \]
 换句话说，Body Runtime 不是把复杂现实 ``传给'' Kernel，而是在自己的时间尺度上先完成大量局部闭环，使只有对高层目标、预测或异常具有意义的结构上升。这与前文得到的多尺度原则一致：
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal
-}
-\]
+\end{statementbox}
 以及
 \[
 \boxed{
@@ -498,11 +495,9 @@ Agent 可以在该包络内部进行策略、经验、局部技能和部分结�
 由此我们也能够更准确地区分 Continuous--Discrete Control 主线与 Agent Kernel 主线。Agent Kernel 研究 ``认知结构和功能组件是什么''；Continuous--Discrete Control 研究 ``这些结构怎样随时间变化、怎样稳定、何时切换，以及谁拥有修改它们的权限''。前者更接近认知架构，后者更接近智能动力学。二者不能合并，因为同一功能架构完全可能具有稳定或不稳定的不同控制律。
 
 第三主线最终希望建立的，是一门可以被验证的 AgentOS Control Theory：
-\[
-\boxed{
+\begin{statementbox}
 ControlOfNestedAdaptiveControlLoops.
-}
-\]
+\end{statementbox}
 它必须能够回答：何时局部自治，何时全局介入；何时继续调参，何时重新表示；何时把 Agent-CSO 下沉为技能，何时重新提升；何时允许学习，何时冻结慢变量；何时通过正常反馈修正，何时触发安全中断。只有这些问题得到统一形式化，AgentOS 才可能从 ``聪明但偶然正确'' 的系统，发展成为能够长期运行的受控智能过程。
 
 \section{第一个 ``+1''：Computer OS 与系统软件——为智能动力学提供持续运行的现实载体}
@@ -520,17 +515,13 @@ AgentOS.
 \]
 
 Computer OS 负责：
-\[
-\boxed{
+\begin{statementbox}
 ComputeResourceManagement
-}
-\]
+\end{statementbox}
 而 AgentOS 负责：
-\[
-\boxed{
+\begin{statementbox}
 IntelligenceResourceManagement.
-}
-\]
+\end{statementbox}
 二者管理的是不同层次的资源。例如 Linux Scheduler 决定哪个线程获得 CPU 时间，而 AgentOS Scheduler 决定哪个 Goal、Agent-CSO、记忆检索或工具调用值得获得有限认知资源；Linux Virtual Memory 解决页面驻留问题，而 $h/E/\Theta$ 的迁移解决认知结构在哪个时间尺度和载体上保持激活；Linux Device Driver 把硬件转成统一设备接口，而 FBI/Body Runtime 把设备能力进一步转换成身体中心的语义能力。
 
 这种分层可以写为：
@@ -712,11 +703,9 @@ J_C
 在机器人或高实时数字身体中，$J_C$ 的延迟与抖动权重可能远高于大模型推理场景。
 
 这种硬件分层与大脑/小脑的类比只能用于帮助理解功能差异，不能简单声称 AgentOS 应当复制生物脑结构。真正重要的是系统理论中的：
-\[
-\boxed{
+\begin{statementbox}
 ComputationShouldMatchTimescale.
-}
-\]
+\end{statementbox}
 谁承担哪种功能，应由闭环的时间常数、数据结构、在线学习要求和安全约束决定，而不是由 ``看起来像哪个脑区'' 决定。
 
 第二个 ``+1'' 还有一个非常重要的系统作用：它能够把成熟能力从昂贵的通用认知计算中进一步沉降到低成本专用执行结构。当某种任务最初需要：
@@ -829,17 +818,13 @@ RelationshipStability > ParameterStability.
 }
 \]
 这一原则同样适用于研发组织。内部模型、数据结构、神经网络架构可以快速试验，但是跨团队接口必须形成相对稳定的 ``语义骨架''。因此应区分：
-\[
-\boxed{
+\begin{statementbox}
 StableContract
-}
-\]
+\end{statementbox}
 和
-\[
-\boxed{
+\begin{statementbox}
 PlasticImplementation.
-}
-\]
+\end{statementbox}
 例如 SGC 可以允许内部编码不断升级，但 ``实体、关系、身体位置、观察/预测状态'' 等基本语义不宜每次版本都重写；FCS 可以改变估计模型，但 ``影响类型、强度、变化率、置信度'' 等公开语义应保持兼容；Kernel 可以更换基础模型，但 Goal、Memory、ControlReference、Residual 与 Authority 的核心含义应尽可能稳定。
 
 可以定义研发耦合矩阵：
@@ -1040,11 +1025,9 @@ World
 }
 \]
 同时受到：
-\[
-\boxed{
+\begin{statementbox}
 ControlTheory
-}
-\]
+\end{statementbox}
 的动态治理，并由：
 \[
 \boxed{

@@ -35,8 +35,12 @@ World
 
 本章所设计的标准体系首先服务于固定核心功能拓扑的第一代 AgentOS，但其设计必须避免把内部实现固化。一个真正具有生命期的智能系统，其模型、控制算法、身体和技能都可能长期变化，因此开放标准真正需要保持稳定的不是参数，而是\textbf{关系、含义和责任边界}。这也是本章的基本立场。
 \end{chapteroverviewbox}
-\ChapterArt{81}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/functional-body-interface-layers.png}
+\caption{AgentOS 开放接口与系统软件基础}
+\end{figure}
 \section{SGC Standard：可行动现实的公共语义坐标标准}
 
 SGC（Semantic Graph Coordinate Space）标准解决的第一个问题，是不同身体、不同感知系统与不同认知内核之间如何形成一个稳定的``现实语义接口''。如果每一种摄像头、机器人、浏览器、车辆或者数字桌面都直接把自己的内部 tensor、像素、检测框或私有 latent 暴露给 Agent Kernel，那么所谓通用 Agent 实际上仍然被具体感知模型和具体身体绑定。我们因此必须在原始感知与高层认知之间建立一个不依赖具体实现的公共世界描述层。
@@ -88,11 +92,9 @@ Pending
 
 它们不能简单合并。若系统把 Predicted Object 与 Observed Object 赋予同样的现实权威，就会破坏本书反复强调的
 
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint
-}
-\]
+\end{statementbox}
 
 原则。一个 BPCC 或世界模型可以预测门后存在障碍物，但在获得现实观测之前，该结构仍然必须保留预测身份，而不能静默覆盖现实层。
 
@@ -146,11 +148,9 @@ Meaning_A\simeq Meaning_B
 
 如果说 SGC 回答的是``世界中有什么，以及它们在哪里''，那么 FCS（Functional Feeling Coordinate/Field System）标准回答的则是另一个同样基础但传统软件系统很少显式表达的问题：
 
-\[
-\boxed{
+\begin{statementbox}
 HowIsRealityAffectingThisAgent?
-}
-\]
+\end{statementbox}
 
 这是我们在 Body Runtime 理论中逐步建立 SGC--FCS 双表示的原因。世界中的同一个状态，不仅具有客观语义内容，还可能对某个具体 Agent 形成完全不同的功能影响。例如外界温度本身可以成为 SGC 中的环境属性，但它对机器人电池、散热系统和动作能力产生的压力，则属于另一种意义结构。如果将两者混合，Agent Kernel 就难以区分``世界是什么''与``世界正在怎样作用于我''。
 
@@ -219,11 +219,9 @@ T_{mission}
 
 FCS Standard 同样必须严格避免把工程功能状态与现象意识混淆。本书使用 Feeling 一词所表达的是
 
-\[
-\boxed{
+\begin{statementbox}
 FunctionalInfluenceState
-}
-\]
+\end{statementbox}
 
 而不是声明系统拥有与人类相同的主观体验。FCS 可以影响 AHC，AHC 又进一步影响 SPC 所形成的自状态和 TCE 控制，但从这一功能链本身不能推出 phenomenal consciousness。标准化层必须尤其谨慎，因为一旦公共 ABI 将``Threat=0.8''定义成人类意义的``恐惧强度''，整个系统就会引入不必要的拟人化语义。
 
@@ -366,11 +364,9 @@ NotBodyMechanism
 
 BPCC（Body Predictive Control Core）在 AgentOS 中承担快速预测、快速控制、残差估计和局部适应的职责。它的出现源于本书此前已经建立的多时间尺度原则：
 
-\[
-\boxed{
+\begin{statementbox}
 EachScaleShouldCloseItsOwnFastLoop
-}
-\]
+\end{statementbox}
 
 认知内核不应该持续介入毫秒级或高频局部控制，因为那既会造成延迟，也会浪费有限的工作记忆和全局认知容量。因此，BPCC 必须能够在 Kernel 不连续干预的情况下关闭局部快速回路，同时又不能演化成一个与 Agent Kernel 争夺主体地位的第二智能体。
 
@@ -901,11 +897,9 @@ WhatItGuarantees
 
 如果 Agent Kernel 需要控制不同 Body、调用不同 Skill、委派给其他 Agent，就必须拥有一种统一方式回答：
 
-\[
-\boxed{
+\begin{statementbox}
 WhatCanThisCarrierActuallyDoNow?
-}
-\]
+\end{statementbox}
 
 传统软件通常把 Capability 理解为静态功能列表，例如某设备``支持摄像头''或某 API``支持文件写入''。但对持续 AgentOS 而言，这远远不够。一个能力不仅有``有没有''，还有范围、精度、速度、可靠度、代价、权限和当前健康状态。
 

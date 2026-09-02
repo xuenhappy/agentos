@@ -249,12 +249,10 @@ C_{\max}(W).
 
 由此得到本章第一个基本原理：
 
-\begin{equation}
-\boxed{
-\text{复杂问题的可处理性依赖于瞬时活跃结构的可控制性，
-而不要求完整问题结构同时进入工作记忆。}
-}
-\end{equation}
+\begin{statementbox}
+复杂问题的可处理性依赖于瞬时活跃结构的可控制性，
+而不要求完整问题结构同时进入工作记忆。
+\end{statementbox}
 
 这实际上把“空间中的复杂度”转换成了“时间、结构层级和外部载体中的分布”。
 
@@ -396,11 +394,9 @@ C_{\max}(W).
 
 这一结果说明：
 
-\begin{equation}
-\boxed{
-\text{真正约束 Agent 的不是问题总规模，而是最小可执行分解的最大活跃前沿。}
-}
-\end{equation}
+\begin{statementbox}
+真正约束 Agent 的不是问题总规模，而是最小可执行分解的最大活跃前沿。
+\end{statementbox}
 
 可以定义
 \begin{equation}
@@ -742,11 +738,9 @@ C_{\max}(W),
 
 这说明 Offloading 的理论意义并非简单提高效率，而是：
 
-\begin{equation}
-\boxed{
-\text{改变一个有限认知主体的有效可解问题边界。}
-}
-\end{equation}
+\begin{statementbox}
+改变一个有限认知主体的有效可解问题边界。
+\end{statementbox}
 
 \section{工具调用为什么相当于获得新的可计算闭包}
 
@@ -914,11 +908,9 @@ TCE
 
 因此，SPC--AHC--TCE 的本质不是“让 Agent 更聪明”，而是：
 
-\begin{equation}
-\boxed{
-\text{使有限资源搜索过程尽可能保持在稳定、可恢复和可验证区域。}
-}
-\end{equation}
+\begin{statementbox}
+使有限资源搜索过程尽可能保持在稳定、可恢复和可验证区域。
+\end{statementbox}
 
 \section{现实验证是开放世界可解性的必要条件}
 
@@ -1070,11 +1062,9 @@ A_te_t+w_t,
 
 这一结论说明：
 
-\begin{equation}
-\boxed{
-\text{长期任务需要反复现实闭合，而不是依赖一次长链推理保持永久正确。}
-}
-\end{equation}
+\begin{statementbox}
+长期任务需要反复现实闭合，而不是依赖一次长链推理保持永久正确。
+\end{statementbox}
 
 \section{局部闭环与全局认知的职责分离}
 
@@ -1195,11 +1185,9 @@ ConstraintEnvelope.
 
 这就是熟练化的数学意义之一：
 
-\begin{equation}
-\boxed{
-\text{学习不仅提高成功率，还改变未来问题对显式工作记忆的结构需求。}
-}
-\end{equation}
+\begin{statementbox}
+学习不仅提高成功率，还改变未来问题对显式工作记忆的结构需求。
+\end{statementbox}
 
 换用 CSO 语言：
 \begin{equation}
@@ -1483,11 +1471,9 @@ OmnipotentSolver.
 
 它真正证明的是：
 
-\begin{equation}
-\boxed{
-\text{有限工作记忆并不构成解决任意规模可分解问题的原则性障碍。}
-}
-\end{equation}
+\begin{statementbox}
+有限工作记忆并不构成解决任意规模可分解问题的原则性障碍。
+\end{statementbox}
 
 只要问题存在一个满足有限认知宽度的求解表示，并且 Agent 拥有足够的时间、外部存储、工具、现实接口和控制能力，就可以把：
 
@@ -1501,18 +1487,14 @@ OmnipotentSolver.
 
 因此 AgentOS 的理论意义不是：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 MakeWorkingMemoryInfinite,
-}
-\end{equation}
+\end{statementbox}
 而是：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 MakeFiniteWorkingMemorySufficientForUnboundedStructuredWork.
-}
-\end{equation}
+\end{statementbox}
 
 这里的 ``unbounded'' 指问题规模可以随着生命周期和外部资源扩展，而不是无限时间内完成无限工作。
 
@@ -1533,15 +1515,10 @@ SequentialExecution.
 AgentOS 对应的是：
 
 \begin{equation}
-FiniteWorkingMemory
-+
-LifecycleMemory
-+
-ExternalMemory
-+
-AdaptiveScheduling
-+
-WorldInteraction.
+\begin{aligned}
+&FiniteWorkingMemory + LifecycleMemory + ExternalMemory \\
+&\qquad + AdaptiveScheduling + WorldInteraction.
+\end{aligned}
 \end{equation}
 
 但两者仍有重要区别。
@@ -1559,20 +1536,16 @@ RealityVerification.
 
 因此可以把完整 Agent 看成在经典计算模型之外增加了：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 EmbodiedInteractiveComputation.
-}
-\end{equation}
+\end{statementbox}
 
 从这一角度看，AgentOS 的目标不是替代可计算性理论，而是研究：
 
-\begin{equation}
-\boxed{
-\text{一个有限认知主体如何组织通用计算、持续记忆和现实闭环，
-从而解决开放世界中的结构化问题。}
-}
-\end{equation}
+\begin{statementbox}
+一个有限认知主体如何组织通用计算、持续记忆和现实闭环，
+从而解决开放世界中的结构化问题。
+\end{statementbox}
 
 \section{与状态空间搜索的关系}
 
@@ -1656,19 +1629,15 @@ P=NP.
 
 因此本章所说：
 
-\begin{equation}
-\boxed{
-\text{可解复杂问题}
-}
-\end{equation}
+\begin{statementbox}
+可解复杂问题
+\end{statementbox}
 
 不是：
 
-\begin{equation}
-\boxed{
-\text{任意问题都可以低成本求解。}
-}
-\end{equation}
+\begin{statementbox}
+任意问题都可以低成本求解。
+\end{statementbox}
 
 完整 Agent 的优势在于\emph{组织求解过程}，而不是废除问题本身的计算复杂性。
 
@@ -1677,20 +1646,16 @@ P=NP.
 若问题属于不可判定问题类，例如一般形式的停机问题，则不存在一个算法可以对所有输入都正确终止。
 
 因此任何有限规则 Agent、AgentOS、LLM 或机器人都不能拥有
-\begin{equation}
-\boxed{
+\begin{statementbox}
 UniversalDecisionForUndecidableProblems.
-}
-\end{equation}
+\end{statementbox}
 
 这给整个“可解决一切可解问题”的表述设定了严格逻辑边界：
 
-\begin{equation}
-\boxed{
-\text{AgentOS 的最大理论承诺只能覆盖“相对于其资源和接口可解的问题”，
-而不能跨越不可计算性。}
-}
-\end{equation}
+\begin{statementbox}
+AgentOS 的最大理论承诺只能覆盖“相对于其资源和接口可解的问题”，
+而不能跨越不可计算性。
+\end{statementbox}
 
 这一边界反而使 AgentOS 的理论更强，因为它把能力主张放在经典可计算性理论允许的范围内。
 
@@ -2045,11 +2010,9 @@ X\rightarrow G.
 
 一个真正重要的 AgentOS 因而不是拥有最多模块，而是拥有：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 ReliableComposableClosedLoops.
-}
-\end{equation}
+\end{statementbox}
 
 \section{能力潜力一：问题规模可以远大于单次认知规模}
 
@@ -2089,11 +2052,9 @@ C_{\mathrm{total}}(\Pi)
 
 核心原因不是其工作记忆巨大，而是：
 
-\begin{equation}
-\boxed{
-\text{它能够让问题存在于整个生命周期，而不是一次推理中。}
-}
-\end{equation}
+\begin{statementbox}
+它能够让问题存在于整个生命周期，而不是一次推理中。
+\end{statementbox}
 
 \section{能力潜力二：过去计算可以沉降成未来结构}
 
@@ -2238,18 +2199,14 @@ A_{t+1},
 \end{equation}
 
 因此完整 Agent 不只是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 Solver.
-}
-\end{equation}
+\end{statementbox}
 
 它还是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 SolverThatCanChangeItsFutureSolvingConditions.
-}
-\end{equation}
+\end{statementbox}
 
 这是持续智能最重要的潜力之一。
 
@@ -2507,11 +2464,9 @@ CompiledSkill.
 
 因此所谓“解决复杂度”并不是让复杂度消失，而是：
 
-\begin{equation}
-\boxed{
-\text{改变结构在空间、时间、功能与边界上的承载方式。}
-}
-\end{equation}
+\begin{statementbox}
+改变结构在空间、时间、功能与边界上的承载方式。
+\end{statementbox}
 
 这正是从早期“复杂度迁移理论”到当前 CSO 承载迁移理论的自然统一。
 
@@ -2571,59 +2526,45 @@ CapabilityRegion(\mathfrak A)
 
 它至少受以下边界约束：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 ComputabilityBoundary
-}
-\end{equation}
+\end{statementbox}
 
 不可计算问题不能被普适解决。
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 ResourceBoundary
-}
-\end{equation}
+\end{statementbox}
 
 有限时间、能量、存储和算力限制实际求解。
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 ObservabilityBoundary
-}
-\end{equation}
+\end{statementbox}
 
 不可区分的现实状态无法可靠判断。
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 ControllabilityBoundary
-}
-\end{equation}
+\end{statementbox}
 
 不能作用的状态无法直接实现。
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 RepresentationBoundary
-}
-\end{equation}
+\end{statementbox}
 
 无法形成有效 Agent-CSO 的结构无法进入认知求解。
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 SafetyBoundary
-}
-\end{equation}
+\end{statementbox}
 
 部分理论上可达状态由于安全和价值约束必须被禁止。
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 IdentityBoundary
-}
-\end{equation}
+\end{statementbox}
 
 某些通过破坏主体连续性才能完成的操作不属于 AgentOS 正常自主可行域。
 
@@ -2672,11 +2613,9 @@ A'
 使原本不可处理的问题成为未来可处理问题。
 
 也就是说：
-\begin{equation}
-\boxed{
-\text{高级智能不只搜索问题空间，也搜索自身未来的求解能力空间。}
-}
-\end{equation}
+\begin{statementbox}
+高级智能不只搜索问题空间，也搜索自身未来的求解能力空间。
+\end{statementbox}
 
 例如：
 \begin{equation}
@@ -2706,11 +2645,9 @@ MarsConstructionSkill.
 
 这说明成熟 Agent 的真正潜力不是拥有一个固定的巨大能力集合，而是：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 CapabilityToExpandItsCapabilitySpace.
-}
-\end{equation}
+\end{statementbox}
 
 \section{由固定拓扑到未来拓扑可塑性的自然边界}
 
@@ -2745,11 +2682,9 @@ PersistentCoordinationCost.
 \end{equation}
 
 若这些量长期存在，则说明：
-\begin{equation}
-\boxed{
-\text{不是当前状态需要调整，而是承载这些状态的功能拓扑本身可能已经不适合。}
-}
-\end{equation}
+\begin{statementbox}
+不是当前状态需要调整，而是承载这些状态的功能拓扑本身可能已经不适合。
+\end{statementbox}
 
 于是下一阶段智能理论自然从：
 \begin{equation}
@@ -2932,12 +2867,10 @@ ReachableClosureOfItsAccumulatedStructure.
 
 它不再只是“当前会做什么”，而是包括：
 
-\begin{equation}
-\boxed{
-\text{它能够通过未来经历、工具、身体、技能和外部结构，
-把哪些今天不会做的事情逐渐变成明天会做的事情。}
-}
-\end{equation}
+\begin{statementbox}
+它能够通过未来经历、工具、身体、技能和外部结构，
+把哪些今天不会做的事情逐渐变成明天会做的事情。
+\end{statementbox}
 
 \section{本章的理论边界}
 
@@ -2959,17 +2892,13 @@ ReachableClosureOfItsAccumulatedStructure.
 
 因此，本章属于：
 
-\begin{equation}
-\boxed{
-\text{条件性的系统可解性理论}
-}
-\end{equation}
+\begin{statementbox}
+条件性的系统可解性理论
+\end{statementbox}
 而不是：
-\begin{equation}
-\boxed{
-\text{无条件的万能智能定理}.
-}
-\end{equation}
+\begin{statementbox}
+无条件的万能智能定理.
+\end{statementbox}
 
 \section{结论：有限认知并不意味着有限问题规模}
 
@@ -2986,18 +2915,14 @@ ReachableClosureOfItsAccumulatedStructure.
 
 因此，AgentOS 解决复杂问题的基本原理并不是：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 MakeTheAgentBigEnoughToContainTheProblem,
-}
-\end{equation}
+\end{statementbox}
 而是：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
 TransformTheProblemSoThatOnlyAFiniteFrontierMustBeContainedAtAnyMoment.
-}
-\end{equation}
+\end{statementbox}
 
 三相记忆把当前状态扩展成生命周期；
 
@@ -3021,11 +2946,9 @@ $\Theta$、$\Psi$ 与 $\Omega$ 则使成功和失败不只是一次任务结果�
 
 因此，一个完整 Agent 的最重要潜力并不是：
 
-\begin{equation}
-\boxed{
-\text{在一次推理里解决任意大的问题},
-}
-\end{equation}
+\begin{statementbox}
+在一次推理里解决任意大的问题,
+\end{statementbox}
 而是：
 
 \begin{equation}

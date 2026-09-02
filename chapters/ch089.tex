@@ -22,8 +22,12 @@
 \]
 只有六者同时成立，我们才可以说一个长期运行的 AgentOS 处于真正意义上的可治理稳定状态。
 \end{chapteroverviewbox}
-\ChapterArt{89}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/control-stability-panel.png}
+\caption{多回路耦合、相变与恢复区域}
+\end{figure}
 \section{工作记忆闭环：有限显式认知面的局部稳定性}
 
 我们首先从最直接的工作记忆闭环开始，因为所有进入显式认知层的目标、假设、计划、关键关系、冲突和异常，最终都必须暂时落在 $h(t)$ 上。此前已经建立工作记忆有限容量原则：$h(t)$ 并不是可以无限扩展的 token 容器，而是一个能够同时维持有限数量活跃认知结构及其关系的显式跨尺度表面。因而 $h$ 的稳定性问题首先不是 ``信息有没有丢失''，而是当前活跃 Agent-CSO 网络是否还能保持足够的结构相干性，使新的输入能够在不破坏已有目标、约束和因果关系的条件下被整合。
@@ -957,11 +961,9 @@ x(t+\Delta)\in\mathcal X_{\mathrm{normal}}
 \text{Level 5: Checkpoint Recovery}.
 \]
 系统首先尝试最小干预：TCE 调节温度、CCM 降低负荷、Scheduler 推迟低优先级任务；若持续失效，再扩大到 Offloading、Goal 重规划和任务暂停；只有当身份、长期记忆或安全边界受到威胁时，才进入更强的治理模式。这与整个 AgentOS 一贯的
-\[
-\boxed{
+\begin{statementbox}
 MinimumNecessaryReorganizationPrinciple
-}
-\]
+\end{statementbox}
 一致：能用状态调节解决的问题，不修改结构；能用局部结构解决的问题，不修改慢变量；能用认知恢复解决的问题，不触及身份和生命周期结构。
 
 为了统一描述整个多回路系统，我们可以定义一个综合稳定泛函

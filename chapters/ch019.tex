@@ -21,7 +21,6 @@ $}
 
 需要特别声明，本章中的 ``World''、``Universe-CSO'' 与 ``Agent-CSO'' 属于本书提出的结构动力学抽象。它可以与控制论、POMDP、主动感知、具身认知、Enactivism、Active Inference 等既有理论形成联系，但不能把这些理论之间的相似性直接解释成本体同一。本章所建立的是一种面向持续人工智能体的统一结构语言，而不是宣称现有物理学或认知科学已经证明了本书全部命题。
 \end{chapteroverviewbox}
-\ChapterArt{19}
 
 \section{智能体不是宇宙之外的观察者}
 
@@ -685,11 +684,9 @@ F_U(U_t,A_t)
 的可实现集合。
 
 这意味着成熟智能不只是 ``在给定世界中求最优行为''，还能够
-\[
-\boxed{
+\begin{statementbox}
 ChangeTheProblemByChangingTheWorld.
-}
-\]
+\end{statementbox}
 这一点将在后面的 Offloading、Body Scale、工具使用和文明尺度理论中反复出现。智能的力量并不只是计算出更好的答案；它还可以创造新的外部结构，使原本困难的问题以后不再需要同样的内部计算。
 
 
@@ -869,11 +866,9 @@ D(C,\hat C_A)
 \epsilon.
 \]
 这样，记忆就从 ``保存内部状态'' 扩展成
-\[
-\boxed{
+\begin{statementbox}
 MaintainingRecoverableStructureAcrossTime.
-}
-\]
+\end{statementbox}
 
 人类日常行为早已大量使用这种机制。把物品放在固定位置，是把未来搜索问题部分编码进环境；写便签，是把工作记忆压力沉降到外部；道路标志把导航规则嵌入空间；软件目录结构把文件分类关系嵌入文件系统；工厂流水线把任务顺序写进物理布局。对于 AgentOS，这些都不应该被看成与认知无关的 ``外界细节''，而应理解成 Agent 可以主动设计的未来认知条件。
 
@@ -1286,11 +1281,9 @@ F
 \mathcal A_A
 \]
 本身。它可以学习新的感知方式、创造新工具、形成新技能、改变身体能力、建立新的世界模型，甚至重构功能拓扑。此时我们就从 ``Agent 在世界中行动'' 进入了
-\[
-\boxed{
+\begin{statementbox}
 Agent learns how to couple with the world.
-}
-\]
+\end{statementbox}
 
 这也是本章和后续 Body 理论之间最重要的接口。Body 并不是给一个已经完成的 ``大脑'' 外接几个传感器，而是 World--Agent--World 闭环的具体边界实现。后面的 SGC 会回答：现实如何以 Agent 可行动的结构形式进入内部；FCS 会回答：现实如何作用于主体；BPCC 会回答：快速身体动力如何局部闭合；KRA 则回答：不同身体的动力学如何与相对稳定的 Cognitive Kernel 长期适配。换言之：
 \[

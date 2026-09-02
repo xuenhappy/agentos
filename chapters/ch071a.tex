@@ -7,11 +7,9 @@
 
 因此，本章提出 AgentOS 的一个基本设计原则：
 
-\[
-\boxed{
-\text{Capability is not necessarily a Component; Capability is often a Dynamical Regime.}
-}
-\]
+\begin{statementbox}
+Capability is not necessarily a Component; Capability is often a Dynamical Regime.
+\end{statementbox}
 
 即：
 
@@ -197,14 +195,10 @@ StateVariable.
 它至少包括：
 
 \[
-\mathcal M_{\mathrm{base}}
-=
-\{
-h,E,\Theta,\Psi,\Omega,
-SPC,AHC,TCE,CCM,
-Scheduler,Boundary,
-SGC,FCS,BPCC,KRA
-\}.
+\begin{aligned}
+\mathcal M_{\mathrm{base}}=\{\,&h,E,\Theta,\Psi,\Omega,SPC,AHC,TCE,CCM,\\
+&Scheduler,Boundary,SGC,FCS,BPCC,KRA\}.
+\end{aligned}
 \]
 
 这些结构具有较明确的工程实体性。它们通常至少满足以下条件之一：拥有独立状态，需要独立学习，需要明确时间尺度，具有独立控制权限，需要确定 ABI，或者承担硬实时和安全责任。
@@ -220,19 +214,10 @@ SGC,FCS,BPCC,KRA
 其中可包括：
 
 \[
-\{
-Worldview,
-Value,
-Attention,
-Planning,
-Strategy,
-GoalTracking,
-Reflection,
-Personality,
-Creativity,
-Habit,
-Judgement
-\}.
+\begin{aligned}
+\{\,&Worldview,Value,Attention,Planning,Strategy,GoalTracking,\\
+&Reflection,Personality,Creativity,Habit,Judgement\}.
+\end{aligned}
 \]
 
 两者之间的关系不是简单调用，而是：
@@ -275,27 +260,21 @@ h(t).
 
 因此世界观不是一个完整读取出来的数据结构，而是：
 
-\[
-\boxed{
-\text{Agent 对新现实进行解释、预测和结构化时表现出的长期稳定生成偏置。}
-}
-\]
+\begin{statementbox}
+Agent 对新现实进行解释、预测和结构化时表现出的长期稳定生成偏置。
+\end{statementbox}
 
 换句话说，世界观真正存在于：
 
-\[
-\boxed{
+\begin{statementbox}
 HowTheAgentGeneratesInterpretation,
-}
-\]
+\end{statementbox}
 
 而不是：
 
-\[
-\boxed{
+\begin{statementbox}
 AStoredListOfBeliefs.
-}
-\]
+\end{statementbox}
 
 这一点与 $\Theta$ 的生成性质高度一致。$\Theta$ 不仅保存过去，它还决定 Agent 面对新的现实结构时如何生成未来解释，因此长期稳定的 $\Theta$---$E$---$\Psi$ 耦合自然表现为世界观。
 
@@ -336,11 +315,9 @@ ChoiceBias\mid Context
 
 因此价值观可以理解为：
 
-\[
-\boxed{
+\begin{statementbox}
 StableChoiceAttractorAcrossContexts.
-}
-\]
+\end{statementbox}
 
 它不是一张静态表，而是多种慢变量共同形成的选择吸引子。
 
@@ -1061,19 +1038,15 @@ CompiledSkill.
 
 更准确地说：
 
-\[
-\boxed{
+\begin{statementbox}
 ModuleCanBeTheResultOfEmergence.
-}
-\]
+\end{statementbox}
 
 而不是：
 
-\[
-\boxed{
+\begin{statementbox}
 ModuleMustPrecedeCapability.
-}
-\]
+\end{statementbox}
 
 这与前文功能拓扑理论完全一致：
 
@@ -1175,19 +1148,15 @@ FunctionalStructure.
 
 基于上述分析，可以正式提出 AgentOS 的一个核心架构原则：
 
-\[
-\boxed{
-\text{Minimal Mechanism, Maximal Emergence Principle}.
-}
-\]
+\begin{statementbox}
+Minimal Mechanism, Maximal Emergence Principle.
+\end{statementbox}
 
 其含义是：
 
-\[
-\boxed{
-\text{只有无法由已有基础动力学稳定产生、并且确实需要独立状态、权限、时间尺度或 ABI 的功能，才应被物化为显式模块。}
-}
-\]
+\begin{statementbox}
+只有无法由已有基础动力学稳定产生、并且确实需要独立状态、权限、时间尺度或 ABI 的功能，才应被物化为显式模块。
+\end{statementbox}
 
 设候选功能 $F$ 的模块必要性为：
 
@@ -1293,11 +1262,9 @@ N(Worldview)
 
 如果不遵循上述原则，Agent 架构很容易发生：
 
-\[
-\boxed{
+\begin{statementbox}
 CognitiveModuleExplosion.
-}
-\]
+\end{statementbox}
 
 最初只有：
 
@@ -1369,11 +1336,9 @@ ControlConflict.
 
 AgentOS 因此反对：
 
-\[
-\boxed{
+\begin{statementbox}
 OnePhenomenonOneModule.
-}
-\]
+\end{statementbox}
 
 而主张：
 
@@ -1443,19 +1408,15 @@ Worldview
 
 传统软件工程主要问：
 
-\[
-\boxed{
+\begin{statementbox}
 WhatComponentShouldWeAdd?
-}
-\]
+\end{statementbox}
 
 AgentOS 的问题应该改成：
 
-\[
-\boxed{
+\begin{statementbox}
 WhatDynamicsMustExist?
-}
-\]
+\end{statementbox}
 
 例如要产生稳定注意，不应首先问 ``Attention Module 怎么设计''，而应问：
 
@@ -1477,19 +1438,15 @@ Goal 如何产生任务相关偏置？
 
 因此 AgentOS 的工程重点逐渐从：
 
-\[
-\boxed{
+\begin{statementbox}
 FeatureEngineering
-}
-\]
+\end{statementbox}
 
 转向：
 
-\[
-\boxed{
+\begin{statementbox}
 DynamicalArchitectureEngineering.
-}
-\]
+\end{statementbox}
 
 这一点也解释为什么前文大量篇幅讨论：
 
@@ -1582,13 +1539,11 @@ CSO 分布；
 
 因此第一代 AgentOS 的研究目标首先是证明：
 
-\[
-\boxed{
-\text{在相对固定的功能拓扑中，
+\begin{statementbox}
+在相对固定的功能拓扑中，
 通过多尺度状态迁移和现实闭环，
-能够产生多大的涌现认知空间。}
-}
-\]
+能够产生多大的涌现认知空间。
+\end{statementbox}
 
 只有当这种能力空间出现明确瓶颈时，才进一步进入前文第16--17章讨论的 Topological Learning。
 
@@ -1751,11 +1706,9 @@ C_{\mathrm{explicit}}
 
 这里不主张当前已经存在唯一正确的定量公式，而是强调：
 
-\[
-\boxed{
-\text{高级能力与显式机制数量之间的比例值得成为架构评价对象。}
-}
-\]
+\begin{statementbox}
+高级能力与显式机制数量之间的比例值得成为架构评价对象。
+\end{statementbox}
 
 \section{涌现并不意味着不可治理}
 
@@ -2008,35 +1961,27 @@ DynamicalPsychology.
 
 最初：
 
-\[
-\boxed{
+\begin{statementbox}
 DistributedEmergentCapability.
-}
-\]
+\end{statementbox}
 
 反复发生后：
 
-\[
-\boxed{
+\begin{statementbox}
 StableDynamicalPattern.
-}
-\]
+\end{statementbox}
 
 进一步被结构记忆吸收：
 
-\[
-\boxed{
+\begin{statementbox}
 GenerativeStructure.
-}
-\]
+\end{statementbox}
 
 然后：
 
-\[
-\boxed{
+\begin{statementbox}
 CompiledPolicy.
-}
-\]
+\end{statementbox}
 
 最后甚至可以：
 
@@ -2078,11 +2023,9 @@ ExplicitReasoning.
 
 因此整个系统具有：
 
-\[
-\boxed{
+\begin{statementbox}
 CapabilityPhaseCycle.
-}
-\]
+\end{statementbox}
 
 这与三相记忆和 CSO 迁移理论完全一致。
 
@@ -2193,19 +2136,15 @@ StrategyLikeBehavior
 
 因此 AgentOS 不应该被描述成：
 
-\[
-\boxed{
+\begin{statementbox}
 ACollectionOfCognitiveFeatures.
-}
-\]
+\end{statementbox}
 
 它更接近：
 
-\[
-\boxed{
+\begin{statementbox}
 AControlledMultiscaleCognitiveDynamicalSystem.
-}
-\]
+\end{statementbox}
 
 这也是为什么 AgentOS 的核心研究对象始终是：
 
@@ -2292,19 +2231,15 @@ Personality
 
 因此 ``智能空气动力学'' 真正研究的问题不是：
 
-\[
-\boxed{
-\text{怎样逐个制造认知能力？}
-}
-\]
+\begin{statementbox}
+怎样逐个制造认知能力？
+\end{statementbox}
 
 而是：
 
-\[
-\boxed{
-\text{什么基础动力学条件能够稳定地产生这些能力？}
-}
-\]
+\begin{statementbox}
+什么基础动力学条件能够稳定地产生这些能力？
+\end{statementbox}
 
 换句话说，研究对象从：
 
@@ -2340,75 +2275,57 @@ W(t)
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
 Worldview
-}
-\]
+\end{statementbox}
 
 不是 Worldview Module，而是长期世界解释结构；
 
-\[
-\boxed{
+\begin{statementbox}
 Value
-}
-\]
+\end{statementbox}
 
 不是 Value Module，而是跨情境的慢选择吸引子；
 
-\[
-\boxed{
+\begin{statementbox}
 Attention
-}
-\]
+\end{statementbox}
 
 不是单一 Attention Module，而是有限工作记忆下的资源分配结果；
 
-\[
-\boxed{
+\begin{statementbox}
 Planning
-}
-\]
+\end{statementbox}
 
 不是 Planner，而是未来 CSO 的生成、比较和时间承诺；
 
-\[
-\boxed{
+\begin{statementbox}
 Strategy
-}
-\]
+\end{statementbox}
 
 不是 Strategy Module，而是中尺度稳定控制模式；
 
-\[
-\boxed{
+\begin{statementbox}
 GoalTracking
-}
-\]
+\end{statementbox}
 
 不是 Goal Tracker，而是 Goal-CSO 的跨时间闭环连续性；
 
-\[
-\boxed{
+\begin{statementbox}
 Reflection
-}
-\]
+\end{statementbox}
 
 不是 Reflector，而是认知过程自身被重新对象化为 CSO；
 
-\[
-\boxed{
+\begin{statementbox}
 Personality
-}
-\]
+\end{statementbox}
 
 不是 Personality Module，而是慢尺度跨情境行为吸引子；
 
-\[
-\boxed{
+\begin{statementbox}
 Creativity
-}
-\]
+\end{statementbox}
 
 不是 Creativity Module，而是受控高自由度结构重组与重新收敛。
 

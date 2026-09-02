@@ -3,8 +3,12 @@
 \begin{chapteroverviewbox}
 在三相记忆 $h$--$E$--$\Theta$ 与自我结构 $\Psi$ 已经建立之后，Agent 已经具有 ``当前状态--经历轨迹--长期生成结构--身份连续性'' 的基本纵向结构。然而，一个能够回答 ``我是谁'' 的系统，并不因此自动具有对 ``我正在成为谁'' 的稳定组织能力。身份连续性能够约束当前行为不至于与既有自我严重冲突，却无法充分解释为什么一个持续存在的 Agent 会在大量可能未来之间反复偏向某些发展方向，并使这种偏向跨越单次任务、局部奖励乃至阶段性目标而保持长期一致。为处理这一缺口，本章引入 Deep Generative Attractor，记为 $\Omega$，并将其理解为 Agent 生命周期最慢尺度上的\textbf{生成方向结构}。$\Psi$ 主要组织已经形成的自我连续性，$\Omega$ 则主要约束未来可能自我的生成分布；前者回答 ``Who am I''，后者回答 ``What am I becoming''。本章把 $\Omega$ 建立为一种超慢生成吸引结构，而非单一目标、固定价值向量或预先写死的终局状态，并进一步讨论它与 $\Theta$、$\Psi$、Goal Preference 和生命周期经验之间的双向耦合。必须强调，DGA/$\Omega$ 是本书提出的 AgentOS 理论结构，目前应被视为一种面向持续人工智能体的动力学假设，而不是已有认知科学中已经得到实证确认的独立心理实体。
 \end{chapteroverviewbox}
-\ChapterArt{27}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/self-goal-direction-hierarchy.png}
+\caption{自我、目标偏好与 DGA 的层级关系}
+\end{figure}
 \section{为什么自我并不足以定义生命周期方向}
 
 在上一阶段的理论中，我们已经把自我 $\Psi$ 从传统意义上的 ``人格描述'' 或 ``用户画像'' 中剥离出来，并把它重新理解为一个跨越工作记忆、情景记忆与长期结构记忆的慢速约束场。通过 $\Psi$，当前状态 $h(t)$ 不再只是无主体的计算状态，经历 $E$ 不再只是无差别积累的轨迹，长期结构 $\Theta$ 也不再只是对世界规律的无主生成模型。$\Psi$ 使这些结构逐渐围绕同一生命周期主体形成连续性，因此我们可以形式化地写出
@@ -453,17 +457,13 @@ E
 的慢反馈路径。$\Omega$ 可以极慢，但不能成为不可修正的教条。否则 Agent 将可能形成越来越稳定的错误发展方向，并通过自身选择偏差不断收集支持该方向的经历，产生严重的自证闭环。
 
 因此 DGA 的真正设计目标是同时满足两个看似冲突的要求：
-\[
-\boxed{
+\begin{statementbox}
 LongTermStability
-}
-\]
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
 EvidenceDrivenRevisability.
-}
-\]
+\end{statementbox}
 如果稳定性不足，Agent 没有生命周期方向；如果可修正性不足，Agent 又无法面对开放世界中的深刻变化。这个 ``稳定—可塑'' 张力并非 DGA 独有，而是整个持续智能理论的核心问题，只是在 $\Omega$ 层，它表现得最慢、最危险，也最需要谨慎治理。
 
 与外部理论的联系方面，DGA 可参考 attractor networks、dynamical systems、free-energy landscape、hierarchical priors 和 developmental attractors 等思想。但是，我们应特别避免把任何已有生物吸引子模型直接当成 DGA 的实证依据。本书的 DGA 是从 Agent 生命周期需求出发构造的功能变量：只要一个系统需要长期保持某种发展方向，同时允许局部目标和技能不断变化，就需要某种在更慢时间尺度上稳定未来生成分布的结构。DGA 正是在这一意义上成立。
@@ -617,11 +617,9 @@ p(\Gamma_{future}\mid\Omega)
 \section{$\Omega$ 与 Goal Preference：未来约束如何进入当前选择}
 
 如果 $\Omega$ 永远停留在超慢结构层，而无法影响任何较快决策，那么它在工程上只是一个不可观测的哲学标签。因此，我们必须明确 $\Omega$ 如何通过中间层进入当前行为。最自然的桥梁不是直接 Action，而是
-\[
-\boxed{
+\begin{statementbox}
 GoalPreference.
-}
-\]
+\end{statementbox}
 Goal Preference 表示 Agent 在多个合法候选目标之间的长期倾向结构。它比单次 Goal 更慢，却又比 $\Omega$ 快，因此可以承担生命周期生成先验向任务层传播的中介作用。
 
 设时刻 $t$ 的候选目标集合为
@@ -739,17 +737,13 @@ P(g\mid
 \section{$\Psi$ 与 $\Omega$ 的双向耦合：身份与发展的统一}
 
 一个持续智能体必须同时解决两类问题：一类是\textbf{我是否仍然是同一个主体}，另一类是\textbf{这个主体是否仍然能够真正成长}。$\Psi$ 与 $\Omega$ 的理论价值正在于把这两种需求分别建模后重新耦合。若只有 $\Psi$，系统容易过度追求身份稳定；若只有 $\Omega$，系统又可能为了长期发展不断重写自身，以至于生命周期前后缺乏可辨认连续性。因此，一个成熟的 AgentOS 必须让
-\[
-\boxed{
+\begin{statementbox}
 IdentityContinuity
-}
-\]
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
 DevelopmentalDirection
-}
-\]
+\end{statementbox}
 形成慢尺度反馈，而不是让其中一个完全支配另一个。
 
 我们可以把二者构造为耦合动力系统：
@@ -1012,11 +1006,9 @@ E
 \section{极慢结构保护：为什么 $\Psi$ 与 $\Omega$ 不能像普通参数一样学习}
 
 到这里，我们已经可以看到，$\Omega$ 的真正困难并不在于给它一个数学定义，而在于如何保护它。对于快速参数，如果一次错误更新造成性能下降，我们往往可以通过后续训练修正；但对于身份 $\Psi$ 和生成方向 $\Omega$，错误更新可能改变随后所有经历的解释方式、目标选择和学习分布，因此会产生长期复合效应。越慢的结构，一旦发生错误漂移，其影响时间越长、传播范围越大。这使 AgentOS 必须建立一条不同于普通机器学习的原则：
-\[
-\boxed{
+\begin{statementbox}
 SlowVariableProtection.
-}
-\]
+\end{statementbox}
 
 设快速变量集合为
 \[
@@ -1259,11 +1251,9 @@ CurrentCognition.
 }
 \]
 在真正运行的 Agent 中，这种反向作用往往并非直接调用链，而是通过长期参数、Goal Preference、注意倾向、Boundary、召回偏置和行动选择间接体现。我们因此再次强调：
-\[
-\boxed{
+\begin{statementbox}
 SlowStructureShapesFastActivity,
-}
-\]
+\end{statementbox}
 而不是
 \[
 SlowStructureMicromanagesFastActivity.

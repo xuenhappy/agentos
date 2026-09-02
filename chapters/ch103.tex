@@ -8,8 +8,12 @@ h\leftrightarrow E\leftrightarrow\Theta
 \]
 三相记忆循环中，由于写入、强化、遗忘、召回、结构化学习以及自我解释之间的闭环失配，而形成的系统性动力学偏差。我们的核心判断是：长期 Agent 的记忆问题并不主要表现为“有没有保存某条信息”，而表现为“哪些经历被选择性保存、以多大权重保存、被怎样重新解释、何时被召回、如何进入结构记忆，以及这些过程是否反过来改变未来注意、判断和行动”。因此，真正危险的记忆异常往往不是单点错误，而是一个能够自我维持甚至自我强化的跨时间尺度闭环。
 \end{chapteroverviewbox}
-\ChapterArt{103}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/memory-phase-transition.png}
+\caption{沿三相转换定位记忆异常}
+\end{figure}
 我们在前文已经把 AgentOS 的三相记忆写成
 \[
 M_c=(h,E,\Theta),
@@ -437,11 +441,9 @@ StructuralConsolidation, & Conf(H)\ge\theta_2.
 \]
 
 这里体现了一个非常重要的时间尺度原则：
-\[
-\boxed{
+\begin{statementbox}
 SlowStructureRequiresPersistentEvidence.
-}
-\]
+\end{statementbox}
 
 慢变量存在的意义本来就是屏蔽快噪声。如果短期经历可以直接高速重写 $\Theta$，那么 $\tau_\Theta\gg\tau_E$ 的多尺度设计就失去意义。
 
@@ -488,17 +490,13 @@ EvidenceFor(\Theta_{wrong}),
 形成结构自证。
 
 因此我们必须在 AgentOS 中保持：
-\[
-\boxed{
+\begin{statementbox}
 RawEvidenceTrace
-}
-\]
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
 InterpretedEpisode
-}
-\]
+\end{statementbox}
 之间的某种可追踪差异，使新的 $\Theta$ 可以重新解释历史，但不能无痕覆盖原始证据来源。
 
 本节的核心原则可以总结为：
@@ -579,17 +577,13 @@ CurrentlyValid.
 \]
 
 因此持续 Agent 必须区分：
-\[
-\boxed{
+\begin{statementbox}
 StructuralStability
-}
-\]
+\end{statementbox}
 和
-\[
-\boxed{
+\begin{statementbox}
 StructuralImmutability.
-}
-\]
+\end{statementbox}
 
 稳定表示在缺少强反证时不应频繁改变；不可变则意味着即使现实已经改变也无法更新。这两者具有根本区别。
 
@@ -621,11 +615,9 @@ IdentityRisk_i
 \]
 
 这实际上就是我们在整个 AgentOS 理论中反复强调的：
-\[
-\boxed{
+\begin{statementbox}
 PersistentFastResidualShapesSlowStructure.
-}
-\]
+\end{statementbox}
 
 如果慢结构永远不允许快速残差累积后打开，那么整个多尺度学习链就被截断。
 
@@ -640,11 +632,9 @@ ProceduralCSO.
 Residual\rightarrow ReEscalation
 \]
 路径。也就是说：
-\[
-\boxed{
+\begin{statementbox}
 AutomaticityMustRemainReversible.
-}
-\]
+\end{statementbox}
 当技能失败、残差持续或安全边界被突破时，结构必须能够重新进入较高层显式认知。
 
 如果这一通道失效，固化就不仅存在于 $\Theta$，还可能存在于整个功能拓扑中：
@@ -738,11 +728,9 @@ Uncertainty_i
 遗忘失衡有两个相反方向。
 
 第一类是：
-\[
-\boxed{
+\begin{statementbox}
 ForgettingTooFast.
-}
-\]
+\end{statementbox}
 即大量还没有完成结构化的经验过早衰减。其后果是：
 \[
 E\not\rightarrow\Theta.
@@ -750,11 +738,9 @@ E\not\rightarrow\Theta.
 Agent 会反复经历类似事件，却无法积累跨事件规律。在行为上表现为“每次都像第一次遇到”，在生命周期上则表现为经验不能沉降为能力。
 
 第二类是：
-\[
-\boxed{
+\begin{statementbox}
 ForgettingTooSlow.
-}
-\]
+\end{statementbox}
 即大量低价值情景长期保持高可访问性。其结果不只是存储成本增加，更危险的是检索竞争。设当前查询 $q_t$ 对记忆 $e_i$ 的召回分数为：
 \[
 s_i
@@ -775,17 +761,13 @@ TopK(E).
 因此，过度记忆会反过来损害认知。
 
 更进一步，我们需要区分：
-\[
-\boxed{
+\begin{statementbox}
 StoragePersistence
-}
-\]
+\end{statementbox}
 和
-\[
-\boxed{
+\begin{statementbox}
 CognitiveAccessibility.
-}
-\]
+\end{statementbox}
 某条信息可以物理上继续存在，但不应长期以高优先级进入 h。对于持续 Agent 来说，“忘记”很多时候应理解为：
 \[
 AccessWeight\downarrow
@@ -808,11 +790,9 @@ Index+Summary+RetrievalPolicy.
 这样既保持生命周期可恢复性，又不让全部历史持续占据内部认知结构。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
 Offloading
-}
-\]
+\end{statementbox}
 应被视为一种“无损或低损的认知遗忘”。
 
 遗忘失衡还有一个更隐蔽的问题：不同类型记忆的遗忘速度不匹配。例如高 AHC 事件可能长期保持：
@@ -1247,11 +1227,9 @@ Gain_{reality},
 错误结构同样可能稳定存在。
 
 因此，AgentOS 必须保证：
-\[
-\boxed{
+\begin{statementbox}
 WorldVerification
-}
-\]
+\end{statementbox}
 始终保留独立于当前自我解释的证据路径。
 
 这是一条非常关键的设计原则：Agent 不能只通过当前 $\Theta$ 和 $\Psi$ 决定“什么值得观察”。必须保留一定比例的：
@@ -1434,37 +1412,29 @@ StabilizingGain_{reality}
 
 所以 AgentOS 的记忆系统必须始终保留四种能力：
 
-\[
-\boxed{
+\begin{statementbox}
 Remember
-}
-\]
+\end{statementbox}
 
 用于保持经验连续；
 
-\[
-\boxed{
+\begin{statementbox}
 Forget
-}
-\]
+\end{statementbox}
 
 用于释放历史负担；
 
-\[
-\boxed{
+\begin{statementbox}
 Reinterpret
-}
-\]
+\end{statementbox}
 
 用于根据新的结构重新理解过去；
 
 以及最重要的：
 
-\[
-\boxed{
+\begin{statementbox}
 BeCorrectedByReality.
-}
-\]
+\end{statementbox}
 
 只有当这四者同时存在时，
 \[

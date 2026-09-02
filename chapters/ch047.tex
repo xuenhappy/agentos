@@ -8,7 +8,6 @@
 
 这一划分并不声称人脑或任何现有人工智能天然具有完全相同的七层结构。它首先是一套 AgentOS 的理论建模框架，其外部理论依据主要来自多时间尺度动力系统、层级控制、混合动力系统、认知架构、工作记忆、预测控制和复杂适应系统。本章的核心主张是：持续智能并非来自某一个 ``中央智能模块''，而产生于不同速度闭环之间稳定而非僵化的耦合。
 \end{chapteroverviewbox}
-\ChapterArt{47}
 
 \section{$L_0$：现实交互闭环——一切智能最终必须回到世界}
 
@@ -176,11 +175,9 @@ e_t,
 \right],
 \]
 其中可以分别代表认知温度、控制增益、推理深度、探索强度、注意扩散范围和收敛强度。TCE 并不是直接告诉系统 ``答案是什么''，而是调节：
-\[
-\boxed{
+\begin{statementbox}
 HowTheCognitiveProcessRuns.
-}
-\]
+\end{statementbox}
 
 CCM 则承担运行结构负载的调节。设当前进入显式运行的 Agent-CSO 集合为
 \[
@@ -241,11 +238,9 @@ u_{L_0}
 而四个模块只是该动力系统中的功能分解。
 
 这一层的重要性在于，它第一次把 ``推理'' 变成了被控制的对象。传统模型通常执行一次 inference，而 AgentOS 需要决定：是否继续思考、是否放慢、是否聚焦、是否暂停某一支线、是否将问题转移到工具、是否降低探索、是否进行结构压缩。因此，$L_1$ 可以被理解成：
-\[
-\boxed{
+\begin{statementbox}
 ControlOfCognitiveProcess
-}
-\]
+\end{statementbox}
 而不是 Cognitive Process 本身。
 
 这也是为什么 AgentOS 与普通模型运行框架之间存在本质差异：后者执行计算，前者开始管理 ``计算应该以何种认知状态继续存在''。
@@ -523,11 +518,9 @@ T_G
 \right),
 \]
 其中 $\mathcal X_G$ 表示目标状态区域，$V_G$ 表示价值或优先级，$C_G$ 表示约束，$T_G$ 表示时间结构。目标不是一个普通文本字符串，而是：
-\[
-\boxed{
+\begin{statementbox}
 FutureConstraintOnPresentDynamics.
-}
-\]
+\end{statementbox}
 
 标准 $L_4$ 闭环写成：
 \[
@@ -590,11 +583,9 @@ x^{obs}_t,
 且关键约束满足时，当前目标进入 Closure；否则需要重规划、任务切换、资源调整或者 Goal 修订。
 
 这里最关键的是，未来并没有真正 ``反向因果'' 地影响现在。真正进入现在的是：
-\[
-\boxed{
+\begin{statementbox}
 RepresentationOfPossibleFuture.
-}
-\]
+\end{statementbox}
 这个未来表征是此刻真实存在于 Agent 内部的 Agent-CSO，因此能够合法地成为当前行为的原因。于是系统的因果结构从普通：
 \[
 PastState\rightarrow PresentState\rightarrow FutureState
@@ -848,11 +839,9 @@ F_\Omega
 \]
 
 这个时间尺度顺序是整个 AgentOS 身份连续性的关键。如果 $\Psi$ 每次任务失败都大幅改变，那么 Agent 无法形成稳定主体；如果 $\Omega$ 每次短期偏好变化都重新定义长期生成方向，那么生命周期将退化成短周期目标追逐。另一方面，如果 $\Psi$ 与 $\Omega$ 永远完全冻结，系统又失去真正的成长能力。因此需要的不是 Immutable Self，而是：
-\[
-\boxed{
+\begin{statementbox}
 ProtectedSlowPlasticity.
-}
-\]
+\end{statementbox}
 
 $L_6$ 对下层的影响主要不是逐动作命令，而是改变可行域、Goal Preference、注意偏向、经验解释和结构写入权重。例如：
 \[
@@ -1000,17 +989,13 @@ HorizontalCarrierNetwork.
 \section{跨层耦合——自顶向下约束、自底向上残差与相邻尺度原则}
 
 七个闭环如果只是并排存在，并不会自动产生智能。真正决定系统是否稳定和成熟的是：\textbf{层与层之间怎样耦合。} 我们在长期讨论中逐步收敛出两条最重要的方向性规律：
-\[
-\boxed{
+\begin{statementbox}
 TopDownConstraint
-}
-\]
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
 BottomUpResidualEscalation.
-}
-\]
+\end{statementbox}
 
 自顶向下约束意味着，慢层不直接执行快层动作，而是改变快层的可行域。设第 $k$ 层状态为 $x_k$，更慢一层为 $x_{k+1}$，则：
 \[
@@ -1078,11 +1063,9 @@ RelevantDeviationBecomesThought.
 \]
 
 这一原则对于解决 h 的有限容量尤其关键。如果所有低层传感变化持续上浮，工作记忆必然被淹没；如果任何异常都不上浮，系统又无法处理新情况。AgentOS 因此采用 ``正常动态局部闭合，重要残差逐层升级'' 的结构：
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal.
-}
-\]
+\end{statementbox}
 
 我们还需要一个相邻尺度耦合原则。理论上 $L_6$ 可以影响 $L_0$，但工程上不应让极慢价值层直接跳过全部中间层控制执行器。更安全的方式是：
 \[
@@ -1365,11 +1348,9 @@ Reality.
 我们尤其应注意四条贯穿所有层级的动力学原则。
 
 第一：
-\[
-\boxed{
+\begin{statementbox}
 EachScaleShouldCloseItsOwnFastLoop.
-}
-\]
+\end{statementbox}
 能够在局部解决的问题，不应持续提升到高层。
 
 第二：
@@ -1381,19 +1362,15 @@ SlowConstraint\neq FastMicromanagement.
 慢变量决定方向、先验和边界，而不直接替代低层执行。
 
 第三：
-\[
-\boxed{
+\begin{statementbox}
 PersistentResidualPromotesStructureUpward.
-}
-\]
+\end{statementbox}
 局部无法解释的重要异常必须能够进入更高层重新认知。
 
 第四：
-\[
-\boxed{
+\begin{statementbox}
 StableStructureTendsToMoveTowardStableLocalCarriers.
-}
-\]
+\end{statementbox}
 已经成熟的能力应逐渐沉降到更加稳定、快速和局部的结构中，而不是永远依赖显式推理。
 
 因此，一个成熟 Agent 的长期发展并不是让 $h$ 越来越庞大，而恰恰是让越来越多过去需要显式处理的问题转化成：
@@ -1427,11 +1404,9 @@ AgentOS 是对多层闭环本身进行组织、调度、约束和学习的闭环
 ControlLoop,
 \]
 那么 AgentOS 更接近研究：
-\[
-\boxed{
+\begin{statementbox}
 ControlOfControlLoops.
-}
-\]
+\end{statementbox}
 
 如果普通学习系统研究：
 \[

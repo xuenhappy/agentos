@@ -42,9 +42,13 @@ SafetyBoundary .
 \]
 因此，本章真正需要回答的是：现实如何成为 Agent 可以理解的结构，Agent 的意图如何重新成为现实中的作用，以及整个过程中哪些结构允许被预测、哪些允许被修改、哪些只能只读观察、哪些必须拥有最高优先级。
 \end{chapteroverviewbox}
-\ChapterArt{71}
 
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/cognitive-task-scheduling-architecture.png}
+\caption{Kernel—KRA—Body Runtime 的现实闭合数据流}
+\end{figure}
 \section{从World进入Body：现实作用首先发生于身体边界}
 
 一个持续智能体与现实世界的关系，并不是从 ``输入一个 prompt'' 开始的。对于真正运行于物理世界或数字世界中的 Agent，第一层事实永远是：现实首先作用于其身体边界，然后才可能被认知系统解释。因此我们将最外层输入写为
@@ -109,11 +113,9 @@ ActionableReality .
 \]
 
 这一设计还具有重要的稳定性意义。若所有现实扰动都直接进入 Kernel，则毫秒级扰动、传感噪声、设备状态和高频控制误差都会竞争有限的工作记忆 $h(t)$。成熟 Agent 必须遵循
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal
-}
-\]
+\end{statementbox}
 即正常、高频、可局部闭合的现实变化首先留在 Body Runtime 内部；只有形成语义事件、持续残差、能力下降或安全风险的变化，才应沿层级向上进入认知系统。这样，现实第一次进入 Agent 时就已经受到时间尺度分离原则的约束，而不是等待 Kernel 过载以后再补救。
 
 
@@ -623,25 +625,19 @@ FCS 也存在类似结构。BPCC 可以读取当前 Control Instability、Threat
 
 因此 KRA$\rightarrow$BPCC 不只是 ``把目标翻译成动作参数''，而要同时规定三个契约：
 
-\[
-\boxed{
+\begin{statementbox}
 SemanticContract
-}
-\]
+\end{statementbox}
 确定每个状态意味着什么；
 
-\[
-\boxed{
+\begin{statementbox}
 ControlContract
-}
-\]
+\end{statementbox}
 确定 BPCC 能控制什么；
 
-\[
-\boxed{
+\begin{statementbox}
 EpistemicContract
-}
-\]
+\end{statementbox}
 确定哪些内容只能读取、哪些允许生成预测、哪些绝不能覆盖真实观测。
 
 这三个合同共同保证高速局部控制不会逐渐演化成一个不受 Kernel 管理的第二认知主体。
@@ -862,11 +858,9 @@ World'
 \Delta\theta_B .
 \]
 如果误差可以通过局部在线学习、增益调整或轨迹修正解决，那么遵守
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal .
-}
-\]
+\end{statementbox}
 否则 Agent 的工作记忆将不断被执行细节污染。
 
 当 residual 具有持续性、跨语义性或者表明 Kernel--Body 映射本身出了问题时，则需要进入 KRA。可以定义

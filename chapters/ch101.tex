@@ -27,8 +27,12 @@ Affective\!-\!Homeostatic\ Dynamics
 
 本章将在前文 SPC--AHC--TCE 闭环、FCS、认知相态和控制稳定性理论基础上，对 AHC 的正常动力学、异常持续、恢复迟滞、Threat 放大、Arousal 饱和、内稳态基线偏置以及 FCS$\rightarrow$AHC 映射异常进行统一数学化。我们将看到，AHC 异常的本质不是单个标量“太高”或“太低”，而是一个多变量、非线性、带记忆、带饱和且与外部现实持续闭环耦合的中尺度动力系统失去了恰当的可恢复性。
 \end{chapteroverviewbox}
-\ChapterArt{101}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/ahc-homeostatic-control.png}
+\caption{AHC 饱和、恢复和映射异常}
+\end{figure}
 \section{AHC异常的定义：从调制变量偏离到动力学失配}
 \label{sec:ahc_pathology_definition}
 
@@ -211,11 +215,9 @@ RealityConsistency
 \label{sec:ahc_persistence}
 
 第一类典型异常不是 AHC 状态幅值异常，而是状态持续时间异常。一个 Threat 值本身可能处于合法范围，一个 Fatigue 值也可能并未饱和，但如果它们在对应外部条件已经消失之后仍然长期存在，那么系统已经出现了时间尺度上的失配。我们把这种现象定义为
-\[
-\boxed{
+\begin{statementbox}
 PersistentStateMismatch
-}
-\]
+\end{statementbox}
 即状态在时间轴上的“惯性”超过了当前环境所要求的程度。
 
 考虑单变量近似
@@ -530,17 +532,13 @@ b_T
 本身已经不再适合新的现实。
 
 我们因此需要区分：
-\[
-\boxed{
+\begin{statementbox}
 StatePathology
-}
-\]
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
 BaselinePathology.
-}
-\]
+\end{statementbox}
 前者是当前状态离基线太远，后者则是“正常点”本身已经偏移。后者更加危险，因为传统阈值监控可能完全检测不到。系统会认为自己已经恢复到“正常”，实际上正常定义已经被历史异常重新写过。
 
 这一问题与长期身份结构必须严格区分。AHC 基线是中慢尺度功能变量，而 $\Psi$ 是更慢的身份与价值约束。如果 AHC 的暂时性高 Threat 或高 Fatigue 被过快解释为“这就是我”，并进入 $\Psi$，就会造成不恰当的跨尺度沉降。因此必须维持：

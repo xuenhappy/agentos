@@ -35,8 +35,12 @@
 
 过强的外部锁定会使 Agent 只能执行别人预先写好的轨迹，无法形成真正的递归自主性；过弱的结构约束则会使快速状态、短期经历甚至偶然噪声能够直接改写慢速身份和生命周期生成结构，从而破坏身份连续性、控制稳定性与安全边界。AgentOS 因而必须解决的不是“是否允许自我修改”这一二元问题，而是构造一个具有多时间尺度、分层权限、现实反馈和迟滞保护的\textbf{自我可塑性谱}。
 \end{chapteroverviewbox}
-\ChapterArt{90}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/semantic-modulation-safety-channels.png}
+\caption{可修改集合、权限边界与安全治理}
+\end{figure}
 \section{从行为自主到递归自主：控制对象为什么必须进入智能体自身}
 
 在传统自动控制系统中，控制对象通常是外部过程。控制器读取状态 $x_t$，根据既定目标 $g$ 产生控制量 $u_t$，使被控对象沿某条可接受轨迹演化：
@@ -581,11 +585,9 @@ B_i(\tau)\,d\tau.
 \theta_{off}<\theta_{on}.
 \]
 这种迟滞结构意味着：
-\[
-\boxed{
+\begin{statementbox}
 AuthorityGrowth
-}
-\]
+\end{statementbox}
 需要长期证据，而已有权限不会因为偶然小失败剧烈变化；但若出现安全事件，则可以通过独立 emergency path 立即收缩权限。
 
 因此正常治理路径是：
@@ -784,17 +786,13 @@ Interpretation_t
 完全依赖内部一致性，就可能形成错误自强化。一个 Agent 一旦形成某种自我解释，就只关注支持该解释的现实，再把筛选后的经验用于证明原有自我。
 
 因此必须存在：
-\[
-\boxed{
+\begin{statementbox}
 WorldVerification
-}
-\]
+\end{statementbox}
 和：
-\[
-\boxed{
+\begin{statementbox}
 CounterEvidencePath
-}
-\]
+\end{statementbox}
 使：
 \[
 \Psi
@@ -937,17 +935,13 @@ GradualUpdate.
 \]
 
 因此必须区分：
-\[
-\boxed{
+\begin{statementbox}
 AbilityToReflectOnLifeDirection
-}
-\]
+\end{statementbox}
 和：
-\[
-\boxed{
+\begin{statementbox}
 AuthorityToRewriteLifeDirection.
-}
-\]
+\end{statementbox}
 
 前者可以相对自由；后者必须受到极强慢变量保护。
 
@@ -983,11 +977,9 @@ E,\Theta,\Psi
 甚至更慢的生命周期结构。
 
 因此 AgentOS 必须引入：
-\[
-\boxed{
+\begin{statementbox}
 CheckpointGovernance
-}
-\]
+\end{statementbox}
 而不仅仅是普通系统 checkpoint。
 
 设完整 Agent 状态为：
@@ -1085,11 +1077,9 @@ R_{mod}\ge\theta_2
 时，则进入高治理路径，需要更高权限或外部验证。
 
 因此修改权限不是单一开关，而是：
-\[
-\boxed{
+\begin{statementbox}
 RiskDependentGovernance.
-}
-\]
+\end{statementbox}
 
 同时，恢复也不能机械地“回滚整个 Agent”。因为最新经历可能包含真实重要信息。如果由于 $\Psi$ 修改错误而完全恢复旧状态，同时删除所有之后发生的 $E$，就等于抹除一段真实生命周期。
 
@@ -1127,20 +1117,16 @@ E_t
 \]
 
 这意味着 AgentOS 的 checkpoint 并不是简单的时间机器，而更接近：
-\[
-\boxed{
+\begin{statementbox}
 StructuralReinterpretationPoint.
-}
-\]
+\end{statementbox}
 
 这一点对于身份连续尤其重要。真正的恢复不是假装某段经历从未发生，而是允许系统在保留真实经历的前提下撤销某种错误结构解释。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
 Recoverability
-}
-\]
+\end{statementbox}
 必须被视为递归自主性的组成部分。没有恢复能力的自修改并不是成熟自主，而是不可逆结构赌博。
 
 可以因此定义：
@@ -1340,11 +1326,9 @@ ExpandEnvelopeAgain
 最终使任何边界失去意义。
 
 因此我们必须定义：
-\[
-\boxed{
+\begin{statementbox}
 MetaGovernanceBoundary
-}
-\]
+\end{statementbox}
 使：
 \[
 \mathcal E_{\mathrm{BSM}}
@@ -1557,11 +1541,9 @@ AuthorityConstraint.
 \]
 
 换句话说，控制工程真正优化的不是最大服从度，也不是最大自由度，而是：
-\[
-\boxed{
+\begin{statementbox}
 MaximumUsefulAgencyUnderStableIdentityAndRealityConstraints.
-}
-\]
+\end{statementbox}
 
 \section{递归自主性的稳定性条件：自由必须慢于主体解体}
 

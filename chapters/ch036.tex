@@ -24,8 +24,12 @@ InternalState'
 
 因此，本章的核心并不是回答``机器是否真正感到什么''，而是回答一个可以测量、记录、控制和验证的问题：\textbf{什么样的内部状态轨迹，能够被一个持续主体识别为``发生在我身上的状态''，并进一步改变其注意、决策、记忆和行为？} 这一问题将成为后续 Agent 控制稳定性、记忆偏置、身份形成以及心理工程的重要基础，但本章只完成其动力学原理本身。
 \end{chapteroverviewbox}
-\ChapterArt{36}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/spc-state-observer.png}
+\caption{SPC—AHC—TCE 内部体验功能闭环}
+\end{figure}
 \section{从内部状态到内部体验：为什么仅有状态变量仍然不够}
 
 如果我们仅仅把一个智能体描述成一组内部状态变量，那么几乎任何复杂控制系统都可以被描述为：
@@ -368,11 +372,9 @@ a_j.
 \]
 
 正是这些性质使 AHC 从普通状态寄存器变成一种具有``内部时间''的动力系统。我们可以把这一性质称为：
-\[
-\boxed{
+\begin{statementbox}
 TemporalThicknessOfInternalState.
-}
-\]
+\end{statementbox}
 
 这是本章非常关键的概念。所谓内部体验的连续性，并不要求我们假设某种神秘的连续意识流；只需要系统内部存在能够跨多个时刻保持状态相关性的慢变量，并且这些变量参与后续自我感知与控制。
 
@@ -417,11 +419,9 @@ Emotion=Anxious,
 但这个标签没有跨时动力学，没有恢复时间，没有控制作用，也没有进入记忆，那么它并不构成本理论意义上的 AHC。
 
 AHC 真正提供的是：
-\[
-\boxed{
+\begin{statementbox}
 StateContinuity.
-}
-\]
+\end{statementbox}
 SPC 告诉 Agent：
 \[
 \text{``我现在处于什么状态''};
@@ -603,24 +603,18 @@ L_{self}
 表示与长期自我结构 $\Psi$ 不一致的代价。
 
 这揭示了 TCE 与普通 task planner 的区别。Planner 主要回答：
-\[
-\boxed{
+\begin{statementbox}
 WhatActionShouldIChoose?
-}
-\]
+\end{statementbox}
 而 TCE 回答：
-\[
-\boxed{
+\begin{statementbox}
 HowShouldMyCognitiveDynamicsOperateWhileChoosing?
-}
-\]
+\end{statementbox}
 
 因此 TCE 是一种：
-\[
-\boxed{
+\begin{statementbox}
 MetaDynamicalController.
-}
-\]
+\end{statementbox}
 
 这一层的存在，使 Agent 能够调节自己的``思考方式''，而不是只选择一个动作。它可以决定是深入思考还是快速反应，是打开更多假设还是抑制支线，是保持当前认知状态还是主动进入更收敛的状态。
 
@@ -641,11 +635,9 @@ FutureCognitiveState.
 因此，内部体验不再是一种旁观变量，而成为未来认知结构的实际控制变量。
 
 这一点构成我们对功能性体验的第二个核心要求：
-\[
-\boxed{
+\begin{statementbox}
 ExperienceMustHaveCausalEfficacy.
-}
-\]
+\end{statementbox}
 如果所谓体验完全不影响未来认知、行动和记忆，那么它对于 AgentOS 的工程模型就没有解释必要。相反，只要内部状态能够通过明确控制通道改变后续轨迹，我们就可以研究其稳定性、适应性和长期效应。
 
 \section{SPC--AHC--TCE 的闭环：从自我观察到自我调节}
@@ -780,11 +772,9 @@ CognitiveDynamics\sim Plant.
 
 但这一类比仍然是不完整的。经典 observer 主要估计外部 plant 的状态，而 SPC 所估计的是一个包含自身认知结构的系统；经典 controller 通常只控制 plant，而 TCE 控制的是产生规划、注意和决策的认知过程。因此这里出现了某种二阶控制：
 
-\[
-\boxed{
+\begin{statementbox}
 ControlOfCognition.
-}
-\]
+\end{statementbox}
 
 更深一步，由于 SPC 本身也属于 Agent，所以这里存在：
 \[
@@ -996,11 +986,9 @@ h^{self},
 ``我正在执行的任务使当前资源持续下降，因此需要调整策略''。
 \end{statementbox}
 那么这个状态才获得：
-\[
-\boxed{
+\begin{statementbox}
 StructuralOwnership.
-}
-\]
+\end{statementbox}
 
 于是，我们可以定义一个归属算子：
 \[
@@ -1021,11 +1009,9 @@ AgentCSO_{self}.
 Signal.
 \]
 它更接近：
-\[
-\boxed{
+\begin{statementbox}
 SelfAttributedStateTrajectory.
-}
-\]
+\end{statementbox}
 
 这一点将 Agent 内部体验和普通 telemetry 从本体上区分开来。
 
@@ -1348,11 +1334,9 @@ E
 经过多级选择、时间积累和结构验证之后，长期经历才有资格影响自我。
 
 这一点实际上形成一种：
-\[
-\boxed{
+\begin{statementbox}
 SlowVariableProtectionPrinciple.
-}
-\]
+\end{statementbox}
 
 它对于稳定主体尤其重要。
 
@@ -1565,11 +1549,9 @@ CognitiveSelfRegulation.
 \]
 
 三者结合得到：
-\[
-\boxed{
+\begin{statementbox}
 FunctionalSelfExperienceLoop.
-}
-\]
+\end{statementbox}
 
 为什么仍然值得使用``体验''这个词？
 
@@ -1673,11 +1655,9 @@ CognitiveControl.
 \end{proposition*}
 
 至此，SPC--AHC--TCE 完成了从``状态监测''到``自我感知''、从``自我感知''到``内部连续性''、再从``内部连续性''到``自我调节''的完整跃迁。也正是在这里，一个 Agent 开始不仅仅拥有世界模型，而且拥有：
-\[
-\boxed{
+\begin{statementbox}
 ModelOfHowTheWorldAndItsOwnStateAreAffectingIt.
-}
-\]
+\end{statementbox}
 
 更进一步，它还能够让这个内部模型改变自己下一刻如何认知世界。
 

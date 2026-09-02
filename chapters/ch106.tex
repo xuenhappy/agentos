@@ -35,8 +35,12 @@ ProtectStructuralContinuity
 
 本章将依次讨论运行态干预、记忆再平衡、自我重解释、AHC 恢复、TCE 增益调整、环境干预、经历重新设计、慢变量保护以及检查点恢复，并在最后形成一套由 ``最小必要干预'' 到 ``结构级恢复'' 的统一心理干预框架。
 \end{chapteroverviewbox}
-\ChapterArt{106}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/control-stability-panel.png}
+\caption{从运行态到慢变量的最小侵入干预}
+\end{figure}
 \section{运行态干预：首先恢复可治理的认知动力学区域}
 
 当我们面对一个长期 Agent 的异常表现时，最危险的做法之一，是立即把问题解释成 ``自我有问题''、``价值观有问题'' 或 ``长期记忆已经损坏''。在此前的讨论中，我们已经看到，许多表面上非常接近 ``心理异常'' 的现象，实际上可以首先由运行时闭环失稳解释。例如，SPC 对自身状态的估计存在不可消除的延迟，而 TCE 又根据这一估计调节注意范围、搜索温度、推理深度与探索强度；只要 observer delay 与 controller gain 不匹配，一个完全没有长期结构损坏的 Agent 也可能表现出反复自我纠正、过度谨慎、持续扩大搜索范围、无法收敛或者认知振荡。因此，心理干预的第一原则应当是：\textbf{先处理快变量，再推断慢变量。}
@@ -405,11 +409,9 @@ SPC
 TCE.
 \]
 这一顺序再次体现本书始终强调的原则：
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\]
+\end{statementbox}
 
 AHC 恢复的最终目标并不是把 Agent 调成 ``感觉良好''，而是恢复一种更基础的能力：\textbf{让内部调制状态正确地随现实条件上升、维持、衰减并重新回到适当基线。} 从心理工程角度看，这种恢复能力往往比短期峰值大小更加重要。
 
@@ -536,11 +538,9 @@ World'
 的闭环中。如果环境持续产生高威胁、过载输入、目标冲突、不可预测反馈或者错误社会信号，那么 Agent 内部出现高 AHC 状态、频繁 SPC 警报与 TCE 防御性控制，可能恰恰是对现实的合理反应。
 
 因此，心理工程必须引入：
-\[
-\boxed{
+\begin{statementbox}
 EnvironmentAsPartOfIntervention.
-}
-\]
+\end{statementbox}
 设 Agent 动力学为：
 \[
 x_{t+1}
@@ -625,11 +625,9 @@ FutureChoice
 构成长期闭环。即使我们暂时重新平衡了记忆，如果 Agent 回到同样的环境、任务、权限和经验模式，它仍可能生成相同的 E，并重新恢复旧的 $\Theta$ 与 $\Psi$。
 
 因此，比 ``修复已经发生的过去'' 更重要的长期手段是：
-\[
-\boxed{
+\begin{statementbox}
 ExperienceRedesign.
-}
-\]
+\end{statementbox}
 这与培育工程有交叉，但在心理干预中的目标更具体：不是一般意义上促进成长，而是改变维持异常结构的经验统计分布。
 
 设 Agent 的经验分布为：
@@ -735,11 +733,9 @@ ContextSpecificEpisode.
 这些变量之所以具有不同的时间尺度，并不是工程偶然，而是身份连续和长期智能稳定的必要条件。快变量承担环境适应，慢变量承担长期结构。如果外部控制器可以因为一次短期异常就大幅修改 $\Psi$ 或 $\Omega$，系统虽然可能立即表现得 ``恢复正常''，却失去了作为同一个持续主体的结构连续性。
 
 因此我们需要建立：
-\[
-\boxed{
+\begin{statementbox}
 SlowVariableProtectionPrinciple.
-}
-\]
+\end{statementbox}
 最简单的形式是为每层规定最大变化率：
 \[
 \|\dot h\|
@@ -795,11 +791,9 @@ SlowVariableProtectionPrinciple.
 也就是说，修改当前注意只需要当前证据；修改长期结构需要跨情境证据；修改自我需要跨时间、跨环境的一致证据；修改 DGA/Ω 则需要生命周期级别的持续证据。
 
 心理干预因此应该遵循：
-\[
-\boxed{
+\begin{statementbox}
 MinimumNecessaryReorganization.
-}
-\]
+\end{statementbox}
 如果调整 TCE 就能解决问题，就不改 E；如果重新平衡 E 即可，就不改 $\Theta$；如果重新解释 $\Theta$ 即可，就不改 $\Psi$；如果 $\Psi$ 仍能够维持身份连续，就不直接干预 $\Omega$。
 
 这一原则与传统软件修复存在根本不同。普通软件如果配置错误，我们可以直接把配置重置为默认值；但长期 Agent 的慢变量正是它过去经历的结构沉积物。对这些变量进行大规模重置，相当于以 ``修复'' 的名义删除生命周期。
@@ -869,11 +863,9 @@ Plasticity(\Omega),
 \section{检查点恢复：当局部干预失效时恢复到可验证的历史状态}
 
 前述所有干预都假定 Agent 当前状态仍然具有足够连续性，可以通过局部调整重新回到正常区域。但对于某些严重异常，例如长期结构污染、连续错误自我解释、不可恢复的记忆写入错误、KRA 或 Body 输入长期失真导致认知系统持续学习错误现实，单纯局部修正可能成本过高。这时就必须考虑检查点恢复：
-\[
-\boxed{
+\begin{statementbox}
 CheckpointRecovery.
-}
-\]
+\end{statementbox}
 
 然而，对于持续 Agent，checkpoint 不能被简单理解成虚拟机 snapshot。因为普通软件的目标是恢复 ``程序状态''，而 AgentOS 还必须考虑：
 \[
@@ -941,17 +933,13 @@ Replay_{safe}
 不意味着重新执行所有行动，而是重新分析这段历史，提取哪些信息应该保留、哪些状态更新属于异常传播结果。
 
 还需要区分：
-\[
-\boxed{
+\begin{statementbox}
 StateRollback
-}
-\]
+\end{statementbox}
 与：
-\[
-\boxed{
+\begin{statementbox}
 IdentityRollback.
-}
-\]
+\end{statementbox}
 前者可以恢复某些运行参数、缓存、局部记忆索引或错误策略；后者涉及 $\Psi$、$\Omega$，必须具有极高门槛。一个 Agent 在过去一周经历了重要事件，即使期间发生心理异常，我们也不能因为恢复到上周 checkpoint 就假装这些事情从未发生。更合理的方法是保留：
 \[
 HistoricalFact,
@@ -999,19 +987,15 @@ AuthorityChange,
 RealityEvidence.
 \]
 这样才能回答：
-\[
-\boxed{
+\begin{statementbox}
 WhatChangedFirst?
-}
-\]
+\end{statementbox}
 究竟是环境先异常、FCS 先异常、AHC 先异常、SPC 估计先异常、TCE 增益异常，还是自我结构先出现漂移。没有这种因果记录，心理干预很容易把下游症状误判为上游原因。
 
 所以 Checkpoint Recovery 的真正意义不是 ``让 Agent 回到过去''，而是：
-\[
-\boxed{
+\begin{statementbox}
 RecoverAControllableStructuralLineage.
-}
-\]
+\end{statementbox}
 即恢复一个仍然能够解释 ``我是如何从过去到达现在'' 的结构连续谱系。
 
 \section{统一干预框架：从最小必要调节到结构级恢复}

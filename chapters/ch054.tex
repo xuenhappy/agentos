@@ -53,7 +53,6 @@ SGC_t
 
 本章只讨论 SGC 本身。FCS、BPCC、KRA 以及更高层认知结构虽然与 SGC 存在接口关系，但除必要的边界说明外，不在本章展开，以避免后文概念提前侵入。
 \end{chapteroverviewbox}
-\ChapterArt{54}
 
 \section{Semantic Graph Coordinate Space：为什么需要一种新的现实表示}
 
@@ -135,17 +134,13 @@ SGC_t
 其中 $\mathcal O_{\leq t}$ 表示截至当前时刻获得的全部有效观测。这个表达意味着，同一个现实对象相对于不同身体，可能具有完全不同的行动意义。例如同一个台阶，对人形机器人可能是可通行结构，对轮式机器人却可能构成障碍；同一个按钮，对于具有机械臂的 Agent 是可按压对象，而对于只有摄像头的固定 Agent 则只是可观察对象。现实对象的物理存在没有改变，但它进入具体 Agent SGC 后所呈现的行动结构发生了变化。
 
 因此我们必须区分两个层次：
-\[
-\boxed{
+\begin{statementbox}
 ObjectProperty
-}
-\]
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
 BodyRelativeProperty .
-}
-\]
+\end{statementbox}
 前者包括物体尺寸、材质、类别等相对稳定属性；后者则包括可达性、可抓取性、是否位于当前视野、距离身体多远、是否超过当前执行器能力等身体相对属性。SGC 需要同时容纳两者，但必须明确其语义来源，不能把身体相对属性错误包装成对象的绝对属性。
 
 在物理空间中，若存在世界坐标系 $W$ 与身体坐标系 $B$，则一个对象的位置可写为
@@ -180,11 +175,9 @@ p(\mathbf p_i\mid y_{\leq t}),
 物理机器人使用几何坐标流形，数字 Agent 则可能使用界面、对象层级和命名空间共同组成的混合坐标结构。
 
 由此我们得到一个重要结论：SGC 并不追求一个与任何主体无关的“终极世界表示”，而追求一个能够使具体 Agent 在现实中稳定行动的
-\[
-\boxed{
+\begin{statementbox}
 Body-GroundedWorldRepresentation .
-}
-\]
+\end{statementbox}
 这与具身认知和 affordance 理论存在一定同构性，但在 AgentOS 中它被进一步工程化为可交换、可检查的公共现实接口。
 
 \section{3D Geometry：语义结构必须落在现实几何之上}
@@ -297,11 +290,9 @@ interaction\_class,
 但具体字段应由 SGC 标准版本确定，而不是由单个模型在运行时自由生成。其原因是：上层 Kernel、控制系统、安全检查器以及日志系统必须能够稳定理解这些字段。如果“是否可移动”今天叫 movable、明天叫 portable、后天又变成一个自然语言描述，那么 SGC 事实上仍然只是一个不稳定的文本接口。
 
 因此 Fixed Attribute Schema 的真正作用是形成：
-\[
-\boxed{
+\begin{statementbox}
 SemanticABI .
-}
-\]
+\end{statementbox}
 这与操作系统中的 syscall ABI 很相似。内部驱动、感知模型和硬件都可以变化，但一旦进入公共接口，就必须服从稳定的数据类型和语义约束。
 
 固定 schema 同时可以帮助区分“基本属性”和“开放语义”。例如一个对象的：
@@ -509,21 +500,15 @@ Parents(d)=\{x_1,\ldots,x_n\}.
 当父节点失效时，Derived 节点也应重新评估。这样 SGC 才真正成为一个具有认识论可追溯性的现实模型，而不是不断累积结论的黑箱数据库。
 
 Epistemic Metadata 与 Bayesian inference、belief state、provenance graph、epistemic logic 等外部理论具有明显联系。但 AgentOS 在这里更强调工程可检查性：并不要求所有结构都具有完美概率分布，而要求系统至少能够回答三个问题：
-\[
-\boxed{
+\begin{statementbox}
 WhereDidThisComeFrom?
-}
-\]
-\[
-\boxed{
+\end{statementbox}
+\begin{statementbox}
 HowCertainAmI?
-}
-\]
-\[
-\boxed{
+\end{statementbox}
+\begin{statementbox}
 IsThisObservedOrGenerated?
-}
-\]
+\end{statementbox}
 这三个问题，是持续智能不被自己的生成内容逐渐脱离现实所必须具备的基础条件。
 
 \section{Object 与 Field：现实既包含离散实体，也包含连续结构}
@@ -685,21 +670,17 @@ lastVerified_t
 如果关系长期未获得新证据，其置信度应衰减，或者被标记为 stale。这个细节对于长期 Agent 尤其重要，因为“过去成立”与“现在成立”不是同一个命题。
 
 因此，SGC 的 Graph 并不是为了视觉上画出节点和边，而是为了把现实从孤立对象集合提升为：
-\[
-\boxed{
+\begin{statementbox}
 PersistentRelationalReality .
-}
-\]
+\end{statementbox}
 这正是“Semantic Graph”中 Graph 一词真正的理论意义。
 
 \section{Affordance：世界必须以“能够做什么”的方式被表示}
 
 如果 SGC 只告诉 Agent 对象是什么、在哪里以及相互之间有什么关系，它仍然只是一个描述性世界模型。真正进入行动以后，Agent 还必须知道：
-\[
-\boxed{
+\begin{statementbox}
 WhatCanIBodyDoHere?
-}
-\]
+\end{statementbox}
 这就是 affordance 的位置。
 
 Affordance 不是物体单方面具有的绝对属性，而是：
@@ -784,11 +765,9 @@ Affordance theory 在生态心理学和机器人学中已有长期发展。SGC �
 WorldDescription,
 \]
 而是：
-\[
-\boxed{
+\begin{statementbox}
 ActionableReality .
-}
-\]
+\end{statementbox}
 
 \section{Observed：被现实直接锚定的结构}
 
@@ -948,11 +927,9 @@ InterpretationOfRealityEvidence .
 智能系统的重要能力之一是预测未来，但正因为预测能力越来越强，就越需要防止预测结果污染当前现实表示。如果系统在 $t$ 时刻预测一个人将在 $t+\Delta$ 出现在门口，这个未来状态绝不能因为模型置信度很高就被标成当前 Observed。
 
 因此 SGC 显式引入：
-\[
-\boxed{
+\begin{statementbox}
 Predicted
-}
-\]
+\end{statementbox}
 状态。
 
 设当前 SGC 为 $S_t$，预测模型为 $F_\Delta$：
@@ -1059,11 +1036,9 @@ u'\neq u_{\mathrm{actual}}.
 这里 $\mathrm{do}(\cdot)$ 只是强调我们正在考虑一个人为改变条件的分支，并不意味着本章建立完整的因果推断理论。
 
 Counterfactual SGC 不属于现实当前状态，而属于：
-\[
-\boxed{
+\begin{statementbox}
 AlternativeActionableWorlds .
-}
-\]
+\end{statementbox}
 例如机器人可以在内部建立：
 \[
 \text{“如果我从左侧绕行，这个区域将变得可达。”}
@@ -1157,17 +1132,13 @@ V(x)\geq\theta_V
 后，SGC 才允许改变正式现实状态。
 
 这一机制对于使用大型生成模型的 Agent 尤其重要。生成模型擅长形成可能解释，但概率生成能力与现实真实性不是同一件事。Pending layer 使我们可以同时保留两种能力：
-\[
-\boxed{
+\begin{statementbox}
 GenerativeOpenness
-}
-\]
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
 RealityDiscipline .
-}
-\]
+\end{statementbox}
 
 Suggested 还可以来自其他 Agent。假设另一个 Agent 报告：
 \[
@@ -1305,11 +1276,9 @@ PerfectlyKnownState .
 身体本身也属于被观测世界的一部分。
 
 这一步使 SGC 从“外界地图”真正变成：
-\[
-\boxed{
+\begin{statementbox}
 Self-In-Actionable-Reality .
-}
-\]
+\end{statementbox}
 这也是 AgentOS 与传统以第三人称场景理解为主的很多世界模型之间最根本的差别之一。
 
 \section{Inspectable Semantic World：SGC 必须成为可检查的现实公共层}
@@ -1317,11 +1286,9 @@ Self-In-Actionable-Reality .
 最后，我们需要回答一个工程上极其重要的问题：为什么 SGC 不能只是 Body Runtime 内部一个高维 latent tensor？答案是，AgentOS 是一个长期运行、可调试、可治理并需要与多个模块协同的系统。如果现实表示完全存在于不可解释 latent 中，那么上层 Kernel、安全机制、人类工程师以及长期日志系统都无法可靠判断 Agent 究竟“认为世界是什么样”。
 
 因此 SGC 必须具备：
-\[
-\boxed{
+\begin{statementbox}
 Inspectability .
-}
-\]
+\end{statementbox}
 
 Inspectable 并不意味着所有内部计算都必须可解释。Body Runtime、视觉网络乃至后续快速预测模块完全可以拥有自己的私有 latent：
 \[
@@ -1429,25 +1396,19 @@ SGC
 
 它同时包含三项约束：
 
-\[
-\boxed{
+\begin{statementbox}
 BodyCentered
-}
-\]
+\end{statementbox}
 意味着世界始终相对于这个 Agent 的现实位置和能力展开；
 
-\[
-\boxed{
+\begin{statementbox}
 Semantic
-}
-\]
+\end{statementbox}
 意味着现实不只是像素和坐标，而具有实体、关系、功能和意义；
 
-\[
-\boxed{
+\begin{statementbox}
 Actionable
-}
-\]
+\end{statementbox}
 意味着这些结构最终能够支持 Agent 在现实中预测、选择与行动。
 
 因此，SGC 可以被视为整个 AgentOS 具身工程中的一条关键分界线：

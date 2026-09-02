@@ -22,7 +22,6 @@ F^{\mathrm{int}}
 
 本章只建立具身输入的原始分类和数学结构，不提前展开后续章节中的 SGC、FCS 与 BPCC 具体实现；但这一四象限结构将成为这些组件得以正确分工的共同基础。
 \end{chapteroverviewbox}
-\ChapterArt{53}
 
 \section{为什么不能把具身输入简单定义为 ``多模态传感器数据''}
 \label{sec:why-not-multimodal-sensor-data}
@@ -268,17 +267,13 @@ Did the world change, did I change, or did our relation change?
 \]
 其中 $P$ 表示 Perception-oriented representation，$F$ 表示 Functional Influence-oriented representation。这里的区别不是 ``客观信息'' 与 ``主观信息''，也不是 ``视觉'' 与 ``情绪''，而是两个不同的系统问题：
 
-\[
-P:
-\quad
-\boxed{\text{What state is the world/body in?}}
-\]
+\begin{statementbox}
+P: What state is the world/body in?
+\end{statementbox}
 
-\[
-F:
-\quad
-\boxed{\text{How is that state functionally acting on this Agent?}}
-\]
+\begin{statementbox}
+F: How is that state functionally acting on this Agent?
+\end{statementbox}
 
 Perception 的目标是重建一个尽量结构化的状态描述。给定原始观测 $z_t$，我们可以写：
 \[
@@ -1088,11 +1083,9 @@ Feeling\neq Modulation.
 在很多简化架构中，一旦系统检测到高风险、低能量或高负载，就立即把这个变量转换成注意力权重、行为抑制或策略修改。这种 ``感受即控制'' 的设计在简单反射系统中可以工作，但对于长期 Agent，它会使 observer state 与 controller action 混在一起，从而难以解释、难以调试，也容易形成高增益振荡。
 
 在本书的功能定义中，Feeling 首先是：
-\[
-\boxed{
+\begin{statementbox}
 FunctionalInfluenceState.
-}
-\]
+\end{statementbox}
 也就是一个被估计出来的状态：
 \[
 F_t
@@ -1159,11 +1152,9 @@ Measured/Estimated State
 }
 \]
 与：
-\[
-\boxed{
+\begin{statementbox}
 Control Input.
-}
-\]
+\end{statementbox}
 若把二者直接绑死：
 \[
 u_t=kF_t
@@ -1253,17 +1244,13 @@ F^{int},
 例如把 ``即将碰撞'' 看成极高 Threat，把 ``电池热失控'' 看成极高 Thermal Pressure。作为状态表示，这当然没有问题；但从系统权限角度看，仅仅这样是不够的。
 
 我们需要严格区分：
-\[
-\boxed{
+\begin{statementbox}
 FeelingState
-}
-\]
+\end{statementbox}
 和：
-\[
-\boxed{
+\begin{statementbox}
 ExceptionEvent.
-}
-\]
+\end{statementbox}
 Feeling 是连续或准连续功能影响状态，例如：
 \[
 F_{\mathrm{threat}}\in[0,1].

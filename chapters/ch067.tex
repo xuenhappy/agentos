@@ -18,8 +18,12 @@ World\rightarrow BodyRuntime\rightarrow KRA\rightarrow Kernel
 
 本章讨论的是一个固定宏观功能拓扑内部的联合学习稳定性问题。这里的 ``Kernel--KRA--BPCC 三体'' 是工程动力系统意义上的三个耦合学习子系统，而非物理学中的三体问题；本章也不预设后续更强的功能拓扑自重构能力。
 \end{chapteroverviewbox}
-\ChapterArt{67}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/control-stability-panel.png}
+\caption{Kernel—KRA—BPCC 联合学习稳定性}
+\end{figure}
 \section{三个学习动力系统同时存在时，问题从参数学习转化为关系学习}
 
 当我们只考虑一个固定模型时，持续学习通常被表述为参数更新问题。设模型参数为 $\theta$，经验流为 $\mathcal{D}_t$，则最简单的学习动力学可以写成
@@ -234,11 +238,9 @@ v_K>\delta_K,
 \section{Primary Learner 原则：每一次明显漂移都应尽量只有一个主要学习者}
 
 仅有平均意义上的时间尺度分离仍然不够，因为现实系统中的学习不是均匀连续发生的。例如机器人换上新的末端执行器后，KRA 和 BPCC 都可能检测到巨大误差；又如 Kernel 更新了高层动作语义以后，KRA 也会立即感受到接口残差。如果所有收到残差的模块都自行解释并更新，就容易形成 ``多方同时纠错''。因此我们进一步引入
-\[
-\boxed{
+\begin{statementbox}
 PrimaryLearner
-}
-\]
+\end{statementbox}
 原则：对于一个确定的适配事件，在一个有限时间窗口内，应尽量指定一个主要承担结构性更新的学习层，其余层保持冻结、弱适配或仅进行低风险局部补偿。
 
 设整体残差向量为
@@ -439,11 +441,9 @@ K^n
 \]
 
 这里的关键不是数学形式本身，而是每个阶段结束后都必须执行：
-\[
-\boxed{
+\begin{statementbox}
 RealityValidation
-}
-\]
+\end{statementbox}
 而不是直接进入下一阶段。因为如果一个错误的 BPCC 更新被 KRA 继续适配，它可能被后者掩盖；如果 KRA 又被 Kernel 继续吸收，则错误最终可能被写入长期结构。于是短期身体误差会沿着：
 \[
 B\rightarrow A\rightarrow K
@@ -523,11 +523,9 @@ x_{t+1}-\hat x_{t+1}.
 这个误差至少可能来自五类原因：现实环境发生变化、传感器观测发生偏差、BPCC 局部模型失准、KRA 映射漂移，或者 Kernel 本身的高层模型错误。如果系统简单地把同一个 $\varepsilon_t$ 同时反向传播到所有可学习组件，就会失去任何因果区分能力。
 
 因此共同学习需要一个独立的
-\[
-\boxed{
+\begin{statementbox}
 DriftAttribution
-}
-\]
+\end{statementbox}
 过程。我们可以把观测到的总残差近似分解为
 \[
 \varepsilon^{obs}
@@ -650,11 +648,9 @@ ArbitrarySystemError
 \section{适配预算使可塑性成为受治理资源，而不是无限开放的能力}
 
 只要一个长期系统允许在线学习，就存在一个容易被忽视的问题：学习能力本身也会消耗系统稳定性。参数可塑性越强，系统适应新情况越快，但同时已有功能关系被破坏的风险越大。因此对于长期 Agent，学习不应被视为免费动作，而应该像计算、内存和能量一样具有明确的
-\[
-\boxed{
+\begin{statementbox}
 AdaptationBudget.
-}
-\]
+\end{statementbox}
 
 我们可以为三个组件分别定义单位时间适配预算：
 \[
@@ -778,17 +774,13 @@ FastNoise\nrightarrow SlowGlobalStructure.
 \section{兼容流形与功能锚点定义了“允许变化而不失去自己”的区域}
 
 如果参数稳定不是我们的最终目标，那么必须回答一个新的问题：当 Kernel、KRA、BPCC 都在改变时，我们凭什么判断系统仍然是 ``同一个可工作的系统''？为此，本体系引入
-\[
-\boxed{
+\begin{statementbox}
 CompatibilityManifold
-}
-\]
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
 FunctionalAnchor
-}
-\]
+\end{statementbox}
 两个互补概念。
 
 兼容流形表示所有能够维持当前系统基本语义、控制、安全和现实关系的参数组合集合：
@@ -913,11 +905,9 @@ RepresentationAlignment.
 \section{现实必须成为共同学习的外部锚，否则三个模型可能共同“学会彼此”而不是学会世界}
 
 当三个模型相互提供训练信号时，会出现一个极其危险的闭环退化：Kernel 适应 KRA，KRA 适应 BPCC，BPCC 又适应 Kernel 给出的控制分布。只要三者能够彼此补偿，它们完全可能形成越来越一致的内部系统，却同时与现实越来越不一致。我们把这种情况称为
-\[
-\boxed{
+\begin{statementbox}
 ClosedLoopCoAdaptationDrift.
-}
-\]
+\end{statementbox}
 
 一个极端例子是：Kernel 逐渐把某种动作理解为 $u_K'$，KRA 将 $u_K'$ 映射成新的身体表示 $u_B'$，BPCC 又学会执行 $u_B'$。只要内部评估主要基于彼此的预测一致性，就可能得到：
 \[
@@ -1037,17 +1027,13 @@ BPCC.
 \section{运行态与巩固态分离，使实时智能与深层学习不必同时承担全部风险}
 
 共同学习稳定性还要求区分两个根本不同的运行模式：
-\[
-\boxed{
+\begin{statementbox}
 OperationalMode
-}
-\]
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
 ConsolidationMode.
-}
-\]
+\end{statementbox}
 许多 AI 系统默认推理和学习可以连续混合进行，但对于一个具有身体、长期记忆和身份连续性的 Agent，这种设计会使运行时行为与结构修改无法清晰区分。尤其当 Agent 正执行安全敏感任务时，深层 KRA 或 Kernel 更新可能改变尚未被验证的功能关系，从而把学习实验直接暴露给现实。
 
 在 Operational Mode 中，系统目标优先级为：
@@ -1384,51 +1370,39 @@ RelationshipStability>ParameterStability.
 不同层级必须具有可区分的适配时间尺度，慢结构为快学习提供参考。
 
 第三，
-\[
-\boxed{
+\begin{statementbox}
 PrimaryLearner.
-}
-\]
+\end{statementbox}
 一次显著结构性适配应尽量只有一个主要学习层，其余组件保持运行但限制深层更新。
 
 第四，
-\[
-\boxed{
+\begin{statementbox}
 AlternateAdaptation.
-}
-\]
+\end{statementbox}
 联合学习应被组织成 ``学习--验证--巩固'' 的交替过程，而不是三个模块同时追逐移动目标。
 
 第五，
-\[
-\boxed{
+\begin{statementbox}
 DriftAttributionBeforeAdaptation.
-}
-\]
+\end{statementbox}
 系统必须首先判断是世界、身体、接口还是认知结构发生变化，再决定修改哪里。
 
 第六，
-\[
-\boxed{
+\begin{statementbox}
 AdaptationIsBudgeted.
-}
-\]
+\end{statementbox}
 可塑性是一种受治理资源。越慢、越全局、越不可逆的结构，其修改预算越小，证据要求越高。
 
 第七，
-\[
-\boxed{
+\begin{statementbox}
 RealityIsTheUltimateAnchor.
-}
-\]
+\end{statementbox}
 Kernel、KRA 与 BPCC 可以彼此学习，但三者不能以彼此的一致性替代现实验证。
 
 从更一般的智能动力学角度，本章揭示了一个值得特别强调的规律：\textbf{当一个智能系统由多个可学习子系统组成以后，长期稳定性不再意味着组件不变化，而意味着各个变化中的子系统仍能维持一组稳定的跨尺度关系。} 因而真正需要被工程化的不是一个最终模型，而是一种
-\[
-\boxed{
+\begin{statementbox}
 StableRelationshipAmongChangingModels.
-}
-\]
+\end{statementbox}
 
 这正是 KRA 在整个 AgentOS 中最深层的理论意义。它不仅是 Kernel 与 Body Runtime 之间的表示适配器，更是长期认知结构和长期身体结构能够在彼此持续成长的条件下仍保持相互可理解性的关系层。BPCC 可以因为新的身体经验而成长，Kernel 可以因为新的世界经验而成长，KRA 也可以因为双方关系变化而成长；但这种成长必须具有节律、归因、预算、锚点和恢复路径。
 

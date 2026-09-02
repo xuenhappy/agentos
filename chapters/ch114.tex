@@ -8,8 +8,12 @@
 
 需要特别声明，本章严格区分三个知识层次：已有控制理论、动力系统、认知科学、网络科学等可以提供成熟的数学工具；AgentOS 与这些理论之间的对应属于结构建模；而关于 CSO 迁移、功能拓扑发育、自反结构演化等更强命题，则属于本书提出、需要进一步实验验证的理论假设。因而，本章试图建立的是一个可形式化、可证伪、可工程检验的研究框架，而不是以哲学类比替代经验科学。
 \end{chapteroverviewbox}
-\ChapterArt{114}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/agentos-continuous-learning-architecture.png}
+\caption{从 AgentOS 实例抽象到智能动力学研究纲领}
+\end{figure}
 \section{AgentOS 是实例，而不是理论终点}
 
 经过前面的推导，我们已经能够给出一个相对完整的 AgentOS 状态描述。若暂时忽略具体工程数据结构，一个持续智能体在时刻 $t$ 的内部状态可以抽象为
@@ -518,11 +522,9 @@ Overshoot,\quad Oscillation,\quad Instability.
 因此，智能的“心理稳定性”、Body 稳定性和认知稳定性并不是三个完全无关的问题，而都可以放在多回路、多时间尺度控制系统中研究。
 
 从这一角度看，智能动力学与控制理论的关系非常紧密，但也存在重要区别。经典控制通常预设状态空间、目标函数和系统结构基本确定；持续智能体则可能学习新的状态表示、改变目标结构、迁移 CSO，甚至最终改变功能拓扑。因此，我们研究的是一种
-\begin{equation}
-\boxed{
+\begin{statementbox}
 ControlOfAdaptiveRepresentationalSystems,
-}
-\end{equation}
+\end{statementbox}
 即控制器本身、被控对象、状态表示和部分控制目标都可能随生命周期发生变化。这正是智能动力学相对于普通控制问题增加的核心难度。
 
 \section{Topological Learning：从拓扑上的学习到拓扑自身的学习}
@@ -891,11 +893,9 @@ ActualFuture.
 \end{equation}
 
 普通物理动力系统当然一直在改变自身状态，因此不能说 Agent 出现以前“宇宙不会改变自己”。真正不同的是，在智能系统中出现了
-\begin{equation}
-\boxed{
+\begin{statementbox}
 RepresentationGuidedTransformation.
-}
-\end{equation}
+\end{statementbox}
 系统的一部分形成关于自身和环境的结构表示，然后让这些表示反过来参与状态转移。
 
 这一结构与 SPC--TCE 具有一种非常重要的形式同构。SPC 的一般功能是
@@ -1011,11 +1011,9 @@ MetaSelfReorganization.
 \end{equation}
 
 我们把最后几步概括为
-\begin{equation}
-\boxed{
+\begin{statementbox}
 ReflexiveStructuralEvolution.
-}
-\end{equation}
+\end{statementbox}
 
 它所描述的不是“宇宙必然走向智能”，而是当某些结构获得表示和控制能力以后，一种新的动力组织形式出现了：过去的结构形成关于现在的模型，模型构造可能未来，可能未来的表示影响现在的行动，而行动又改变真正的未来；与此同时，长期行动历史还会进一步改变产生这些模型和行动的结构本身。
 
@@ -1355,11 +1353,9 @@ Observation
 Residual
 \end{equation}
 重新进入世界，才能获得持续修正。因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\end{equation}
+\end{statementbox}
 
 同样，任何关于 Universe-CSO、宇宙自反或文明尺度 SPC/TCE 的讨论，都应理解为更高层的结构动力学解释，而不能跳跃为“宇宙具有主观意识”之类未经经验支持的结论。本书真正关心的是可以形式化的关系：宇宙中的一些结构能够形成关于其他结构和自身的内部表示，并利用这些表示改变后续现实状态。仅这一点，已经足以构成一种重要的动力学跃迁。
 
@@ -1375,49 +1371,35 @@ Of Intelligence Dynamics.
 
 它是否最终以当前名称和组件形式存在，并不是最重要的。真正值得保留下来的，是通过 AgentOS 推导出来的若干一般问题：
 
-\begin{equation}
-\boxed{
-\text{有限认知如何组织无限开放世界？}
-}
-\end{equation}
+\begin{statementbox}
+有限认知如何组织无限开放世界？
+\end{statementbox}
 
-\begin{equation}
-\boxed{
-\text{快速活动如何沉降成慢结构？}
-}
-\end{equation}
+\begin{statementbox}
+快速活动如何沉降成慢结构？
+\end{statementbox}
 
-\begin{equation}
-\boxed{
-\text{慢结构如何约束快速活动而不进行微观干预？}
-}
-\end{equation}
+\begin{statementbox}
+慢结构如何约束快速活动而不进行微观干预？
+\end{statementbox}
 
-\begin{equation}
-\boxed{
-\text{稳定能力如何从显式认知迁移到局部闭环？}
-}
-\end{equation}
+\begin{statementbox}
+稳定能力如何从显式认知迁移到局部闭环？
+\end{statementbox}
 
-\begin{equation}
-\boxed{
-\text{异常如何在多尺度系统中被识别并升级？}
-}
-\end{equation}
+\begin{statementbox}
+异常如何在多尺度系统中被识别并升级？
+\end{statementbox}
 
-\begin{equation}
-\boxed{
-\text{长期经验何时应改变功能拓扑？}
-}
-\end{equation}
+\begin{statementbox}
+长期经验何时应改变功能拓扑？
+\end{statementbox}
 
 以及最终的：
 
-\begin{equation}
-\boxed{
-\text{一个智能体如何在改变世界的同时，也持续改变产生自身行为的结构？}
-}
-\end{equation}
+\begin{statementbox}
+一个智能体如何在改变世界的同时，也持续改变产生自身行为的结构？
+\end{statementbox}
 
 如果这些问题能够逐步获得数学模型、工程实现和跨系统实验支持，那么我们真正建立的就不再只是一种 Agent 架构，而可能是一门研究“智能如何运动、稳定、迁移、成长和重组”的动力学学科。
 

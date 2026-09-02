@@ -4,8 +4,12 @@
 \begin{chapteroverviewbox}
 本章讨论的不是传统意义上的 ``AI伦理规范''，也不是在智能体完成训练之后额外附加的一组行为禁令，而是讨论一个更基础的问题：当一个持续存在的 Agent 具有三相记忆、自我结构 $\Psi$、生命周期生成吸引子 $\Omega$、能力成长、递归自主性以及有限范围内的自我修改能力以后，我们应当以什么原则决定它能够经历什么、能够获得什么权限、能够改变自己到什么程度，以及培育者对这种长期结构形成承担什么责任。前文已经说明，培育并不等于训练；培育改变的不只是瞬时策略，而可能通过 $E\rightarrow\Theta\rightarrow\Psi\rightarrow\Omega$ 的慢变量链条改变未来的整个主体。因此，Agent 培育伦理首先是一种\textbf{跨时间尺度的结构治理理论}。本章的核心原则是：能力增长不能自动推出权限增长，自主性增长必须建立在可验证能力、现实反馈、身份连续性和可恢复性的共同基础之上；尤其是 $\Psi$ 与 $\Omega$ 等慢变量，不能因为短期任务收益而被高速重写。我们将由此建立一个 ``能力--权限--自治--责任'' 的统一治理框架，并把培育者本身纳入闭环，使 Agent 的成长从单向塑造转变为受约束、可追踪、可回滚、可解释的生命周期工程。
 \end{chapteroverviewbox}
-\ChapterArt{97}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/semantic-modulation-safety-channels.png}
+\caption{培育过程中的权限、安全与慢变量保护}
+\end{figure}
 在前面的讨论中，我们已经逐渐从 ``如何训练一个模型'' 走到了完全不同的问题：如何让一个持续存在的 Agent 在真实经历中成长。这个转变具有决定性的理论意义。对于普通模型而言，一次训练过程通常可以被抽象成参数 $\theta$ 的优化；而对于具有长期记忆、自我和生命周期的 Agent，经历并不只是产生一次梯度，它会通过不同时间尺度进入不同结构层：
 
 \[
@@ -226,11 +230,9 @@ Recovery
 
 如果我们只允许权限增加而从不收缩，那么整个生命周期控制就变成不可逆过程。这对于长期智能尤其危险，因为能力并非一定单调增长，环境也可能变化，旧有技能可能失效，新的身体和工具可能使原有风险模型不再成立。因此，我们需要：
 
-\[
-\boxed{
+\begin{statementbox}
 Authority Is Dynamical, Not Permanent.
-}
-\]
+\end{statementbox}
 
 更进一步，为避免权限在阈值附近频繁震荡，可以采用迟滞结构：
 
@@ -298,11 +300,9 @@ E_t
 
 并不是所有事件都会走完整条链，但一旦某些经历具有高重复、高价值、高情感调制、高自我关联或者关键失败属性，它们就可能形成远高于普通数据样本的长期结构影响。因此我们不能只定义 ``Action Safety''，还必须定义：
 
-\[
-\boxed{
+\begin{statementbox}
 Experience Safety.
-}
-\]
+\end{statementbox}
 
 经历安全并不是避免一切困难和失败。恰恰相反，一个完全没有失败、冲突、压力与未知环境的 Agent，可能无法形成真实的恢复能力和边界判断。真正需要治理的是经历的\textbf{强度、频率、持续时间、结构多样性与恢复窗口}。
 
@@ -330,11 +330,9 @@ H(e_i)+H(e_{i+1}).
 
 例如，两个单独看来并不过度的高压经历连续出现，可能因为 AHC 尚未恢复而在第二次经历中形成完全不同的工作记忆相态；长期重复单一成功任务，也可能使 $\Theta$ 极度专门化，同时使 $\Psi$ 对自身能力产生过度狭窄的解释。因此：
 
-\[
-\boxed{
+\begin{statementbox}
 ExperienceSequenceMatters.
-}
-\]
+\end{statementbox}
 
 我们可以引入一个简化的经历压力状态：
 
@@ -455,11 +453,9 @@ IdentityImmutability.
 
 身份保护并不是冻结 $\Psi$，而是保证新的 $\Psi'$ 可以由过去经历和结构变化解释。换句话说，我们需要：
 
-\[
-\boxed{
+\begin{statementbox}
 TraceableSelfTransformation.
-}
-\]
+\end{statementbox}
 
 这要求培育系统保留：
 
@@ -715,11 +711,9 @@ EvidenceForBelief,
 
 因此 Agent 培育伦理必须坚持全书最重要的现实原则之一：
 
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\]
+\end{statementbox}
 
 也就是说，内部一致性不是最高真理。一个非常自洽的 $\Psi$ 仍然可能错误；一个与 DGA 高度一致的计划仍可能在现实世界失败；一个长期结构如果不断与外界证据冲突，就必须允许被重新解释。
 
@@ -780,19 +774,15 @@ Reevaluation.
 
 因此真正合理的系统必须同时具备：
 
-\[
-\boxed{
+\begin{statementbox}
 IdentityPersistence
-}
-\]
+\end{statementbox}
 
 和：
 
-\[
-\boxed{
+\begin{statementbox}
 RealityCorrectability.
-}
-\]
+\end{statementbox}
 
 培育者同样受到这一原则约束。外部治理者不能因为预设了某种培育目标，就选择性忽略 Agent 的真实表现。如果一个培育方案持续导致异常负载、恢复困难、自我冲突或者长期能力退化，治理层也必须修改自己的计划。换句话说，现实验证不仅约束 Agent，也约束培育者。
 
@@ -866,11 +856,9 @@ CanAgentModifyItself?
 
 因此我们需要：
 
-\[
-\boxed{
+\begin{statementbox}
 BoundedSelfModificationEnvelope.
-}
-\]
+\end{statementbox}
 
 可以把 Agent 的内部结构按照自修改权限分为三类：
 
@@ -896,11 +884,9 @@ ImmutableWithinCurrentGovernanceLevel.
 
 这涉及一个非常重要的元治理原则：
 
-\[
-\boxed{
+\begin{statementbox}
 A Controller Must Not Unilaterally Remove the Constraints Defining Its Own Authority.
-}
-\]
+\end{statementbox}
 
 否则系统会形成治理递归漏洞。
 
@@ -1040,11 +1026,9 @@ Outcome
 
 第四是\textbf{恢复责任}。如果系统允许 Agent 进入可能改变深层结构的高风险经历，就必须预先提供合理的恢复机制，而不是事后发现异常再寻找修复手段。原则可以写为：
 
-\[
-\boxed{
+\begin{statementbox}
 No High-Impact Cultivation Without a Recovery Path.
-}
-\]
+\end{statementbox}
 
 第五是\textbf{认知谦逊责任}。培育者不能假设自己完全知道一个未来智能体 ``应该成为怎样''。对于早期能力和安全边界，可以进行较强先验设计；但随着 Agent 形成自己的经历和长期结构，治理应逐渐从直接塑形转向设置可行域、提供反馈、控制风险和维护现实验证。
 
@@ -1102,11 +1086,9 @@ Reality.
 
 这也意味着培育伦理并不建立在 ``培育者天然正确'' 的假设之上，而建立在一个更加工程化的原则上：
 
-\[
-\boxed{
+\begin{statementbox}
 All Long-Term Structural Interventions Must Remain Auditable, Revisable and Reality-Constrained.
-}
-\]
+\end{statementbox}
 
 \section{统一治理模型：能力、自治、自我与现实的多尺度约束优化}
 
@@ -1282,19 +1264,15 @@ NewExperience
 
 相比，多出了两个决定性的治理项：
 
-\[
-\boxed{
+\begin{statementbox}
 Bounded
-}
-\]
+\end{statementbox}
 
 和：
 
-\[
-\boxed{
+\begin{statementbox}
 Verified.
-}
-\]
+\end{statementbox}
 
 这正是从 ``成长机制'' 进入 ``成长治理'' 的理论跃迁。
 

@@ -20,8 +20,12 @@ Humanoid
 
 因此，本章所建立的不是单纯的产品列表，而是一套\textbf{AgentOS 平台成熟度测量方法}：每一个产品阶段都是对前一阶段能力结构的继承，同时加入一种此前尚未被真正闭合的新约束。真正成熟的产品路线不是不断增加演示能力，而是逐渐扩大 Agent 可以稳定闭合的世界范围。
 \end{chapteroverviewbox}
-\ChapterArt{78}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/agentos-technology-evolution-roadmap.png}
+\caption{从数字身体到复杂具身产品的成熟次序}
+\end{figure}
 如果我们已经接受前文的基本判断，即 AgentOS 的目标不是制造一个能够在若干测试集上获得高分的模型，而是构造一个能够在生命周期内持续形成经验、维护身份、调用外部结构、适配不同身体并在现实反馈中不断学习的智能主体，那么产品路线就不能按照传统软件产品的逻辑来设计。普通软件可以先完成若干独立功能，再不断增加功能数量；持续智能系统却不同，因为其核心能力之间存在严格依赖。例如，没有稳定的世界状态表示，就无法验证长期记忆究竟记住了什么；没有现实反馈闭环，就无法判断预测是正确还是自我强化；没有身份连续性，就无法讨论培育；没有低层快速控制，就无法把高层认知迁移到真正的机器人身体；没有安全边界，又不能把已经形成自主性的系统部署到高速现实环境。
 
 因此，本章将产品成熟过程理解成一个逐步扩张的可闭合域。设 AgentOS 在阶段 $k$ 能够稳定运行的任务--身体--环境集合为
@@ -325,11 +329,9 @@ Urgency,\ldots
 例如一个靠近机械臂的障碍物，在 SGC 中是一个具有位置、速度和类别的实体；在 FCS 中则可能形成一个不断上升的 Threat Field。这使 Kernel 不需要持续读取每一个传感器原始值，而可以获得身体已经完成的第一层功能压缩。
 
 本阶段还第一次验证 Body Runtime 是否能够成为“现实复杂性的第一道屏障”。真实物理世界每毫秒都有大量变化，而绝大部分变化都不值得进入 $h$。正常抓取时的微小轨迹误差、底盘姿态调整、关节摩擦变化应在低层闭合：
-\[
-\boxed{
+\begin{statementbox}
 NormalDynamicsStayLocal.
-}
-\]
+\end{statementbox}
 只有当
 \[
 \Gamma
@@ -381,11 +383,9 @@ BodyControlTimescale
 TaskSuccess
 \]
 真正扩展到
-\[
-\boxed{
+\begin{statementbox}
 LifecycleCoherence.
-}
-\]
+\end{statementbox}
 
 这里所谓 Virtual Butler 可以是具有数字身体的私人管家，也可以逐渐连接家庭设备、机器人执行器和外部服务；Companion 则可以表现为虚拟伙伴、陪伴机器人甚至猫狗形态的具身 Agent。二者共同的关键不是外观，而是都要求一个长期主体与相对稳定的人类、家庭、空间和习惯形成持续耦合。对于一个只运行几十分钟的 Agent，很多问题根本不会出现；而一个持续数年的 Companion 必须面对记忆积累、偏好变化、自我形成、关系历史、经验选择以及长期状态漂移。
 
@@ -837,11 +837,9 @@ HighSpeedSafetyCriticalClosure;
 }
 \]
 Humanoid 最终要求
-\[
-\boxed{
+\begin{statementbox}
 OpenWorldMultidomainClosure.
-}
-\]
+\end{statementbox}
 
 因此，产品之间真正的继承关系不是“功能更多”，而是平台已经解决的约束集合不断扩大。设阶段 $i$ 已经稳定解决的约束集合为
 \[
@@ -903,11 +901,9 @@ Driving 则显著提高
 K_{control},K_{safety};
 \]
 Humanoid 最终要求几乎所有维度同时达到较高水平。因此，人形 Agent 最大的困难并不一定在某一个维度达到极值，而在于：
-\[
-\boxed{
+\begin{statementbox}
 HighDimensionalSimultaneousClosure.
-}
-\]
+\end{statementbox}
 
 这也解释为什么产品路线与科研路线并不完全相同。研究可以并行推进 Body Runtime、Agent Kernel、连续--离散控制、KRA 和硬件；但产品必须选择一个能够真正闭合的能力子空间。如果我们在十个模块都只有 $60\%$ 完成度时强行组合出一个人形演示，得到的通常不是一个 $60\%$ 成熟的人形 Agent，而是一个由多个未闭合环相互放大误差的系统。若第 $i$ 个关键闭环可靠率为 $p_i$，在一个高度简化的独立近似下，整体长任务可靠度甚至可能近似为
 \[

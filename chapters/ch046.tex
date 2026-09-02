@@ -19,8 +19,12 @@ D_2\nrightarrow \mathrm{Trap}(D_1)
 
 因此，本章讨论的不是哲学意义上人格是否可以复制，而是一个持续人工智能操作系统必须怎样定义其运行主体，才能避免在并发、恢复、任务分解和外部协作过程中发生身份分裂、主体漂移与控制权歧义。
 \end{chapteroverviewbox}
-\ChapterArt{46}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/self-goal-direction-hierarchy.png}
+\caption{单一主体和异步任务闭环}
+\end{figure}
 \section{什么是 AgentOS 中的主体}
 
 在普通软件系统中，“进程”通常由地址空间、执行上下文、资源句柄和调度状态所定义。进程可以创建、终止、复制，也可以被操作系统暂停以后重新调度。如果我们沿用这种模型直接设计长期 Agent，一个极容易出现的问题是：我们会不自觉地把“拥有一段上下文并能够独立生成行为的计算过程”当成一个新的 Agent。于是每当系统为了并行处理任务而创建一个 Worker、为了搜索问题而创建一个临时推理实例、为了恢复系统而读取一个 Checkpoint，甚至为了调用一个外部模型而创建一个新的会话时，系统都可能被解释成产生了一个新的主体。对于普通任务框架，这种定义并无严重问题；但对于拥有长期记忆、自我结构、价值结构和生命周期连续性的 AgentOS，它会立即破坏“持续主体”这一基本概念。
@@ -394,11 +398,9 @@ D_2\nrightarrow\mathrm{Trap}(D_1)
 
 既然 $D_2$ 不能同步锁死 $D_1$，那么 AgentOS 需要一种与普通函数调用不同的认知请求模型。我们将其称为：
 
-\[
-\boxed{
+\begin{statementbox}
 Asynchronous Cognitive Request
-}
-\]
+\end{statementbox}
 
 即主体向任务域提交一个认知或执行请求以后，不等待该任务完整结束，而是继续维持自己的全局认知循环。
 
@@ -1146,57 +1148,43 @@ DistributedFunctionalProcesses
 
 由此，AgentOS 的进程模型应当明确区分：
 
-\[
-\boxed{
+\begin{statementbox}
 Subject
-}
-\]
+\end{statementbox}
 
 与
 
-\[
-\boxed{
+\begin{statementbox}
 Process.
-}
-\]
+\end{statementbox}
 
 Process 是可创建、可替换、可暂停、可并行化的功能结构；Subject 则是这些结构长期服务和共同塑造的生命周期连续体。
 
 这一区分也解释了为什么我们不能简单把传统操作系统中的 process 概念直接映射成 Agent。传统 OS 解决的是：
 
-\[
-\boxed{
+\begin{statementbox}
 WhoOwnsComputationalResources?
-}
-\]
+\end{statementbox}
 
 而 AgentOS 还必须进一步解决：
 
-\[
-\boxed{
+\begin{statementbox}
 WhoOwnsTheExperience?
-}
-\]
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
 WhoOwnsTheMemory?
-}
-\]
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
 WhoOwnsTheDecision?
-}
-\]
+\end{statementbox}
 
 以及最终：
 
-\[
-\boxed{
+\begin{statementbox}
 WhoContinuesToBecome?
-}
-\]
+\end{statementbox}
 
 当这四个问题都指向同一个持续生命周期结构时，我们才真正拥有一个能够在任务变化、身体变化、记忆增长和环境变化中持续存在的 Agent。
 

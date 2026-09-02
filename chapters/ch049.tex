@@ -20,8 +20,12 @@ BodyRuntime
 
 本章只建立这一跃迁所需的基础本体、边界和动力学关系。后续有关 Body Scale、统一身体接口、SGC、FCS、BPCC 与 Kernel--Body 适配机制的具体设计，将建立在本章给出的完整 Agent 定义之上。
 \end{chapteroverviewbox}
-\ChapterArt{49}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/cognitive-kernel-body-runtime.png}
+\caption{Cognitive Kernel 与 Body Runtime 的完整主体}
+\end{figure}
 \section{无身体认知系统的理论边界}
 
 在此前关于 AgentOS 的讨论中，我们已经可以构造一个相当完整的内部认知系统。设 Agent 的认知状态为
@@ -52,17 +56,13 @@ I_{C}
 其中 $I_C$ 是进入认知系统的输入。
 
 然而，一个根本问题随即出现：如果 $I_C$ 只是由另一个软件模块提前准备好的符号输入，而认知系统产生的输出也只是某种待执行的符号，那么这个系统虽然拥有内部认知循环，却仍没有回答“主体如何真实存在于世界之中”的问题。其所有世界知识最终都必须依赖某个外部系统代替它完成感知，其所有行动意图也必须依赖另一个外部系统代替它进入现实。此时我们拥有的更准确地说是一个
-\[
-\boxed{
+\begin{statementbox}
 CognitiveCore
-}
-\]
+\end{statementbox}
 而不是一个闭合意义上的
-\[
-\boxed{
+\begin{statementbox}
 Agent.
-}
-\]
+\end{statementbox}
 
 这种差异不能简单理解为“有没有机械手”。真正缺失的是一个稳定的因果闭合。一个完整智能体必须使其内部状态能够通过行动影响现实，而现实变化又必须通过新的观测重新进入内部状态。因此最小闭环不是
 \[
@@ -418,11 +418,9 @@ x_W
 这意味着 Agent 的自由行动空间从一开始就必须受到物理可行性、安全性和能力边界的约束。
 
 此外，身体本身会变化。电池下降、关节磨损、传感器漂移、负载变化、温度上升，都会使同一个高层动作产生不同的实际结果。因此 Agent 不只是“通过身体控制世界”，还必须逐渐学习：
-\[
-\boxed{
+\begin{statementbox}
 WhatThisBodyCanCurrentlyDo.
-}
-\]
+\end{statementbox}
 这意味着身体状态是 Agent 世界模型的一部分，并且 Body Capability 并不是常数：
 \[
 \mathcal C_B
@@ -510,11 +508,9 @@ NewState.
 区别主要在于具体动力学。物理世界通常具有连续状态、惯性和力学约束；数字世界更多表现为混合离散--连续状态、协议约束、权限边界和事务逻辑。但是这并不削弱数字环境的现实性。对于一个数字 Agent 来说，删除一个文件、发送一封邮件、修改数据库记录、提交一段代码，都是具有真实因果后果的行动。
 
 因此，我们不能把“数字 Agent”理解为一个没有身体的 Agent。更准确地说，它具有：
-\[
-\boxed{
+\begin{statementbox}
 DigitalBody.
-}
-\]
+\end{statementbox}
 其身体不是机械肢体，而是由操作接口、权限系统、持续数字状态和执行能力共同组成。
 
 这个观点对于 AgentOS 尤其重要，因为它意味着我们无需等待通用人形机器人出现，便可以首先在数字环境中验证许多 Body 理论。例如，数字 Agent 是否能够形成稳定的行动技能；是否能够区分预测状态和实际执行结果；是否能够维护身体/环境能力模型；是否能够在低层操作失效时把异常重新提升到认知层；是否能够在不同数字 Body 之间实现能力迁移。这些问题都可以先在 Browser、Desktop、Shell 等环境中进行研究。
@@ -536,11 +532,9 @@ SessionState
 }
 \]
 这些状态与人类身体的能量、温度或损伤不同，但在功能上具有类似意义：它们限制 Agent 当前能够执行哪些动作。如果某个 API token 失效，Agent 的行动能力会下降；如果网络断开，外部服务变得不可达；如果文件系统只读，某些计划无法执行。因此数字 Agent 同样需要回答：
-\[
-\boxed{
+\begin{statementbox}
 WhatCanIDoNow?
-}
-\]
+\end{statementbox}
 而不只是：
 \[
 WhatDoIWantToDo?
@@ -638,11 +632,9 @@ u_{\mathrm{agent}}
 如果这一关系持续存在，那么 Browser 对该 Agent 而言就不仅是一个工具，而是其进入 Web Reality 的一种数字身体。
 
 更重要的是，浏览器中的“世界”不是纯粹视觉画面。一个按钮具有位置、文本、可点击性、权限状态、当前交互上下文和潜在后果。因此 Agent 真正需要的不是像素本身，而是：
-\[
-\boxed{
+\begin{statementbox}
 ActionableDigitalReality.
-}
-\]
+\end{statementbox}
 这与物理机器人需要的可行动三维现实本质一致，只是坐标空间不同。
 
 Shell 更能体现数字 Body 的执行属性。通过 Shell，Agent 可以直接作用于操作系统状态：
@@ -759,11 +751,9 @@ B_{\mathrm{network}}
 \section{Cursor 作为数字末端执行器}
 
 为了进一步理解数字 Body，我们可以把 Cursor 看成一个极具代表性的结构。它不是因为视觉上像“手”才重要，而是因为它在图形界面中承担了从高层行动意图到局部环境状态改变之间的最终执行映射。因此，在数字具身中，Cursor 可以被形式化为一种：
-\[
-\boxed{
+\begin{statementbox}
 DigitalEndEffector.
-}
-\]
+\end{statementbox}
 
 在机器人控制中，一个机械臂末端执行器的状态可以表示为：
 \[
@@ -854,11 +844,9 @@ SubmitButton
 MoveCursorTo(824,517).
 \]
 前者是语义动作，后者是具体身体动作。若整个 AgentOS 绑定于像素坐标，则换一个分辨率、窗口布局或设备后，高层能力会大幅失效。真正通用的 Agent 应保留：
-\[
-\boxed{
+\begin{statementbox}
 SemanticActionInvariant
-}
-\]
+\end{statementbox}
 并把具体坐标映射留给身体侧。
 
 我们可以表示：
@@ -955,11 +943,9 @@ Verification.
 \]
 
 这与我们在整个 AgentOS 理论中反复坚持的：
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint
-}
-\]
+\end{statementbox}
 完全一致。
 
 因此，Cursor 虽然只是一个非常小的数字接口，却已经呈现出 Body Runtime 的核心逻辑：高层意图必须被转换成某一身体特定的动作坐标；动作必须经过现实；现实结果必须重新被观测；异常必须能够触发新的认知。正是在这个意义上，一个光标、一个机械臂末端和一个车辆方向控制系统可以被放进同一个更一般的身体理论中进行研究。
@@ -1167,17 +1153,13 @@ Continuous.
 这为未来一个 Agent 在数字身体、机器人身体、车辆身体甚至多个临时身体之间迁移提供了理论可能。
 
 不过，身体更换并不是零成本操作。由于经验和技能可能已经依赖某一 Body，因此必须区分：
-\[
-\boxed{
+\begin{statementbox}
 BodyIndependentStructure
-}
-\]
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
 BodySpecificStructure.
-}
-\]
+\end{statementbox}
 前者包括较高层目标、对象语义、长期自我和许多世界结构；后者则包括动作映射、身体能力、快速预测模型和具体控制策略。真正通用的 AgentOS 应尽可能使前者保持稳定，而重新适配后者。
 
 因此我们可以进一步写：
@@ -1277,17 +1259,13 @@ World,
 它描述这个持续主体如何在现实中占据一个可行动的位置。
 
 前者解决：
-\[
-\boxed{
+\begin{statementbox}
 ContinuityInTime,
-}
-\]
+\end{statementbox}
 后者解决：
-\[
-\boxed{
+\begin{statementbox}
 CausalPositionInReality.
-}
-\]
+\end{statementbox}
 二者结合以后，我们才真正得到本书意义上的持续人工智能生命体的最小结构条件：
 
 \[

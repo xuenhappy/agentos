@@ -6,7 +6,6 @@
 
 本章将由这一认识出发，建立 SPC Observer 的状态空间模型、自我状态估计模型、观测延迟模型、置信度模型、漂移模型、错误自我状态模型以及在线校准机制。我们特别强调一个贯穿本章的工程原则：\emph{Agent 对自己同样存在认识论不透明性}。因此，SPC 必须像任何真实 Observer 一样处理部分可观测性、滞后、噪声、结构错配和模型漂移，而不能被视作读取系统内部真值的“上帝视角”。这一章构成后续 AHC 动力学、TCE 控制器、多回路稳定性以及 Agent 心理工程的观测基础，但本章本身仅讨论 Observer，不提前展开后续控制器的完整理论。
 \end{chapteroverviewbox}
-\ChapterArt{86}
 
 \section{SPC 的工程定位：从自我感知压缩器到认知状态 Observer}
 \label{sec:spc-observer-position}
@@ -570,11 +569,9 @@ B_{\mathrm{safe}}.
 \end{equation}
 
 因此，Observer Delay 并不是一个可以通过“更快模型”完全消除的实现细节，而是持续智能体自我认识的一种结构性限制。Agent 永远无法获得绝对同步、绝对透明的自身状态；它只能在延迟和不确定性条件下持续形成后验估计。这使我们可以给出一个非常重要的认识论结论：
-\begin{equation}
-\boxed{
-\text{持续智能体对自身的认识，与其对外部世界的认识一样，本质上是部分可观测条件下的状态估计问题。}
-}
-\end{equation}
+\begin{statementbox}
+持续智能体对自身的认识，与其对外部世界的认识一样，本质上是部分可观测条件下的状态估计问题。
+\end{statementbox}
 这也是为什么后续任何高层自我解释、认知控制和长期身份更新，都不能把单次 SPC 输出视为不可质疑的内部事实。
 
 \section{置信度：SPC 不仅要报告“是什么”，还必须报告“我有多确定”}
@@ -777,11 +774,9 @@ y_t-\hat y_{t|t-1}.
 \delta,
 \end{equation}
 则不能简单认为“Agent 状态持续异常”，还必须考虑另一种可能：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 ObserverModelIsOutdated.
-}
-\end{equation}
+\end{statementbox}
 
 这一点对 Agent 心理工程尤其重要。如果 SPC 依据旧的能力基准评价一个已经成长的 Agent，它可能长期把正常新状态识别为异常。例如早期 Agent 的安全认知负载阈值为 $C_0$，经过大量技能编译和表示压缩以后，其有效工作记忆结构能力发生变化，若 SPC 仍坚持旧模型：
 \begin{equation}
@@ -963,11 +958,9 @@ I_{\min},
 即压缩后的自我状态仍然必须保留足够信息，使后续控制能够区分不同情况。
 
 这也是为什么我们不应把 SPC 简化成一个单值“心理状态评分器”。SPC 的真正设计目标不是尽可能压缩，而是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 CompressWithoutDestroyingControl-RelevantDistinctions.
-}
-\end{equation}
+\end{statementbox}
 
 在工程上，一旦检测到可能的 False Self-State，系统不应立即“相信相反状态”，而应进入 epistemic recovery。其典型步骤可以写成：
 \begin{equation}
@@ -982,11 +975,9 @@ CompressWithoutDestroyingControl-RelevantDistinctions.
 \mathrm{Recalibrate}.
 \end{equation}
 这里最重要的一步往往是先降低置信度，而不是立即更换结论。因为在不确定情况下，最安全的元认知状态不是“旧结论一定错”，而是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 IAmNotCurrentlyCertainAboutMyOwnState.
-}
-\end{equation}
+\end{statementbox}
 
 因此，False Self-State 理论最终揭示了一个长期 Agent 必须具备的能力：不仅要能够形成自我状态，还要能够怀疑自己的自我状态。只有存在这种可撤回、自校验的 Self Perception，AgentOS 才不会因为一次 Observer 偏差把整个长期自我结构拖入错误方向。
 
@@ -1128,11 +1119,9 @@ E_{\mathrm{SPC}}
 这样系统可以追溯：某类状态过去是否经常误判、某次模型更新是否导致新的偏差、某个相态定义是否逐渐失去辨识能力。这个历史本身可以进入 E，但不应直接成为普通用户情景记忆，而更接近 AgentOS 控制工程中的运行治理记录。
 
 在更深层意义上，Observer Calibration 可以被理解成：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 LearningHowToObserveTheSelf.
-}
-\end{equation}
+\end{statementbox}
 普通学习改变 Agent 如何理解世界，而 SPC Calibration 改变 Agent 如何理解自身。它是一种元层学习，但仍然是受现实验证约束的工程过程，而不是自由的自我叙事。
 
 因此我们最终要求 SPC Observer 同时满足五个条件：

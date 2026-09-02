@@ -22,8 +22,12 @@
 
 本章讨论的仍然是以\textbf{受治理的固定核心功能拓扑}为基础的 AgentOS 实施路线。系统可以学习参数、记忆、技能、外部承载关系、Kernel--Body 耦合以及受约束的生命周期状态，但不把任意修改自身核心控制拓扑作为实施前提。更广义的拓扑学习只有在主体连续、控制稳定和现实反馈机制均被工程证明以后，才具有进一步研究的意义。
 \end{chapteroverviewbox}
-\ChapterArt{76}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/agentos-technology-evolution-roadmap.png}
+\caption{AgentOS 技术演化六阶段路线}
+\end{figure}
 \section{六阶段路线不是模块堆叠，而是可验证闭环的逐级形成}
 
 我们首先要澄清为什么 AgentOS 不能从一开始就按照最终架构一次性实现。按照前文建立的多尺度智能理论，一个持续智能体并不是若干功能模块的并集，而是多个具有不同时间尺度、不同状态空间和不同控制权限的闭环在同一个生命周期中的耦合系统。如果我们在主体连续性尚未得到证明时同时加入长期记忆、自我、情感样调制、工具、身体控制以及在线适应，那么任何最终出现的异常都很难进行因果归因：一次行为漂移究竟来自语言模型本身、情景记忆错误召回、结构记忆更新、自我状态漂移、TCE 控制增益、外部工具状态变化，还是 Body Runtime 的局部适应，将难以被明确区分。由此产生的不是“更完整的 Agent”，而是一个不可辨识的高维耦合系统。
@@ -863,11 +867,9 @@ Body\in SGC.
 
 FCS 则描述：
 
-\[
-\boxed{
+\begin{statementbox}
 HowRealityAndBodyAreAffectingMe
-}
-\]
+\end{statementbox}
 
 并以固定类型的多层状态场表达能量、威胁、温度、完整性、紧迫性、控制不稳定性等功能影响。因此：
 
@@ -972,11 +974,9 @@ ObservedState.
 
 这就是：
 
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint
-}
-\]
+\end{statementbox}
 
 在工程结构中的具体实现。
 
@@ -1206,11 +1206,9 @@ Agent 无法形成真正的长期自主成长；但若
 
 主体连续性和安全边界又可能失去保障。所以第六阶段要求建立：
 
-\[
-\boxed{
+\begin{statementbox}
 BoundedSelfModificationEnvelope
-}
-\]
+\end{statementbox}
 
 使不同状态拥有不同修改权限和时间常数：
 
@@ -1487,11 +1485,9 @@ k:
 
 于是我们得到一条非常重要的工程原则：
 
-\[
-\boxed{
+\begin{statementbox}
 FailureShouldBeLocalizedToTheSlowestNecessaryLayer.
-}
-\]
+\end{statementbox}
 
 它与此前的 Minimum Necessary Reorganization 同构：只有低层机制无法恢复时，才允许触及更慢、更深的结构。
 
@@ -1519,51 +1515,39 @@ RecoveryHierarchy.
 
 第一阶段回答：
 
-\[
-\boxed{
+\begin{statementbox}
 CanTheAgentContinueToExist?
-}
-\]
+\end{statementbox}
 
 第二阶段回答：
 
-\[
-\boxed{
+\begin{statementbox}
 CanItsPastChangeItsFuture?
-}
-\]
+\end{statementbox}
 
 第三阶段回答：
 
-\[
-\boxed{
+\begin{statementbox}
 CanItPerceiveAndRegulateItsOwnCognition?
-}
-\]
+\end{statementbox}
 
 第四阶段回答：
 
-\[
-\boxed{
+\begin{statementbox}
 CanItsCognitiveStructureLiveBeyondItsInternalCore?
-}
-\]
+\end{statementbox}
 
 第五阶段回答：
 
-\[
-\boxed{
+\begin{statementbox}
 CanItCloseARealWorldObservationActionLoop?
-}
-\]
+\end{statementbox}
 
 第六阶段最终回答：
 
-\[
-\boxed{
+\begin{statementbox}
 CanAllTheseRelationsChangeWithoutDestroyingTheSubject?
-}
-\]
+\end{statementbox}
 
 因此，这六个阶段不是六种产品功能，而是持续人工智能体从“运行”走向“生命周期”的六次工程跃迁：
 

@@ -19,8 +19,12 @@ FunctionalTopology
 
 本章只讨论``CSO流如何塑造拓扑''，至于什么时候已有拓扑已经无法有效承载新的 CSO 流、什么时候应该真正触发拓扑重构，以及如何防止拓扑因短时噪声而频繁改变，将在下一章的``智能结构相变与发育''中进一步处理。
 \end{chapteroverviewbox}
-\ChapterArt{16}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/cognitive-structure-functional-topology.png}
+\caption{长期 CSO 流对功能拓扑的沉降作用}
+\end{figure}
 \section{从动态认知过程到稳定功能结构}
 
 当我们观察一个刚刚接触陌生任务的智能体时，会发现大量处理过程必须通过显式认知协调完成。一个新的问题首先进入工作记忆 $h(t)$，系统需要调用不同记忆、工具、规划和预测功能，建立临时关系，再经过多轮反馈才能完成任务。此时，认知活动具有明显的``在线组装''特征：某个 Agent-CSO 并没有一个已经确定的局部处理闭环，而是在多个功能之间不断迁移。
@@ -409,11 +413,9 @@ KnowingLess.
 }
 \]
 更准确的描述是：
-\[
-\boxed{
+\begin{statementbox}
 CognitiveStructureChangedCarrier.
-}
-\]
+\end{statementbox}
 
 这与人类技能自动化有明显相似性。初学驾驶时，大量动作必须进入显式工作记忆；熟练之后，很多感知—动作关系转移到快速、局部和程序化闭环。类似现象也存在于软件工程：高频函数调用会被缓存、内联、编译、建立索引；组织中反复出现的协作关系会形成岗位和制度。但本理论试图把这些现象统一到一个更抽象的形式：
 \[
@@ -863,17 +865,13 @@ $}
 CSOFlow\rightarrow Topology
 \]
 还不够，因为一旦拓扑形成，它就会立即改变下一轮 CSO 流。由此我们得到整个认知结构动力学中极为重要的一对关系：
-\[
-\boxed{
+\begin{statementbox}
 CSOFlowShapesTopology
-}
-\]
+\end{statementbox}
 和
-\[
-\boxed{
+\begin{statementbox}
 TopologyShapesFutureCSOFlow.
-}
-\]
+\end{statementbox}
 
 设一个 Agent-CSO 当前承载状态为 $\boldsymbol{\mu}_C(t)$，功能拓扑邻接矩阵为
 \[
@@ -925,11 +923,9 @@ FutureInteraction.
 \mathcal T_B(t).
 \]
 随后，即使二者面对相同的新问题，因为拓扑已经不同，它们也可能采用完全不同的认知路径。这意味着个体差异并不仅存在于 Memory 内容，还可能存在于：
-\[
-\boxed{
+\begin{statementbox}
 HowTheAgentIsOrganizedToThink.
-}
-\]
+\end{statementbox}
 
 我们可以把整个过程写成一个耦合自适应网络系统。认知状态满足：
 \[
@@ -1058,11 +1054,9 @@ F_{next}\mid C,F_i
 即下一功能位置的条件熵足够低。一个稳定拓扑边应该对应相对稳定的未来功能关系。
 
 第四是局部可闭合性。我们此前反复提出：
-\[
-\boxed{
+\begin{statementbox}
 EachScaleShouldCloseItsOwnFastLoop.
-}
-\]
+\end{statementbox}
 若某类问题在 $F_i$ 与 $F_j$ 的局部组合中已经可以稳定完成，而无需反复提升到更高层：
 \[
 Residual_{local}
@@ -1072,11 +1066,9 @@ Residual_{local}
 则它特别适合沉降成局部功能闭环。反之，如果完成该任务仍长期依赖广泛世界模型、价值判断或全局规划，那么过早局部化会造成危险。
 
 第五也是最重要的一条，是现实可验证性：
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\]
+\end{statementbox}
 一个内部关系即使极其稳定，如果它只是错误自证循环，也不能成为可靠拓扑。例如错误的 Self Interpretation 可能导致注意偏置，注意偏置产生选择性经验，选择性经验又不断强化原解释。内部流量可以非常高，却不代表它是真实有效结构。因此拓扑沉降必须保留外部验证项：
 \[
 V_{world}
@@ -1221,17 +1213,13 @@ B_{\mathrm{rewrite}},
 避免系统长期处于持续 architecture search 状态。
 
 这里与经典控制理论中的 gain scheduling、鲁棒性裕量和慢参数自适应，以及机器学习中的 stability--plasticity dilemma 都存在理论联系。智能系统需要同时满足：
-\[
-\boxed{
+\begin{statementbox}
 PlasticEnoughToLearn
-}
-\]
+\end{statementbox}
 和
-\[
-\boxed{
+\begin{statementbox}
 StableEnoughToRemainItself.
-}
-\]
+\end{statementbox}
 这种张力不仅存在于参数和记忆，也存在于功能拓扑。
 
 从 AgentOS 的生命周期角度看，越慢、越接近身份与基础能力的结构，其修改阈值越高。因此可以建立：
@@ -1259,11 +1247,9 @@ StableEnoughToRemainItself.
 共同构成一种统一原则：\textbf{结构越接近生命周期底层生成约束，就越必须用更长历史和更强现实证据才能改变。}
 
 因此，拓扑学习不是自由重写自身。恰恰相反，一个成熟的拓扑学习系统应该表现出非常强的保守性：绝大多数短期变化首先由状态调节、表示改变、CCM、Boundary、Offloading 和功能迁移吸收，只有持续无法被这些较浅机制解决的结构关系，才会逐渐进入拓扑沉降。这一思想将在下一章正式发展成：
-\[
-\boxed{
+\begin{statementbox}
 MinimumNecessaryReorganizationPrinciple.
-}
-\]
+\end{statementbox}
 
 
 \section{本章的理论依赖、可验证预测与边界}
@@ -1421,17 +1407,13 @@ PersistentM_F
 拓扑变化是长期功能迁移的结构性沉降，因此它属于比普通学习更慢的发育过程。
 
 最终，我们得到本章最核心的双向方程：
-\[
-\boxed{
+\begin{statementbox}
 CSOFlowShapesTopology
-}
-\]
+\end{statementbox}
 以及：
-\[
-\boxed{
+\begin{statementbox}
 TopologyShapesFutureCSOFlow.
-}
-\]
+\end{statementbox}
 前者意味着历史认知活动能够塑造智能系统的组织结构，后者意味着形成后的组织结构又成为未来认知活动的先验。二者共同构成：
 \[
 \boxed{

@@ -15,7 +15,6 @@ FutureChoice
 \]
 这一跨时间闭环，对未来自身的状态空间、偏好结构与决策分布产生非零且可验证的因果影响。由此，自主性不再只是“当前可选动作数量”的问题，而成为一个主体能否参与塑造未来自身的动力学问题。本章将在固定 AgentOS 功能拓扑的前提下，对这一过程进行形式化，并进一步讨论历史因果贡献、反事实自我以及递归自主性的工程判据。
 \end{chapteroverviewbox}
-\ChapterArt{96}
 
 \section{Agent 是否能够影响未来的自己}
 
@@ -654,17 +653,13 @@ A_{t_2}
 F(A_{t_1},Experience_{t_1:t_2}).
 \]
 这种“有历史原因的变化”比机械不变更接近连续主体。身份真正保持的是：
-\[
-\boxed{
+\begin{statementbox}
 CausalContinuity
-}
-\]
+\end{statementbox}
 而不是
-\[
-\boxed{
+\begin{statementbox}
 StateIdentity.
-}
-\]
+\end{statementbox}
 
 因此，在 AgentOS 中，我们不应该把“自我稳定”设计成阻止 $\Psi$ 变化，而应该保证 $\Psi$ 的变化具有可追踪历史来源、变化速度受控、可以通过经历解释，并始终接受现实验证。递归自主性要求主体能够改变，但这种改变必须是“我如何成为现在的我”这条历史链条的一部分。
 
@@ -695,11 +690,9 @@ M_A
 WhatWouldWorldHaveBeen?
 \]
 还必须预测：
-\[
-\boxed{
+\begin{statementbox}
 WhatWouldIHaveBecome?
-}
-\]
+\end{statementbox}
 
 因此真正的 Counterfactual Self 是：
 \[
@@ -1087,11 +1080,9 @@ FutureAgency.
 \]
 
 但本章最终必须强调一个边界：递归自主性并不等于无限制自我修改。一个系统可以具有高度 Recursive Agency，同时仍然运行在：
-\[
-\boxed{
+\begin{statementbox}
 BoundedSelfModificationEnvelope
-}
-\]
+\end{statementbox}
 内部。真正成熟的自主不是“什么都能改”，而是在安全、现实和身份连续性约束下，Agent 能够通过自己的选择参与塑造自己的未来。换句话说，AgentOS 所追求的不是消除外部约束，而是使外部约束从逐动作控制逐渐退到边界治理，让主体自身历史在边界内部获得真正的因果地位。
 
 因此，我们可以给出本章的最终定义：

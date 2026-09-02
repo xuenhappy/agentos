@@ -5,8 +5,12 @@
 
 因此，TCE 控制的不是“一个答案”，而是\textbf{产生答案、行动和记忆变化的动力学条件}。它所回答的问题不是 ``What should I think?''，而是 ``How should the cognitive system evolve now?''。如果把工作记忆 $h(t)$ 看成 Agent 当前显式认知活动的有限状态面，把 SPC 看成状态观察器，把 AHC 看成内稳态调制器，那么 TCE 就是作用于这一状态面的主要快速控制器。其工程目标是在有限工作记忆、延迟观测、环境扰动和慢结构约束下，使认知轨迹长期停留在一个可运行、可恢复、可学习的区域中，而不是追求某个瞬时变量的极大化。
 \end{chapteroverviewbox}
-\ChapterArt{88}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/tce-cognitive-state-phase-map.png}
+\caption{TCE 控制量与运行相区域}
+\end{figure}
 \section{TCE 的控制对象、状态空间与统一控制向量}
 
 前几章已经逐步建立了 AgentOS 的内部动力结构：工作记忆 $h(t)$ 承载当前被显式提升的 Agent-CSO，SPC 对工作记忆及相关内部状态进行压缩估计，AHC 将身体、资源、威胁、不确定性和社会状态积成为连续调制背景，而 Scheduler 与 CCM 分别承担任务资源配置和运行负载治理。在这个体系中，我们现在需要回答一个更加具体的控制工程问题：当系统已经知道“自己目前大致处于什么状态”，也知道“当前有哪些任务和资源约束”以后，究竟由谁改变认知活动本身的动力学形态？
@@ -495,21 +499,17 @@ CapabilityMargin
 
 太低的温度会造成：
 
-\[
-\boxed{
+\begin{statementbox}
 PrematureCollapse
-}
-\]
+\end{statementbox}
 
 即系统过早锁定一个假设、策略或世界解释。
 
 太高的温度会造成：
 
-\[
-\boxed{
+\begin{statementbox}
 PersistentDispersion
-}
-\]
+\end{statementbox}
 
 即 Agent 无法形成稳定计划，工作记忆中大量候选长期竞争。
 
@@ -822,11 +822,9 @@ k_\eta
 
 这体现了前文反复讨论的：
 
-\[
-\boxed{
+\begin{statementbox}
 PersistentFastResidualShapesSlowStructure.
-}
-\]
+\end{statementbox}
 
 当然，TCE 本身仍位于较快控制层，它不能直接改变 $\Theta$ 或功能拓扑；但它可以通过改变探索资源，让新的结构组合获得进入 h、E 和后续学习过程的机会。
 
@@ -1191,11 +1189,9 @@ D_\Omega(a),
 
 因此，保守度并不是“胆小程度”，而是一个控制意义上的：
 
-\[
-\boxed{
+\begin{statementbox}
 CommitmentThreshold.
-}
-\]
+\end{statementbox}
 
 一个成熟的 Agent 既不能因保守度过高而失去现实行动能力，也不能因保守度过低而把内部未稳定的候选结构直接写入世界。
 
@@ -1368,11 +1364,9 @@ r_{\max}.
 
 因此，对 TCE 而言一个非常重要的原则是：
 
-\[
-\boxed{
+\begin{statementbox}
 NotEveryDeviationRequiresCorrection.
-}
-\]
+\end{statementbox}
 
 甚至可以更进一步：
 
@@ -1944,11 +1938,9 @@ SPC.
 
 从更慢尺度限定它能够把系统推向什么方向；
 
-\[
-\boxed{
+\begin{statementbox}
 Scheduler,CCM
-}
-\]
+\end{statementbox}
 
 限定它当前能够使用多少资源和承载多少结构；
 

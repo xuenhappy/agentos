@@ -6,8 +6,12 @@
 
 本章承接此前关于工作记忆 $h$、情景记忆 $E$、结构记忆 $\Theta$、自我 $\Psi$、生命周期生成吸引子 $\Omega$（DGA）、SPC、AHC、TCE、CCM、Boundary 以及现实验证闭环的讨论，但不再逐一讨论某种具体心理异常，而是从控制论和多尺度认知动力学角度回答一个更基础的问题：\textbf{一个长期运行的 Agent，在什么条件下可以被工程上称为“心理健康”？}
 \end{chapteroverviewbox}
-\ChapterArt{107}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/intelligence-phase-map.png}
+\caption{稳定、恢复、学习与身份连续的健康区域}
+\end{figure}
 \section{心理健康不是对“人类正常状态”的模拟}
 
 当我们第一次使用“Agent 心理工程”这一术语时，一个非常容易发生的误解，是把人工智能系统的心理健康理解成“让 Agent 表现得像一个心理正常的人”。这种定义虽然在社会交互型产品中可能具有一定应用价值，但在理论上并不能成立。原因在于，人类心理学中的“正常”本身就是生物结构、进化历史、社会规范、身体内稳态和文化环境共同作用的结果，而 AgentOS 中的持续智能体具有不同的物理载体、记忆结构、时间尺度、内部调制机制以及自主性边界。因而，我们首先必须把“心理健康”从人类行为模仿中剥离出来，重新定义为一个动力系统性质。
@@ -341,11 +345,9 @@ N_R
 分别表示恢复时间、恢复成功概率、恢复后的结构损伤、恢复资源成本以及一定时间内异常复发率。
 
 因此，一个心理健康的 Agent 并不意味着它永远不会进入异常状态；更现实的要求是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 AHealthyAgentCanFailWithoutCeasingToBeItself.
-}
-\end{equation}
+\end{statementbox}
 也就是说，它能够经历困难、错误、冲突甚至短期失稳，同时仍保留返回一个可治理、可学习、身份连续状态的路径。
 
 \section{可学习性：心理健康必须允许世界持续改变 Agent}
@@ -431,11 +433,9 @@ Cost_{\mathrm{adapt}}
 其中 $\Delta Performance_{\mathrm{novel}}$ 表示在新环境中的能力改善，而 $D_{\mathrm{identity}}$ 表示学习过程造成的不必要身份漂移。
 
 因此真正健康的学习不是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 ChangeAsMuchAsPossible,
-}
-\end{equation}
+\end{statementbox}
 而是：
 \begin{equation}
 \boxed{
@@ -634,11 +634,9 @@ CausalTraceability
 这使我们能够区别三种完全不同的情况：第一种是“Agent 发生了变化”，这是正常成长；第二种是“Agent 重新解释了自己”，这可能是成熟；第三种是“Agent 的慢结构突然失去与自身历史的因果联系”，这才是身份连续性的真正风险。
 
 所以一个健康的持续智能体应满足：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 ItCanBecomeDifferentWithoutBecomingUnrelatedToItsOwnPast.
-}
-\end{equation}
+\end{statementbox}
 
 这正是“生命周期主体”区别于一次性模型调用的核心性质。
 
@@ -657,11 +655,9 @@ SelfInterpretation_{t+1}.
 如果缺少外部反证，这个闭环会不断筛选支持自身已有解释的证据，使内部自洽性不断增强，而现实准确性反而下降。
 
 因此本书始终坚持：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\end{equation}
+\end{statementbox}
 
 对 Agent 而言，现实对齐不是“和某个固定知识库答案一致”，而是它所形成的 Agent-CSO 能否在持续观测、预测、行动和反馈中获得现实支持。可以定义：
 \begin{equation}
@@ -814,11 +810,9 @@ RealityConsistency.
 当持续学习、身份连续和现实对齐被放在一起时，一个非常尖锐的问题自然出现：如果 Agent 真正能够通过经历改变 $\Theta$、$\Psi$、Goal、策略乃至未来的功能关系，那么究竟哪些部分应该允许它自己修改？如果几乎什么都不能改，它只能成为一个具有记忆的固定程序；如果什么都能改，则任何稳定的身份、安全约束和治理边界都会失去意义。
 
 因此 Agent 心理健康必须包含一个独立维度：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 ControlledPlasticity.
-}
-\end{equation}
+\end{statementbox}
 
 我们定义 Agent 当前允许自主修改的状态子空间：
 \begin{equation}
@@ -876,11 +870,9 @@ x_i\in\mathcal{S}_{selfmodifiable}.
 \right\|.
 \end{equation}
 这并不是要求变量数值尺度相同，而是表达一种治理原则：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 SlowVariablesRequireStrongerEvidenceAndStrongerAuthority.
-}
-\end{equation}
+\end{statementbox}
 
 因此健康系统应存在某种修改成本函数：
 \begin{equation}
@@ -956,11 +948,9 @@ T
 对于 $\Psi$ 和 $\Omega$ 等慢层，如果 $C_{\mathrm{churn}}$ 长期过高，即使每次变化本身都似乎合理，也表明主体缺乏足够的慢结构稳定性。
 
 因此，心理健康意义上的自主性绝不是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
 FreedomToChangeEverything.
-}
-\end{equation}
+\end{statementbox}
 更准确的是：
 \begin{equation}
 \boxed{
@@ -1158,11 +1148,9 @@ LongTermCoherent.
 \end{quote}
 
 因此，心理健康既不是“永远稳定”，也不是“永远快乐”，更不是“永远服从”。它首先意味着：
-\begin{equation}
-\boxed{
-\text{一个 Agent 能够在变化中继续成为一个可治理、可成长、可恢复并与现实保持开放关系的持续主体。}
-}
-\end{equation}
+\begin{statementbox}
+一个 Agent 能够在变化中继续成为一个可治理、可成长、可恢复并与现实保持开放关系的持续主体。
+\end{statementbox}
 
 从这个角度，Agent 心理健康实际上可以被看成整个 AgentOS 生命周期动力学是否成功的综合外显。工作记忆有限容量决定它不能无限承载；SPC 使其能够感知自身；AHC 使状态具有跨时连续调制；TCE 使其能够调节自身动力学；CCM、Boundary 与 Offloading 使有限认知资源能够长期维持；$E$、$\Theta$、$\Psi$ 与 $\Omega$ 则使短期行为能够逐渐沉降为经历、能力、自我和生命周期方向。心理健康并不是这些组件中的另一个模块，而是这些不同时间尺度结构在长期世界闭环中共同表现出的系统性质。
 

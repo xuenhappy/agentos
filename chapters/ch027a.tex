@@ -629,11 +629,9 @@ z_h,c_E,\Psi
 A_{lk}B_{lk}^{\top}.
 \]
 因此 $\Theta$ 可以被理解为
-\[
-\boxed{
+\begin{statementbox}
 StructuralMixtureOfGenerators,
-}
-\]
+\end{statementbox}
 即一个可根据当前状态选择性激活的慢速结构生成器集合。
 
 按照三相时间尺度原则，$\Theta$ 的主要学习输入不应来自单帧 $h$，而应来自经过时间过滤的 $E$：
@@ -716,23 +714,17 @@ A_{ij}^E
 \]
 
 从本体上看，$E$ 与 $\Theta$ 的差异因此非常明确。$E$ 记录
-\[
-\boxed{
+\begin{statementbox}
 WhatHappened?
-}
-\]
+\end{statementbox}
 而 $\Theta$ 学习
-\[
-\boxed{
+\begin{statementbox}
 WhatUsuallyGeneratesWhat?
-}
-\]
+\end{statementbox}
 以及
-\[
-\boxed{
+\begin{statementbox}
 WhatMayHappenNext?
-}
-\]
+\end{statementbox}
 若 $E$ 中反复存在
 \[
 z_i\rightarrow z_j
@@ -955,17 +947,13 @@ r_i^\Psi\uparrow
 \lambda_i\downarrow,
 \]
 从而保存更久。相反，与主体无关且长期未被使用的事件衰减更快。因此 $\Psi$ 同时参与
-\[
-\boxed{
+\begin{statementbox}
 WhatShouldBeRemembered?
-}
-\]
+\end{statementbox}
 和
-\[
-\boxed{
+\begin{statementbox}
 WhatCanBeForgotten?
-}
-\]
+\end{statementbox}
 这才符合原有“自我是情景记忆筛选器”的定义。
 
 $\Psi$ 在 $\Theta$ 中的作用则更加特殊。它不应该表现为普通世界对象节点，而应表现为长期结构的参考原点。设
@@ -1406,11 +1394,9 @@ $h\rightarrow E$ 的训练目标必须保证情景向量不仅保持语义，还
 其中 $\mathcal{L}_{temporal}$ 保证邻近情景的顺序关系可恢复，$\mathcal{L}_{causal}$ 则约束具有稳定因果关系的事件形成可预测结构。
 
 $E\rightarrow h$ 的目标不应是恢复原始 Token，而应恢复
-\[
-\boxed{
+\begin{statementbox}
 TaskRelevantLatentState.
-}
-\]
+\end{statementbox}
 因此，其损失应围绕后续任务性能、状态重构以及情景关系保持定义，而不是简单的文本重建。
 
 $\Theta\rightarrow h$ 则更不应被理解为知识检索。结构记忆的本质是通过改变网络生成场，使当前工作记忆在不同的长期经验背景下自然进入不同状态。因此：
@@ -1556,11 +1542,9 @@ SlowStorage.
 \]
 
 同样，$\Psi$ 也不是第四级缓存。它既不是当前状态，也不是事件轨迹，也不是普通世界生成模型，而是
-\[
-\boxed{
+\begin{statementbox}
 CrossPhaseSelfCondition.
-}
-\]
+\end{statementbox}
 它改变 h 中哪些状态更容易形成，E 中哪些经历更容易保存，以及 $\Theta$ 中哪些结构更容易稳定。因此，更准确的描述是：
 \[
 \boxed{
@@ -1869,11 +1853,9 @@ h(t)
 }
 \]
 回答的是
-\[
-\boxed{
+\begin{statementbox}
 WhatIsActiveNow?
-}
-\]
+\end{statementbox}
 
 情景记忆
 \[
@@ -1884,11 +1866,9 @@ E(t)
 }
 \]
 回答的是
-\[
-\boxed{
+\begin{statementbox}
 WhatHappenedAlongMyTrajectory?
-}
-\]
+\end{statementbox}
 
 结构记忆
 \[
@@ -1925,11 +1905,9 @@ ExperienceSelectionField;
 }
 \]
 在 $\Theta$ 中，它表现为
-\[
-\boxed{
+\begin{statementbox}
 StructuralCoordinateOrigin.
-}
-\]
+\end{statementbox}
 
 因此，自我的严格数学含义可以重新表述为：
 

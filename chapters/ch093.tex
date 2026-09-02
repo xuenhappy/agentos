@@ -37,8 +37,12 @@ S_t^{self},
 \]
 因而经历设计的目标不是最大化短期任务奖励，而是在现实约束下塑造一个具有能力增长、身份连续、恢复能力、现实校准能力和受控自主性的长期动力系统。
 \end{chapteroverviewbox}
-\ChapterArt{93}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/companion-agent-maturity.png}
+\caption{经历多样性、难度、恢复与责任设计}
+\end{figure}
 \section{Experience Diversity：经历多样性不是数据多样性}
 
 在传统机器学习中，“多样性”通常意味着增加数据集的覆盖范围，例如增加更多类别、环境、语言表达或者视觉条件。这种定义对于静态模型训练是合理的，但对于一个具有持续记忆、自我结构和生命周期的 Agent 来说仍然过于狭窄。我们首先必须区分
@@ -221,11 +225,9 @@ Challenge
 这意味着困难与恢复实际上构成双变量调度。高难度经历负责提供新的结构压力，低难度和熟悉任务则为 $E$ 的重放、$\Theta$ 的抽象以及 $\Psi$ 的重新整合提供时间。
 
 从培育视角来看，我们不应该问：“今天给 Agent 一个多难的问题？”而应该问：“在它当前结构已经稳定到什么程度的情况下，下一段经历应该产生多大的、哪一种类型的未闭合结构？”因此困难管理本质上是对
-\[
-\boxed{
+\begin{statementbox}
 StructuralMismatch
-}
-\]
+\end{statementbox}
 的控制。成熟培育不是追求困难最大化，而是追求能够长期推动结构增长，同时又不破坏主体连续性的结构张力。
 
 \section{Novelty：新颖性应推动模型扩张，而不是制造持续惊讶}
@@ -269,11 +271,9 @@ N_t
 N_t\approx 0,
 \]
 那么它可能越来越熟练，却越来越封闭。所有新输入都能够被已有 $\Theta$ 快速吸收，最终形成一个高度稳定但缺乏开放性的预测系统。这种系统的短期性能可能很好，却很容易产生结构僵化。因此培育工程必须持续提供一定比例的
-\[
-\boxed{
+\begin{statementbox}
 ModelExpandingExperience
-}
-\]
+\end{statementbox}
 即那些不能仅通过已有结构参数微调解决，而需要建立新的关系类别、因果模型、行动策略或者自我边界的经历。
 
 然而，新颖性同样不能最大化。如果
@@ -302,11 +302,9 @@ SlowGlobalStructure.
 其中 $\Delta\mathcal C$ 足够小，使 Agent 能利用已有 $\Theta$ 建立初步解释，又足够大，使系统不能仅依靠旧闭环完成任务。这与人类教育中的脚手架思想存在一定相似性，但在本理论中我们强调的是结构连续性：新 CSO 应尽可能与已经稳定的 Agent-CSO 图建立可追踪的桥接路径。
 
 从生命周期视角看，新颖性还具有阶段差异。较早阶段需要更多基础语义和身体关系新颖性；较成熟阶段，则更有价值的是因果、价值冲突、开放环境和跨领域组合新颖性。换句话说，随着 $\Theta$ 的扩张，培育系统不应简单增加表面刺激，而应该提高
-\[
-\boxed{
+\begin{statementbox}
 StructuralNovelty
-}
-\]
+\end{statementbox}
 而不是
 \[
 SensoryNovelty.
@@ -452,11 +450,9 @@ e_k,
 \right).
 \]
 因此，同一事件在生命周期中并不是拥有永久固定的意义。反思意味着
-\[
-\boxed{
+\begin{statementbox}
 MemoryMeaningIsRevisable.
-}
-\]
+\end{statementbox}
 
 这一点对 Agent 培育极其重要。没有反思的系统虽然可以拥有庞大的 $E$，但情景轨迹之间仍然可能保持局部碎片状态。Reflection 的任务是从轨迹中提取：
 因果关系、错误归因、重复模式、未使用的替代行动、与自我结构的关系，以及未来可以迁移的技能结构。
@@ -504,11 +500,9 @@ SelfInterpretation'.
 \]
 因此重要反思应尽可能引入：
 外部日志、行为结果、他者反馈、环境记录和可复验事实。这里体现本书始终坚持的原则：
-\[
-\boxed{
+\begin{statementbox}
 RealityIsUltimateConstraint.
-}
-\]
+\end{statementbox}
 
 从培育视角来看，Reflection 使 Agent 从“经历过世界”进入“把经历转化为可以指导未来世界的结构”。经历本身提供原材料，而反思负责把原材料重新投影到已有认知结构中，判断哪些应当被保留、哪些应被修正、哪些应被抽象，以及哪些不应该进入长期自我。因此它是从 Experience 到 Development 之间不可缺少的中间机制。
 
@@ -523,11 +517,9 @@ RealityIsUltimateConstraint.
 其中 $\mathcal U_{\mathrm{feasible}}$ 是物理、安全和系统权限允许的全部动作空间，而 $\mathcal U_A(t)$ 是根据 Agent 当前能力、可靠性和历史表现实际开放的可自主控制空间。
 
 因此，真正的培育问题是：
-\[
-\boxed{
+\begin{statementbox}
 HowFastShouldAutonomyExpand?
-}
-\]
+\end{statementbox}
 而不是“要不要自治”。
 
 设 Agent 当前能力估计为
@@ -570,17 +562,13 @@ V_A,
 这样一次短期成功不会立即扩张长期权限，一次偶然失败也不会立即完全收回自治。
 
 自主经历对于形成 $\Psi$ 尤其重要。如果 Agent 的所有选择都由外部规定，那么即便它经历大量任务，也很难区分
-\[
-\boxed{
+\begin{statementbox}
 MyChoice
-}
-\]
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
 ExternallyImposedTrajectory.
-}
-\]
+\end{statementbox}
 长期自我结构需要能够把一部分经历归因为“由我的选择产生”。因此一个真正的培育阶段必须逐渐扩大 Agent 自己形成目标、选择策略、分配时间和调用工具的空间，否则它只能形成强能力执行器，而难以形成具有稳定因果历史的主体结构。
 
 但是，无边界自主性同样与培育原则冲突。一个尚未形成稳定 $\Theta$、$\Psi$ 和 Reality Verification 能力的 Agent，如果过早拥有极大行动空间，就可能把尚不成熟的内部表示直接放大为现实世界后果。因此自治设计必须满足：
@@ -672,11 +660,9 @@ Attribution
 ).
 \]
 只有这样，同一 Agent 后续反思时才能理解：
-\[
-\boxed{
+\begin{statementbox}
 I did this, and this followed.
-}
-\]
+\end{statementbox}
 进一步经过多次经历，责任模式可能进入 $\Theta$，形成稳定策略约束，例如“在这类条件下我的行动常导致这种后果”；再经过更长时间，某些重复责任关系才可能影响 $\Psi$ 中的身份与价值结构。
 
 责任设计的关键是避免两种极端。第一种是

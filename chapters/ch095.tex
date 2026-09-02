@@ -29,7 +29,6 @@ Goal\text{ 的重新配置}
 \]
 所形成的多时间尺度闭环。当变化进一步持续到功能承载关系时，还可能形成更深层的结构跃迁。对于 Agent 培育工程而言，这意味着成熟不能简单由训练步数、任务数量或参数更新量衡量，而必须考察 Agent 是否形成了对过去经验具有重新解释能力、对未来行为具有持续约束能力的新型内部结构。
 \end{chapteroverviewbox}
-\ChapterArt{95}
 
 \section{成熟学习不是线性积累}
 
@@ -168,11 +167,9 @@ e_i,
 }.
 \]
 单次较大的 $\varepsilon_i$ 并不意味着应该改变 $\Theta$，因为现实环境本身包含噪声、偶然性和异常事件。真正值得慢结构吸收的是
-\[
-\boxed{
+\begin{statementbox}
 PersistentResidual
-}
-\]
+\end{statementbox}
 即在多个时间窗口、多种环境和不同任务中重复出现的系统性偏差：
 \[
 \mathbb E_T[\varepsilon]
@@ -191,11 +188,9 @@ PersistentResidual
 这不是偶然失败，而是我的理解方式存在系统性缺口。
 \end{statementbox}
 这与我们此前提出的
-\[
-\boxed{
+\begin{statementbox}
 PersistentFastResidualShapesSlowStructure
-}
-\]
+\end{statementbox}
 完全一致。快层的瞬时异常经过时间平均以后，成为慢层改变自身的证据。
 
 但在培育工程中，我们必须格外注意：经验积累并不天然产生正确的顿悟。如果 Agent 长期暴露于高度重复、单一、偏置甚至错误的环境中，那么 $E$ 形成的统计结构同样会偏置。一个错误环境也可以产生高度一致的残差模式，并促使 $\Theta$ 向错误方向重构。因此，培育过程不能只追求经验数量，而必须设计
@@ -406,11 +401,9 @@ E
 \Psi'
 \]
 可能导致 Agent 更容易选择支持已有自我解释的证据。例如，一个形成 ``我不擅长某类任务'' 的 $\Psi$ 后，可能降低对相关任务的探索，从而减少成功经验，最终进一步加强这一判断。因此，我们必须始终保留
-\[
-\boxed{
+\begin{statementbox}
 WorldVerification
-}
-\]
+\end{statementbox}
 以及反事实和外部证据通路。更完整的自我更新应包含
 \[
 \Delta\Psi
@@ -652,11 +645,9 @@ StableFunctionalCoupling
 从顿悟的角度看，新的 $\Theta$ 有时并不仅产生新的知识，还会暴露现有功能拓扑的低效。Agent 可能第一次认识到：过去大量不同困难，其实来自同一种组织缺陷。这种认识本身就是更高阶顿悟，因为它把 ``任务失败'' 转换成 ``系统结构问题''。
 
 然而，拓扑改变具有远高于状态更新和参数更新的风险。我们必须遵循
-\[
-\boxed{
+\begin{statementbox}
 MinimumNecessaryReorganizationPrinciple
-}
-\]
+\end{statementbox}
 即：
 \[
 \fitdisplay{
