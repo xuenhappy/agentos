@@ -35,11 +35,7 @@ World\)}
 本章所设计的标准体系首先服务于固定核心功能拓扑的第一代 AgentOS，但其设计必须避免把内部实现固化。一个真正具有生命期的智能系统，其模型、控制算法、身体和技能都可能长期变化，因此开放标准真正需要保持稳定的不是参数，而是\textbf{关系、含义和责任边界}。这也是本章的基本立场。
 \end{chapteroverviewbox}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/functional-body-interface-layers.png}
-\caption{AgentOS 开放接口与系统软件基础}
-\end{figure}
+
 \section{SGC Standard：可行动现实的公共语义坐标标准}
 
 SGC（Semantic Graph Coordinate Space）标准解决的第一个问题，是不同身体、不同感知系统与不同认知内核之间如何形成一个稳定的``现实语义接口''。如果每一种摄像头、机器人、浏览器、车辆或者数字桌面都直接把自己的内部 tensor、像素、检测框或私有 latent 暴露给 Agent Kernel，那么所谓通用 Agent 实际上仍然被具体感知模型和具体身体绑定。我们因此必须在原始感知与高层认知之间建立一个不依赖具体实现的公共世界描述层。
