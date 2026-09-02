@@ -8,12 +8,6 @@
 本章将在不依赖后续 Offloading 具体实现的前提下，把 Boundary 建立为 AgentOS 的第一层认知治理机制，并证明：\textbf{对于有限工作记忆而言，高质量智能不仅取决于进入工作记忆以后如何推理，更取决于大量不应进入的结构能否在进入之前被正确地挡住、降级、延迟或局部闭合。}
 \end{chapteroverviewbox}
 
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/dynamic-cognitive-boundary.png}
-\caption{动态认知边界与准入分类}
-\end{figure}
 \section{智能首先需要决定什么不进入自己}
 
 在前面的讨论中，我们已经把工作记忆 $h(t)$ 从一个普通的短期存储区提升为整个 AgentOS 的有限显式认知界面。只有那些在当前时刻需要跨功能、跨记忆、跨目标进行全局协调的 Agent-CSO，才有理由被提升到 $h(t)$。由此产生一个容易被忽略、却比“如何推理”更加前置的问题：如果外部世界和内部系统持续产生结构，而 $h(t)$ 又只能维持有限数量的高耦合关系，那么智能系统首先必须具备的能力并不是处理更多，而是\textbf{拒绝更多}。
