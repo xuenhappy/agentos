@@ -16,11 +16,7 @@ SafetyAuthority > BPCCAuthority > CognitiveExecutionAuthority
 两条核心原则。这里的 ``Safety'' 不是 Agent 的价值判断，也不是 $\Psi$、AHC 或 TCE 中的风险偏好，而是对身体、环境及受保护对象所施加的\emph{不可被普通认知绕过的实时可行域约束}。我们将依次建立实时危险为什么不能等待认知、Realtime Safety Controller 的动力学位置、安全事件如何向认知层升级、Safety Authority 的优先级体系、Single Writer Principle、多层控制引用以及 Safety Envelope，并最终把安全边界形式化为一个包围 BPCC 与 Agent Kernel 的最外层可执行约束结构。
 \end{chapteroverviewbox}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/semantic-modulation-safety-channels.png}
-\caption{实时身体安全包络与权限旁路}
-\end{figure}
+
 \section{实时危险为何不能依赖认知闭环}
 
 在前面的 AgentOS 结构中，我们始终坚持一个多时间尺度原则：不同层级应当关闭属于自己的快速闭环，而不应把所有变化都升级到工作记忆 $h(t)$ 中显式处理。Body Runtime 的意义正是在于，将毫秒至百毫秒尺度上的身体状态、局部预测和控制活动留在身体侧，而由 Agent Kernel 在更慢的时间尺度上处理目标、语义、规划、长期预测和认知结构。安全问题把这一原则推到了最严格的极限：某些现实变化的时间常数短于任何可靠的认知决策时间，因此，若安全动作必须等待 Kernel 完成观察、语义化、工作记忆准入、SPC 状态评估、TCE 调节、规划以及控制引用生成，则系统在结构上已经失去了对这类危险进行实时保护的能力。
