@@ -20,11 +20,6 @@ AgentInvariantBodySemantics\)}
 \end{chapteroverviewbox}
 
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/functional-body-interface-layers.png}
-\caption{FBI 与系统软件接口层级}
-\end{figure}
 \section{为什么智能体需要一个功能身体接口}
 
 在没有身体抽象层的情况下，一个智能体与现实发生联系的最直接方式，是让认知系统直接接收摄像头图像、麦克风信号、电池电压、机器人关节角、浏览器 DOM、鼠标坐标、文件系统事件以及各种设备私有状态，并直接输出电机命令、鼠标轨迹、API 调用或系统调用。从短期演示角度看，这种方式并非不能工作；一个足够大的模型甚至能够在相当程度上学习各种输入输出格式之间的映射。然而，一旦我们的研究对象从一次性模型推理转向持续存在、可以更换身体、长期成长的 Agent，这种设计立即暴露出根本缺陷：认知结构被大量偶然的身体实现细节污染了。
