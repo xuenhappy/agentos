@@ -17,11 +17,7 @@
 这一研究路线的目的不是把 AgentOS 强制改写成传统控制器，而是建立一套能够描述、分析和验证长期人工智能主体运行稳定性的统一动力学语言。
 \end{chapteroverviewbox}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/control-stability-panel.png}
-\caption{连续—离散控制的稳定性研究面板}
-\end{figure}
+
 \section{快速连续动力学：智能运行时首先是一个流动过程}
 
 我们首先从一个容易被传统软件工程忽略的问题开始：一个持续智能体在大部分时间里，并不是不断执行``进入状态 A、跳转状态 B、执行状态 C''这样的离散状态机，而是在一个高维状态空间中持续变化。注意焦点的权重不会在两个值之间突然跳跃，认知压力不会瞬间从零变成最大，AHC 中的威胁、疲劳、资源压力与社会可信度也不会天然呈现二值变化；Body Runtime 中的位置、速度、控制误差、感知置信度和局部预测残差更明显地属于连续变量。因此，在 AgentOS 的运行理论中，我们应当首先定义一个连续状态向量
