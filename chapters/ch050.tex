@@ -28,11 +28,6 @@ ControlTransfer
 \end{chapteroverviewbox}
 
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/embodied-cognitive-offloading.png}
-\caption{身体尺度迁移与认知卸载的区别}
-\end{figure}
 \section{Body Scale 的第一性定义：智能规模不能只由参数规模决定}
 
 我们首先必须重新审视“智能规模”这一常用但含义模糊的概念。当前人工智能系统通常使用参数量、训练数据量、计算量、上下文长度或者推理吞吐量描述模型规模，这些指标当然具有重要工程意义，但它们本质上测量的是一个计算模型内部可以储存、拟合或者临时处理多少结构，而不是一个持续智能主体可以和多大范围、多种形态的现实建立有效闭环。如果一个拥有极大参数量的系统只能通过固定文本接口存在，那么它虽然拥有很大的内部表征容量，却仍可能拥有极窄的现实作用边界。相反，一个参数量并不极大的智能体，如果能够稳定迁移于浏览器、桌面系统、机器人机械臂、车辆乃至新的传感器--执行器组合之间，其实际可作用世界可能远大于前者。因此，在 AgentOS 的认识框架中，我们必须把 Model Scale 与 Body Scale 分开。
