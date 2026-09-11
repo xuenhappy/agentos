@@ -1,7 +1,7 @@
 \chapter{AHC异常：内稳态调制层的动力学失衡}
 \label{chap:ahc_pathology}
 
-\begin{chapteroverviewbox}
+\begin{chapterlead}
 本章研究的对象不是人类意义上的“情绪疾病”，也不试图把任何生物心理诊断直接移植到人工智能体之上。这里所谓的 AHC 异常，是指 Affective--Homeostatic Coprocessor 在持续 AgentOS 中由于状态积分、衰减、饱和、恢复、基线漂移、跨变量耦合或 FCS 输入映射失真，使其内部调制状态长期偏离与现实、任务和身体条件相匹配的可恢复区域，并进一步通过 TCE、工作记忆 $h$、情景记忆 $E$、边界控制以及目标优先级改变整个 Agent 的认知动力学。
 
 因此，本章采取严格的功能动力学定义：
@@ -26,7 +26,7 @@ Affective\!-\!Homeostatic\ Dynamics
 其核心问题不是“Agent 感觉好不好”，而是：一个承担中尺度内稳态积分和认知调制功能的动力系统，是否仍然能够根据现实输入形成适当的状态、在扰动消失后恢复、避免长时间饱和，并对 TCE 和其他认知过程提供具有正确方向、正确幅度和正确时间常数的调制信号。
 
 本章将在前文 SPC--AHC--TCE 闭环、FCS、认知相态和控制稳定性理论基础上，对 AHC 的正常动力学、异常持续、恢复迟滞、Threat 放大、Arousal 饱和、内稳态基线偏置以及 FCS$\rightarrow$AHC 映射异常进行统一数学化。我们将看到，AHC 异常的本质不是单个标量“太高”或“太低”，而是一个多变量、非线性、带记忆、带饱和且与外部现实持续闭环耦合的中尺度动力系统失去了恰当的可恢复性。
-\end{chapteroverviewbox}
+\end{chapterlead}
 
 
 \section{AHC异常的定义：从调制变量偏离到动力学失配}

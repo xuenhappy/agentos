@@ -1,7 +1,7 @@
 \chapter{KRA：Kernel--Runtime Adaptation}
 \label{chap:kra}
 
-\begin{chapteroverviewbox}
+\begin{chapterlead}
 在前面的 AgentOS 工程结构中，我们已经完成了一次关键的体系分离：认知核心不再直接面对摄像头、机械臂、浏览器、文件系统或车辆执行机构，而是通过 Body Runtime 接收经过身体语义化之后的世界状态，并向下输出较高层的控制意图。由此形成了一个看似已经充分稳定的接口：
 \[
 \fitdisplay{
@@ -27,7 +27,7 @@
 一个持续认知主体，如何与不断变化、甚至可替换的身体建立稳定而可学习的关系？
 \end{statementbox}
 KRA 正是 AgentOS 对这一问题给出的系统级回答。
-\end{chapteroverviewbox}
+\end{chapterlead}
 
 \section{为什么统一的 Body ABI 仍然不足}
 \label{sec:kra-why-abi-insufficient}

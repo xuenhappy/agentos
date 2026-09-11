@@ -1,7 +1,7 @@
 \chapter{连续动力学与离散治理}
 \label{chap:continuous-discrete-governance}
 
-\begin{chapteroverviewbox}
+\begin{chapterlead}
 本章确立 AgentOS 的一个基础运行原则：\textbf{持续智能既不能被还原为纯连续动力系统，也不能被还原为传统离散程序状态机。}一个长期存在的智能体，其注意、工作记忆、内稳态、自我感知、认知温度、预测误差以及身体控制等变量，在运行过程中表现为连续演化；然而目标是否成立、任务是否进入执行态、技能是否完成编译、权限是否被授予、是否建立检查点以及安全中断是否触发，却具有不可消除的离散治理性质。因此 AgentOS 的正确数学对象不是单一神经网络，也不是普通有限状态机，而是一个由\textbf{连续认知动力学、离散治理状态、事件触发条件和受约束状态重置共同组成的混合动力系统}。
 
 本章的核心命题可以压缩为：
@@ -9,7 +9,7 @@
 Discrete Governance,\qquad Continuous Execution
 \end{statementbox}
 离散治理规定智能体此刻被允许处于什么制度状态、拥有什么目标和权限、哪些结构能够被修改以及哪些过程必须立即停止；连续动力学则负责在这些约束形成的可行域内部完成实时认知、学习、预测和行动。二者共同保证 AgentOS 同时具有连续适应能力与长期结构稳定性。
-\end{chapteroverviewbox}
+\end{chapterlead}
 
 \section{Agent 运行为什么不是纯程序状态机}
 

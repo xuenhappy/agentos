@@ -1,7 +1,7 @@
 \chapter{Body Runtime 研发路线：从统一身体接口到可迁移具身闭环}
 \label{chap:body-runtime-roadmap}
 
-\begin{chapteroverviewbox}
+\begin{chapterlead}
 本章讨论 AgentOS ``3+1+1'' 总体研发路线中第一条独立技术主线——Body Runtime 的工程演进路径。这里的核心问题并不是“如何为大模型增加机器人控制接口”，而是如何构造一个可以长期独立演化、能够接入不同物理身体与数字身体，并在毫秒至秒级时间尺度上自主闭合感知--预测--控制--残差--学习循环的身体运行时。我们将坚持此前建立的基本分工：
 \begin{statementbox}
 \centering
@@ -16,7 +16,7 @@ SemanticInterfaceStable,\quad FastDynamicsLocal,\quad RealityAuthoritative
 }
 \]
 即语义接口应尽量稳定，高频动力学应尽量在身体局部闭合，而任何内部预测最终都必须重新经过现实观测验证。本章给出的不是单个机器人产品的开发顺序，而是一条从“身体接口”逐步走向“可迁移身体运行时”的系统工程路线。
-\end{chapteroverviewbox}
+\end{chapterlead}
 
 \begin{figure}[htbp]
 \centering

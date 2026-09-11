@@ -1,6 +1,6 @@
 \chapter{FCS 的群体感受扩展：流体群体智能、SFPU 与跨尺度具身协同}
 
-\begin{chapteroverviewbox}
+\begin{chapterlead}
 前一章已经建立了 AgentOS 面向现实世界的二元接口：SGC（Semantic Graph Coordinate Space）负责描述“现实中有什么、它们在哪里以及彼此具有怎样的语义关系”，FCS（Feeling Coordinate/Field System）负责描述“这些现实状态正在如何作用于本体”。在此基础上，本章进一步研究一个自然但具有重要架构意义的问题：当一个独立 Agent 不再只通过视觉、触觉、本体感觉、能源状态等普通 Body Driver 感知现实，而开始成为一个大规模机器人群体的一部分时，群体宏观结构应当通过什么接口进入本地 AgentOS？
 
 本章给出的答案是：\textbf{群体协调不应该首先表现为一个外部中央系统对本地 AgentOS 的强制命令，而应首先表现为一种新的身体感受。} 为此，我们引入 SFPU（Swarm Field Processing Unit）。在软件架构意义上，单个 SFPU 被严格定义为 AgentOS Body Driver 体系中的一种特殊群体场驱动器；多个 SFPU 通过 Field Plane 互联后共同形成分布式群体场网络；独立于本地 AgentOS 的 SwarmOS 通过 Potential Plane 向 SFPU 提供群体任务势能和目标嵌入；SFPU 再通过局部场重构与势能微分产生物理梯度和语义梯度，并经 Gradient Plane 映射为 FCS 中的一种特殊“群体梯度感受面”。
@@ -25,7 +25,7 @@ Body
 Collective\ Field\)}
 \end{statementbox}
 其中，群体层提供宏观结构约束，个体层保留本体认知、边界与最终行动决策权。由此，FCS 不再只是“身体内部感受场”，而获得了一种更一般的含义：\textbf{任何能够以本体为参照表达“现实结构对我产生怎样方向性影响”的结构化场，都可以作为一种 FCS 感受面接入 AgentOS。}
-\end{chapteroverviewbox}
+\end{chapterlead}
 
 \begin{figure}[htbp]
 \centering

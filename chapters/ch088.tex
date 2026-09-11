@@ -1,10 +1,10 @@
 \chapter{TCE 控制器工程}
 
-\begin{chapteroverviewbox}
+\begin{chapterlead}
 本章讨论的 TCE（Temperature \& Control Executor）不是一个新的推理模型，也不是负责决定“应该完成什么任务”的规划器，更不是替代 Scheduler、CCM 或自我结构 $\Psi$ 的中央意志模块。TCE 的严格工程定位是：\textbf{在 SPC 对当前认知状态进行估计、AHC 给出连续内稳态调制背景、Scheduler 给出资源与任务包络、CCM 给出认知负载约束之后，对 Agent 当前认知动力学的增益、温度、注意范围、探索程度、搜索深度、抑制强度、记忆流速与运行节律实施连续反馈控制。}
 
 因此，TCE 控制的不是“一个答案”，而是\textbf{产生答案、行动和记忆变化的动力学条件}。它所回答的问题不是 ``What should I think?''，而是 ``How should the cognitive system evolve now?''。如果把工作记忆 $h(t)$ 看成 Agent 当前显式认知活动的有限状态面，把 SPC 看成状态观察器，把 AHC 看成内稳态调制器，那么 TCE 就是作用于这一状态面的主要快速控制器。其工程目标是在有限工作记忆、延迟观测、环境扰动和慢结构约束下，使认知轨迹长期停留在一个可运行、可恢复、可学习的区域中，而不是追求某个瞬时变量的极大化。
-\end{chapteroverviewbox}
+\end{chapterlead}
 
 \begin{figure}[htbp]
 \centering

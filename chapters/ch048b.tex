@@ -1,0 +1,2218 @@
+\chapter{液态情景记忆：数学表示、动力学与工程实现}
+
+\section{从情景数据库到液态情景记忆}
+
+在此前的三相记忆理论中，记忆系统被表示为
+\[
+\mathcal{M}_c=(h,E,\Theta),
+\]
+其中
+\[
+h=\mathrm{State},
+\qquad
+E=\mathrm{Trajectory},
+\qquad
+\Theta=\mathrm{Generator}.
+\]
+
+工作记忆 $h$ 表示当前仍然参与认知闭环的活动状态，结构记忆 $\Theta$ 表示由历史经历沉降形成、能够影响未来状态演化的慢生成结构，而情景记忆 $E$ 位于二者之间，承担对具体经历、状态变化轨迹和事件关系的中时间尺度保持。
+
+如果将 $E$ 简单实现为
+\[
+E=\{e_1,e_2,\ldots,e_N\},
+\]
+并把每个 $e_i$ 当作固定向量或数据库记录，则虽然能够实现基本的存储和检索，却不能充分表达此前所定义的“液态”性质。
+
+液态情景记忆至少需要满足以下动力学特征：
+
+\begin{itemize}
+    \item 新经历能够持续流入；
+    \item 已有情景能够逐渐淡化和蒸发；
+    \item 经常被重新使用的情景能够得到强化；
+    \item 相似经历能够发生聚合与整合；
+    \item 过度粗粒度的情景能够发生拆分；
+    \item 情景之间的时间、因果和语义关系能够被重新解释；
+    \item 大量稳定经历能够逐步向结构记忆 $\Theta$ 沉降；
+    \item 已经被 $\Theta$ 充分解释的情景可以进一步淡化。
+\end{itemize}
+
+因此，情景记忆不能只被理解为静态记录集合，而应被建模为一个持续演化的历史结构系统。
+
+本章将情景记忆表示为
+\[
+\boxed{
+\mathcal{E}(t)
+=
+\left(
+\mu_E(t),
+\mathcal{G}_E(t)
+\right),
+}
+\]
+其中 $\mu_E(t)$ 描述情景在记忆空间中的“质量分布”和流动状态，$\mathcal{G}_E(t)$ 描述情景之间的结构关系。
+
+这一表示将分别承担“液态”和“情景”两个部分。
+
+\section{情景的最小数学对象}
+
+\subsection{情景不是快照，而是轨迹}
+
+工作记忆状态记为
+\[
+h(t)\in\mathcal{H},
+\]
+其中 $\mathcal{H}$ 为工作状态空间。
+
+一次情景不应仅仅表示某一时刻的状态
+\[
+h(t_i),
+\]
+而应对应一个有限时间区间上的状态轨迹
+\[
+\gamma_i
+=
+\left\{
+h(s)
+\mid
+s\in[t_i^{-},t_i^{+}]
+\right\}.
+\]
+
+因此情景首先是
+\[
+\boxed{
+\mathrm{Episode}
+=
+\mathrm{BoundedTrajectory}.
+}
+\]
+
+这一定义强调：情景记忆真正保存的不只是“当时是什么状态”，而是“状态怎样从一个状态变化到另一个状态”。
+
+可以进一步定义
+\[
+\Delta h_i
+=
+h(t_i^{+})
+-
+h(t_i^{-}),
+\]
+用于表示情景中最粗粒度的状态变化。
+
+因此，一个情景的最小表示可以写为
+\[
+e_i
+=
+\left(
+\gamma_i,
+t_i^{-},
+t_i^{+}
+\right).
+\]
+
+\subsection{加入上下文与关系结构}
+
+仅有轨迹仍不足以描述完整经历。为了支持未来的整合、重构和召回，可以将一个情景扩展为
+\[
+\boxed{
+e_i
+=
+\left(
+\gamma_i,
+c_i,
+r_i,
+\tau_i,
+m_i,
+q_i
+\right),
+}
+\]
+其中：
+
+\begin{itemize}
+    \item $\gamma_i$ 表示情景轨迹；
+    \item $c_i$ 表示该事件的上下文表示；
+    \item $r_i$ 表示事件内部的关系结构；
+    \item $\tau_i=[t_i^{-},t_i^{+}]$ 表示时间区间；
+    \item $m_i\geq0$ 表示当前记忆强度；
+    \item $q_i$ 表示置信度、重要度、新颖性等元数据。
+\end{itemize}
+
+关系结构可以进一步写成局部图
+\[
+r_i
+=
+(V_i,E_i^{rel}),
+\]
+其中节点表示事件中被区分出的结构，边表示它们之间的时序、语义、因果或其他关系。
+
+因此，一个完整情景不再只是一个 embedding，而是
+\[
+\boxed{
+\mathrm{Trajectory}
++
+\mathrm{Context}
++
+\mathrm{Relations}
++
+\mathrm{MemoryMass}.
+}
+\]
+
+\section{从工作记忆到情景记忆：事件切分}
+
+\subsection{为什么不能把每个工作状态都写入情景记忆}
+
+若每一个时刻的工作状态
+\[
+h(t)
+\]
+都直接成为一条情景记录，则在持续运行条件下，情景数量会近似随时间线性增长，甚至在高频系统中增长得更快。
+
+因此
+\[
+h\rightarrow E
+\]
+首先不是“写入”，而是“事件切分”。
+
+连续工作状态需要被分割为若干具有相对完整性的轨迹区间：
+\[
+h(t)
+\longrightarrow
+\gamma_1,\gamma_2,\ldots,\gamma_n.
+\]
+
+\subsection{事件边界函数}
+
+可以定义事件边界强度
+\[
+b(t)
+=
+\alpha
+\|\dot h(t)\|
++
+\beta N(t)
++
+\gamma \varepsilon(t)
++
+\delta R(t),
+\]
+其中：
+
+\begin{itemize}
+    \item $\|\dot h(t)\|$ 表示当前状态变化速度；
+    \item $N(t)$ 表示新颖性；
+    \item $\varepsilon(t)$ 表示预测残差；
+    \item $R(t)$ 表示当前任务或认知相关性。
+\end{itemize}
+
+当
+\[
+b(t)>\theta_b
+\]
+时，可以将该时刻附近视为潜在事件边界。
+
+于是连续状态流
+\[
+h(t)
+\]
+被转换为
+\[
+\boxed{
+h(t)
+\rightarrow
+\{\gamma_i\}.
+}
+\]
+
+随后利用情景绑定算子
+\[
+\mathcal{B}
+\]
+将轨迹压缩成情景对象：
+\[
+\boxed{
+e_i
+=
+\mathcal{B}(\gamma_i,c_i,r_i).
+}
+\]
+
+因此
+\[
+h\rightarrow E
+\]
+可以更加严格地表示为
+\[
+\boxed{
+\mathrm{ContinuousState}
+\rightarrow
+\mathrm{EventSegmentation}
+\rightarrow
+\mathrm{EpisodeFormation}.
+}
+\]
+
+\section{情景记忆测度：液态记忆的质量表示}
+
+\subsection{为什么需要测度而不是简单列表}
+
+如果情景记忆仅表示为
+\[
+E=\{e_i\},
+\]
+则无法自然表达“某些情景正在变弱”“某些情景正在强化”以及“某些情景正在逐渐消失”。
+
+因此为每个情景引入记忆质量
+\[
+m_i(t)\geq0.
+\]
+
+将整个情景集合表示为离散测度
+\[
+\boxed{
+\mu_E(t)
+=
+\sum_{i=1}^{N(t)}
+m_i(t)
+\delta_{z_i(t)},
+}
+\]
+其中：
+
+\begin{itemize}
+    \item $z_i(t)$ 表示情景在某个情景表示空间 $\mathcal{Z}_E$ 中的位置；
+    \item $m_i(t)$ 表示该情景当前的记忆质量；
+    \item $\delta_{z_i}$ 表示集中在该情景位置上的 Dirac 测度。
+\end{itemize}
+
+这种表示并不意味着情景是物理颗粒，而只是借用粒子系统和测度理论，将记忆强弱、聚合和消散统一到同一个数学对象中。
+
+\subsection{情景空间中的移动}
+
+情景表示本身也可以随时间发生变化：
+\[
+\boxed{
+\dot z_i
+=
+v_E
+\left(
+z_i,
+\mu_E,
+\mathcal{G}_E
+\right),
+}
+\]
+其中 $v_E$ 表示情景空间中的有效流场。
+
+这一项允许过去情景随着新知识和新经历被重新组织。例如，某个事件最初被归入一种解释，后来可能因为新的经历而逐渐移动到另一类情景簇附近。
+
+因此：
+\[
+\boxed{
+\text{情景记忆不仅可以变弱，也可以改变自身解释位置。}
+}
+\]
+
+\section{情景蒸发与强化}
+
+\subsection{基础蒸发模型}
+
+情景记忆的液态性质首先表现为自然衰减。
+
+最简单的质量动力学为
+\[
+\dot m_i
+=
+-\lambda_i m_i,
+\]
+其解为
+\[
+m_i(t)
+=
+m_i(0)e^{-\lambda_i t}.
+\]
+
+其中 $\lambda_i$ 是情景的蒸发率。
+
+如果
+\[
+m_i(t)<\theta_{\mathrm{forget}},
+\]
+则该情景可以视为已经失去有效记忆身份。
+
+\subsection{非均匀蒸发}
+
+不同情景不应具有相同蒸发速度。
+
+可以定义
+\[
+\lambda_i
+=
+\lambda_0
+f
+\left(
+I_i,
+C_i,
+U_i
+\right),
+\]
+其中：
+
+\begin{itemize}
+    \item $I_i$ 表示重要度；
+    \item $C_i$ 表示置信度；
+    \item $U_i$ 表示未来使用或预测价值。
+\end{itemize}
+
+高重要度、高置信度和高使用价值情景应满足
+\[
+\lambda_i\downarrow.
+\]
+
+\subsection{召回强化}
+
+情景并不是只会衰减。
+
+若情景在当前认知中被重新召回，可加入强化项：
+\[
+\boxed{
+\dot m_i
+=
+-\lambda_i m_i
++
+\alpha R_i(t),
+}
+\]
+其中 $R_i(t)$ 表示情景 $i$ 当前的召回强度。
+
+若进一步考虑使用价值，则可以写成
+\[
+\dot m_i
+=
+-\lambda_i m_i
++
+\alpha R_i
++
+\beta U_i.
+\]
+
+因此情景记忆形成
+\[
+\boxed{
+\mathrm{Decay}
+\leftrightarrow
+\mathrm{Reactivation}.
+}
+\]
+
+\section{情景之间的关系图}
+
+测度 $\mu_E$ 能够表示液态强度，却不能表示情景之间复杂的结构关系。
+
+因此定义动态图
+\[
+\boxed{
+\mathcal{G}_E(t)
+=
+\left(
+V_E(t),
+E_E(t)
+\right),
+}
+\]
+其中
+\[
+V_E(t)
+=
+\{e_1,e_2,\ldots,e_N\}
+\]
+为情景节点集合。
+
+边可以具有不同类型：
+\[
+E_E
+=
+E^{temp}
+\cup
+E^{causal}
+\cup
+E^{semantic}
+\cup
+E^{context}
+\cup
+E^{part}.
+\]
+
+它们分别表示：
+
+\begin{itemize}
+    \item 时间先后关系；
+    \item 因果或影响关系；
+    \item 语义相似关系；
+    \item 上下文共享关系；
+    \item 宏情景与子情景之间的包含关系。
+\end{itemize}
+
+因此完整情景记忆最终表示为
+\[
+\boxed{
+\mathcal{E}(t)
+=
+\left(
+\mu_E(t),
+\mathcal{G}_E(t)
+\right).
+}
+\]
+
+其中：
+\[
+\mu_E
+\]
+主要承担液态记忆动力学，而
+\[
+\mathcal{G}_E
+\]
+承担经历之间的历史结构。
+
+\section{情景凝聚：从重复经历形成更高层事件}
+
+\subsection{相似情景的凝聚概率}
+
+设两个情景 $e_i$ 与 $e_j$ 在情景空间中的相似度为
+\[
+S_{ij}
+=
+\operatorname{Sim}(z_i,z_j).
+\]
+
+同时定义关系一致度
+\[
+R_{ij}
+\]
+和冲突度
+\[
+D_{ij}.
+\]
+
+可以定义凝聚核
+\[
+\boxed{
+K_{ij}
+=
+\sigma
+\left(
+aS_{ij}
++
+bR_{ij}
+-
+cD_{ij}
+\right).
+}
+\]
+
+当
+\[
+K_{ij}>\theta_{\mathrm{merge}}
+\]
+时，可以考虑将两个情景归入同一宏情景。
+
+\subsection{简单凝聚}
+
+最简单情况下：
+\[
+e_i+e_j
+\rightarrow
+e_{ij}.
+\]
+
+其质量为
+\[
+m_{ij}
+=
+m_i+m_j.
+\]
+
+若情景中心使用向量表示，则新中心可近似为
+\[
+z_{ij}
+=
+\frac{
+m_i z_i
++
+m_j z_j
+}{
+m_i+m_j
+}.
+\]
+
+但这只是最简单的工程近似。
+
+\subsection{层级凝聚}
+
+为了避免在合并时完全破坏原有事件个体性，更合理的做法是建立新的宏情景：
+\[
+\boxed{
+E_{\mathrm{macro}}
+\rightarrow
+\{E_1,E_2,\ldots,E_k\}.
+}
+\]
+
+例如，一次复杂任务可以由多个子事件组成，而整个任务又作为更高层情景存在。
+
+因此情景图应允许层级结构：
+\[
+\boxed{
+\mathrm{Episode}
+\rightarrow
+\mathrm{MacroEpisode}
+\rightarrow
+\mathrm{EpisodeHierarchy}.
+}
+\]
+
+\section{情景碎裂与重新切分}
+
+凝聚的反向过程是碎裂。
+
+某个历史情景可能在最初形成时粒度过粗，后来随着更多上下文出现，需要被重新拆分。
+
+定义情景内部方差
+\[
+V_i
+=
+\operatorname{Var}(\gamma_i),
+\]
+或更一般地定义内部结构不一致度
+\[
+H_i.
+\]
+
+若
+\[
+H_i>\theta_{\mathrm{split}},
+\]
+则情景可被重新拆分为
+\[
+\boxed{
+E_i
+\rightarrow
+\{E_{i1},E_{i2},\ldots,E_{ik}\}.
+}
+\]
+
+因此情景记忆内部同时存在：
+\[
+\boxed{
+\mathrm{Coagulation}
+}
+\]
+和
+\[
+\boxed{
+\mathrm{Fragmentation}.
+}
+\]
+
+这也是将其称为液态而非静态数据库的重要原因。
+
+\section{情景重构：过去关系的重新解释}
+
+\subsection{事实与解释的区分}
+
+情景重构并不意味着任意修改过去。
+
+更合理的设计是将：
+
+\[
+\mathrm{ObservedContent}
+\]
+与
+\[
+\mathrm{DerivedRelation}
+\]
+分开保存。
+
+历史事件中直接观测到的内容应保持较高稳定性，而基于这些事件建立的因果、分类、语义和层级关系允许更新。
+
+\subsection{图重写}
+
+设当前情景图为
+\[
+\mathcal{G}_E(t).
+\]
+
+新的经历和新的结构知识到来后，可以通过图重写算子
+\[
+\boxed{
+\mathcal{G}_E(t+\Delta t)
+=
+\mathcal{R}_E
+\left(
+\mathcal{G}_E(t),
+\Delta I
+\right),
+}
+\]
+其中 $\Delta I$ 表示新证据。
+
+图重写可能包括：
+
+\begin{itemize}
+    \item 删除旧的低置信关系；
+    \item 增加新的关系；
+    \item 修改关系类型；
+    \item 调整边权；
+    \item 建立新的宏情景层级。
+\end{itemize}
+
+因此所谓“重构记忆”，更准确地说是：
+\[
+\boxed{
+\text{重新组织历史之间的关系，而不是简单覆盖历史。}
+}
+\]
+
+\section{液态情景记忆的连续动力方程}
+
+综合写入、流动、凝聚、碎裂、蒸发和向慢结构沉降，可以将情景测度的动力学写为
+\[
+\boxed{
+\frac{\partial \mu_E}{\partial t}
++
+\nabla_z
+\cdot
+\left(
+v_E\mu_E
+\right)
+=
+S_h
++
+\mathcal{C}[\mu_E]
+-
+\mathcal{F}[\mu_E]
+-
+\mathcal{D}[\mu_E]
+-
+\mathcal{K}_{E\rightarrow\Theta}[\mu_E].
+}
+\]
+
+其中：
+
+\begin{itemize}
+    \item $S_h$ 表示由工作记忆进入情景记忆的新情景源；
+    \item $\mathcal{C}$ 表示情景凝聚；
+    \item $\mathcal{F}$ 表示情景碎裂；
+    \item $\mathcal{D}$ 表示蒸发和衰减；
+    \item $\mathcal{K}_{E\rightarrow\Theta}$ 表示向结构记忆沉降。
+\end{itemize}
+
+同时，情景关系图满足
+\[
+\boxed{
+\dot{\mathcal{G}}_E
+=
+\mathcal{R}_E
+\left(
+\mathcal{G}_E,
+h,
+\Theta
+\right),
+}
+\]
+表示经历之间的关系会随着当前经验和长期结构的发展而重新组织。
+
+这一组方程共同定义了液态情景记忆的宏观动力学。
+
+\section{从情景记忆到结构记忆：从轨迹到生成器}
+
+\subsection{结构记忆的学习目标}
+
+在三相理论中，
+\[
+E=\mathrm{Trajectory},
+\qquad
+\Theta=\mathrm{Generator}.
+\]
+
+因此
+\[
+E\rightarrow\Theta
+\]
+的本质不是“把情景保存得更久”，而是：
+\[
+\boxed{
+\text{从大量具体轨迹中提取能够预测和生成未来状态的稳定结构。}
+}
+\]
+
+设结构记忆由参数化生成模型
+\[
+f_\Theta
+\]
+表示。
+
+最简单的目标是学习：
+\[
+\boxed{
+p_\Theta
+\left(
+h_{t+\Delta}
+\mid
+h_t,u_t,c_t
+\right),
+}
+\]
+其中 $u_t$ 表示当前行动或外部作用，$c_t$ 表示上下文。
+
+因此每个 Episode 中的状态转移：
+\[
+(h_t,u_t,h_{t+1})
+\]
+天然构成结构记忆的训练数据。
+
+\subsection{基本结构学习目标}
+
+若情景 $E_i$ 内含一组状态转移
+\[
+D_i
+=
+\{
+(h_t,u_t,h_{t+1})
+\},
+\]
+则结构学习目标可以写为
+\[
+\boxed{
+\mathcal{L}_\Theta
+=
+\sum_i
+w_i
+\sum_{t\in E_i}
+\ell
+\left(
+f_\Theta(h_t,u_t),
+h_{t+1}
+\right),
+}
+\]
+其中
+\[
+w_i
+=
+m_i
+c_i
+r_i
+\]
+可以综合表示记忆质量、置信度和当前巩固优先级。
+
+结构记忆更新为
+\[
+\boxed{
+\Theta
+\leftarrow
+\Theta
+-
+\eta_\Theta
+\nabla_\Theta
+\mathcal{L}_\Theta.
+}
+\]
+
+这给出了最基本的
+\[
+E\rightarrow\Theta
+\]
+工程实现。
+
+\section{情景整理与结构学习之间的关系}
+
+\subsection{为什么不能简单随机重放全部 Episode}
+
+如果所有 Episode 都以同样概率参与结构学习，系统就退化成普通 Replay Buffer。
+
+液态情景记忆的意义之一，正是先对经历进行：
+\[
+\boxed{
+\mathrm{Decay}
++
+\mathrm{Merge}
++
+\mathrm{Split}
++
+\mathrm{Reorganize}
+}
+\]
+之后，再决定哪些结构值得进入 $\Theta$。
+
+因此可以定义巩固优先度
+\[
+\boxed{
+P_i^{cons}
+=
+F
+\left(
+m_i,
+c_i,
+\varepsilon_i,
+d_i
+\right),
+}
+\]
+其中：
+
+\begin{itemize}
+    \item $m_i$ 表示记忆质量；
+    \item $c_i$ 表示置信度；
+    \item $\varepsilon_i$ 表示当前 $\Theta$ 对该情景的预测残差；
+    \item $d_i$ 表示该情景对当前经验分布的覆盖价值。
+\end{itemize}
+
+于是只有：
+
+\begin{itemize}
+    \item 稳定重复出现；
+    \item 高可信；
+    \item 对当前结构模型仍有较高学习价值；
+    \item 或能够覆盖重要状态区域
+\end{itemize}
+
+的 Episode，才应获得较高巩固概率。
+
+\subsection{宏情景与充分统计量}
+
+大量相似 Episode 可以进一步形成宏情景统计：
+\[
+\boxed{
+S_k
+=
+(
+\mu_k,
+\Sigma_k,
+N_k,
+R_k,
+P_k^{outcome}
+).
+}
+\]
+
+其中：
+
+\begin{itemize}
+    \item $\mu_k$ 表示原型；
+    \item $\Sigma_k$ 表示变化范围；
+    \item $N_k$ 表示样本数量；
+    \item $R_k$ 表示稳定关系；
+    \item $P_k^{outcome}$ 表示结果分布。
+\end{itemize}
+
+因此可以由
+\[
+\{E_i\}_{i\in\mathcal C_k}
+\]
+压缩成
+\[
+S_k,
+\]
+再进一步更新
+\[
+\Theta.
+\]
+
+于是
+\[
+\boxed{
+E\rightarrow\Theta
+}
+\]
+更加准确地表示为：
+\[
+\boxed{
+\mathrm{Instances}
+\rightarrow
+\mathrm{StableStatistics}
+\rightarrow
+\mathrm{Generator}.
+}
+\]
+
+\section{结构记忆如何反向控制情景蒸发}
+
+三相循环并不是单向：
+\[
+h\rightarrow E\rightarrow\Theta.
+\]
+
+当结构记忆已经能够充分解释某一类经历时，大量具体 Episode 可以降低长期保留优先级。
+
+定义
+\[
+\varepsilon_i^\Theta
+=
+\ell
+\left(
+f_\Theta(E_i),
+E_i
+\right)
+\]
+作为 $\Theta$ 对 Episode $i$ 的解释残差。
+
+可以令情景蒸发率为
+\[
+\boxed{
+\lambda_i
+=
+\lambda_0
++
+\alpha
+\exp
+\left(
+-\varepsilon_i^\Theta
+\right).
+}
+\]
+
+当
+\[
+\varepsilon_i^\Theta\ll1
+\]
+时，说明该经历已经被结构记忆充分吸收，则
+\[
+\lambda_i\uparrow.
+\]
+
+而当
+\[
+\varepsilon_i^\Theta\gg1
+\]
+时，该经历仍然包含当前结构无法解释的内容，应满足
+\[
+\lambda_i\downarrow.
+\]
+
+因此：
+\[
+\boxed{
+\text{被结构充分吸收的经历可以更快淡化；
+无法被结构解释的经历应被更长时间保留。}
+}
+\]
+
+这一机制使 $E$ 成为当前 $\Theta$ 尚未完全解释的历史结构缓冲层。
+
+\section{E--Theta 双向闭环}
+
+由此可以得到情景记忆与结构记忆之间的双向关系：
+\[
+\boxed{
+E
+\xrightarrow{\mathrm{Consolidation}}
+\Theta
+}
+\]
+以及
+\[
+\boxed{
+\Theta
+\xrightarrow{\mathrm{Explain/Reinterpret}}
+E.
+}
+\]
+
+$\Theta$ 从 Episode 中学习稳定结构，而新的 $\Theta$ 又重新决定：
+
+\begin{itemize}
+    \item 哪些 Episode 已经没有必要高强度保留；
+    \item 哪些 Episode 仍然属于无法解释的异常；
+    \item 哪些历史关系需要重新解释；
+    \item 哪些情景应该被重新聚类。
+\end{itemize}
+
+因此情景记忆不是一个静态训练集，而是：
+\[
+\boxed{
+\text{结构记忆与历史之间持续调整的中间动力层。}
+}
+\]
+
+\section{三相记忆的统一动力学}
+
+综合前述关系，可以将三相记忆写成三层快--慢系统。
+
+工作记忆层：
+\[
+\boxed{
+\dot h
+=
+F_h
+\left(
+h,
+u,
+\Theta,
+\operatorname{Recall}(E)
+\right).
+}
+\]
+
+情景记忆层：
+\[
+\boxed{
+\frac{\partial \mu_E}{\partial t}
++
+\nabla_z\cdot(v_E\mu_E)
+=
+S_h
++
+\mathcal C[\mu_E]
+-
+\mathcal F[\mu_E]
+-
+\mathcal D[\mu_E]
+-
+\mathcal K[\mu_E,\Theta].
+}
+\]
+
+情景关系层：
+\[
+\boxed{
+\dot{\mathcal G}_E
+=
+\mathcal R_E
+\left(
+\mathcal G_E,
+h,
+\Theta
+\right).
+}
+\]
+
+结构记忆层：
+\[
+\boxed{
+\dot\Theta
+=
+-\eta_\Theta
+\nabla_\Theta
+\mathbb E_{
+e\sim\mu_E^{cons}
+}
+\left[
+\mathcal L_\Theta(e)
+\right].
+}
+\]
+
+于是：
+\[
+\boxed{
+h
+\leftrightarrow
+E
+\leftrightarrow
+\Theta
+}
+\]
+不再只是概念性箭头，而具有明确的数学对象和动力学意义。
+
+\section{基于 PyTorch 的离散工程实现}
+
+连续测度方程适合理论分析，但当前 GPU 系统中更现实的第一步，是将液态情景记忆离散化为有限粒子系统。
+
+\subsection{Episode 粒子表示}
+
+令系统中当前存在 $N$ 个 Episode。
+
+可以维护以下张量：
+\[
+Z
+\in
+\mathbb R^{N\times d_E},
+\]
+表示情景 embedding；
+
+\[
+M
+\in
+\mathbb R^N,
+\]
+表示质量；
+
+以及
+\[
+C,I,Nv,\varepsilon
+\in
+\mathbb R^N
+\]
+分别表示置信度、重要度、新颖性和预测误差。
+
+工程上，一个 Episode 可以表示为：
+
+\begin{verbatim}
+Episode:
+    id
+    trajectory_embedding
+    start_state
+    end_state
+    context
+    timestamp
+    mass
+    confidence
+    importance
+    novelty
+    prediction_error
+    consolidation_score
+\end{verbatim}
+
+如果需要保存更完整轨迹，则可以额外保存：
+
+\begin{verbatim}
+states  : [T, H]
+actions : [T-1, A]
+\end{verbatim}
+
+\subsection{Trajectory Encoder}
+
+由于
+\[
+E=\mathrm{Trajectory},
+\]
+需要将变长轨迹映射为固定维度 Episode 表示。
+
+例如可以使用 GRU：
+
+\begin{verbatim}
+class TrajectoryEncoder(nn.Module):
+    def __init__(self, h_dim, e_dim):
+        super().__init__()
+        self.gru = nn.GRU(
+            h_dim,
+            e_dim,
+            batch_first=True
+        )
+        self.proj = nn.Linear(
+            e_dim + 2 * h_dim,
+            e_dim
+        )
+
+    def forward(self, trajectory):
+        _, hidden = self.gru(trajectory)
+
+        z = torch.cat([
+            hidden[-1],
+            trajectory[:, 0],
+            trajectory[:, -1]
+        ], dim=-1)
+
+        z = self.proj(z)
+
+        return F.normalize(z, dim=-1)
+\end{verbatim}
+
+其中起始状态和结束状态被显式保留，用以强调
+\[
+\boxed{
+\mathrm{Episode}
+=
+\mathrm{WhatChanged}.
+}
+\]
+
+\section{Episode Store 与模型参数的分离}
+
+情景记忆 $E$ 是运行状态，而结构记忆 $\Theta$ 才属于模型慢参数。
+
+因此 Episode 不应默认注册为
+\[
+\mathrm{nn.Parameter}.
+\]
+
+更合理的方式是使用
+\[
+\mathrm{register\_buffer}
+\]
+或独立 tensor store。
+
+例如：
+
+\begin{verbatim}
+class EpisodicMemory(nn.Module):
+    def __init__(self, capacity, e_dim, h_dim):
+        super().__init__()
+
+        self.capacity = capacity
+
+        self.register_buffer(
+            "z",
+            torch.zeros(capacity, e_dim)
+        )
+
+        self.register_buffer(
+            "start_state",
+            torch.zeros(capacity, h_dim)
+        )
+
+        self.register_buffer(
+            "end_state",
+            torch.zeros(capacity, h_dim)
+        )
+
+        self.register_buffer(
+            "mass",
+            torch.zeros(capacity)
+        )
+
+        self.register_buffer(
+            "confidence",
+            torch.zeros(capacity)
+        )
+
+        self.register_buffer(
+            "importance",
+            torch.zeros(capacity)
+        )
+
+        self.register_buffer(
+            "prediction_error",
+            torch.zeros(capacity)
+        )
+
+        self.register_buffer(
+            "valid",
+            torch.zeros(
+                capacity,
+                dtype=torch.bool
+            )
+        )
+\end{verbatim}
+
+这样能够在软件层面明确区分：
+\[
+\boxed{
+E
+\neq
+\Theta.
+}
+\]
+
+\section{h 到 E 的工程写入}
+
+一旦一段轨迹完成事件切分，就可以通过 Trajectory Encoder 生成
+\[
+z_i.
+\]
+
+写入时通常应执行
+\[
+\operatorname{detach}(z_i),
+\]
+使该情景脱离当前反向传播图。
+
+原因是，一旦经历进入情景记忆，它已经从“当前计算状态”转化为“历史状态”，不应永久保留整个在线计算图。
+
+工程形式可以写为：
+
+\begin{verbatim}
+@torch.no_grad()
+def write_episode(
+    memory,
+    z,
+    start,
+    end,
+    confidence,
+    importance,
+    pred_error
+):
+    ...
+\end{verbatim}
+
+这一设计也符合
+\[
+\boxed{
+h\rightarrow E
+}
+\]
+本身就是一次动力学相变，而不是简单延长当前计算图。
+
+\section{基于向量相似度的初级召回}
+
+最简单的情景召回可以使用
+\[
+q
+\in
+\mathbb R^{d_E}
+\]
+与 Episode embedding 的相似度：
+\[
+s_i
+=
+\frac{
+q^\top z_i
+}{
+\|q\|\|z_i\|
+}.
+\]
+
+选取
+\[
+i\in
+\operatorname{TopK}(s)
+\]
+即可得到相关 Episode。
+
+对应 PyTorch：
+
+\begin{verbatim}
+query = F.normalize(query, dim=-1)
+memory_z = F.normalize(memory_z, dim=-1)
+
+score = query @ memory_z.T
+
+values, indices = torch.topk(
+    score,
+    k=top_k
+)
+\end{verbatim}
+
+这实现了最简单的：
+\[
+\boxed{
+E\rightarrow h.
+}
+\]
+
+但这只是 Recall，并不能单独构成液态情景记忆。
+
+\section{PyTorch 中的蒸发与强化}
+
+指数衰减可以直接实现为：
+\[
+m_i
+\leftarrow
+m_i
+e^{-\lambda_i\Delta t}.
+\]
+
+例如：
+
+\begin{verbatim}
+@torch.no_grad()
+def decay(memory, dt, base_decay):
+    rate = (
+        base_decay
+        / (1.0 + memory.importance)
+        / (1.0 + memory.confidence)
+    )
+
+    memory.mass *= torch.exp(
+        -rate * dt
+    )
+\end{verbatim}
+
+召回强化则可以写成：
+
+\begin{verbatim}
+@torch.no_grad()
+def reinforce(memory, indices, amount):
+    memory.mass[indices] += amount
+\end{verbatim}
+
+这样就实现：
+\[
+\boxed{
+\mathrm{Evaporation}
+\leftrightarrow
+\mathrm{Reactivation}.
+}
+\]
+
+\section{PyTorch 中的情景凝聚}
+
+设当前情景 embedding 矩阵为
+\[
+Z\in\mathbb R^{N\times d}.
+\]
+
+归一化后：
+\[
+S
+=
+ZZ^\top
+\]
+可用于估计 Episode 相似度。
+
+第一版实现中不建议对大规模记忆执行全局
+\[
+O(N^2)
+\]
+搜索，而应限制在：
+
+\begin{itemize}
+    \item 最近写入 Episode；
+    \item 当前召回候选；
+    \item 已经属于同一粗粒度簇的 Episode；
+    \item 或外部近邻检索返回的候选。
+\end{itemize}
+
+若两个 Episode 需要合并，可以使用：
+\[
+z_{ij}
+=
+\frac{
+m_i z_i+m_j z_j
+}{
+m_i+m_j
+}.
+\]
+
+简单工程实现：
+
+\begin{verbatim}
+@torch.no_grad()
+def merge_pair(memory, i, j):
+    mi = memory.mass[i]
+    mj = memory.mass[j]
+
+    m = mi + mj
+
+    z = (
+        mi * memory.z[i]
+        + mj * memory.z[j]
+    ) / m
+
+    memory.z[i] = F.normalize(
+        z,
+        dim=-1
+    )
+
+    memory.mass[i] = m
+    memory.valid[j] = False
+\end{verbatim}
+
+不过，更成熟的实现应优先构造 Macro-Episode，而不是直接删除原始情景。
+
+\section{Macro-Episode 与在线统计}
+
+对于大量相似情景，可以维护在线原型统计：
+\[
+N_k,
+\qquad
+\mu_k,
+\qquad
+\Sigma_k.
+\]
+
+例如使用在线均值：
+\[
+\mu_k^{(n)}
+=
+\mu_k^{(n-1)}
++
+\frac{
+x_n-\mu_k^{(n-1)}
+}{
+n
+}.
+\]
+
+这可以将大量具体 Episode 压缩成：
+\[
+\boxed{
+\mathrm{Prototype}
++
+\mathrm{Variation}
++
+\mathrm{Count}.
+}
+\]
+
+这些 Macro-Episode 既能够降低情景记忆规模，也能够直接成为结构学习的重要统计输入。
+
+\section{PyTorch 中的情景图}
+
+第一版动态图不一定需要使用专门的图学习框架。
+
+可以直接使用稀疏结构：
+
+\begin{verbatim}
+edge_index   # [2, M]
+edge_type    # [M]
+edge_weight  # [M]
+\end{verbatim}
+
+其中关系类型可以编码为：
+
+\begin{verbatim}
+0 : temporal
+1 : causal
+2 : semantic
+3 : context
+4 : shared_structure
+5 : part_of
+\end{verbatim}
+
+因此：
+\[
+\mathcal{G}_E
+\]
+在工程上可以从一个简单动态稀疏图开始。
+
+后续若需要基于关系传播，可以进一步使用图神经网络，但图神经网络并不是液态情景记忆定义本身的必要条件。
+
+\section{情景碎裂的工程实现}
+
+若某个 Macro-Episode 内部方差过高：
+\[
+\operatorname{Var}(E_k)
+>
+\theta_{\mathrm{split}},
+\]
+则可以执行局部聚类，把一个过度粗粒度的情景簇重新拆分成多个子簇。
+
+第一版可以使用简单 K-means：
+\[
+E_k
+\rightarrow
+E_k^{(1)},
+E_k^{(2)},
+\ldots.
+\]
+
+因此软件运行中可以形成：
+\[
+\boxed{
+\mathrm{Merge}
+\leftrightarrow
+\mathrm{Split}.
+}
+\]
+
+这使情景粒度本身成为可调节变量，而不是在首次写入时永久固定。
+
+\section{结构记忆网络的 PyTorch 实现}
+
+结构记忆 $\Theta$ 可以首先实现为普通预测神经网络。
+
+例如：
+\[
+f_\Theta:
+(h_t,a_t)
+\rightarrow
+\hat h_{t+1}.
+\]
+
+PyTorch 形式：
+
+\begin{verbatim}
+class StructuralMemory(nn.Module):
+    def __init__(
+        self,
+        h_dim,
+        action_dim,
+        hidden_dim
+    ):
+        super().__init__()
+
+        self.model = nn.Sequential(
+            nn.Linear(
+                h_dim + action_dim,
+                hidden_dim
+            ),
+            nn.SiLU(),
+            nn.Linear(
+                hidden_dim,
+                hidden_dim
+            ),
+            nn.SiLU(),
+            nn.Linear(
+                hidden_dim,
+                h_dim
+            )
+        )
+
+    def forward(self, h, action):
+        x = torch.cat(
+            [h, action],
+            dim=-1
+        )
+
+        return self.model(x)
+\end{verbatim}
+
+这时：
+\[
+\boxed{
+E\rightarrow\Theta
+}
+\]
+就具体表现为：
+\[
+\boxed{
+\mathrm{TrajectoryData}
+\rightarrow
+\mathrm{GenerativeDynamicsModel}.
+}
+\]
+
+\section{巩固采样器}
+
+结构记忆不应从 $E$ 中完全均匀采样。
+
+定义：
+\[
+p_i
+\propto
+m_i
+\cdot
+c_i
+\cdot
+(\varepsilon_i+\epsilon_0).
+\]
+
+其中：
+
+\begin{itemize}
+    \item $m_i$ 表示当前记忆质量；
+    \item $c_i$ 表示置信度；
+    \item $\varepsilon_i$ 表示结构模型当前预测误差。
+\end{itemize}
+
+归一化：
+\[
+p_i
+=
+\frac{
+\tilde p_i
+}{
+\sum_j \tilde p_j
+}.
+\]
+
+PyTorch：
+
+\begin{verbatim}
+priority = (
+    mass
+    * confidence
+    * (prediction_error + eps)
+)
+
+priority = priority / (
+    priority.sum() + 1e-8
+)
+
+indices = torch.multinomial(
+    priority,
+    batch_size,
+    replacement=True
+)
+\end{verbatim}
+
+于是情景记忆首先完成历史治理，再向结构记忆提供训练样本。
+
+\section{结构吸收后的情景蒸发}
+
+每次 $\Theta$ 更新后，都可以重新评估历史 Episode。
+
+对于 Episode $i$：
+\[
+\varepsilon_i^\Theta
+=
+\ell
+\left(
+f_\Theta(h_i^{start},a_i),
+h_i^{end}
+\right).
+\]
+
+再根据：
+\[
+\varepsilon_i^\Theta
+\]
+调整蒸发速度。
+
+例如：
+\[
+\lambda_i
+=
+\lambda_0
++
+\alpha
+e^{-\varepsilon_i^\Theta}.
+\]
+
+因此：
+
+\[
+\varepsilon_i^\Theta\downarrow
+\Rightarrow
+\lambda_i\uparrow,
+\]
+表示结构已经学会该类经历，可以减少对具体 Episode 的依赖。
+
+反之：
+\[
+\varepsilon_i^\Theta\uparrow
+\Rightarrow
+\lambda_i\downarrow,
+\]
+表示该经历仍然具有结构学习价值，应当继续保留。
+
+这一机制使：
+\[
+\boxed{
+E
+}
+\]
+成为结构记忆尚未完全吸收的历史中间层。
+
+\section{液态情景记忆的维护周期}
+
+第一版工程系统可以周期性执行以下维护过程：
+
+\begin{enumerate}
+    \item 新 Episode 写入；
+    \item 情景质量衰减；
+    \item 被召回情景强化；
+    \item 相似情景候选搜索；
+    \item Macro-Episode 凝聚；
+    \item 高内部方差簇拆分；
+    \item 情景图关系更新；
+    \item 计算结构记忆残差；
+    \item 根据优先级采样巩固数据；
+    \item 更新结构记忆 $\Theta$；
+    \item 根据结构吸收程度调整蒸发率；
+    \item 删除质量低于阈值的 Episode。
+\end{enumerate}
+
+可以概括为：
+\[
+\boxed{
+\mathrm{Write}
+\rightarrow
+\mathrm{Decay}
+\rightarrow
+\mathrm{Recall}
+\rightarrow
+\mathrm{Merge}
+\rightarrow
+\mathrm{Split}
+\rightarrow
+\mathrm{Reconstruct}
+\rightarrow
+\mathrm{Consolidate}
+\rightarrow
+\mathrm{Evaporate}.
+}
+\]
+
+这就是液态情景记忆的一次完整软件维护周期。
+
+\section{推荐的 PyTorch 模块划分}
+
+工程上可以将系统拆分为：
+
+\begin{verbatim}
+ThreePhaseMemorySystem
+|
+|-- EventSegmenter
+|
+|-- TrajectoryEncoder
+|
+|-- EpisodicMemory
+|   |
+|   |-- ParticleStore
+|   |
+|   `-- EpisodicGraph
+|
+|-- MemoryDynamics
+|   |
+|   |-- Decay
+|   |-- Reinforce
+|   |-- Merge
+|   |-- Split
+|   `-- Reconstruct
+|
+`-- StructuralMemory
+    |
+    `-- Consolidator
+\end{verbatim}
+
+对应数学关系：
+\[
+h
+\xrightarrow{
+\mathrm{EventSegmenter}
+}
+\gamma,
+\]
+\[
+\gamma
+\xrightarrow{
+\mathrm{TrajectoryEncoder}
+}
+e,
+\]
+\[
+e
+\rightarrow
+E,
+\]
+\[
+E
+\xrightarrow{
+\mathrm{MemoryDynamics}
+}
+E',
+\]
+\[
+E'
+\xrightarrow{
+\mathrm{Consolidator}
+}
+\Theta.
+\]
+
+\section{可微过程与不可微记忆动力过程的分离}
+
+第一代实现中，不建议让所有记忆生命周期操作都参与端到端反向传播。
+
+可以将系统划分为两类。
+
+可微部分包括：
+
+\begin{itemize}
+    \item Trajectory Encoder；
+    \item Event Boundary Scorer；
+    \item Recall Projection；
+    \item Structural Memory $\Theta$。
+\end{itemize}
+
+状态动力过程包括：
+
+\begin{itemize}
+    \item Episode 写入；
+    \item 质量蒸发；
+    \item Recall 强化；
+    \item Merge；
+    \item Split；
+    \item Graph Rewrite；
+    \item Prune。
+\end{itemize}
+
+后者可以主要在
+\[
+\mathrm{torch.no\_grad()}
+\]
+环境下执行。
+
+这样能够保持三相理论中的基本区分：
+\[
+\boxed{
+\text{当前可微计算}
+\neq
+\text{历史状态动力}
+\neq
+\text{慢参数学习}.
+}
+\]
+
+\section{Hot--Warm--Cold 情景存储层}
+
+持续智能体中的 Episode 数量可能远大于 GPU 显存能够长期容纳的规模。
+
+因此工程上可以采用：
+
+\[
+\boxed{
+\mathrm{Hot}
+\rightarrow
+\mathrm{Warm}
+\rightarrow
+\mathrm{Cold}
+}
+\]
+三级物理存储。
+
+Hot Episode：
+
+\begin{itemize}
+    \item 当前任务高度相关；
+    \item 最近产生；
+    \item 最近频繁召回；
+    \item 直接保存在 GPU。
+\end{itemize}
+
+Warm Episode：
+
+\begin{itemize}
+    \item 中期保留；
+    \item 低频召回；
+    \item 保存在主存。
+\end{itemize}
+
+Cold Episode：
+
+\begin{itemize}
+    \item 长生命周期保存；
+    \item 很少直接召回；
+    \item 可保存在持久化存储。
+\end{itemize}
+
+需要强调：
+\[
+\boxed{
+\mathrm{Carrier}
+\neq
+\mathrm{MemoryPhase}.
+}
+\]
+
+一个 Episode 无论位于 GPU、RAM 还是持久化设备，只要仍然属于中时间尺度可重新识别历史，都仍然属于 $E$。
+
+\section{在线循环与慢巩固循环}
+
+为了保持三相时间尺度分离，建议把系统运行分成两个主要循环。
+
+在线快速循环：
+\[
+\boxed{
+h
+\rightarrow
+\mathrm{EventDetection}
+\rightarrow
+E
+\rightarrow
+\mathrm{Recall}
+\rightarrow
+h.
+}
+\]
+
+慢速巩固循环：
+\[
+\boxed{
+E
+\rightarrow
+\mathrm{Merge/Split/Reconstruct}
+\rightarrow
+\mathrm{Consolidation}
+\rightarrow
+\Theta.
+}
+\]
+
+满足：
+\[
+\tau_h
+\ll
+\tau_E
+\ll
+\tau_\Theta.
+\]
+
+这样软件实现本身就保持了三相记忆原理论的时间尺度结构。
+
+\section{最小可验证系统}
+
+完整液态情景记忆并不需要一次实现全部机制。
+
+第一个实验版本可以只实现：
+
+\begin{enumerate}
+    \item Trajectory Encoder；
+    \item Episode Store；
+    \item Recall；
+    \item Mass Decay；
+    \item Episode Merge；
+    \item $\Theta$ Consolidation。
+\end{enumerate}
+
+然后比较三类系统：
+
+直接在线学习：
+\[
+h+\Theta;
+\]
+
+普通经验重放：
+\[
+h+\mathrm{ReplayBuffer}+\Theta;
+\]
+
+液态情景记忆：
+\[
+\boxed{
+h+E_{\mathrm{liquid}}+\Theta.
+}
+\]
+
+可以比较：
+
+\begin{itemize}
+    \item 长期预测误差；
+    \item 灾难性遗忘；
+    \item 新规律学习速度；
+    \item 情景召回准确性；
+    \item 情景数量增长速度；
+    \item 重复经历压缩率；
+    \item 异常经历保留率；
+    \item 结构记忆泛化能力。
+\end{itemize}
+
+若液态情景系统在这些指标上表现出稳定优势，就说明 $E$ 不只是辅助数据库，而可能是固定拓扑持续学习体系中的必要中间动力层。
+
+\section{本章的标准情景记忆数学对象}
+
+经过本章讨论，可以正式将情景记忆定义为：
+\[
+\boxed{
+\mathcal{E}_t
+=
+\left(
+\mu_t,
+\mathcal{G}_t
+\right).
+}
+\]
+
+其中：
+
+\[
+\mu_t
+=
+\sum_i
+m_i(t)
+\delta_{z_i(t)}
+\]
+描述情景的质量、流动、衰减、强化和凝聚；
+
+而
+\[
+\mathcal{G}_t
+\]
+描述情景之间的时间、因果、语义和层级关系。
+
+因此：
+\[
+\boxed{
+\mu_t
+=
+\text{液态动力},
+}
+\]
+\[
+\boxed{
+\mathcal{G}_t
+=
+\text{历史结构}.
+}
+\]
+
+两者共同构成完整的情景记忆。
+
+\section{本章结论}
+
+三相记忆中的情景层 $E$ 不应被理解为一个静态事件数据库。
+
+其更加完整的定义应是：
+\[
+\boxed{
+E=
+\text{可流动、可整合、可重构、可蒸发并可向慢结构沉降的历史轨迹系统}.
+}
+\]
+
+在数学上，可以表示为
+\[
+\boxed{
+E(t)
+=
+\left(
+\mu_E(t),
+\mathcal{G}_E(t)
+\right).
+}
+\]
+
+其中：
+
+\[
+\mu_E
+\]
+负责表示记忆强度、蒸发、凝聚和碎裂；
+
+\[
+\mathcal{G}_E
+\]
+负责表示时序、因果、上下文和层级关系。
+
+而从 $E$ 到结构记忆 $\Theta$ 的过程，则是：
+\[
+\boxed{
+\mathrm{Trajectory}
+\rightarrow
+\mathrm{OrganizedHistory}
+\rightarrow
+\mathrm{StableStatistics}
+\rightarrow
+\mathrm{Generator}.
+}
+\]
+
+因此三相记忆的完整动力关系可以写为：
+\[
+\boxed{
+h
+\xrightarrow{
+\mathrm{EventFormation}
+}
+E
+\xrightarrow{
+\mathrm{LiquidDynamics}
+}
+E'
+\xrightarrow{
+\mathrm{Consolidation}
+}
+\Theta.
+}
+\]
+
+同时：
+\[
+\boxed{
+\Theta
+\xrightarrow{
+\mathrm{Prediction/Interpretation}
+}
+E,h.
+}
+\]
+
+最终形成：
+\[
+\boxed{
+h
+\leftrightarrow
+E
+\leftrightarrow
+\Theta.
+}
+\]
+
+从更深层来看，液态情景记忆承担的是工作状态与长期生成结构之间不可缺少的历史缓冲层：
+
+\[
+\boxed{
+\text{当前状态不能直接成为长期规律；
+它必须先成为历史，
+历史经过整合和验证后，
+其中稳定的部分才有资格成为结构。}
+}
+\]
+
+这使三相记忆从一个记忆分层模型进一步发展为一个完整的持续学习动力系统。

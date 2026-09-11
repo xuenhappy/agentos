@@ -1,7 +1,7 @@
 \chapter{KRA 的功能对齐理论}
 \label{chap:kra-functional-alignment}
 
-\begin{chapteroverviewbox}
+\begin{chapterlead}
 本章确立 KRA（Kernel--Runtime Adaptation）最核心的理论原则：\textbf{Agent Kernel 与 Body Runtime 之间不应以内部表示的一致性作为耦合目标，而应以现实闭环中的功能一致性、语义契约一致性与控制后果一致性作为最终对齐标准。} Kernel 与 BPCC 可以具有完全不同的内部表征空间、模型结构、训练目标乃至时间尺度，只要二者能够通过稳定的公共语义接口，在真实世界反馈下保持预测、控制、残差解释和安全约束的一致，就可以构成稳定的统一智能体。
 
 因此，本章提出 KRA 的四阶段原则：
@@ -30,7 +30,7 @@ KRA 的最终锚点不是 Kernel，也不是 BPCC，更不是任何一个学习�
 RealityIsTheUltimateAlignmentAnchor
 \end{statementbox}
 只有能够持续通过真实观测重新闭合的功能关系，才能被认为是有效的 Kernel--Body 耦合关系。本章由此建立 Semantic Contract、Contract Envelope 与 Functional Anchor 三个工程对象，为异构认知内核、异构身体运行时以及未来跨身体迁移提供统一的功能对齐理论基础。
-\end{chapteroverviewbox}
+\end{chapterlead}
 
 \section{Train Separately：为什么 Kernel 与 Body Runtime 不应被迫共享一种内部表示}
 

@@ -1,6 +1,6 @@
 \chapter{FBI：Functional Body Interface——从具体身体到统一智能体身体语义}
 
-\begin{chapteroverviewbox}
+\begin{chapterlead}
 在前述 AgentOS 体系中，我们已经把一个完整智能体区分为认知内核与身体运行时两个彼此耦合但时间尺度不同的动力系统。认知内核处理目标、记忆、自我、推理与长期结构变化；身体运行时则直接面对现实世界中的传感器、执行器、设备状态、数字接口和高频局部动力学。问题由此变得十分具体：如果不同身体拥有完全不同的传感器、执行器、坐标系、控制协议和内部状态，一个持续存在的 Agent Kernel 如何在不随每一种身体重新设计自身的情况下获得统一的“身体经验”并发出统一意义上的行动意图？
 
 本章提出 \textbf{FBI（Functional Body Interface，功能身体接口）} 作为这一问题的基础工程解。FBI 不是普通设备驱动层，也不是一个将传感器数据简单转换成文本的适配器，而是位于具体身体实现与 AgentOS 认知体系之间的\textbf{功能语义边界}。它一方面将身体特有的原始状态投影为统一的身体中心现实表示和功能影响表示，另一方面把认知层给出的抽象控制意图映射到该身体能够理解的执行参考空间，并向认知层显式声明该身体当前具有何种能力、约束、可信度与可达边界。
@@ -17,7 +17,7 @@ Sensor \rightarrow LLM,
 AgentInvariantBodySemantics\)}
 \end{statementbox}
 其目标是在保持具体身体高效、局部、实时和可适应的同时，使上层 Agent Kernel 尽可能保持身体无关性。FBI 因而是 Body Scale 原理真正落入系统工程的第一道接口，也是后续 SGC、FCS、BPCC、KRA 以及多身体迁移能够成立的基础。
-\end{chapteroverviewbox}
+\end{chapterlead}
 
 
 \section{为什么智能体需要一个功能身体接口}
