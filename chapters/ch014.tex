@@ -10,11 +10,12 @@
 \mathcal G_F
 \]
 的基本理论。我们将把智能系统描述为由功能节点、功能边、闭环集合及其动态属性构成的有向多层网络，并进一步说明，一个成熟的“模块”应被理解为长期稳定的功能关系在实现层上的拓扑凝聚，即
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Module = StableTopologicalCondensate
-}
-\]
+\)}
+\end{statementbox}
 而不是智能理论的不可再分基本单元。
 
 这一转换具有重要意义。它使我们能够在不绑定 Transformer、神经元、软件进程、机器人控制器或特定计算芯片的情况下讨论智能组织；也为下一章建立 CSO 图与功能图的双图理论奠定基础。更重要的是，它为后面“CSO 流塑造拓扑”“长期功能迁移沉降为技能和模块”“智能发育最终表现为功能拓扑演化”等理论留下严格的数学接口。
@@ -116,13 +117,14 @@ Module.
 这意味着模块并不是智能组织的起点，而更像是智能组织长期稳定以后出现的“结构化结果”。
 
 这一观点与传统软件工程并不矛盾。工程上我们仍然需要模块，因为模块化可以改善封装性、测试性、安全性和资源管理。但理论上必须保持：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalOntology
 \neq
 ImplementationOntology.
-}
-\]
+\)}
+\end{statementbox}
 
 如果这一层不加区分，后续关于技能沉降、认知结构迁移、功能重组和拓扑学习的讨论就会退化成“把某段代码从模块 A 搬到模块 B”。而我们真正关心的是更一般的问题：\textbf{某类 Agent-CSO 的处理责任是否改变了，它是否进入了新的时间尺度、闭环和因果路径。}
 
@@ -490,15 +492,16 @@ A_{ij}=A_{ij}(\omega),
 这与前面建立的智能频谱理论发生第一次明确连接：功能拓扑不是脱离时间尺度的静态结构，而是一个在不同频率下表现出不同有效耦合强度的多尺度动力网络。
 
 因此，本章意义上的“功能边”最终包含三个核心维度：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Relation
 +
 Dynamics
 +
 Authority.
-}
-\]
+\)}
+\end{statementbox}
 它描述的不只是“谁向谁发信息”，而是“谁能够以何种方式、在多快的时间尺度上、以多大的作用强度改变谁”。
 
 
@@ -706,13 +709,14 @@ EachScaleShouldCloseItsOwnFastLoop.
 快速层则在这一约束空间中自行闭环。
 
 这就是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance
 \neq
 FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 
 因此，多闭环不是 AgentOS 后期附加的工程技巧，而是从智能时空尺度理论自然推导出来的结构要求。一个成熟智能系统并不依赖单个中央循环控制所有状态，而是由大量局部闭环完成自己的快速稳定，再通过较慢闭环协调它们之间的关系。
 
@@ -1051,13 +1055,14 @@ w_{ij},
 那么这组功能就开始具有独立封装的条件。
 
 因此我们定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Module
 =
 StableTopologicalCondensate.
-}
-\]
+\)}
+\end{statementbox}
 
 这里的 ``condensate'' 不是物理学意义上的玻色凝聚，而是一个结构隐喻：原本动态、分散、需要频繁协调的功能关系，经过长期反复使用以后形成局部稳定、内部高耦合、外部接口相对简单的功能团簇。
 
@@ -1223,13 +1228,14 @@ M_a.
 \]
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalTopology
 \neq
 ImplementationTopology.
-}
-\]
+\)}
+\end{statementbox}
 
 这一区别具有非常直接的现实意义。
 
@@ -1320,12 +1326,13 @@ $}
 因此，实现自由并不意味着功能无约束。恰恰相反，真正的标准化应当发生在功能层，而把实现层保持开放。
 
 本章由此得到一个十分重要的工程原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StandardizeFunctionalRelations,
 DoNotOverstandardizeInternalRepresentations.
-}
-\]
+\)}
+\end{statementbox}
 
 这一思想后来会在 KRA 理论中进一步发展为：
 \[
@@ -1427,13 +1434,14 @@ PersistentFastResidualShapesSlowStructure.
 但在本章，这一关系第一次获得了明确的拓扑载体。
 
 最重要的是，我们把模块从第一性对象的位置上移除，并重新定义为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Module
 =
 StableTopologicalCondensate.
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，模块是稳定功能关系的封装，是重复闭环的结构沉降，是过去动力学在当前实现结构中的历史痕迹。
 

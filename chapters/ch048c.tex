@@ -6,11 +6,12 @@
 
 但是，只要继续追问一个最基本的问题，就会发现前面的理论仍然缺少一个关键环节：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{一次真实经历到来以后，系统究竟应该改变什么？}
-}
-\]
+\)}
+\end{statementbox}
 
 它可能只应该改变当前工作状态：
 
@@ -66,21 +67,23 @@ E_i.
 
 真正的问题变成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 现实产生的学习信号，应当在什么时间、以什么强度、通过什么学习方式，被路由到智能体的哪一种结构。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 本章将这个问题称为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{Learning Scheduling}
-}
-\]
+\)}
+\end{statementbox}
 
 即学习调度。
 
@@ -110,24 +113,27 @@ E.
 
 第一，
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E\text{ 如何形成、组织、重构、蒸发并沉降为 }\Theta;
-}
-\]
+\)}
+\end{statementbox}
 
 第二，
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS\text{ 如何调度整个过程中的可塑性。}
-}
-\]
+\)}
+\end{statementbox}
 
 这两个问题最终会汇合成一个统一结构：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{经历动力学}
 \rightarrow
 \text{证据组织}
@@ -135,8 +141,8 @@ AgentOS\text{ 如何调度整个过程中的可塑性。}
 \text{学习调度}
 \rightarrow
 \text{结构适应}.
-}
-\]
+\)}
+\end{statementbox}
 
 这也是持续人工智能生命体从“能够学习”进一步走向“能够治理自身学习”的关键一步。
 
@@ -175,23 +181,26 @@ E
 
 从功能上可以分别写成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h=\text{CurrentState}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E=\text{OrganizedHistory}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Theta=\text{SlowGenerator}.
-}
-\]
+\)}
+\end{statementbox}
 
 从工程角度看，\(h\) 与 \(\Theta\) 的基本职责都相对清楚。
 
@@ -239,19 +248,21 @@ h_t,u_t
 
 主要回答：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{在当前状态和作用条件下，接下来更可能发生什么？}
-}
-\]
+\)}
+\end{statementbox}
 
 或者更一般地：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{未来状态应该怎样生成？}
-}
-\]
+\)}
+\end{statementbox}
 
 真正复杂的是中间的：
 
@@ -295,42 +306,46 @@ E.
 
 以及最重要的：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{什么时候一组经历已经足以改变 }\Theta?
-}
-\]
+\)}
+\end{statementbox}
 
 因此，三相记忆真正需要重点设计的并不是三个彼此平行的记忆模块，而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 一个位于当前状态和长期生成结构之间、具有自身动力学的情景历史层。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 从这个意义上，可以把三者重新解释为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h=\text{状态端},
 \qquad
 E=\text{历史治理端},
 \qquad
 \Theta=\text{生成端}.
-}
-\]
+\)}
+\end{statementbox}
 
 而三相记忆的核心工程问题则变成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 如何构造一个能够把现在组织成历史，再把历史转化为未来生成结构的 }E.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{情景记忆不是 Replay Buffer，而是可演化的历史状态}
@@ -357,11 +372,12 @@ q
 
 原因是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Sample}\neq\text{Episode}.
-}
-\]
+\)}
+\end{statementbox}
 
 一次真正的 Episode 必须保持：
 
@@ -441,8 +457,9 @@ m_i
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E_i
 =
 \text{Trajectory}
@@ -452,8 +469,8 @@ E_i
 \text{Relation}
 +
 \text{MemoryMass}.
-}
-\]
+\)}
+\end{statementbox}
 
 这使 \(E\) 不再是过去数据的简单集合，而成为一个真正可以继续演化的历史对象。
 
@@ -470,11 +487,12 @@ h(t).
 
 因此第一步不是“存储”，而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{EventFormation}.
-}
-\]
+\)}
+\end{statementbox}
 
 定义事件边界强度：
 
@@ -569,11 +587,12 @@ E_i.
 
 因为系统需要学会：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{什么样的状态变化值得被视为“一次经历”。}
-}
-\]
+\)}
+\end{statementbox}
 
 这一过程主要可以依赖自监督信号。
 
@@ -591,11 +610,12 @@ E_i.
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EventSegmentation
-}
-\]
+\)}
+\end{statementbox}
 
 本身就属于 \(E\) 的第一层适应。
 
@@ -610,11 +630,12 @@ z_i\approx z_j,
 
 那么系统就会失去情景记忆最重要的属性：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EpisodeIdentity.
-}
-\]
+\)}
+\end{statementbox}
 
 例如：
 
@@ -626,19 +647,21 @@ EpisodeIdentity.
 
 因此 \(E\) 必须同时保留：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{语义相似性}
-}
-\]
+\)}
+\end{statementbox}
 
 和：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{经历个体性}.
-}
-\]
+\)}
+\end{statementbox}
 
 可以使用可学习的模式分离映射：
 
@@ -672,23 +695,25 @@ y_{ij}^{diff}=1
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Pattern Separation}
-}
-\]
+\)}
+\end{statementbox}
 
 不是简单地把所有表示无限拉开。
 
 真正目标是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 在保持经验之间可比较性的同时，避免具有不同时间身份和结果结构的 Episode 彼此覆盖。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 这是情景记忆能够真正承担历史功能的基本条件。
 
@@ -713,11 +738,12 @@ y_{ij}^{diff}=1
 
 因此 E 的核心不是把这些信息简单拼接，而是建立：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{RelationalBinding}.
-}
-\]
+\)}
+\end{statementbox}
 
 可以写成：
 
@@ -777,16 +803,18 @@ O_i
 
 因此情景记忆不是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 What.
-}
-\]
+\)}
+\end{statementbox}
 
 而更接近：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 What
 +
 Where
@@ -796,16 +824,17 @@ When
 How
 +
 WhatChanged.
-}
-\]
+\)}
+\end{statementbox}
 
 其中最容易被传统记忆系统忽略的是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 WhatChanged.
-}
-\]
+\)}
+\end{statementbox}
 
 因为如果 E 最终要支持：
 
@@ -815,11 +844,12 @@ E\rightarrow\Theta,
 
 那么它必须保存足够多的状态转移信息，使系统能够从具体经历中学习：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{状态怎样演化。}
-}
-\]
+\)}
+\end{statementbox}
 
 因此可以把 Episode 进一步写成：
 
@@ -856,13 +886,14 @@ TopK(E).
 
 所以真正需要的是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PartialCue
 \rightarrow
 EpisodeCompletion.
-}
-\]
+\)}
+\end{statementbox}
 
 设当前查询：
 
@@ -918,15 +949,16 @@ h.
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Recall
 =
 Retrieval
 +
 PatternCompletion.
-}
-\]
+\)}
+\end{statementbox}
 
 训练时可以随机遮蔽 Episode 的一部分：
 
@@ -978,11 +1010,12 @@ e_i
 
 因此 E 更合理的工作方式是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{默认潜伏，必要时浮现。}
-}
-\]
+\)}
+\end{statementbox}
 
 可以定义 Recall Gate：
 
@@ -1037,22 +1070,24 @@ g_t^R\uparrow.
 
 这产生一个十分重要的原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 Recall should be residual-driven rather than continuously active.
 }
-}
-\]
+\)}
+\end{statementbox}
 
 即：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{当前结构能够处理，就不必回忆；
 当前结构解释失败，历史才重新进入现在。}
-}
-\]
+\)}
+\end{statementbox}
 
 这不仅降低计算成本，也为后面的情景蒸发机制提供了关键基础。
 
@@ -1129,11 +1164,12 @@ G_i
 
 这使 E 不再是静态存储，而成为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{带质量的历史动力系统}.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{情景重构：事实核心与解释结构必须分离}
@@ -1190,49 +1226,54 @@ E_t,
 
 这意味着：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{过去发生过什么}
-}
-\]
+\)}
+\end{statementbox}
 
 和：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{现在怎样理解过去}
-}
-\]
+\)}
+\end{statementbox}
 
 必须被区分。
 
 因此情景记忆重构应满足：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EvidencePreservation
 +
 InterpretationPlasticity.
-}
-\]
+\)}
+\end{statementbox}
 
 这是一个十分关键的认知稳定条件。
 
 否则所谓“液态”会退化成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HistoryWithoutIdentity.
-}
-\]
+\)}
+\end{statementbox}
 
 而真正的 E 应当是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{可重构但仍保持历史连续性的过去。}
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{情景整合：从 Episode 集合到动态关系图}
@@ -1241,13 +1282,14 @@ HistoryWithoutIdentity.
 
 真正的历史还依赖：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Episode
 \leftrightarrow
 Episode
-}
-\]
+\)}
+\end{statementbox}
 
 之间的关系。
 
@@ -1356,11 +1398,12 @@ E
 
 最终不是一个 memory list，而是一个：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{动态历史关系场。}
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{情景合并：重复经历必须形成更高层历史对象}
@@ -1434,19 +1477,21 @@ E_1,E_2,\ldots,E_n
 
 这样：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{具体性}
-}
-\]
+\)}
+\end{statementbox}
 
 和：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{抽象组织性}
-}
-\]
+\)}
+\end{statementbox}
 
 可以同时存在。
 
@@ -1538,19 +1583,21 @@ E_i^{(2)},
 
 这意味着：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{历史的组织方式本身也是可以学习的。}
-}
-\]
+\)}
+\end{statementbox}
 
 因此 E 的液态性质不是简单“容易忘”，而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{其内部粒度、关系和解释结构都可以持续重组。}
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{情景蒸发：遗忘不是失败，而是历史功能的迁移}
@@ -1577,11 +1624,12 @@ t.
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{情景蒸发是持续智能的必要治理机制之一。}
-}
-\]
+\)}
+\end{statementbox}
 
 但蒸发不应仅仅由时间决定。
 
@@ -1650,23 +1698,26 @@ G_i
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{常用的历史被召回强化；}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{异常历史因惊奇而被保留；}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{已被慢结构充分吸收的普通经历逐渐蒸发。}
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{Theta 并不需要直接删除 E}
@@ -1733,8 +1784,9 @@ m_i\downarrow.
 
 因此可以写成完整链：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E
 \rightarrow
 \Theta'
@@ -1748,18 +1800,19 @@ LessRecall
 LessReinforcement
 \rightarrow
 EpisodeEvaporation.
-}
-\]
+\)}
+\end{statementbox}
 
 这意味着：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 遗忘有时不是学习失败，而是结构学习成功以后具体历史失去了原有功能。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 这也是：
 
@@ -1792,13 +1845,14 @@ E\rightarrow\Theta
 
 应当表示：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Instance
 \rightarrow
 Generator.
-}
-\]
+\)}
+\end{statementbox}
 
 假设一个 Episode 提供一段轨迹：
 
@@ -1872,8 +1926,9 @@ Utility_i.
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 w_i
 =
 f(
@@ -1883,8 +1938,8 @@ Coverage_i,
 Residual_i,
 Utility_i
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 这说明：
 
@@ -1896,11 +1951,12 @@ E
 
 实际上承担了：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{长期结构学习的数据治理层。}
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{从具体经历到充分统计：E 的整理为 Theta 提供训练结构}
@@ -1977,13 +2033,14 @@ S_k
 
 其真正目的之一是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 把大量具体历史逐渐组织成足以支持慢结构学习的经验统计结构。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 因此：
 
@@ -1997,11 +2054,12 @@ E^{org}
 
 又已经开始承担：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{EvidencePreparationForTheta}.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{为什么 E 到 Theta 必须由学习调度控制}
@@ -2028,20 +2086,22 @@ Residual_i\gg0
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Surprise
 \neq
 StructuralTruth.
-}
-\]
+\)}
+\end{statementbox}
 
 这正是为什么需要学习调度。
 
 定义 Episode 对 \(\Theta\) 的结构学习资格：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Q_i^\Theta
 =
 f(
@@ -2052,8 +2112,8 @@ Residual_i,
 Utility_i,
 Conflict_i
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 可以写成：
 
@@ -2099,11 +2159,12 @@ Q_i^\Theta\ll1.
 
 此时：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{先进入 E，而不是立即修改 }\Theta.
-}
-\]
+\)}
+\end{statementbox}
 
 随着相似 Episode 增加：
 
@@ -2127,13 +2188,14 @@ Q_i^\Theta\uparrow.
 
 于是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{EvidenceAccumulation}
 \rightarrow
 \text{StructuralPlasticityPermission}.
-}
-\]
+\)}
+\end{statementbox}
 
 这是三相记忆和学习调度真正连接的地方。
 
@@ -2162,13 +2224,14 @@ MetaLearning.
 
 原因是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningSignal
 \neq
 LearningTarget.
-}
-\]
+\)}
+\end{statementbox}
 
 一次监督纠正可以用于：
 
@@ -2204,76 +2267,84 @@ E 的保留；
 
 因此，监督、自监督和强化学习更适合作为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningPrimitives.
-}
-\]
+\)}
+\end{statementbox}
 
 而 AgentOS 需要在其上建立：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningScheduling.
-}
-\]
+\)}
+\end{statementbox}
 
 学习调度回答的不是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{怎样算梯度？}
-}
-\]
+\)}
+\end{statementbox}
 
 而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{这个信号应该改变谁？}
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{AgentOS 学习的三层统一结构}
 
 为了避免为监督学习、自监督学习、强化学习、元学习分别建立独立的顶层体系，可以把 AgentOS 的全部学习压缩为三个功能层：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{LearningScheduling}
 \rightarrow
 \textbf{LearningControl}
 \rightarrow
 \textbf{LearningAdaptation}.
-}
-\]
+\)}
+\end{statementbox}
 
 三层不是按照快、中、慢时间尺度划分，而是按照功能划分。
 
 学习调度负责：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{谁学习、何时学习。}
-}
-\]
+\)}
+\end{statementbox}
 
 学习控制负责：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{怎样学习、学习多少。}
-}
-\]
+\)}
+\end{statementbox}
 
 学习适应负责：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{真正发生什么结构变化。}
-}
-\]
+\)}
+\end{statementbox}
 
 这个三层结构可以覆盖：
 
@@ -2297,19 +2368,21 @@ Replay；
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{学习范式}
-}
-\]
+\)}
+\end{statementbox}
 
 从顶层体系下降为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{学习适应算子集合}.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{第一层：学习调度决定谁获得可塑性}
@@ -2432,13 +2505,14 @@ g_{\Lambda_E}\uparrow.
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningScheduling
 =
 PlasticityRouting.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{第二层：学习控制决定如何改变}
@@ -2447,11 +2521,12 @@ PlasticityRouting.
 
 学习控制器还要决定：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{用什么方式改变。}
-}
-\]
+\)}
+\end{statementbox}
 
 定义：
 
@@ -2548,11 +2623,12 @@ A_i^{RL}
 
 这意味着：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{监督、自监督、强化学习的选择与组合，本身属于学习控制问题。}
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{第三层：学习适应真正执行结构变化}
@@ -2618,36 +2694,40 @@ Episode 合并与拆分。
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningAdaptation
 =
 \text{真正的状态、参数或拓扑变化。}
-}
-\]
+\)}
+\end{statementbox}
 
 到这里，学习的三个问题被完全分离：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Scheduling:
 \text{谁应该改变？}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Control:
 \text{应该怎样改变？}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Adaptation:
 \text{实际上改变了什么？}
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{学习信号的统一来源}
@@ -2727,33 +2807,36 @@ I_t
 
 真正关系是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningSignal
 \rightarrow
 LearningScheduler
 \rightarrow
 LearningTarget.
-}
-\]
+\)}
+\end{statementbox}
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictionError
-}
-\]
+\)}
+\end{statementbox}
 
 可以主要进入 E；
 
 也可以经过长期证据积累以后进入 \(\Theta\)。
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reward
-}
-\]
+\)}
+\end{statementbox}
 
 可以更新行为策略；
 
@@ -2776,19 +2859,21 @@ r_{t+k}
 
 AgentOS 还必须解决：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{一个长期结果究竟应该归因于哪个内部结构？}
-}
-\]
+\)}
+\end{statementbox}
 
 这可以称为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{Structural Credit Assignment}.
-}
-\]
+\)}
+\end{statementbox}
 
 设长期性能：
 
@@ -2817,8 +2902,9 @@ C_i
 
 因此需要组合：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Gradient
 +
 EligibilityTrace
@@ -2828,8 +2914,8 @@ Replay
 CounterfactualEvaluation
 +
 LongTermStatistics.
-}
-\]
+\)}
+\end{statementbox}
 
 例如记录某个过去学习决策的资格痕迹：
 
@@ -2857,22 +2943,24 @@ e_i^L(t)r_{t+k}.
 
 于是系统能够学习：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{过去哪一次“允许谁学习”的决策最终是正确的。}
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{学习调度器自身为什么也必须学习}
 
 如果 Learning Scheduler 完全由人工规则固定，那么 Agent 可以持续学习世界，却无法学习：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{怎样学习更好。}
-}
-\]
+\)}
+\end{statementbox}
 
 因此学习调度器自身参数：
 
@@ -2918,8 +3006,9 @@ Outcome_{t:T}.
 
 然后这些结果反过来形成调度器自身的学习信号：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Phi_{S,t+1}
 =
 F_S
@@ -2927,13 +3016,14 @@ F_S
 \Phi_{S,t},
 Outcome_{t:T}
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 于是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Scheduler_t
 \rightarrow
 LearningDecision_t
@@ -2941,35 +3031,38 @@ LearningDecision_t
 Outcome_{t:T}
 \rightarrow
 Scheduler_{t+1}.
-}
-\]
+\)}
+\end{statementbox}
 
 这就是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{自指学习调度。}
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{自指不是无限元递归，而是闭环递归}
 
 这里必须严格区分：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Self-reference}
-}
-\]
+\)}
+\end{statementbox}
 
 和：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{InfiniteMetaHierarchy}.
-}
-\]
+\)}
+\end{statementbox}
 
 AgentOS 不需要建立：
 
@@ -2986,25 +3079,27 @@ S_3
 
 真正需要的是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 S_t
 \rightarrow
 Outcome_t
 \rightarrow
 S_{t+1}.
-}
-\]
+\)}
+\end{statementbox}
 
 即：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 x_{t+1}
 =
 F(x_t,result_t).
-}
-\]
+\)}
+\end{statementbox}
 
 学习调度器把自己也视为一种可适应结构。
 
@@ -3012,31 +3107,34 @@ F(x_t,result_t).
 
 整个系统仍然只有：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningScheduling
 \rightarrow
 LearningControl
 \rightarrow
 LearningAdaptation.
-}
-\]
+\)}
+\end{statementbox}
 
 区别只是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Scheduling
-}
-\]
+\)}
+\end{statementbox}
 
 和：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Control
-}
-\]
+\)}
+\end{statementbox}
 
 自身也进入 Adaptation 的对象集合。
 
@@ -3123,21 +3221,23 @@ C_{risk}
 
 真正优化的是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 整个生命周期中的学习效率、稳定性和未来适应能力。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 因此 Learning Scheduler 更接近一个：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LongHorizonMetaPolicy.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{学习控制器自身也需要适应}
@@ -3186,8 +3286,9 @@ gradient 是否爆炸；
 
 也应该允许根据结果更新：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Phi_{C,t+1}
 =
 F_C
@@ -3195,8 +3296,8 @@ F_C
 \Phi_{C,t},
 LearningOutcome_t
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 通常可以认为：
 
@@ -3251,17 +3352,19 @@ E.
 
 可以区分：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E=\text{当前历史状态}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Lambda_E=\text{历史治理策略}.
-}
-\]
+\)}
+\end{statementbox}
 
 因此：
 
@@ -3297,8 +3400,9 @@ g_{\Lambda_E}\uparrow.
 
 这种学习的目标可以定义为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 J_E
 =
 FutureUtility
@@ -3308,8 +3412,8 @@ StorageCost
 RecallCost
 -
 FalseMemoryCost.
-}
-\]
+\)}
+\end{statementbox}
 
 因此：
 
@@ -3321,19 +3425,21 @@ FalseMemoryCost.
 
 学习的是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{如何管理历史。}
-}
-\]
+\)}
+\end{statementbox}
 
 而不是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{世界本身是什么。}
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{E 的治理策略具有生命周期发育性质}
@@ -3366,11 +3472,12 @@ RecallCost\downarrow.
 
 系统更多采用：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{多经历、多保留、多比较。}
-}
-\]
+\)}
+\end{statementbox}
 
 随着：
 
@@ -3410,19 +3517,21 @@ AnomalyRetention\uparrow.
 
 于是成熟 Agent 的 E 逐渐从：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{大量记录日常}
-}
-\]
+\)}
+\end{statementbox}
 
 转向：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{重点保留异常、转折和未解释历史。}
-}
-\]
+\)}
+\end{statementbox}
 
 因此：
 
@@ -3453,11 +3562,12 @@ reward。
 
 还会逐渐依赖：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfRelevance_{\Psi}.
-}
-\]
+\)}
+\end{statementbox}
 
 可以把 Episode 的保留或写入价值写成：
 
@@ -3475,19 +3585,21 @@ FutureUtility_i
 
 于是 Agent 的长期记忆选择逐渐从：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{什么显著就记什么}
-}
-\]
+\)}
+\end{statementbox}
 
 过渡为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{什么对长期自身结构重要就更值得保留。}
-}
-\]
+\)}
+\end{statementbox}
 
 反过来，被长期保留并反复召回的情景又会参与：
 
@@ -3523,19 +3635,21 @@ E
 
 前者主要回答：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{怎样管理历史？}
-}
-\]
+\)}
+\end{statementbox}
 
 后者主要回答：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{跨时间而言，我是谁？}
-}
-\]
+\)}
+\end{statementbox}
 
 二者只是部分共享相近的慢发育时间尺度。
 
@@ -3552,11 +3666,12 @@ IO。
 
 AgentOS 还必须调度一种特殊资源：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Plasticity}.
-}
-\]
+\)}
+\end{statementbox}
 
 定义全局学习预算：
 
@@ -3594,13 +3709,14 @@ B_L(t).
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningScheduling
 =
 PlasticityScheduling.
-}
-\]
+\)}
+\end{statementbox}
 
 越慢、越稳定的结构，其可塑性预算一般应该越小。
 
@@ -3623,11 +3739,12 @@ B_{\Psi}^P.
 
 由于不同结构变化的长期代价不同，因此学习调度必须体现一种基本非对称性：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{越慢的结构，越难被修改。}
-}
-\]
+\)}
+\end{statementbox}
 
 对于：
 
@@ -3689,21 +3806,23 @@ E
 
 这可以称为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{Evidence Sedimentation Principle}.
-}
-\]
+\)}
+\end{statementbox}
 
 即：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 瞬时经验可以快速进入情景历史，但只有经过时间组织和多次验证的结构才能获得慢结构修改权。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{Boundary 必须控制的不只是输入，还包括学习权限}
@@ -3776,23 +3895,25 @@ E\nrightarrow\Theta
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InputAccess
 \neq
 LearningAccess.
-}
-\]
+\)}
+\end{statementbox}
 
 更进一步：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MemoryAccess
 \neq
 StructuralWriteAccess.
-}
-\]
+\)}
+\end{statementbox}
 
 这是持续 Agent 学习安全的基本原则。
 
@@ -3823,11 +3944,12 @@ Replay；
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitiveLoad_t
-}
-\]
+\)}
+\end{statementbox}
 
 应成为学习调度输入。
 
@@ -3853,27 +3975,30 @@ g_\Theta\downarrow.
 
 即：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{先记，后学。}
-}
-\]
+\)}
+\end{statementbox}
 
 这使 AgentOS 可以自然形成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 OnlineExperiencePhase
-}
-\]
+\)}
+\end{statementbox}
 
 和：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 OfflineConsolidationPhase.
-}
-\]
+\)}
+\end{statementbox}
 
 前者重点保持实时运行；
 
@@ -3906,11 +4031,12 @@ TCE 已经负责当前运行时的：
 
 在学习调度框架下，还可以引入一个：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PlasticityGain
-}
-\]
+\)}
+\end{statementbox}
 
 记为：
 
@@ -3952,27 +4078,30 @@ g_P\downarrow,
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 TCE
-}
-\]
+\)}
+\end{statementbox}
 
 主要调制：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{当前学习可塑性强度},
-}
-\]
+\)}
+\end{statementbox}
 
 而 Learning Scheduler 主要决定：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{哪些结构具有学习资格}.
-}
-\]
+\)}
+\end{statementbox}
 
 二者不能混淆。
 
@@ -3993,11 +4122,12 @@ TCE
 
 Learning Scheduler 则负责：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{可塑性分配。}
-}
-\]
+\)}
+\end{statementbox}
 
 但学习本身又需要计算资源。
 
@@ -4017,31 +4147,34 @@ Risk_i
 
 普通 Scheduler 决定：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{这个学习进程现在能不能运行。}
-}
-\]
+\)}
+\end{statementbox}
 
 Learning Scheduler 决定：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{这个结构现在有没有资格发生学习。}
-}
-\]
+\)}
+\end{statementbox}
 
 因此可以写成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentScheduling
 =
 ResourceScheduling
 +
 LearningScheduling.
-}
-\]
+\)}
+\end{statementbox}
 
 二者相互耦合，但治理对象不同。
 
@@ -4086,13 +4219,14 @@ WorseScheduler,
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfReference
 \neq
 UnboundedSelfModification.
-}
-\]
+\)}
+\end{statementbox}
 
 学习调度器自身必须受到：
 
@@ -4138,19 +4272,21 @@ J_S^{baseline}
 
 这使：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{自指学习}
-}
-\]
+\)}
+\end{statementbox}
 
 成为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{Bounded Self-Modification}.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{学习闭环自身也必须满足稳定性要求}
@@ -4190,13 +4326,14 @@ F_L(X_t,s_t).
 
 这里并不是要求所有实际 AgentOS 都严格按线性系统满足这一不等式，而是提出一个基本原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 学习动力学本身也必须被视为需要稳定性的闭环，而不能假定学习过程天然稳定。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 因此：
 
@@ -4245,13 +4382,14 @@ Boundary 拒绝；
 
 因此整体更合理地写成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{DifferentiableLearningCore}
 +
 \text{DiscreteLearningGovernance}.
-}
-\]
+\)}
+\end{statementbox}
 
 离散治理部分仍然可以利用：
 
@@ -4267,21 +4405,23 @@ bandit；
 
 所以：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{AgentOS 自指学习}
 \neq
 \text{全系统必须使用反向传播}.
-}
-\]
+\)}
+\end{statementbox}
 
 其本质是一个：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{连续学习动力学与离散结构事件耦合的混合系统。}
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{三相记忆与学习调度最终形成两个嵌套闭环}
@@ -4304,16 +4444,18 @@ h'.
 
 它解决：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{经历怎样成为未来能力。}
-}
-\]
+\)}
+\end{statementbox}
 
 第二个是学习治理闭环：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningScheduler_t
 \rightarrow
 LearningDecision_t
@@ -4321,26 +4463,28 @@ LearningDecision_t
 Outcome_t
 \rightarrow
 LearningScheduler_{t+1}.
-}
-\]
+\)}
+\end{statementbox}
 
 它解决：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{系统怎样逐渐学会更好地学习。}
-}
-\]
+\)}
+\end{statementbox}
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ObjectLearningLoop
 \subset
 LearningGovernanceLoop.
-}
-\]
+\)}
+\end{statementbox}
 
 外层并不是一个无限新的元结构，而是对内层学习结果的长期反馈控制。
 
@@ -4356,8 +4500,9 @@ LearningGovernanceLoop.
 
 首先，现实和内部状态产生学习信号：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 s_t^L
 =
 \mathcal O_L
@@ -4367,8 +4512,8 @@ E_t,
 \Theta_t,
 Outcome_t
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 学习调度：
 
@@ -4440,8 +4585,9 @@ E_t,
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Phi_{S,t+1}
 =
 A_S
@@ -4449,13 +4595,14 @@ A_S
 \Phi_{S,t},
 Outcome_{t:T}
 )
-}
-\]
+\)}
+\end{statementbox}
 
 以及：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Phi_{C,t+1}
 =
 A_C
@@ -4463,13 +4610,14 @@ A_C
 \Phi_{C,t},
 LearningOutcome_t
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 于是整个闭环成为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Experience
 \rightarrow
 Schedule
@@ -4481,8 +4629,8 @@ Adapt
 Outcome
 \rightarrow
 Schedule'.
-}
-\]
+\)}
+\end{statementbox}
 
 这就是 AgentOS 自指学习调度的核心动力学形式。
 
@@ -4493,169 +4641,189 @@ Schedule'.
 
 第一条是学习对象分离原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 不同时间尺度、不同功能的结构必须拥有不同的学习权限和可塑性边界。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 第二条是证据沉降原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 越慢的结构，越需要经过 E 的历史组织和时间验证。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 第三条是可塑性预算原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 可塑性是一种有限资源，而不是默认无限开放的能力。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 第四条是学习信号路由原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 监督、预测误差、reward、惊奇等信号都不能自动获得所有结构的修改权。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 第五条是结果反馈原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 学习调度策略本身必须接受长期现实结果评价。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 第六条是自指有界原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 学习调度器可以学习自己，但其自修改必须受到预算、稳定性和现实反馈约束。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{从持续学习到学习运行时}
 
 传统持续学习主要解决：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{怎样不断获得新能力，同时减少旧能力损失。}
-}
-\]
+\)}
+\end{statementbox}
 
 进入 AgentOS 后，这个问题被进一步展开为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{什么值得学习？}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{应该由什么结构学习？}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{应该什么时候学习？}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{应该使用什么学习方式？}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{应该改变多少？}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{什么必须暂时保持不变？}
-}
-\]
+\)}
+\end{statementbox}
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SupervisedLearning,
 SelfSupervisedLearning,
 ReinforcementLearning,
 MetaLearning
-}
-\]
+\)}
+\end{statementbox}
 
 不再是 AgentOS 最高层的学习分类。
 
 它们成为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningAdaptationPrimitives.
-}
-\]
+\)}
+\end{statementbox}
 
 而更高层的 AgentOS 学习结构只有三个基本抽象：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningScheduling
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningControl
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningAdaptation.
-}
-\]
+\)}
+\end{statementbox}
 
 由此，AgentOS 从：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{执行学习算法的系统}
-}
-\]
+\)}
+\end{statementbox}
 
 转变为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{管理学习过程本身的智能运行时。}
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{本章结论：E 是学习证据层，Learning Scheduler 是可塑性治理层}
@@ -4676,11 +4844,12 @@ h
 
 真正决定：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{历史怎样成为学习证据}
-}
-\]
+\)}
+\end{statementbox}
 
 的是：
 
@@ -4722,13 +4891,14 @@ E
 
 其核心作用可以概括为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 E 把当前经历转化成经过时间组织的结构学习证据。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 而一旦系统中同时存在：
 
@@ -4746,50 +4916,56 @@ E,
 
 AgentOS 必须增加：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningScheduling.
-}
-\]
+\)}
+\end{statementbox}
 
 用于决定：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{谁有权被经验改变。}
-}
-\]
+\)}
+\end{statementbox}
 
 并进一步通过：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningControl
-}
-\]
+\)}
+\end{statementbox}
 
 决定：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{应该怎样改变。}
-}
-\]
+\)}
+\end{statementbox}
 
 最后由：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningAdaptation
-}
-\]
+\)}
+\end{statementbox}
 
 真正实施结构变化。
 
 更重要的是，学习调度器与学习控制器自身也属于可学习对象，因此形成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Schedule_t
 \rightarrow
 Control_t
@@ -4799,30 +4975,32 @@ Adaptation_t
 Outcome_t
 \rightarrow
 Schedule_{t+1}.
-}
-\]
+\)}
+\end{statementbox}
 
 这使 AgentOS 获得一种有限递归的自指学习能力。
 
 因此，本章最终可以得到两个统一定义：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 E 是持续智能体中把“经历”转化为“可学习历史”的证据动力层。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 以及：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 AgentOS 的自指学习调度，是对整个智能体内部可塑性进行路由、控制、结果反馈与有界自修改的学习治理机制。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 如果把两者合并起来，整个持续学习过程最终不再只是：
 
@@ -4836,8 +5014,9 @@ Model.
 
 而变成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reality
 \rightarrow
 h
@@ -4853,25 +5032,27 @@ StructuralAdaptation
 \Theta/\Psi/\Lambda_E
 \rightarrow
 NewFutureDynamics.
-}
-\]
+\)}
+\end{statementbox}
 
 于是持续智能的核心也从：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{不断训练}
-}
-\]
+\)}
+\end{statementbox}
 
 提升为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 让现实经验经过历史组织和可塑性治理，以正确的时间尺度改变正确的内部结构。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 这正是从普通持续学习系统走向持续人工智能生命体所需要跨越的关键一步。

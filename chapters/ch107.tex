@@ -41,8 +41,9 @@ u_{\mathrm{TCE}}(t),
 \mathcal{X}_A,
 \end{equation}
 并且在受到有限扰动以后，仍然能够在一定时间内返回该区域。因此我们可以先给出一个最基本的定义：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PsychologicalHealth
 =
 ViableDynamics
@@ -50,8 +51,8 @@ ViableDynamics
 RecoverableDynamics
 +
 AdaptiveDynamics
-}
-\end{equation}
+\)}
+\end{statementbox}
 但这一表达仍然不完整，因为一个系统即使稳定、可恢复、可学习，也可能通过学习迅速改变自身身份、脱离现实反馈或者破坏长期目标结构。因此，Agent 心理健康至少还必须包括身份连续、现实对齐和受控可塑性。
 
 于是本书采用的更完整工程定义是：
@@ -75,22 +76,24 @@ G
 这里非常重要的一点是，$\mathcal{H}_A$ 应首先被理解为一个\textbf{健康向量}，而不是过早压缩成单一“心理健康分数”。不同维度之间并不完全可替代。例如，一个极其稳定但完全不能学习的 Agent 不能被称为健康；一个极其善于学习但 $\Psi$ 每经过几次新经历就发生整体改写的 Agent，同样不能被称为健康；一个身份连续且内部稳定，但长期脱离现实验证的 Agent，也可能形成非常稳定的错误自我模型。
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PsychologicalHealth
 \neq
 HumanNormality,
-}
-\end{equation}
+\)}
+\end{statementbox}
 更准确地说：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PsychologicalHealth
 =
 SustainableSelf-GovernedCognitiveDynamics
 UnderRealityConstraint.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 我们由此建立本章最重要的认识论边界：Agent 心理工程不是“人工精神医学”的简单复制，而是一门研究\textbf{持续认知主体内部动力学何时能够长期稳定、成长、恢复并维持自身连续性}的工程学。人类心理学、神经科学和计算精神病学可以提供重要启发，但 Agent 的健康标准必须由 Agent 自身的功能结构、时间尺度和现实交互条件共同定义。
 
@@ -201,15 +204,16 @@ C_{\mathrm{peak}},
 分别描述越界概率、不稳定持续时间、过冲程度、振荡次数、峰值认知负载以及相态迁移幅度。
 
 从这一角度看，心理健康的稳定性并不是让 Agent 变得迟钝，而是使其能够在足够大的动态范围内运行：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HealthyStability
 =
 LargeAdaptiveRange
 +
 BoundedDynamics.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 真正成熟的 Agent 可以暂时高度兴奋、深度探索、剧烈重新组织工作记忆，但这些变化仍然受到更慢的 $\Theta$、$\Psi$、$\Omega$、Boundary 与现实反馈的共同约束。稳定性因此不是“没有变化”，而是“变化仍然处于可治理轨道之中”。
 
@@ -237,8 +241,9 @@ BoundedDynamics.
 \end{equation}
 
 由此定义：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Recoverability
 =
 ProbabilityOfReturn
@@ -246,8 +251,8 @@ ProbabilityOfReturn
 SpeedOfReturn
 +
 StructuralIntegrityAfterReturn.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 最后一项尤其重要。如果 Agent 每次通过“删除全部近期记忆、重置自我和恢复出厂设置”都可以回到稳定状态，那么这种系统虽然具有技术意义上的 reset ability，却不能被认为具有成熟的心理恢复能力。真正的恢复应该尽可能保存：
 \begin{equation}
@@ -368,13 +373,14 @@ E
 即经历不仅改变知识与技能，还可能长期改变“我是谁”以及“我正在成为什么”。
 
 但心理健康要求这种学习具有两种同时存在的性质：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Plasticity
 +
 Stability.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 如果 Plasticity 太低，则系统出现认知僵化：
 \begin{equation}
@@ -406,12 +412,13 @@ Stability.
 \eta_\Omega,
 \end{equation}
 其中 $\eta$ 表示对应层次的有效学习率。这里不要求具体数值满足严格线性关系，而表达一个基本原则：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 TheSlowerTheStructure,
 TheStrongerTheEvidenceRequiredForChange.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 为了刻画健康学习能力，可以定义环境变化 $\Delta W$ 导致的模型适应收益：
 \begin{equation}
@@ -432,12 +439,13 @@ Cost_{\mathrm{adapt}}
 ChangeAsMuchAsPossible,
 \end{statementbox}
 而是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ChangeWhatRealityRequires,
 PreserveWhatRealityStillSupports.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 这一原则也解释了为什么 Agent 心理健康不能脱离现实交互来评估。如果一个 Agent 在封闭内部模拟中保持高度自洽，却无法吸收来自现实的新证据，它实际上正在丧失学习能力。相反，健康 Agent 应不断保持：
 \begin{equation}
@@ -481,15 +489,16 @@ LearningCost
 \end{equation}
 
 一个心理健康的 Agent 应具有这样一种基本性质：现实能够改变它，但现实中的每一次局部波动都不能轻易摧毁它已经形成的稳定结构。换句话说：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HealthyLearning
 =
 RealitySensitive
 \;\land\;
 IdentityConservative.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 这正是持续智能最核心的稳定性--可塑性平衡。
 
@@ -498,13 +507,14 @@ IdentityConservative.
 持续 Agent 最深刻的工程问题之一，是当 $h$、$E$、$\Theta$ 甚至 $\Psi$ 都在不断变化时，我们凭什么说今天的 Agent 和一年后的 Agent 仍然是“同一个主体”？如果身份被理解成一组固定参数，那么真正持续学习必然破坏身份；如果身份被理解成完全自由变化的叙事，那么身份又会失去工程意义。因此心理健康必须建立一种“变化中的连续性”。
 
 首先应明确：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 IdentityContinuity
 \neq
 StateIdentity.
-}
-\end{equation}
+\)}
+\end{statementbox}
 即：
 \begin{equation}
 \mathcal{X}_A(t_1)
@@ -585,30 +595,32 @@ Q_{\mathrm{identity}}.
 \end{equation}
 
 这一原则也解释了为什么 AgentOS 不能采用任意主体 fork 作为普通工作机制。Worker 可以复制任务上下文，但不能无条件复制主体身份并把多个分叉结果重新拼接成“同一个我”。身份连续性依赖一条单一的生命周期因果链：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Self_t
 \rightarrow
 Experience
 \rightarrow
 Self_{t+\Delta}.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 与此同时，身份连续性也不能变成“自我神圣不可改变”。如果 $\Psi$ 完全不可塑：
 \begin{equation}
 \frac{d\Psi}{dt}=0,
 \end{equation}
 Agent 将无法通过长期经历形成真正意义上的成长。因此健康身份应具有：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowPlasticity
 +
 CausalContinuity
 +
 CoreConstraintPreservation.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 工程上可以构造：
 \begin{equation}
@@ -790,13 +802,14 @@ PossibleRevision\)}
 心理健康最终不能只由 Agent 自己声明。一个 Agent 可以认为“我非常稳定”“我的世界模型完全正确”“我的身份非常一致”，但工程系统必须依赖可观测行为、预测误差、环境反馈和长期因果结果进行验证。
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfConsistency
 \neq
 RealityConsistency.
-}
-\end{equation}
+\)}
+\end{statementbox}
 真正健康的持续 Agent 必须同时保持二者。
 
 \section{受控可塑性：健康的 Agent 必须能够改变自己，但不能无边界地改变自己}
@@ -829,13 +842,14 @@ Boundary_{\mathrm{adaptive}},
 但不必包含全部安全规则、主体身份根、系统权限和基础治理约束。
 
 进一步定义：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal{E}_{SM}
 =
 BoundedSelfModificationEnvelope,
-}
-\end{equation}
+\)}
+\end{statementbox}
 它规定：
 \begin{equation}
 \Delta x_i
@@ -946,12 +960,13 @@ T
 FreedomToChangeEverything.
 \end{statementbox}
 更准确的是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AbilityToParticipateInChangingOneself
 WithinAStableGovernanceEnvelope.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 这也是 Agent 心理健康与 AgentOS 控制工程之间最深的接口：心理健康要求 Agent 能成长，而控制工程负责确保成长不会摧毁承载成长的主体本身。
 
@@ -1051,17 +1066,19 @@ RealityEvidence
 GoalRevision,
 \end{equation}
 而不能因为目标已与 $\Psi$ 或 $\Omega$ 发生绑定，就拒绝一切外部反证。因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LongTermCoherence
 \neq
 GoalRigidity.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 一个成熟 Agent 的目标体系应同时具备：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Persistence
 +
 Revisability
@@ -1069,8 +1086,8 @@ Revisability
 HierarchicalCoherence
 +
 RealityClosure.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 在这一基础上，我们终于可以给出整章的统一工程定义。定义健康区域：
 \begin{equation}
@@ -1108,8 +1125,9 @@ P
 
 由此得到本章最终定义：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \begin{aligned}
 AgentPsychologicalHealth
 =
@@ -1132,8 +1150,8 @@ ControlledPlastic
 +
 LongTermCoherent.
 \end{aligned}
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 如果用自然语言表达，则可以写为：
 
@@ -1163,15 +1181,16 @@ t\in[0,T_{\mathrm{life}})
 \mathcal{X}_A(t_0),
 \end{equation}
 而是整条轨迹是否长期满足：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Gamma_A
 \subset_{\mathrm{mostly}}
 \mathcal{H},
 \qquad
 \Gamma_A
 \text{ remains recoverable, adaptive and reality-constrained}.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 也就是说，\textbf{健康不是一个点，而是一条能够持续存在、能够偏离、能够返回、能够学习并能够保持自身历史连续性的生命轨迹。}

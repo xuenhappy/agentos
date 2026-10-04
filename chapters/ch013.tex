@@ -141,13 +141,14 @@ C_{\mathrm{arith}}
 @F_{\mathrm{program}}.
 \]
 于是，对于同一类任务，我们观察到的主观现象是“想得越来越少”，但这并不意味着能力消失。更准确地说，是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ThinkingLess
 \neq
 KnowingLess
-}
-\]
+\)}
+\end{statementbox}
 而是
 \begin{statementbox}
 StructureChangedFunctionalCarrier.
@@ -365,15 +366,16 @@ h.
 \]
 
 这种现象在传统认知科学中常被称为 cognitive offloading 或 extended cognition；在 AgentOS 中，它被进一步工程化为 Boundary 与 Offloading 机制。其理论核心可以表达为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InternalMemory
 +
 ExternalRecoverableStructure
 =
 EffectiveAgentMemory.
-}
-\]
+\)}
+\end{statementbox}
 这里“可恢复”是关键。如果 Agent 将某个结构写入外部，却失去了定位、调用、验证和解释该结构的能力，那么它并不能构成真正意义上的外部记忆。
 
 因此，我们需要把外化结构写成
@@ -538,13 +540,14 @@ ExplicitReasoning.
 它将贯穿后面的 Body Runtime、BPCC、Skill Compilation 与多尺度控制理论。
 
 传统 skill acquisition、automaticity、procedural memory、policy distillation 和 compiler optimization 都能为这里提供外部理论参照，但本书试图进一步统一这些现象：无论是一个人的熟练动作、一个数字 Agent 生成的脚本，还是机器人身体中的控制器，它们都可以看成某类 Agent-CSO 从高成本通用功能迁移到低成本专用闭环的过程。所谓“熟练”，因此可以被严格定义为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Mastery
 =
 MigrationOfRepeatedCSOsTowardStableLocalClosedLoops.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{迁移的可逆性：成熟不是永久下沉，异常可以重新进入认知}
@@ -635,14 +638,13 @@ Recompile.
 早期复杂度迁移理论曾试图用“复杂度近似守恒”描述这样一种直觉：当一个任务从困难变得简单时，完成任务所需要的结构似乎并没有凭空消失，而是被转移、压缩或固化到了其他地方。但如果严格把复杂度看成可守恒物理量，这一说法会遇到困难。认知结构可以被压缩、合并、抽象甚至遗忘，因此不存在已知意义上的严格复杂度守恒定律。
 
 因此，我们在 CSO 理论中把这一思想修正为\textbf{结构连续性原则}：
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EffectiveCognitiveStructure
 \text{ does not ordinarily disappear merely because explicit processing decreases;}
-}
-$}
-\]
+\)}
+\end{statementbox}
 而是倾向于发生
 \[
 \resizebox{.96\linewidth}{!}{$\displaystyle
@@ -904,13 +906,14 @@ PersistentM_F
 这种形式当然非常重要，但它只描述了学习的一种特殊实现。如果一个 Agent 把任务写成程序、把知识存入数据库、把动作编译到身体控制器、把经验沉淀进结构记忆，或者通过改变环境降低未来认知负担，这些过程都可能显著增强能力，却不能被统一描述成同一个参数更新公式。
 
 因此，本书采用更一般的学习定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Learning
 =
 ChangeOfCSORealizationAndPlacement.
-}
-\]
+\)}
+\end{statementbox}
 或者用中文表述：
 
 \begin{statementbox}
@@ -972,15 +975,16 @@ C_k,
 即认知结构图和功能拓扑本身发生变化。
 
 因此可以写成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StateAdaptation
 \subset
 Learning
 \subset
 Development.
-}
-\]
+\)}
+\end{statementbox}
 这里的集合符号表示概念层级，而不是严格数学集合关系。
 
 这一分层帮助我们解决了“持续学习”和“智能发育”长期混淆的问题。一个模型持续更新参数并不必然意味着其功能组织发生发育；一个 Agent 获得越来越多记忆也不必然意味着其能力越来越成熟。真正的成熟通常表现为：
@@ -998,60 +1002,66 @@ StableDistributedCapability
 从这个角度，我们可以重新定义几个重要概念。
 
 记忆是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Memory
 =
 CSOStabilizationAcrossTime.
-}
-\]
+\)}
+\end{statementbox}
 
 召回是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Recall
 =
 SlowCSOReactivationIntoFastDynamics.
-}
-\]
+\)}
+\end{statementbox}
 
 技能是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Skill
 =
 StableFunctionalDownMigrationOfCSO.
-}
-\]
+\)}
+\end{statementbox}
 
 认知卸载是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Offloading
 =
 CarrierMigrationAcrossAgentBoundary.
-}
-\]
+\)}
+\end{statementbox}
 
 熟练是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Mastery
 =
 RepeatedCSOMigrationTowardStableLocalClosure.
-}
-\]
+\)}
+\end{statementbox}
 
 而发育则是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Development
 =
 LongTermCSOMigration
 +
 StructuralReorganization.
-}
-\]
+\)}
+\end{statementbox}
 
 这样，过去分散在机器学习、记忆研究、技能学习、认知卸载和软件工程中的多个概念，被放到同一个结构坐标系中。
 

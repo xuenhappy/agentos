@@ -323,15 +323,16 @@ w_i^{\mathrm{self}}
 \Psi_t,
 \]
 同一个内部状态在生命周期不同阶段可能产生不同解释。这意味着 SPC 不是一个固定函数，而是一个带慢参数的动态估计系统：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SPC_t
 =
 SPC(
 \cdot;\Psi_t,\Theta_t
 ).
-}
-\]
+\)}
+\end{statementbox}
 因此，一个持续 Agent 的 ``我现在怎么样'' 并不是一套永恒不变的统计规则，而是始终相对于当前已经形成的主体结构进行解释。
 
 这一机制也提示我们必须警惕自我解释的封闭循环。如果 $\Psi$ 影响 SPC，SPC 的结果又影响后续注意和经验选择，那么可能形成
@@ -533,11 +534,12 @@ p(x_t^{\mathrm{self}}\mid z_{\le t}),
 即综合历史和当前证据以后，对 ``我现在可能是什么状态'' 的估计。
 
 这使 SPC 自然获得了一个非常重要的变量：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Confidence_{\mathrm{self}}.
-}
-\]
+\)}
+\end{statementbox}
 智能体不只应该表示：
 \[
 \text{``我处于高负载状态''},
@@ -727,11 +729,12 @@ Uncertainty_i
 ).
 \]
 换言之，自我认识不是简单的 ``值''，而应该是一组
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Value+Confidence+Timescale+Freshness
-}
-\]
+\)}
+\end{statementbox}
 共同组成的估计对象。
 
 \section{SPC 与 h、E、\texorpdfstring{$\Theta$}{Theta}、\texorpdfstring{$\Psi$}{Psi} 的耦合}
@@ -1078,13 +1081,14 @@ r_t^{self}
 但实际行为不断表现出任务失败、资源耗尽和恢复异常，那么外部事实必须拥有比内部自我解释更高的校准权重。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityEvidence
 >
 SelfInterpretiveConsistency.
-}
-\]
+\)}
+\end{statementbox}
 这与全书已经建立的
 \begin{statementbox}
 RealityIsUltimateConstraint
@@ -1109,11 +1113,12 @@ P(\mathrm{event}\mid p\in B_k)
 这样 ``自我认识准确'' 就不再是一种哲学宣称，而成为可以通过长期运行数据检验的工程性质。
 
 此外，自我状态输出还需要保留 provenance，即：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Source,\ Confidence,\ Timestamp,\ Evidence.
-}
-\]
+\)}
+\end{statementbox}
 例如：
 \[
 SelfState_i
@@ -1305,35 +1310,38 @@ z_t
 \]
 
 这里存在三个不可消除的差异：真实状态与观测之间存在观测损失；观测与自我状态之间存在压缩损失；当前真实状态与 SPC 输出之间存在时间延迟。由此我们得到：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfPerception
 =
 Approximate,
 Compressed,
 Delayed,
 Probabilistic.
-}
-\]
+\)}
+\end{statementbox}
 
 但 ``不完美'' 并不意味着它没有价值。恰恰相反，一个有限智能系统真正需要的不是绝对透明自我，而是一个在有限资源条件下足够支撑调节的自我状态模型。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 OptimalSelfPerception
 \neq
 MaximumSelfInformation.
-}
-\]
+\)}
+\end{statementbox}
 更合理的目标是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 OptimalSelfPerception
 =
 MinimalRepresentation
 \;with\;
 SufficientControlRelevance.
-}
-\]
+\)}
+\end{statementbox}
 
 SPC 进一步揭示了一个更深的智能原理：一个系统开始具有较高级自我调节能力，并不需要它 ``看到自己的一切''；它只需要能够持续把自己的关键状态压缩为新的认知对象，使
 \[

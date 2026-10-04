@@ -63,12 +63,13 @@ z_s
 x_f(t)\in\mathcal{M}(z_s),
 \]
 $\mathcal{M}(z_s)$ 可以理解为由当前能力、自我、价值、长期结构和安全边界共同决定的可行流形。我们此前反复强调的
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,\qquad
 LowerLevelOptimizesInsideIt
-}
-\]
+\)}
+\end{statementbox}
 在这里获得了正式的控制论含义。
 
 在 Body Runtime 中，同样的原则表现得更加明显。假设 BPCC 状态为 $x_B$，Kernel 下发的控制参考为 $r_K$，则快速局部控制可以写成
@@ -219,12 +220,13 @@ Stability\uparrow
 DevelopmentCapacity\downarrow.
 \]
 AgentOS 的解决方案不是寻找一个统一最优学习率，而是把稳定性与可塑性分布到不同时间尺度上：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FastLayersPlastic,\qquad
 SlowLayersStable.
-}
-\]
+\)}
+\end{statementbox}
 从这一点出发，身份连续与持续学习并不是矛盾，而是一个多时间尺度系统的自然性质。
 
 这种慢学习还意味着我们必须区分参数改变与结构改变。$\Theta$ 中某个技能模型的参数调整可能属于局部连续学习；某类 Agent-CSO 从显式推理迁移到 Body Skill，则属于承载方式改变；而 $\Psi$ 对``这类行动是否与我的身份一致''的长期重新解释，则属于更深层的生成结构变化。因此持续学习不是一个单一更新算子：
@@ -306,12 +308,13 @@ R_q(x,q).
 其中 $R$、$N$、$U$、$P$ 分别代表残差、风险、新颖性和持续性，则 Scheduler 可以触发一个离散的认知升级事件，把问题从局部运行状态提升到显式 $h$。
 
 这种结构很好地解释了此前我们所说的：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityDoesNotContinuouslyBecomeThought;
 RelevantDeviationBecomesThought.
-}
-\]
+\)}
+\end{statementbox}
 世界并不需要每毫秒被全部转化成显式认知，Body Runtime 和其他局部闭环可以连续处理正常动态；只有事件超过触发条件，才进行离散升级。这就是 event-triggered cognition，而不是 continuous global cognition。
 
 同样，Skill 编译也具有明显的混杂性质。一个重复任务在相当长时间内可以连续积累统计量：
@@ -443,13 +446,14 @@ R_t
 例如在 Flow 中保持适度高激活范围、低干预；在 Turbulent 中降低探索温度、增加支线抑制和 CCM 压缩；在 Critical 中触发强边界治理和卸载；进入 Gas 状态时则可能进入恢复模式，对 $h$ 进行大规模清理并重新建立 Goal anchor。
 
 这里需要特别强调：相态识别并不是心理标签，而是运行控制中的宏观状态估计。它的价值在于，把大量微观变量压缩成对控制有直接意义的制度状态。SPC 因而承担两种观察：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StateEstimation
 +
 RegimeEstimation.
-}
-\]
+\)}
+\end{statementbox}
 前者回答``我现在有哪些状态''，后者回答``这些状态组合起来正在形成什么动力学制度''。只有后者成立，TCE 才能真正从参数调节器升级成认知运行制度控制器。
 
 \section{稳定性：持续智能首先必须保证自己不会被自身调节系统破坏}
@@ -592,14 +596,15 @@ m_j\ \text{has write authority over}\ x_i
 它的意义不仅适用于电机或文件，也应推广到重要内部状态。多个模块可以对某个变量提出建议，但在一个确定时间窗口内，应当存在唯一最终写入权，否则系统可能出现控制冲突。
 
 因此可以区分：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Observe
 ,\ Recommend
 ,\ Control
 ,\ Rewrite
-}
-\]
+\)}
+\end{statementbox}
 四种不同权限。SPC 通常属于 Observe；AHC 主要产生 Modulation；TCE 属于 Control；而真正涉及 $\Theta/\Psi/\Omega$ 的 Rewrite 必须具有更高治理门槛。用偏序表示：
 \[
 Observe
@@ -1003,13 +1008,14 @@ Topology is the slow memory of repeated CSO interaction.
 \end{statementbox}
 
 从这一点看，我们此前定义的
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DynamicsOnTopology
 +
 DynamicsOfTopology
-}
-\]
+\)}
+\end{statementbox}
 终于进入工程路线：第一代 AgentOS 主要实现前者，即在稳定拓扑上进行持续动力学习；更成熟的发育型 Agent 才逐步开放后者，即允许极慢速、受治理的功能拓扑重组。
 
 为了避免拓扑学习退化成任意 Architecture Search，我们坚持 Minimum Necessary Reorganization Principle：

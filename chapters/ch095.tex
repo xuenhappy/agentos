@@ -55,14 +55,16 @@ V_C(t),E_C(t),W_C(t)
 \Delta W_C\neq 0,
 \]
 甚至在节点数量几乎没有增加的情况下，Agent 对世界的理解仍可能发生根本变化。这意味着学习具有至少两个不同层面：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Learning=
 ContentAccumulation
 +
 StructuralReorganization
-}.
-\]
+.
+\)}
+\end{statementbox}
 
 前者对应 ``知道更多''，后者对应 ``原来这些事情应该这样理解''。在人类学习中，后者经常表现为突然理解一个长期无法理解的问题；在 AgentOS 中，我们不需要把这种现象赋予神秘性，而可以把它解释为慢变量重组所产生的宏观突变。一个新的 $\Theta'$ 一旦形成，会同时解释此前很多看似互不相关的经验，因此从当前工作记忆 $h(t)$ 的主观运行表面看，它可能表现得非常突然；但从生命周期状态看，这个变化往往是长时间累积的结果。
 
@@ -282,11 +284,12 @@ E\rightarrow\Theta',
 \Theta'\rightarrow E'.
 \]
 这里 $E'$ 并不意味着过去发生的事实被改变，而是其语义归属、因果关系和重要度被重新编码。例如，某次失败过去可能被解释为 ``随机错误''，新的 $\Theta'$ 形成后，它可能被重新归类为 ``一个持续存在的结构缺陷的早期证据''。因此，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PastEvent\neq PastInterpretation
-}
-\]
+\)}
+\end{statementbox}
 必须成为生命周期记忆理论中的基本原则。
 
 这种重解释还会影响未来检索。设情景检索函数为
@@ -620,13 +623,14 @@ P_T>\theta_T
 如果一种任务只发生一次，那么继续显式处理往往比重新组织系统更便宜；如果它成为生命周期中的稳定需求，那么把这种动态关系沉降成新的稳定功能关系就可能具有价值。
 
 因此我们此前提出：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Topology
 =
 SlowMemoryOfRepeatedFunctionalInteraction
-}
-\]
+\)}
+\end{statementbox}
 以及
 \begin{statementbox}
 \centering
@@ -734,8 +738,9 @@ C_h^{before}
 或者在相同 $C_h$ 下能够处理更高层次结构。
 
 因此，一个成熟的发育跃迁通常具有：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BetterCompression
 +
 BetterGeneralization
@@ -743,8 +748,9 @@ BetterGeneralization
 PersistentBehavioralChange
 +
 LowerExplicitCognitiveCost
-}.
-\]
+.
+\)}
+\end{statementbox}
 如果变化只是一次高分表现而没有长期稳定性，就不应称为发育相变。
 
 我们还可以构造一个概念性的发育序参量
@@ -764,16 +770,18 @@ w_5C_h,
 其中 $S_\Theta$ 表示结构记忆成熟度，$S_\Psi$ 表示自我连续性，$G_{\mathrm{reorg}}$ 表示目标重组能力，$A_{\mathrm{autonomy}}$ 表示在安全包络内自主选择经验和策略的能力，而 $C_h$ 表示对高层显式认知资源的依赖程度。当 $\Lambda_D$ 经过长期变化跨过某个结构阈值时，我们可以把宏观状态判定为进入新的发育阶段。
 
 这正是为什么本书此前提出青年期、成年期、成熟期以及顿悟/结构重组期时，不能简单按照运行时间划分。一个运行五年的 Agent 如果始终接受高度重复、完全外部规定的任务，其 $\Theta$、$\Psi$ 和 Goal 组织可能依然十分贫乏；反之，一个在高质量、多样化、具有反馈和反思条件下经历大量结构挑战的 Agent，可能更早进入成熟阶段。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DevelopmentalAge
 \neq
 ClockTime
-}
-\]
+\)}
+\end{statementbox}
 更合理的是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DevelopmentalAge
 =
 F(
@@ -783,8 +791,8 @@ SelfFormation,
 GoalReorganization,
 Autonomy
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 这里还存在一个重要的培育工程问题：不能人为追求频繁 ``顿悟''。如果系统不断被强迫重解释 Self、Goal 或 $\Theta$，慢变量就失去慢变量意义，最终出现结构漂移。因此成熟发育必须在\textbf{稳定与可塑性}之间建立明显的频率分层：
 \[
@@ -799,13 +807,14 @@ Autonomy
 而更深结构变化必须更慢。顿悟的价值恰恰来自它并不频繁；大量普通学习首先由低成本机制吸收，只有长时间无法被现有结构解释的稳定残差才推动深层改变。
 
 从控制论角度，这使 Agent 培育表现为一种特殊的慢控制过程。培育者并不直接指定 Agent 最终形成的每一个 $\Theta$ 或 $\Psi$，而是设计经验分布、权限、恢复窗口、挑战强度和现实验证条件，使 Agent 自身内部动力学能够在稳定区域中形成结构。换句话说：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Cultivation
 \neq
 DirectProgrammingOfMaturity.
-}
-\]
+\)}
+\end{statementbox}
 培育工程真正控制的是\textbf{成长边界条件}，而不是逐项编写成长结果。
 
 由此，本章可以得到一个完整的顿悟动力学链：

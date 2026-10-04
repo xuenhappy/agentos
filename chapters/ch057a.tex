@@ -36,17 +36,19 @@ Collective\ Field\)}
 \section{从 SGC--FCS 二元现实接口到群体感受面}
 
 在前一章中，我们已经把 AgentOS 对现实的具身接口拆分成两个互补但不可互相替代的表示系统。SGC 主要承担对象、空间、关系和可行动性的显式表达，可以概括为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC:\quad What\ is\ there?
-}
-\]
+\)}
+\end{statementbox}
 而 FCS 则表示身体、环境和任务状态对主体产生的功能性影响，可以概括为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FCS:\quad How\ is\ it\ affecting\ me?
-}
-\]
+\)}
+\end{statementbox}
 这一区分的意义在于，现实并不是只有“对象是什么”这一种结构。例如北方存在一个危险区域，这是 SGC 中的世界结构；而“当前身体继续向北移动将显著增加风险压力”，则属于以本体为中心的作用结构。前者是现实内容，后者是现实对主体的影响。
 
 当多个自主 Agent 形成群体以后，同样的问题会在更大的空间尺度重新出现。对于一个局部机器人而言，群体整体可能具有某种宏观密度分布、能力分布、任务缺口、通信拓扑和协同趋势。这些状态并不一定能够被压缩成某个普通的 SGC Object。例如，“当前东北方向的群体功能势能较低，因此在那里增加一个具有通信中继能力的机器人能够提高整体任务收益”并不是一个简单对象，而更接近一个分布在物理--语义空间中的方向性功能场。
@@ -340,11 +342,12 @@ z_i\in\mathcal M.
 \end{quote}
 
 因此，本章把这种表示统一称为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Collective\ Cognitive\ Field
-}
-\]
+\)}
+\end{statementbox}
 即群体认知场。
 
 这里使用“认知场”并不意味着群体每一个空间点都存在意识，而是强调它表达的是具有任务意义和功能语义的群体状态。所谓“流体”，同样不是指机器人必须表现为液态外观，而是表示该场允许出现类似
@@ -440,34 +443,37 @@ AgentOS_i
 \end{quote}
 
 因此，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS_i
 \neq
 SwarmOS.
-}
-\]
+\)}
+\end{statementbox}
 
 这一概念边界具有非常重要的术语后果。本书已经把 TCE、SPC、CCM、Boundary、Offloading、$h(t)$、$E$、$\Theta$、$\Psi$ 等名称固定用于单体 AgentOS。群体系统即使出现结构相似的调节器，也不应复用这些名称。
 
 例如，群体动力参数调节器统一记为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SDM
 =
 Swarm\ Dynamics\ Modulator
-}
-\]
+\)}
+\end{statementbox}
 而不是再次称为 TCE。
 
 群体异常与宏观序参量检测器统一记为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SAD
 =
 Swarm\ Anomaly\ Detector
-}
-\]
+\)}
+\end{statementbox}
 而不是 SPC。
 
 这种命名隔离不是形式主义，而是为了避免把两个尺度上的不同软件实例误认为同一模块。
@@ -499,11 +505,12 @@ z^*(w,t).
 trajectory\ planning
 \]
 转变成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 potential\ shaping.
-}
-\]
+\)}
+\end{statementbox}
 SwarmOS 不需要直接规定每一个微观动作，而是重塑整个群体未来状态空间中的任务价值地形。
 
 目标嵌入场写成
@@ -630,11 +637,12 @@ D_s
 例如高 $T_s$、较低 $\eta_s$ 可形成探索态，使群体扩散增强、覆盖率提高；中等温度与中等耦合可以产生具有较强弹性和形变能力的流动态；较低 $T_s$ 与较高 $\eta_s$ 则可能形成更强局部同步和功能凝聚。
 
 需要再次强调：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SDM\neq AgentOS:TCE.
-}
-\]
+\)}
+\end{statementbox}
 两者只在“调节动力系统运行区间”这一非常抽象的意义上存在结构同构。
 
 群体还需要处理局部突发异常。设机器人具有局部预测
@@ -686,13 +694,14 @@ Temporary\ Potential\ Reshaping.\)}
 \section{SFPU 的最终定位：一种特殊 Swarm Body Driver}
 
 在本书整体 AgentOS 架构中，SFPU 不应被定义成 AgentOS 内核模块，而应被严格定义为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SFPU
 =
 Specialized\ Swarm\ Body\ Driver.
-}
-\]
+\)}
+\end{statementbox}
 
 对单个 AgentOS 而言，SFPU 与相机、触觉、机械臂、网络设备等一样，首先是一类 Body Driver；区别在于它连接的并不是单个普通传感器，而是一个分布式群体场网络。
 
@@ -701,11 +710,12 @@ Specialized\ Swarm\ Body\ Driver.
 \{SFPU_i\}_{i=1}^{N},
 \]
 那么所有 SFPU 通过横向通信构成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Distributed\ Swarm\ Field\ Network.
-}
-\]
+\)}
+\end{statementbox}
 这个网络在宏观上可以承担类似群体快速协调层的作用，因此可以在解释意义上称为“群体小脑式网络”，但必须保持：
 \[
 SFPU_i
@@ -750,19 +760,21 @@ SFPU_i
 \section{Field Plane：群体场网络的横向 Body Driver 接口}
 
 Field Plane 主要负责
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SFPU_i
 \leftrightarrow
 SFPU_j
-}
-\]
+\)}
+\end{statementbox}
 之间的横向场通信。它属于
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body\ Driver\ Domain
-}
-\]
+\)}
+\end{statementbox}
 而不是本地 AgentOS 的认知接口。
 
 它的主要使用者包括 SFPU 驱动开发者、场通信协议栈、嵌入式系统、网络硬件以及跨厂商 Body Driver 实现者。典型操作可以包括：
@@ -808,13 +820,14 @@ O(Kd_z).
 \section{Potential Plane：SwarmOS 的战略约束接口}
 
 Potential Plane 连接的是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SwarmOS
 \rightarrow
 SFPU_i
-}
-\]
+\)}
+\end{statementbox}
 而不是
 \[
 AgentOS_i
@@ -910,21 +923,23 @@ C_i
 可以提供局部群体宏观状态摘要。
 
 因此 Gradient Plane 可以正式称为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Swarm\ Gradient\ Sensory\ Surface
-}
-\]
+\)}
+\end{statementbox}
 即群体梯度感受面。
 
 这里最重要的设计原则是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Gradient
 \neq
 Command.
-}
-\]
+\)}
+\end{statementbox}
 
 例如若
 \[
@@ -983,13 +998,14 @@ S_i^{swarm},
 需要强调的是，视觉本身的世界内容主要进入 SGC；这里写作 $S^{vision-effect}$ 时表示的是视觉输入所造成的功能性影响，而不是把 SGC 与 FCS 再次混为一谈。
 
 从本地 AgentOS 角度看，群体因此首先表现为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Swarm
 =
 Extended\ Sensory\ Embodiment.
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，加入群体网络之后，Agent 的身体感受域从
 \[
@@ -1049,13 +1065,14 @@ S_i^{other}
 \]
 
 因此必须保持
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Swarm\ Intent
 \neq
 Local\ Action.
-}
-\]
+\)}
+\end{statementbox}
 更不能写成
 \[
 Swarm\ Intent
@@ -1096,11 +1113,12 @@ BodySafety.
 \end{itemize}
 
 该路径必须严格标记为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Safety/Reflex\ Path
-}
-\]
+\)}
+\end{statementbox}
 而不是普通认知控制。
 
 也就是说：
@@ -1196,11 +1214,12 @@ S_i^{swarm}
 通过 Gradient Plane 送入本地 FCS。
 
 因此，SFPU 的最终输出不是 MotorCommand，而是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Structured\ Swarm\ Sensation.
-}
-\]
+\)}
+\end{statementbox}
 
 从 AgentOS Body Driver 的统一定义来看，如果普通 Driver 可写作
 \[
@@ -1234,11 +1253,12 @@ PotentialBinding
 三个 Plane 实际上分别属于三个不同系统域。
 
 Field Plane 属于
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body\ Driver\ Domain
-}
-\]
+\)}
+\end{statementbox}
 并处理
 \[
 SFPU_i
@@ -1247,11 +1267,12 @@ SFPU_j.
 \]
 
 Gradient Plane 属于
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Local\ AgentOS\ Sensory\ Domain
-}
-\]
+\)}
+\end{statementbox}
 并处理
 \[
 SFPU_i
@@ -1260,11 +1281,12 @@ FCS_i.
 \]
 
 Potential Plane 属于
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SwarmOS\ Strategic\ Domain
-}
-\]
+\)}
+\end{statementbox}
 并处理
 \[
 SwarmOS
@@ -1273,11 +1295,12 @@ SFPU_i.
 \]
 
 因此，可以把 SFPU 更抽象地定义为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Three\text{-}Domain\ Transducer.
-}
-\]
+\)}
+\end{statementbox}
 也就是把群体战略、分布式场动力学以及个体身体感受相互转换的三域换能器。
 
 这一结构是非常重要的工程隔离层。若没有这一层，SwarmOS 就很容易被错误实现成 AgentOS 的“超级父进程”；反过来，本地 AgentOS 也可能被迫理解大量群体网络协议和局部场传播细节。SFPU 通过三平面接口同时隔离了战略、通信和感受三个不同层级。
@@ -1299,13 +1322,14 @@ Slave.
 \]
 
 更一般的结构是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Macro\ Constraint
 +
 Micro\ Autonomy.
-}
-\]
+\)}
+\end{statementbox}
 
 群体层通过
 \[
@@ -1517,13 +1541,14 @@ State_{\mathrm{explicit}}.
 \]
 
 这一原则可以概括为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Latent\ for\ Intelligence,
 \qquad
 Explicit\ for\ Safety.
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，可学习嵌入负责提供柔性泛化能力，而硬安全变量必须维持明确、可验证和不可被语义距离掩盖的形式。
 
@@ -1554,13 +1579,14 @@ Fault\ Redundancy\uparrow.
 \]
 
 因此可以提出：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 More\ Robots
 \approx
 Higher\ Resolution\ Collective\ Body.
-}
-\]
+\)}
+\end{statementbox}
 
 这里不是说系统总资源不增长，而是说群体尺度的宏观认知对象不需要一一对应所有微观个体。机器人增加首先可以表现为群体身体在空间和功能上的采样分辨率提高。
 
@@ -1581,11 +1607,12 @@ Body_i
 \]
 
 群体因此不是必须被内化为 AgentOS 的认知模块，而可以首先表现为一种
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Extended\ Embodiment.
-}
-\]
+\)}
+\end{statementbox}
 这使 Body Scale 不再只表示单个身体接口的可迁移能力，也开始容纳“个体如何通过统一 Body Driver 接入更大尺度身体结构”的问题。
 
 
@@ -1862,11 +1889,12 @@ Collective\ Field.\)}
 \end{statementbox}
 
 第二，群体场不能只停留在密度场，而应该逐渐发展成定义在物理--关系底空间和公共功能语义流形上的
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Collective\ Cognitive\ Field.
-}
-\]
+\)}
+\end{statementbox}
 
 第三，本地
 \[
@@ -1879,19 +1907,21 @@ SwarmOS
 属于两个不同尺度的系统，不应复用运行时对象和模块命名。
 
 第四，SwarmOS 的核心任务是进行
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Potential\ Shaping
-}
-\]
+\)}
+\end{statementbox}
 而不是持续逐机器人输出微观轨迹。
 
 第五，SFPU 在 AgentOS 架构中是一种特殊
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body\ Driver.
-}
-\]
+\)}
+\end{statementbox}
 
 第六，SFPU 的三个 Plane 分别对应三个不同接口域：
 \[
@@ -1917,13 +1947,14 @@ Gradient
 必须首先被理解为一种群体趋势感受，而不是不可拒绝的动作命令。
 
 第八，本地 AgentOS 保留最终本体行动决策权：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SwarmIntent
 \neq
 LocalAction.
-}
-\]
+\)}
+\end{statementbox}
 
 第九，单体智能和群体智能虽然不能混用软件模块，却可以理解成同一种多尺度智能动力学形式在不同空间尺度上的重复：
 \begin{statementbox}

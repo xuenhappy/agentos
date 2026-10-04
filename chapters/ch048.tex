@@ -108,15 +108,16 @@ R_t,\;F_t,\;\tau_t,\;B_t,\;S_t
 
 因此，我们需要区分三个层次：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{State Change}
 <
 \text{Structural Change}
 <
 \text{Topological Change}.
-}
-\]
+\)}
+\end{statementbox}
 
 状态变化是当前运行内容变化；结构变化是记忆、表示、自我、策略或承载关系变化；拓扑变化则要求长期功能关系本身被新增、删除、拆分或重组。本章专门研究前两个层级。
 
@@ -254,13 +255,14 @@ F_\Omega(\Omega,\Psi,\Theta,\mathcal{H}),
 
 如果所有变量都以 $h$ 的速度变化，那么系统虽然极度可塑，却没有身份；如果所有变量都以 $\Omega$ 的速度变化，那么系统虽然稳定，却无法适应。持续智能需要的是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FastPlasticity
 +
 SlowContinuity.
-}
-\]
+\)}
+\end{statementbox}
 
 这也解释了为什么三相记忆不能被理解成三个数据库。$h$ 是系统的实时显式表面；$E$ 是被选择后的轨迹结构；$\Theta$ 是对经验进行压缩后能够重新生成预测、规则和技能的结构。它们不是三个互不关联的容器，而是三个不同动力时间尺度上的同一认知结构生命周期。
 
@@ -963,15 +965,16 @@ ActiveAgentCSO.
 
 因此身份连续性更准确地应定义成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 IdentityContinuity
 =
 BoundedSlowChange
 +
 HistoricalCausalTraceability.
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，同一个 Agent 可以改变价值排序、世界观甚至自我解释，但这种变化应能够从自己的经历中追溯出来，而不是由于一次 prompt 或单次异常事件任意覆盖。
 
@@ -1111,15 +1114,16 @@ z_{\leq t-\delta}
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SPC
 =
 Observer/Estimator,
 \qquad
 SPC\neq GroundTruth.
-}
-\]
+\)}
+\end{statementbox}
 
 这一认识极其重要，因为它意味着 Agent 的“自我感受”本身也是一个可能发生误差的认知对象。SPC 需要输出的不仅是状态估计，还应输出可信度：
 
@@ -1330,15 +1334,16 @@ InternalMemory
 
 而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EffectiveCognitiveSpace
 =
 InternalCarriers
 \cup
 ExternalCarriers.
-}
-\]
+\)}
+\end{statementbox}
 
 这里 Boundary 的作用不仅是“安全边界”，而是决定哪些认知结构值得被内部长期承载，哪些应该只保存索引和恢复路径。
 
@@ -1380,13 +1385,14 @@ B_i^*
 
 更深一层，环境自身也可以成为外部记忆。例如一个机器人为了避免未来重复规划，可以直接改变环境结构；一个数字 Agent 可以建立目录、脚本和数据库；一个社会性 Agent 可以把特定知识委托给其他 Agent 或组织。于是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ModifyEnvironment
 =
 ModifyFutureCognitiveCondition.
-}
-\]
+\)}
+\end{statementbox}
 
 这个过程虽然没有改变 AgentOS 内部功能拓扑，却改变了 Agent 未来面对问题时的有效计算结构。
 
@@ -1469,13 +1475,14 @@ Request(D_1)
 
 是允许的，但：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 D_2
 \nrightarrow
 Trap(D_1).
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，一个子任务不能同步占据主体直到自己完成，否则长周期任务可能让整个 Agent 无法处理更高优先级的现实事件、自身状态和安全需求。
 
@@ -1543,13 +1550,14 @@ $X$ 是连续状态，$Q$ 是离散治理状态，$F$ 是连续动力学，$G$ �
 
 这一结构对于持续主体非常重要，因为身份连续性不能完全依靠连续网络状态，也不能完全依靠离散数据库。它必须同时存在于：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ContinuousSelfDynamics
 +
 DiscreteIdentityGovernance.
-}
-\]
+\)}
+\end{statementbox}
 
 例如 $\Psi$ 可以缓慢变化，但“谁有权修改 $\Psi$”“何时允许进入恢复点”“哪些 Task 可以生成长期 Goal”等属于离散治理约束。
 
@@ -1753,13 +1761,14 @@ SelfValidation\)}
 
 以及：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reality
 =
 UltimateConstraint.
-}
-\]
+\)}
+\end{statementbox}
 
 持续智能与短时模型最大的差异之一，就在于错误不能只按“单轮回答是否正确”评估，而必须考虑它是否可能沿着记忆与自我层级长期传播。固定拓扑的一个实际优势恰好在这里：主要功能通路固定以后，错误传播路径、更新权限和恢复点更容易被分析、测试和治理，因此它天然适合作为长期 Agent 的第一代安全架构。
 
@@ -1988,8 +1997,9 @@ DifferentAgent.\)}
 
 因此，一个固定拓扑 AgentOS 已经可以具有：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PersistentMemory
 +
 Identity
@@ -2001,8 +2011,8 @@ SelfRegulation
 Externalization
 +
 RecursiveAgency.
-}
-\]
+\)}
+\end{statementbox}
 
 这已经足以构成相当强的持续智能。
 
@@ -2176,13 +2186,14 @@ C_{\max}(W)
 
 以及：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reality
 =
 UltimateConstraint.
-}
-\]
+\)}
+\end{statementbox}
 
 这三个条件分别保证了：
 

@@ -187,21 +187,23 @@ I(C_A;Y_G),
 其中 $Y_G$ 表示与目标 $G$ 相关的未来结果变量。如果一个压缩后的 Agent-CSO 对预测和控制目标仍然保留足够信息，那么详细微观信息的丢失并不构成认知失败。
 
 这使我们可以提出一个重要原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Intelligence
 \neq
 CompleteRepresentationOfReality
-}
-\]
+\)}
+\end{statementbox}
 而更接近
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Intelligence
 =
 ConstructionOfAction-SufficientStructure.
-}
-\]
+\)}
+\end{statementbox}
 智能并不要求复制宇宙，而要求在有限工作记忆、有限带宽和有限生命周期中形成足够有效的结构。这也解释了为什么认知抽象、注意、遗忘和结构压缩并非智能的缺陷，而恰恰是有限主体得以存在的必要条件。
 
 Observation 还会受到 Agent 历史的反向影响。设
@@ -299,13 +301,14 @@ UniverseCSO'\)}
 \end{statementbox}
 
 这里揭示了一个本书后面会反复强调的原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ActionIssued
 \neq
 ActionSucceeded.
-}
-\]
+\)}
+\end{statementbox}
 Agent 的内部计划只是一种结构，它没有权力直接宣布现实已经改变。只有经过物理或数字世界真正执行之后，产生的新观测才能确认 Universe-CSO 是否发生了预期变化。这一原则将在 Body Runtime 一编中进一步发展成
 \[
 Control
@@ -373,13 +376,14 @@ U_t,\pi
 因此 Agent 的行动不是简单 ``响应刺激''，而是当前现实状态、内部世界模型和未来约束共同作用的结果。
 
 这一结构使智能区别于大量非表征性动力过程。一块岩石同样能够改变周围世界，一颗恒星也会通过引力和辐射改变环境，但我们并不因此称它们为智能行动。智能行动的关键不是 ``产生影响''，而是影响过程受到内部世界结构和未来可能性模型调节：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Action_{intelligent}
 =
 RepresentationGuidedWorldTransformation.
-}
-\]
+\)}
+\end{statementbox}
 这一定义仍然是功能性的，并不要求主观意识。
 
 Action 还具有结构尺度。快速动作可能只作用于局部：
@@ -430,11 +434,12 @@ U_t.
 这种思想对于某些状态估计问题具有工程价值，但如果把它作为一般智能的认识论，就会遇到不可克服的容量问题。任何有限 Agent 都无法实时复制包含自身在内的整个现实，而且即使具有足够存储能力，完整复制也不是高效行动所必需的。
 
 因此，我们把 Agent 内部世界理解为一种
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Selective,\ Compressed,\ Action-Oriented
-}
-\]
+\)}
+\end{statementbox}
 的结构投影。设现实状态空间为 $\mathcal U$，Agent 内部有效状态空间为 $\mathcal Z_A$，则
 \[
 \Pi_A:\mathcal U\rightarrow\mathcal Z_A.
@@ -458,13 +463,14 @@ Z_t=\Pi_A(U_t),
 那么 $Z_t$ 就可以被视为关于该任务的近似充分表示。这个思想与统计学中的 sufficient statistic、POMDP belief state 和 representation learning 存在联系，但本书把它推广到生命周期 Agent：充分性不是固定任务上的一次性性质，而会随 Goal、Body、Capability 和长期 $\Theta$ 改变。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoodRepresentation
 \neq
 MaximumInformation.
-}
-\]
+\)}
+\end{statementbox}
 恰恰相反，一个好的 Agent-CSO 往往要求主动舍弃大量无关自由度。工作记忆有限容量定理进一步要求：
 \[
 C_{run}(h_t)
@@ -514,13 +520,14 @@ C_A^{goal}.
 后面 SGC 体系中的 Observed、Derived、Predicted、Counterfactual 等 metadata，正是这一认识论结构在工程接口上的实现。
 
 这里必须引入一个极重要的区分：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RepresentationIdentity
 \neq
 FunctionalAlignment.
-}
-\]
+\)}
+\end{statementbox}
 不同 Agent 即使形成完全不同的内部表示，只要它们保持关键因果、关系和行动可达性的同构，就可能在功能上具有等价世界模型。例如一个人可以以 ``门把手'' 的概念表示某个对象，机器人可以用关节、抓取面、接触几何和 affordance 参数表示同一对象，二者内部结构并不相同，但均能稳定完成 ``开门'' 行为。于是我们可以通过映射
 \[
 \Phi:
@@ -549,13 +556,14 @@ CorrectionAbility
 \right).
 \]
 一个 Agent 的世界模型越能够经受不同时间、环境和行动结果的反复检验，其 Agent-CSO 与 Universe-CSO 的功能耦合就越稳定。因此所谓 ``真实'' 在工程层面至少包含：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictiveConsistency
 +
 InterventionalConsistency.
-}
-\]
+\)}
+\end{statementbox}
 它既能预测世界，也能在行动之后正确解释世界为什么发生了变化。
 
 这使世界模型从传统的 ``被动描述器'' 转变成一个持续参与现实闭环的结构系统。Agent 的内部世界不是现实复制品，却可以成为现实中极其重要的因果结构，因为它决定 Agent 接下来观察什么、忽略什么、改造什么以及如何重新组织自己。
@@ -635,12 +643,13 @@ SlowExternalStructure.\)}
 这种沉降能够极大降低未来认知成本。例如，一个人不需要每天重新推导乘法算法，因为它可以存在于教育体系、纸张、计算器和软件之中；一个 Agent 不需要每次重新显式推理重复操作，因为它可以将其编译为 Skill 或 Script。
 
 由此产生一个更一般的结构连续性原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StructureDoesNotNecessarilyDisappear;
 ItMayChangeCarrier.
-}
-\]
+\)}
+\end{statementbox}
 所谓 ``思考得更少'' 并不等于 ``系统拥有的结构更少''。一个成熟系统常常恰恰因为更多认知结构已经沉降到稳定内部或外部载体，才不再需要每次使用工作记忆重新构建它们。
 
 在生命周期尺度上，我们可以把外化建模为一个结构流：
@@ -717,13 +726,14 @@ C_A'.
 \mathcal F_A
 \]
 被迁移到了外部结构 $T$。因此，可以把 Tool 形式化成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Tool
 =
 ExternalizedFunctionalCarrierOfCSOTransformation.
-}
-\]
+\)}
+\end{statementbox}
 
 例如计算器并不只是 ``外部设备''。对于计算任务，它承担了原本可以存在于工作记忆、结构记忆或内部程序中的数值转换。地图承担空间关系的外部结构化；数据库承担大规模事实保持；搜索引擎承担外部检索；编译器承担结构转换；机器人夹具则承担部分物理约束和操作技能。工具的共同特征是：它们把稳定、重复的结构关系沉降到环境，使 Agent 以后可以通过一个低复杂度接口调用更高复杂度功能。
 
@@ -768,13 +778,14 @@ R_{\min},
 \Omega_A^{act}.
 \]
 计算机同时扩展观察、内部处理和行动能力。因此，从更一般的角度：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Tool
 =
 ExtensionOfObservationActionBoundary.
-}
-\]
+\)}
+\end{statementbox}
 
 这一结论直接连接后面的 Body 定义。我们不应该简单根据 ``工具在皮肤外、身体在皮肤内'' 区分 Body 与 Tool。更重要的是稳定性、控制权限、低延迟耦合、状态透明性和持续依赖。如果某种工具长期以低延迟、稳定、可感知的方式被 Agent 控制，那么它可能逐渐进入 Functional Body 的范围。因此智能体边界
 \[
@@ -806,13 +817,14 @@ ExternalCompilation.\)}
 这与 Agent 内部的 Skill Compilation 是同一条规律在边界另一侧的表现。内部成熟能力可以沉降到 $\Theta$ 或 Body Skill，外部成熟能力可以沉降成 Tool、Script、Program 或 Environment Structure。
 
 由此可以看到，工具生态不是 AgentOS 的附加外围，而是长期智能扩展的重要组成部分。一个持续主体不可能把所有世界知识、技能和控制结构都保存在自身内部。真正可扩展的 Agent 必然成为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InternalCognition
 +
 ExternalFunctionalStructure
-}
-\]
+\)}
+\end{statementbox}
 的组合系统。
 
 这也为后面 AgentOS 为什么要把 Skill、Tool、File、DB、Program 和 Other Agent 统一纳入 Boundary/Offloading 管理提供理论基础。工具不是简单的插件；它是认知结构跨越 Agent 边界之后形成的稳定功能载体。
@@ -1083,13 +1095,14 @@ Parameters_t
 Parameters_{t+1}
 \]
 扩展到
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Learning
 =
 ChangeOfFutureWorld--AgentCoupling.
-}
-\]
+\)}
+\end{statementbox}
 只要某种经验使未来的 Observation、Representation、Action 或 World Dynamics 的耦合方式稳定改变，就可以认为长期智能系统发生了广义学习。
 
 这还使 ``适应环境'' 和 ``改变环境'' 之间不再存在绝对边界。初级智能主要满足：

@@ -463,11 +463,12 @@ Prediction
 PreAdjustment.
 \]
 于是 CCM 从单纯的反馈复杂度控制器升级为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Feedforward+Feedback
-}
-\]
+\)}
+\end{statementbox}
 联合治理机制。这对于避免系统频繁进入临界或湍流状态具有重要意义。
 
 
@@ -633,17 +634,19 @@ Stability,\ldots
 ],
 \]
 而 CCM 专门针对其中的结构负载部分实施操作。因此可以写：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SPC:\ WhatStateAmIIn?
-}
-\]
+\)}
+\end{statementbox}
 而：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CCM:\ HowShouldTheActiveStructureBeReorganized?
-}
-\]
+\)}
+\end{statementbox}
 
 在理想实现中，SPC 与 CCM 共享部分观测变量，却不能合并成同一功能。否则系统会失去 observer 与 structure regulator
 之间的模块化关系。
@@ -1089,13 +1092,14 @@ N_{\mathrm{reuse}}(C^*),
 合并同时也是形成抽象能力的微观来源之一。抽象并不是凭空 ``想得更高''，
 而是系统发现一组低层关系在当前任务中可以被一个更稳定的高阶结构取代。
 因此我们可以把运行时抽象写成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Abstraction_{\mathrm{runtime}}
 =
 StructuralMergeUnderGoalPreservation.
-}
-\]
+\)}
+\end{statementbox}
 
 这使 CCM 不再只是一个 ``清理内存'' 的组件，而成为有限认知系统中形成高阶操作单元的重要机制。
 
@@ -1107,11 +1111,12 @@ StructuralMergeUnderGoalPreservation.
 导致认知容量被重复占用。
 
 因此 CCM 的去重对象不是字符串，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Semantic/StructuralEquivalence.
-}
-\]
+\)}
+\end{statementbox}
 
 设：
 \[
@@ -1635,13 +1640,14 @@ T_{\min},
 而不是每个目标都持续占据 h。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PersistentGoal
 \neq
 ContinuouslyActiveGoal.
-}
-\]
+\)}
+\end{statementbox}
 
 这一点极大扩展了有限工作记忆系统的长期能力。
 Agent 可以同时拥有成百上千个潜在任务，而在任一时刻只激活极少数当前闭环。
@@ -1787,13 +1793,14 @@ C(R).
 
 即使经过分解、合并、去重、折叠和表示重构，某些结构仍然没有必要继续占据工作记忆。
 此时 CCM 可以进行有限的微卸载：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h
 \longrightarrow
 M_{\mathrm{aux}}.
-}
-\]
+\)}
+\end{statementbox}
 
 这里我们暂时不展开后续更加完整的认知卸载理论，只讨论 CCM 内部为了维持工作记忆稳定所执行的局部结构迁移。
 
@@ -1880,11 +1887,12 @@ J_{\mathrm{off}}>0
 
 更重要的是，CCM 不能卸载没有形成稳定恢复索引的结构。如果一个关键中间变量被移出以后无法重新定位，
 就相当于信息丢失。因此微卸载必须满足：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Indexability+Recoverability.
-}
-\]
+\)}
+\end{statementbox}
 
 对于长期任务，我们甚至可以维护：
 \[
@@ -2208,13 +2216,14 @@ h(t)
 不仅是可能的，而且应当成为成熟智能的常态。
 
 这导出一个非常重要的结论：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MatureIntelligence
 =
 SelectiveExplicitCognition.
-}
-\]
+\)}
+\end{statementbox}
 
 成熟并不意味着任何事情都需要显式思考。恰恰相反，能力越成熟，越多结构可以以压缩、潜在、程序化、
 结构化或外部形式存在，真正进入当前显式认知面的只剩下：

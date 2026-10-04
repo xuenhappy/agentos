@@ -79,13 +79,14 @@ s\in[t_i^{-},t_i^{+}]
 \]
 
 因此情景首先是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Episode}
 =
 \mathrm{BoundedTrajectory}.
-}
-\]
+\)}
+\end{statementbox}
 
 这一定义强调：情景记忆真正保存的不只是“当时是什么状态”，而是“状态怎样从一个状态变化到另一个状态”。
 
@@ -147,8 +148,9 @@ r_i
 其中节点表示事件中被区分出的结构，边表示它们之间的时序、语义、因果或其他关系。
 
 因此，一个完整情景不再只是一个 embedding，而是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Trajectory}
 +
 \mathrm{Context}
@@ -156,8 +158,8 @@ r_i
 \mathrm{Relations}
 +
 \mathrm{MemoryMass}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{从工作记忆到情景记忆：事件切分}
 
@@ -243,15 +245,16 @@ e_i
 h\rightarrow E
 \]
 可以更加严格地表示为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{ContinuousState}
 \rightarrow
 \mathrm{EventSegmentation}
 \rightarrow
 \mathrm{EpisodeFormation}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{情景记忆测度：液态记忆的质量表示}
 
@@ -308,11 +311,12 @@ z_i,
 这一项允许过去情景随着新知识和新经历被重新组织。例如，某个事件最初被归入一种解释，后来可能因为新的经历而逐渐移动到另一类情景簇附近。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{情景记忆不仅可以变弱，也可以改变自身解释位置。}
-}
-\]
+\)}
+\end{statementbox}
 
 \section{情景蒸发与强化}
 
@@ -398,13 +402,14 @@ U_i
 \]
 
 因此情景记忆形成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Decay}
 \leftrightarrow
 \mathrm{Reactivation}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{情景之间的关系图}
 
@@ -563,15 +568,16 @@ E_{\mathrm{macro}}
 例如，一次复杂任务可以由多个子事件组成，而整个任务又作为更高层情景存在。
 
 因此情景图应允许层级结构：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Episode}
 \rightarrow
 \mathrm{MacroEpisode}
 \rightarrow
 \mathrm{EpisodeHierarchy}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{情景碎裂与重新切分}
 
@@ -604,17 +610,19 @@ E_i
 \]
 
 因此情景记忆内部同时存在：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Coagulation}
-}
-\]
+\)}
+\end{statementbox}
 和
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Fragmentation}.
-}
-\]
+\)}
+\end{statementbox}
 
 这也是将其称为液态而非静态数据库的重要原因。
 
@@ -669,11 +677,12 @@ E_i
 \end{itemize}
 
 因此所谓“重构记忆”，更准确地说是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{重新组织历史之间的关系，而不是简单覆盖历史。}
-}
-\]
+\)}
+\end{statementbox}
 
 \section{液态情景记忆的连续动力方程}
 
@@ -743,11 +752,12 @@ E=\mathrm{Trajectory},
 E\rightarrow\Theta
 \]
 的本质不是“把情景保存得更久”，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{从大量具体轨迹中提取能够预测和生成未来状态的稳定结构。}
-}
-\]
+\)}
+\end{statementbox}
 
 设结构记忆由参数化生成模型
 \[
@@ -835,8 +845,9 @@ E\rightarrow\Theta
 如果所有 Episode 都以同样概率参与结构学习，系统就退化成普通 Replay Buffer。
 
 液态情景记忆的意义之一，正是先对经历进行：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Decay}
 +
 \mathrm{Merge}
@@ -844,8 +855,8 @@ E\rightarrow\Theta
 \mathrm{Split}
 +
 \mathrm{Reorganize}
-}
-\]
+\)}
+\end{statementbox}
 之后，再决定哪些结构值得进入 $\Theta$。
 
 因此可以定义巩固优先度
@@ -929,15 +940,16 @@ E\rightarrow\Theta
 }
 \]
 更加准确地表示为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Instances}
 \rightarrow
 \mathrm{StableStatistics}
 \rightarrow
 \mathrm{Generator}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{结构记忆如何反向控制情景蒸发}
 
@@ -994,33 +1006,36 @@ E_i
 \]
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{被结构充分吸收的经历可以更快淡化；
 无法被结构解释的经历应被更长时间保留。}
-}
-\]
+\)}
+\end{statementbox}
 
 这一机制使 $E$ 成为当前 $\Theta$ 尚未完全解释的历史结构缓冲层。
 
 \section{E--Theta 双向闭环}
 
 由此可以得到情景记忆与结构记忆之间的双向关系：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E
 \xrightarrow{\mathrm{Consolidation}}
 \Theta
-}
-\]
+\)}
+\end{statementbox}
 以及
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Theta
 \xrightarrow{\mathrm{Explain/Reinterpret}}
 E.
-}
-\]
+\)}
+\end{statementbox}
 
 $\Theta$ 从 Episode 中学习稳定结构，而新的 $\Theta$ 又重新决定：
 
@@ -1032,11 +1047,12 @@ $\Theta$ 从 Episode 中学习稳定结构，而新的 $\Theta$ 又重新决定�
 \end{itemize}
 
 因此情景记忆不是一个静态训练集，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{结构记忆与历史之间持续调整的中间动力层。}
-}
-\]
+\)}
+\end{statementbox}
 
 \section{三相记忆的统一动力学}
 
@@ -1213,13 +1229,14 @@ class TrajectoryEncoder(nn.Module):
 \end{verbatim}
 
 其中起始状态和结束状态被显式保留，用以强调
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Episode}
 =
 \mathrm{WhatChanged}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{Episode Store 与模型参数的分离}
 
@@ -1421,13 +1438,14 @@ def reinforce(memory, indices, amount):
 \end{verbatim}
 
 这样就实现：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Evaporation}
 \leftrightarrow
 \mathrm{Reactivation}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{PyTorch 中的情景凝聚}
 
@@ -1519,15 +1537,16 @@ n
 \]
 
 这可以将大量具体 Episode 压缩成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Prototype}
 +
 \mathrm{Variation}
 +
 \mathrm{Count}.
-}
-\]
+\)}
+\end{statementbox}
 
 这些 Macro-Episode 既能够降低情景记忆规模，也能够直接成为结构学习的重要统计输入。
 
@@ -1582,13 +1601,14 @@ E_k^{(2)},
 \]
 
 因此软件运行中可以形成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Merge}
 \leftrightarrow
 \mathrm{Split}.
-}
-\]
+\)}
+\end{statementbox}
 
 这使情景粒度本身成为可调节变量，而不是在首次写入时永久固定。
 
@@ -1649,13 +1669,14 @@ E\rightarrow\Theta
 }
 \]
 就具体表现为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{TrajectoryData}
 \rightarrow
 \mathrm{GenerativeDynamicsModel}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{巩固采样器}
 
@@ -1789,8 +1810,9 @@ E
 \end{enumerate}
 
 可以概括为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Write}
 \rightarrow
 \mathrm{Decay}
@@ -1806,8 +1828,8 @@ E
 \mathrm{Consolidate}
 \rightarrow
 \mathrm{Evaporate}.
-}
-\]
+\)}
+\end{statementbox}
 
 这就是液态情景记忆的一次完整软件维护周期。
 
@@ -1910,15 +1932,16 @@ E'
 环境下执行。
 
 这样能够保持三相理论中的基本区分：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{当前可微计算}
 \neq
 \text{历史状态动力}
 \neq
 \text{慢参数学习}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{Hot--Warm--Cold 情景存储层}
 
@@ -1926,15 +1949,16 @@ E'
 
 因此工程上可以采用：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Hot}
 \rightarrow
 \mathrm{Warm}
 \rightarrow
 \mathrm{Cold}
-}
-\]
+\)}
+\end{statementbox}
 三级物理存储。
 
 Hot Episode：
@@ -1963,13 +1987,14 @@ Cold Episode：
 \end{itemize}
 
 需要强调：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Carrier}
 \neq
 \mathrm{MemoryPhase}.
-}
-\]
+\)}
+\end{statementbox}
 
 一个 Episode 无论位于 GPU、RAM 还是持久化设备，只要仍然属于中时间尺度可重新识别历史，都仍然属于 $E$。
 
@@ -1978,8 +2003,9 @@ Cold Episode：
 为了保持三相时间尺度分离，建议把系统运行分成两个主要循环。
 
 在线快速循环：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h
 \rightarrow
 \mathrm{EventDetection}
@@ -1989,12 +2015,13 @@ E
 \mathrm{Recall}
 \rightarrow
 h.
-}
-\]
+\)}
+\end{statementbox}
 
 慢速巩固循环：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E
 \rightarrow
 \mathrm{Merge/Split/Reconstruct}
@@ -2002,8 +2029,8 @@ E
 \mathrm{Consolidation}
 \rightarrow
 \Theta.
-}
-\]
+\)}
+\end{statementbox}
 
 满足：
 \[
@@ -2044,11 +2071,12 @@ h+\mathrm{ReplayBuffer}+\Theta;
 \]
 
 液态情景记忆：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h+E_{\mathrm{liquid}}+\Theta.
-}
-\]
+\)}
+\end{statementbox}
 
 可以比较：
 
@@ -2097,20 +2125,22 @@ m_i(t)
 描述情景之间的时间、因果、语义和层级关系。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mu_t
 =
 \text{液态动力},
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal{G}_t
 =
 \text{历史结构}.
-}
-\]
+\)}
+\end{statementbox}
 
 两者共同构成完整的情景记忆。
 
@@ -2119,12 +2149,13 @@ m_i(t)
 三相记忆中的情景层 $E$ 不应被理解为一个静态事件数据库。
 
 其更加完整的定义应是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E=
 \text{可流动、可整合、可重构、可蒸发并可向慢结构沉降的历史轨迹系统}.
-}
-\]
+\)}
+\end{statementbox}
 
 在数学上，可以表示为
 \[
@@ -2151,8 +2182,9 @@ E(t)
 负责表示时序、因果、上下文和层级关系。
 
 而从 $E$ 到结构记忆 $\Theta$ 的过程，则是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Trajectory}
 \rightarrow
 \mathrm{OrganizedHistory}
@@ -2160,8 +2192,8 @@ E(t)
 \mathrm{StableStatistics}
 \rightarrow
 \mathrm{Generator}.
-}
-\]
+\)}
+\end{statementbox}
 
 因此三相记忆的完整动力关系可以写为：
 \[
@@ -2183,15 +2215,16 @@ E'
 \]
 
 同时：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Theta
 \xrightarrow{
 \mathrm{Prediction/Interpretation}
 }
 E,h.
-}
-\]
+\)}
+\end{statementbox}
 
 最终形成：
 \[
@@ -2206,13 +2239,14 @@ E
 
 从更深层来看，液态情景记忆承担的是工作状态与长期生成结构之间不可缺少的历史缓冲层：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{当前状态不能直接成为长期规律；
 它必须先成为历史，
 历史经过整合和验证后，
 其中稳定的部分才有资格成为结构。}
-}
-\]
+\)}
+\end{statementbox}
 
 这使三相记忆从一个记忆分层模型进一步发展为一个完整的持续学习动力系统。

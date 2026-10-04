@@ -10,11 +10,12 @@ N_{\mathrm{Agent}}^{D_1}=1
 }
 \]
 以及
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 D_2\nrightarrow \mathrm{Trap}(D_1)
-}
-\]
+\)}
+\end{statementbox}
 其中 $D_1$ 表示持续主体动力学域，$D_2$ 表示任务与执行过程域。主体可以调度任意数量的任务和局部执行过程，但任务不能同步占有主体、复制主体或将主体的生命周期锁死在一个局部过程之中。主体的连续性不是一个语言模型在文本中声称“我是同一个我”，而是由记忆连续、状态连续、控制权连续、历史因果连续和唯一主体句柄共同维持的系统性质。
 
 因此，本章讨论的不是哲学意义上人格是否可以复制，而是一个持续人工智能操作系统必须怎样定义其运行主体，才能避免在并发、恢复、任务分解和外部协作过程中发生身份分裂、主体漂移与控制权歧义。
@@ -196,23 +197,25 @@ A
 
 因此我们需要区分：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Concurrency
 \neq
 MultiplicityOfSubject
-}
-\]
+\)}
+\end{statementbox}
 
 以及：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ParallelCognition
 \neq
 ParallelSelf
-}
-\]
+\)}
+\end{statementbox}
 
 这一区分尤其重要，因为未来 AgentOS 很可能必然采用高度分布式计算。一个长期 Agent 需要同时维护身体闭环、环境监测、工具执行、经验整理、记忆沉降和任务计划。如果我们要求“主体唯一”意味着所有这些过程串行运行，那么系统将无法达到实际可用的实时性。相反，我们允许功能无限分布，但要求这些功能最终通过统一的主体治理结构耦合。
 
@@ -236,15 +239,16 @@ P_i(
 
 其中 $P_i$ 是根据目标、权限和上下文生成的任务投影，而不是完整主体复制。由此形成一个关键原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 TaskContext
 =
 ProjectionOfAgentState,
 \quad
 \text{not CopyOfAgent}
-}
-\]
+\)}
+\end{statementbox}
 
 这个原则将成为防止后续系统在任务并行化时无意中复制“自我状态”的基础。
 
@@ -252,23 +256,25 @@ ProjectionOfAgentState,
 
 为了在形式上区分主体动力学和任务动力学，我们引入两个不同的运行域：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 D_1
 =
 \text{Persistent Subject Domain}
-}
-\]
+\)}
+\end{statementbox}
 
 以及
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 D_2
 =
 \text{Task and Execution Domain}.
-}
-\]
+\)}
+\end{statementbox}
 
 $D_1$ 负责长期主体状态，包括身份、自我、当前全局状态、长期记忆关系、价值边界、权限以及生命周期连续性；$D_2$ 负责具体任务、推理分支、工具调用、局部规划和有限时执行过程。
 
@@ -361,11 +367,12 @@ D_1
 
 如果这种结构成为 AgentOS 的主要运行方式，那么任何一个任务都可能长时间锁死持续主体，使其他认知过程无法进入全局工作状态。因此，我们提出：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 D_2\nrightarrow\mathrm{Trap}(D_1)
-}
-\]
+\)}
+\end{statementbox}
 
 这里的 Trap 指一个局部任务通过同步等待、无限循环、资源占有或上下文劫持，使主体无法继续执行自己的状态更新、风险评估、边界管理和其他任务调度。
 
@@ -478,13 +485,14 @@ h.
 
 这可以写成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 TaskOutput
 \neq
 AgentBelief
-}
-\]
+\)}
+\end{statementbox}
 
 只有经过主体级整合函数
 
@@ -634,13 +642,14 @@ H_X\land S_X\land A_X
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ReasoningAbility
 \neq
 Subjecthood
-}
-\]
+\)}
+\end{statementbox}
 
 Skill 更加明显。一个 Skill 可以包含：
 
@@ -683,13 +692,14 @@ A_{\mathrm{external}},
 
 因此可以得到一个非常重要的边界：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InternalWorker
 \neq
 ExternalAgent
-}
-\]
+\)}
+\end{statementbox}
 
 Internal Worker 的状态最终归属于主体：
 
@@ -806,21 +816,23 @@ X_{A_2}(t).
 
 因此在第一代 AgentOS 中，我们提出：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 fork(A)=Forbidden
-}
-\]
+\)}
+\end{statementbox}
 
 并进一步：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 new(A)=Forbidden,
 \qquad
 delete(A)=Forbidden
-}
-\]
+\)}
+\end{statementbox}
 
 这里需要非常谨慎地理解这些表达。它们不是说系统永远不能创建新的 Agent，而是说\textbf{一个已经存在的持续主体不能把创建、复制和删除主体自身当作普通运行时操作}。新 Agent 的创建应属于更高层的系统治理事件，而不是像创建线程一样由普通任务执行。
 
@@ -852,13 +864,14 @@ IdentityContinuity=1,
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ExecutionTermination
 \neq
 IdentityTermination
-}
-\]
+\)}
+\end{statementbox}
 
 Checkpoint 恢复也同样不能被解释成创建新 Agent。如果主体在 $t_1$ 时刻崩溃，然后从 $t_0<t_1$ 的 checkpoint 恢复，那么我们面对的是：
 
@@ -1033,13 +1046,14 @@ A
 
 这里尤其要强调：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 IdentityContinuity
 \neq
 StateSimilarity
-}
-\]
+\)}
+\end{statementbox}
 
 两个状态非常相似的 Agent 可能是不同主体，例如 fork 后的两个实例；而同一个主体在经历多年学习以后，状态可能发生巨大变化，但仍然保持同一生命周期身份。
 
@@ -1085,25 +1099,28 @@ N_{\mathrm{Agent}}^{D_1}=1
 
 再进一步：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Owner(T_i)=A
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Owner(W_j)=A
-}
-\]
+\)}
+\end{statementbox}
 
 以及：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 D_2\nrightarrow Trap(D_1).
-}
-\]
+\)}
+\end{statementbox}
 
 这四组关系共同组成 AgentOS 的基础主体不变量。
 
@@ -1111,23 +1128,25 @@ D_2\nrightarrow Trap(D_1).
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SingleSubject
 \neq
 CentralizedComputation
-}
-\]
+\)}
+\end{statementbox}
 
 反而更准确的是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SingleSubject
 +
 DistributedFunctionalProcesses
-}
-\]
+\)}
+\end{statementbox}
 
 这也是本章最重要的系统思想之一。
 

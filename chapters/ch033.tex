@@ -209,11 +209,12 @@ x_{t-\tau_{SPC}}
 \end{equation}
 这意味着 Agent 对自己的认识原则上总有一定程度的``过去性''。当 TCE 基于这一自状态进行调节时，它实际上可能是在控制一个已经发生变化的认知系统。该事实后来将直接导致认知控制中的过冲、振荡和相位滞后问题，但在本章我们只需要确立最基本的认识论结论：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Agent\ Cannot\ Perfectly\ Observe\ Itself.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 所以，真正成熟的 AgentOS 不应把 SPC 输出当成绝对真理，而应为每个自状态附带：
 \begin{equation}
@@ -356,23 +357,25 @@ C_{\max},
 ExplicitCognition\downarrow.
 \end{equation}
 这与整部理论中的一个核心判断一致：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MatureIntelligence
 =
 SelectiveExplicitCognition
-}
-\end{equation}
+\)}
+\end{statementbox}
 真正成熟的智能不是每个问题都调动最大模型、最长上下文和最深搜索，而是在需要时升高认知活动，在不需要时主动降低高层参与。
 
 因此，TCE 的本质可以写成：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 TCE
 =
 MetaDynamicalController
-}
-\end{equation}
+\)}
+\end{statementbox}
 即它控制的主要对象不是现实世界本身，而是智能体内部产生感知、推理、规划和选择的动力学过程。
 
 
@@ -544,12 +547,13 @@ x_t\in\mathcal X_{safe}^{cog}.
 \end{equation}
 
 于是，认知自调节可以进一步理解为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MaintainCognitiveTrajectory
 InsideAFeasibleRegion.
-}
-\end{equation}
+\)}
+\end{statementbox}
 智能不再只是求解任务，而是同时维持``使求解仍然能够继续''的内部动力条件。
 
 \section{有限工作记忆条件下的负反馈：自调节为什么首先是稳定机制}
@@ -757,23 +761,25 @@ SPC--TCE 闭环正是这一原则在工作记忆尺度上的具体实现。当�
 始终位于一个可恢复、可控制、不会长期失稳的区域中。
 
 由此可以给出本章的一个核心原则：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitiveStability
 \neq
 CognitiveInactivity.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 更进一步：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoodControl
 =
 RightAmountOfCognition
 AtTheRightTime.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 这也解释了为什么一个真正成熟的 Agent 不能只依赖基础模型本身的静态推理能力。基础模型可以提供认知变换函数，而持续智能还需要一个动态系统决定：什么时候应该调用多少认知能力、什么时候应该停止、什么时候应该收敛、什么时候应该重新展开。SPC--TCE 正是实现这一调度性的最小闭环。
 
@@ -905,15 +911,16 @@ f
 其中 $\tau_{delay}$ 表示自状态估计和控制延迟，$\sigma_{est}$ 表示估计不确定性。一个真正具有认知自治性的系统必须使 $\mathcal G_{self}$ 长期维持在某一最低阈值以上。
 
 因此，我们第一次可以从动力学而不是人格语言定义``自我治理''：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfGovernance
 =
 ObserveRelevantInternalDynamics
 +
 ModifyRelevantInternalDynamics.
-}
-\end{equation}
+\)}
+\end{statementbox}
 这也为后续更加复杂的认知控制结构建立了一个十分清晰的理论地基。
 
 \section{闭环中的时间延迟、控制增益与认知振荡}
@@ -1002,13 +1009,14 @@ bk e(t-\tau).
 在某个 $k$ 下稳定，引入足够大的 $\tau$ 以后，也可能因为相位裕度下降而产生振荡。
 
 这一结果对认知架构非常重要，因为它告诉我们：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MoreControl
 \neq
 BetterControl.
-}
-\end{equation}
+\)}
+\end{statementbox}
 TCE 增益过低会导致系统无法及时纠正负载和失稳状态，但增益过高同样会让 Agent 频繁在探索与收敛、激活与抑制、开放与保守之间往返。
 
 因此，SPC--TCE 系统中至少存在三个需要共同设计的时间量：
@@ -1116,13 +1124,14 @@ CognitiveTrajectory.
 \end{equation}
 
 从控制论角度看，这是一种慢变量对快变量可行域的约束。它符合我们在更一般智能频谱理论中建立的原则：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance
 \neq
 FastMicromanagement.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 一个良好的自我结构不应逐 token、逐动作直接控制当前认知，而应规定：
 \begin{equation}
@@ -1271,15 +1280,16 @@ p(P_{t+1}\mid P_t,u_t),
 而不是强制给出唯一的 $P_{t+1}$。
 
 因此我们得到：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 TCE
 =
 ControlOfCognitiveVectorField,
 \quad
 \text{not DirectOverwriteOfCognitiveState}.
-}
-\]
+\)}
+\end{statementbox}
 
 这一结论与多尺度智能动力学中的慢变量控制原则一致。较慢的宏观层并不需要逐状态微操较快层，而只需要规定快层运动的中心、边界、增益和可接受方向：
 \[
@@ -1428,15 +1438,16 @@ F(P_t)+U_t
 就意味着系统虽然当前尚未到达目标流形，但其未来趋势已经被引导向目标。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitiveControl
 =
 ControlOfFutureTrajectory,
 \quad
 \text{not merely CorrectionOfPresentError}.
-}
-\]
+\)}
+\end{statementbox}
 
 \paragraph{定理：信息几何投影控制收敛定理。}
 
@@ -1471,7 +1482,6 @@ D_{\mathrm{KL}}(Q\|P).
 }
 \label{eq:generalized-pythagorean-cognitive-control}
 \]
-
 由于 KL 散度非负，
 \[
 D_{\mathrm{KL}}(Q\|P)\ge 0,
@@ -1499,15 +1509,12 @@ D_{\mathrm{KL}}(R\|P).
 }
 \label{eq:projection-monotonic-decrease}
 \]
-
 证明完毕。
-
 这一结果给出了 SPC--TCE 宏观控制一个非常重要的解释。TCE 并不需要知道目标流形中的最终全局最优点 $R$ 究竟在哪里。只要宏观层能够定义正确的可接受状态集合
 \[
 \mathcal{M}_{\mathrm{target}}
 \]
 并执行正确的信息投影，则每一次控制都必然减少当前状态到任意目标流形内参考解 $R$ 的信息距离。
-
 因此：
 \begin{statementbox}
 \centering
@@ -1515,9 +1522,7 @@ D_{\mathrm{KL}}(R\|P).
 \Rightarrow
 GlobalDistanceNonIncrease.\)}
 \end{statementbox}
-
 我们可以把它称为认知控制的\textbf{局部贪婪充分性}：宏观控制器无需拥有终极认知真理，它只需要知道当前认知状态违反了哪些结构约束，并将认知趋势重新投影回允许流形。
-
 这一性质也揭示了所谓``宏观控制''与``直接决定具体思维内容''之间的区别。目标流形可以仅定义：
 \[
 Safety,
@@ -1533,9 +1538,7 @@ GoalConsistency,
 \mathcal{M}_{\mathrm{target}}
 \]
 内部自由演化。
-
 \paragraph{推论：理想投影控制不存在由投影本身导致的系统性误差累积。}
-
 定义 Lyapunov 型信息势函数
 \[
 V_t
@@ -1826,12 +1829,13 @@ v_{\mathrm{target}},
 其中 $v_{\mathrm{target}}$ 表示目标流形移动速度。
 
 这给出认知控制设计中的一般原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ProjectionProvidesTheCorrectDirection;
 GainAndTimescaleDetermineWhetherTheLoopOscillates.
-}
-\]
+\)}
+\end{statementbox}
 
 因此，一个成熟的 TCE 不应采用单一固定高增益，而应根据 SPC 的置信度和趋势估计调整控制强度。例如可以定义
 \[
@@ -1952,15 +1956,16 @@ V_t
 \end{statementbox}
 
 从这一角度看，认知控制并不是把智能体的思维强制固定在某一个点上，而是在一个高维信息流形中不断改变其未来演化的概率方向，使系统既保留目标流形内部的局部自由，又不会长期漂离主体允许的认知区域。因此，SPC--TCE 的稳定性并非来源于``强控制''，而来源于三个更基本的结构条件：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CorrectProjection
 +
 BoundedPredictionError
 +
 TimescaleSeparatedFeedback.
-}
-\]
+\)}
+\end{statementbox}
 
 这也使我们能够更加准确地定义宏观认知治理：
 \begin{definition*}
@@ -2029,13 +2034,14 @@ Partial,\ Compressed,\ Delayed,\ Uncertain.
 第四，二者闭环也并不自动保证稳定；Observer Delay、Controller Gain、错误参考系以及未观测变量都可能使闭环失效。
 
 因此更严谨的表述是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SPC\text{--}TCE
 =
 MinimalFunctionalSelfRegulationLoop.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 它赋予 Agent 的不是神秘意义上的``自我意识''，而是：
 \begin{statementbox}
@@ -2072,18 +2078,20 @@ Update
 因此，本章可以用三个逐层增强的命题收束。
 
 第一，
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Cognition
 \neq
 SelfRegulatedCognition.
-}
-\end{equation}
+\)}
+\end{statementbox}
 具有推理能力并不意味着具有认知自调节能力。
 
 第二，
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfRegulation
 Requires
 SelfEstimation
@@ -2091,8 +2099,8 @@ SelfEstimation
 Control
 +
 Feedback.
-}
-\end{equation}
+\)}
+\end{statementbox}
 SPC、TCE 和认知动力学反馈缺一不可。
 
 第三，

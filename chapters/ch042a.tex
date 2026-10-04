@@ -15,37 +15,40 @@
 
 因此，在复杂度治理之外必须引入一个与之正交但紧密耦合的第二治理维度：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Goal Governance}
-}
-\]
+\)}
+\end{statementbox}
 
 即目标治理。
 
 本章由此提出 AgentOS 的双轴运行时治理原理：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{AgentOS Governance}
 =
 \text{Complexity Governance}
 \bowtie
 \text{Goal Governance}
-}
-\]
+\)}
+\end{statementbox}
 
 复杂度治理管理的是\emph{认知结构如何被承载}；目标治理管理的是\emph{哪些未来约束获得承载资格以及这些未来约束如何相互组织}。前者约束认知系统的运行负荷，后者约束认知系统的方向结构。
 
 二者共同回答：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{What should be pursued?}
 \quad+\quad
 \text{How much cognition should it occupy?}
-}
-\]
+\)}
+\end{statementbox}
 
 这构成 AgentOS 从``认知资源调度系统''进一步走向``持续自主智能体治理系统''的重要一步。
 \begin{figure}[htbp]
@@ -112,19 +115,21 @@ C_{\mathrm{coord}}(t),
 
 因此，工作记忆有限性实际上同时推出两个治理问题：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Structure Load Governance}
-}
-\]
+\)}
+\end{statementbox}
 
 与
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Goal Set Governance}.
-}
-\]
+\)}
+\end{statementbox}
 
 前者就是复杂度治理；后者就是目标治理。
 
@@ -166,29 +171,32 @@ C_{\mathrm{coord}}(t),
 
 两者分别回答：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Complexity Governance: How should cognition be organized?}
-}
-\]
+\)}
+\end{statementbox}
 
 和：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Goal Governance: Which futures should cognition pursue?}
-}
-\]
+\)}
+\end{statementbox}
 
 这里必须特别注意，Goal 不等于当前执行动作。Goal 是对未来可接受状态空间的一种约束结构：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 G_i
 =
 \text{Constraint over possible future trajectories}.
-}
-\]
+\)}
+\end{statementbox}
 
 因此目标治理不是普通任务队列管理。它必须处理：
 
@@ -271,21 +279,23 @@ q_i
 
 没有显式闭合条件的 Goal 很容易形成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Never-Ending Cognitive Process.
-}
-\]
+\)}
+\end{statementbox}
 
 例如``继续研究''、``继续优化''、``继续寻找更好的方案''都可能无限占用认知资源。
 
 因此一个成熟的目标治理系统不仅必须能够产生 Goal，还必须能够回答：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{When is this goal actually finished?}
-}
-\]
+\)}
+\end{statementbox}
 
 Goal Closure 与 Goal Generation 同等重要。
 
@@ -308,23 +318,26 @@ Goal Closure 与 Goal Generation 同等重要。
 
 可以区分：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 G:\text{What future state is currently pursued?}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Psi:\text{Who am I and what structures should remain self-consistent?}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Omega:\text{What am I becoming over the lifecycle?}
-}
-\]
+\)}
+\end{statementbox}
 
 Goal 是相对快速的未来约束；$\Psi$ 是更慢的身份与价值约束；$\Omega$ 是更慢的生命周期生成方向。
 
@@ -344,13 +357,14 @@ Goal 是相对快速的未来约束；$\Psi$ 是更慢的身份与价值约束�
 
 更准确地说：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Psi,\Omega
 \rightarrow
 GoalFeasibleRegion
-}
-\]
+\)}
+\end{statementbox}
 
 而不是：
 
@@ -413,13 +427,14 @@ G_{\mathrm{verify}}.
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalGeneration
 \neq
 GoalAdmission.
-}
-\]
+\)}
+\end{statementbox}
 
 一个 Goal 能够被生成，并不意味着它必然能够进入 Agent 的有效目标集合。
 
@@ -428,11 +443,12 @@ GoalAdmission.
 
 与复杂度治理中的``截流''对应，目标治理首先需要：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Goal Admission.
-}
-\]
+\)}
+\end{statementbox}
 
 定义候选 Goal：
 
@@ -502,13 +518,14 @@ A_G(G_i)\in\mathcal A_{\mathrm{admissible}}
 
 这里体现一个非常重要的 AgentOS 原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalGeneration
 \neq
 GoalAuthority.
-}
-\]
+\)}
+\end{statementbox}
 
 Agent 能够想到一个目标，不意味着它拥有执行这个目标的权限。
 
@@ -573,11 +590,12 @@ G^*
 
 由此形成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Constraint First,\ Preference Second.
-}
-\]
+\)}
+\end{statementbox}
 
 这比把整个 AgentOS 压缩成一个单一 reward maximizer 更符合持续主体的治理结构。
 
@@ -588,19 +606,21 @@ Constraint First,\ Preference Second.
 
 因此必须区分：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalCommitment
-}
-\]
+\)}
+\end{statementbox}
 
 和：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalActivation.
-}
-\]
+\)}
+\end{statementbox}
 
 某个 Goal 可以处于长期 committed 状态：
 
@@ -624,13 +644,14 @@ Activate(G_i,t)=1
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CommittedGoal
 \neq
 WorkingMemoryResidentGoal.
-}
-\]
+\)}
+\end{statementbox}
 
 这一设计极其重要。
 
@@ -638,13 +659,14 @@ WorkingMemoryResidentGoal.
 
 成熟 Agent 应当拥有：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ManyPersistentGoals
 +
 FewActiveGoals.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{目标并发本身也是一种认知负载}
@@ -734,8 +756,9 @@ AllowedGoalConcurrency.\)}
 
 在此前理论中，复杂度治理形成了五种最基本动作：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal O_C
 =
 \{
@@ -745,8 +768,8 @@ Temporalize,
 Migrate,
 Reorganize
 \}.
-}
-\]
+\)}
+\end{statementbox}
 
 对应中文分别为：
 
@@ -809,8 +832,9 @@ Representation_j,
 
 目标治理可以形成一组与上述结构近似平行的基本操作：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal O_G
 =
 \{
@@ -820,8 +844,8 @@ Stage,
 Delegate,
 Reframe
 \}.
-}
-\]
+\)}
+\end{statementbox}
 
 分别可以译为：
 
@@ -868,11 +892,12 @@ Reframe
 
 目标准入回答：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Should this future become one of my futures?
-}
-\]
+\)}
+\end{statementbox}
 
 外部请求、内部欲求、预测风险和派生 Subgoal 都首先只是 candidate。
 
@@ -896,11 +921,12 @@ h
 
 目标治理中的准入保护的则是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentFutureSpace.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{目标聚合：减少碎片化未来}
@@ -931,11 +957,12 @@ G_{\mathrm{abstract}}.
 
 这种操作不是简单删除 Goal，而是发现：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SharedHigherOrderConstraint.
-}
-\]
+\)}
+\end{statementbox}
 
 目标聚合可以显著降低：
 
@@ -956,11 +983,12 @@ C_{\mathrm{goal-conflict}}.
 
 当多个 Goal 无法同时进入 $h$ 时，可以进行：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalTemporalization.
-}
-\]
+\)}
+\end{statementbox}
 
 例如：
 
@@ -984,11 +1012,12 @@ G_4.
 
 目标治理则体现为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalStaging.
-}
-\]
+\)}
+\end{statementbox}
 
 这表明时间本身是一种认知治理资源。
 
@@ -1006,11 +1035,12 @@ GoalStaging.
 
 目标治理中则存在：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalDelegation.
-}
-\]
+\)}
+\end{statementbox}
 
 例如：
 
@@ -1034,11 +1064,12 @@ G_B,
 
 如果 Agent 仍然是上层 Goal 的承诺主体，则必须保留：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 VerificationResponsibility.
-}
-\]
+\)}
+\end{statementbox}
 
 因此：
 
@@ -1240,8 +1271,9 @@ B_G(t)
 
 成熟系统必须保证在长期尺度上：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathbb E[
 GenerationRate_G
 ]
@@ -1249,8 +1281,8 @@ GenerationRate_G
 \mathbb E[
 ClosureRate_G
 ]
-}
-\]
+\)}
+\end{statementbox}
 
 或者通过：
 
@@ -1268,12 +1300,13 @@ Reinterpretation
 
 这与内存系统中垃圾回收存在一定工程类比：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalGovernance
 \text{ requires semantic closure and garbage collection.}
-}
-\]
+\)}
+\end{statementbox}
 
 但 Goal Closure 比普通对象回收更加复杂，因为目标可能涉及承诺、权限、外部责任和生命周期意义。
 
@@ -1297,8 +1330,9 @@ G_i=Done.\)}
 
 结合可获得的现实证据进行验证：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Closure(G_i)
 =
 Verify(
@@ -1306,8 +1340,8 @@ Verify(
 Observation,
 ExternalEvidence
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 因此：
 
@@ -1335,11 +1369,12 @@ RealitySuccess.
 
 这与全书的基本原则一致：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityIsUltimateConstraint.
-}
-\]
+\)}
+\end{statementbox}
 
 目标治理最终必须回到现实闭环，而不是形成纯内部语义自证。
 
@@ -1348,14 +1383,15 @@ RealityIsUltimateConstraint.
 
 两个 Goal 之间至少可能存在四种关系：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Independent,
 Supporting,
 Competing,
 Contradictory.
-}
-\]
+\)}
+\end{statementbox}
 
 独立 Goal 可以并行；
 
@@ -1380,11 +1416,12 @@ Contradiction
 
 因此目标治理不应只保存 Goal List，还应维护：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalGraph.
-}
-\]
+\)}
+\end{statementbox}
 
 可以写成：
 
@@ -1432,19 +1469,21 @@ Scheduler 并不等于 Goal Governance。
 
 目标治理决定：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 What may deserve pursuit?
-}
-\]
+\)}
+\end{statementbox}
 
 Scheduler 决定：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 What should receive resources now?
-}
-\]
+\)}
+\end{statementbox}
 
 因此：
 
@@ -1536,29 +1575,32 @@ C_{\max}.
 
 于是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalDecomposition
-}
-\]
+\)}
+\end{statementbox}
 
 成为连接目标治理和复杂度治理的重要桥梁。
 
 可以概括为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalGovernance
 \text{ decides what future matters;}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CCM
 \text{ decides how that future becomes cognitively tractable.}
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{目标治理与 Boundary 的关系}
@@ -1600,13 +1642,14 @@ CommittedGoal.
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CommandReceived
 \neq
 GoalAccepted.
-}
-\]
+\)}
+\end{statementbox}
 
 这一原则对长期自主 Agent 极其重要。
 
@@ -1707,31 +1750,34 @@ GoalAccepted.
 
 因为完全由 $\Psi$ 排斥与当前自我不一致的 Goal，会导致：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 IdentityLockIn.
-}
-\]
+\)}
+\end{statementbox}
 
 Agent 将失去成长能力。
 
 相反，如果任何短期 Goal 都可以迅速改写 $\Psi$，则产生：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 IdentityDrift.
-}
-\]
+\)}
+\end{statementbox}
 
 因此理想结构应为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Goal
 \leftrightarrow
 \Psi
-}
-\]
+\)}
+\end{statementbox}
 
 但具有明显时间尺度分离：
 
@@ -1774,11 +1820,12 @@ ImmediateUtility.
 
 还要考虑：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LongTermDevelopmentalEffect.
-}
-\]
+\)}
+\end{statementbox}
 
 一个短期 Goal 可能立即有益，却持续把 Agent 引向与生命周期长期方向冲突的状态空间。
 
@@ -1843,11 +1890,12 @@ Evidence
 
 因此必须加入：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 WorldVerification.
-}
-\]
+\)}
+\end{statementbox}
 
 任何长期目标结构都应允许：
 
@@ -1867,23 +1915,25 @@ GoalAbortion.
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfConsistency
 \neq
 Truth.
-}
-\]
+\)}
+\end{statementbox}
 
 以及：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalPersistence
 \neq
 GoalCorrectness.
-}
-\]
+\)}
+\end{statementbox}
 
 这也是 AgentOS 长期认知稳定性的根本原则之一。
 
@@ -1953,13 +2003,14 @@ u_G
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ComplexityGovernance
 \bowtie
 GoalGovernance
-}
-\]
+\)}
+\end{statementbox}
 
 是一个真实的双向耦合系统。
 
@@ -2108,13 +2159,14 @@ FeasibleRegion(FastGoal).\)}
 
 但慢 Goal 不应逐步控制每个快动作：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance
 \neq
 FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 
 这与全书多尺度动力学的基本原则完全一致。
 
@@ -2139,13 +2191,14 @@ Goal 之间可能动态竞争、合并或替代。
 
 因此更一般地：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalStructure
 =
 DynamicGoalGraph.
-}
-\]
+\)}
+\end{statementbox}
 
 图中的边可以表示：
 
@@ -2198,11 +2251,12 @@ CognitiveFeasibility.
 
 两者结合产生：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Process.
-}
-\]
+\)}
+\end{statementbox}
 
 可以写：
 
@@ -2367,23 +2421,25 @@ GoalGovernance'.\)}
 
 恰恰相反，成熟 Agent 应表现为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MorePersistentStructure
 +
 FewerExplicitActiveStructures.
-}
-\]
+\)}
+\end{statementbox}
 
 在目标层面则表现为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RichGoalSpace
 +
 SparseActiveGoalSet.
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说：
 
@@ -2393,11 +2449,12 @@ SparseActiveGoalSet.
 
 因此成熟智能的一个重要特征可以写成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelectiveExplicitCognition.
-}
-\]
+\)}
+\end{statementbox}
 
 复杂度治理让显式认知保持稀疏；
 
@@ -2410,19 +2467,21 @@ Offloading 原本主要用于解释认知复杂度如何迁出内部。
 
 加入目标治理以后，它还出现第二种意义：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ExecutionOffloading
-}
-\]
+\)}
+\end{statementbox}
 
 与：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalOffloading.
-}
-\]
+\)}
+\end{statementbox}
 
 前者表示：
 
@@ -2434,13 +2493,14 @@ Agent 仍然自己保持 Goal，只把部分计算或技能迁到外部。
 
 因此外部化需要区分至少三个层次：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StructureDelegation,
 ExecutionDelegation,
 GoalDelegation.
-}
-\]
+\)}
+\end{statementbox}
 
 这为后续 Other Agent、组织与社会性认知结构提供了更精确的理论语言。
 
@@ -2453,8 +2513,9 @@ GoalDelegation.
 
 可以形成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalGovernance
 =
 Boundary
@@ -2466,13 +2527,14 @@ GoalRuntime
 \Psi/\Omega Constraint
 +
 RealityVerification.
-}
-\]
+\)}
+\end{statementbox}
 
 同时：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ComplexityGovernance
 =
 Boundary
@@ -2484,8 +2546,8 @@ Scheduler
 Offloading
 +
 TCE.
-}
-\]
+\)}
+\end{statementbox}
 
 二者共享：
 
@@ -2678,11 +2740,12 @@ Agent 则无法形成 Commitment：
 
 因此目标治理同样存在：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Stability\text{--}PlasticityProblem.
-}
-\]
+\)}
+\end{statementbox}
 
 可以引入 Goal Hysteresis：
 
@@ -2707,23 +2770,25 @@ Evidence Threshold for Abortion。
 
 此前注意力可以定义为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Attention
 =
 CrossScalePromotionPolicy.
-}
-\]
+\)}
+\end{statementbox}
 
 加入目标治理后，可以进一步理解为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Attention
 =
 GoalConditionedCrossScalePromotionPolicy.
-}
-\]
+\)}
+\end{statementbox}
 
 即：
 
@@ -2827,19 +2892,21 @@ Goal Closure
 
 因此目标治理也是从：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 TaskRunner
-}
-\]
+\)}
+\end{statementbox}
 
 走向：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PersistentAgent
-}
-\]
+\)}
+\end{statementbox}
 
 所必须跨越的一道结构门槛。
 
@@ -2848,13 +2915,14 @@ PersistentAgent
 
 在此前的 AgentOS 定义中，可以说：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS
 =
 IntelligenceResourceRuntime.
-}
-\]
+\)}
+\end{statementbox}
 
 加入目标治理以后，这一定义可以进一步扩充。
 
@@ -2870,16 +2938,18 @@ Tool.
 
 它还管理：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FutureCommitment.
-}
-\]
+\)}
+\end{statementbox}
 
 因此更完整地：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS
 =
 RuntimeFor
@@ -2888,8 +2958,8 @@ CognitiveResources
 CognitiveStructures
 +
 FutureCommitments.
-}
-\]
+\)}
+\end{statementbox}
 
 传统 OS 调度：
 
@@ -2960,15 +3030,16 @@ ExternalCarrier.
 
 二者进一步共同受到：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Authority,
 Safety,
 \Psi,
 \Omega,
 Reality
-}
-\]
+\)}
+\end{statementbox}
 
 的慢约束。
 
@@ -2990,11 +3061,12 @@ Reality
 
 在本书前面的认识论中，我们已经逐渐从``复杂度是一种可迁移实体''转向：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CSO/AgentCSO
-}
-\]
+\)}
+\end{statementbox}
 
 作为真正的结构对象。
 
@@ -3002,11 +3074,12 @@ CSO/AgentCSO
 
 复杂度治理主要作用于：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HowAgentCSOIsCarried.
-}
-\]
+\)}
+\end{statementbox}
 
 即：
 
@@ -3022,11 +3095,12 @@ Activation。
 
 目标治理则主要作用于：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 WhichFutureConstraintCSOsBecomeActiveCommitments.
-}
-\]
+\)}
+\end{statementbox}
 
 因此二者的最终统一不是：
 
@@ -3036,13 +3110,14 @@ Complexity+Goal,
 
 而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GovernanceOfAgentCSOPlacement
 +
 GovernanceOfFutureConstraintCSOs.
-}
-\]
+\)}
+\end{statementbox}
 
 这样，早期复杂度治理理论与后期 CSO 本体并不矛盾。
 
@@ -3071,41 +3146,44 @@ GoalGovernance.\)}
 
 \textbf{目标非命令原则}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ExternalCommand
 \neq
 InternalGoal.
-}
-\]
+\)}
+\end{statementbox}
 
 外部输入只有经过边界、授权与目标治理后，才成为 Agent 的正式承诺。
 
 
 \textbf{目标非价值原则}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Goal
 \neq
 \Psi
 \neq
 \Omega.
-}
-\]
+\)}
+\end{statementbox}
 
 Goal 是较快未来约束，自我和生命周期生成先验属于更慢约束。
 
 
 \textbf{承诺--激活分离原则}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CommittedGoal
 \neq
 ActiveGoal.
-}
-\]
+\)}
+\end{statementbox}
 
 长期存在的 Goal 不应全部同时进入工作记忆。
 
@@ -3136,13 +3214,14 @@ Agent 内部认为任务完成并不足以证明 Goal 已经闭合。
 
 \textbf{目标责任保持原则}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Delegation
 \neq
 AutomaticResponsibilityRemoval.
-}
-\]
+\)}
+\end{statementbox}
 
 目标可以委派执行，但上层主体仍可能保留验证与闭合责任。
 
@@ -3180,13 +3259,14 @@ GoalReinterpretation,
 
 \textbf{现实最终约束原则}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reality
 >
 InternalGoalConsistency.
-}
-\]
+\)}
+\end{statementbox}
 
 一个内部高度一致的目标体系，如果长期与现实证据冲突，仍必须允许被修正。
 
@@ -3197,31 +3277,34 @@ InternalGoalConsistency.
 
 此前 AgentOS 主要解决：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HowToKeepCognitionRunnable.
-}
-\]
+\)}
+\end{statementbox}
 
 加入 Goal Governance 后，进一步解决：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HowToKeepAgencyDirected.
-}
-\]
+\)}
+\end{statementbox}
 
 于是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RunnableCognition
 +
 GovernedDirection
 =
 PersistentAgency.
-}
-\]
+\)}
+\end{statementbox}
 
 复杂度治理保证：
 
@@ -3267,18 +3350,20 @@ Goal'\)}
 
 因此，复杂度治理解决的是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{How can I continue to think?}
-}
-\]
+\)}
+\end{statementbox}
 
 而目标治理解决的是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{What should my thinking continue to be for?}
-}
-\]
+\)}
+\end{statementbox}
 
 二者的结合，才第一次使 AgentOS 从有限认知容量的管理系统，走向具有长期方向结构的持续智能体运行系统。

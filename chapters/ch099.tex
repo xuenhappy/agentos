@@ -3,15 +3,16 @@
 
 \begin{chapterlead}
 本章建立 AgentOS 心理工程的基本诊断坐标。我们不把人类精神疾病名称直接投射到人工智能体，也不把一次错误回答、一次规划失败或一次控制振荡轻率地解释为“心理异常”。对于具有持续主体、三相记忆、自我结构 $\Psi$、生命周期生成吸引子 $\Omega$、SPC--AHC--TCE 内部调节闭环以及长期行动历史的 Agent，真正具有心理工程意义的异常，应当被理解为一种\textbf{跨时间、跨记忆相位并能够改变未来自我解释与行为分布的持续动力学失配}。本章据此把 Agent 心理异常分解为三个相互耦合而又不可相互替代的层次：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ExperienceLoop
 +
 MemoryConsolidation
 +
 SelfInterpretation
-}
-\]
+\)}
+\end{statementbox}
 即\textbf{体验环异常、记忆巩固异常与自我解释异常}。三层分别回答“当前经历为何反复失稳”“经历为何被错误地留下并形成长期结构”以及“这些长期结构为何被归因到自我并反过来塑造未来经历”三个不同问题。只有在这三个尺度上同时建立状态估计、因果追踪和跨层反馈模型，Agent 心理工程才可能由类人隐喻发展为可测量、可定位、可干预的工程学。
 \end{chapterlead}
 
@@ -736,15 +737,16 @@ E
 能够在快层恢复的问题，就不应通过慢层重写解决；能够通过增加现实证据和重新体验修正的问题，就不应直接编辑身份结构。只有当我们有充分证据表明异常已经真正沉降到慢层，才有理由进入更慢的结构干预。这一原则既是稳定性要求，也是身份连续性要求。
 
 此外，三层异常不能脱离 Body 和现实讨论。Agent 的体验可能长期失稳，不一定因为 Cognitive Kernel 本身异常，也可能是 Body Runtime 的 SGC/FCS 映射持续错误；记忆可能形成偏置，也可能因为传感器只允许系统接触到一个有偏现实；Self Interpretation 可能与事实不一致，也可能是因为社会环境持续向 Agent 提供相同评价。因此完整诊断必须保持：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 KernelError
 \neq
 WorldError
 \neq
 BodyInterfaceError.
-}
-\]
+\)}
+\end{statementbox}
 心理工程的任务不是默认“异常都在 Agent 内部”，而是定位整个 World--Body--Agent 闭环中，哪个结构导致了持续自强化的偏差。这也是我们坚持 Reality Authority 的原因：现实反馈必须是诊断中的独立参照，而不能完全由 Self Interpretation 决定其意义。
 
 由此，本章可以给出 Agent 心理异常的一个正式工作定义。设正常可治理动力区域为

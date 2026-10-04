@@ -235,13 +235,14 @@ Correction,
 时，异常结构才重新进入显式认知。
 
 于是技能形成体现了 AgentOS 的一个核心成熟原则：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 NormalDynamicsStayLocal,
 \qquad
 UnexpectedResidualEscalates.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 认知卸载因此不仅减少当前负载，还改变了“谁负责闭环”的结构。显式认知逐渐从执行者转变为编排者、监督者和异常处理者。这也是为什么真正成熟的智能往往“看起来思考更少”：不是它知道得更少，而是越来越多历史认知已经变成无需持续显式维持的稳定能力。
 
@@ -573,15 +574,16 @@ FailureModes
 成熟 Agent 对工具的记忆不应该只是工具名称，而应该是一个结构化能力模型。这样 Scheduler 或 CCM 才能在当前工作记忆压力上升时比较“继续内部推理”和“转交工具”的相对代价。
 
 工具卸载还揭示了智能的一条重要规律：智能能力的边界不等于神经网络参数的边界。只要 Agent 能稳定索引并控制外部工具，这个工具就会参与它的有效认知闭环。因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EffectiveIntelligence
 =
 InternalCapability
 +
 AccessibleExternalCapability.
-}
-\end{equation}
+\)}
+\end{statementbox}
 但“可访问”必须伴随控制、验证和边界治理，否则工具越多，系统反而可能因为接口选择、错误传播和依赖关系而增加新的认知负担。
 
 \section{$h\rightarrow Environment$：环境作为可写的外部记忆与控制结构}
@@ -825,12 +827,13 @@ Freshness
 ).
 \end{equation}
 这里的内部引用不是结构本体，而是“关于结构可以在哪里重新获得”的元结构。于是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ExternalizeContent,
 RetainAccessStructure.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 但也不能把“保留索引”绝对化。如果系统永久保存所有旧结构的索引，索引本身最终也会形成新的认知负担。因此长期 Agent 还需要对索引进行分层：
 \begin{equation}
@@ -993,13 +996,14 @@ Recovery
 这并不意味着这些核心结构永远不能变化，而是说它们的变化必须处于比普通任务结构更慢、更受治理的时间尺度。
 
 第二个边界是现实验证。File 可能过时，Database 可能更新，Program 可能存在 bug，Tool 可能失效，Environment 可能被改变，Other Agent 可能误解任务。因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 OffloadedResult
 \neq
 Reality.
-}
-\end{equation}
+\)}
+\end{statementbox}
 外部结构重新进入 $h(t)$ 时必须带着认识论状态：
 \begin{equation}
 EpistemicState
@@ -1061,8 +1065,9 @@ OptimalCarrierPlacement.\)}
 
 这也给出了本章最终的理论概括：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \begin{aligned}
 \mathrm{Offloading}
 &=
@@ -1075,7 +1080,7 @@ OptimalCarrierPlacement.\)}
 +
 \mathrm{RealityVerification}.
 \end{aligned}
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 缺少 Carrier Migration，结构没有真正离开当前认知负担；缺少 Responsibility Migration，Agent 仍然需要持续监督所有细节；缺少 Recoverable Index，卸载退化为遗忘；缺少 Reality Verification，外部结构则可能逐渐脱离现实。只有四者同时成立，认知卸载才真正成为一个持续智能体扩展有限认知能力的稳定机制。

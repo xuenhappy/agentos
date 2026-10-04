@@ -29,13 +29,14 @@
 \text{功能承载动力学}\)}
 \end{statementbox}
 或者更加简洁地写成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Dynamics\ On\ Topology
 +
 Dynamics\ Of\ Topology
-}
-\]
+\)}
+\end{statementbox}
 
 需要特别说明的是，本章借用了图论、多层网络、超图、动态网络、双部图、图映射以及控制系统中的状态--实现分离思想，但“双图理论”在本书中的具体含义，是为CSO、Agent-CSO及AgentOS长期智能动力学服务的理论构造，不应与任何一种现成图神经网络或知识图谱模型直接等同。
 \end{chapterlead}
@@ -54,23 +55,25 @@ C_{\text{cup-on-table}}
 在刚刚被感知时，可能主要由感知整合功能承载；在进入工作记忆以后，它可能被规划、语言推理和目标评估同时调用；在经验沉降之后，它可能进入情景记忆；若该结构长期重复出现，则其中某部分甚至可能被编译进身体控制技能，使其不再需要显式进入工作记忆。换言之，同一个认知结构可以沿着不同功能和不同时间尺度发生迁移。
 
 因此，如果我们把认知对象直接等同于功能模块内部状态，就会隐含一个错误假设：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitiveStructure
 \equiv
 FunctionalLocation
-}
-\]
+\)}
+\end{statementbox}
 而长期智能恰恰要求我们否定这一等同。
 
 更加准确的关系应当是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitiveStructure
 \neq
 FunctionalCarrier
-}
-\]
+\)}
+\end{statementbox}
 但同时：
 \begin{statementbox}
 \centering
@@ -467,13 +470,14 @@ a_{\text{residual}}>a_{\text{semantic}},
 这意味着真正的功能拓扑天然是typed graph，而不是简单graph。
 
 本书此前提出：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Module
 =
 StableTopologicalCondensate
-}
-\]
+\)}
+\end{statementbox}
 现在可以给出更加明确的解释。一个模块并不是理论上预先存在的本体实体，而是多个功能节点与边在长期运行中形成高度内部耦合、稳定边界和相对自主闭环以后，被工程上封装成一个模块。例如SPC可能最初只是几个状态估计功能的集合，当这些功能形成稳定耦合并拥有统一接口后，我们才把它们称为“SPC模块”。
 
 因此：
@@ -492,13 +496,14 @@ FunctionalEncapsulation.
 外部理论中，网络科学、hypergraph、causal architecture、control network和functional connectivity都可以帮助我们数学化$\mathcal G_F$。但需要避免把“功能拓扑”直接等同于物理连接图。一个神经系统中可能有数十亿物理突触，但高层功能拓扑只保留对当前理论尺度有意义的因果功能关系。同样，一个软件Agent中两个功能可能运行在同一个Transformer内，也可能分别运行在不同进程中；只要其功能关系保持，$\mathcal G_F$就可以在同一抽象层保持不变。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ImplementationTopology
 \neq
 FunctionalTopology.
-}
-\]
+\)}
+\end{statementbox}
 
 这是本章第二个基础分离原则。
 
@@ -799,11 +804,12 @@ r_{ij}
 则表示自我结构仅以慢偏置方式约束该目标，而不是显式处理目标细节。
 
 这种区分对于理解我们此前提出的：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance\neq FastMicromanagement
-}
-\]
+\)}
+\end{statementbox}
 至关重要。
 
 慢层结构并不需要复制快层所有信息，也不需要逐步计算每个动作。它只需要通过改变可行域、优先级、增益、准入条件等方式影响快层动力学。因此，一个CSO可以跨层存在，却在每一层承担不同功能。
@@ -996,15 +1002,16 @@ SemanticClass
 成熟智能的方向恰好相反。它希望保持少量真正需要全局整合的结构进入中央显式功能，而将大量稳定关系沉降到局部闭环。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MatureIntelligence
 =
 SelectiveCentralization
 +
 DistributedFunctionalClosure.
-}
-\]
+\)}
+\end{statementbox}
 
 这里再次体现双图理论的意义：我们不通过“模块数量”判断智能成熟度，而观察$\mathcal G_C$在$\mathcal G_F$上的承载分布。如果绝大多数熟练CSO仍然集中于单一中央功能，则系统虽然可能表现强大，却仍然具有高中央认知成本。
 
@@ -1033,11 +1040,12 @@ p_j
 \section{拓扑之上的动力学：Dynamics on Topology}
 
 到目前为止，我们暂时假定功能拓扑$\mathcal G_F$在短时间尺度上固定。在这个条件下，智能仍然可以产生极其丰富的动力学，因为CSO本身以及它们在功能图上的承载关系持续变化。这类过程称为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Dynamics\ On\ Topology.
-}
-\]
+\)}
+\end{statementbox}
 
 形式上，在：
 \[
@@ -1241,11 +1249,12 @@ J_C
 当系统长期运行以后，仅靠在固定$\mathcal G_F$上重新分配CSO可能逐渐变得低效。某些功能之间可能持续发生高成本往返，某些新型CSO可能长期缺少合适承载结构，某些旧功能连接可能几乎不再使用。此时，学习问题发生性质变化：系统需要的不再只是改变“哪些结构在哪里运行”，而是改变“有哪些地方可供这些结构运行”。
 
 这就是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Dynamics\ Of\ Topology.
-}
-\]
+\)}
+\end{statementbox}
 
 形式上：
 \[
@@ -1568,13 +1577,14 @@ DevelopmentalIntelligence.
 对于真正生命周期智能，第三层最终不可避免。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Learning
 \subset
 Development.
-}
-\]
+\)}
+\end{statementbox}
 
 但Development不应理解为单向“越来越复杂”。一个成熟系统可能通过拓扑重构反而变得更加简单。例如多个长期重复功能：
 \[
@@ -1781,15 +1791,16 @@ PersistentCSOFlow
 第六是操作系统。传统OS把Process与Resource分开，而双图理论在更高层把Cognitive Structure与Functional Carrier分开。这也是为什么AgentOS最终可以被理解成一种认知资源运行时。不过这种类比存在明确边界：CSO并不是普通文件，功能承载也不是单纯CPU调度；它们还具有语义、时间、自我、价值和生命周期属性。
 
 因此，本章必须保持三个层次的认识论边界：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EstablishedTheory
 \neq
 FormalAnalogy
 \neq
 AgentOSHypothesis.
-}
-\]
+\)}
+\end{statementbox}
 
 图论、多层网络、动态系统与控制理论属于已有数学工具；
 
@@ -1805,8 +1816,9 @@ AgentOSHypothesis.
 \end{definition*}
 
 由此，智能活动可以进一步写成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 IntelligentActivity
 =
 Generation
@@ -1818,23 +1830,25 @@ Coupling
 Migration
 +
 Stabilization.
-}
-\]
+\)}
+\end{statementbox}
 
 学习可以写成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Learning
 =
 \Delta\mathcal G_C
 +
 \Delta\mu.
-}
-\]
+\)}
+\end{statementbox}
 
 而发育则进一步包括：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Development
 =
 \Delta\mathcal G_C
@@ -1842,8 +1856,8 @@ Development
 \Delta\mu
 +
 \Delta\mathcal G_F.
-}
-\]
+\)}
+\end{statementbox}
 
 于是固定拓扑AgentOS与未来发育型AgentOS之间的关系也变得十分清楚：
 

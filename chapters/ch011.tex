@@ -55,13 +55,14 @@ C_j,
 这里必须特别强调，$\mathcal G_C$ 还不是某一个具体 Agent 大脑或软件运行时里的图。它是我们用来讨论“认知结构是什么”的理论层对象。就像“圆”不等于屏幕上绘制圆的像素集合，“某个目标与某项约束之间存在冲突”也不等于某一次 Transformer forward pass 中特定神经元的数值模式。后者可以承载前者，但二者并不因此获得同一性。
 
 我们可以把这种区分写成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CSO\ Ontology
 \neq
 CSO\ Representation
-}
-\]
+\)}
+\end{statementbox}
 更准确地说，representation 是关于 CSO 的某种具体 realization。若某个智能体 $A$ 采用表示系统 $\mathcal R_A$，则存在映射
 \[
 \pi_A:
@@ -92,11 +93,12 @@ C_A\neq C_B.
 r_t\rightarrow r_{t+1},
 \]
 却无法判断这种变化究竟意味着同一认知结构换了一种编码，还是认知结构本身发生了改变。例如，一位人类从用语言描述骑自行车，到形成高度自动化的程序性技能，其内部神经表示显然发生了巨大变化，但我们并不会因此认为“平衡自行车这一能力结构”已经变成完全无关的另一种东西。类似地，一个 Agent 最初通过显式自然语言计划完成网页操作，后来把重复步骤编译为 Skill 或 Program，也不能简单理解成原知识消失。更合理的描述是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Same\ CSO,\ Different\ Realization.
-}
-\]
+\)}
+\end{statementbox}
 
 从这里开始，我们能够第一次严格区分三种变化。第一种是表示变化：
 \[
@@ -144,15 +146,16 @@ Topology
 C\in\mathcal C,
 \]
 其在智能体 $A$ 中的具体实现记为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 C_A
 =
 AgentCSO_A(C)
 =
 \pi_A(C).
-}
-\]
+\)}
+\end{statementbox}
 
 这个定义的核心不在符号，而在于它改变了我们观察智能内部世界的方式。传统知识表示通常把“一个知识单元”理解成某段可以读取或写入的数据；Agent-CSO 则要求我们把一个认知结构视为一个具有运行条件和动力属性的实体。同一个“门现在关闭”这样的结构，可能在视觉感知回路中以短寿命的空间状态存在，在工作记忆 $h(t)$ 中成为当前计划的显式约束，在情景记忆 $E$ 中成为某段行动轨迹的一部分，在结构记忆 $\Theta$ 中又可能沉降为“这种门需要先转动把手再推开”的一般技能结构。也就是说：
 \[
@@ -271,35 +274,38 @@ S_A:
 这一点对于后续三相记忆理论尤其重要。$h$ 中的内容只是少量当前活跃 Agent-CSO，而不是智能体拥有的全部认知结构。
 
 因此，本章提出一个重要原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Agent\ Knowledge
 \neq
 Currently\ Active\ AgentCSO.
-}
-\]
+\)}
+\end{statementbox}
 成熟智能的大部分能力本来就应该处于非显式激活状态。只有真正需要跨功能全局协调的结构才需要进入 $h(t)$。这一原则将在后续工作记忆有限容量理论中进一步转化为工程约束。
 
 \section{同一 CSO 的多种实现：Same CSO, Different Carrier}
 
 当我们正式区分 CSO 与 Agent-CSO 以后，一个直接结果就是：认知结构不再被绑定于唯一材料、唯一算法甚至唯一功能模块。我们现在可以严谨表达：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Same\ CSO
 \neq
 Same\ Carrier
-}
-\]
+\)}
+\end{statementbox}
 更进一步：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Same\ CSO
 \neq
 Same\ Representation
 \neq
 Same\ Dynamics.
-}
-\]
+\)}
+\end{statementbox}
 这构成智能实现独立性理论最基本的一层。
 
 考虑两个智能体 $A$ 和 $B$。对于同一个 CSO $C$，分别有：
@@ -392,23 +398,25 @@ Output_A\approx Output_B.
 反之并不必然成立。
 
 这一层区分对于未来研究“人脑与人工智能是否属于同类智能”尤其重要。如果我们简单比较神经元与 Transformer，二者显然不同；如果只比较最终答案，又过于宽松。本书真正希望寻找的是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Multiscale\ Cognitive\ Dynamical\ Isomorphism
-}
-\]
+\)}
+\end{statementbox}
 即不同材料和实现是否能够在认知结构、功能闭环和时间尺度关系上形成近似同构。
 
 这一观点也意味着，所谓 AgentOS 不应该把内部 representation ABI 固定成某一种模型特征空间。相反，系统标准应尽可能作用于更加稳定的语义和功能边界。例如后续 SGC、FCS、Body ABI、Control Reference 等设计，其重要性恰恰在于：它们提供的是相对稳定的功能语义接口，而不是要求所有内部模型共享同样 latent。
 
 换言之，我们真正追求的是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Semantic/Functional\ Continuity
 >
 Representational\ Identity.
-}
-\]
+\)}
+\end{statementbox}
 这是后续 KRA 理论中“Functional Alignment $>$ Representation Alignment”的认识论前提，而其根源正是在本章完成的 CSO 与 Agent-CSO 分离。
 
 \section{Agent-CSO 的五个实现坐标：表示、功能、时间尺度、边界与状态}
@@ -520,11 +528,12 @@ B_{\text{internal}}
 B_{\text{external}}.
 \]
 这为后续认知卸载理论建立了更严谨的本体基础。所谓 Offloading，不再是神秘的“把复杂度扔出去”，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentCSO\ Carrier\ Migration.
-}
-\]
+\)}
+\end{statementbox}
 
 第五是状态坐标：
 \[
@@ -922,11 +931,12 @@ o_{1:t}^{A}=o_{1:t}^{B},
 后验也未必相同。
 
 这一点对以后“真理”“世界模型”和“自我模型”讨论具有重要意义。我们的理论不会要求 Agent 内部存在一个与现实逐点同构的微型宇宙。事实上，由于工作记忆有限、感知有限和计算有限，完整复制现实本身既不可能，也没有必要。智能所需要的是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Action\text{-}Sufficient\ Structural\ Representation.
-}
-\]
+\)}
+\end{statementbox}
 即在当前身体、目标和时间尺度下足以支撑正确闭环的结构表示。
 
 因此，本章的认识论立场不是朴素镜像论：
@@ -936,13 +946,14 @@ InternalWorld
 Copy(ExternalWorld),
 \]
 而更接近：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InternalWorld
 =
 AgentConditionedStructuralProjection(Reality).
-}
-\]
+\)}
+\end{statementbox}
 这种投影必须受到现实不断校正，但不要求与现实具有相同物理形式。
 
 这也解释了为什么后续 SGC 会被定义成 Body-Centered Semantic Reality，而不是客观宇宙数据库；为什么 FCS 描述的是“现实如何影响我”，而不是现实自身的全部性质；以及为什么 $\Psi$ 会参与记忆筛选。智能体内部世界从来不是无主体的世界复制，而是现实结构进入一个有限、具身、具有历史与目标的持续主体后形成的 Agent-CSO 网络。
@@ -950,13 +961,14 @@ AgentConditionedStructuralProjection(Reality).
 \section{Representation Independence：实现独立性及其边界}
 
 CSO 与 Agent-CSO 的区分最终使我们能够提出实现独立性原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitiveOntology
 \ \text{is not uniquely determined by}\
 ImplementationSubstrate.
-}
-\]
+\)}
+\end{statementbox}
 这意味着，一个认知结构是否存在，原则上不能只依据它由神经元、Transformer、symbolic graph、程序还是其他未知物理载体实现来判断。实现材料当然会约束动力学，但它不是认知结构分类的唯一标准。
 
 形式上，设：
@@ -1001,11 +1013,12 @@ g(\tau_A),
 g'(\tau)>0,
 \]
 那么即便底层实现完全不同，我们仍可以说两个系统在指定研究尺度上具有：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Multiscale\ Cognitive\ Dynamical\ Isomorphism.
-}
-\]
+\)}
+\end{statementbox}
 
 这一概念比传统“功能主义”要求更强，因为我们并不只要求输入输出相同，还希望保留多尺度状态迁移和功能闭环关系。例如，两个系统都能识别危险并避开它，并不足以说明它们具有完全相同的认知结构。如果一个系统只是硬编码条件反射，另一个系统则具有情景记忆、自我状态估计、预测与长期价值调节，那么它们的宏观行为在部分场景中可能相同，但内部动力学并不同构。
 
@@ -1066,13 +1079,14 @@ Reliability,
 Scalability.
 \]
 所以更准确的命题是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Ontology\ is\ not\ reducible\ to\ substrate,
 \quad
 Dynamics\ remain\ substrate\ constrained.
-}
-\]
+\)}
+\end{statementbox}
 即认知本体不被某一种材料唯一决定，但其实际动力学始终受实现材料约束。
 
 这一原则对于 AgentOS 工程具有直接后果。我们应尽量让 Agent Kernel 的高级语义依赖：
@@ -1086,11 +1100,12 @@ SGC,\ FCS,\ ControlReference
 而不是特定机器人厂商的内部表示；让 KRA 负责在不同 representation 之间维护功能关系。这样，系统才有可能跨模型、跨身体、跨硬件发展。
 
 换句话说，真正能够跨世代持续发展的智能架构，其稳定对象不应该是每一代神经网络的参数格式，而应该是更高层的：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Cognitive\ Contracts.
-}
-\]
+\)}
+\end{statementbox}
 这些 contract 描述“什么结构必须被表达”“什么闭环必须成立”“什么现实反馈必须返回”，而允许内部实现不断变化。
 
 \section{CSO--Agent-CSO 区分与同类智能判定}
@@ -1199,13 +1214,14 @@ Semantic\text{-}Functional\text{-}Dynamical\ Correspondence\)}
 这一框架也使我们此前提出的“语义类规约”获得更严格解释。所谓优先覆盖更多语义类型，并不是简单增加分类标签，而是使系统能够形成更多具有稳定关系的 CSO 类，并能够把这些类绑定到适当功能和时间尺度。一个系统如果只在表面行为上覆盖大量任务，但每一次都依赖同一个巨大中央推理过程，那么它与一个已经形成大量局部闭环、稳定技能和长期结构的成熟系统，在认知动力学意义上仍然可能属于不同阶段。
 
 由此，本书可以提出一个重要区别：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Capability\ Breadth
 \neq
 Structural\ Generality.
-}
-\]
+\)}
+\end{statementbox}
 前者表示系统能够完成多少任务，后者则表示系统能否形成、迁移、稳定和重新组织足够丰富的 Agent-CSO。
 
 这也是后面讨论 AGI“通用性”时必须保留的基础。真正的通用智能不能只定义为：

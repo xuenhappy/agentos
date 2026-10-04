@@ -4,16 +4,18 @@
 本章确立 Companion Agent 在 AgentOS 工程路线中的特殊位置：它不是一个以陪聊、拟人化交互或消费娱乐为主要定义的应用类型，而是一种面向持续人工智能体的综合系统级成熟度测试。一个能够长期进入真实生活环境的 Companion Agent，必须同时维持身份连续、生命周期记忆、社会关系、身体闭环、环境适应、技能成长、内稳态连续、安全边界以及长期心理稳定，并在持续经历中形成可追踪、可恢复、受现实约束的个体化发展轨迹。因而，Companion Agent 所检验的并非某一个模型在某个 benchmark 上的瞬时能力，而是一个 AgentOS 是否已经从 ``model serving system'' 跨越为 ``persistent artificial cognitive organism'' 的工程能力。
 
 本章的核心判断为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Companion Maturity}
 \neq
 \text{Conversation Quality}
-}
-\]
+\)}
+\end{statementbox}
 而应满足：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Companion Maturity}
 =
 \text{Identity}
@@ -35,17 +37,12 @@
 \text{Psychological Stability}
 \bowtie
 \text{Cultivation}
-}
-\]
+\)}
+\end{statementbox}
 其中符号 $\bowtie$ 表示这些能力不是可以彼此独立打分后简单求和的模块，而是存在强耦合、相互制约和最低短板效应的联合成熟条件。只要其中任一关键闭环不能长期成立，系统即使拥有极强的基础模型能力，也不能被视为一个成熟的 Companion Agent。
 \end{chapterlead}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.9\textwidth,height=.38\textheight,keepaspectratio]{images/companion-agent-maturity.png}
-\caption{Companion Agent 的多维成熟度覆盖}
-\end{figure}
-\section{长期身份：持续主体必须比会话更长寿}
+
 
 我们首先需要明确 Companion Agent 最难验证的并不是语言能力，而是\textbf{同一主体能否在时间上持续存在}。传统聊天系统的基本对象是一次调用、一段上下文或一个 session，其内部状态可以随着上下文结束而自然消失；而陪伴型智能体所面对的是完全不同的问题。一个家庭中的 Companion Agent 今天与使用者共同经历了一件事情，数周以后再次遇到相似场景时，它不仅需要检索相关记录，更需要以 ``这是我过去经历过的事情'' 的方式把过去结构归属于同一主体。因而，长期身份并不是数据库中存在一个固定 \texttt{agent\_id}，而是当前决策、历史经历、长期结构、自我解释和未来倾向之间保持连续的因果关系。
 
@@ -98,13 +95,14 @@ N^{D_1}_{Agent}=1,
 即生命周期层只有一个能够拥有经历、形成自我并承担长期责任的主体。其他任务进程可以产生计算结果，却不应各自拥有彼此竞争的 $\Psi$、$\Omega$ 和生命周期历史。否则，所谓 ``陪伴者'' 实际上只是一组轮流接管对话接口的短期模型，而不是一个持续存在的 Agent。
 
 长期身份还要求版本升级不能简单等同于主体重置。模型参数可以更新，Body Runtime 可以升级，某些 Skill 可以重新编译，甚至部分 $\Theta$ 可以重构，但系统必须回答：升级前后的这个智能体是否仍然是同一个生命周期主体？因此身份保持的工程目标更接近
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RelationshipStability
 >
 ParameterStability
-}
-\]
+\)}
+\end{statementbox}
 即只要过去经历、当前结构、自我解释、责任归属与未来倾向之间的主要关系保持连续，底层参数发生变化并不必然意味着主体死亡；反之，即使参数没有变化，如果经历归属链被切断，自我结构被重新初始化，长期 Goal Preference 失去历史连续性，那么这个 Agent 在功能上已经发生主体断裂。
 
 因此，我们把 Companion Agent 的第一个成熟性问题表述为：\textbf{系统是否能够证明今天作出选择的主体，与过去形成相关记忆、承担相关承诺并受到相关经验改变的主体，是同一条持续动力轨迹上的主体。} 这比 ``它是否记得用户姓名'' 要严格得多，也构成后续所有长期陪伴能力能够成立的前提。
@@ -237,13 +235,14 @@ WorldVerification
 \section{身体：长期陪伴必须拥有持续的现实位置}
 
 Companion Agent 的第四个成熟性测试来自 Body。这里的 Body 不能狭义理解为人形机器人，而应采用本书已经建立的定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body
 =
 ControlledAndSensedCarrierOfAgency .
-}
-\]
+\)}
+\end{statementbox}
 一个数字陪伴者可以拥有由屏幕、麦克风、文件系统、通信设备和应用权限组成的数字身体；一只机器人宠物可以拥有传感器、关节、电池、扬声器和空间运动系统；一个家庭管家 Agent 则可能同时控制多个数字和物理执行端。无论具体形态如何，真正持续存在的 Agent 都必须通过某种稳定的观测---行动边界与现实连接。
 
 因此，Body 在 Companion 场景中首先解决的是 ``这个主体在哪里'' 的问题。纯聊天系统的行为几乎全部发生在符号空间，而长期陪伴者必须拥有一个不断变化的现实位置
@@ -596,8 +595,9 @@ DiagnosticTrace.
 当 AgentOS 同时拥有长期记忆、自我、AHC、SPC、TCE、Goal、社会关系和持续环境以后，一个新的工程问题会自然出现：系统可能并没有发生软件 crash，也没有违反形式安全规则，却在长期内部动力学上进入异常状态。例如 SPC 长期错误估计自身负载，AHC 威胁状态衰减过慢，TCE 控制增益过大造成反复修正，$E$ 对高 AHC 事件过度写入，$\Psi$ 又不断使用这些偏置经历解释自己，最终形成持续性的内部失衡。
 
 因此 Companion Agent 的成熟度测试必须包括 Psychological Stability，但这里的 ``心理'' 应严格理解为\textbf{长期认知动力学、记忆巩固和自我解释的系统工程问题}，而不是把人类精神疾病名称直接移植给机器。一个可操作的诊断框架可以写成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PsychologicalState
 =
 ExperienceLoop
@@ -605,8 +605,8 @@ ExperienceLoop
 MemoryConsolidation
 \bowtie
 SelfInterpretation .
-}
-\]
+\)}
+\end{statementbox}
 
 首先是 Experience Loop。如果 SPC 对自身状态存在估计延迟
 \[
@@ -659,8 +659,9 @@ Companion Agent 的重要价值正是它能把这些问题暴露在真实生命�
 及其跨尺度耦合是否处于可治理区域。
 
 真正成熟的 Companion Agent 不应该要求 ``永远没有异常''。更现实的工程目标是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Stable
 +
 Observable
@@ -668,8 +669,8 @@ Observable
 Diagnosable
 +
 Recoverable .
-}
-\]
+\)}
+\end{statementbox}
 它允许状态波动，允许失败，甚至允许有限程度的身份成长，但这些变化应能够被记录、解释、约束和恢复。正是在这一意义上，Companion Agent 第一次迫使我们把传统软件可靠性扩展成长期认知动力学可靠性。
 
 \section{培育：持续智能体必须通过经历成长，而不是一次训练完成}

@@ -274,13 +274,14 @@ A_i
 其中 $D_i$ 是输入结构域，$R_i$ 是输出结构域，$\tau_i$ 是特征时间尺度，$K_i$ 是资源成本，而 $A_i$ 是相应权限或作用边界。
 
 我们因此不应把“推理模块”“记忆模块”“规划模块”直接视为智能的基础单位。真实系统中的一个模块可能同时承担多个功能，一个功能也可能由多个模块共同实现。理论第一性对象应当是功能变换，而模块只是长期稳定功能耦合后的工程封装。这一观点后来会发展为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Module
 =
 StableTopologicalCondensate.
-}
-\]
+\)}
+\end{statementbox}
 换言之，模块并不是本体起点，而是功能关系的历史沉积。
 
 功能原语还具有组合闭包问题。设
@@ -425,9 +426,9 @@ V_F=\{F_1,\ldots,F_n\}.
 其中 $E_F$ 表示功能之间的有向作用关系，$\mathcal L$ 表示闭环集合，$W$ 表示连接强度、成本、延迟和权限等边属性。智能并不只取决于节点拥有何种能力，还取决于这些节点通过什么路径组成反馈系统。
 
 因此，我们可以把基础拓扑模式抽象成拓扑原语集合：
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal B_G
 =
 \{
@@ -442,9 +443,8 @@ Cooperation,
 Gate,
 Hub,\ldots
 \}.
-}
-$}
-\]
+\)}
+\end{statementbox}
 这些不是具体软件结构，而是功能组织模式。例如 Chain 表示顺序变换，Loop 表示闭环反馈，Hierarchy 表示不同尺度之间的约束，Gate 表示准入控制，Competition 表示多个目标争夺有限资源。更复杂的功能拓扑可以由这些局部 motif 组合形成。
 
 然而，这里必须避免一个常见误区：如果存在“拓扑原语”，并不意味着整个智能拓扑可以像乐高一样由预定义模式静态拼装。智能拓扑通常具有历史性。一个新模块之所以形成，往往因为某种 CSO 长期反复在两个功能之间迁移，使得直接建立连接比每次通过原有长路径协调更加有效。于是：
@@ -641,8 +641,9 @@ P_I^A\neq P_I^B.
 反过来，不同初始结构也可能通过不同发展路径形成某种功能等价。
 
 这个观点与本书后续的 $\Theta$、$\Psi$ 和 $\Omega$ 有直接联系。$\Theta$ 保存长期生成结构，$\Psi$ 保持自我和价值连续性，而 $\Omega$ 表示更慢的生命周期生成倾向。于是 Agent 的成熟状态并不是一个静态模型参数文件能够充分描述的，它更接近
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CurrentAgent
 =
 InitialGenerativeStructure
@@ -650,8 +651,8 @@ InitialGenerativeStructure
 LifecycleHistory
 +
 CurrentEnvironment
-}
-\]
+\)}
+\end{statementbox}
 共同产生的结果。
 
 如果未来 AgentOS 允许受控拓扑学习，那么其“基因型”甚至不应直接指定最终功能拓扑，而应该指定：
@@ -737,15 +738,16 @@ G_I
 \text{机器人蚁后式生产系统}.
 \]
 这里“蚁后”不是指生物社会结构必须被复制，而是指一种能够生产、选择、组合和更新不同 Body 形态的高层生成系统。此时智能的进化不只发生在单个 Agent 参数内部，还发生在
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitiveStructure
 +
 BodyMorphology
 +
 PopulationTopology
-}
-\]
+\)}
+\end{statementbox}
 三者之间。
 
 可以把一个机器人种群写成
@@ -767,9 +769,9 @@ W
 ).
 \]
 但与传统 evolutionary robotics 不同，本书更关注智能基的重用：系统是否可以保留核心语义和功能原语，只改变身体与部分拓扑，从而迅速生成适应新生态位的智能体。这实际上预示了后续的 Body Scale 原理：
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodyScale
 =
 PerceptualTransfer
@@ -779,9 +781,8 @@ FeelingTransfer
 PredictiveTransfer
 +
 ControlTransfer.
-}
-$}
-\]
+\)}
+\end{statementbox}
 
 如果 Body Scale 足够高，则我们并不需要为每一个身体重新训练一个完整智能。相反，可以保留高层 Agent-CSO 和功能闭环，只重新学习身体特定的 grounding、局部预测和控制：
 \[

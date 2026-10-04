@@ -514,7 +514,7 @@ $\Theta$ 则保存从重复经验中获得的生成规则：
 \end{equation}
 
 因此，Agent 的有效状态不是有限大小的 $h_t$，而是
-\begin{equation}
+\[
 \boxed{
 \mathcal S_A(t)
 =
@@ -526,7 +526,7 @@ E_t
 \oplus
 \mathcal M_{\mathrm{ext}}(t).
 }
-\end{equation}
+\]
 
 只要长期载体可以增长，Agent 的生命周期可访问结构容量就不由 $W$ 单独决定。
 
@@ -560,8 +560,9 @@ K^n
 MemoryCapacity=Capacity(h),
 \end{equation}
 而应写为
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EffectiveMemory
 =
 h
@@ -571,8 +572,8 @@ E
 \Theta
 +
 ExternalMemory.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 \section{CCM 如何保证局部认知始终落在可运行区域}
 
@@ -921,21 +922,23 @@ TCE
 在纯符号问题中，一个中间结果可以通过形式证明确认；在开放世界问题中，Agent 的内部预测并不拥有现实权威。
 
 因此必须保持
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ActionIssued
 \neq
 ActionSucceeded
-}
-\end{equation}
+\)}
+\end{statementbox}
 以及
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearnedDynamics
 \neq
 RealityAuthority.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 设 Agent 预测行动 $u_t$ 后世界将达到
 \begin{equation}
@@ -1106,13 +1109,14 @@ x_f\in\mathcal K(x_s).
 
 于是：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \qquad
 LowerLevelOptimizesInsideIt.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 这使大量低层复杂度不必进入 $h$。
 
@@ -1138,13 +1142,14 @@ r_f
 
 因此：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictLocally,
 \qquad
 EscalateResidualGlobally.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 这使完整 Agent 的认知核心不需要承担环境中全部微观动力学。
 
@@ -1270,13 +1275,14 @@ Active.
 
 这说明：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FixedTopology
 \neq
 FixedIntelligence.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 一个固定功能拓扑仍然能够通过状态、表示、记忆、技能和载体迁移产生巨大的生命周期能力增长。
 
@@ -1463,13 +1469,14 @@ C_{\max}(W).
 
 上述定理并没有证明：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS
 =
 OmnipotentSolver.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 它真正证明的是：
 
@@ -1680,20 +1687,22 @@ AgentOS 的最大理论承诺只能覆盖“相对于其资源和接口可解的
 
 因此：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Computable
 \neq
 Embodiment-Reachable.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 例如一个 Agent 可以知道如何搬起一块岩石，但如果其 Body 没有足够力量、工具或调用其他 Agent 的能力，则该现实任务仍然不可完成。
 
 因此完整可解性实际上由三种边界共同决定：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Solvability
 =
 Computability
@@ -1701,8 +1710,8 @@ Computability
 CognitiveExecutability
 \cap
 Physical/OperationalReachability.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 这是 AgentOS 与纯算法理论的重要区别。
 
@@ -1787,8 +1796,9 @@ G\mid
 
 因此完整 Agent 的“能力潜力”不能只用问题解答率定义，还必须包括：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Capability
 +
 Continuity
@@ -1796,8 +1806,8 @@ Continuity
 Coherence
 +
 Development.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 \section{持续学习如何使可解问题集合随生命周期扩大}
 
@@ -1847,13 +1857,14 @@ S_t\rightarrow S_{t+1},
 
 现实系统中这一单调关系并非自动成立，因为遗忘、工具失效、身份约束变化和身体退化都可能缩小能力集合，但它给出了“成长”的清晰数学方向：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Development
 =
 ExpansionAndRestructuringOfTheReachableProblemSpace.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 \section{复杂问题求解的统一 AgentOS 循环}
 
@@ -2289,8 +2300,9 @@ OtherAgent.
 
 这意味着完整 AgentOS 的最终能力上界不能仅以单个基础模型衡量，而必须考虑：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Agent
 +
 ExternalMemory
@@ -2302,8 +2314,8 @@ Environment
 OtherAgents
 +
 Institutions.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 这为后续从个体智能走向组织智能与文明尺度智能奠定理论接口。
 
@@ -2358,13 +2370,14 @@ Skill.
 因此学习主要发生在更快的结构中，而身份结构只吸收长期稳定证据。
 
 由此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PlasticCapability
 +
 SlowIdentity
-}
-\end{equation}
+\)}
+\end{statementbox}
 可以同时成立。
 
 能力增长不要求主体每次学习后都成为另一个主体。
@@ -2504,11 +2517,12 @@ V
 \end{itemize}
 
 则 Agent 的能力不再是一个标量，而是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CapabilityRegion(\mathfrak A)
-}
-\end{equation}
+\)}
+\end{statementbox}
 ——即该 Agent 在不同资源、时间尺度和现实条件下的可解问题区域。
 
 这个概念比单一 IQ 或 benchmark 更适合持续智能。
@@ -2734,8 +2748,9 @@ C_{\max}(W)
 }
 \end{equation}
 以及：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Pi
 \subseteq
 \mathrm{Reach}
@@ -2746,8 +2761,8 @@ Tools,
 Body,
 Environment
 ).
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 因此可以提出本书中的\emph{有限认知主体复杂可解问题原理}：
 
@@ -2841,21 +2856,23 @@ FutureCapability.
 \end{equation}
 
 所以，一个成熟 Agent 的真正理论上限应写为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Capability_t
 \neq
 StaticFunctionSet,
-}
-\end{equation}
+\)}
+\end{statementbox}
 而是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Capability_t
 =
 ReachableClosureOfItsAccumulatedStructure.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 它不再只是“当前会做什么”，而是包括：
 

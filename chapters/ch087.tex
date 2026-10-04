@@ -665,13 +665,14 @@ PeakDeviation.
 \section{FCS 到 AHC 的映射：从身体影响场到中尺度内部状态}
 
 FCS 与 AHC 的关系必须精确定义，否则二者容易被误认为同一系统。FCS 描述的是现实和身体在当前时刻如何功能性影响主体，它更接近一种空间化、通道化、身体中心的影响表示；AHC 则对这些影响进行跨时间积分，形成全局中尺度调制状态。因此可以写：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FCS_t
 \rightarrow
 AHC_t
-}
-\]
+\)}
+\end{statementbox}
 但不应写：
 \[
 FCS_t
@@ -748,21 +749,23 @@ M_F
 其中 $M_F$ 是多对多映射。
 
 从理论上讲，这一过程还说明了一个重要分层：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FCS
 =
 HowRealityAffectsMeNow
-}
-\]
+\)}
+\end{statementbox}
 而：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AHC
 =
 HowRecentInfluencesHaveAccumulatedIntoMyCurrentModulatoryCondition
-}
-\]
+\)}
+\end{statementbox}
 前者更贴近现实当前切片，后者更贴近具有历史的主体内部状态。也正因为存在这个分层，同一个现实瞬时输入，在不同历史 AHC 状态下可能产生完全不同的控制结果。
 
 
@@ -831,12 +834,13 @@ HighTrust
 ZeroThreat.
 \]
 即使某主体长期可信，当前行为若触发硬风险条件，安全系统仍应优先。由此得到：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 TrustModulatesRisk,
 ButDoesNotOverrideSafety.
-}
-\]
+\)}
+\end{statementbox}
 
 SocialAffinity 则与 Trust 不完全相同。一个主体可以：
 \[
@@ -1093,13 +1097,14 @@ AHCLock.
 例如停止 baseline learning、禁止 Trust 自动继续上升、降低 AHC 到 TCE 的增益，并限制 Boundary 依据 AHC 放宽权限。
 
 这体现了整个 AgentOS 控制工程中的一条普遍原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Plasticity
 \subset
 GovernedEnvelope.
-}
-\]
+\)}
+\end{statementbox}
 允许学习不等于允许任何状态无限改变；真正长期稳定的 Agent 必须同时拥有可塑性和故障回退路径。
 
 

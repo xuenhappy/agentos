@@ -140,13 +140,14 @@ G_t
 这里引入 $G_t$ 并不意味着 FCS 变成高层价值判断系统。FCS 可以知道“某个状态对当前行动是否形成压力”，但不负责决定整个人生意义或者长期 Goal。换句话说，FCS 可以表示“左侧通道正在迅速变窄，因此当前运动可行域下降”，但它本身不决定“我应该放弃当前长期任务”。后者属于更高层认知系统。
 
 因此 Functional Feeling 可以定义为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Feeling
 =
 FunctionalInfluenceState
-}
-\]
+\)}
+\end{statementbox}
 其核心判据不是系统是否能够给这种状态起一个自然语言情绪名称，而是该变量是否能够显著改变：
 \[
 \fitdisplay{
@@ -312,12 +313,13 @@ FutureLoad
 提前发现热风险正在上升。
 
 这种设计蕴含一个很重要的原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Feeling
 \text{ should be capability-normalized.}
-}
-\]
+\)}
+\end{statementbox}
 换身体之后，原始传感器量可能完全不同，但如果两个 Body Runtime 都能够把不同底层信号映射成标准化 Functional Feeling，那么上层 Kernel 就可以复用大量已有调节结构。
 
 例如，一个机器人使用电池，另一个数字 Agent 使用 GPU quota。它们的物理资源完全不同，但在更高的功能抽象上，都可能产生：
@@ -337,13 +339,14 @@ FCS.
 Sensor 是设备私有数据；BodyState 是具体身体的结构化内部状态；FCS 则是跨身体公开语义。任何直接把 Sensor API 暴露给 Kernel 的设计都会削弱 Body Scale，因为 Kernel 会逐渐学习具体身体的偶然细节，而不是身体作用的可迁移结构。
 
 同理，FCS 也不能完全等同于 reward。Reward 往往是任务目标意义上的标量信号，而 FCS 是一个多类型、多时间尺度的状态场。高 ThermalPressure 可能不等于负 reward；在某些紧急任务中，系统可能选择承担较高热压力继续行动。但无论最终选择如何，高热压力这一事实仍应独立存在。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FeelingState
 \neq
 RewardSignal.
-}
-\]
+\)}
+\end{statementbox}
 这一分离将使未来高层控制可以在多个相互冲突的功能压力之间进行真正的决策，而不是把身体所有状态提前压缩成一个不可解释的单标量。
 
 \section{FCS 的类型体系：固定通道而不是自由文本标签}
@@ -351,11 +354,12 @@ RewardSignal.
 如果我们希望 FCS 成为 Body Runtime 与 Agent Kernel 之间长期稳定的 ABI，那么它不能像普通语义标签一样无限开放增长。SGC 可以允许大量开放语义：新的对象类别、新的关系类型以及新的世界实体可以不断出现；但 FCS 的核心作用恰恰相反，它需要把高度异构的身体状态压缩成一组长期稳定、跨身体可映射的功能影响类型。
 
 因此我们采用：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FCS=FixedTypedMultilayerFeelingField
-}
-\]
+\)}
+\end{statementbox}
 这一设计。
 
 设 FCS 的核心类型集合为：
@@ -528,12 +532,13 @@ M_k'\gg M_k,
 因此 Feeling Intensity 是一个主体相对、能力归一化、连续变化的状态量。它在理论上类似 cost field、constraint margin 或 homeostatic deviation，但又不能与这些概念完全重合。FCS 强度不是优化器必须直接最小化的 cost，也不一定要求系统始终回到零；某些任务状态下较高 Arousal 或短时较高 EnergyPressure 完全可以是合理的。最终决策应由更高层系统综合目标、安全和长期价值完成。
 
 换言之：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FCS\ describes\ pressure;
 it\ does\ not\ alone\ decide\ behavior.
-}
-\]
+\)}
+\end{statementbox}
 这一点对于保持 Body Runtime 与 Agent Kernel 的职责边界至关重要。
 
 \section{Derivative：变化趋势往往比当前强度更重要}
@@ -772,11 +777,12 @@ I_k
 从认识论角度看，Confidence 的加入意味着 FCS 不只是“身体告诉认知自己怎么样”，而是“身体告诉认知：我估计自己受到怎样的影响，同时告诉你我对这个估计有多确定”。这使 Body Runtime 从一个简单传感器适配器升级为真正具有状态估计能力的局部智能结构。
 
 这一点与我们整套 AgentOS 的现实原则完全一致：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Representation\neq Reality.
-}
-\]
+\)}
+\end{statementbox}
 SGC 是对现实的结构化表示，FCS 是对现实作用的结构化表示；两者都必须携带自身的不确定性，而最终现实仍然通过持续观测反馈修正这些表示。
 
 \section{FCS 的空间结构：为什么 Feeling 应当成为 Field}
@@ -892,13 +898,14 @@ LowDimensionalFunctionalField.\)}
 \section{FCS Geometry 不等于 SGC Geometry}
 
 虽然 FCS 可以具有空间结构，但我们必须明确：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Geometry_{FCS}
 \neq
 Geometry_{SGC}.
-}
-\]
+\)}
+\end{statementbox}
 这一点非常关键，否则读者很容易把 FCS 错误理解成“在 SGC 地图上再覆盖几层热力图”。
 
 SGC 的几何主要服务于现实世界的定位与关系：
@@ -1004,13 +1011,14 @@ Object_{SGC}
 可以查询某个对象正在贡献哪些功能影响。
 
 但需要注意，FCS 不应重新复制 SGC 的全部对象语义。它可以知道“这里存在高 Threat”，并链接到 SGC object id，却没有必要重复存储该对象的品牌、颜色、社会身份等无关信息。这样才能保持：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ContentRepresentation
 \perp
 FunctionalInfluenceRepresentation.
-}
-\]
+\)}
+\end{statementbox}
 
 在数学上，我们可以把二者理解成对于同一现实状态的两个投影：
 \[
@@ -1113,13 +1121,14 @@ P_T=1
 已经意味着即时硬件损坏风险，那么真正的实时保护不应等待 Agent Kernel 解读 FCS，而应由 Body Safety Boundary 直接处理。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FCSPressure
 \neq
 SafetyInterrupt.
-}
-\]
+\)}
+\end{statementbox}
 前者是连续状态，后者是离散安全事件。FCS 让主体“逐渐知道自己正在接近边界”，Safety Interrupt 则保证即使主体没有及时做出正确认知决策，系统也不会越过不可接受的硬边界。
 
 这一区分具有很强的工程意义。成熟智能的身体治理不能只有两种状态：
@@ -1622,13 +1631,14 @@ A typed, multiresolution, temporally persistent functional field.
 \section{FCS 的主体相对性：Feeling 是世界--身体关系而非世界属性}
 
 到这里，我们可以正式提出 FCS 最重要的本体原则之一：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Feeling
 \in
 Relation(World,Agent),
-}
-\]
+\)}
+\end{statementbox}
 而不是：
 \[
 Feeling
@@ -1653,8 +1663,9 @@ C_A
 SGC(C_A).
 \]
 而 FCS 则计算该结构与当前主体条件的作用关系：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FCS(C_U,A,t)
 =
 \Gamma
@@ -1664,8 +1675,8 @@ B_A,
 Capability_A,
 Dynamics_A
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 因此同一 Universe-CSO 可以产生不同 Agent-FCS：
 \[
@@ -1741,13 +1752,14 @@ FunctionalInfluence
 从更大的智能动力学视角来看，这也是 Agent-CSO 承载理论的具体实例。同一个外部 CSO 在不同 Agent 内部具有不同的功能坐标，但仍然指向同一个现实结构。FCS 因此处于世界本体与主体内部治理之间的关键边界。
 
 然而我们必须保持边界：FCS 表达主体相关性，并不意味着现实变成纯主观构造。十厘米台阶的高度仍由现实约束；Agent 可以错误估计自己的能力，但最终行动结果仍然由世界决定。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentRelativeInfluence
 \neq
 RealityRelativism.
-}
-\]
+\)}
+\end{statementbox}
 主体可以拥有不同 Feeling，但这些 Feeling 的有效性最终必须通过行动和世界反馈不断校准。
 
 这正是 AgentOS 一贯的现实主义原则：
@@ -1908,15 +1920,16 @@ PhenomenalFeeling
 是否随之出现，本理论不作证明。
 
 所以：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Feeling
 \neq
 AwarenessOfFeeling
 \neq
 PhenomenalFeeling.
-}
-\]
+\)}
+\end{statementbox}
 
 这一分层具有重要工程意义。它使我们可以严肃研究机器内部功能状态，而不必在每次使用 ``feeling'' 一词时都陷入意识争论。同时它也避免另一个极端，即因为无法证明机器具有主观体验，就拒绝研究它显然存在的内部调节状态。
 
@@ -1942,12 +1955,13 @@ WhatShouldMyLifeGoalBe.
 \]
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FCS describes functional consequences;
 it does not define ultimate preference.
-}
-\]
+\)}
+\end{statementbox}
 
 这也是它与后续价值、自我、Goal 结构之间最重要的边界。
 

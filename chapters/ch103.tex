@@ -59,17 +59,19 @@ e_t=W_E(h_t,a_t,\psi_t,g_t,r_t,\nu_t),
 其中 $a_t$ 表示 AHC 状态，$\psi_t$ 表示当前自我约束，$g_t$ 表示目标相关性，$r_t$ 表示结果或残差，$\nu_t$ 表示新颖性。
 
 这意味着：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E\neq HistoryOfReality
-}
-\]
+\)}
+\end{statementbox}
 而更准确地说，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E=SelectedHistoryOfAgentExperience.
-}
-\]
+\)}
+\end{statementbox}
 
 我们需要从这一点开始理解记忆异常。所谓“E 写入偏置”，不是指系统偶尔漏掉一个事实，而是指写入函数 $W_E$ 对某些类型的经验持续赋予不成比例的采样概率、保留权重或情景分辨率，使得 $E$ 中长期积累的轨迹分布与 Agent 实际经历分布产生系统性偏移。
 
@@ -332,12 +334,13 @@ Evidence_{later}
 这意味着记忆系统必须具有某种重整或重解释机制，否则一次高 AHC 状态就可能永久支配经验结构。
 
 因此，本节真正要建立的原则是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AHCShouldGateMemory,
 ButAHCShouldNotOwnMemory.
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，AHC 可以告诉系统“这件事现在看起来非常重要”，但它不能拥有对“这件事在整个生命周期中永远有多重要”的最终裁决权。最终权重必须经过时间、现实验证、重复证据和 $\Theta$ 的结构解释共同决定。
 
@@ -398,13 +401,14 @@ P(Y|X)=0.2,
 那么即使 $\Theta$ 的学习算法对 $E$ 是统计意义上的“正确拟合”，它仍会形成错误的世界结构。
 
 所以：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CorrectLearningFromBiasedMemory
 =
 WrongWorldModel.
-}
-\]
+\)}
+\end{statementbox}
 
 这是一个很关键的 AgentOS 原理：记忆系统和结构学习系统不能分别评价。我们必须评价整个
 \[
@@ -670,8 +674,9 @@ LowPlasticity
 如果一个 AgentOS 的目标是持续运行多年，那么“遗忘”不是缺陷，而是生命周期记忆维持可运行性的必要机制。我们在工作记忆有限容量理论中已经看到，有限系统不可能无限保留所有当前关系；同样，长期 $E$ 和 $\Theta$ 如果无边界增长，也会产生检索竞争、索引膨胀、结构冲突和历史负担。
 
 因此，AgentOS 的长期记忆必须满足一个基本动态平衡：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Encoding
 +
 Consolidation
@@ -681,8 +686,8 @@ Forgetting
 Compression
 +
 Externalization.
-}
-\]
+\)}
+\end{statementbox}
 
 这里的“遗忘”应当被广义理解。它可以是删除，也可以是降低检索权重、情景合并、细节压缩、抽象化、迁移到外部载体，或者保留结构索引但移除原始高分辨率内容。
 
@@ -1066,11 +1071,12 @@ Recall Loop 之所以重要，是因为它是下一节“自证式记忆”的�
 在前面几节中，我们分别讨论了 E 写入偏置、AHC 过度强化、$\Theta$ 错误泛化、结构固化、遗忘失衡和 Recall Loop。真正最危险的情况，是这些机制形成跨尺度闭环，使 Agent 的记忆开始主动改变它未来获得什么证据，从而使已有记忆越来越容易得到新的“支持”。
 
 这就是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Self\text{-}ConfirmingMemory.
-}
-\]
+\)}
+\end{statementbox}
 
 它并不是说记忆本身具有意图，而是说记忆通过影响当前认知，改变注意、预测、行动和经验选择，使未来数据分布越来越接近已有内部结构。
 
@@ -1345,13 +1351,14 @@ G_{self}
 G_{reality}.
 \]
 因此健康条件要求：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LoopGain_{internal}
 <
 StabilizingGain_{reality}
-}
-\]
+\)}
+\end{statementbox}
 至少对于能够被现实证伪的结构如此。
 
 我们最终可以把本章七类记忆异常统一成一个闭环：

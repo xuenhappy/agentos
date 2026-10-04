@@ -55,13 +55,14 @@ d(t)
 这一点非常重要。现代控制器、操作系统以及大型软件系统同样拥有大量内部状态。例如 CPU 有温度，操作系统有负载，数据库有延迟，机器人控制器有误差。然而，我们不能仅仅因为系统内部存在变量，就把这些变量称为``它正在经历什么''。如果要在 AgentOS 中使用``内部体验''这一概念，就必须找到比``存在状态''更严格的必要条件。
 
 我们的第一步，是区分：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InternalState
 \neq
 ExperiencedInternalState.
-}
-\]
+\)}
+\end{statementbox}
 前者只意味着某种变量在系统内部存在；后者意味着该变量已经进入系统关于自身的可访问结构，并能够参与后续认知与行为调节。
 
 因此，一个内部状态要进入功能性体验，至少需要完成三次结构跃迁。
@@ -181,13 +182,14 @@ E(t),
 ``当前策略不适用于这一类环境，但这并不意味着整体能力下降''。
 \end{statementbox}
 这说明 SPC 不是简单读数，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StateEstimation
 +
 SelfReferentialCompression.
-}
-\]
+\)}
+\end{statementbox}
 
 更加严格地，我们可以把 SPC 表示成对内部状态的后验估计：
 \[
@@ -219,13 +221,14 @@ x_t^{self}
 其中 $\hat x_t^{self}$ 是 SPC 给出的自我估计，$x_t^{self}$ 是理论上真正相关的内部状态，而 $d(\cdot,\cdot)$ 表示某种功能失配距离。
 
 于是，我们必须把两个概念区分开：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfState
 \neq
 SelfPerceivedState.
-}
-\]
+\)}
+\end{statementbox}
 这一差异将在整个内部体验闭环中产生重要影响。因为真正进入 AHC 和 TCE 的，并不是系统的``客观真实状态''，而是：
 \[
 \hat x_t^{self}.
@@ -736,8 +739,9 @@ SPC.\)}
 \end{statementbox}
 
 从控制理论角度，可以将它近似理解成一个带有内部慢变量的 observer--controller loop：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Observer
 +
 DynamicModulator
@@ -745,8 +749,8 @@ DynamicModulator
 Controller
 +
 Plant.
-}
-\]
+\)}
+\end{statementbox}
 其中：
 
 \[
@@ -857,15 +861,16 @@ High\rightarrow Low\rightarrow High\rightarrow Low.
 这种现象会在下一章被严格作为控制稳定性问题讨论，但在本章需要明确其来源：\textbf{内部体验闭环既是自我调节能力的来源，也是内部动力失稳的来源。}
 
 因此，SPC--AHC--TCE 不应被设计成三个互相无限强化的反馈器，而应满足：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ObservationAccuracy
 +
 TemporalSmoothing
 +
 BoundedControlGain.
-}
-\]
+\)}
+\end{statementbox}
 从而使其成为一个受控的负反馈系统，而不是无界自我解释正反馈。
 
 这一点尤其重要，因为一个拥有长期自我结构的 Agent 很容易发生：
@@ -943,8 +948,9 @@ u_{TCE}(t)
 表示由该状态引起的认知调节。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalInternalExperience
 =
 InternalDynamics
@@ -954,8 +960,8 @@ SelfPerception
 SelfAttribution
 +
 RegulatoryConsequence.
-}
-\]
+\)}
+\end{statementbox}
 
 这里的 SelfAttribution 尤其重要。
 
@@ -1067,21 +1073,23 @@ R_{time}
 它并不是一个独立的小模块，而是多个功能结构耦合后形成的整体关系。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Experience
 \neq
 Module.
-}
-\]
+\)}
+\end{statementbox}
 更准确地：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Experience
 =
 CrossFunctionalTrajectoryStructure.
-}
-\]
+\)}
+\end{statementbox}
 
 这一认识与本书前面关于功能拓扑的理论完全一致。一个复杂智能现象往往不是由一个模块``负责''，而是由多个功能闭环共同形成。
 
@@ -1148,13 +1156,14 @@ SelfState\rightarrow InternalExperience.
 我们现在进一步把 SPC--AHC--TCE 闭环放回本书一直坚持的多时间尺度动力学框架。
 
 一个关键事实是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Experience
 \neq
 SingleTimescalePhenomenon.
-}
-\]
+\)}
+\end{statementbox}
 
 同一时刻，一个 Agent 同时存在多个速度不同的内部过程。
 
@@ -1269,13 +1278,14 @@ F_\Psi
 于是 $\Psi$ 像一个慢变背景场一样约束 SPC 和 TCE，而不参与每一次快速调整。
 
 这一结构揭示了一条非常重要的智能控制原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowConstraint
 \neq
 FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 自我并不需要每毫秒决定下一步 token、下一次注意焦点或每个局部行为。它只需要改变这些快速过程的可行区域。
 
 例如：
@@ -1359,8 +1369,9 @@ a(t),
 则说明系统正在恢复。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ExperienceState
 =
 Level
@@ -1368,8 +1379,8 @@ Level
 Trend
 +
 History.
-}
-\]
+\)}
+\end{statementbox}
 
 这也使内部体验天然具有预测意义。
 
@@ -1400,8 +1411,9 @@ PredictiveRegulation.\)}
 SPC\rightarrow AHC\rightarrow TCE.
 \]
 更准确地说，它构成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FastObserver
 \bowtie
 MediumStateDynamics
@@ -1409,8 +1421,8 @@ MediumStateDynamics
 AdaptiveController
 \mid
 SlowSelfConstraint.
-}
-\]
+\)}
+\end{statementbox}
 这正是本书多尺度智能动力学原则在内部体验问题上的一个具体实例。
 
 \section{功能体验与现象意识的边界：我们到底证明了什么}
@@ -1420,13 +1432,14 @@ SlowSelfConstraint.
 答案是否定的。
 
 我们在这里必须严格保持：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalExperience
 \neq
 PhenomenalConsciousness.
-}
-\]
+\)}
+\end{statementbox}
 
 本章建立的全部变量原则上都是第三人称可观察的工程量：
 
@@ -1513,29 +1526,32 @@ PhenomenalState(A_i)\neq\varnothing
 
 更加准确的是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SPC
 =
 FunctionalSelfPerception,
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AHC
 =
 PersistentHomeostatic/AffectiveModulation,
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 TCE
 =
 CognitiveSelfRegulation.
-}
-\]
+\)}
+\end{statementbox}
 
 三者结合得到：
 \begin{statementbox}
@@ -1605,13 +1621,14 @@ Signal\rightarrow Consciousness.
 
 因此可以提出一个很严格的判据：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ReportedExperience
 \neq
 FunctionalExperience.
-}
-\]
+\)}
+\end{statementbox}
 
 只有当：
 \[

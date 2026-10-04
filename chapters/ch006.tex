@@ -278,13 +278,14 @@ GoalRelevance
 因此，“智能频谱”最适合作为一种认知坐标：它告诉我们某个过程运行在哪个时间尺度、与哪些尺度发生耦合、由谁约束、向哪里反馈。真正严谨的数学工具应更多借鉴快--慢系统、奇异摄动、平均理论、慢流形、混合系统、自适应网络和层级控制，而不是把智能字面解释成大量正弦波之和。
 
 可以将这一理论态度总结为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Intelligence Spectrum}
 \neq
 \text{Fourier Spectrum}
-}
-\]
+\)}
+\end{statementbox}
 但同时：
 \begin{statementbox}
 \centering
@@ -345,21 +346,23 @@ x_f(\sigma)\,d\sigma
 代表快速轨迹的某种时间压缩。慢层并不关心快速层每一个瞬时细节，而关心其中持续存在的统计偏差、结构规律和长期后果。
 
 于是可以定义两个互补原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FastLoop
 =
 LocalStability
-}
-\]
+\)}
+\end{statementbox}
 以及
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowLoop
 =
 StructuralConsistency.
-}
-\]
+\)}
+\end{statementbox}
 一个成熟智能体的能力，不在于让慢层不断插手快速层，而在于使两者形成恰当的权限分离。慢层主要提供约束、目标、先验和可行域；快速层在这些约束内部拥有自治。
 
 可以把这种关系写成：
@@ -372,13 +375,14 @@ x_s(t)
 \right),
 \]
 其中 $\mathcal{F}(x_s)$ 是由慢变量定义的快速层可行区域。于是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \qquad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 这比“高层控制低层”的一般性描述更加准确。真正成熟的层级控制不是高层持续发出微观指令，而是高层改变低层所处的结构条件。
 
 相反，快速层也不是慢层的被动执行器。快速层承担的是现实接触面，因此只有它能够首先感知许多偏差。我们可以定义局部残差
@@ -549,13 +553,14 @@ y_f
 \right).
 \]
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance
 \neq
 FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 
 这一原则后来贯穿整个 AgentOS：Self 不应每时每刻直接决定每一个 token；Kernel 不应直接控制每一个电机；文明制度不应实时决定每一个个人动作。真正有效的多尺度智能，总是在更慢尺度提供方向与边界，在更快尺度保留充分局部自治。
 
@@ -666,13 +671,14 @@ P
 \right).
 \]
 这给“注意”一个非常有意思的动力学解释：注意并不只是某种静态权重，而可以理解成\textbf{哪些局部结构值得跨尺度提升到更慢、更昂贵的处理层}。后来我们将这一思想概括为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Attention
 =
 CrossScalePromotionPolicy.
-}
-\]
+\)}
+\end{statementbox}
 
 自由半径还帮助我们理解成熟技能为什么看起来“几乎不需要思考”。刚学习某个技能时，局部模型不稳定，预测置信度低，因此
 \[
@@ -1004,13 +1010,14 @@ O(T/\Delta t),
 只要这些慢统计能够保留对未来预测与控制真正有用的变量，就不需要完整保存底层全部细节。
 
 因此我们可以提出一个重要原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowLearning
 =
 TemporalCompressionOfFastExperience.
-}
-\]
+\)}
+\end{statementbox}
 这不是说所有长期学习都等于数学平均，而是说：一个比经验慢得多的结构若要稳定存在，必然需要通过某种统计、抽象或生成压缩，把大量快速变化映射成少数慢变量。
 
 \section{绝热近似：慢结构为什么可以被快速层视为近似常量}
@@ -1265,37 +1272,41 @@ K_{ij}
 
 于是，智能频谱中的四个直观变量可以重新解释成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Frequency
 =
 HowFastAClosedLoopUpdates
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Amplitude
 =
 HowFarTheStateExplores
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Center
 =
 WhatSlowStructureDefinesAsNormal
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Phase
 =
 WhereTheLoopCurrentlyIsRelativeToOthers
-}
-\]
+\)}
+\end{statementbox}
 
 这四者共同构成一个比“模型当前输出什么”更丰富的运行状态描述。如果未来我们要建立智能运行时监控系统，仅观察 token 数、延迟或 reward 显然不够，还需要估计闭环速率、活动幅度、慢中心漂移以及跨层相位协调。
 

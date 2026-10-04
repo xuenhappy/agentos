@@ -42,13 +42,14 @@ S_t^{self},
 \section{Experience Diversity：经历多样性不是数据多样性}
 
 在传统机器学习中，“多样性”通常意味着增加数据集的覆盖范围，例如增加更多类别、环境、语言表达或者视觉条件。这种定义对于静态模型训练是合理的，但对于一个具有持续记忆、自我结构和生命周期的 Agent 来说仍然过于狭窄。我们首先必须区分
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DataDiversity
 \neq
 ExperienceDiversity
-}
-\]
+\)}
+\end{statementbox}
 前者描述输入样本之间的统计差异，后者描述智能体在不同目标、因果关系、身体状态、社会关系、行动后果和自我解释条件下形成的完整闭环差异。对于 Agent 而言，同一张图像如果分别出现在探索、逃避、协作、失败复盘和责任承担情境中，就不是同一种经历，因为它们最终进入 $E$、$\Theta$ 和 $\Psi$ 的方式不同。
 
 因此，我们把经历多样性定义为 Agent-CSO 在多个结构维度上的覆盖程度。设一段生命周期窗口 $\mathcal T=[t_0,t_1]$ 中出现的 Agent-CSO 分布为
@@ -67,8 +68,9 @@ C,F,\tau,B,R
 其中 $\mathcal H$ 可以根据实际实现采用熵、有效秩、图覆盖率或其他结构性指标。这里重要的不是具体选择哪一种信息度量，而是承认：一个 Agent 即便阅读了极其丰富的文本，如果始终处于被动回答、无行动后果、无长期责任、无环境变化的单一闭环中，其真正的 Experience Diversity 仍然可能很低。
 
 这可以解释为什么培育工程不能简单复制互联网预训练范式。预训练可以让 $\Theta$ 获得极其广泛的结构先验，却未必产生与具体主体经历对应的 $E$ 和 $\Psi$。对于持续 Agent，我们真正希望形成的是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 WorldDiversity
 +
 ActionDiversity
@@ -78,8 +80,8 @@ OutcomeDiversity
 SelfStateDiversity
 +
 RelationDiversity
-}
-\]
+\)}
+\end{statementbox}
 共同组成的经历空间。一个成熟 Agent 必须经历成功与失败、熟悉与陌生、独立与合作、低风险与适度风险、确定与不确定、短任务与长任务等不同闭环，否则其长期结构容易发生局部过拟合。
 
 但是，多样性也不能无限增加。若
@@ -123,13 +125,14 @@ D_{\max}
 \section{Difficulty：困难度必须匹配当前结构能力而非任务标签}
 
 经历设计的第二个核心变量是困难度。传统训练流程往往按照任务本身给出静态难度，例如把某个数学题、机器人任务或者软件操作定义为“简单”“中等”或“困难”。但对于持续智能体，困难并不是任务固有的标量属性。同一个任务对于不同阶段、不同身体、不同 $\Theta$ 和不同当前工作记忆状态的 Agent，其有效困难完全不同。因此应首先建立
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Difficulty
 =
 Relation(Task,AgentState)
-}
-\]
+\)}
+\end{statementbox}
 而不是
 \[
 Difficulty=Property(Task).
@@ -310,13 +313,14 @@ SensoryNovelty.
 \section{Recovery：恢复不是停止学习，而是慢结构完成学习的必要阶段}
 
 如果说 Difficulty 和 Novelty 负责制造结构扰动，那么 Recovery 则负责让这些扰动被吸收。传统 AI 训练通常把“更多训练步”视为持续进步，而持续 Agent 的多时间尺度结构却告诉我们：学习不只发生在事件发生的瞬间，也发生在事件之后。对一个具有 $h/E/\Theta/\Psi$ 的系统而言，新的经历首先进入快速状态，随后才能逐渐被选择、重放、抽象和重新解释。因此
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Experience
 \neq
 LearningCompletion.
-}
-\]
+\)}
+\end{statementbox}
 很多真正决定生命周期结构的变化发生在经历结束以后。
 
 我们可以把一次高强度经历后的系统扰动表示为
@@ -408,8 +412,9 @@ E
 h
 \]
 并在新的 $\Theta$、$\Psi$ 和现实证据条件下再次处理。因此反思的基本动力过程不是重复记忆，而是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E
 \rightarrow
 h
@@ -417,8 +422,8 @@ h
 Reinterpretation
 \rightarrow
 E'/\Theta'.
-}
-\]
+\)}
+\end{statementbox}
 
 设一次经历轨迹为
 \[
@@ -604,13 +609,14 @@ Experience.
 如果说 Autonomy 允许 Agent 做出自己的选择，那么 Responsibility 则让这些选择的后果在其内部结构中保持因果连续性。没有责任结构的自主性，很容易退化成无成本探索：每次选择都可以被视为一次独立 episode，错误不会影响未来角色，成功也不会形成长期可信度。这种系统可以拥有行动自由，却很难形成真正的生命周期行为结构。
 
 在这里，我们不把责任理解为人类法律或道德意义上的人格责任，而首先定义为一个工程变量：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Responsibility
 =
 PersistenceOfActionConsequenceAttribution.
-}
-\]
+\)}
+\end{statementbox}
 即 Agent 能否将
 \[
 Choice_t
@@ -689,13 +695,14 @@ Agent 需要学习区分：
 以及“目前无法可靠归因”。
 
 责任还必须与权限相匹配。一个没有决定权的 Agent 不应被赋予完整责任；反过来，一个拥有高度自治、能够影响现实的重要 Agent，也不能让其历史完全从内部生命周期中消失。因此应满足概念上的一致性条件：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ResponsibilityScope
 \approx
 AutonomyScope.
-}
-\]
+\)}
+\end{statementbox}
 
 在培育工程中，责任的真正价值是把离散任务连成生命周期。如果一个 Agent 知道今天的决定会改变明天的信任、权限、环境和自身可选空间，那么其决策就不再只是
 \[
@@ -720,28 +727,31 @@ U_\tau
 \section{Failure：失败必须保持为可解释残差，而不是简单负奖励}
 
 在传统强化学习中，失败很容易被压缩成一个负 reward；在工程测试中，失败则往往只是一次指标下降。但对于持续 Agent，失败是非常特殊的经历，因为它同时暴露了三个结构之间的失配：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Prediction
 \neq
 Reality,
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Capability
 \neq
 Demand,
-}
-\]
+\)}
+\end{statementbox}
 以及可能存在的
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfModel
 \neq
 ActualSelf.
-}
-\]
+\)}
+\end{statementbox}
 因此失败是最重要的结构校准来源之一。
 
 设 Agent 对结果的预测为
@@ -815,13 +825,14 @@ LearningValue(Failure)
 RealWorldCost(Failure).
 \]
 理想培育环境应尽可能创造：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HighLearningValue
 +
 BoundedIrreversibleCost.
-}
-\]
+\)}
+\end{statementbox}
 这就是为什么早期培育更适合使用模拟环境、数字身体、沙盒和可回滚任务，而随着能力与责任增长，才逐渐进入高真实后果环境。
 
 另一方面，如果 Agent 从未失败，也无法形成对能力边界的准确 Agent-CSO。持续成功可能导致

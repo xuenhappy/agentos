@@ -8,11 +8,12 @@
 \section{为什么 BPCC 不是一块缩小的大模型推理芯片}
 
 当我们从软件层面建立
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentSystem=AgentKernel+BodyRuntime
-}
-\]
+\)}
+\end{statementbox}
 以后，一个极易出现的工程误区是认为：既然 Agent Kernel 可以运行在大模型推理芯片上，那么只需要在身体侧放置一块更小、更便宜、速度更快的神经网络加速器，就可以承担 Body Runtime 的全部工作。这个判断忽略了两类计算在动力学性质上的根本区别。Agent Kernel 的主要任务是进行语义理解、长期规划、世界模型推演、工作记忆组织、目标管理、记忆检索以及对未来可能性的生成，其计算可以具有较高的不确定性，可以接受一定程度的运行时间波动，也允许通过增加计算深度换取更好的推理质量。BPCC 所承担的则是另外一类问题：身体局部状态估计、短时预测、姿态和轨迹控制、残差检测、局部策略修正以及异常上浮。这些任务首先受到现实世界的时间约束，而不是受到语言生成吞吐量约束。
 
 因此我们必须区分两种不同的计算目标。对于高层推理芯片，可以概念性地定义其主要优化目标为
@@ -255,11 +256,12 @@ R_i\leq D_i,
 其中 $R_i$ 为最坏响应时间。只有在这些约束满足之后，剩余算力才可以分配给较弱实时性的预测、学习和优化任务。
 
 这一原则与本书此前提出的
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SafetyAuthority>BPCCAuthority
-}
-\]
+\)}
+\end{statementbox}
 完全一致。甚至 BPCC 本身也不能成为安全的最终权威。如果其神经预测模块异常、学习参数漂移或计算超时，底层仍需存在独立的 Safety Boundary。由此形成至少三级执行权：
 \[
 Safety
@@ -286,8 +288,9 @@ HigherLevelCognitiveFreedom.\)}
 如果 BPCC 只有快速控制而没有持续适应，它仍然只是一个传统实时控制器。真正把它与普通运动控制芯片区分开的关键，是其必须在现实交互中持续修正局部身体模型。机器人换了工具、关节产生磨损、电池状态变化、负载质量发生改变、轮胎摩擦系数变化、网络延迟改变，都会使原有动力学模型逐渐失配。若所有这些变化都必须重新上传 Agent Kernel、重新训练大型模型再下发，整个系统就失去了身体层自主适应的意义。
 
 因此 BPCC 的基本结构应保持
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BPCC
 =
 FastPrediction
@@ -297,8 +300,8 @@ FastControl
 ResidualEstimation
 +
 AdaptiveLearning.
-}
-\]
+\)}
+\end{statementbox}
 设身体局部状态为 $x_t$，控制输入为 $u_t$，局部模型参数为 $\theta_t$，BPCC 的预测可以写成
 \[
 \hat x_{t+1}
@@ -425,8 +428,9 @@ AdaptiveLocalClosureHardware,
 \section{Cerebellum Chip：面向局部预测控制闭环的专用计算域}
 
 到这里，我们已经可以正式定义本书所说的 Cerebellum Chip。它不是要求人工系统复制生物小脑，而是从功能与时间尺度上定义一种新的硬件类型：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CerebellumChip
 =
 Deterministic
@@ -440,8 +444,8 @@ LocalControl
 ResidualLearning
 +
 BoundedAdaptation.
-}
-\]
+\)}
+\end{statementbox}
 其存在的理由来自 AgentOS 自身的多尺度结构，而不是来自生物模仿冲动。只要一个智能体拥有现实身体，就会自然出现大量高频、局部、重复、可闭合的 Agent-CSO。如果让这些结构长期占据高层认知，就违反工作记忆有限定理；如果把它们下沉到普通固定控制器，又失去持续适应能力。因此必须出现一种介于“纯实时控制器”和“高层大模型推理机”之间的计算层。
 
 从体系结构角度，可以把小脑芯片内部抽象为
@@ -527,23 +531,25 @@ PublicEmbodiedState
 SGC+FCS+Residual+Confidence.
 \]
 这继承了本书已经确立的
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Interface=SemanticSkeleton+LatentMuscle.
-}
-\]
+\)}
+\end{statementbox}
 芯片内部允许为了速度使用最有效的表示，跨层通信则必须维持语义、认识论状态和控制权限边界。
 
 我们还应把 Cerebellum Chip 与 Safety Chip 或硬安全逻辑区别开。小脑芯片可以非常快，但它仍然是可学习系统。安全关键的最终约束不能完全交给一个在线变化的学习器。因此更完整的硬件层次应是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SafetyBoundary
 >
 CerebellumControl
 >
 AdaptivePrediction
-}
-\]
+\)}
+\end{statementbox}
 或者从数据流看：
 \[
 Sensor
@@ -658,12 +664,13 @@ AgentCSO_B
 \section{Kernel--Body 异构计算：智能不是把所有计算放在最快的芯片上}
 
 Inference Chip 与 Cerebellum Chip 同时存在以后，新的关键问题不是“如何让两块芯片通信”，而是如何定义二者之间的认知边界。AgentOS 的基本原则始终是：高层负责目标、语义和跨尺度协调，低层负责局部快速闭环。因此异构计算必须服从
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,\quad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 
 设 Kernel 输出高层控制参考
 \[
@@ -933,19 +940,21 @@ CriticalControl.
 这一优先级与生物智能在资源紧张时优先维持基本身体闭环的结构具有功能上的相似性，但本书只采用其工程同构，不作生物必然性推断。
 
 最终，Computer OS 与 AgentOS 之间应形成非常明确的职责边界：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ComputerOS:
 HowToAllocatePhysicalCompute
-}
-\]
+\)}
+\end{statementbox}
 而
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS:
 WhatCognitiveStructureDeservesWhichCompute.
-}
-\]
+\)}
+\end{statementbox}
 前者不知道某个 Tensor 是否代表“我的目标”，后者也不需要知道某块 SRAM 的 cache line 如何替换。二者通过稳定的资源与实时契约耦合。只有维持这一分层，AgentOS 才能同时运行在服务器、个人计算机、汽车、机器人以及未来不同形态的具身硬件上。
 
 因此，第80章真正提出的硬件路线不是简单的 ``一块大芯片 + 一块小芯片''，而是一套与多尺度智能理论同构的物理计算结构：
@@ -970,11 +979,12 @@ ComputerOS
 负责在物理资源层维持它们的时间、内存、带宽、能量与安全隔离。
 
 由此，本书在软件层已经建立的原则
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance,\ FastLocalAutonomy
-}
-\]
+\)}
+\end{statementbox}
 最终获得硬件形式：
 \begin{statementbox}
 慢认知使用高表达计算，快身体使用确定性计算；稳定能力向低层硬件沉降，持续异常向高层认知重新提升。

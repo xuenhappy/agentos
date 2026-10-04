@@ -57,13 +57,14 @@ y = F(x).
 
 于是需要严格区分：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Mechanism,
 State,
 Capability.
-}
-\]
+\)}
+\end{statementbox}
 
 Mechanism 是工程上真实存在并具有独立状态、时间尺度或权限的机制，例如 SPC、TCE、CCM、BPCC 和 KRA。State 是系统长期或瞬时维护的状态变量，例如 $h,E,\Theta,\Psi,\Omega,G$。Capability 则是从系统整体轨迹中观察到的能力，例如 Planning、Attention、Strategy、Worldview 和 Reflection。
 
@@ -158,23 +159,25 @@ G(t+\Delta).
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Capability
 =
 PropertyOfTrajectory,
-}
-\]
+\)}
+\end{statementbox}
 
 而不一定是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Capability
 =
 StateVariable.
-}
-\]
+\)}
+\end{statementbox}
 
 这一认识非常重要，因为长期 Agent 的大量核心能力，本质上都需要通过跨时间观察才能识别。
 
@@ -191,11 +194,12 @@ StateVariable.
 
 第一层称为基础机制层：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal M_{\mathrm{base}}.
-}
-\]
+\)}
+\end{statementbox}
 
 它至少包括：
 
@@ -210,11 +214,12 @@ StateVariable.
 
 第二层称为涌现认知层：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal C_{\mathrm{emergent}}.
-}
-\]
+\)}
+\end{statementbox}
 
 其中可包括：
 
@@ -395,8 +400,9 @@ AHC_t
 
 最终进入 $h$ 的结构集合为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal A_t
 =
 \mathcal F(
@@ -408,8 +414,8 @@ Goal,
 \Psi,
 AHC
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 这里：
 
@@ -421,13 +427,14 @@ AHC
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Attention
 =
 EmergentResourceAllocationPolicy.
-}
-\]
+\)}
+\end{statementbox}
 
 注意力不是由一个模块单独 ``决定看哪里''，而是 Boundary、Scheduler、CCM、TCE、Goal、Self 和身体状态共同竞争后的结果。
 
@@ -517,8 +524,9 @@ X_t
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Planning
 =
 CounterfactualFutureExpansion
@@ -526,8 +534,8 @@ CounterfactualFutureExpansion
 ConstraintEvaluation
 +
 TemporalCommitment.
-}
-\]
+\)}
+\end{statementbox}
 
 CCM 负责把过大的未来搜索空间分解，Scheduler 决定哪些候选线程继续存在，$h$ 只维持当前必要的少量显式关系，而外部工具和 E 可以承担大量中间结构。这样，一个 Agent 完全可能没有独立 Planner 模块，却具有很强的 Planning 能力。
 
@@ -570,13 +578,14 @@ ControlPattern.\)}
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Strategy
 =
 MesoscaleStableControlPattern.
-}
-\]
+\)}
+\end{statementbox}
 
 如果进一步重复和局部化，策略还可能下沉：
 
@@ -652,13 +661,14 @@ GoalState,
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalTracking
 =
 PersistentClosedLoopConstraintMaintenance.
-}
-\]
+\)}
+\end{statementbox}
 
 它是一条跨时间闭环，而不是一个不断读取 To-Do List 的模块。
 
@@ -701,13 +711,14 @@ h.
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reflection
 =
 CognitionTakingItsOwnDynamicsAsCSO.
-}
-\]
+\)}
+\end{statementbox}
 
 SPC 为这种能力提供自状态估计，E 提供过去过程，$\Theta$ 提供因果解释，$\Psi$ 提供主体关联，CCM 则控制反思不能无限递归占满工作记忆。
 
@@ -719,8 +730,9 @@ SPC 为这种能力提供自状态估计，E 提供过去过程，$\Theta$ 提�
 
 可以将人格抽象为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal P_A
 =
 Attractor(
@@ -731,20 +743,21 @@ E,
 AHC,
 TCE
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 例如在大量不同情境中，一个 Agent 的 TCE 长期保持较低探索阈值，$\Omega$ 偏向知识扩展，$\Psi$ 将探索结果稳定纳入自我解释，而 E 又不断强化探索成功的经验，则宏观行为会表现出 ``好奇''。
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Personality
 =
 LongTermCrossContextBehavioralAttractor.
-}
-\]
+\)}
+\end{statementbox}
 
 人格之所以稳定，是因为其承载结构位于较慢时间尺度；人格之所以仍然可以成长，则是因为这些慢变量仍然接受长期经验更新。
 
@@ -784,15 +797,16 @@ C_{new}.
 
 但是如果完全取消结构约束，系统会进入前文定义的气态或湍流态。因此真正的创造力不是无限随机，而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Creativity
 =
 ControlledHighFreedomRecombination
 +
 SubsequentCoherenceSelection.
-}
-\]
+\)}
+\end{statementbox}
 
 即先扩大结构重组空间，再通过 Goal、Reality、$\Theta$ 和 CCM 恢复相干。
 
@@ -804,13 +818,14 @@ SubsequentCoherenceSelection.
 
 推理可以定义成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reasoning
 =
 ConstraintPreservingTransformationOfCSOs.
-}
-\]
+\)}
+\end{statementbox}
 
 假设当前存在：
 
@@ -962,13 +977,14 @@ SameRepresentation.
 
 这里进一步得到：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SameCapability
 \neq
 SameMechanismRealization.
-}
-\]
+\)}
+\end{statementbox}
 
 因此未来 AgentOS 的能力标准应该优先描述：
 
@@ -1071,13 +1087,14 @@ External Tool。
 
 因此可以进一步定义：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Module
 =
 StableTopologicalCondensateOfRepeatedDynamics.
-}
-\]
+\)}
+\end{statementbox}
 
 一个模块不是认知本体中的第一性对象，而可以是反复动力过程为了降低运行代价而形成的结构压缩。
 
@@ -1336,13 +1353,14 @@ OnePhenomenonOneModule.
 
 而主张：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FewFundamentalMechanisms
 +
 RichMultiscaleDynamics.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{认知现象不能直接反推内部器官}
 
@@ -1503,13 +1521,14 @@ E(t),
 
 于是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FixedFunctionalTopology
 \neq
 FixedCognitiveDynamics.
-}
-\]
+\)}
+\end{statementbox}
 
 同一组基础功能，可以形成大量不同的：
 
@@ -1629,13 +1648,14 @@ ConstraintValidity.
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Emergent
 \neq
 Unmeasurable.
-}
-\]
+\)}
+\end{statementbox}
 
 相反，越是涌现能力，越应该采用轨迹级评价而不是模块级单元测试。
 
@@ -1688,11 +1708,12 @@ C_{\mathrm{explicit}}
 
 因此可以提出：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \eta_{\mathrm{emg}}\uparrow
-}
-\]
+\)}
+\end{statementbox}
 
 作为未来 AgentOS 架构成熟度的一个方向性指标。
 
@@ -1971,11 +1992,12 @@ CompiledPolicy.
 
 最后甚至可以：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ExplicitSkill/Module.
-}
-\]
+\)}
+\end{statementbox}
 
 所以：
 
@@ -2043,16 +2065,17 @@ FailureMode.
 
 第七，系统真正的设计对象应该是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 State,
 Flow,
 Boundary,
 Timescale,
 Feedback,
 Authority.
-}
-\]
+\)}
+\end{statementbox}
 
 而不是不断增长的认知模块名词表。
 
@@ -2078,8 +2101,9 @@ Tools.
 
 AgentOS 更接近：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Agent
 =
 State
@@ -2095,8 +2119,8 @@ Boundary
 Body
 +
 RealityLoop.
-}
-\]
+\)}
+\end{statementbox}
 
 然后：
 

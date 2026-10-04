@@ -25,15 +25,16 @@ E=\mathrm{Trajectory},
 传统数字系统可以分别用运行时激活、情景数据库和模型参数实现三者，但这并不是三相记忆的定义本身。更加一般地说，任何物理或计算系统，只要能够同时产生快状态、中期轨迹和慢结构，并且三者之间能够稳定发生双向转换，就原则上可以实现三相记忆。
 
 因此三相记忆应首先被理解为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{State}
 \leftrightarrow
 \mathrm{Trajectory}
 \leftrightarrow
 \mathrm{Generator}
-}
-\]
+\)}
+\end{statementbox}
 这一多时间尺度动力学结构，而不是
 \[
 \mathrm{RAM}
@@ -78,15 +79,16 @@ F(X,\Theta,u)\,dt
 后文使用 ``Geometric Computing Unit''，简称 GCU，指代一种按照上述原则构造的物理计算单元。这里的 GCU 不是本章理论成立的必要条件，而仅作为一种代表性工程实例。任何满足连续状态演化、状态残留和结构可塑性条件的物理介质，都可以被纳入同一分析框架。
 
 从三相记忆角度看，关键并不在于器件采用忆阻、电磁振荡、光学传播、自旋电子学或其他技术，而在于物理系统能否形成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{FastState}
 +
 \mathrm{IntermediateTrace}
 +
 \mathrm{SlowStructure}
-}
-\]
+\)}
+\end{statementbox}
 三组清晰分离的时间尺度。
 
 \section{单体物理介质中的三相记忆}
@@ -152,13 +154,14 @@ t\gg\tau_h
 时，某些当前激活会自然衰减，而不需要显式执行删除操作。
 
 这提供了一种不同于地址式存储的工作记忆理解：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{WorkingMemory}
 =
 \mathrm{CurrentlySustainedDynamics}.
-}
-\]
+\)}
+\end{statementbox}
 
 换句话说，工作记忆不是一个地方，而是系统当前仍然在维持的状态。
 
@@ -194,13 +197,14 @@ m(t+\Delta t)\neq 0.
 h\rightarrow E
 \]
 被实现为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{FastState}
 \rightarrow
 \mathrm{PersistentTrace}.
-}
-\]
+\)}
+\end{statementbox}
 
 而召回
 \[
@@ -216,13 +220,14 @@ x.
 \]
 
 因此，物理系统中的召回不一定需要显式搜索某个地址，而可以表现为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{PastTrace}
 \rightarrow
 \mathrm{AttractorReactivation}.
-}
-\]
+\)}
+\end{statementbox}
 
 必须特别注意，这里所得到的首先是中期经历痕迹，而不是已经完成完整语义绑定的情景记忆。简单的残留变量能够说明“某种状态曾经发生”，但尚不足以表示“什么对象在什么地点、什么时间发生了什么关系”。这一限制将在后文成为引入专门情景绑定系统的直接原因。
 
@@ -278,20 +283,22 @@ v,
 E\rightarrow\Theta
 \]
 获得明确物理意义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{RepeatedTrajectory}
 \rightarrow
 \mathrm{SlowGeometry}.
-}
-\]
+\)}
+\end{statementbox}
 
 长期学习不是永久保持过去所有瞬时状态，而是让反复出现的有效关系逐渐成为以后状态演化的结构条件。这一过程可以概括为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{HistoryBecomesStructure}.
-}
-\]
+\)}
+\end{statementbox}
 
 \begin{figure}[htbp]
 \centering
@@ -388,21 +395,23 @@ E
 成为同一动力系统的不同时间尺度。
 
 这与此前提出的智能频谱理论一致：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{SameSystem},
 \mathrm{DifferentTimescales}.
-}
-\]
+\)}
+\end{statementbox}
 
 同时，它也为认知结构迁移提供了直接物理解释：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{FastActivity}
 \rightarrow
 \mathrm{SlowStructure}.
-}
-\]
+\)}
+\end{statementbox}
 
 但是这种实现存在重要边界。一般的中期残留
 \[
@@ -422,20 +431,22 @@ E_i
 \]
 
 因此必须严格区分
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{PersistentTrace}
 \neq
 \mathrm{StructuredEpisode}.
-}
-\]
+\)}
+\end{statementbox}
 
 当 Agent 开始进入复杂具身环境时，真正需要回答的问题不再只是“此前激活过什么”，而是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{What\ happened,\ where,\ when,\ and\ in\ relation\ to\ whom?}
-}
-\]
+\)}
+\end{statementbox}
 
 这使三相记忆从同质动力实现进一步走向功能分化。
 
@@ -490,13 +501,14 @@ S_{\mathrm{table}}
 于是对象本身可以保持稳定，而对象--位置关系作为独立结构动态变化。
 
 这可以概括为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{StableIdentity}
 +
 \mathrm{VariableSituation}
-}
-\]
+\)}
+\end{statementbox}
 的分离。
 
 后文使用 ``What-GCU'' 和 ``Where-GCU'' 分别指代实现这两个空间的候选物理几何计算区域。它们仍然只是工程实例，理论本身并不要求特定器件。
@@ -522,11 +534,12 @@ X_S(t)
 该事件后来产生了什么结果。
 
 因此必须增加一个新的功能：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Binding}.
-}
-\]
+\)}
+\end{statementbox}
 
 这里的 Binding 不是简单拼接两个向量，而是产生一个可以被再次寻址、模式补全和重新激活的关系结构。
 
@@ -564,11 +577,12 @@ B(W_i,S_i,T_i,R_i,A_i,V_i)
 这里 ``海马式'' 只表示功能上的设计借鉴：快速建立事件索引、关系绑定、模式补全以及从部分线索重新激活相关分布式表示。它并不意味着硬件必须复制生物海马的解剖结构。
 
 HGU 的理论角色不是传统数据库，而是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{DynamicRelationalBinder}.
-}
-\]
+\)}
+\end{statementbox}
 
 因此 What 区域主要承载
 \[
@@ -579,11 +593,12 @@ Where 区域主要承载
 \text{对象在哪里},
 \]
 而 HGU 主要承载
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{这个对象在这个时间、这个地点发生了什么关系}.
-}
-\]
+\)}
+\end{statementbox}
 
 例如一个事件可以抽象表示为
 \[
@@ -629,22 +644,24 @@ X_C(t)
 其中 $X_H^{\mathrm{active}}$ 表示当前被激活的情景索引或绑定结构，$X_C$ 表示当前控制、目标和其他参与显式认知的活动状态。
 
 因此工作记忆更准确地定义为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h=
 \mathrm{TemporarilyCoherentDistributedState}.
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，工作记忆并不一定是所有信息被物理搬运到一个中心，而可以是一组分布在不同功能区域、但在当前时刻形成临时高耦合或同步关系的活动结构。
 
 这一物理解释与此前的
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h=
 \mathrm{SparseExplicitCrossScaleSurface}
-}
-\]
+\)}
+\end{statementbox}
 保持一致：只有当前真正需要跨功能全局协调的 Agent-CSO 才进入这一临时协同状态，而绝大多数低层动力过程仍然局部闭合。
 
 \section{HGU 中的情景形成与模式补全}
@@ -698,15 +715,16 @@ E_i
 E\rightarrow h
 \]
 获得一种明确的物理实现：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{PartialCue}
 \rightarrow
 \mathrm{EpisodeAttractor}
 \rightarrow
 \mathrm{DistributedPatternCompletion}.
-}
-\]
+\)}
+\end{statementbox}
 
 这里的关键不是 ``查找一条记录''，而是利用绑定结构恢复此前共同出现的多个状态空间。
 
@@ -731,13 +749,14 @@ E\rightarrow\Theta
 \{E_1,E_2,\ldots,E_n\}.
 \]
 若其中反复出现某些稳定关系，则可逐渐形成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{RepeatedEpisodeRelations}
 \rightarrow
 \mathrm{StableGenerativeGeometry}.
-}
-\]
+\)}
+\end{statementbox}
 
 例如，大量不同事件可能共同支持
 \[
@@ -755,20 +774,22 @@ E\rightarrow\Theta
 这些跨情景稳定结构不再依赖某一单次 Episode，而被压缩进更慢的语义、空间、因果或技能结构中。
 
 因此可以把 HGU 和长期几何区域的功能差异抽象为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{EpisodeSystem}
 :
 \mathrm{Fast,\ Sparse,\ InstanceSpecific},
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{StructuralSystem}
 :
 \mathrm{Slow,\ Distributed,\ Statistical,\ Generative}.
-}
-\]
+\)}
+\end{statementbox}
 
 这种快情景--慢结构分工与互补学习系统思想具有明显对应，但本章将其推广为一种硬件无关的三相记忆实现原则。
 
@@ -799,13 +820,14 @@ E_i'
 \]
 
 因此，理想的 HGU 不必永久冻结一个完整语言叙事，而可以保存
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{EpisodeIndex}
 +
 \mathrm{RelationalTrace}
-}
-\]
+\)}
+\end{statementbox}
 并在召回时利用当前 $\Theta$ 重建具体语义。
 
 这样
@@ -813,13 +835,14 @@ E_i'
 \Theta\rightarrow E
 \]
 就表现为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{CurrentGenerativeStructure}
 \rightarrow
 \mathrm{ReinterpretationOfPastExperience}.
-}
-\]
+\)}
+\end{statementbox}
 
 这一机制十分重要，因为持续智能体对同一人生经历的理解会随着知识、自我和价值结构发展而变化。
 
@@ -847,20 +870,22 @@ F_{\mathrm{interaction}}.
 \Theta\rightarrow h
 \]
 在物理实现中等价于
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{SlowGeometry}
 \rightarrow
 \mathrm{FastDynamics}.
-}
-\]
+\)}
+\end{statementbox}
 
 这一关系正是全书多时间尺度理论的核心：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{SlowStructureShapesFastActivity}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{为什么从当前状态直接修改长期结构必须受到严格限制}
 
@@ -873,8 +898,9 @@ h\rightarrow\Theta
 如果每一个瞬时异常状态都直接改变长期几何结构，就可能导致偶然噪声固化、错误世界模型形成、结构漂移以及对抗性污染。
 
 因此更安全的默认路径应为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h
 \rightarrow
 \mathrm{TemporaryTrace}
@@ -884,8 +910,8 @@ E
 \mathrm{Validation}
 \rightarrow
 \Theta.
-}
-\]
+\)}
+\end{statementbox}
 
 只有满足极高置信度、强监督或特殊安全条件的结构，才允许使用较快的
 \[
@@ -894,11 +920,12 @@ h\rightarrow\Theta
 通道。
 
 这实际上是此前
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{SlowVariableProtection}
-}
-\]
+\)}
+\end{statementbox}
 原则在物理记忆系统中的具体实现。
 
 \section{自我、价值与情景写入}
@@ -925,11 +952,12 @@ P(E_i\;\mathrm{write})
 其中 $N_i$ 表示新颖性，$V_i$ 表示价值或内稳态重要性，$G_i$ 表示目标相关度，$S_i$ 表示自我相关度，而 $\varepsilon_i$ 表示预测残差。
 
 此前 AgentOS 中定义的慢自我结构 $\Psi$ 在这里并不是另一块情景存储器，而主要影响
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{WhichEventsBecomeMyEpisodes}.
-}
-\]
+\)}
+\end{statementbox}
 
 同样，AHC 或身体影响状态可以给情景附加功能性调制标签，使以后召回的不仅是
 \[
@@ -979,13 +1007,14 @@ F_i
 \end{itemize}
 
 因此可以抽象为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Omega
 \rightarrow
 \mathrm{PlasticityLandscape}.
-}
-\]
+\)}
+\end{statementbox}
 
 从这一视角看，$\Theta$ 更接近 ``我已经学会什么''，而 $\Omega$ 更接近 ``我的长期结构朝什么方向允许继续改变''。
 
@@ -1000,13 +1029,14 @@ F_i
 即主体当前可行动现实的显式语义图坐标空间。SGC 需要包含对象、位置、关系、属性、可行动性以及认识论状态，并且必须能够被 Agent Kernel 和工程人员检查。
 
 因此 Where 物理动力区域不能直接等同于 SGC：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{WherePhysicalSpace}
 \neq
 \mathrm{SGC}.
-}
-\]
+\)}
+\end{statementbox}
 
 前者可以拥有大量面向高速计算的私有物理状态，而 SGC 是对这些状态经过语义化后的公开 ABI。
 
@@ -1018,28 +1048,30 @@ F_i
 \]
 
 What 表示系统则向 SGC 提供对象身份、语义属性和关系候选。因此整体可写为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{WhatSystem}
 +
 \mathrm{WhereSystem}
 \rightarrow
 \mathrm{SGC}.
-}
-\]
+\)}
+\end{statementbox}
 
 HGU 则进一步提供过去的 What--Where--When 关系，使当前 SGC 获得持续实体身份、历史关系和情景上下文。
 
 因此
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{CurrentObservation}
 +
 \mathrm{EpisodicContext}
 \rightarrow
 \mathrm{SGC}_t.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{情景记忆与 FCS/AHC 的关系}
 
@@ -1062,13 +1094,14 @@ F_i=
 当该 Episode 被重新激活时，这一影响摘要可以重新进入 AHC，使过去经历对当前控制产生适当的调制作用。
 
 需要强调的是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{EpisodeAffectTag}
 \neq
 \mathrm{CompleteFCSReplay}.
-}
-\]
+\)}
+\end{statementbox}
 
 情景记忆只保存与事件相关的功能影响，而不是逐帧复制当时全部身体状态。
 
@@ -1111,24 +1144,26 @@ E=
 \]
 
 因此二者关系可以概括为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{HomogeneousMemoryDynamics}
 \rightarrow
 \mathrm{FunctionallyDifferentiatedMemorySystem}.
-}
-\]
+\)}
+\end{statementbox}
 
 系统规模较小时，同一个物理介质可以同时承担当前状态、经历残留和长期结构；当情景绑定、空间导航、概念泛化和长期巩固成为稳定且高频的独立需求时，系统可能出现专门化功能区域。
 
 这与前文定义
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Module}
 =
 \mathrm{StableTopologicalCondensate}
-}
-\]
+\)}
+\end{statementbox}
 完全一致：所谓专用情景绑定器，不必在理论上被规定为从系统诞生时便存在，而可以被理解为长期稳定功能需求形成的拓扑凝聚。
 
 \section{三相记忆实现的 CSO 无关性}
@@ -1170,13 +1205,14 @@ C.
 \]
 
 因此
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{SameCSO}
 \neq
 \mathrm{SameCarrier}.
-}
-\]
+\)}
+\end{statementbox}
 
 这也是为什么三相记忆不能由某一种数据库、网络参数或芯片器件来定义。
 
@@ -1204,24 +1240,26 @@ C.
 \]
 
 因此记忆巩固可以重新写成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{MemoryConsolidation}
 =
 \mathrm{CSOSpectralMigration}.
-}
-\]
+\)}
+\end{statementbox}
 
 即
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{FastActiveCSO}
 \rightarrow
 \mathrm{IntermediateEpisodeCSO}
 \rightarrow
 \mathrm{SlowGenerativeCSO}.
-}
-\]
+\)}
+\end{statementbox}
 
 这里真正迁移的不是一份完整数据从一个地址复制到另一个地址，而是同一相关认知结构逐步获得更长时间常数、更稳定承载和更低运行成本。
 
@@ -1238,19 +1276,21 @@ P_{\mathrm{escape}}
 形式。
 
 但是必须严格区分
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Exploration}
 \neq
 \mathrm{Learning}.
-}
-\]
+\)}
+\end{statementbox}
 
 升高 $T$ 只是让系统访问更多候选状态，并不意味着这些候选状态都应该进入慢结构。
 
 因此合理时序应是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{TemperatureRise}
 \rightarrow
 \mathrm{StateExploration}
@@ -1262,8 +1302,8 @@ P_{\mathrm{escape}}
 \mathrm{EpisodeFormation}
 \rightarrow
 \mathrm{SlowConsolidation}.
-}
-\]
+\)}
+\end{statementbox}
 
 不能简单采用
 \[
@@ -1292,24 +1332,26 @@ R(x,t)
 其中 $T$ 表示有效认知温度，$G$ 表示增益场，$I$ 表示抑制场，而 $R$ 表示共振或局部传播偏置。
 
 于是产生
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{SoftwareCognitiveControl}
 \rightarrow
 \mathrm{PhysicalDynamicalModulation}.
-}
-\]
+\)}
+\end{statementbox}
 
 这并不意味着 TCE 必须由某个特定 NPU 实现。TCE 是功能概念，而 CPU、NPU、模拟控制电路、GCU 内部调制器都可能承载其中不同部分。
 
 因此必须坚持
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{FunctionalOntology}
 \neq
 \mathrm{HardwarePlacement}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{稳定几何、软件孪生与可塑几何}
 
@@ -1346,17 +1388,19 @@ E\rightarrow\Theta
 在受控条件下长期发生。
 
 因此可以分别理解为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{ProtectedSlowPhase}
-}
-\]
+\)}
+\end{statementbox}
 和
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{PlasticSlowPhase}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{机器睡眠作为时间尺度隔离的巩固机制}
 
@@ -1392,45 +1436,50 @@ E
 \]
 
 这一过程可以形象地称为 ``机器睡眠''，但其工程本质并不是模仿生物睡眠，而是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{TimescaleSeparatedMemoryConsolidation}.
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，把需要实时稳定性的快速现实闭环，与可能改变长期结构的慢学习过程在时间上隔离。
 
 对于分布式系统，这一巩固过程也不要求全部发生在本地芯片。情景经历可以在保持身份和索引关系的条件下进入离线学习系统，经过验证后再转化为新的长期几何结构。
 
 因此三相记忆所要求的是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{FunctionalContinuity},
-}
-\]
+\)}
+\end{statementbox}
 而不是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{PhysicalColocation}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{单体路线与分体路线的工程定位}
 
 由上述理论可以得到两条基本实现路线。
 
 第一种为统一物理介质路线：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{UnifiedGeometricMemorySystem}.
-}
-\]
+\)}
+\end{statementbox}
 
 同一个介质同时包含快速状态、中期残留和慢结构。其优点是实现统一、低延迟、低数据搬运和较强的物理连续性，适合规模较小、情景结构相对简单或高度实时的自主系统。
 
 第二种为功能分化路线：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{SemanticSystem}
 +
 \mathrm{SpatialSystem}
@@ -1438,8 +1487,8 @@ E
 \mathrm{EpisodeBinder}
 +
 \mathrm{SlowGenerativeMemory}.
-}
-\]
+\)}
+\end{statementbox}
 
 这一体系更适合长期具身 Agent，因为它允许对象身份、空间状态和一次性事件分别具有最适合自己的表示方式和学习时间尺度。
 
@@ -1450,13 +1499,14 @@ E
 \mathrm{Incorrect},
 \]
 而是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{MinimalMemoryArchitecture}
 \rightarrow
 \mathrm{DifferentiatedMemoryArchitecture}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{三相物理记忆与完整 AgentOS 的接口}
 
@@ -1506,8 +1556,9 @@ E\rightarrow\Theta.
 并通过目标、注意、温度、写入阈值和可塑性策略反向影响未来认知。
 
 因此整体可以表示为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{World}
 \rightarrow
 h
@@ -1525,8 +1576,8 @@ E
 \mathrm{Action}
 \rightarrow
 \mathrm{World}'.
-}
-\]
+\)}
+\end{statementbox}
 
 物理几何记忆只是这一生命周期认知闭环中 $h/E/\Theta$ 的一种候选承载方式，而不是对 AgentOS 功能架构本身的替代。
 
@@ -1535,71 +1586,81 @@ E
 通过单体物理动力实现和多通路情景绑定实现可以看到，三相记忆具有明显的实现无关性。
 
 在最简单的单体系统中，可以写成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h=
 \mathrm{FastPhysicalState},
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E=
 \mathrm{IntermediatePersistentTrace},
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Theta=
 \mathrm{SlowPhysicalGeometry}.
-}
-\]
+\)}
+\end{statementbox}
 
 在复杂的功能分化系统中，则可以写成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h=
 \mathrm{DistributedActiveState},
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E=
 \mathrm{BoundRelationalEpisode},
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Theta=
 \mathrm{DistributedGenerativeStructure}.
-}
-\]
+\)}
+\end{statementbox}
 
 因此三相记忆真正描述的不是 ``记忆被存在哪里''，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{过去如何以不同时间尺度继续存在，并重新参与未来。}
-}
-\]
+\)}
+\end{statementbox}
 
 可以进一步把三相关系压缩为三个更本质的定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h:
 \text{仍然正在发生的结构},
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E:
 \text{已经发生、但尚未完全成为生成结构的经历},
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Theta:
 \text{已经沉降成、能够改变未来发生方式的结构}.
-}
-\]
+\)}
+\end{statementbox}
 
 由此，传统数字系统中的工作缓存、情景数据库和模型参数只是三相记忆的一组软件实现；未来的物理动力介质则可能使
 \[
@@ -1624,10 +1685,11 @@ E:
 第三类是仍待实验验证的 AgentOS 几何计算假设，包括：物理连续动力介质能否承载足够高维的通用语义表示；共振、局部传播和吸引子动力学能否在大规模任务上替代传统显式注意机制；专用情景绑定器能否稳定形成跨模态、跨时间的通用 Episode；物理结构可塑性是否能够在现实噪声和器件漂移条件下安全实现长期 Agent-CSO 沉降；以及多物理区域之间是否能够保持足够稳定的功能同构。
 
 因此，本章的主要结论并不是某一种 GCU 或 HGU 芯片已经被证明可行，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{三相记忆的定义本身允许一种比传统数字存储更加底层的物理动力学实现。}
-}
-\]
+\)}
+\end{statementbox}
 
 未来硬件研究的任务，是寻找能够真正满足这些动力学约束的物理介质。

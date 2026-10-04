@@ -90,13 +90,14 @@ u_{t+k}.
 这里最重要的并不是链条中的某一模块，而是当前行为可以通过生命周期记忆改变未来产生行为的结构。系统因此获得了真正意义上的\emph{历史依赖性（history dependence）}和\emph{递归主体性（recursive agency）}。
 
 我们可以把传统模型工程与持续 Agent 工程的差别形式化为两个不同的问题。模型工程主要研究
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \theta
 \xrightarrow{\text{optimization}}
 \theta^{*},
-}
-\]
+\)}
+\end{statementbox}
 而 Agent 生命周期工程研究的是
 \[
 \boxed{
@@ -141,11 +142,12 @@ t\in[0,T_{\mathrm{life}}]
 \tau_{\Omega}.
 \]
 每一层都拥有一定程度的局部自治，同时又受到更慢尺度结构的约束，并向更慢层提交持续残差。这种设计避免了所有问题都进入中央认知，但也意味着系统已经成为一个典型的
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MultiLoop\;+\;MultiTimescale\;+\;Adaptive
-}
-\]
+\)}
+\end{statementbox}
 控制对象。
 
 以最基础的 SPC--TCE 环为例。设真实认知状态为 $x_c(t)$，SPC 并不能直接透明读取 $x_c(t)$，而只能从有限历史观测中形成估计
@@ -306,13 +308,14 @@ Training
 Deployment.
 \]
 但 AgentOS 的基本假设恰好相反。对于真正持续存在的主体，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Deployment
 =
 ContinualDevelopment.
-}
-\]
+\)}
+\end{statementbox}
 也就是说，Agent 进入现实世界以后仍然不断获得经验 $E$，经验改变结构记忆 $\Theta$，长期结构又逐渐改变自我 $\Psi$ 和未来生成倾向 $\Omega$。因此一个 Agent 在时间 $t_2$ 的能力不只是初始模型 $\theta_0$ 与后来若干参数更新的结果，而是其整个经历轨迹的函数：
 \[
 \mathcal C(t_2)
@@ -540,15 +543,16 @@ SelfEstimate',
 一个能够自我维持的闭环异常。
 
 这说明 Agent 的异常不仅存在于 ``reasoning output''，还可能存在于\emph{经验生成机制本身}。因此我们此前逐步形成了 Agent 心理工程的三层诊断对象：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ExperienceLoop
 +
 MemoryConsolidation
 +
 SelfInterpretation.
-}
-\]
+\)}
+\end{statementbox}
 第一层考察 Agent 如何产生经历。如果 Boundary、Attention、TCE 或 Body Policy 长期使 Agent 只接触到高度偏置的环境区域，那么即使所有记忆写入算法完全正常，其生命周期数据分布也已经偏移。第二层考察经历如何进入 E、如何被压缩进入 $\Theta$，以及哪些高 AHC 状态获得过高写入权重。第三层则考察 $\Psi$ 如何解释这些经历，并让解释重新影响未来注意、目标和经验选择。
 
 尤其需要警惕的是自我解释正反馈。设某次经历 $e_t$ 被 $\Psi$ 解释为关于自身的命题
@@ -692,15 +696,16 @@ D\!\left(
 \end{statementbox}
 
 这三者不能互相替代。控制工程可以使系统稳定，却不能决定什么经历最有利于形成成熟能力。例如将 TCE 调节得极其保守、让 Boundary 阻止绝大多数未知输入，可能得到一个非常稳定的 Agent，却同时失去成长性。培育工程可以不断增加高质量经验，但如果 SPC--AHC--TCE 闭环本身不稳定，新的经历反而会不断放大内部振荡。心理工程可以修复已经形成的异常模式，却不能替代正常生命周期中的能力培养。因此，对于一个持续 Agent 来说，三种工程目标一般必须同时存在：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Stability
 \cap
 Development
 \cap
 Recoverability.
-}
-\]
+\)}
+\end{statementbox}
 
 为了进一步说明其区别，可以定义三个不同的性能泛函。控制工程关注
 \[
@@ -815,13 +820,14 @@ Observation
 Agent
 \]
 这一闭环验证。换言之：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InternalConsistency
 \neq
 RealityConsistency.
-}
-\]
+\)}
+\end{statementbox}
 持续 Agent 的所有内部工程最终都必须接受现实闭环的校验。
 
 到这里，我们也可以看清这三门工程与传统 AI 学科之间真正的关系。机器学习研究从数据中形成能力；控制理论研究系统怎样在反馈下保持目标行为；软件工程研究复杂人工系统怎样可靠构建；机器人学研究感知、决策和行动的具身闭环；认知科学研究自然智能内部结构。AgentOS 三大工程并不取代这些学科，而是在 Persistent Agent 这一新的研究对象上重新组合它们。其共同研究对象不再是单独模型、单独控制器或单独软件系统，而是：

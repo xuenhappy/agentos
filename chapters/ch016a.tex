@@ -434,27 +434,30 @@ L(E\mid\Theta)
 其中$\mathcal{R}_S$代表结构更新带来的稳定性代价。
 
 因此三种基本承载形式可以用如下方式统一：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 H
 =
 OnlineExpansion,
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E
 =
 TemporalResidualCompression,
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Theta
 =
 ReusableGenerativeCompression.
-}
-\]
+\)}
+\end{statementbox}
 
 于是从在线工作结构到经验，再到长期生成结构的过程
 \[
@@ -663,13 +666,14 @@ Recoverability
 则将$C$迁移到外部载体在长期成本意义上更优。
 
 因此外部化可以定义为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Offloading
 =
 ConstrainedCrossBoundaryCarrierOptimization.
-}
-\]
+\)}
+\end{statementbox}
 
 这里的External并不预设具体实现。它可以是文件、数据库、程序、工具、物理环境或者其他能够被稳定重新访问的外部结构。重要的不是物理位置，而是：Agent是否保留了可靠索引、恢复路径和功能关联。如果一个外部结构无法被重新定位或重新解释，则它不能构成有效的长期外部认知载体。
 
@@ -866,13 +870,14 @@ StableFunctionalCoupling.\)}
 \end{statementbox}
 
 因此可以重新定义
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Topology
 =
 CompressedHistoryOfStableFunctionalInteraction.
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，功能拓扑是过去大量重复动态协调被压缩之后留下的慢结构。
 
@@ -947,13 +952,14 @@ L(\mathrm{Interactions}),
 则模块化具有描述优势。
 
 因此可以得到前文所提出的命题
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Module
 =
 StableTopologicalCondensate
-}
-\]
+\)}
+\end{statementbox}
 的MDL解释：模块并非智能系统的第一性对象，而是反复发生的内部功能关系在慢时间尺度上被压缩和固化以后形成的拓扑凝聚体。
 
 从这一观点出发，高层认知能力不应因为被观察到就自动对应一个软件模块。只有当某种功能关系长期稳定、重复并且显式物化能够减少未来总体结构和协调成本时，它才有理由从涌现能力沉降为明确的功能结构。
@@ -1124,13 +1130,14 @@ d_A(C,\hat C)
 因此，只要能力仍然存在，相关CSO不必保持原始表示，但必须在某处保持足够的可恢复结构。
 
 由此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StructuralContinuity
 \neq
 RepresentationIdentity.
-}
-\]
+\)}
+\end{statementbox}
 
 一个CSO可以经历
 \[
@@ -1311,13 +1318,14 @@ z_i
 z_j.
 \]
 真正发生的是Agent-CSO承载状态变化：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CSORemainsStructurallyRelated,
 \qquad
 RepresentationAndCarrierChange.
-}
-\]
+\)}
+\end{statementbox}
 
 由于
 \[
@@ -1334,14 +1342,15 @@ L_A(C\mid M_t,z_j),
 从系统层面观察就表现为“复杂度从一个地方转移到了另一个地方”。
 
 因此，更严格的定义应为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ComplexityMigration
 =
 ConditionalDescriptionCostRedistribution
 InducedByCSOMigration.
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，复杂度不是迁移的本体，而是认知结构迁移以后产生的测量结果。真正的本体对象仍然是CSO及其承载关系。
 
@@ -1366,14 +1375,15 @@ InducedByCSOMigration.
 同时任务正确性、现实一致性和安全约束未下降，则可以认为发生了有效学习。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Learning
 =
 TransformationOfAgentStructure
 ThatReducesExpectedFutureConditionalCSOCost.
-}
-\]
+\)}
+\end{statementbox}
 
 熟练则可以进一步定义为某一任务分布$D$上的有效成本下降。设
 \[
@@ -1422,8 +1432,9 @@ L(\mathrm{Coordination}\mid\mathcal T).
 L_h(H_t)\leq B_h.
 \]
 如果$B_h$无限大、所有状态访问时间为零、计算资源无限、存储免费、外部世界完全稳定，那么许多结构压缩和迁移确实不再必要。然而实际智能系统满足
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FiniteWorkingMemory
 +
 FiniteTime
@@ -1431,8 +1442,8 @@ FiniteTime
 FiniteEnergy
 +
 OpenWorld.
-}
-\]
+\)}
+\end{statementbox}
 
 因此反复出现的结构如果永远停留在高成本在线状态，将持续消耗有限$B_h$。为了维持更大的任务范围，系统必须把不同类型的结构逐渐分配到更适当的承载方式：
 

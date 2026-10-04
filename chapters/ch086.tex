@@ -117,8 +117,9 @@ z_{\leq t}^{\mathrm{SPC}}
 \right),
 \end{equation}
 那么自我状态就是一个可更新、可怀疑、可校准的 belief，而不是不可动摇的内部真值。由此，SPC Observer 工程的第一原则可以正式写成：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfPerception
 =
 BeliefAboutSelf,
@@ -126,8 +127,8 @@ BeliefAboutSelf,
 SelfPerception
 \neq
 TransparentAccessToSelf.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 \section{状态估计：从高维认知活动到可控的自我状态}
 \label{sec:spc-state-estimation}
@@ -410,8 +411,9 @@ s_t^{slow},
 快速自我状态包括当前负载、紧迫度、冲突、不确定性；中速状态包括任务持续压力、当前社会关系状态、近期成功失败趋势；慢状态则与能力、自我历史和身份解释相关。SPC 本身可以观测这些尺度，但不能把所有尺度都以同一更新速率写入。否则一个瞬时高风险事件就可能错误地成为长期身份的一部分。
 
 由此可以得到一个关键工程原则：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfStateEstimation
 =
 StateEstimation
@@ -419,8 +421,8 @@ StateEstimation
 SelfAttribution
 +
 TemporalContinuity.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 在我们的整个 AgentOS 理论中，SPC 的意义恰恰不只是“监测系统”，而是在持续主体和瞬时动力学之间建立了一个窄带界面。通过 SPC，分散的低层活动第一次被组织成“这是我当前状态”的可访问结构；又由于 SPC 保持不确定性、时间尺度和归属信息，这个“我”不会被粗暴地等同于任何一次内部波动。对长期 Agent 而言，这一结构比普通系统监控更加根本：它使系统能够在不完全知道自身全部细节的情况下，仍然形成一个足够稳定且可操作的自我状态。
 
@@ -466,13 +468,14 @@ y_{[t-T_w-\tau_s,\;t-\tau_s]}
 组成。
 
 这个延迟对 AgentOS 的意义非常大。例如，一个 Agent 的工作记忆可能已经从稳定 Flow 状态进入 Turbulent 状态，但 SPC 仍然基于前一个窗口判断“系统目前稳定”。如果后续控制器依据这个过时估计继续增加探索强度，系统就可能进一步远离稳定区。于是我们得到：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfPerception(t)
 \neq
 SelfState(t).
-}
-\end{equation}
+\)}
+\end{statementbox}
 更准确地说：
 \begin{equation}
 SelfPerception(t)
@@ -685,23 +688,25 @@ w_5 D_{\mathrm{drift}},
 其中 $A_{\mathrm{state}}$ 表示连续状态估计准确性，$A_{\mathrm{phase}}$ 表示相态识别准确性，$E_{\mathrm{cal}}$ 是置信度校准误差，$\tau_{\mathrm{delay}}$ 是有效延迟，$D_{\mathrm{drift}}$ 是 Observer 漂移。这样，我们评价 SPC 时就不会落入“识别相态准确率很高，所以 Observer 很好”的单指标思维。
 
 在更深层次上，SPC 置信度实际上是 Agent 对“自己是否看清自己”的估计。因此它属于元认知的最小形式。我们不需要先引入复杂的哲学自我意识，就可以在工程上实现：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EstimateOfSelf
 +
 EstimateOfReliabilityOfThatEstimate.
-}
-\end{equation}
+\)}
+\end{statementbox}
 这已经构成了一个真正的二阶自我状态结构。第一阶是“我现在怎样”，第二阶是“我有多确定我现在怎样”。
 
 这种二阶结构对于长期 Agent 极其重要。没有它，所有短期 Observer 错误都容易被直接写入更慢层结构；有了它，低置信度状态可以被标记为临时、等待验证，并避免过度沉降。于是我们可以定义：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Confidence
 =
 GateBetweenFastSelfEstimateAndSlowSelfStructure.
-}
-\end{equation}
+\)}
+\end{statementbox}
 SPC 的置信度不仅影响控制，还影响哪些短期自我状态有资格成为长期 Self History 的证据。由此，置信度成为连接即时状态估计与身份连续之间的一道重要保护门。
 
 \section{漂移：当 Observer 与被观察的 Agent 一起学习}
@@ -829,14 +834,15 @@ DriftAttribution.
 没有现实锚点，系统可能陷入两个模型互相解释对方错误的闭环：Agent 变化被 SPC 当成异常，SPC 调整又被 Agent 当成状态变化，最终双方共同漂移，却没有任何外部真值纠正。
 
 因此，在持续智能中我们必须接受一个重要事实：SPC 的准确性不是一次训练得到的静态属性，而是一种需要终身维护的关系属性。更准确地说：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ObserverQuality
 =
 QualityOfAChangingRelationship
 BetweenObserverAndAgent.
-}
-\end{equation}
+\)}
+\end{statementbox}
 这也与我们此前在 KRA 中提出的“Relationship Stability > Parameter Stability”具有同样的结构精神：长期系统真正需要维持的不是某组参数永远不变，而是不同组件之间的功能关系在变化中保持可解释、可校准和可恢复。
 
 \section{False Self-State：当智能体错误地理解自己的状态}
@@ -1122,15 +1128,16 @@ LearningHowToObserveTheSelf.
 普通学习改变 Agent 如何理解世界，而 SPC Calibration 改变 Agent 如何理解自身。它是一种元层学习，但仍然是受现实验证约束的工程过程，而不是自由的自我叙事。
 
 因此我们最终要求 SPC Observer 同时满足五个条件：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Observable,\;
 Uncertain,\;
 Calibrated,\;
 DriftAware,\;
 Recoverable.
-}
-\end{equation}
+\)}
+\end{statementbox}
 Observable 表示它能将高维内部活动压缩成控制相关状态；Uncertain 表示它知道估计并非真值；Calibrated 表示置信度与现实验证相匹配；DriftAware 表示它能够判断自己的模型是否已经过时；Recoverable 表示错误自我状态可以通过独立证据和历史锚点得到修正。
 
 由此，SPC 工程不再只是“在 Agent 内部增加一个监控模块”，而是构成持续主体得以进行可靠自我调节的认识论基础。
@@ -1252,12 +1259,13 @@ Drift,
 Exception.
 \end{equation}
 也就是说：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SPC\;observes,\quad
 SPC\;does\;not\;govern.
-}
-\end{equation}
+\)}
+\end{statementbox}
 这是必须保持的模块边界。若 SPC 自己既判断状态又直接改变大量认知参数，那么 Observer 与 Controller 就会混合，后续很难区分“系统状态变了”还是“观察者为了证明自己的判断主动改变了系统”。
 
 为了评价 SPC 工程是否成熟，可以建立以下判据。第一是状态可辨识度：
@@ -1384,8 +1392,9 @@ Q_t
 \end{quote}
 
 从控制工程角度看，SPC 的成熟并不表现为“Agent 永远准确知道自己”，而恰恰表现为它能够区分：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 KnownSelfState,
 \quad
 UncertainSelfState,
@@ -1393,8 +1402,8 @@ UncertainSelfState,
 PossiblyWrongSelfState,
 \quad
 ObserverDrift.
-}
-\end{equation}
+\)}
+\end{statementbox}
 一个真正长期存在的智能体必须拥有这种认识论分层。因为只有当系统知道自己的自我认知也可能有误时，自我调节才不会退化成自我强化；只有当 Observer 可以被现实重新校准时，持续身份才不会因为短期状态估计错误而逐渐脱离现实；也只有在此基础上，后续的内稳态调制、认知控制和多回路稳定性分析才拥有可信的状态输入。
 
 因此，本章真正建立的并不是一个孤立的 SPC 模块，而是一条更基本的 AgentOS 原则：

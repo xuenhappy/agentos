@@ -7,21 +7,24 @@
 上一章已经定义了 SGC（Semantic Graph Coordinate Space，语义图坐标空间）的基本结构。本章进一步强调，SGC 的理论地位并不等同于传统计算机视觉中的 Scene Graph，也不等同于 SLAM 地图、目标检测结果或多模态特征张量。SGC 是一个以智能体身体为行动参照，将空间几何、持续实体、语义关系、认识论状态、预测结果和可行动性统一绑定起来的 \textbf{Actionable Reality Representation}。
 
 因此，本章将建立如下核心命题：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC \neq ImageUnderstanding
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC \neq SceneGraph
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC \neq World
-}
-\]
+\)}
+\end{statementbox}
 而更准确地说：
 \begin{statementbox}
 \centering
@@ -123,12 +126,13 @@ WhatPersistentStructuredRealityDoesTheAgentCurrentlyActWithin?
 从 AgentOS 的总体框架看，这一区别非常重要。如果我们只把视觉识别结果直接输入大模型，那么每一个观察周期都可能重新产生一套对象描述，世界就会退化成连续文本片段。SGC 的作用恰恰是阻止这种退化。它要求系统形成一个持续存在的、具有实体身份和空间关系的世界，使语言模型、规划器以及其他认知结构不必每次重新从原始感知中重建现实。
 
 因此，SGC 的第一原则可以写为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ObservationIsTransient,\quad
 WorldStructureMustPersist.
-}
-\]
+\)}
+\end{statementbox}
 
 观察是瞬时的，世界结构必须持续。
 
@@ -180,11 +184,12 @@ p_i^{W}
 \]
 
 但我们的理论还需要继续前进一步。对于智能而言，仅仅建立所谓 ``objective world coordinates'' 仍然不够。因为智能不是无身体的观察者。一个现实结构是否重要、可达、危险、可操作，与智能体自身身体有直接关系。因此，SGC 最终必须建立：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body\in SGC.
-}
-\]
+\)}
+\end{statementbox}
 
 这意味着身体不是在世界地图之外的一个 ``viewer''，而是世界图中的一个实体，并且是整个行动意义的参照中心。
 
@@ -227,13 +232,14 @@ Affordance=\text{Blocked}.
 \]
 
 这说明 SGC 既不是主观幻想，也不是纯客观物理地图，而是一种非常特殊的结构：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ObjectiveStructure
 +
 AgentRelativeActionMeaning.
-}
-\]
+\)}
+\end{statementbox}
 
 因此我们在这里需要区分三个层级：
 \[
@@ -262,11 +268,12 @@ BodyCenteredActionSpace.
 真正的 SGC 是后二者的统一，而不是第一层的简单语义化。
 
 这也是为什么我们把它称作 Semantic Graph \emph{Coordinate Space}，而不仅仅是 Semantic Graph。所谓 Coordinate，并不仅是欧氏几何坐标，还包括主体相对于现实所处的功能坐标。一个持续 Agent 最终需要的不是关于世界的百科全书，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 World + MeInWorld.
-}
-\]
+\)}
+\end{statementbox}
 
 从这个意义上说，身体是现实进入智能的原点，也是智能重新进入现实的原点。
 
@@ -320,13 +327,14 @@ EntityNonexistent.
 \]
 
 这可以形成 SGC 的一个基本认识论规则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Visibility
 \neq
 Existence.
-}
-\]
+\)}
+\end{statementbox}
 
 类似地：
 \[
@@ -404,12 +412,13 @@ q_i^{id}(t)\in[0,1].
 \]
 
 因此，成熟 SGC 的原则不是“永远知道对象是谁”，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 IdentityMustPersistWhenEvidenceSupportsIt,
 AndUncertaintyMustPersistWhenEvidenceDoesNot.
-}
-\]
+\)}
+\end{statementbox}
 
 保持确定性很重要，保持不确定性同样重要。
 
@@ -496,8 +505,9 @@ dX_{t-1}.
 虽然真实工程实现不一定采用严格 Bayesian filter，但这条公式体现了重要原则：当前 SGC 不只是当前观察的函数，也是上一时刻世界模型和世界动力学的函数。
 
 即：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC_t
 =
 Update
@@ -506,8 +516,8 @@ SGC_{t-1},
 Observation_t,
 DynamicsPrior
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 这意味着 SGC 天然具有记忆，但这种记忆与 \(E\) 情景记忆不同。SGC 保存的是“当前世界现在被认为是什么”，而 \(E\) 保存的是“过去发生过什么”。因此：
 \[
@@ -681,8 +691,9 @@ Entity + History + Relation + Prediction
 这与本书前面 CSO 理论完全一致。CSO 不只包括对象，还包括关系、约束、目标、事件和因果。SGC 所做的，就是把其中与当前可行动现实相关的部分投射到具体世界结构上。
 
 因此，我们可以把 SGC 更严格地定义成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC_t
 =
 GroundedRelationalSlice
@@ -690,8 +701,8 @@ GroundedRelationalSlice
 AgentCSO_t,
 Reality_t
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 它不是 Agent 全部知识，而是其中当前能够与现实实体、空间和行动发生绑定的那部分结构。
 
@@ -704,14 +715,15 @@ Reality_t
 因此，SGC 如果只允许存储 observed reality，就会迫使所有预测脱离空间现实表示，在另一个系统中单独进行，这会使当前世界和可能未来之间失去统一坐标。
 
 因此 SGC 必须允许至少四种不同认识论状态：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Observed,
 Derived,
 Predicted,
 Counterfactual.
-}
-\]
+\)}
+\end{statementbox}
 
 Observed 表示当前由传感器直接支持的结构；
 Derived 表示由多个观测和已有规则推导的结构；
@@ -747,13 +759,14 @@ v_i
 \]
 
 这里有一个非常重要的系统原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictedState
 \neq
 ObservedState.
-}
-\]
+\)}
+\end{statementbox}
 
 二者可以共享同一坐标空间，却绝不能共享同一认识论权限。
 
@@ -933,12 +946,13 @@ BodyRelativeAffordance.
 例如“杯子”这个 Agent-CSO 可以保持稳定，但不同机器人对它的 grasp affordance 完全不同。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MeaningCanTransfer,
 AffordanceMustBeRegrounded.
-}
-\]
+\)}
+\end{statementbox}
 
 这是一条非常重要的具身智能原则。
 
@@ -1242,11 +1256,12 @@ SGC 不是为了消灭 latent，而是在 Agent 与现实之间保留一层稳�
 
 在完成前面的论证以后，我们必须强调本章最重要的边界：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC\neq Reality.
-}
-\]
+\)}
+\end{statementbox}
 
 SGC 是 Agent 对现实的当前结构估计。
 
@@ -1293,26 +1308,28 @@ X_t^{world}
 但真实世界本身通常无法完整获得，所以这个误差只能通过新的感知、行动结果和交叉验证间接估计。
 
 因此，一个成熟的 SGC 必须不仅表示世界，还表示自己的不确定性：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 WorldRepresentation
 +
 UncertaintyAboutWorldRepresentation.
-}
-\]
+\)}
+\end{statementbox}
 
 这与前文 SPC 的认识论限制具有深刻一致性。Agent 不能完全透明地知道自己的内部状态，也不能完全透明地知道外部世界。无论面对内部还是外部，持续智能都工作在有限观测条件下。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PersistentIntelligence
 =
 PersistentEstimation
 +
 PersistentCorrection.
-}
-\]
+\)}
+\end{statementbox}
 
 这也意味着，SGC 不应设计成一个不断趋向“绝对正确世界模型”的数据库，而应该是一个能够持续被现实修正的动态结构：
 \[
@@ -1346,41 +1363,45 @@ Observation'\)}
 从这一点出发，我们可以得到 SGC 的几条核心设计原则。
 
 第一，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SensorData
 \neq
 World.
-}
-\]
+\)}
+\end{statementbox}
 感知只是证据。
 
 第二，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SemanticInference
 \neq
 Observation.
-}
-\]
+\)}
+\end{statementbox}
 推理结果必须保留认识论类型。
 
 第三，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Prediction
 \neq
 Reality.
-}
-\]
+\)}
+\end{statementbox}
 预测可以参与控制，却不能直接拥有现实声明权。
 
 第四，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body\in SGC.
-}
-\]
+\)}
+\end{statementbox}
 智能体自身必须作为可行动世界中的一个实体存在。
 
 第五，
@@ -1455,8 +1476,9 @@ SGCShouldBeInspectableAndTraceable.
 是置信度、新鲜度、来源和冲突等质量描述。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC
 =
 Persistent
@@ -1470,8 +1492,8 @@ Relational
 EpistemicallyTyped
 +
 Actionable.
-}
-\]
+\)}
+\end{statementbox}
 
 如果把这一章压缩成一句最重要的话，我们可以说：
 

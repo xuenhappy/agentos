@@ -91,13 +91,14 @@ CPU,GPU,NPU,RAM,Storage,Network,Device
 例如，当系统处于普通分析任务时，可以允许大量结构在 GPU 上以吞吐优先方式运行；当 SPC 发现认知相态接近临界区，而 Body 同时出现高风险 FCS 信号，则 Scheduler 应当降低非关键任务优先级，把有限资源优先分配给自我状态估计、身体预测和安全相关过程。由此可见，硬件资源虽然不是 AgentOS 的理论本体，但它定义了认知结构能够实际运行的物理边界。
 
 因此我们应当坚持：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitiveFreedom
 \subseteq
 PhysicalFeasibility
-}
-\]
+\)}
+\end{statementbox}
 Agent 可以在其认知空间中形成大量可能计划，但能够进入现实行动链的，只能是位于底层硬件、设备和环境共同允许的可行区域中的部分。这个原则也与本书此前反复强调的
 \begin{statementbox}
 RealityIsUltimateConstraint
@@ -134,8 +135,9 @@ Credential
 Linux 并不直接知道一个内存页中保存的是“自我记忆”还是普通缓存，也不知道一个进程正在执行“人生反思”还是矩阵乘法。它有意保持这种语义无知，因为它治理的是计算资源，而不是认知意义。
 
 这种“语义无知”实际上正是 Linux 能够成为 AgentOS 基础的原因。Linux 提供的是一种稳定的资源契约：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ResourceIsolation
 +
 ResourceScheduling
@@ -143,11 +145,12 @@ ResourceScheduling
 ResourceProtection
 +
 HardwareAbstraction
-}
-\]
+\)}
+\end{statementbox}
 而 AgentOS 在其上增加：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitiveMeaning
 +
 CognitiveScheduling
@@ -155,8 +158,8 @@ CognitiveScheduling
 MemoryLifecycle
 +
 AgencyGovernance.
-}
-\]
+\)}
+\end{statementbox}
 
 因此，两者之间不存在替代关系，而是严格的层次关系。
 
@@ -185,32 +188,35 @@ h/E/\Theta/Skill/File/Tool.
 二者在抽象层面都涉及“有限资源与迁移”，但其治理对象完全不同。Linux 可能因为内存压力把页面换出到 swap；AgentOS 则可能因为工作记忆负载过高把某个认知支线从 $h$ 中 Fold 到 E、外部文件或者暂停队列。两者可以发生联动，却不能混为同一机制。
 
 于是我们可以给出非常重要的系统边界：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LinuxKernel
 =
 SemanticAgnosticResourceGovernor
-}
-\]
+\)}
+\end{statementbox}
 而
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS
 =
 SemanticAwareCognitiveGovernor.
-}
-\]
+\)}
+\end{statementbox}
 
 这个边界决定了未来实现时的大量技术选择。大多数 AgentOS 核心认知逻辑应当运行在 user space，而不是进入 Linux kernel space。只有真正需要低延迟资源隔离、设备访问、实时调度提示、安全执行或硬件 telemetry 的部分，才需要通过现有 Linux syscall、cgroup、namespace、capability、eBPF、real-time scheduling、device interface 等机制获得支持。AgentOS 不应通过把越来越多“智能逻辑”塞进 ring 0 来获得权威，因为这会同时破坏可验证性、稳定性和安全隔离。
 
 从更一般的系统设计原则看：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Privilege
 \neq
 Intelligence.
-}
-\]
+\)}
+\end{statementbox}
 一个认知层越聪明，并不意味着它越应该拥有内核权限。恰恰相反，真正长期运行的智能体更需要将强大的认知能力置于可审计、可恢复、可撤销的系统边界之中。因此 Linux Kernel 应继续保持对 AgentOS 的底层资源主权，而 AgentOS 在其上形成更高级但受约束的认知治理。
 
 \section{Computer OS：计算资源运行时与 AgentOS 的智能资源运行时}
@@ -218,21 +224,23 @@ Intelligence.
 在本书中，我们有必要把 Linux Kernel 与更广义的 Computer OS 区分开来。Linux Kernel 负责最底层的系统资源治理，而完整 Computer OS 还包括 system service、filesystem hierarchy、network service、device manager、container runtime、security policy、user session 以及各种持久化基础设施。对 AgentOS 而言，它真正依赖的是这一完整计算资源运行环境。
 
 因此可以把 Computer OS 定义为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ComputerOS
 =
 RuntimeForComputationalResources
-}
-\]
+\)}
+\end{statementbox}
 而 AgentOS 定义为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS
 =
 RuntimeForIntelligenceResources.
-}
-\]
+\)}
+\end{statementbox}
 
 所谓 Intelligence Resource，并不是一种新的物理资源，而是经过认知语义组织以后形成的功能资源。例如：
 \[
@@ -278,13 +286,14 @@ $\sigma_C$ 是 Computer OS 的计算调度，决定进程、线程与计算资�
 例如 AgentOS 决定“提高当前身体风险分析优先级”，最终必须被落实为提高某些进程 CPU quota、确保推理 accelerator 可用、保留足够内存、提升某些 I/O 请求优先级等具体操作。
 
 这种两层调度意味着：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitivePriority
 \neq
 CPU nice\ value.
-}
-\]
+\)}
+\end{statementbox}
 一个高认知优先级 Goal 不一定直接对应 Linux 最高优先级线程。AgentOS 还必须考虑资源消耗、执行阶段、是否等待外部 I/O、是否可以异步处理、是否属于安全关键任务等条件。换言之，认知意义必须先通过运行时映射，才能转化为计算意义。
 
 因此 AgentOS 与 Computer OS 的正确关系不是：
@@ -292,11 +301,12 @@ CPU nice\ value.
 AgentOS\ supersedes\ Linux,
 \]
 而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS\circ ComputerOS.
-}
-\]
+\)}
+\end{statementbox}
 前者对后者施加更高层的语义需求，后者则向前者暴露真实可用资源。两者之间形成自顶向下约束和自底向上反馈：AgentOS 给出认知优先级、延迟要求和可靠性等级；Computer OS 返回 CPU pressure、memory pressure、device availability、network latency 和 process health。然后 AgentOS 根据这些现实反馈调整认知计划。
 
 这也意味着未来真正成熟的 AgentOS 不能把 Linux 看成透明黑箱。它不需要控制 Linux 的内部算法，却必须读取足够多的资源 telemetry，使 SPC、CCM 和 Scheduler 了解自身运行条件。例如：
@@ -336,13 +346,14 @@ G(t),
 ].
 \]
 如果底层某个推理进程退出，甚至整个设备重启，只要这一结构能够通过 checkpoint、persistent memory 与可靠恢复重新建立连续演化关系，则主体可以保持系统意义上的持续性。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentIdentity
 \neq
 UnixPID.
-}
-\]
+\)}
+\end{statementbox}
 
 这构成 AgentOS Runtime 与普通 application runtime 的第一个根本差异。
 
@@ -395,21 +406,23 @@ WorldVerification
 RecoveredAgentState.
 \]
 这再次体现：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Persistence
 \neq
 BlindStateRestoration.
-}
-\]
+\)}
+\end{statementbox}
 
 AgentOS Runtime 还必须将底层模型看作可替换计算资源，而不是主体本身。例如：
 \[
 M_1\rightarrow M_2
 \]
 只要认知 ABI、记忆结构和身份连续性得到维护，就不应自动被解释为“一个 Agent 死亡，另一个 Agent 出生”。这意味着模型与主体之间应满足：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Model
 =
 CognitiveComputeComponent,
@@ -417,8 +430,8 @@ CognitiveComputeComponent,
 Agent
 =
 PersistentDynamicalSubject.
-}
-\]
+\)}
+\end{statementbox}
 
 这条区分对于未来大模型升级尤其重要。否则每一次 Foundation Model 更新都会破坏长期 Agent 的生命周期，而 AgentOS 的价值恰恰在于使“智能主体”从具体模型版本中解耦出来。
 
@@ -468,13 +481,14 @@ SemanticResourceState.
 $\Pi_{OS}$ 本质上就是对底层计算复杂度的粗粒化。
 
 第二个原因是安全边界。Linux kernel 的错误通常意味着整个机器失稳，而 AgentOS 是高复杂度、持续学习和长期变化的软件。将这种高可塑逻辑放入 ring 0 会把认知错误直接放大成系统级错误。因此合理架构应满足：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitivePlasticity
 \perp
 KernelPrivilege
-}
-\]
+\)}
+\end{statementbox}
 即认知可塑性与底层特权程度应尽可能解耦。
 
 第三个原因是生态复用。Linux 已经拥有 device driver、container、security、network、storage 与 observability 生态。AgentOS 真正需要建立的竞争优势，应当是：
@@ -493,12 +507,13 @@ AuthorityGovernance,
 因此 AgentOS 与 Linux 更接近数据库系统、容器系统、浏览器运行时和 JVM 与 OS 的关系：它可以非常复杂，甚至形成自己的 resource scheduler、object model 与 security model，但仍然通过标准 OS 能力落地。
 
 我们由此得到一条工程定律：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOSShouldOwnSemanticComplexity,
 LinuxShouldOwnComputationalMechanics.
-}
-\]
+\)}
+\end{statementbox}
 这并不排除未来某些 AgentOS 关键路径获得 kernel-assisted optimization，但这种优化应当保持为加速机制，而不能改变功能边界。
 
 \section{CPU/Memory Scheduling 与 Cognitive Scheduling：两个调度世界}
@@ -620,12 +635,13 @@ FallbackModel.
 这使系统形成一个跨层闭环，而不是高层单向命令低层。
 
 值得强调的是，这种结构再次验证了全书最重要的多尺度控制原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsPriority,
 LowerLevelOwnsExecutionFeasibility.
-}
-\]
+\)}
+\end{statementbox}
 AgentOS 可以定义“什么重要”，但 Linux 与 Hardware 最终决定“当前能够怎样执行”。
 
 \section{Process 与 Agent 主体：为什么 PID 不能定义“我”}
@@ -677,13 +693,14 @@ History_A
 其中 $ID_A$ 不是 PID，而是生命周期主体标识；$M_A$ 是持续记忆；$\Psi_A$ 与 $\Omega_A$ 提供慢身份结构。
 
 这使我们能够正式写出：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentPersistence
 >
 ProcessPersistence.
-}
-\]
+\)}
+\end{statementbox}
 
 此前我们提出：
 \[
@@ -692,13 +709,14 @@ N^{D_1}_{Agent}=1,
 即一个 AgentOS 生命周期在 D1 主体层保持一个持续主体。D2 可以同时拥有多个 Goal、Task、Worker，但它们不能自动获得主体地位。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Worker
 \neq
 AgentSubject.
-}
-\]
+\)}
+\end{statementbox}
 一个 Worker 可以执行搜索、编译、计算、工具调用或者局部规划，但它不应该拥有独立的 $\Psi/\Omega$ 并与主体竞争身份控制权。
 
 这也是为什么我们曾提出：
@@ -728,13 +746,14 @@ A=\varnothing.
 这种设计对于休眠、设备重启、模型切换和跨设备迁移都至关重要。
 
 进一步，D2 任务不得同步锁死 D1 主体：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 D_2
 \nrightarrow
 Trap(D_1).
-}
-\]
+\)}
+\end{statementbox}
 如果某个任务调用一个持续两小时的工具，主体不应该因此失去响应其他重要事件的能力。工程上意味着认知任务应尽量采用异步 request/event 模式：
 \[
 TaskRequest
@@ -752,13 +771,14 @@ Resume,
 \section{File System 与 External Memory：存储数据不等于拥有记忆}
 
 Linux filesystem 为 AgentOS 提供了极其重要的持久存储基础，但我们必须明确：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 File
 \neq
 Memory.
-}
-\]
+\)}
+\end{statementbox}
 一个目录中保存一百万个文件，并不意味着 Agent 真正“记住”了一百万件事情。只有当外部结构被纳入 Agent 的认知索引、语义关系和恢复机制以后，它才成为广义认知记忆体系的一部分。
 
 因此可以把 External Memory 定义为：
@@ -788,8 +808,9 @@ ExternalArtifact
 RetrievableAgentCSO.
 \]
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Offloading
 =
 Externalization
@@ -797,8 +818,8 @@ Externalization
 Indexing
 +
 Recoverability.
-}
-\]
+\)}
+\end{statementbox}
 
 Linux filesystem 主要负责第一个对象的持久化：
 \[
@@ -1000,19 +1021,21 @@ SGC/FCS.
 高层预测绝不能直接覆盖真实观测。
 
 于是 Device Driver 与 Body Driver 的区别可以浓缩为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DeviceDriver:
 \ HowToTalkToHardware
-}
-\]
+\)}
+\end{statementbox}
 而
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodyDriver:
 \ WhatThisHardwareMeansForThisAgent.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{Security Model 与 Agent Authority：权限不只是 Unix 用户权限}
 
@@ -1037,15 +1060,16 @@ WhichCognitiveIntentMayCauseWhichReal-WorldEffect?
 例如 Linux permission 可以允许某个进程写入一个文件，但 AgentOS 仍然可能因为当前 Goal、Body state、Self policy 或安全治理禁止这一行为。反之，AgentOS 认为某个动作应该执行，也必须通过 Linux credential 才能获得底层权限。
 
 因此两层权限形成交集：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Authority_{effective}
 =
 Authority_{AgentOS}
 \cap
 Permission_{ComputerOS}.
-}
-\]
+\)}
+\end{statementbox}
 只有两者同时允许，现实动作才能发生。
 
 AgentOS Authority 至少应作用于：
@@ -1123,13 +1147,14 @@ Cap_{agent},
 但 Worker 不应自动继承全部 Agent 权限。否则一个负责网页搜索的局部任务就可能获得修改 $\Psi$ 或控制关键设备的权限。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Delegation
 \neq
 IdentityTransfer.
-}
-\]
+\)}
+\end{statementbox}
 
 在最底层，Linux 仍然拥有最终计算执行权；在身体层，Safety Controller 可以拥有高于普通 BPCC 的实时保护权；在认知层，AgentOS Authority 控制 Goal 与 Agent-CSO 的语义权限。三者形成：
 \begin{statementbox}
@@ -1143,13 +1168,14 @@ CognitiveAuthority\)}
 相互嵌套、互不替代的安全结构。
 
 这种设计最终使一个强能力 Agent 的自主性不再等于“获得 root”，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Autonomy
 =
 ActionFreedomWithinGovernedAuthorityEnvelope.
-}
-\]
+\)}
+\end{statementbox}
 这比传统软件权限更适合长期智能体，因为智能真正需要的不是无限权限，而是在持续成长过程中拥有明确、可审计、可恢复且与能力相匹配的行动空间。
 
 \section{本章小结：Linux 承载计算，AgentOS 承载持续智能}
@@ -1182,30 +1208,33 @@ WhatComputationalResourcesAreAvailableAndAllowed?
 \end{statementbox}
 
 AgentOS 回答：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 WhatShouldThisPersistentAgentThinkAbout,
 Remember,
 Learn,
 AndDo?
-}
-\]
+\)}
+\end{statementbox}
 
 因此两类操作系统最核心的对应关系可以写成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ComputerOS:
 ComputeResourceScheduling
-}
-\]
+\)}
+\end{statementbox}
 以及
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS:
 CognitiveStructureScheduling.
-}
-\]
+\)}
+\end{statementbox}
 
 传统 OS 让许多程序能够安全共享一台机器；AgentOS 则试图让大量目标、经验、认知结构、技能、工具和身体闭环能够在同一个持续主体中长期共存而不破坏身份连续性。
 

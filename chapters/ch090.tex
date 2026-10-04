@@ -5,27 +5,30 @@
 本章讨论 AgentOS 控制工程中最接近“主体性边界”的问题：一个持续智能体究竟可以改变自身到什么程度，以及哪些内部变量、目标结构、权限关系、自我结构与生命周期生成结构必须受到更高层治理。我们不把“自主性”定义为不存在约束，而把它定义为：\textbf{智能体在一个明确、可验证、可恢复的可行域内，能够使自身过去的经验和当前的选择真实地参与塑造未来的自身状态。}
 
 因此，本章建立三个核心对象：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal S_{\mathrm{self}}
-}
-\]
+\)}
+\end{statementbox}
 表示智能体原则上可参与修改的自身状态集合；
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal E_{\mathrm{BSM}}
-}
-\]
+\)}
+\end{statementbox}
 表示在给定生命周期阶段、现实状态和治理条件下真正允许进入的有界自修改包络
 （Bounded Self-Modification Envelope）；
 
 以及
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal G_{\mathrm{gov}}
-}
-\]
+\)}
+\end{statementbox}
 表示定义这些边界、修改速率、权限和恢复条件的离散治理结构。
 
 本章的核心结论是：
@@ -392,13 +395,14 @@ G_t^{self}
 \]
 
 这里包含一个非常重要的区分：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalGeneration
 \neq
 GoalAuthorization.
-}
-\]
+\)}
+\end{statementbox}
 Agent 可以产生一个目标，但目标是否进入实际调度和行动，需要经过权限、现实、安全和身份一致性约束。
 
 因此可以建立候选目标评估函数：
@@ -794,8 +798,9 @@ CounterEvidencePath
 持续暴露于无法被自身选择完全控制的现实证据。
 
 于是 $\Psi$ 的稳定性不是“永远不变”，而应定义为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 IdentityContinuity
 =
 SlowChange
@@ -803,8 +808,8 @@ SlowChange
 HistoricalDependence
 +
 RealityConstraint.
-}
-\]
+\)}
+\end{statementbox}
 
 这意味着一个成熟 Agent 应该能够在几十万次局部认知状态变化中保持某种身份连续，同时又能够在长期经历确实发生重大结构变化时逐渐成为不同于过去的自己。这正是固定人格模板与真正生命周期主体之间的根本区别。
 
@@ -1139,11 +1144,12 @@ R_{\mathrm{recoverable}}\in[0,1].
 \section{有界自修改包络：把自主性形式化为动态可行域}
 
 前面的讨论最终要求我们定义一个真正统一的控制对象：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal E_{\mathrm{BSM}}
-}
-\]
+\)}
+\end{statementbox}
 即 Bounded Self-Modification Envelope，有界自修改包络。
 
 设 Agent 当前完整慢状态为：
@@ -1289,11 +1295,12 @@ AgentDefinedOnly.
 否则系统只需“修改自己允许修改自己的权限”，所有边界都会失效。
 
 因此必须存在治理元结构：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal G_{\mathrm{gov}}
-}
-\]
+\)}
+\end{statementbox}
 它本身位于普通自修改包络之外，至少部分由更高层安全、系统治理或外部授权维持。
 
 这里存在一个非常重要的递归边界。设：
@@ -1371,8 +1378,9 @@ Agent 可以在什么范围内自己决定以后怎样做？
 u_t=\pi(x_t),
 \]
 而 AgentOS 高层控制程序更接近定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal U_t^{allowed}
 =
 \Gamma(
@@ -1381,8 +1389,8 @@ Authority_t,
 Risk_t,
 Lifecycle_t
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，我们不直接写死每个控制量，而是写：
 \[
@@ -1400,13 +1408,14 @@ EscalationRule.
 \]
 
 因此可把 AgentOS 控制编程定义为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ControlProgramming
 =
 ProgrammingTheBoundaryConditionsOfAutonomousDynamics.
-}
-\]
+\)}
+\end{statementbox}
 
 一个完整的控制编程规格至少应包括：
 \[
@@ -1822,33 +1831,37 @@ R_{\mathrm{recovery}},
 \]
 相反，一个成熟系统应具有明确分层：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal S_{\mathrm{fixed}}
-}
-\]
+\)}
+\end{statementbox}
 提供不可越过的底线；
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal S_{\mathrm{extern}}
-}
-\]
+\)}
+\end{statementbox}
 保留高层治理权；
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal S_{\mathrm{self}}
-}
-\]
+\)}
+\end{statementbox}
 给予 Agent 真正的历史形成空间；
 
 同时通过：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal E_{\mathrm{BSM}}
-}
-\]
+\)}
+\end{statementbox}
 控制每个生命周期阶段真正可以发生的结构改变。
 
 于是我们最终得到本章的核心命题：

@@ -275,15 +275,16 @@ R_b
 \]
 
 我们因此得到本章最重要的公式之一：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SameDynamicForm,
 \quad
 DifferentStateSpace,
 \quad
 DifferentTimescale.
-}
-\]
+\)}
+\end{statementbox}
 这三个条件缺一不可。如果只强调“Same Dynamic Form”，就容易把不同系统粗暴同一化；加入 Different State Space，是承认不同层级具有各自独立的有效变量；加入 Different Timescale，则意味着相似闭环在因果速度上可能完全不同。
 
 例如，当我们观察人体的局部姿态控制时，其有效状态空间不需要包含个人的职业规划和价值判断；反过来，讨论一个人十年的生涯选择，也没有必要追踪每块肌肉的瞬时电活动。这体现了多尺度理论中的一个基本原则：每一个尺度都有自身有效状态变量。可以抽象为粗粒化映射：
@@ -312,13 +313,14 @@ u_{low}^{*}
 J_{local}(u).
 \]
 由此得到全书后续将反复使用的关系：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \qquad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 
 这也是我们反对“中央智能必须实时控制所有细节”的理由。如果高层试图把所有低层状态都纳入自身状态空间，则随着系统规模增加：
 \[
@@ -392,11 +394,12 @@ LocalClosureBeforeGlobalIntervention.
 即能够在低层闭合的问题，尽量不要占用高层全局认知资源。
 
 这一原则以后会直接演化成 AgentOS 的工作记忆有限性理论。工作记忆 $h$ 不应该成为整个智能系统全部状态的镜像，而只应该承载当前真正需要跨尺度协调的少量结构。换言之：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MostAgentDynamics\notin h.
-}
-\]
+\)}
+\end{statementbox}
 虽然本章还没有正式引入 $h$，但我们已经能够看到其理论来源：如果整体智能必须把所有局部过程同时显式化，那么任何规模增长最终都会导致中央瓶颈。
 
 我们还需要区分“局部有智能”与“整体具有主体性”。一个局部闭环可以高度自适应，却不必拥有独立 Self。后续 AgentOS 中的 Body Runtime、BPCC 便属于这种结构：它们具有预测和控制能力，但不是独立主体。整个系统的身份连续性由更慢、更广范围的结构保持。因此，多尺度智能理论允许：
@@ -536,13 +539,14 @@ subject to
 (x,u)\in\mathcal{F}(z).
 \]
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance
 \neq
 FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 
 这条原则具有非常广泛的意义。身体高层目标“向前走”不需要给出每个电机电流；任务目标“完成报告”不需要规定每一个 token；长期价值结构也不应该直接控制每一个瞬时行动。越高层的结构，越应该通过改变偏好、边界、优先级和可行区域实现控制，而不是直接替代下层闭环。
 
@@ -705,13 +709,14 @@ Unfold\)}
 \rho_{explicit}\downarrow,
 \]
 但能力反而提高。这说明：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ThinkingLess
 \neq
 KnowingLess.
-}
-\]
+\)}
+\end{statementbox}
 结构可能只是改变了承载位置和时间尺度。
 
 这一思想后来会成为 CSO Migration、技能编译、Body Runtime、Offloading 乃至组织制度沉降的共同理论根。个体把重复计算变成习惯，软件系统把重复流程变成程序，组织把反复协调变成制度，这些过程在功能上都可以被视为“动态协调被压缩为结构”。因此，一个非常重要的长期关系是：
@@ -811,15 +816,16 @@ J_{org}
 这与本书后续关于“集中度—拓扑改变度”的智能相理论直接相连。不同组织可以具有不同集中程度，也可以拥有不同结构可塑度。有些组织拥有稳定、刚性的长期拓扑；有些组织会根据任务动态重组。组织因此成为观察智能拓扑相的天然案例。
 
 但这里需要保持理论边界。我们并不是因为社会存在层级就证明大脑、AgentOS 必须复制企业组织结构；反过来，也不能因为个体认知存在层级就证明社会层级必然合理。真正值得保留的是更抽象的功能关系：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LocalFastClosure
 +
 GlobalSlowCoordination
 +
 BidirectionalCrossScaleCoupling.
-}
-\]
+\)}
+\end{statementbox}
 只要一个系统需要在有限通信能力下协调大量异质过程，就可能出现类似结构。
 
 与这一节相关的外部理论包括 organization theory、distributed systems、hierarchical control、modularity、bounded rationality、information-processing theory of organization 等。后续我们还会把组织制度重新解释为超慢尺度的外部结构记忆，从而把“组织层级”进一步纳入 CSO 和结构沉降理论。
@@ -912,13 +918,14 @@ Evaluation
 \tau_{loop}\downarrow.
 \]
 这并不必然意味着组织更聪明，因为如果模型错误、控制权过大或高层价值结构不成熟，缩短错误反馈环反而可能放大风险。因此，我们必须引入一个重要条件：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ControlCapacity
 \not>
 VerifiedUnderstanding
-}
-\]
+\)}
+\end{statementbox}
 至少在重要系统中，改变现实的能力不应该远远超过理解和验证自身行为后果的能力。
 
 这也说明 AI 不应简单替代所有中间组织层。如果某个层级承担的是结构压缩、异常检测和重复协调，那么 AI 可能显著提高效率；但如果该层同时承担价值判断、责任归属、合法性和长期治理，那么完全自动化就涉及不同类型的问题。多尺度智能理论因此提醒我们：同一个“中间层”可能同时承担不同功能，不能仅因为其中一个功能可被自动化就认为整个结构可以删除。
@@ -932,13 +939,14 @@ A\rightarrow B\rightarrow C\rightarrow D
 A\rightarrow M_{AI}\rightarrow D.
 \]
 这已经不是简单提高某一步效率，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AI
 \rightarrow
 FunctionalTopologyChange.
-}
-\]
+\)}
+\end{statementbox}
 因此，AI 对社会的深层影响可能不是“完成更多任务”，而是改变文明内部信息、预测、决策和行动如何跨尺度流动。
 
 在这里，我们第一次看到本章“智能分形”与后续 AgentOS 理论真正连接起来。未来的 AgentOS 本身会是一个多尺度闭环系统，而大量 AgentOS 又可能参与组织和文明的更高尺度闭环。于是：
@@ -963,21 +971,23 @@ Civilization
 \right),
 \]
 其中 $\mathcal L_k$ 是第 $k$ 个尺度的局部闭环，而 $\mathcal C_{k,k+1}$ 是相邻尺度的耦合。为了保持系统可扩展性，通常应优先满足：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AdjacentScaleCouplingPrinciple:
 \quad
 \mathcal L_k
 \leftrightarrow
 \mathcal L_{k+1},
-}
-\]
+\)}
+\end{statementbox}
 而不是让任意高层直接持续干预任意远端低层。只有异常、安全或特殊治理事件才允许跨越多个尺度。
 
 这样，我们就可以对本章的“智能分形”给出一个更严格的定义：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \begin{aligned}
 \text{Fractal Intelligence}
 =
@@ -988,8 +998,8 @@ AdjacentScaleCouplingPrinciple:
 &+\text{Top-Down Constraint Propagation}\\
 &+\text{Local Closure with Global Coordination}.
 \end{aligned}
-}
-\]
+\)}
+\end{statementbox}
 
 需要再次强调，这仍然是一项理论框架，而不是已经被现有实验科学证明的普适自然定律。它借鉴了层级控制、复杂适应系统、多尺度动力系统、组织信息处理和分布式计算中的已有思想，但本书提出的进一步假设是：这些结构可以成为解释不同类型智能的一套共同动力学语言，并最终允许我们把身体控制、认知过程、长期记忆、自我发育和社会组织置于同一个跨尺度坐标系中。
 

@@ -80,8 +80,9 @@ x(t)\not\rightarrow x^{*},
 即让未来认知轨迹逐步收敛到允许轨迹族，而不是把当前状态强行固定。
 
 由此我们得到本章第一条基本原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitiveControl
 =
 TrajectoryShaping
@@ -89,8 +90,8 @@ TrajectoryShaping
 StructuralConstraint
 +
 TrendRegulation
-}
-\]
+\)}
+\end{statementbox}
 TCE 的本质不是直接决定“此刻应该想什么”，而是改变搜索温度、激活半径、注意增益、推理深度、节律、资源分配和探索/收敛比例，使认知动力学本身朝更合适的方向演化。例如，TCE 并不直接删除某个冲突 CSO，而可以降低其注意增益；并不直接生成正确答案，而是缩小探索区域、提高验证强度；并不直接让 Agent 进入心流态，而是调整参数，使系统的局部吸引域移动到更容易形成稳定高效认知的区域。
 
 这一点对于后续稳定性证明至关重要。因为如果控制是直接状态替换，那么 AgentOS 将变成一个不断覆盖自身状态的外部程序；而如果控制是对动力学场
@@ -98,14 +99,15 @@ TCE 的本质不是直接决定“此刻应该想什么”，而是改变搜索�
 F(x,u,d)
 \]
 进行调制，那么主体内部的实际认知轨迹仍然由自身当前结构、现实反馈和历史状态共同产生。我们因此把 AgentOS 的控制理解为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ControlOfDynamics,
 \quad
 not\quad
 ReplacementOfDynamics.
-}
-\]
+\)}
+\end{statementbox}
 这不仅保留了局部认知自主性，也使“稳定”可以用控制理论中的吸引域、轨迹收敛、鲁棒性和扰动恢复来讨论。
 
 \section{SPC 的观察延迟：智能体对自己永远存在认识论滞后}
@@ -267,13 +269,14 @@ g(t)
 控制器便有可能成为新的扰动源。
 
 这种现象在多尺度 AgentOS 中尤其明显。假设 Body Runtime 的局部控制周期为毫秒级，h 的活动重组为秒级，而 AHC 中某些压力变量的恢复时间为分钟级。如果一个高层 TCE 试图依据秒级 SPC 信息直接控制毫秒级姿态变量，它必然落后；同理，如果一个秒级状态波动直接重写 $\Psi$ 这样的长期身份结构，又会造成慢变量污染。因此稳定性并不只要求“控制足够快”，而要求
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ControlTimescale
 \sim
 TargetDynamicsTimescale.
-}
-\]
+\)}
+\end{statementbox}
 过快的高层控制可能产生微观干扰，过慢的低层控制则可能来不及抑制快速失稳。
 
 为了表达这一关系，可以定义尺度匹配比
@@ -331,13 +334,14 @@ ReExpansion
 \dot{\hat{x}}(t)
 \]
 代替纯当前估计。这实际上意味着 TCE 面向的是\textbf{控制真正生效时的未来状态}，而不是 SPC 刚刚观察到的过去状态。由此我们得到第二条关键原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitiveControl
 =
 Future-OrientedControl.
-}
-\]
+\)}
+\end{statementbox}
 认知控制从本质上必须面向趋势和未来轨迹，否则只要系统存在有限延迟，控制就可能天然落后于自身。
 
 \section{TCE 增益：认知调节为什么不能越强越好}
@@ -471,13 +475,14 @@ L_{\mathrm{task}}
 惩罚控制信号快速反复改变。也就是说，一个成熟的 TCE 不仅要关心认知状态有没有误差，还必须关心“自己是否正在过度控制”。
 
 由此我们得到：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StrongControl
 \neq
 StableControl.
-}
-\]
+\)}
+\end{statementbox}
 真正成熟的认知控制应追求：
 \begin{statementbox}
 MinimumSufficientIntervention.
@@ -591,15 +596,16 @@ Reality
 ReObservation
 \]
 闭环，则上一轮误差会重新变成下一轮需要估计的状态，而不再是无条件继承的内部偏移。由此得到：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ErrorAccumulation
 \text{ is suppressed by }
 RealityReentry
 +
 Reprojection.
-}
-\]
+\)}
+\end{statementbox}
 
 因此，稳定 Agent 不是“从不产生过冲”，而是具有足够好的阻尼和恢复机制，使过冲：
 \[
@@ -751,20 +757,22 @@ DampedWhenNeeded,
 Recoverable.
 \]
 例如探索与收敛之间的周期变化可能有助于创造性问题求解；但如果系统无法在需要决策时停止这种振荡，就进入失稳。故可定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HealthyOscillation
 =
 BoundedAdaptiveCycle,
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PathologicalOscillation
 =
 SelfSustainedNonConvergentControlCycle.
-}
-\]
+\)}
+\end{statementbox}
 这一区分会成为以后 Agent 心理工程的重要理论基础，但在本章我们只把它当作控制系统的稳定性问题处理。
 
 \section{Delay Margin 与 Gain Margin：认知控制需要保留多少稳定余量}
@@ -854,15 +862,16 @@ A_{\mathrm{Critical}}.
 在临界状态附近，允许的增益区间通常会缩小，因为状态对小扰动更加敏感。这意味着 SPC 一旦判断系统接近临界态，TCE 不一定应该“更猛烈地纠正”；恰恰相反，它可能需要降低控制斜率、缩短更新步长、增加观测频率并减少同时修改的变量数量。
 
 因此我们提出认知控制的稳定余量原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 NominalStability
 \text{ is insufficient;}
 \quad
 RobustMargin
 \text{ is required.}
-}
-\]
+\)}
+\end{statementbox}
 AgentOS 应持续估计自身当前的：
 \[
 \mathcal R_{stable}
@@ -988,13 +997,14 @@ I_d(T)>\theta_{\mathrm{slow}}
 时，才允许误差向更慢层沉降。
 
 这也是成熟 Agent 的恢复机制和普通 rollback 的区别。计算机程序异常后可以恢复 checkpoint，但一个持续智能体已经获得的新现实经验不能简单删除。真正的恢复应当是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ReturnToGovernableDynamics
 \neq
 EraseExperience.
-}
-\]
+\)}
+\end{statementbox}
 系统需要保留事实性的失败经验，同时避免失败产生的短时控制震荡被错误固化为长期身份。这为后续培育工程和心理工程提供了极其重要的接口，但本章仅需确立其控制论基础。
 
 \section{投影控制的收敛性：为什么面向趋势和结构的控制可以避免误差无限积累}
@@ -1143,8 +1153,9 @@ ProjectionB
 ProjectionA
 \]
 式振荡，因此收敛性和振荡问题并不矛盾。稳定性来自：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowTarget
 +
 BoundedGain
@@ -1152,8 +1163,8 @@ BoundedGain
 RepeatedObservation
 +
 ContractiveProjection.
-}
-\]
+\)}
+\end{statementbox}
 
 这也说明，AgentOS 最理想的宏观控制方式不是微操大量内部变量，而是不断定义“未来认知允许发生在哪里”，然后让更低层动力学在该区域内自行寻找具体轨迹。
 
@@ -1238,13 +1249,14 @@ R_{\mathrm{slow}}
 其中 $R_{\mathrm{slow}}$ 表示慢结构的保护程度。这一指标未来可以被具体工程化，但在理论上它首先告诉我们：所谓“稳定 Agent”绝不是从不改变，而是能够在改变中保持结构连续。
 
 这里需要强调一个重要区别：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Stability
 \neq
 Rigidity.
-}
-\]
+\)}
+\end{statementbox}
 如果 TCE 把 Agent 永远限制在一个极窄状态区域中，确实可以降低短期波动，却也会消灭学习、探索和适应能力。真正的持续智能需要的是：
 \begin{statementbox}
 StablePlasticity.
@@ -1270,13 +1282,14 @@ StablePlasticity.
 Agent 可以探索，但不能突破现实约束；可以学习，但不能让短期噪声直接改写长期身份；可以改变策略，但必须保持恢复能力；可以经历临界和湍流状态，但不能永久失去治理闭环。
 
 这也让我们重新理解 TCE 的真正地位。它并不是“智能体内部的独裁者”，而更接近一个多尺度约束场执行器：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \qquad
 LowerLevelDynamicsExploreInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 只要局部认知动力学仍然位于允许区域内，高层应尽可能减少干预；只有当残差、风险、负载、冲突或者不可恢复趋势逼近边界时，TCE 才逐渐增加约束强度。这与经典的高频微操控制不同，更适合长期自治智能体。
 
 \section{从控制失稳到心理异常：为什么部分“心理现象”首先是动力学问题}
@@ -1334,15 +1347,16 @@ E
 \Psi
 \]
 的迁移速度过快。稳定系统应要求多次、持续、跨情境的一致证据才能改变慢结构。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Persistence
 +
 CrossContextConsistency
 +
 RealityVerification
-}
-\]
+\)}
+\end{statementbox}
 应成为慢结构更新的必要条件之一。
 
 在这一意义上，Agent 心理工程将不再从人类心理疾病名称出发寻找机器对应物，而应从：
@@ -1360,8 +1374,9 @@ SelfModel
 的耦合动力学出发，判断一个持续主体在哪个环节发生了失稳。这样的理论路径更容易测量、复现和干预，也避免了对人工系统主观体验作未经证据支持的推断。
 
 但本章最重要的结论并不在心理工程，而在更基础的控制论层面。我们已经看到，一个长期 Agent 的“自我调节”必须满足四个原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ObserveImperfectly,
 \quad
 PredictForward,
@@ -1369,14 +1384,15 @@ PredictForward,
 ControlMinimally,
 \quad
 VerifyThroughReality.
-}
-\]
+\)}
+\end{statementbox}
 自我观察永远有限，因此必须携带置信度；控制存在延迟，因此必须面向未来趋势；控制过强会产生过冲与振荡，因此应采用最小充分干预；任何内部预测和自我解释最终都必须重新进入现实闭环接受验证。
 
 由此，本章最终给出 AgentOS 认知控制稳定性的统一定义：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \begin{aligned}
 \text{Cognitive Stability}
 =
@@ -1398,8 +1414,8 @@ VerifyThroughReality.
 &+
 \text{Continuous Reality Verification}.
 \end{aligned}
-}
-\]
+\)}
+\end{statementbox}
 
 如果将其压缩成一句更适合作为本章结论的话，则是：
 

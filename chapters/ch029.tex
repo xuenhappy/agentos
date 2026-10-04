@@ -328,13 +328,14 @@ C_{\mathrm{run}}\uparrow
 超过这一点以后，系统仍可能继续输出语言、执行动作甚至保持局部流畅，但已经不再可靠地维持全局结构一致性。
 
 这一区分对于研究大模型 Agent 尤其重要。生成过程局部流畅并不是相干性的充分证据。一个系统可以在语言层面继续产生语法正确的句子，同时忘记二十步之前的任务约束；可以逐步完成每一个局部子任务，却最终得到与最初目标不一致的整体结果。换言之，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LocalFluency
 \neq
 GlobalCognitiveCoherence.
-}
-\]
+\)}
+\end{statementbox}
 
 因此，本章后面所谓“工作记忆容量”应始终理解为：在一定时间窗口内，使工作认知图保持 $\Gamma_h\geq\Gamma_{\min}$ 所允许的最大有效结构负载。这个定义比“能够放多少内容”严格得多，也更适合作为 AgentOS 的设计基础。
 
@@ -871,13 +872,14 @@ LocalSkill
 Action.
 \]
 只有出现异常残差时，相关结构才重新进入显式工作面。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ThinkingLess
 \neq
 KnowingLess.
-}
-\]
+\)}
+\end{statementbox}
 
 第四是\textbf{外部化}。当内部显式结构不能无限增长时，智能体会把稳定结构写入语言、文字、程序、工具和环境。这也是为什么人类文明的高级认知能力并不只存在于单个大脑内部。数学符号、纸张、计算机、数据库和制度，本质上都在改变未来认知需要显式维持的结构量。
 

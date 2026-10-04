@@ -72,17 +72,19 @@ Reality
 Observation
 \]
 重新进入系统。因此我们坚持
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ActionIssued\neq ActionSucceeded
-}
-\]
+\)}
+\end{statementbox}
 以及
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearnedDynamics\neq RealityAuthority.
-}
-\]
+\)}
+\end{statementbox}
 
 这意味着，$L_0$ 不是一个普通的 I/O 层。它实际上承担着整个 AgentOS 的\textbf{现实裁决权}。越往高层，系统拥有越大的抽象能力、未来生成能力与自我解释能力，但任何高层结构最终都不能取消 $L_0$ 的外部验证。$\Theta$ 可以建立世界模型，$\Psi$ 可以形成身份解释，$\Omega$ 可以提供生命周期方向，然而现实仍然保有对这些结构进行反证的权力。
 
@@ -250,11 +252,12 @@ ControlOfCognitiveProcess
 h(t),
 \]
 但经过整个理论发展，我们已经不再把 $h$ 理解成一个简单短时缓存，而把它定义为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h=\text{Sparse Explicit Cross-Scale Surface}.
-}
-\]
+\)}
+\end{statementbox}
 
 这句话具有两个关键含义。第一，$h$ 是稀疏的。绝大部分低层身体控制、长期生成结构、情景存储和慢变量不需要持续进入工作记忆。第二，$h$ 是跨尺度的。来自世界、Body、E、$\Theta$、$\Psi$、Goal、Tool 的结构，只有在当前需要显式协调时，才被暂时提升到这一表面。
 
@@ -349,17 +352,19 @@ h\rightarrow ExternalMemory.
 一个成熟 Agent 不应该把所有低层状态、所有记忆和所有熟练技能长期放入 $h$。相反，只有新颖、冲突、重大、不确定或者需要跨功能协调的结构才值得进入。
 
 我们也应看到 $L_1$ 与 $L_2$ 的明确区别。$L_2$ 中的 Agent-CSO 是认知内容；$L_1$ 则观察和调节这些内容的运行状态。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 L_2=\text{WhatIsBeingExplicitlyThought},
-}
-\]
+\)}
+\end{statementbox}
 而
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 L_1=\text{HowExplicitThoughtIsBeingManaged}.
-}
-\]
+\)}
+\end{statementbox}
 
 这一区别非常重要，因为如果把二者混合，就会导致 ``认知内容'' 与 ``认知控制变量'' 相互污染。TCE 的 temperature 不应该变成 h 中一个必须持续思考的文本变量；同样，一个当前任务目标也不应该被错误地当成控制器增益。
 
@@ -370,13 +375,14 @@ L_1=\text{HowExplicitThoughtIsBeingManaged}.
 $L_3$ 是整个 AgentOS 从 ``即时认知系统'' 变成 ``具有历史和持续学习能力的主体'' 的关键层。在这一层，我们不再只研究此刻正在思考什么，而开始研究：\textbf{当前状态怎样成为经历，经历怎样形成结构，而结构又怎样重新改变当前状态。}
 
 三相记忆的最简定义为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h=State,\qquad
 E=Trajectory,\qquad
 \Theta=Generator.
-}
-\]
+\)}
+\end{statementbox}
 
 这里的 $h$ 已经在 $L_2$ 中作为工作记忆展开；在 $L_3$ 中，它被重新理解成三相循环的 ``现在切面''。$E$ 是从当前向过去延伸的情景轨迹结构，而 $\Theta$ 是跨多次经验逐渐稳定下来的生成结构。我们因此得到：
 \[
@@ -755,17 +761,19 @@ D_{\max}(t)
 \]
 
 其中：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Psi:\ WhoAmI
-}
-\]
+\)}
+\end{statementbox}
 表示较稳定的自我、身份、价值关系和长期一致性结构；而
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Omega:\ WhatAmIBecoming
-}
-\]
+\)}
+\end{statementbox}
 表示更慢的生命周期生成吸引子，即某些未来发展方向在长期经验积累后逐渐形成的生成偏置。
 
 于是 $L_6$ 可以抽象成：
@@ -853,11 +861,12 @@ Goal,
 意味着不同事件由于和身份关系不同，会具有不同情景写入权重。
 
 这体现了我们反复强调的：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance\neq FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 慢变量的作用不是每毫秒告诉低层应该怎样动作，而是规定更宽的结构中心、约束、增益和可行区域。下层在这个区域内部仍然拥有局部自治。
 
 与此同时，快层也能够反向改变慢层，但必须满足 ``持续残差'' 和 ``长期证据'' 条件。例如：
@@ -921,13 +930,14 @@ C@ExternalTool.
 此后 Agent 只需要保留索引、调用条件、接口模型和验证机制，而无需重新承担全部内部推理负荷。
 
 环境也是同样的结构。一个机器人第一次穿过复杂空间可能需要持续地图推理；如果它通过标记、整理、建设道路或改变场景，使未来行动更加简单，那么：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EnvironmentModification
 =
 FutureCognitiveLoadModification.
-}
-\]
+\)}
+\end{statementbox}
 这就是环境作为外部记忆和外部结构的意义。
 
 Other Agent 则产生社会性外化：
@@ -968,13 +978,14 @@ L_6
 是 Agent 内部最慢认知约束层；Organization 与 Civilization 则属于横向扩展后形成的更高系统尺度。两者可能在时间尺度上同样很慢，但属于不同的分类坐标。
 
 因此，完整 AgentOS 不是一座完全封闭的七层塔，而更像：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 VerticalMultiscaleLoops
 \bowtie
 HorizontalCarrierNetwork.
-}
-\]
+\)}
+\end{statementbox}
 纵向解决 ``同一主体内部结构以什么速度变化''，横向解决 ``认知结构由什么载体承担''。二者交叉以后，才真正得到具身、工具化、社会化的持续智能。
 
 \section{跨层耦合——自顶向下约束、自底向上残差与相邻尺度原则}
@@ -1004,13 +1015,14 @@ u_k;
 例如 $\Psi$ 不应该逐 token 指挥 h，而是改变哪些 Goal 更容易被接受；$\Theta$ 不应该每毫秒覆盖 Body，而是提供结构预测和技能；Goal 不直接控制 motor，而形成 Process 和 Control Reference。
 
 这一原则可以概括为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \quad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 
 相反，自底向上的传播主要由异常、残差、风险和持续失配驱动。定义某层局部残差：
 \[
@@ -1046,12 +1058,13 @@ GoalRelevance_k
 则相关 Agent-CSO 被提升到更高层显式处理。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityDoesNotContinuouslyBecomeThought;
 RelevantDeviationBecomesThought.
-}
-\]
+\)}
+\end{statementbox}
 
 这一原则对于解决 h 的有限容量尤其关键。如果所有低层传感变化持续上浮，工作记忆必然被淹没；如果任何异常都不上浮，系统又无法处理新情况。AgentOS 因此采用 ``正常动态局部闭合，重要残差逐层升级'' 的结构：
 \begin{statementbox}
@@ -1092,15 +1105,16 @@ L_0.
 这与 averaging theory 和 singular perturbation 中的时标分离思想高度一致，但在 AgentOS 中被赋予认知意义：短期波动不定义人格，一次失败不重写世界观，一个突发工具错误不应改变生命周期方向。
 
 因此，多层 AgentOS 并不是一个中央控制器对所有尺度实施强管控，而是一种：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DistributedLocalClosure
 +
 HierarchicalConstraint
 +
 ResidualDrivenEscalation.
-}
-\]
+\)}
+\end{statementbox}
 也正是在这种结构中，我们才能同时获得局部效率、全局一致性以及长期可塑性。
 
 \section{统一动力学——从七个闭环到一个持续智能系统}
@@ -1321,8 +1335,9 @@ Organization,
 共同构成横向承载网络。
 
 所以完整表达应是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS
 =
 VerticalMultiscaleLoops
@@ -1330,8 +1345,8 @@ VerticalMultiscaleLoops
 HorizontalCarrierNetwork
 \bowtie
 Reality.
-}
-\]
+\)}
+\end{statementbox}
 
 我们尤其应注意四条贯穿所有层级的动力学原则。
 
@@ -1342,11 +1357,12 @@ EachScaleShouldCloseItsOwnFastLoop.
 能够在局部解决的问题，不应持续提升到高层。
 
 第二：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowConstraint\neq FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 慢变量决定方向、先验和边界，而不直接替代低层执行。
 
 第三：

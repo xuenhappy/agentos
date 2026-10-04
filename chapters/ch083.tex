@@ -49,8 +49,9 @@ Task\rightarrow Result,
 也就是说，每一次任务都有可能改变未来的主体。
 
 这使 AgentOS 从传统软件栈中的 ``任务工具箱'' 转变为一个管理持续智能状态演化的 Runtime。它关心的不是某次 API 调用是否成功，而是一次成功或失败如何写入 $E$，是否需要改变 $\Theta$，是否影响 $\Psi$，是否使某个技能成熟，是否改变未来 Boundary 策略，以及是否需要调整 Agent 可获得的权限和自治水平。于是，AgentOS 的核心操作对象不再只是文件、线程和进程，而逐渐扩展为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Goal,\;
 AgentCSO,\;
 Memory,\;
@@ -59,8 +60,9 @@ Body,\;
 Tool,\;
 Authority,\;
 Lifecycle
-}.
-\]
+.
+\)}
+\end{statementbox}
 
 这里必须特别强调：把 AgentOS 称为 ``OS'' 并不意味着它应该重新实现 Linux 内核。相反，我们一直坚持
 \begin{statementbox}
@@ -72,17 +74,19 @@ ComputerOS
 AgentOS\)}
 \end{statementbox}
 这一分层结构。Linux 负责计算现实的稳定抽象，例如进程、虚拟内存、设备、文件和网络；AgentOS 则建立在这些抽象之上，把它们重新组织成对长期智能体有意义的认知资源。因此，可以作如下功能区分：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ComputerOS=\text{Compute Resource Runtime}
-}
-\]
+\)}
+\end{statementbox}
 以及
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS=\text{Intelligence Resource Runtime}.
-}
-\]
+\)}
+\end{statementbox}
 
 前者回答的是 ``计算资源如何安全、高效地分配''，后者回答的是 ``有限认知能力应该在生命周期中如何分配、沉降、外化和恢复''。这一转换构成 AgentOS 从产品走向基础设施的第一步：只有当管理对象从应用调用上升为持续智能资源时，系统才具有形成独立基础设施层的理论必要性。
 
@@ -113,8 +117,9 @@ h,\quad E,\quad \Theta,\quad \Psi,\quad \Omega
 其中 $R_i$ 是具体表示方式，$F_i$ 是当前功能承载，$\tau_i$ 是有效时间尺度，$B_i$ 是内部或外部边界位置，$S_i$ 表示激活状态。学习的许多过程都可以被理解为 $\chi_i$ 的变化，而 AgentOS 的责任就是确保这种变化不会破坏主体连续性。
 
 第三类资源是技能。Skill 不应被理解为任意一个外部函数。我们此前将成熟技能定义为一种经过重复认知而逐渐沉降形成的局部闭环：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodySkill
 =
 LocalPredictor
@@ -122,8 +127,8 @@ LocalPredictor
 LocalController
 +
 ResidualModel.
-}
-\]
+\)}
+\end{statementbox}
 对于数字 Agent，这个 ``BodySkill'' 可以表现为稳定脚本、浏览器操作程序、工具组合或者局部 policy。对于具身 Agent，它可能是移动、抓取、操作设备等身体闭环。Skill 因而是一种被编译后的认知资本：它减少未来相同问题再次占用 $h$ 的必要性。于是可以定义技能资本
 \[
 K_A(t)=\{k_1,k_2,\ldots,k_n\},
@@ -131,13 +136,14 @@ K_A(t)=\{k_1,k_2,\ldots,k_n\},
 并用执行成本、成功率、残差分布、适用条件和权限边界描述每个技能。
 
 第四类资源是身体能力。Body 并不是外围设备，而是主体可观察和可控制现实的有效边界：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body
 =
 ControlledAndSensedCarrierOfAgency.
-}
-\]
+\)}
+\end{statementbox}
 因此，AgentOS 还必须维护某种能力集合
 \[
 \mathcal C_B(t)
@@ -237,13 +243,14 @@ m_j^{ext}
 其中 $\mu$ 表示 Agent-CSO 到不同记忆载体之间的配置映射，$C_h$ 是持续占用工作记忆的代价，$C_{\mathrm{retrieval}}$ 是未来检索代价，$C_{\mathrm{modification}}$ 是修改成本，$L_{\mathrm{loss}}$ 则是结构丢失或失真的风险。不同类型的结构应该选择不同的载体。例如短期未决结构应停留在 $h$ 或近期 $E$；重复经验可能形成 $\Theta$；稳定操作过程可能沉降成 Skill；高精度事实资料更适合数据库或文件；需要世界直接参与维持的状态则可能通过环境结构保存。
 
 这使认知卸载得到更严格的含义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Offloading
 =
 AgentCSOCarrierMigration
-}
-\]
+\)}
+\end{statementbox}
 而不是简单地 ``把内容写出 Context''。有效卸载必须保证：
 \[
 Recoverability>0,\qquad
@@ -301,11 +308,12 @@ Authority_i
 其中 $Pre_i$ 描述可执行前提，$Cap_i$ 是能力语义，$Policy_i$ 是内部实现，$Post_i$ 是预期后验状态，$Residual_i$ 描述执行偏差，$Risk_i$ 是风险模型，$Authority_i$ 则确定调用权限。只有这样，Skill 才可以安全进入 AgentOS 的认知调度体系。
 
 这里需要特别区分 ``调用 Skill'' 与 ``相信 Skill''。一个 Skill 即使长期稳定，也不能拥有对现实状态的最终解释权。仍然必须遵守
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ActionIssued\neq ActionSucceeded
-}
-\]
+\)}
+\end{statementbox}
 以及
 \begin{statementbox}
 RealityIsUltimateConstraint.
@@ -354,18 +362,20 @@ SharedExecutableCapability.\)}
 \section{Body Ecosystem：让同一个主体进入不同现实}
 
 如果 Memory Ecosystem 扩展了 Agent 的时间边界，Skill Ecosystem 扩展了能力边界，那么 Body Ecosystem 扩展的则是主体的现实边界。Body 在我们的理论中从来不等于机械身体，而被定义为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body
 =
 ControlledAndSensedCarrierOfAgency.
-}
-\]
+\)}
+\end{statementbox}
 因此，浏览器、桌面操作系统、Shell、文件系统、机器人、汽车和人形身体都可以成为不同形式的 Body。真正重要的问题不是它们物理形态是否一致，而是 Agent 能否通过稳定接口获得感知、功能影响、预测和控制能力。
 
 Body Scale 理论已经给出一个重要判断：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodyScale
 =
 PerceptualTransfer
@@ -375,8 +385,8 @@ FeelingTransfer
 PredictiveTransfer
 +
 ControlTransfer.
-}
-\]
+\)}
+\end{statementbox}
 一个 Agent 是否具有大 Body Scale，不取决于它控制的机器有多大，而取决于同一个认知 Kernel 在切换身体以后，可以保留多少既有意义、世界模型、技能与控制结构。理想状态不是每换一个 Body 就重新训练一个完整智能体，而是
 \[
 KnownMeaning
@@ -387,15 +397,16 @@ NewEmbodiment.
 \]
 
 为实现这一点，我们把 Body Runtime 设计成相对独立的高频运行层：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentSystem
 =
 AgentKernel
 \bowtie
 BodyRuntime.
-}
-\]
+\)}
+\end{statementbox}
 Kernel 决定 ``做什么''，Body Runtime 负责 ``这个身体怎样做到''。两者之间通过 FBI、SGC、FCS、ControlReference、PredictiveEnvelope、BPCCFeedback 和 Safety 等稳定语义接口交互。由此，Body Ecosystem 的核心不再是统一机器人硬件，而是统一 ``主体如何理解一个身体''。
 
 SGC 在这里提供可行动现实的语义结构：
@@ -734,15 +745,16 @@ PersistentAgentLifecycle
 任何希望成为基础设施的系统，最终都会遇到一个比技术架构更困难的问题：谁定义接口，谁控制接入，谁拥有主体身份，以及谁可以修改未来生态。AgentOS 如果只是单个公司的封闭产品，可以通过私有 API 快速迭代；但如果它希望承载长期 Agent、身体、Skill、Memory 与组织协作，就必须让关键语义接口具备跨实现稳定性。否则，每个 Agent 的生命周期将被锁定在某个具体模型、某个 Body、某个云厂商或者某个数据格式中，这与 ``持续主体'' 的目标直接冲突。
 
 因此，我们此前提出的基本路线可以概括为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 OpenSpecification
 +
 ReferenceOpenSource
 +
 CommercialHighPerformanceImplementation.
-}
-\]
+\)}
+\end{statementbox}
 三者并不矛盾。开放 Specification 保证语义中立；Reference Implementation 使标准可以被实际验证；商业实现则允许在性能、规模、安全、硬件集成和服务质量上竞争。基础设施最不应该形成垄断的位置，恰恰是那些定义 Agent ``如何存在'' 的核心 ABI。
 
 这些核心标准至少包括
@@ -766,23 +778,25 @@ SafetyGovernance.
 其中 SGC/FCS 解决 ``现实如何进入主体''；Body ABI 解决不同身体如何接入；BPCC ABI 解决局部控制如何向上暴露状态；Skill 和 Capability Descriptor 解决能力如何描述与迁移；Agent Communication 解决主体之间如何建立可信协作；Safety Governance 则定义哪些底线不能由普通认知覆盖。
 
 在这里，标准化最重要的原则不是要求所有内部 representation 相同，而是坚持
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalAlignment
 >
 RepresentationAlignment.
-}
-\]
+\)}
+\end{statementbox}
 不同模型、不同机器人和不同厂商完全可以拥有私有 latent、私有控制算法和私有 Memory 实现，只要它们能够在公共语义边界上满足可验证契约。KRA 的存在正是为了允许这一点：稳定的是关系和功能，不是内部参数。
 
 同时，AgentOS 基础设施还应尽量采用低平台租金原则。所谓 ``平台租金'' 不只是商业抽成，还包括语义控制权。如果一个中心平台可以任意改变 Agent 的 Memory、Skill、Body 或 Communication 接口，则它实际上拥有改变大量 Agent 生命周期结构的权力。因此，基础 ABI 越接近 Agent 身份、长期记忆和现实控制，就越应该保持稳定、中立和可迁移。
 
 这也解释了为什么长期壁垒不应主要建立在 ``封闭接口'' 上。真正可持续的竞争优势更可能来自
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Trust+Ecosystem+Execution+Scale.
-}
-\]
+\)}
+\end{statementbox}
 Trust 表示用户和开发者相信该 Runtime 不会任意破坏主体连续性；Ecosystem 表示拥有大量兼容 Skill、Body、Memory 和组织服务；Execution 表示实际工程性能与安全；Scale 则表示大规模运行、跨设备同步和硬件支持。标准可以开放，而优秀实现仍然具有巨大的工程价值。
 
 从治理层面看，还必须明确：AgentOS 基础设施不应获得无边界的主体修改权。特别是 $\Psi$、$\Omega$、Authority、Safety Boundary 和关键 Memory 都需要不同等级的修改权限。基础设施层可以提供机制，但不能默认拥有所有语义主权。可以形式化为
@@ -794,13 +808,14 @@ ModificationAuthority(x)
 其中不同状态变量 $x$ 具有不同授权集合 $\mathcal P_x$。例如普通 Skill 安装与身份核心修改显然不能属于同一权限等级。
 
 因此，AgentOS 作为基础设施的成熟标志并不是 ``控制一切''，而恰恰是能够明确哪些东西不能由自己单方面控制。真正长期稳定的智能生态必须满足：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InfrastructurePower
 \quad\text{is bounded by}\quad
 SemanticGovernance.
-}
-\]
+\)}
+\end{statementbox}
 只有这样，AgentOS 才可能从一个高性能产品成长为能够被整个软件和机器人生态共同依赖的公共技术层。
 
 \section{Intelligence Resource Runtime：AgentOS 的最终基础设施定位}
@@ -918,17 +933,19 @@ IntelligenceInfrastructure.\)}
 这不是一个必然的商业时间表，而是一条由理论依赖决定的系统演化链。只有在持续主体、记忆、技能、身体和安全边界已经建立后，生态才具有稳定语义；只有在稳定语义存在以后，跨 Agent 协作和组织结构才不会退化成临时工作流；只有这些能力都能在开放标准上运行，AgentOS 才真正具有基础设施属性。
 
 最后，我们可以把本章的结论压缩成三个层次。第一，传统 Computer OS 管理的是计算世界中的稀缺资源：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CPU,\ Memory,\ Device,\ Storage,\ Network.
-}
-\]
+\)}
+\end{statementbox}
 第二，AgentOS 管理的是持续主体内部和边界上的智能资源：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Attention,\ Memory,\ Skill,\ Body,\ Tool,\ Authority,\ CognitiveStructure.
-}
-\]
+\)}
+\end{statementbox}
 第三，当这些资源可以跨应用、跨设备、跨 Agent 和跨生命周期稳定迁移时，AgentOS 才从一个具体产品变成
 \begin{statementbox}
 InfrastructureForPersistentIntelligence.

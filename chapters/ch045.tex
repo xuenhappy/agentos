@@ -366,13 +366,14 @@ E.
 这与本书此前形成的 Goal--Process--Action--Verify--Closure 闭环一致。失败的 Goal 同样有价值，因为失败结构可以进入 E，并进一步影响 \(\Theta\) 对可行性的估计。撤销不是遗忘，而是把“为什么不继续”变成可被未来使用的经验。
 
 我们由此得到一条重要原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalGovernance
 =
 CommitmentManagement
-}
-\]
+\)}
+\end{statementbox}
 目标治理并不是替 Agent 决定每一个动作，而是治理哪些未来状态值得被提升成系统级承诺。它正是连续可能性空间和离散行为组织之间的桥梁。
 
 \section{Skill 编译：从连续熟练化到离散结构提交}
@@ -450,8 +451,9 @@ N_{\mathrm{validation}}>N_{\min}.
 \mathrm{Fallback}.
 \]
 成熟 Skill 不只是动作序列，而是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Skill
 =
 LocalPredictor
@@ -459,16 +461,17 @@ LocalPredictor
 LocalController
 +
 ResidualModel.
-}
-\]
+\)}
+\end{statementbox}
 也就是说，它必须知道在什么条件下执行、期望发生什么以及什么时候自己已经失效。
 
 Skill 编译还揭示了一个更深的认知原则：成熟不是让智能体拥有越来越多显式思考，而是让越来越多稳定结构退出 h 的长期占用。由此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ThinkingLess\neq KnowingLess.
-}
-\]
+\)}
+\end{statementbox}
 很多情况下，
 \begin{statementbox}
 StructureChangedCarrier.
@@ -484,13 +487,14 @@ StructureChangedCarrier.
 \section{权限调整：能力增长不等于控制权自动增长}
 
 如果一个 Agent 能够长期学习，那么迟早会出现能力增长。能力增长之后是否自动获得更多权限，是持续智能系统必须明确回答的治理问题。我们的立场是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CapabilityGrowth
 \neq
 AuthorityGrowth.
-}
-\]
+\)}
+\end{statementbox}
 能力属于“系统能够做到什么”，权限则属于“系统被允许做到什么”。两者如果被绑定成同一个连续变量，就会产生严重结构风险：任何通过经验提高能力的局部模块，都可能自动扩大自己对环境、工具、记忆甚至自身结构的修改范围。
 
 因此定义能力状态
@@ -552,13 +556,14 @@ Autonomy.\)}
 \mathcal U(a).
 \]
 因此权限控制不需要不断告诉 Agent 应采取哪一步行动，而是通过收缩或扩张 \(\mathcal U\) 管理自治边界。这同样体现了：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \qquad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 
 权限还具有明显时间尺度要求。普通状态和技能可以较快适应，而高权限状态应比能力估计更慢。设
 \[
@@ -619,15 +624,16 @@ O_{t:t+\Delta}
 即系统能够依赖 Checkpoint 与新的现实观测重新进入与原先主体连续的可接受状态。
 
 这个恢复充分集通常至少包括：关键 E 增量、\(\Theta\) 版本、自我 \(\Psi\)、DGA/\(\Omega\)、有效 Goal、权限状态、重要 Skill 版本、外部资源索引以及未闭合任务的因果摘要。与普通数据库 snapshot 不同，这里的目标不是逐字节恢复，而是恢复：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 IdentityContinuity
 +
 CausalContinuity
 +
 GovernanceContinuity.
-}
-\]
+\)}
+\end{statementbox}
 一个 Agent 即使恢复后工作记忆内容略有不同，只要它记得重要经历、保持相同身份结构、理解中断原因、继承合法目标和权限，就可能保持更强的主体连续性；反过来，即便 RAM 被完美复制，但外部世界已发生巨大变化，Agent 仍然必须经过 Reality Re-entry 才能继续运行。
 
 Checkpoint 本身是典型离散治理事件：
@@ -653,13 +659,14 @@ T_{\mathrm{elapsed}}
 时建立新 Checkpoint。
 
 Checkpoint 还必须与现实世界状态区分。我们不能认为恢复旧 Checkpoint 就意味着“世界也恢复到过去”。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentRollback
 \neq
 WorldRollback.
-}
-\]
+\)}
+\end{statementbox}
 重启后必须首先执行现实重新校准：
 \[
 Checkpoint
@@ -722,13 +729,14 @@ q_{\mathrm{safety}}.
 CognitiveDependency.\)}
 \end{statementbox}
 也就是说，紧急制动、执行器限幅、资源断开、工具撤销等安全动作不需要等待高层主体“理解完发生了什么”。其控制权限应满足：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SafetyAuthority
 >
 OrdinaryCognitiveAuthority.
-}
-\]
+\)}
+\end{statementbox}
 这并不是剥夺 Agent 的主体性，而是承认不同时间尺度的控制必须在相应层级闭合。
 
 然而安全中断也不能被理解成永久凌驾于全部认知之上的黑盒。紧急动作之后，事件必须重新上浮到 Agent：
@@ -874,15 +882,16 @@ R_e(X^-,q^-).
 \Gamma_{\mathrm{logical}},
 \]
 它由权限、Goal、Safety、Checkpoint 和内部治理规则决定。真正允许 Agent 走过的轨迹必须满足：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Gamma_{\mathrm{feasible}}
 =
 \Gamma_{\mathrm{physical}}
 \cap
 \Gamma_{\mathrm{logical}}.
-}
-\]
+\)}
+\end{statementbox}
 这个公式非常重要，因为它揭示了 AgentOS 治理的本质：软件规则无法让现实不允许的轨迹变得可能，而物理上可行的行为也不等于 Agent 在制度上有权执行。
 
 进一步，我们还可以定义价值或任务损失：

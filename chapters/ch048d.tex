@@ -62,19 +62,21 @@ E_t,
 \end{equation}
 
 定义 AgentOS 学习为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Learning
 =
 ExperienceDrivenChangeOfFutureStateTransition
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 即：凡是经验驱动并能够持续改变未来状态转移规律的结构变化，都属于学习。
 
 由此，AgentOS 学习问题可以重写为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Experience
 \rightarrow
 CreditAssignment
@@ -82,15 +84,16 @@ CreditAssignment
 PlasticityAllocation
 \rightarrow
 StructureChange
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 学习调度的核心任务因此变为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{决定现实反馈应该获得改变 Agent 哪一部分结构的权力。}
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 \begin{figure}[htbp]
 \centering
@@ -173,13 +176,14 @@ E,
 \end{equation}
 
 更准确地说：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal{H}_L
 =
 \text{Hierarchical Multi-timescale Plasticity Hypergraph}
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 其几何直觉为多层金字塔，但其拓扑结构允许：
 
@@ -263,13 +267,14 @@ s_t^{cons}
 \end{equation}
 
 重要的是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningSignal
 \neq
 LearningTarget
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 同一个误差信号可以被分配给不同结构，而同一个结构也可以同时接收多种学习信号。
 
@@ -306,13 +311,14 @@ c_n(t)
 \end{equation}
 
 因此学习调度的本体可以定义为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningScheduling
 =
 CreditRoutingOnPlasticityHypergraph
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 若采用归一化信用表示，则可以令：
 \begin{equation}
@@ -380,36 +386,39 @@ c_i,
 \section{三层学习结构}
 
 AgentOS 的全部学习过程可以压缩为三个功能层级：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningScheduling
 \rightarrow
 LearningControl
 \rightarrow
 LearningAdaptation
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 三层分别对应：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CreditRouting
 \rightarrow
 CreditTransformation
 \rightarrow
 CreditRealization
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{第一层：学习调度}
 
 学习调度解决：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{谁获得学习信用？}
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 定义调度器：
 \begin{equation}
@@ -455,11 +464,12 @@ g_i\approx0
 \section{第二层：学习控制}
 
 Learning Control 解决：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{获得信用以后应该怎样学习？}
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 定义：
 \begin{equation}
@@ -583,20 +593,22 @@ Learning Adaptation 执行真正的结构变化：
 结构重组更新。
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SupervisedLearning,
 SelfSupervisedLearning,
 ReinforcementLearning
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 在 AgentOS 中不再是顶层学习结构，而是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningAdaptationOperators.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{三相记忆是最基本的信用沉降路径}
@@ -610,15 +622,16 @@ E
 \Theta,
 \end{equation}
 可以重新解释为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InstantError
 \rightarrow
 EpisodeCredit
 \rightarrow
 StructuralCredit.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 当前预测残差：
 \begin{equation}
@@ -744,13 +757,14 @@ e_i^L(t)
 其中 $\delta_t$ 为当前价值残差或长期结果误差。
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EligibilityTrace
 =
 TemporalBridgeForDelayedCredit
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 它允许过去的：
 
@@ -854,8 +868,9 @@ E
 \end{equation}
 
 跨时间尺度传播：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InstantResidual
 \rightarrow
 EpisodeCredit
@@ -863,15 +878,16 @@ EpisodeCredit
 StructuralCredit
 \rightarrow
 SelfCredit.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 因此 Learning Scheduler 不是一个单层分类器，而是一个：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Multi-scale Credit Routing Process.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{学习权限与可塑性预算}
@@ -901,13 +917,14 @@ B_L(t).
 \end{equation}
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Plasticity
 =
 FiniteAgentResource.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 对于快慢结构，可以采用默认关系：
 \begin{equation}
@@ -920,11 +937,12 @@ B_\Psi^P.
 
 该关系表达的是稳定性设计原则：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{结构越慢，单位时间允许的修改幅度越小。}
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{慢结构保护原则}
@@ -954,15 +972,16 @@ Support_i
 \end{equation}
 
 从而：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowStructure
 \Rightarrow
 HighEvidenceThreshold
 +
 LowPlasticityRate.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{E 到 Theta 的信用升级}
@@ -1034,15 +1053,16 @@ Q_i^\Theta.
 \end{equation}
 
 于是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Episode
 \rightarrow
 EvidenceAccumulation
 \rightarrow
 StructuralCredit.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{Theta 对 E 的间接反向作用}
@@ -1080,8 +1100,9 @@ m_i(E)\downarrow.
 \end{equation}
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Theta
 \rightarrow
 BetterPrediction
@@ -1091,8 +1112,8 @@ LessSurprise
 LessRecall
 \rightarrow
 EpisodeEvaporation
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 比直接：
 \begin{equation}
@@ -1135,13 +1156,14 @@ WhatToConsolidate.
 \end{equation}
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Lambda_E
 =
 MemoryGovernancePolicy.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 定义长期记忆治理效用：
 \begin{equation}
@@ -1170,11 +1192,12 @@ J_E.
 \end{equation}
 
 这构成：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningToRemember.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{Psi 的信用升级条件}
@@ -1205,13 +1228,14 @@ c_\Psi>0.
 \end{equation}
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EpisodeCredit
 \not\Rightarrow
 SelfCredit.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 只有跨时间、跨情景、持续稳定的自我相关证据，才能获得慢自我结构的修改权限。
 
@@ -1322,14 +1346,15 @@ g_E>0.
 \end{equation}
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HighLoad
 \Rightarrow
 RecordNow,
 ConsolidateLater.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 由此形成：
 \begin{equation}
@@ -1360,8 +1385,9 @@ StructuralWritePermission.
 \end{equation}
 
 因此 AgentOS Scheduler 可以统一写为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Scheduler
 =
 ResourceScheduling
@@ -1369,15 +1395,16 @@ ResourceScheduling
 ProcessScheduling
 +
 LearningScheduling.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 其中 Learning Scheduling 的特殊资源为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PlasticityBudget.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{学习冲突}
@@ -1437,13 +1464,14 @@ S_{\max}.
 \end{equation}
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Learning
 =
 ConstrainedStructuralControl.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{学习调度器的自指条件}
@@ -1462,13 +1490,14 @@ V_L,
 所以调度器本身也是可塑性超图节点。
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CreditRouter
 \in
 CreditGraph.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 它对其他结构分配信用，同时自身也可能因长期调度结果获得信用。
 
@@ -1523,15 +1552,16 @@ S_3
 \end{equation}
 
 而定义为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 S_t
 \rightarrow
 Outcome_t
 \rightarrow
 S_{t+1}.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 因此它是动力学递归：
 \begin{equation}
@@ -1603,11 +1633,12 @@ LearningEfficiency\downarrow,
 \end{equation}
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningControl
-}
-\end{equation}
+\)}
+\end{statementbox}
 也属于自适应对象。
 
 
@@ -1667,22 +1698,24 @@ C_{risk}
 \end{equation}
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningScheduler
 \neq
 FastLossMinimizer.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 更准确是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningScheduler
 =
 LongHorizonPlasticityPolicy.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{学习调度可以表述为强化控制问题}
@@ -1780,11 +1813,12 @@ J^{cf}(a_t^{L'})
 \end{equation}
 
 于是调度器可以利用：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CounterfactualCreditAssignment
-}
-\end{equation}
+\)}
+\end{statementbox}
 估计某次结构信用分配是否合理。
 
 
@@ -1818,11 +1852,12 @@ J_L
 
 这不是 AgentOS 必须全局满足的物理定律，而是用于表达一个重要设计原则：
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{学习闭环本身必须保持有界。}
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{自指学习的慢变量保护}
@@ -1861,22 +1896,24 @@ J_S^{old}
 等保守接受条件。
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfReference
 \neq
 UnboundedSelfModification.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 而应满足：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfReferentialLearning
 =
 BoundedRecursiveAdaptation.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{连续学习动力学与离散学习治理}
@@ -1918,15 +1955,16 @@ Offload.
 \end{equation}
 
 因此整体学习系统更适合写成混合动力系统：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal{L}_{Agent}
 =
 ContinuousPlasticity
 \bowtie
 DiscreteLearningGovernance.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{多时间尺度学习方程}
@@ -2063,13 +2101,14 @@ Utility
 \end{equation}
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CreditPromotion
 =
 EvidenceBasedTimescaleMigration.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 只有满足跨时间稳定性的信用，才向更慢结构传播。
 
@@ -2089,18 +2128,20 @@ c_\Theta
 的结构学习信用。
 
 前者是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StructureActivation
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 后者是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StructureModificationSignal.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 因此：
 \begin{equation}
@@ -2119,12 +2160,13 @@ h
 仍应受到信用沉降和可塑性预算限制。
 
 这保证：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FastRead,
 SlowWrite.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{学习调度与三相记忆的非对称性}
@@ -2158,22 +2200,24 @@ E
 通常应当缓慢。
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ReadPath
 \neq
 WritePath.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 并且：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ActivationTopology
 \neq
 PlasticityTopology.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 这是学习调度超图与普通认知执行图必须区分的重要原因。
 
@@ -2230,11 +2274,12 @@ R_{\max}.
 \end{equation}
 
 因此 Learning Scheduling 本质上是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ConstrainedMulti-timescaleCreditAllocation.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{三层学习的最终统一形式}
@@ -2300,8 +2345,9 @@ CreditRealization.
 \end{equation}
 
 因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Learning
 =
 CreditRouting
@@ -2309,8 +2355,8 @@ CreditRouting
 CreditControl
 \rightarrow
 CreditRealization.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{自指闭环的统一方程}
@@ -2389,37 +2435,40 @@ X_t,s_t
 \subsection{学习对象分离原则}
 
 不同结构必须拥有独立的可塑性边界：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningSignal
 \neq
 AutomaticGlobalUpdate.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 \subsection{信用路由原则}
 
 现实反馈首先形成信用，然后决定结构修改位置：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Feedback
 \rightarrow
 Credit
 \rightarrow
 Target.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 \subsection{证据沉降原则}
 
 越慢的结构，越需要经过更长期证据积累：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowStructure
 \Rightarrow
 LongerEvidenceAccumulation.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 \subsection{可塑性预算原则}
 
@@ -2444,84 +2493,94 @@ B_i^P\downarrow.
 
 \subsection{自指有界原则}
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SchedulerCanLearnScheduler
-}
-\end{equation}
+\)}
+\end{statementbox}
 但必须满足：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BoundedSelfModification.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 \subsection{现实优先原则}
 
 无论内部信用模型如何预测：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityAuthority
 >
 InternalLearningExpectation.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{与传统学习范式的统一关系}
 
 监督学习可理解为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ExternallyProvidedCredit.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 自监督学习可理解为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictionDerivedCredit.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 强化学习可理解为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DelayedUtilityCredit.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 Replay 可理解为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HistoricalCreditReinjection.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 Eligibility Trace 可理解为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DelayedCreditBridge.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 元学习可理解为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningRuleCredit.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 三相记忆则提供：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InstantCredit
 \rightarrow
 EpisodeCredit
 \rightarrow
 StructuralCredit.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 因此这些学习技术并不是互斥体系，而是同一信用超图中的不同信用生成与实现机制。
 
@@ -2583,8 +2642,9 @@ h_{t+1}.
 \end{equation}
 
 现实再次给出结果，从而：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reality
 \rightarrow
 Error/Credit
@@ -2598,19 +2658,20 @@ Adaptation
 NewBehavior
 \rightarrow
 Reality'.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 同时，由于 Scheduler 与 Controller 自身属于 $X$：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Scheduling_t
 \rightarrow
 LearningOutcome
 \rightarrow
 Scheduling_{t+1}.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 由此整个学习系统闭合。
 
@@ -2620,76 +2681,84 @@ Scheduling_{t+1}.
 本章最终提出三个核心命题。
 
 第一：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 AgentOS 中的学习，本质上不是参数更新，而是信用在多尺度可塑性超图中的传播。
 }
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 第二：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 Learning Scheduler 的核心职责，是控制误差、奖励、惊奇、约束与长期结果所产生的信用，在不同结构和时间尺度之间如何分配。
 }
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 第三：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 由于 Learning Scheduler 自身也是可塑性超图中的节点，所以 AgentOS 能够依据过去学习调度的长期结果，反过来修改自己的学习调度策略，从而形成有界的自指学习闭环。
 }
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 
 \section{最简统一表达}
 
 整个理论最终可以压缩为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{学习}
 =
 \text{信用传播}
-}
-\end{equation}
+\)}
+\end{statementbox}
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{调度}
 =
 \text{信用路由}
-}
-\end{equation}
+\)}
+\end{statementbox}
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{控制}
 =
 \text{信用变换}
-}
-\end{equation}
+\)}
+\end{statementbox}
 
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{适应}
 =
 \text{信用落地}
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 以及：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{自指学习}
 =
 \text{信用路由规则自身也接受长期信用。}
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 因此，AgentOS 的统一学习方程可以写为：
 \begin{equation}
@@ -2732,13 +2801,14 @@ Learning Scheduler 的核心职责，是控制误差、奖励、惊奇、约束�
 \end{equation}
 
 最终：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 AgentOS 的自指学习调度，
 就是在一个由不同时间尺度、不同稳定程度和不同结构修改权限组成的多层可塑性超图上，
 对现实反馈所产生的信用进行受约束路由，
 并允许这种路由策略依据其长期结果有限地修改自身。
 }
-}
-\end{equation}
+\)}
+\end{statementbox}

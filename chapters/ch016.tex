@@ -46,13 +46,14 @@ F_C(t_1)=F_j.
 这意味着同一 CSO 或其连续变换后的结构，从一个功能区域迁移到了另一个功能区域。
 
 单次迁移本身并不意味着系统应该改变拓扑。智能体面对开放世界时必然会出现大量偶然的跨功能协调。例如一个罕见事故可能临时要求视觉系统、长期记忆、伦理判断、规划器和外部工具共同参与，但这种关系可能在整个生命周期只出现一次。如果系统因为任何一次临时协同都建立永久直接连接，那么拓扑会迅速膨胀，并最终失去结构性。因此我们首先必须区分：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 TransientInteraction
 \neq
 StructuralRelation
-}
-\]
+\)}
+\end{statementbox}
 
 真正能够形成拓扑的不是``发生过交互''，而是具有持续统计结构的交互。设功能 $F_i$ 与 $F_j$ 之间关于某类 CSO 的迁移事件序列为
 \[
@@ -104,13 +105,14 @@ L_{ij}^{C}
 \end{proposition*}
 
 这个判断与传统软件工程中的静态模块划分有明显不同。在传统软件中，架构师先规定模块 A、模块 B 和它们的接口，然后运行数据沿着预设接口流动；而在发育型智能系统中，我们考虑另一种可能性：系统首先经历大量动态 CSO 流，随后从这些长期流动关系中逐渐发现哪些功能之间值得形成稳定路径。因此功能拓扑可以被理解成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalTopology
 =
 SlowMemoryOfRepeatedFunctionalRelations
-}
-\]
+\)}
+\end{statementbox}
 
 这也解释了为什么我们此前将模块定义为
 \[
@@ -218,8 +220,9 @@ U_{ij}^{C}(t)
 \lambda_s S_{ij}^{\mathrm{risk}}(t).
 \]
 这里 $U$ 表示任务收益，$R^{\mathrm{res}}$ 表示迁移后仍残留的预测或控制残差，$C^{\mathrm{coord}}$ 表示跨功能协调成本，$S^{\mathrm{risk}}$ 表示安全与稳定性代价。于是拓扑真正应该``记住''的，不是单纯发生频繁的流，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Persistent
 +
 Useful
@@ -229,8 +232,8 @@ Stable
 LowResidual
 \quad
 CSOFlow.
-}
-\]
+\)}
+\end{statementbox}
 
 进一步，如果我们不再区分具体 CSO，而考虑某一类语义结构集合 $\mathcal{C}_{\alpha}$，则可以得到功能边上的总有效通量：
 \[
@@ -397,13 +400,14 @@ CompiledSkill
 Action,
 \]
 而原本需要显式经过 $h$ 的大量关系被沉降进新的直接功能闭环。从外部看，智能体似乎``思考得更少''；但从结构上看，它并不是知道得更少，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ThinkingLess
 \neq
 KnowingLess.
-}
-\]
+\)}
+\end{statementbox}
 更准确的描述是：
 \begin{statementbox}
 CognitiveStructureChangedCarrier.
@@ -453,13 +457,14 @@ e^{-\Delta t/\tau_T},
 \Delta t\geq0.
 \]
 于是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalTopology
 \approx
 SlowIntegralOfEffectiveCSOFlow.
-}
-\]
+\)}
+\end{statementbox}
 
 这个公式的重要之处不在于我们一定要采用指数核，而在于它揭示了一个更一般的时间尺度结构：瞬时 CSO 流是快变量，功能拓扑是对这些快变量长期统计结构进行积分后形成的慢变量。它与我们此前提出的智能频谱理论完全一致：
 \[
@@ -627,16 +632,18 @@ K_T
 逐渐被固化成低成本、局部、稳定的功能通路。
 \end{statementbox}
 因此我们此前提出：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Skill
 =
 CSOFunctionalDownMigration.
-}
-\]
+\)}
+\end{statementbox}
 从本章角度，更完整的表达是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SkillFormation
 =
 CSOMigration
@@ -644,8 +651,8 @@ CSOMigration
 LocalClosure
 +
 TopologicalCapitalAccumulation.
-}
-\]
+\)}
+\end{statementbox}
 
 拓扑资本具有典型的``前期投资、后期摊销''结构。假设建立一条新功能耦合需要一次性成本
 \[
@@ -674,22 +681,24 @@ V_{\mathrm{edge}}>0
 时，拓扑沉降才具有长期经济性。
 
 这解释了为什么一个智能体不应该把所有偶发处理都编译成新模块。拓扑是一种昂贵资源。它带来速度和稳定性，但也带来维护成本、僵化风险和错误固化风险。每一条新功能边实际上都是对未来任务分布的一种长期赌注：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 NewTopology
 =
 CommitmentToFutureRegularity.
-}
-\]
+\)}
+\end{statementbox}
 
 如果环境长期稳定，这种赌注可以产生巨大的结构资本；如果环境突然变化，过去形成的拓扑资本甚至可能变成拓扑负债。例如，一个高度专门化的技能系统在原任务上极为高效，但进入新环境以后可能因为过强的旧闭环而产生偏差。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 TopologicalCapital
 \neq
 UnconditionalAdvantage.
-}
-\]
+\)}
+\end{statementbox}
 
 它只在未来任务统计结构与过去具有一定连续性时成立。
 
@@ -761,13 +770,14 @@ M_B
 }
 \]
 更合理的关系是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PersistentM_F
 \longrightarrow
 \Delta\mathcal{T}.
-}
-\]
+\)}
+\end{statementbox}
 即长期稳定的功能迁移最终改变功能拓扑。
 
 这一区分非常重要，因为它把``学习''与``发育''区分开来。一个 Agent-CSO 从 $F_i$ 移动到 $F_j$：
@@ -781,13 +791,14 @@ CSO@F_j
 w_{ij},
 \]
 甚至新建功能节点、拆分原有节点或形成新的闭环。于是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Learning
 =
 ChangeOfCSORealization,
-}
-\]
+\)}
+\end{statementbox}
 而更深层的：
 \begin{statementbox}
 \centering
@@ -949,35 +960,38 @@ Risk
 \]
 
 这正是所谓
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DynamicsOnTopology
 +
 DynamicsOfTopology.
-}
-\]
+\)}
+\end{statementbox}
 
 前者研究在给定功能拓扑上智能如何运行；后者研究长期运行历史如何改变拓扑本身。二者不能被分开理解。
 
 这一框架与适应网络（adaptive/co-evolving networks）理论存在直接形式相似性。在传统网络动力学中，节点状态通过网络传播，而节点状态反过来改变网络边；例如社会意见影响社交关系，社交关系又改变未来意见传播。在我们的理论中，传播的对象不是简单标量状态，而是具有语义、时间尺度、边界和功能角色的 Agent-CSO。因此我们所研究的是一种更加具体的认知—功能共同演化：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitiveStructureDynamics
 \bowtie
 FunctionalTopologyDynamics.
-}
-\]
+\)}
+\end{statementbox}
 
 这也意味着拓扑最终会形成``认知吸引路径''。当某一类结构长期沿着同一组功能流动以后，系统遇到类似问题时会自然优先进入这些路径。这可以带来专家直觉，也可能形成路径依赖、刻板反应甚至错误习惯。因此，拓扑不仅是一种能力结构，也是一种偏置结构：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Topology
 =
 Capability
 +
 Constraint.
-}
-\]
+\)}
+\end{statementbox}
 它让某些认知过程变得非常容易，同时让其他可能路径变得不再容易被探索。
 
 因此成熟智能必须同时具有两种能力：第一，利用稳定拓扑获得高效率；第二，在拓扑与现实长期失配时重新打开原本被压缩的搜索空间。这正是下一章``结构失配—拓扑压力—拓扑相变''需要进一步处理的问题。
@@ -1112,13 +1126,14 @@ w_{ij}\uparrow.
 \end{aligned}
 \]
 这些实现的物理形式完全不同，但它们都实现同一功能效果：减少某类稳定 CSO 流所需要的动态协调长度。因此我们必须再次区分：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalTopologyChange
 \neq
 PhysicalRewiringOnly.
-}
-\]
+\)}
+\end{statementbox}
 
 这也是本理论能够同时适用于神经系统、软件 Agent、机器人和组织系统的重要原因。
 
@@ -1138,13 +1153,14 @@ PhysicalRewiringOnly.
 \theta_{\mathrm{off}},
 \]
 并要求：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \theta_{\mathrm{on}}
 >
 \theta_{\mathrm{off}}.
-}
-\]
+\)}
+\end{statementbox}
 
 新边只有在：
 \[
@@ -1157,12 +1173,13 @@ PhysicalRewiringOnly.
 并持续相当时间以后才逐渐衰减。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FormationRequiresStrongEvidence,
 DeletionRequiresPersistentDisuse.
-}
-\]
+\)}
+\end{statementbox}
 
 这种迟滞结构可以避免短期环境变化导致系统整体结构振荡。它和人类技能、组织制度以及成熟软件接口都具有相似直觉：建立一个稳定结构往往需要大量证据，但结构一旦形成，也不会因为一次失败就完全消失。
 
@@ -1343,13 +1360,14 @@ FunctionalTopology.\)}
 \end{statementbox}
 
 进一步，我们把功能拓扑理解为 CSO 流的慢时间尺度积分：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalTopology
 \approx
 SlowIntegralOfEffectiveCSOFlow.
-}
-\]
+\)}
+\end{statementbox}
 拓扑由此获得一种特殊的记忆含义：$E$ 记住``经历了什么''，$\Theta$ 记住``结构如何生成与运作''，而功能拓扑记住的是：
 \begin{statementbox}
 系统自己过去怎样组织认知活动最有效。
@@ -1362,13 +1380,14 @@ ExplicitCognition
 StableLocalClosure.
 \]
 于是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ThinkingLess
 \neq
 KnowingLess.
-}
-\]
+\)}
+\end{statementbox}
 很多时候，它意味着系统已经把过去的思考转化成了现在的结构。
 
 本章同时完成了一项重要概念修正：拓扑学习不是 CSO 迁移的独立维度。基本 CSO 迁移仍然只有表示、功能、时间尺度和载体等方向：
@@ -1378,13 +1397,14 @@ KnowingLess.
 (M_R,M_F,M_\tau,M_B),
 \]
 而：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PersistentM_F
 \rightarrow
 \Delta\mathcal T.
-}
-\]
+\)}
+\end{statementbox}
 拓扑变化是长期功能迁移的结构性沉降，因此它属于比普通学习更慢的发育过程。
 
 最终，我们得到本章最核心的双向方程：
@@ -1396,13 +1416,14 @@ CSOFlowShapesTopology
 TopologyShapesFutureCSOFlow.
 \end{statementbox}
 前者意味着历史认知活动能够塑造智能系统的组织结构，后者意味着形成后的组织结构又成为未来认知活动的先验。二者共同构成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DynamicsOnTopology
 +
 DynamicsOfTopology.
-}
-\]
+\)}
+\end{statementbox}
 
 从生命周期角度看，这意味着智能体不仅能够学习世界，而且原则上还能够逐渐学习：
 \begin{proposition*}

@@ -82,13 +82,15 @@ m_e
 \mathrm{Memory}=\mathrm{Storage},
 \]
 而应改写为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Memory}
 =
 \mathrm{RecoverableStructureAcrossTime}
-}.
-\]
+.
+\)}
+\end{statementbox}
 只要过去形成的结构能够跨越时间重新作用当前状态，它就在功能意义上具备记忆属性；而它究竟位于参数、数据库、文件、环境还是另一个 Agent 中，是第二层问题。
 
 \section{Me：Agent 的外部认知世界}
@@ -797,15 +799,17 @@ M_{\mathrm{int}}\rightarrow\infty,
 一个结构可以从 \(h\) 沉降进 \(E\)，从 \(E\) 抽象进 \(\Theta\)，也可以从内部迁移到 Me；只要语义连续性、索引与恢复机制得到保持，它仍然可以参与同一主体的未来认知过程。
 
 因此，真正需要保护的不是``字节留在内部''，而是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StructuralContinuity
 +
 Recoverability
 +
 RealityVerification
-}.
-\]
+.
+\)}
+\end{statementbox}
 这三个条件共同决定一次认知卸载究竟是成熟学习，还是不可逆遗失。
 
 本章由此完成了 AgentOS 记忆理论从三相内部记忆向完整内外记忆体系的扩展。至此，一个持续 Agent 已经不再被限制在自身参数和内部存储中，而开始拥有一个可治理、可访问、可外化、可重新内化的外部认知世界 \(M_e\)。这个结论也为后续讨论具身环境、社会性协作以及更加一般的结构迁移奠定了基础，但在当前层级，我们应当把最核心的原则固定下来：
@@ -819,8 +823,9 @@ RealityVerification
 
 更形式化地：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentMemory(t)
 =
 M_{\mathrm{int}}(t)
@@ -828,8 +833,8 @@ M_{\mathrm{int}}(t)
 B_t
 \bowtie
 M_e(t)
-}
-\]
+\)}
+\end{statementbox}
 
 其中 \(M_{\mathrm{int}}\) 保存主体内部连续性，\(M_e\) 扩展主体可调用结构空间，而动态 Boundary \(B_t\) 决定结构如何在两者之间迁移。对持续智能而言，\textbf{记忆因此不再是一个仓库，而是一套跨时间、跨载体维持认知结构连续性的动力系统。}
 

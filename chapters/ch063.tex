@@ -141,24 +141,26 @@ C_A(t)
 
 由此我们得到本章第一条原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearnedDynamics\neq RealityAuthority.
-}
-\]
+\)}
+\end{statementbox}
 
 模型可以比瞬时传感器更加可靠，长期先验也可以用来拒绝明显异常的观测，但模型本身没有权利宣布现实已经按照自己的预测发生。预测只能生成对未来的结构约束；现实是否进入该状态，必须经过新的观测事件确认。正是在这个意义上，我们将 Reality Authority 作为 AgentOS 的最终认识论锚点：不是因为 Agent 能直接获得``绝对现实''，而是因为\textbf{内部世界必须永远保留向外部现实重新开放的纠错通道}。
 
 \section{行动发出不等于行动成功：从意图状态到现实状态}
 
 在普通软件系统中，一个函数调用返回成功往往意味着操作已经完成。然而具身智能进入真实世界以后，这一假设不再成立。Agent 可以发出一个动作命令，却无法仅凭命令本身判断世界已经按照该命令发生变化。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ActionIssued
 \neq
 ActionSucceeded.
-}
-\]
+\)}
+\end{statementbox}
 这条看似简单的原则实际上决定了 AgentOS 是否真正拥有现实闭环。
 
 设 Agent Kernel 在时刻 $t$ 形成目标：
@@ -332,11 +334,12 @@ y^{obs}_{t+1}
 因此，当行动失败时，高层 Agent 不应立刻得出``我的世界模型错误''，也不能立即认为``Body Runtime 控制失败''。正确机制是逐层归因：首先由 BPCC 判断局部动力学偏差；KRA 判断 Kernel--Body 语义或动力映射是否发生失配；必要时才把结构性残差提升给更高认知层重新解释。
 
 这里体现了我们一直强调的：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictLocally,\ EscalateResidualGlobally.
-}
-\]
+\)}
+\end{statementbox}
 正常行为尽可能在局部闭环中完成，异常才向更高层升级。但是无论异常由哪一级处理，最终成功状态仍然不能由局部模型直接写回现实状态，而必须重新进入现实验证链。
 
 因此，本节得到第二条原则：
@@ -514,13 +517,14 @@ RealityReentry
 RawDataReentry.
 \]
 更准确的是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityReentry
 =
 RealityGroundedSemanticReentry.
-}
-\]
+\)}
+\end{statementbox}
 
 这也解释了为什么 Body Runtime 在整个 AgentOS 中是第一道现实压缩层。对于 Kernel 来说，现实不是数百万像素、数万个传感器采样点和连续设备寄存器，而是：
 \[
@@ -591,15 +595,16 @@ AgentCSO(C_U).
 Observation=Reality,
 \]
 而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reality
 >
 Observation
 >
 Prediction
-}
-\]
+\)}
+\end{statementbox}
 在认识论结构上形成一种方向性约束。
 
 设宇宙实际状态为：
@@ -633,13 +638,14 @@ ModelGeneratedPrediction
 的区别不在于前者绝对没有误差，而在于前者的更新因果链最终连接到外部现实。
 
 因此，我们更精确地定义现实权威：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityAuthority
 =
 TheRequirementThatBeliefRemainRevisableByRealityGroundedEvidence.
-}
-\]
+\)}
+\end{statementbox}
 中文即：
 
 \begin{statementbox}
@@ -700,12 +706,13 @@ IG\approx0
 \tau_\Theta.
 \]
 这种稳定性本来是身份连续和长期能力形成的基础，但也意味着错误一旦进入慢层，就可能变得极难修正。因此，我们应采用一个重要的结构原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowerStructureRequiresStrongerEvidenceForChange,
 ButNeverInfiniteResistanceToReality.
-}
-\]
+\)}
+\end{statementbox}
 即：
 
 \begin{statementbox}
@@ -748,13 +755,14 @@ SlowStructureUpdate.
 换句话说，现实不是通过一次瞬时冲击直接重写自我，而是通过持续、可重复、跨场景的残差逐步迫使慢结构重新解释自己。
 
 因此，本章所说的现实权威，并不意味着取消主体、先验与世界模型。恰恰相反，一个没有内部稳定结构的系统只能被每一次噪声拖动；真正成熟的智能必须同时具备：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InternalCoherence
 +
 ExternalCorrectability.
-}
-\]
+\)}
+\end{statementbox}
 前者使它成为一个持续主体，后者保证这个主体没有脱离世界。
 
 \section{现实残差：从错误信号到跨尺度认知事件}
@@ -941,13 +949,14 @@ K_T(r_{t-T:t}),
 \text{现实不应通过每个噪声瞬时重写整个智能体}.
 \]
 二者合起来，形成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityAuthority
 +
 TimescaleProtection.
-}
-\]
+\)}
+\end{statementbox}
 这也是持续人工智能体能够同时保持适应性与身份连续性的一个基本动力学条件。
 
 \section{现实验证与长期记忆：防止错误沿时间尺度沉降}
@@ -1151,13 +1160,14 @@ Experience
 SelfInterpretation'
 \]
 可能形成闭环。如果没有外部反证通道，这种循环会越来越稳定，却越来越脱离现实。因此 Reality Authority 还意味着：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfConsistency
 \neq
 Truth.
-}
-\]
+\)}
+\end{statementbox}
 一个内部世界可以高度一致，同时高度错误。
 
 这也是为什么真正成熟的 AgentOS 应同时优化两个目标：
@@ -1181,15 +1191,16 @@ Truth.
 保证这些结构仍受到现实证据约束。只优化前者会产生封闭自洽系统，只优化后者而缺乏内部稳定结构，则产生随噪声漂移的系统。
 
 因此我们可以把长期智能的认识论稳定性写成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EpistemicStability
 =
 InternalCoherence
 \times
 ExternalCorrectability.
-}
-\]
+\)}
+\end{statementbox}
 任一项接近零，持续智能都难以成立。
 
 \section{Reality Authority 的统一形式：从世界模型到持续智能体的现实锚定}
@@ -1273,11 +1284,12 @@ O_{t+1}
 \end{statementbox}
 
 因此，对一个持续智能体而言，真正封闭的系统边界不是 Agent 自身，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Agent+World.
-}
-\]
+\)}
+\end{statementbox}
 Agent 的内部闭环只是在这个更大闭环中的一个子系统。如果我们只优化 Agent 内部自洽性：
 \[
 \mathcal A_t\rightarrow\mathcal A_{t+1},
@@ -1315,24 +1327,26 @@ Agent 的内部闭环只是在这个更大闭环中的一个子系统。如果�
 于是，我们可以把 Reality Authority 写成四条正式公理。
 
 第一，\textbf{来源区分公理}：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Observed
 \neq
 Predicted
 \neq
 Counterfactual.
-}
-\]
+\)}
+\end{statementbox}
 
 第二，\textbf{行动验证公理}：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ActionIssued
 \neq
 ActionSucceeded.
-}
-\]
+\)}
+\end{statementbox}
 
 第三，\textbf{现实重入公理}：
 \begin{statementbox}
@@ -1346,12 +1360,13 @@ Observation\)}
 不能被纯内部模拟替代。
 
 第四，\textbf{慢结构可纠正公理}：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowStructure
 \text{ may resist fast noise, but must remain corrigible by persistent reality evidence.}
-}
-\]
+\)}
+\end{statementbox}
 
 这四条公理共同形成 AgentOS 的 Reality Authority Principle。
 
@@ -1413,8 +1428,9 @@ Reality.
 
 因此，我们可以用一个最终公式结束本章：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \begin{aligned}
 \text{Intelligence}
 &=
@@ -1431,8 +1447,8 @@ Reality.
 &\qquad
 \Big|\_{\text{continuously constrained by Reality}}
 \end{aligned}
-}
-\]
+\)}
+\end{statementbox}
 
 或者用本书更统一的 CSO 语言表达：
 

@@ -176,14 +176,15 @@ u_T(t)
 
 这一区分具有非常重要的工程意义。TCE 如果被允许直接改变目标、身份、价值、任务权限和身体安全约束，就会从“认知动力控制器”演化成一个缺乏边界的中央决策器，从而破坏整个 AgentOS 的分层结构。我们在本书中始终坚持：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 TCE\neq Planner,\qquad
 TCE\neq Scheduler,\qquad
 TCE\neq CCM,\qquad
 TCE\neq \Psi.
-}
-\]
+\)}
+\end{statementbox}
 
 Planner 决定候选策略内容，Scheduler 决定谁获得资源，CCM 决定哪些认知结构可以被当前有限工作记忆承载，$\Psi$ 和 $\Omega$ 提供慢尺度的主体约束，而 TCE 决定这些活动\textbf{以怎样的动力学方式运行}。
 
@@ -349,11 +350,12 @@ TCE 必须控制认知控制本身的强度。
 
 一个成熟 Agent 不是时时被中央控制器紧紧握住，而应在局部结构能够自行闭合时降低高层增益，在持续残差或接近失稳边界时才增加控制强度。这与全书此前反复形成的原则一致：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance\neq FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 
 TCE 的成熟并不是控制得越来越多，而是越来越准确地知道什么时候应该少控制，什么时候必须强控制。
 
@@ -675,13 +677,14 @@ SelfRel_i
 
 由此我们可以理解为什么成熟智能不是“注意更多”，而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MatureIntelligence
 =
 SelectiveExplicitCognition.
-}
-\]
+\)}
+\end{statementbox}
 
 当越来越多熟练结构下沉到 $\Theta$、Skill、Body Runtime 或外部工具之后，真正需要进入 h 的内容反而应该减少。若一个 Agent 随能力增长反而需要越来越多全局注意力才能完成熟悉任务，那么从 AgentOS 理论看，这不是成熟，而是结构没有完成正确沉降。
 
@@ -1835,13 +1838,14 @@ x^\star_\phi-\hat x
 
 因此可以把 TCE 的长期成熟原则写成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 NormalDynamicsStayLocal,
 \qquad
 ControlEscalatesWithPersistentResidual.
-}
-\]
+\)}
+\end{statementbox}
 
 这里也自然连接到我们前面建立的智能多尺度理论：高层的作用不是持续告诉低层每一步该怎样运动，而是定义：
 
@@ -1887,15 +1891,16 @@ x_c(t)
 
 它观察的不是世界本身，而是 Agent 如何处理世界；它控制的不是具体认知内容，而是认知内容之间传播、竞争、稳定和退出的动力条件；它的成功标准也不是某一次任务获得最高 reward，而是在长时间运行中保持：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CapacityBounded,
 Stable,
 Adaptive,
 Recoverable,
 RealityAligned.
-}
-\]
+\)}
+\end{statementbox}
 
 到这里，我们就可以把第88章的全部内容压缩成一个工程闭环：
 

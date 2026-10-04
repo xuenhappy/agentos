@@ -10,11 +10,12 @@
 因此 Body Runtime 既不是被动设备驱动层，也不是第二个智能主体，而是位于现实世界和认知内核之间的\textbf{快速具身动力学层、现实语义压缩层和局部闭环承载层}。
 
 本章按照工程依赖关系而不是组件罗列顺序展开：首先建立稳定的 Body ABI，使身体成为可替换对象；随后形成 SGC 与 FCS 两个公开现实表示空间；再通过 BPCC 构造快速预测控制闭环；然后分别在仿真、物理机器人和数字身体上验证同一套结构；进一步把反复成功的高层控制沉降为 Body Skill；最终由 Safety 与硬件加速保证这一体系能够进入真实长期运行环境。整个研发过程始终遵守三个原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SemanticInterfaceStable,\quad FastDynamicsLocal,\quad RealityAuthoritative
-}
-\]
+\)}
+\end{statementbox}
 即语义接口应尽量稳定，高频动力学应尽量在身体局部闭合，而任何内部预测最终都必须重新经过现实观测验证。本章给出的不是单个机器人产品的开发顺序，而是一条从“身体接口”逐步走向“可迁移身体运行时”的系统工程路线。
 \end{chapterlead}
 
@@ -111,11 +112,12 @@ Structure_{Kernel}
 \section{SGC：建立身体中心的可行动现实表示}
 
 当 Body ABI 稳定以后，第二个问题立即出现：不同身体具有完全不同的原始感知格式，Agent Kernel 究竟应该“看到”什么？如果直接把 Camera Frame、LiDAR Point Cloud、DOM Tree、鼠标坐标、Joint State 和各种传感器张量送入高层认知，那么 Body Runtime 实际上并没有完成抽象。认知内核仍然需要知道具体传感器和身体实现，Body Scale 也就无法成立。因此 Body Runtime 的第二阶段必须建立统一的现实内容表示，即
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC=SemanticGraphCoordinateSpace.
-}
-\]
+\)}
+\end{statementbox}
 
 SGC 的本质不是传统计算机视觉中的 Scene Graph，而是\textbf{身体中心、持续存在、能够被行动约束和预测使用的语义现实坐标空间}。可以形式化写成
 \[
@@ -159,11 +161,12 @@ controlledBy,\ldots
 \]
 
 SGC 最重要的工程原则之一是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body\in SGC.
-}
-\]
+\)}
+\end{statementbox}
 智能体不能拥有一个悬浮于世界之外的“上帝视角”。即使 Body Runtime 能通过多摄像头、卫星地图或网络数据形成近似全局地图，任何最终可行动表示仍然必须能够回到“我现在位于哪里、什么是我可达的、什么会阻碍我、什么与我的能力相关”。因此 SGC 的几何并不是纯客观坐标，而是一个以主体能力为参照的 actionable geometry。相同楼梯对于人形机器人可能具有
 \[
 Affordance=\text{walkable},
@@ -212,11 +215,12 @@ SGC 的理论依赖可以借鉴 SLAM、object-centric perception、scene graph�
 \section{FCS：建立现实对主体影响的统一功能场}
 
 如果 SGC 回答的是“世界中有什么，以及我在哪里”，那么仅有 SGC 仍然不足以支撑一个长期具身 Agent。真实身体还存在另一类同样重要的信息：这些现实状态正在如何影响主体。电池余量、执行器温度、结构损伤、系统延迟、网络抖动、控制残差、接触力、威胁距离和资源压力并不只是世界中的“对象属性”，它们会直接改变 Agent 当前应采取的控制策略、探索强度和风险容忍度。因此 Body Runtime 的第三阶段必须建立一个与 SGC 正交的公开状态空间：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FCS=FixedTypedMultilayerFeelingField.
-}
-\]
+\)}
+\end{statementbox}
 
 这里的 Feeling 始终是工程功能概念，而不是关于主观体验的判断。FCS 表达的是
 \begin{statementbox}
@@ -248,13 +252,14 @@ Mask_k
 其中 $I_k$ 表示影响强度，$\dot I_k$ 表示变化趋势，$Conf_k$ 表示估计可信度，$Mask_k$ 则表示其空间或功能影响范围。
 
 为什么要把 FCS 从 SGC 中单独分离出来？因为“对象是什么”和“对象怎样作用于我”在系统功能上并不相同。桌面上的火源在 SGC 中可能始终是同一个实体，但随着距离、身体材料、温度和当前任务不同，Threat Field 可以发生完全不同的变化。反之，一个数字 Agent 中 CPU 过载、上下文延迟或者网络中断甚至没有清晰的空间实体，却会显著影响系统行为。因此我们需要：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC=\text{Reality Content},
 \qquad
 FCS=\text{Reality Influence}.
-}
-\]
+\)}
+\end{statementbox}
 这两个坐标系共同构成 Body Runtime 的公开现实面。
 
 FCS 的研发必须坚持“固定类型、连续强度、低语义开销”的原则。若每一种身体都产生完全不同的 Feeling token，例如机器人 A 使用 ``motor-overheat'', 机器人 B 使用 ``joint-fatigue'', 浏览器 Agent 使用 ``DOM-latency'', 那么高层又会被身体差异侵入。更合理的方法是将底层异构状态映射到较稳定的功能通道。例如：
@@ -300,15 +305,16 @@ SGC 与 FCS 解决了现实如何被表达，但仍没有解决一个关键问�
 \tau_{\mathrm{required-control}}
 \]
 时发生不可避免的控制失稳。因此 Body Runtime 的第四个研发节点必须是 BPCC，即 Body Predictive Control Core 的仿真实现。其功能可以概括为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BPCC=
 FastPrediction+
 FastControl+
 ResidualEstimation+
 AdaptiveLearning.
-}
-\]
+\)}
+\end{statementbox}
 
 我们首先在 Simulator 中实现 BPCC，而不应该直接把未经验证的快速自适应控制器部署到真实机器人。其原因不仅是安全，更是理论可观测性。在真实环境中，传感噪声、机械误差、网络延迟和设备故障同时存在，难以区分 BPCC 内部模型错误与现实执行误差。Simulator 则允许我们分别控制世界模型、身体模型、噪声与扰动，从而建立清晰的实验变量。
 
@@ -338,12 +344,13 @@ L_{goal}(\hat y_{t+k},r_{t+k})
 \right].
 \]
 这里 $r$ 不是逐执行器动作，而是来自高层的 Control Reference 或 Predictive Envelope。BPCC 因此不是自由决定“我要做什么”，而是在高层给出的可行区域中选择怎样最有效地做到：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion;
 BPCCOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 
 Residual 是 BPCC 的核心公共信号。我们可以定义：
 \[
@@ -378,11 +385,12 @@ GoalRelevance
 \Gamma_B\geq\theta_{\mathrm{up}},
 \]
 则产生 Kernel-level event。由此落实我们此前建立的重要原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictLocally,\ EscalateResidualGlobally.
-}
-\]
+\)}
+\end{statementbox}
 
 Simulator 阶段应专门测试模型失配，而不是只测试控制成功率。例如人为改变摩擦系数、执行器延迟、传感遮挡、质量分布、UI 布局或 API 响应时间，观察 BPCC 是否能够通过局部在线适应吸收小变化，并在变化过大时主动上报，而不是继续“自信执行”。一个成熟的 BPCC 不是永远局部解决问题，而是能够判断：
 \begin{statementbox}
@@ -503,12 +511,13 @@ NewBody\rightarrow LearnEverythingAgain.
 \section{Digital Body：证明“身体”是主体与现实之间的功能边界}
 
 Physical Robot 并不是 Body Runtime 唯一的验证对象。事实上，数字身体是验证 Body Scale 和 Body ABI 是否真正抽象成功的另一条同等重要路线。若我们的 Body 理论只能解释机械臂和摄像头，那么它仍然只是机器人软件。AgentOS 所使用的身体定义更一般：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body=
 ControlledAndSensedCarrierOfAgency.
-}
-\]
+\)}
+\end{statementbox}
 只要某个系统允许 Agent 持续感知状态、执行动作、承受动作后果并形成闭环，它就可以构成 Body。因此 Desktop、Browser、Shell、Filesystem、Network 和 App Environment 都可以构成数字 Body。
 
 在数字身体中，SGC 的实现发生变化，但结构角色保持不变。例如浏览器状态可表示为：
@@ -614,25 +623,27 @@ C@h
 C@BodySkill.
 \]
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ThinkingLess\neq KnowingLess.
-}
-\]
+\)}
+\end{statementbox}
 真正发生的是
 \[
 StructureChangedCarrier.
 \]
 
 一个完整 Body Skill 不应该只是固定动作序列。它至少需要包含：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodySkill=
 LocalPredictor+
 LocalController+
 ResidualModel.
-}
-\]
+\)}
+\end{statementbox}
 若技能只记录动作轨迹，那么环境轻微变化就会失败；若技能包含局部 predictor 和 residual detector，则它可以在有限变化范围内自主适应，并在超出能力范围时重新把问题提升给认知层。因此一个 Skill 可以表示为：
 \[
 S_k=
@@ -703,11 +714,12 @@ SafetyController
 ProtectiveAction
 \]
 的直接路径，而无需首先经过 h、SPC、TCE 或 Agent Kernel 的语义推理。于是 Body Runtime 权限关系应满足：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SafetyAuthority>BPCCAuthority.
-}
-\]
+\)}
+\end{statementbox}
 
 Safety 层至少包含三类约束。第一类是硬物理约束，例如最大关节力矩、电池温度、机械结构负载、最小碰撞距离；第二类是系统资源约束，例如文件删除权限、网络发送范围、进程终止能力；第三类是运行时动态安全约束，例如当前控制器已经进入高不确定区域，即使还没有越过物理极限，也应该提前降级。
 
@@ -746,11 +758,12 @@ x_{t+k}\in\mathcal X_{safe}.
 同一个执行资源在任一时刻只能有一个有效写入者。高层 Kernel、BPCC、Skill Controller 和 Safety Controller 可以提出不同控制请求，但必须经过明确仲裁，否则多层控制器同时写入同一个执行器，会形成比算法错误更危险的结构冲突。Safety Controller 的覆盖行为也必须留下可审计记录，使 Kernel 在事后能够理解为什么动作没有按原计划执行。
 
 另一个关键原则是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Feeling\neq Exception.
-}
-\]
+\)}
+\end{statementbox}
 FCS 中 Threat 或 ControlInstability 升高只是连续风险状态，并不意味着立即触发安全中断。若所有风险都直接变成硬中断，系统会不断在正常与紧急之间震荡；反过来，如果所有风险都只是 FCS 调制，则真正危险事件又可能等待认知过久。因此我们需要连续 FCS 与离散 Safety Event 并存：
 \[
 ContinuousRisk
@@ -826,13 +839,14 @@ H_{kernel}.
 这些计算层不一定最终由五块独立芯片实现，但在调度与实时保证上必须表现为不同执行域。特别是 Safety 和 Fast Control 不应因为 Kernel 推理拥塞而失去计算资源。
 
 硬件加速还应反向约束 Body ABI。一个错误方向是为了特定芯片性能，直接把其内部 tensor layout 暴露到 Agent Kernel。这样短期性能提高，却破坏 Body Scale。正确原则应是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StableSemanticABI
 >
 TemporaryHardwareOptimization.
-}
-\]
+\)}
+\end{statementbox}
 硬件可以在 Body Runtime 内部任意融合 SGC encoder、BPCC latent、sensor processing，但对外仍应恢复成稳定的 SGC、FCS、Residual 和 Control Reference。
 
 这一阶段还需要研究结构迁移的物理成本。如果一个成熟 Body Skill 已经长期稳定，那么它可以从昂贵的通用推理单元进一步下沉到专用控制执行域：

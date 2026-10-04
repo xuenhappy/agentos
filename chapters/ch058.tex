@@ -182,13 +182,14 @@ z_t
 Encoder(y_t).
 \]
 这样做在单一任务中可以有效，却会给长期 Agent 带来一个隐患：系统很难区分“我认为世界是什么”与“世界使我处于什么功能状态”。AgentOS 因而要求公共认知边界满足
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SemanticContent
 \perp
 FunctionalModulation
-}
-\]
+\)}
+\end{statementbox}
 这里的 $\perp$ 不是严格统计独立，而是指两者在接口语义和控制职责上保持正交。它们可以来自同一事件，却不得成为同一不可解释变量。
 
 我们还需要讨论 Modulation Channel 的时间性质。语义事件往往可以是离散的：
@@ -809,13 +810,14 @@ time
 这三个数据结构应尽量保持稳定，从而使 Body Runtime 内部可以使用高度优化、甚至完全不同的实现，而 Agent Kernel 不需要知道底层具体传感器或者控制器细节。
 
 这一结构还给出了一个重要的工程隔离原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PublicSemanticContract
 +
 PrivateOptimizedDynamics
-}
-\]
+\)}
+\end{statementbox}
 身体运行时内部可以拥有高速 latent、滤波器、预测器和控制状态，但跨越认知边界时必须输出具有明确语义和权限属性的公共信号。这样才能避免一个常见问题：底层神经网络的 latent representation 逐渐成为整个 Agent 唯一的隐式 ABI，最终导致身体、认知、记忆和控制不可检查地耦合在一起。
 
 三通道还帮助我们理解后续 AgentOS 调度为何不能只依赖传统 message queue。普通消息系统通常关心：
@@ -834,15 +836,16 @@ safetyDeadline).
 于是 Body--Kernel 边界真正传输的不是“数据包”，而是带有认知和控制属性的结构事件。
 
 从更高层看，这恰好对应本书最开始的多尺度智能原则。外部世界同时存在高速物理扰动、中速主体状态变化以及较慢的语义关系演化。如果我们把所有尺度压进同一处理循环，系统必然要么为了安全牺牲认知深度，要么为了认知深度牺牲实时性。三信号通道通过结构分离，使不同尺度各自找到适合自己的闭环：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FastConstraint
 \parallel
 ContinuousModulation
 \parallel
 StructuredCognition
-}
-\]
+\)}
+\end{statementbox}
 三者最终又在真实行动结果中重新汇合。
 
 因此，本章可以用一个完整闭环收束：

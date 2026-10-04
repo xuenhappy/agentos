@@ -95,18 +95,20 @@ RealityIsUltimateConstraint
 
 SGC 的第二项核心要求是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body\in SGC
-}
-\]
+\)}
+\end{statementbox}
 
 智能体自己的身体不能位于世界模型之外。对于物理机器人，Body 可以包含基座、机械臂、末端执行器、传感器视场以及可达空间；对于数字 Agent，Body 则可以包含屏幕、窗口、光标、键盘输入能力、浏览器上下文、文件系统作用范围以及网络执行端点。正因为身体属于 SGC，``同一个世界对象''对于不同 Body 才可能具有不同 affordance。例如相同的一段楼梯，对于轮式机器人可能表示不可达结构，对于人形机器人却可能表示标准可通行结构。
 
 这意味着 SGC Standard 不应规定智能体必须使用什么视觉模型、SLAM 算法或 neural scene representation。标准真正需要约束的是跨实现可以交换的\textbf{语义骨架}：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Coordinate
 +
 Entity
@@ -118,8 +120,8 @@ Field
 Affordance
 +
 EpistemicStatus
-}
-\]
+\)}
+\end{statementbox}
 
 从工程上看，这一思想与传统 Scene Graph、SLAM、知识图谱和世界模型均有交集，但 SGC 的目标更具体：它不是要求完整描述现实，而是提供 Agent 行动所需的\textbf{可检查公共现实面}。也正因为如此，类似影视作品中把人物、身份、空间、关系和威胁状态同时叠加在现实中的``机器视角''，只能算一种形象化近似；真正的 SGC 标准还必须严格管理坐标、时间、来源、身体中心性和现实可信度。
 
@@ -131,11 +133,12 @@ Representation_A=Representation_B,
 
 而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Meaning_A\simeq Meaning_B
-}
-\]
+\)}
+\end{statementbox}
 
 从而使跨身体、跨感知模型和跨硬件的 AgentOS 仍然可以获得足够稳定的世界语义契约。
 
@@ -190,11 +193,12 @@ scope
 
 这里一个非常重要的工程原则是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RawMeasurement\neq FCS
-}
-\]
+\)}
+\end{statementbox}
 
 例如电池电量为 $31\%$ 是原始状态或 SGC/Body State 中的事实，而 EnergyPressure 可能是
 
@@ -222,17 +226,19 @@ FunctionalInfluenceState
 
 SGC 与 FCS 因此形成一对互补标准：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC=\text{Content of Actionable Reality}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FCS=\text{Functional Influence of Reality}
-}
-\]
+\)}
+\end{statementbox}
 
 它们之间可以有关联，但不能相互替代。更正式地，我们可以定义身体状态到两个公共空间的映射
 
@@ -285,17 +291,19 @@ Safety
 
 Body ABI 必须遵守一个核心职责分离：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentKernel=WhatToDo
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodyRuntime=HowThisBodyDoesIt
-}
-\]
+\)}
+\end{statementbox}
 
 这并不是绝对禁止 Kernel 产生具体动作，而是定义默认责任层级。Kernel 给出的应首先是语义和目标意义上的控制引用，例如``保持目标在可跟踪区域''、``移动到该可达区域''、``点击当前语义为确认按钮的对象''，而 Body Runtime 可以根据身体构型、当前动力学、局部传感和实时限制把这些高层结构变成真正可执行动作。
 
@@ -346,12 +354,13 @@ Capability_{t+\Delta}.
 
 标准化到这里就应停止。Body ABI 不应规定电机控制器类型、私有 latent 维度、SLAM 算法、控制器实现甚至神经网络结构。换言之：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StandardizeBodyMeaning,
 NotBodyMechanism
-}
-\]
+\)}
+\end{statementbox}
 
 只有保持这一边界，未来完全不同的机器人、车辆和数字执行环境才有可能共享同一个持续 Agent Kernel。
 
@@ -435,36 +444,39 @@ BPCC 应继续局部修正；而当
 
 系统则需要把相应结构升级给 Kernel/KRA，由更高层重新解释。由此形成本书反复强调的原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictLocally,
 EscalateResidualGlobally
-}
-\]
+\)}
+\end{statementbox}
 
 这也是 BPCC ABI 与普通机器人控制接口的关键区别：它不仅输出``成功/失败''，还必须能够向更高层描述为什么现有局部模型正在失效。
 
 与此同时，BPCC 预测不能取得现实权威。我们必须明确：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BPCCPrediction
 \neq
 ObservedReality
-}
-\]
+\)}
+\end{statementbox}
 
 任何预测结果都不能直接写入 Observed SGC/FCS。动作之后的真实世界状态必须重新经过传感路径进入 Body Runtime，形成新的 Observation。否则系统可能形成一个危险的内部闭环：控制器根据自己的预测确认自己的成功，最终脱离世界反馈。
 
 因此，BPCC Standard 本质上应形成一种``高速私有实现、低带宽公共语义''结构：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PrivateFastState
 +
 PublicSemanticContract
-}
-\]
+\)}
+\end{statementbox}
 
 这允许工业机器人使用确定性控制器、消费机器人使用学习控制器、车辆使用 MPC，而 Agent Kernel 无需理解它们的内部算法。对 AgentOS 而言，真正需要稳定的是功能责任和残差语义，而不是 BPCC 如何完成计算。
 
@@ -508,12 +520,13 @@ X_t^\ast
 
 这正体现了本书的多尺度控制原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 LowerLevelOptimizesInsideIt
-}
-\]
+\)}
+\end{statementbox}
 
 Control Reference Standard 因此必须至少具有四类语义：目标语义、约束语义、时间语义和权限语义。没有时间语义，Body Runtime 无法知道一个目标是否仍然有效；没有权限语义，就无法解决高层任务、身体安全和局部控制之间的冲突。
 
@@ -532,8 +545,9 @@ ActiveWriter(r_i)
 
 因此 Control Reference 标准真正把 AgentOS 中抽象的``意图''变成工程可执行的跨层契约。它既不是自然语言 prompt，也不是低层 actuator command，而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SemanticGoal
 +
 StateEnvelope
@@ -543,8 +557,8 @@ Constraint
 Time
 +
 Authority
-}
-\]
+\)}
+\end{statementbox}
 
 的组合。
 
@@ -615,13 +629,14 @@ Escalation.
 
 Predictive Envelope 还有一个重要意义：它允许高层与低层保持不同世界模型。Kernel 可能使用较抽象的语义预测，而 BPCC 使用高频连续动力学预测。标准并不要求两者共享同一 latent，只要求二者能够在某个公共可验证空间中判断：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Compatible
 \quad\text{or}\quad
 Incompatible.
-}
-\]
+\)}
+\end{statementbox}
 
 因此，Predictive Envelope 实际上是一个跨表示的兼容性流形。
 
@@ -643,12 +658,13 @@ Predictive Envelope 就是这一兼容流形在短期控制层的一种显式公
 
 标准化这一概念时尤其要避免规定具体预测模型。Kernel 可以是 Transformer、VLA、世界模型甚至混合符号系统；BPCC 可以是 MPC、神经控制器或经典状态空间系统。开放标准只规定预测包络的语义和违反条件，而把内部预测算法留给实现者。由此我们得到一个重要的标准化原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StandardizePredictionContract,
 NotPredictionModel.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{Agent Communication Protocol：跨主体的结构交换协议}
 
@@ -656,13 +672,14 @@ NotPredictionModel.
 
 因此 Agent Communication Protocol 的第一原则是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Communication
 \neq
 SharedMind
-}
-\]
+\)}
+\end{statementbox}
 
 两个 Agent 可以交换 Agent-CSO 的外部表示，却不能因此假定它们拥有相同内部表示。设 Agent $A$ 内部存在
 
@@ -743,8 +760,9 @@ ReturnContract).
 
 标准也不应规定多 Agent 的组织策略、角色字典或者高层治理模型。那些属于组织层可编程结构。协议需要稳定的是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Identity
 +
 Meaning
@@ -754,8 +772,8 @@ Authority
 Provenance
 +
 TemporalValidity
-}
-\]
+\)}
+\end{statementbox}
 
 而不是``所有 Agent 应该怎样合作''。只有坚持这一边界，多 Agent 协议才不会把某一种社会结构固化成整个 AgentOS 生态的唯一模型。
 
@@ -763,8 +781,9 @@ TemporalValidity
 
 在本书的理论中，Skill 从来不只是一个函数、prompt 或脚本。真正成熟的 Skill 是经过长期经验沉降以后形成的局部可执行闭环：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Skill
 =
 LocalPredictor
@@ -772,8 +791,8 @@ LocalPredictor
 LocalController
 +
 ResidualModel
-}
-\]
+\)}
+\end{statementbox}
 
 因此 Skill Package Standard 的任务，并不是定义一种新的插件压缩包格式，而是回答一个更基础的问题：一个已经从显式认知中沉降出去的能力，怎样被不同 AgentOS、不同 Body Runtime 和不同生命周期安全地保存、调用、验证、迁移和重新升级到显式认知。
 
@@ -823,13 +842,14 @@ Exception.
 
 由此实现：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MatureIntelligence
 =
 SelectiveExplicitCognition
-}
-\]
+\)}
+\end{statementbox}
 
 的工程形式。
 
@@ -870,8 +890,9 @@ K_3^{vehicle}
 
 因此 Skill Package Standard 真正标准化的不是``技能内部怎样计算''，而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 WhatItMeans
 +
 WhenItCanRun
@@ -883,8 +904,8 @@ WhatItPredicts
 HowItFails
 +
 WhatItGuarantees
-}
-\]
+\)}
+\end{statementbox}
 
 这六项构成可迁移技能的公共契约。
 
@@ -960,11 +981,12 @@ Requirement(Skill).
 
 这里还需要区分 Capability 与 Authority：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CanDo\neq MayDo
-}
-\]
+\)}
+\end{statementbox}
 
 系统技术上能够执行某个动作，并不意味着当前 Agent 被授权执行。例如某 Body 能够删除文件，但特定任务上下文下可能不存在 Delete Authority。因此标准应显式表达：
 
@@ -980,14 +1002,15 @@ GrantedAuthority.
 
 最终，Capability Descriptor 是 AgentOS 的一种``动作空间类型系统''。它让 Kernel 不必知道所有身体实现细节，却可以知道：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 WhatIsPossible,
 HowWell,
 AtWhatCost,
 UnderWhatAuthority.
-}
-\]
+\)}
+\end{statementbox}
 
 这是跨身体迁移、Skill 复用、工具调度和 Agent 委派共同依赖的最基础公共语义之一。
 
@@ -1006,13 +1029,14 @@ CognitiveDependency\)}
 
 以及：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SafetyAuthority
 >
 BPCCAuthority
-}
-\]
+\)}
+\end{statementbox}
 
 这意味着关键安全闭环必须能够在 Agent Kernel、TCE、Skill 甚至 BPCC 出现错误时仍然独立生效。Safety Governance Standard 因此不能只规定``模型应该安全''，而应规定系统级权限、状态和中断结构。
 
@@ -1142,13 +1166,14 @@ UndefinedBehavior.
 
 它们共同体现同一个标准化原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 Interface=SemanticSkeleton+ImplementationFreedom
 }
-}
-\]
+\)}
+\end{statementbox}
 
 对于 AgentOS 来说，真正应该被开放标准长期冻结的，不是今天某个大模型的 latent space，不是某种机器人控制算法，也不是某个厂商的内部组件图，而是跨系统必须长期保持稳定的\textbf{语义责任、状态类型、时间关系、权限关系和现实验证路径}。
 
@@ -1160,11 +1185,12 @@ Implementation_A\neq Implementation_B
 
 同时仍然满足
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Contract_A\simeq Contract_B.
-}
-\]
+\)}
+\end{statementbox}
 
 只有这样，一个 Agent Kernel 才可能跨越模型迭代而保持生命周期，一个成熟 Skill 才可能跨身体迁移，一个 Body Runtime 才可能被不同认知内核使用，而未来不同企业、机器人和数字系统也才可能真正进入同一个持续智能生态。
 

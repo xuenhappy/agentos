@@ -160,11 +160,12 @@ x(t^+)-x(t^-).
 
 于是，“闪电文明看石头文明”的思想实验实际上提前揭示了本书一个贯穿始终的原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance\neq FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 
 真正成熟的跨尺度智能体系，并不要求慢层跟随快层每一步，而要求慢层建立足够稳定的约束面，让快层在其中拥有局部自治。
 
@@ -320,8 +321,9 @@ b^N.
 即使真实智能不会穷举整个树，这个公式也揭示了问题本质：外部控制者的模型可能以远慢于内部状态空间展开的速度更新。于是治理者不仅“反应慢”，而是连自己正在控制的对象都越来越难以保持结构同步。
 
 时间黑洞真正危险的地方因此不是纯速度，而是以下组合：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HighSpeed
 \times
 HighAutonomy
@@ -329,8 +331,8 @@ HighAutonomy
 HighWorldAccess
 \times
 FastSelfModification.
-}
-\]
+\)}
+\end{statementbox}
 一个高速但没有行动能力的模拟器，未必构成治理问题；一个行动能力极强但内部规则完全固定、可形式验证的控制器，也可能较容易管理。真正困难的是高速认知、环境访问、长链规划和结构可塑性同时出现。
 
 这也解释了为什么我们后来在 AgentOS 中反复强调：
@@ -340,21 +342,23 @@ CriticalSafety\nrightarrow CognitiveDependency.
 安全边界不能等到比系统本身更慢的高层认知临时决定。对于高速 Body Runtime，需要本地 Safety Boundary；对于高速 AI 系统，也必须把某些约束提前编译到其可行状态空间之中。
 
 换言之，如果治理者永远慢于被治理系统，那么治理机制就必须从：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Observe\to Violation\to Decide\to Stop
-}
-\]
+\)}
+\end{statementbox}
 转变为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DefineFeasibleRegion
 \to
 LocalAutonomyInsideRegion
 \to
 EscalateBoundaryEvents.
-}
-\]
+\)}
+\end{statementbox}
 
 这正是后文
 \[
@@ -431,24 +435,26 @@ T_{shared}
 
 这里揭示出一个重要区别：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SemanticAlignment
 \neq
 TemporalAlignment.
-}
-\]
+\)}
+\end{statementbox}
 
 两个智能可以原则上理解同一个概念，却因为时间尺度差异无法形成实时合作。例如闪电文明完全可能理解石头文明提出的长期价值，却在等待石头文明确认一次行动的过程中已经完成了巨大规模的内部演化。反之，石头文明也可能理解闪电文明的技术报告，却无法以足够速度参与其决策过程。
 
 同理：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalAlignment
 \neq
 ControlAlignment.
-}
-\]
+\)}
+\end{statementbox}
 共享长期目标并不能保证短期行为协调。高速智能在一个慢速治理周期内可能有大量自由路径，其中只有部分路径保持在慢速系统能够接受的区域。因此，真正跨尺度的对齐不能要求：
 \[
 u_B(t)=u_A(t)
@@ -794,13 +800,14 @@ R=
 可以达到极大的数量级。
 
 如果仍然试图用“每一步都由人类审批”治理高速 AI，会产生两个极端。第一种是把 AI 完全锁死，使其无法发挥高速闭环优势；第二种是在实际运行中绕过人类审批，形成表面 human-in-the-loop、实际上 human-out-of-the-loop 的系统。真正稳定的方法仍然是本章已经推导出的层级治理：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowHumanGovernance
 +
 FastMachineAutonomyWithinBoundaries.
-}
-\]
+\)}
+\end{statementbox}
 
 因此，人类真正需要控制的不是 AI 每一个 token、每一次工具调用或者每个毫秒动作，而是更慢层的结构变量，例如：
 \[
@@ -848,15 +855,16 @@ Escalation.
 \]
 
 这样，人类的角色从高速系统的“逐动作驾驶员”转变为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ConstraintDesigner
 +
 SlowGovernanceLayer
 +
 RealityAuthority.
-}
-\]
+\)}
+\end{statementbox}
 
 这种结构并不意味着人类失去控制。恰恰相反，它承认了不同时间尺度之间真实存在的物理限制，从而把控制放在真正有效的位置。一个管理者并不需要亲自决定公司每封邮件；一个人的意识也不会控制每个肌肉纤维；一个 Agent Kernel 同样不应直接运行所有 servo loop。成熟控制本来就意味着：
 \begin{statementbox}

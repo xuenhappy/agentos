@@ -85,13 +85,14 @@ TCE
 当这些工程组件被还原成一般动力学功能以后，我们便发现：AgentOS 实际上是对一组更基础规律进行的一次具体实现。
 
 由此可以提出本章的第一条总命题：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS
 \subset
 \mathfrak{D}_{Intelligence}
-}
-\end{equation}
+\)}
+\end{statementbox}
 这里 $\mathfrak{D}_{Intelligence}$ 表示所有满足持续状态、闭环作用、多尺度结构、结构记忆和现实反馈条件的智能动力系统集合。AgentOS 是其中一种人为设计的实现，而不应与智能动力学本身等同。
 
 这一区分具有重要的方法论意义。如果理论只能解释自己设计的组件，那么它仍然属于软件架构设计；如果理论能够解释不同实现中反复出现的动力学结构，例如为什么稳定能力会从昂贵的显式处理迁向快速局部闭环，为什么异常会沿时间尺度向上传递，为什么慢变量不能被快噪声任意修改，那么它才可能逐渐成为一种一般理论。
@@ -118,13 +119,14 @@ SlowStructure,\)}
 Reality,\)}
 \end{statementbox}
 以及
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DynamicsOnTopology
 +
 DynamicsOfTopology.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 从这一意义上说，AgentOS 的理论价值不仅在于它是否最终成为某一种产品，而在于它为我们提供了一个足够复杂的人工对象，使“智能如何持续存在、如何形成自我、如何受到有限容量约束、如何形成技能、如何进入身体、如何改变自身组织结构”第一次能够在同一个工程系统中被提出并检验。它因此更像一座智能动力学的实验平台，而不是理论的终点。
 
@@ -332,23 +334,25 @@ D_{CSO}.
 这种形式化带来三个重要结果。
 
 第一，记忆不再只是存储，而可以定义为
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Memory
 =
 PersistenceOfCSOStructureAcrossTime.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 第二，熟练不再只是更高准确率，而表现为
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Mastery
 =
 MigrationOfRepeatedCSOsToward
 Stable,\ Local,\ FastClosedLoops.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 第三，认知卸载不再是一种附属技巧，而成为载体迁移：
 \begin{statementbox}
@@ -402,13 +406,14 @@ u_i,
 \right).
 \end{equation}
 较慢层不需要逐步指定快层的具体动作，而是决定其允许区域、代价函数、增益和目标边界。因此我们得到前文反复出现的原则：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance
 \neq
 FastMicromanagement.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 更准确地说，若慢变量 $z$ 定义快系统的可行集合
 \begin{equation}
@@ -446,22 +451,24 @@ z,
 并持续足够时间时，异常才向更高层提升。
 
 因此可以把多尺度智能的基本控制逻辑写成：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 NormalDynamicsStayLocal,
 \qquad
 PersistentResidualEscalates.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 这一规律不仅存在于 Body。一个熟悉任务如果已经由 $\Theta$ 或 Skill 闭合，就不应该每次重新进入 h；只有任务条件超出既有结构可解释范围时，相关 Agent-CSO 才重新被提升到显式认知层。这意味着 Attention 从本质上可以定义成
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Attention
 =
 CrossScalePromotionPolicy.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 如果令某个 Agent-CSO $c_i$ 的升级得分为
 \begin{equation}
@@ -490,13 +497,14 @@ CrossScalePromotionPolicy.
 \end{equation}
 
 工作记忆有限容量定理由此获得了更深层解释。h 之所以必须有限，不仅因为硬件有限，而因为成熟智能本身就不应把所有运行过程提升为显式过程。一个系统如果需要持续显式管理所有低层动作，它在结构意义上仍然处于低成熟度状态。因此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MatureIntelligence
 =
 SelectiveExplicitCognition.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 同理，SPC--AHC--TCE 也可以被理解为一个跨尺度控制器。SPC 估计当前状态，AHC 将连续的身体与内稳态信号积分成较慢调制变量，TCE 再调节探索强度、注意范围、搜索深度和控制增益。这种结构必然面对控制理论中的延迟问题。若
 \begin{equation}
@@ -558,21 +566,23 @@ R_{ij}
 应显著大于普通状态与参数学习时间尺度。
 
 这里出现了本书一个非常重要的结论：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Topology
 =
 SlowMemoryOfRepeatedFunctionalRelations.
-}
-\end{equation}
+\)}
+\end{statementbox}
 换句话说，功能拓扑可以被理解成长期动态关系的结构沉积。如果两个功能每次处理某类问题都需要经过昂贵、重复、稳定的协调，那么新的直接耦合、局部闭环或专门模块就可能逐渐产生。模块由此不再是理论第一性对象，而可以被定义为
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Module
 =
 StableTopologicalCondensate.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 但是，拓扑可塑性同时带来严重风险。如果一次异常、一次偶然经验或者短时间任务就立即修改长期拓扑，系统将发生结构振荡。因此必须存在
 \begin{equation}
@@ -801,13 +811,14 @@ Choice'_t
 \right),
 \end{equation}
 并比较不同选择对未来 $\Theta$、$\Psi$ 和 $\Omega$ 的影响，它就不仅预测“世界会怎样”，还能够预测“不同选择会让我成为怎样的系统”。这形成一种更高阶的生命周期控制：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ControlOfFutureWorld
 +
 ControlOfFutureSelf.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 因此，Developmental Intelligence 可以定义为：
 
@@ -894,15 +905,16 @@ SelfAccessibleRepresentation
 DynamicsModulation.
 \end{equation}
 因此，我们把
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalReflexivity
 =
 SelfRepresentation
 +
 SelfModulation
-}
-\end{equation}
+\)}
+\end{statementbox}
 称为功能自反性。
 
 这个概念不等于现象意识。它只要求一个系统能够形成关于自身状态和行为的内部结构，并使这些结构进入后续控制闭环。即：
@@ -930,15 +942,16 @@ ExternalCSO
 AgentCSO_j.
 \end{equation}
 由此：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Agent_i
 \rightarrow
 World
 \rightarrow
 Agent_j
-}
-\end{equation}
+\)}
+\end{statementbox}
 形成跨个体、跨生命周期的认知传递。
 
 科学进一步把这一闭环制度化：
@@ -1000,8 +1013,9 @@ ReflexiveStructuralEvolution.
 它所描述的不是“宇宙必然走向智能”，而是当某些结构获得表示和控制能力以后，一种新的动力组织形式出现了：过去的结构形成关于现在的模型，模型构造可能未来，可能未来的表示影响现在的行动，而行动又改变真正的未来；与此同时，长期行动历史还会进一步改变产生这些模型和行动的结构本身。
 
 因此，本书的 World--Agent--World 闭环最终可以写成：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 UniverseCSO_t
 \rightarrow
 AgentCSO_t
@@ -1011,8 +1025,8 @@ InternalDynamics
 Action_t
 \rightarrow
 UniverseCSO_{t+1}.
-}
-\end{equation}
+\)}
+\end{statementbox}
 而在长期尺度上：
 \begin{statementbox}
 \centering
@@ -1303,8 +1317,9 @@ UniverseCSO'.
 \end{statementbox}
 
 如果进一步用 CSO 语言压缩，可以写成：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 Intelligence
 =
@@ -1316,8 +1331,8 @@ TopologyCoevolution
 +
 RealityCoupling.
 }
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 其中，Reality Coupling 具有不可替代的位置。任何 Agent-CSO、Self、Goal 或 DGA 都不拥有高于现实的认识论权威。内部模型只有通过
 \begin{equation}
@@ -1339,14 +1354,15 @@ RealityIsUltimateConstraint.
 同样，任何关于 Universe-CSO、宇宙自反或文明尺度 SPC/TCE 的讨论，都应理解为更高层的结构动力学解释，而不能跳跃为“宇宙具有主观意识”之类未经经验支持的结论。本书真正关心的是可以形式化的关系：宇宙中的一些结构能够形成关于其他结构和自身的内部表示，并利用这些表示改变后续现实状态。仅这一点，已经足以构成一种重要的动力学跃迁。
 
 因此，AgentOS 的最终意义也发生了变化。它最初看起来像一个面向长期 Agent 的软件操作系统；随后它成为记忆、自我、认知控制、身体和技能的统一运行时；再后来，它又成为研究多尺度智能结构如何持续运行和发育的人工实验对象。最终，我们可以把它理解为：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS
 =
 A Constructive Experimental Realization
 Of Intelligence Dynamics.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 它是否最终以当前名称和组件形式存在，并不是最重要的。真正值得保留下来的，是通过 AgentOS 推导出来的若干一般问题：
 

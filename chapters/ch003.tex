@@ -164,13 +164,14 @@ B_{\mathrm{global}}
 
 这里出现了一个值得特别强调的区别：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LocalComputationalScale
 \neq
 GlobalCognitiveScale.
-}
-\]
+\)}
+\end{statementbox}
 
 增加一万个并行处理器，可以大幅提高大量互不依赖任务的吞吐，但如果某个认知任务要求所有节点频繁共享全局状态，那么同步和通信成本可能迅速成为主导因素。
 
@@ -205,13 +206,14 @@ LocalClosure.
 
 能够在局部解决的问题，应尽量由局部闭环解决；只有那些局部无法消除的残差、冲突或不确定性才向更高尺度传播。这一原则将在后文转化为 AgentOS 的：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 NormalDynamicsStayLocal,
 \qquad
 EscalateResidualGlobally.
-}
-\]
+\)}
+\end{statementbox}
 
 从这一章的角度看，这并不是一种任意的软件架构偏好，而是由跨尺度通信成本自然导出的工程策略。
 
@@ -799,8 +801,9 @@ P(\mathrm{success})
 
 这说明所谓“智能速度”至少涉及：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Speed
 =
 F(
@@ -811,8 +814,8 @@ Prediction,
 Action,
 Recovery
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 再进一步，一个 Agent 的长期速度还与记忆有关。一个没有持久记忆的模型可能每次重新解决同一问题：
 
@@ -1047,13 +1050,14 @@ $C_i$ 表示维持该速度需要的资源成本。
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Fastest
 \neq
 Optimal.
-}
-\]
+\)}
+\end{statementbox}
 
 真正高级的智能不是一个“统一高速机器”，而是一组经过组织的时间尺度。
 
@@ -1072,13 +1076,14 @@ StructuralUpdate.
 
 同样，高层治理也不能持续进行微观管理。如果一个慢层目标每毫秒都重新干预底层控制，就会破坏局部闭环的稳定性。因此产生：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance
 \neq
 FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 高层真正应该做的是定义：
 
 允许区域；
@@ -1102,13 +1107,14 @@ x_f
 其中慢变量 $x_s$ 定义快变量的可行域 $\mathcal F$，而不是指定每一个 $x_f(t)$。
 
 这最终导向一个非常重要的 AgentOS 原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \qquad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 
 从智能动力学角度看，真正的成熟不是“所有环越来越快”，而是\textbf{各时间尺度之间的分工越来越清晰}。高速结构负责局部稳定；中速结构负责当前认知与经验；慢结构负责知识、自我和长期方向。只有异常、持续残差和重要的新结构才逐级向更慢、更全局的层次传播。
 

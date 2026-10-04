@@ -206,13 +206,14 @@ Environment
 本书不会简单采用“全部算内部”或“全部算外部”的极端答案，而是提出一个更具有工程意义的处理方式：\textbf{智能体必须存在明确边界，但这个边界可以是功能定义的，而且能够随工具、身体和协作结构发生扩展。}
 
 例如，人的手机并不是生物身体的一部分，但它可能长期承担记忆检索、导航、通信和知识访问功能。从功能上说，它改变了这个人的可观察空间和可行动空间。类似地，对一个数字 Agent 来说，浏览器、Shell、文件系统和网络接口并不是“世界之外的工具”，而更像构成其数字身体的一部分。后文中我们将把这种能够被持续感知和控制的载体定义为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body
 =
 ControlledAndSensedCarrierOfAgency.
-}
-\]
+\)}
+\end{statementbox}
 
 这意味着 Body 可以是物理机器人，也可以是数字环境中的一组稳定接口。
 
@@ -254,16 +255,18 @@ Environment.
 表示 Agent \(A\) 在时刻 \(t\) 的功能边界。这个边界不一定完全固定。安装新的传感器会扩大观察边界，获得新的工具会扩大行动边界，失去网络连接则会缩小功能边界。
 
 由此得到：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Capability(A)
 \neq
 InternalModel(A)
-}
-\]
+\)}
+\end{statementbox}
 而更接近：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Capability(A)
 =
 F(
@@ -273,8 +276,8 @@ Tools,
 Environment,
 SocialCoupling
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 这种认识对 AgentOS 极其重要。因为如果我们默认所有智能都必须存在于模型内部，那么最终只能不断扩大参数和上下文；而如果承认认知结构可以分布在不同载体上，那么长期智能的工程问题就转变成：
 
@@ -337,8 +340,9 @@ X^{(\tau)}(t),
 快速变量对于慢尺度观察者而言可能只是噪声。例如机器人关节每毫秒发生大量控制变化，但如果我们观察它一个月的技能学习，这些细节可能被平均掉；相反，从伺服控制器视角看，“一个月后的能力成长”又几乎可以视为静态背景。
 
 因此，不同时间尺度会产生不同有效状态：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FastState
 ,\quad
 ExperienceState
@@ -346,8 +350,8 @@ ExperienceState
 StructuralState
 ,\quad
 IdentityState.
-}
-\]
+\)}
+\end{statementbox}
 
 这个认识后来成为整个 AgentOS 时间谱的基础：
 \[
@@ -428,16 +432,17 @@ How did it become what it is now, and how will this state constrain what it can 
 例如，我们以毫秒精度观察一台机器人，会看到传感器数据、局部状态估计和电机控制；以秒级观察，会看到避障、抓取和姿态调整；以分钟级观察，会看到任务计划；以天级观察，会看到技能形成；以月级观察，则可能看到身体模型适应和行为风格变化。
 
 这意味着：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ObservedIntelligence
 =
 Projection(
 UnderlyingDynamics,
 ObservationWindow
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 这里的“投影”非常重要。真实智能系统可以同时运行大量过程，而研究者一次往往只能选择一部分变量和尺度。因此我们所构建的智能理论从来不等于系统本身，而是对系统某个尺度的有效描述。
 

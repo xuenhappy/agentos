@@ -11,13 +11,14 @@ Linux Kernel 管理 CPU、内存、设备、文件、网络与进程等计算资
 \textbf{智能资源}。
 
 本章坚持一个基本结构原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{ComputerOS}
 \;\neq\;
 \mathrm{AgentOS}
-}
-\]
+\)}
+\end{statementbox}
 前者回答``计算如何持续运行''，后者回答``一个智能主体如何持续存在、持续认知、持续学习并保持身份连续''。
 因此，本章不追求把所有能力堆入一个巨型单体进程，而采用
 \textbf{认知微内核（Cognitive Microkernel）+ 可治理服务（Governed Cognitive Services）}
@@ -25,8 +26,9 @@ Linux Kernel 管理 CPU、内存、设备、文件、网络与进程等计算资
 AgentOS Kernel 的可信核心，其余能力通过明确 ABI、异步事件和受治理服务连接。
 
 全章的核心工程命题可以压缩为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{AgentOS Kernel}
 =
 \text{Persistent Subject}
@@ -38,8 +40,8 @@ AgentOS Kernel 的可信核心，其余能力通过明确 ABI、异步事件和�
 \text{Cognitive Scheduling}
 +
 \text{Governance}
-}
-\]
+\)}
+\end{statementbox}
 其目标不是让每一次推理更长，而是使一个有限认知容量的主体能够在长期运行中保持
 \textbf{连续、有限、可恢复、可调节、可扩展并最终可成长}。
 \end{chapterlead}
@@ -60,11 +62,12 @@ N_{\mathrm{Agent}}^{D_1}=1,
 \]
 其中 $D_1$ 表示主体层。任务、工具调用、后台工作线程和并行推理过程可以有多个，但它们属于
 $D_2$ 或更低的执行层，而不自动获得独立主体身份。因此需要明确区分
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Subject}\neq \mathrm{Task}\neq \mathrm{Worker}.
-}
-\]
+\)}
+\end{statementbox}
 一个 Worker 可以被创建和销毁，一个 Task 可以失败并重新运行，一个 Tool Session 可以瞬时存在，
 但 Persistent Subject Manager 所维护的主体身份必须跨越这些局部过程保持连续。
 
@@ -107,11 +110,12 @@ fork(A)=Forbidden
 
 Persistent Subject Manager 因而还承担一个容易被忽略的职责：阻止低层任务绑架主体。
 设主体运行空间为 $D_1$，任务为 $D_2$，则应满足
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 D_2\nrightarrow \mathrm{Trap}(D_1).
-}
-\]
+\)}
+\end{statementbox}
 任何任务都应能够被暂停、撤销、超时或重新调度，而不能因为一个工具等待、无限推理链、
 网络阻塞或局部失败使整个主体永久停止。这使 AgentOS 更接近
 \textbf{Single-Agent Multi-Task OS}，而不是``一个任务就是一个 Agent''的传统框架。
@@ -193,11 +197,12 @@ LLM context 是一种计算载体，而 $h$ 是一种
 \textbf{认知功能对象}。同一个 $h$ 可以被序列化进 prompt、KV cache、结构图、显式状态对象，
 甚至跨模型分段实现；反过来，一个极长 prompt 也可能包含大量不属于当前 $h$ 的非活动历史信息。
 因此应写成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h(t)\neq ContextWindow(t),
-}
-\]
+\)}
+\end{statementbox}
 而更准确地说，
 \[
 ContextWindow
@@ -206,11 +211,12 @@ ContextWindow
 \]
 
 由此，AgentOS Kernel 的关键原则变成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Most Agent dynamics should not remain in }h.
-}
-\]
+\)}
+\end{statementbox}
 成熟智能不是让更多内容永久占据显式工作区，而是让稳定结构尽可能沉降到慢记忆、Skill、
 Body Runtime 或外部载体，只让异常、冲突、决策岔路和新的结构关系重新进入 $h$。
 这正是有限工作记忆如何反过来催生智能组织结构的工程原因。
@@ -434,11 +440,12 @@ SPC(z_{\leq t}),
 p(x_t^{self}\mid z_{\leq t}).
 \]
 这一点必须成为 Kernel 的基本认识论原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfPerception\neq SelfState.
-}
-\]
+\)}
+\end{statementbox}
 
 由于观察存在采样、压缩和推理延迟，SPC 必然具有
 \[
@@ -540,11 +547,12 @@ I_i(t)
 AHC 则维护``最近一段时间，世界和身体正在怎样持续影响我''。
 
 需要再次强调：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AHC\neq PhenomenalEmotion.
-}
-\]
+\)}
+\end{statementbox}
 本章讨论的是功能性内稳态与情感样调制结构，不由此推断主观体验。
 例如 threat channel 增强，可以使 TCE 自动降低探索半径、增加验证频率；
 fatigue 增强，可以降低并发任务数量；
@@ -800,11 +808,12 @@ Internal\rightarrow External.
 \]
 因此它同时决定什么可以写文件、调用工具、委派他者、修改环境或发布到外部系统。
 换言之，Boundary 是双向的：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Admission + Externalization.
-}
-\]
+\)}
+\end{statementbox}
 
 从 CSO 观点来看，Boundary 实际上控制
 \[
@@ -839,8 +848,9 @@ Boundary 决定某个结构是否应该留在内部，而 Offloading Manager 则
 Delete.
 \]
 更准确的工程表达是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Offloading
 =
 CarrierMigration
@@ -848,8 +858,8 @@ CarrierMigration
 IndexRetention
 +
 RecoveryContract.
-}
-\]
+\)}
+\end{statementbox}
 如果一个 Agent 把某项内容写入文件，但之后完全不知道文件在哪里、为什么存在以及何时需要重新读取，
 那只是遗失，不是认知卸载。
 
@@ -1019,13 +1029,14 @@ Task.
 \]
 但这种约束并不意味着超慢变量实时指定每一个动作。
 更合理的是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \quad
 LowerLevelChoosesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 这保持了目标一致性，也避免高层慢结构成为低层动作的微观控制器。
 
 
@@ -1072,8 +1083,9 @@ Fallback
 }
 \]
 对于具身技能，还可以进一步写成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodySkill
 =
 LocalPredictor
@@ -1081,8 +1093,8 @@ LocalPredictor
 LocalController
 +
 ResidualModel.
-}
-\]
+\)}
+\end{statementbox}
 这样 Skill 不只告诉系统``怎么做''，还知道正常执行时应该看到什么，以及什么时候需要重新求助高层。
 
 Skill Runtime 的关键原则是：
@@ -1262,11 +1274,12 @@ StateReconciliation.
 \]
 
 这一原则非常重要，因为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearnedState\neq RealityAuthority.
-}
-\]
+\)}
+\end{statementbox}
 否则恢复操作本身会制造认知幻觉。
 
 慢变量恢复还应更加谨慎。$\Theta$、$\Psi$、$\Omega$ 的更新最好采取版本化事务：
@@ -1286,13 +1299,14 @@ RollbackPoint.
 
 Recovery 也不意味着始终回滚。有些失败恰恰包含重要经验。
 因此更高级的恢复策略是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RestoreOperationalState
 +
 PreserveFailureEvidence.
-}
-\]
+\)}
+\end{statementbox}
 即恢复可运行状态，但保留导致失败的 episode 和 residual，
 使错误成为未来 $\Theta$ 更新的依据。
 
@@ -1407,8 +1421,9 @@ AgentOS 很快会退化成难以验证、难以替换、难以定位故障的 mo
 \textbf{什么才属于 AgentOS Kernel 的真正可信核心。}
 
 建议将组件统一描述为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ModuleSpec
 =
 (
@@ -1420,8 +1435,8 @@ Timescale,
 Learning,
 Authority
 ).
-}
-\]
+\)}
+\end{statementbox}
 其中 Function 定义模块存在理由；
 State 定义其私有状态；
 Input/Output 定义 ABI；
@@ -1545,15 +1560,16 @@ R_j(X_K^-),
 \]
 例如 Task 创建、Goal 关闭、Checkpoint、Skill 注册、Authority 修改和安全中断。
 因此更加完整地看，AgentOS Kernel 是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HybridCognitiveSystem
 =
 ContinuousDynamics
 +
 DiscreteGovernance.
-}
-\]
+\)}
+\end{statementbox}
 
 其核心快速运行闭环可以概括为
 \[
@@ -1613,15 +1629,16 @@ SlowUpdate.\)}
 到这里，我们终于能够重新解释``Kernel''这个名称的意义。
 AgentOS Kernel 并不是因为它运行在 CPU ring 0 才叫 Kernel，
 而是因为它维护了智能体不可轻易丢失的核心不变量：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Identity,\;
 CognitiveContinuity,\;
 MemoryContinuity,\;
 ResourceGovernance,\;
 Recoverability.
-}
-\]
+\)}
+\end{statementbox}
 
 Linux Kernel 保障的是计算机进程能够安全访问机器资源；
 AgentOS Kernel 则进一步保障一个持续智能主体能够安全访问
@@ -1629,8 +1646,9 @@ AgentOS Kernel 则进一步保障一个持续智能主体能够安全访问
 
 因此，本章最终可以把 AgentOS Kernel 定义为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \begin{aligned}
 \mathrm{AgentOSKernel}
 =&\;
@@ -1657,8 +1675,8 @@ h\mathrm{\ CognitiveBus}
 &\bowtie\;
 \mathrm{Recovery/Governance}.
 \end{aligned}
-}
-\]
+\)}
+\end{statementbox}
 
 这里的 $\bowtie$ 刻意不用普通加号，因为这些结构并不是互相独立的功能插件。
 它们通过共享主体、共享工作记忆、共享时间尺度和共享权限体系形成耦合闭环。

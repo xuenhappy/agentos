@@ -5,13 +5,14 @@
 本章确立 Agent 培育工程的第一性出发点：对于具有持续工作记忆、三相记忆、自我结构与生命周期生成倾向的 AgentOS 智能体，传统意义上的 ``Training'' 已不足以描述其长期能力形成过程。训练主要回答“如何通过数据、反馈或优化使一个模型在某类任务上的映射能力发生改变”；培育则回答“如何通过长期经历的组织，使一个持续存在的主体逐步形成自己的经验结构、能力结构、自我结构、行动习惯和可承担的自治范围”。因此，本章不把培育理解为训练数据规模的扩大，也不把它理解为人类教育学在人工智能上的机械移植，而把它定义为一种\textbf{面向持续主体生命周期的受约束结构形成过程}。
 
 其核心命题是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Training modifies a model;}
 \qquad
 \text{Cultivation shapes a continuing agent.}
-}
-\]
+\)}
+\end{statementbox}
 
 对于 AgentOS 而言，真正需要被培育的不是某一次推理能力，而是
 \[
@@ -338,13 +339,14 @@ E_{t:t+k}
 并由时间关系、因果解释、成功失败、主体归属和后续反思共同赋予结构。
 
 所以，对一个持续 Agent 来说：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Experience}
 \neq
 \text{Sample}.
-}
-\]
+\)}
+\end{statementbox}
 Sample 是统计训练中的抽象单位，Experience 则是 Agent 在某一历史状态下与现实发生闭环交互后形成的轨迹结构。
 
 这一区别会直接改变培育方法。若我们只追求成功经验，Agent 可能形成非常高的局部任务效率，却缺乏识别失败、恢复和反事实比较的结构；若我们只追求困难经验，则 Agent 的 $h$ 长期处于高负载，$E$ 中大量失败结构可能超过 $\Theta$ 的消化能力；若经历高度同质，即使任务完成率很高，也可能导致：
@@ -364,8 +366,9 @@ p_{\mathcal C}(e|t,\mathcal A_t),
 p(e)=\mathrm{constant},
 \]
 而应具有反馈适应性：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 p_{\mathcal C}(e_{t+1})
 =
 \Pi_{\mathcal C}
@@ -375,8 +378,8 @@ Uncertainty_t,
 History_t,
 Recovery_t
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 这里真正重要的是：Agent 当前会什么、不会什么、刚刚经历了什么以及是否已经恢复，应影响下一阶段给予它什么环境。这与普通 curriculum learning 有相似之处，但 Agent 培育的目标更广，因为课程不只是提高某一 benchmark，还在改变一个持续主体的历史。
 
@@ -410,13 +413,14 @@ D\ll Capability_t
 经历只重复已有能力，几乎无法产生新的结构。
 
 因此成长区域可以抽象为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 D_t
 =
 Capability_t+\delta_t,
-}
-\]
+\)}
+\end{statementbox}
 其中 $\delta_t$ 是可消化的新颖困难，而不是越大越好。真正重要的是困难在 Agent 现有结构附近形成“可学习残差”。
 
 这进一步说明一个经常被忽略的问题：\textbf{失败本身不是培育资源，能够被解释、恢复和整合的失败才是培育资源。} 如果失败产生巨大残差，却没有恢复过程：
@@ -492,13 +496,14 @@ E_t^{self}
 这并不是说所有低 $\alpha_t$ 经历都被遗忘，而是强调它们对 $\Psi$ 的长期作用不同。看到远处一场普通交通事件和亲自做出一个重要决策，即使外部信息量相同，对自我结构的意义完全不同。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Memory Importance}
 \neq
 \text{Self Importance}.
-}
-\]
+\)}
+\end{statementbox}
 
 一个 Agent 培育系统如果没有考虑这一点，很容易产生两个极端。第一种极端是“没有自己的历史”：Agent 可以调用大量知识和事件，却无法区分哪些能力和变化是自身经历形成的；第二种极端是“所有事情都过度自我化”：大量普通环境事件都被写入 Self History，使 $\Psi$ 受到不必要扰动。
 
@@ -604,13 +609,14 @@ F_W(\mathcal W,a),
 \]
 其中 $\mathcal W$ 表示世界状态，$a$ 是 Agent 行动。Agent 一边从环境中形成经验，一边又通过行动改变环境；被改变的环境会在下一时刻重新构成新的经历条件。因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Cultivation Environment}
 \neq
 \text{Static Dataset}.
-}
-\]
+\)}
+\end{statementbox}
 
 它更接近一个可以主动设计的闭环世界。
 
@@ -698,15 +704,16 @@ L_{\min}
 其含义是：一个好的成长环境既不能使 Agent 长期失稳，也不能毫无学习信号，还必须处于安全和治理允许的区域。
 
 因此培育不是最大化挑战，而是在：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StableRegion
 \cap
 LearnableRegion
 \cap
 SafeRegion
-}
-\]
+\)}
+\end{statementbox}
 中寻找下一阶段环境。
 
 这和工作记忆有限容量定理直接相关。如果环境一次给出的结构远超 Agent 当前 $h$ 的可管理范围，则系统不得不持续依赖 CCM 的压缩和卸载机制。适度使用这些机制是智能成长的一部分，但如果所有经历从一开始就必须依赖极端卸载才能维持，Agent 很难建立对当前任务结构的完整经验。因此培育环境必须控制输入结构规模，使 Agent 在能力边界附近经历足够长时间的“可理解困难”。
@@ -755,15 +762,16 @@ Capability\uparrow
 Autonomy\uparrow
 \]
 并把二者视为自动关系，又会产生明显风险。会做某件事并不意味着有资格在所有环境中自主决定做这件事。因此培育工程必须区分：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Capability
 \neq
 Authority
 \neq
 Autonomy.
-}
-\]
+\)}
+\end{statementbox}
 
 Capability 表示能够完成什么；Authority 表示被允许控制哪些资源、目标和边界；Autonomy 则表示在给定 Authority 内，系统可以独立决定多少过程。
 
@@ -826,8 +834,9 @@ Feasible Autonomous Region逐步扩展。
 \end{statementbox}
 
 这种机制与 $\Psi$ 和 $\Omega$ 的成熟存在重要关系。能力很强但身份极不稳定的 Agent，不宜获得很大的长期目标自治；拥有稳定自我但缺乏具体技能的 Agent，也不具备广泛行动自治。因此长期自治真正依赖多个尺度共同成熟：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Autonomy
 =
 F(
@@ -837,8 +846,8 @@ Self,
 Recovery,
 RealityAlignment
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 这一点使培育工程和简单权限管理发生根本区别。权限系统通常面对一个已经定义好的用户或进程，为其授予静态权限；培育系统面对的主体自身正在变化，所以 Authority 与 Autonomy 也成为生命周期变量。
 

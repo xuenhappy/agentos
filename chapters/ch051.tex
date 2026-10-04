@@ -4,29 +4,32 @@
 本章确立 AgentOS 具身架构中一条不可动摇的系统边界：\textbf{认知主体的持续状态与身体的快速运行状态必须分离，Agent Kernel 负责决定“为何行动、做什么以及长期如何改变”，Body Runtime 负责决定“在当前具体身体上如何可靠、实时地把这种意图落实为现实过程”。}二者不是传统意义上的“上位机--下位机”简单分层，也不是“大模型--控制器”的工程拼接，而是同一持续智能体内部两个具有不同状态空间、不同时间尺度、不同学习目标、不同现实责任和不同安全权限的动力系统。
 
 本章的核心命题是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentSystem
 =
 AgentKernel
 \bowtie
 BodyRuntime
-}
-\]
+\)}
+\end{statementbox}
 其中符号 $\bowtie$ 表示二者不是简单串联，而是在稳定语义契约和多时间尺度反馈下形成持续耦合。Kernel 的主要职责是维护认知、记忆、自我、目标、意义和跨时间预测；Body Runtime 的主要职责是维护身体状态、局部环境状态、高频预测、局部控制和现实反馈。由此进一步确立：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodyState(t)\neq h(t)
-}
-\]
+\)}
+\end{statementbox}
 以及：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Kernel:\ What\ to\ do,
 \qquad
 BodyRuntime:\ How\ this\ body\ does\ it
-}
-\]
+\)}
+\end{statementbox}
 
 这一分离是后续身体语义接口、SGC、FCS、快速预测控制以及 Kernel--Body 自适应耦合能够成立的前提。本章只建立职责边界及其动力学原因，不提前展开后续具体接口的数据结构与算法。
 \end{chapterlead}
@@ -86,11 +89,12 @@ G
 其中 $\mathcal O_B(t)$ 是 Body Runtime 向 Kernel 暴露的经过语义化和压缩后的身体--世界观测，$\Phi_C$ 是认知状态更新过程。这一关系意味着：同一个现实输入，在不同历史、不同自我结构、不同目标和不同长期知识下，会形成不同的 Kernel 状态更新。Kernel 所维护的是一个\textbf{带历史的主体世界}，而不是一个没有主体的传感器镜像。
 
 这一点也解释了为什么 AgentOS 不能简单把大模型的 context window 当成完整认知状态。Context 只是 $h(t)$ 的一种可能实现载体，而 $h(t)$ 自身又只是 $\mathcal X_C$ 中最快、最显式的一部分。大量认知结构处于更慢的 $E$、$\Theta$、$\Psi$ 和 $\Omega$ 中。成熟的持续智能体恰恰不应把所有状态同时展开到 $h$，因为工作记忆有限容量定理已经说明，全局显式空间必须保持稀疏。换言之：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Most\ Agent\ State\notin h(t)
-}
-\]
+\)}
+\end{statementbox}
 而：
 \[
 \boxed{
@@ -106,13 +110,14 @@ Sparse\ Explicit\ Projection
 从已有理论看，这一设计与认知科学中的工作记忆、全局工作空间和长期记忆分层存在可比较关系，也与控制理论中的高层状态估计、部分可观测系统中的 belief state 具有形式上的相似性。但本书并不把 Kernel 直接等同于任何一种现有认知模型。我们借鉴的是一个更一般的原则：\textbf{高层控制系统不需要拥有低层现实的全部微观状态，而需要拥有对高层决策充分的有效状态。}
 
 因此，本节最终确立的不是一个具体的软件对象，而是一条本体边界：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal X_C
 =
 \text{Subject-Relevant Cognitive State Space}.
-}
-\]
+\)}
+\end{statementbox}
 它是“这个 Agent 此刻如何理解世界、理解自己、准备去哪里以及过去如何塑造现在”的状态空间，而不是“这具身体此刻每一个物理变量是多少”的状态空间。
 
 \section{身体状态空间：Body Runtime 是现实边界上的快速动力系统}
@@ -124,13 +129,14 @@ Sparse\ Explicit\ Projection
 如果 Agent 使用的是物理机器人身体，那么 $\mathcal X_B$ 可以包含关节、力矩、速度、姿态、电池、温度、驱动器健康、传感器置信度、局部障碍物状态和控制误差；如果 Agent 使用的是数字身体，那么它同样可以包含窗口状态、光标位置、页面结构、进程状态、网络连接、文件锁、接口可用性、权限、延迟和正在执行的操作进度。
 
 因此，“身体”在这里不是生物学意义上的肉身，而是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body
 =
 ControlledAndSensedCarrierOfAgency.
-}
-\]
+\)}
+\end{statementbox}
 凡是一个持续主体能够通过它接收现实反馈并向现实施加动作的载体，都属于 Body 范畴。由此，Body Runtime 的状态可以抽象为
 \[
 \mathcal X_B
@@ -230,11 +236,12 @@ NormalDynamicsStayLocal.
 AgentOS 具身架构中一个极容易犯的错误，是把“系统当前拥有的全部可观测状态”直接塞入工作记忆 $h(t)$，并称之为 Agent 的“当前状态”。这种设计在简单 Demo 中看似自然，因为大模型需要通过文字或结构化输入了解环境，但它在长期运行系统中会造成严重的理论和工程混乱。
 
 必须明确：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodyState(t)\neq h(t).
-}
-\]
+\)}
+\end{statementbox}
 
 BodyState 属于现实交互动力学，而 $h(t)$ 属于认知显式动力学。二者可以存在映射，却不能在本体上等同。
 
@@ -294,13 +301,14 @@ h
 \text{``如果向左转可能避开障碍物''}.
 \]
 但 BodyState 不能把这种预测直接当成真实状态。于是必须坚持：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictedBodyState
 \neq
 ObservedBodyState.
-}
-\]
+\)}
+\end{statementbox}
 否则模型的预期可能覆盖现实反馈，产生所谓“自我实现式状态估计”：系统以为动作已经成功，于是停止读取实际执行结果。这一点对于物理机器人和数字 Agent 同样危险。一个软件 Agent 发出了“文件已删除”的命令，并不意味着文件真的已经删除；浏览器执行了点击，也不意味着目标窗口真的完成了状态转换。
 
 因此，真实状态必须通过：
@@ -352,11 +360,12 @@ G
 \section{Kernel 的职责：决定 What To Do，而不是直接操纵每一个自由度}
 
 当我们说
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Kernel:\ WhatToDo
-}
-\]
+\)}
+\end{statementbox}
 时，“What”不能被狭义理解为只输出一句高层自然语言目标。Kernel 真正负责的是建立\textbf{行动的认知意义、目标约束、未来方向和跨时间一致性}。也就是说，它决定的不只是“向前走”，而是“为什么现在应该向前走、这个行动属于什么目标、允许承受多大风险、失败后是否继续、这次经历应如何影响未来”。
 
 设 Kernel 在时刻 $t$ 的认知状态为 $x_C(t)$，可行动候选集合为
@@ -431,8 +440,9 @@ HighLevelAffordance.\)}
 Kernel 还承担另一个 Body Runtime 无法替代的职责：\textbf{跨时间尺度一致性}。Body Runtime 的局部最优可能与主体的长期目标冲突。例如，在瞬时控制上最快的路径可能增加长期风险；执行当前命令最直接的方式可能违反 Agent 的权限边界；局部最稳定的动作可能与当前社会语境不一致。这些冲突只有在 Kernel 更广阔的认知状态中才能判断。
 
 因此可以把 Kernel 的作用概括为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Kernel
 =
 Meaning
@@ -444,29 +454,31 @@ GlobalConstraint
 LongHorizonPrediction
 +
 CrossTemporalConsistency.
-}
-\]
+\)}
+\end{statementbox}
 
 它与经典 hierarchical planning、model-based decision making、executive control 等理论存在明显交集，但 AgentOS 更强调：Kernel 不是一个单独的 planner，而是包含 $h/E/\Theta/\Psi/\Omega$ 等多时间尺度状态的持续认知主体。Planner 可以是 Kernel 中的一项功能，但不能代表 Kernel 本身。
 
 我们由此得到一条贯穿整个具身架构的原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \qquad
 LowerLevelActsInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 Kernel 最重要的控制能力，不是每时每刻告诉低层“具体怎么动”，而是不断定义\textbf{什么样的未来仍然属于这个主体愿意接受的可行未来}。
 
 \section{Body Runtime 的职责：决定 How This Body Does It，并在局部闭合现实}
 
 与 Kernel 的 WhatToDo 相对应，Body Runtime 的职责可以表达为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodyRuntime:\ HowThisBodyDoesIt.
-}
-\]
+\)}
+\end{statementbox}
 这里的“How”包含远多于传统 actuator control 的内容。它至少包括具体身体状态估计、局部世界建模、高频预测、控制求解、动作执行、执行进度、身体健康、局部异常判定和现实反馈。
 
 设 Kernel 给出的行动参考为
@@ -608,11 +620,12 @@ Escalate.
 \]
 
 这形成后续整个 AgentOS 非常重要的原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictLocally,\ EscalateResidualGlobally.
-}
-\]
+\)}
+\end{statementbox}
 
 它与控制工程中的 local feedback、异常检测、event-triggered control 以及操作系统中的 interrupt 存在形式对应。不过这里的重要扩展在于，升级的不是简单硬件中断，而是\textbf{某个现实 CSO 从低层身体承载重新迁移到高层显式认知承载}。
 
@@ -659,19 +672,21 @@ u_B(t)
 它预测在执行某个具体动作之后，身体和局部现实下一瞬间会发生什么。
 
 因此可写为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 P_C:
 LongHorizon,\ BroadStateSpace
-}
-\]
+\)}
+\end{statementbox}
 和
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 P_B:
 ShortHorizon,\ LocalStateSpace.
-}
-\]
+\)}
+\end{statementbox}
 
 两者不是竞争关系，而是不同频率上的嵌套预测。
 
@@ -731,13 +746,14 @@ PersistentFastResidualShapesSlowStructure
 这种结构与 hierarchical predictive control、model predictive control、predictive processing 等已有理论存在一定相似性，但我们需要特别避免把 AgentOS 简化成“预测编码的工程实现”。AgentOS 所谓预测具有更广泛含义：Kernel 的长期预测可能来自语言模型、世界模型、符号结构、经验记忆、工具模拟甚至社会知识，而 Body Runtime 的局部预测则可以由完全不同的模型实现。二者不要求同构，只要求在功能上保持可校准的一致关系。
 
 因此，本章所建立的原则是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 OneAgent
 \neq
 OnePredictor.
-}
-\]
+\)}
+\end{statementbox}
 一个成熟 Agent 可以包含多个时间尺度和多个状态空间上的预测器，但这些预测器必须服从同一主体的目标和现实反馈闭环。
 
 \section{时间尺度分离：为什么高层认知不能直接承担身体实时控制}
@@ -799,13 +815,14 @@ EveryMicroAction.
 它的结果是 Kernel 被大量底层状态占用，认知延迟不断增加，而 Body 又因为等待高层推理而失去实时稳定性。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance
 \neq
 FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 
 慢层的职责是定义中心、边界、目标和约束，不是直接取代快层。
 
@@ -818,13 +835,14 @@ FastMicromanagement.
 可能意味着当前身体技能已经不足，Kernel 需要重新规划、重新学习甚至改变目标。
 
 所以真实关系是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FastLocalClosure
 +
 SlowGlobalAdaptation.
-}
-\]
+\)}
+\end{statementbox}
 
 这一结构与 singular perturbation theory、averaging theory、hierarchical control、real-time systems 等成熟理论具有很强的数学兼容性。特别是快--慢动力系统提供了后续严格证明系统稳定性的自然工具。但需要注意，本书借用这些数学理论，是为了描述 AgentOS 的跨尺度结构，而不是宣称整个认知系统天然满足某一个标准奇异摄动模型。真实 Agent 包含离散事件、模型切换、工具调用和记忆更新，因此最终更接近 hybrid multiscale dynamical system。
 
@@ -888,13 +906,14 @@ Kernel
 BodyExperience.
 \]
 真实持续 Agent 的 $\Theta$、$\Psi$ 甚至长期目标都可能因为身体而变化。例如长期使用轮式身体的 Agent 会形成不同于人形身体的可行动世界结构；长期视野受限的身体会形成不同的空间经验；高能耗身体可能让资源约束更深地进入行为策略。因此更准确的表述是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ArchitectureIndependence
 \neq
 ExperientialIndependence.
-}
-\]
+\)}
+\end{statementbox}
 
 我们希望保持的是\textbf{架构层身体可迁移性}，同时允许\textbf{经验层身体塑造性}。
 
@@ -927,15 +946,16 @@ Kernel--Body 分离正是这些迁移能够发生的基础条件。
 这意味着 Body Runtime 必须承担一个重要职责：把身体特异性尽可能吸收到局部层，让 Kernel 面对的是更加稳定的行动语义空间。同时，Kernel 又必须保留学习能力，使其能够逐渐理解当前身体的能力边界，而不是假设所有 Body 都等价。
 
 于是我们得到：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Kernel
 =
 BodyIndependentArchitecture
 +
 BodyDependentLearning.
-}
-\]
+\)}
+\end{statementbox}
 
 前半部分保证跨身体连续性，后半部分保证真正的具身适应。
 
@@ -1038,13 +1058,14 @@ HigherLevelCognition.\)}
 只有无法在当前尺度解释或解决的结构才逐渐向上提升。
 
 第四是\textbf{慢结构约束原则}：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \quad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 Kernel 不进行快速微操，而是维持行动的意义、目标、边界与长期一致性。
 
 因此，完整 Agent 不是两个并列系统：
@@ -1052,15 +1073,16 @@ Kernel 不进行快速微操，而是维持行动的意义、目标、边界与�
 Kernel+BodyRuntime,
 \]
 而更准确地是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Agent
 =
 SlowCognitiveSubject
 \bowtie
 FastRealityCouplingSystem.
-}
-\]
+\)}
+\end{statementbox}
 
 这里的“Slow”与“Fast”是相对的。Kernel 内部本身存在从 $h$ 到 $\Omega$ 的多级时间尺度，Body Runtime 内部也存在从 servo 到语义身体状态的多级尺度。因此严格地说，我们面对的是：
 \begin{statementbox}
@@ -1076,47 +1098,52 @@ Kernel--Body 划分只是这个多频智能系统中最重要的一条功能边�
 
 我们的答案是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodyState\neq CognitiveState
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Kernel\neq LowLevelController
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodyRuntime\neq PassiveActuator
-}
-\]
+\)}
+\end{statementbox}
 
 而：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Kernel
 =
 Meaning+
 Goal+
 LongHorizonConstraint+
 IdentityContinuity
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodyRuntime
 =
 LocalState+
 FastPrediction+
 FastControl+
 RealityFeedback.
-}
-\]
+\)}
+\end{statementbox}
 
 从更深的 CSO 角度，这种职责分离实际上是在确定认知结构的承载位置。当某一结构需要跨任务、跨身体、跨生命周期保持意义时，它倾向于由 Kernel 更慢的结构承载；当某一结构主要负责某个具体身体上的高速局部闭环时，它倾向于沉降到 Body Runtime。于是 Kernel--Body 分离并不是人为的软件边界，而可以被理解为多尺度 CSO 迁移在工程架构中的自然结果。
 

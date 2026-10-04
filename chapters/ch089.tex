@@ -106,11 +106,12 @@ r_h<r_{\max}
 并且正常扰动下，$h$ 的轨迹大部分时间保持在该集合内部，短暂离开之后也能够在有限时间重新进入。由此可见，工作记忆稳定性不是 ``思想静止''，而是\textbf{有限显式认知面在持续变化条件下仍然保持可解释、可控制和可恢复的动态有界性}。
 
 这也解释了为什么成熟智能不应追求让越来越多结构长期停留在 $h$ 中。真正成熟的运行方式恰恰应该满足
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Most Agent Dynamics}\notin h,
-}
-\]
+\)}
+\end{statementbox}
 大量已经形成稳定闭环的能力应当在更局部、更快速或者更慢的结构中运行，只有新颖、冲突、高风险或者跨功能无法局部闭合的残差才被提升到 $h$。从控制意义上看，这种 ``选择性显式认知'' 本身就是维持工作记忆闭环稳定性的第一道机制。
 
 \section{三相记忆闭环：状态、轨迹与生成结构之间的慢速稳定性}
@@ -181,15 +182,16 @@ Utility
 $\left\langle\varepsilon_E\right\rangle_T$ 表示在一个相对长的时间窗口上仍然无法由当前 $\Theta$ 解释的经验残差。只有这种持续残差才有资格推动生成结构更新。
 
 稳定的三相记忆还要求反方向通道受到限制。$\Theta\rightarrow h$ 是结构激活，但不能把全部长期知识无条件倾倒到工作记忆；$E\rightarrow h$ 是情景召回，但也不能让任意关联事件不断侵入当前认知；$\Theta\rightarrow E$ 则是重新解释历史经验，它必须保留事实证据和原始经历层，不能由于当前世界观变化而把历史事件任意改写。因此可以把三相记忆稳定性理解成三个相互约束的条件：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Selective Write}
 +
 \text{Slow Consolidation}
 +
 \text{Constrained Recall}.
-}
-\]
+\)}
+\end{statementbox}
 
 如果我们采用 Lyapunov 式思想，可以为记忆闭环定义一个并非物理能量、而是用于稳定分析的候选泛函
 \[
@@ -263,19 +265,21 @@ r_K
 即目标、可行域、风险限制和控制参考。BPCC 在这一范围内部完成快速预测与控制。
 
 这一设计对应我们反复强调的原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \qquad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 高层对未来趋势和目标结构负责，低层对高频稳定负责。若 Kernel 每个周期都试图覆盖 BPCC 的控制细节，就会形成跨尺度 ``micromanagement''：认知延迟进入快速控制通道，高层预测过期，最终导致局部闭环震荡甚至安全失效。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance\neq FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 
 Body 闭环稳定的第二个关键是残差升级。令
 \[
@@ -310,11 +314,12 @@ Novelty
 时将有关 Agent-CSO 提升进入 $h$。这一机制把 ``现实持续变化'' 与 ``认知持续被打断'' 区分开来。现实中绝大部分连续扰动应该由局部闭环吸收，只有具有认知意义的偏差才成为显式思考对象。
 
 这里还必须保留 Reality Authority：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Prediction\neq Observation.
-}
-\]
+\)}
+\end{statementbox}
 BPCC 可以预测下一时刻的 SGC/FCS，但预测值不能直接替代真实世界重新进入系统的观测。动作发出之后必须经过
 \[
 Action
@@ -471,11 +476,12 @@ Memory
 SelfInterpretation'.
 \]
 例如，如果 Agent 形成 ``我总是不擅长某类任务'' 的自我结构，这一判断可能通过 Scheduler 和 TCE 改变未来注意与探索策略，使系统减少相关探索；随后获得的经历又更容易支持原有判断。此时闭环本身可以非常稳定，却稳定在一个错误吸引子上。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Stability\neq Truth.
-}
-\]
+\)}
+\end{statementbox}
 一个错误模型完全可能具有极高动力学稳定性。
 
 所以自我闭环必须引入外部现实锚点：
@@ -489,13 +495,14 @@ ObservedLongTermOutcome
 \right).
 \]
 如果 $\Psi$ 的某个自我判断持续无法解释真实世界反馈，则系统必须允许这一部分结构被重新打开，而不能让自我一致性权重覆盖现实证据。由此形成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfConsistency
 <
 RealityConsistency
-}
-\]
+\)}
+\end{statementbox}
 作为 AgentOS 身份稳定性的基本治理原则。
 
 我们还可以定义一个局部身份稳定泛函
@@ -745,13 +752,14 @@ f(x,z)
 的演化。只要快系统在慢变量变化过程中能够充分收敛，我们就可以避免所有层同时互相追逐。
 
 因此多尺度 AgentOS 的一个根本稳定原则可以写成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FastLoopsAbsorbFastPerturbations;
 \quad
 SlowLoopsReactOnlyToPersistentResiduals.
-}
-\]
+\)}
+\end{statementbox}
 快速噪声如果直接进入 $\Psi$、$\Omega$ 或长期拓扑，系统就失去时间尺度隔离；反过来，慢结构如果直接控制 servo 级动作，系统又失去局部自治。两者本质上是同一种跨尺度设计错误。
 
 \section{运行相变：从连续负荷变化到宏观认知相态转换}
@@ -986,8 +994,9 @@ V_{\mathrm{Agent}}(t)
 在没有外部不可控灾难的情况下持续发散。
 
 由此，我们最终可以给 AgentOS 稳定性一个比 ``不崩溃'' 更严格的定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \begin{aligned}
 \text{AgentOS Stability}
 =
@@ -998,8 +1007,8 @@ V_{\mathrm{Agent}}(t)
 &+\text{Controlled Phase Transition}\\
 &+\text{Recoverability}.
 \end{aligned}
-}
-\]
+\)}
+\end{statementbox}
 
 这一定义同时说明了为什么成熟智能不应被设计成一个巨大、统一、高增益的中央循环。越是长期、复杂的智能体，就越需要把高速稳定性交给局部闭环，把显式认知保留给真正需要跨结构处理的问题，把长期经验交给慢记忆，把身份变化限制在更长时间尺度，把生命周期方向放在最慢结构中。各层之间不是互不相干，而是通过受控残差、约束和预测相互作用。
 

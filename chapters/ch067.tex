@@ -4,11 +4,12 @@
 在前述 Agent Kernel、KRA 与 BPCC 的分层设计中，我们已经建立了一个基本事实：长期智能体并不是由一个统一模型独立承担认知、适配与控制，而是由不同时间尺度、不同状态空间以及不同学习目标的动力系统共同组成。Agent Kernel 负责较慢尺度上的认知结构、世界模型、目标、自我以及长期生成结构；BPCC 负责身体侧的快速预测、局部控制、残差估计和在线适配；KRA 则承担两者之间的语义、动力学与控制关系适配。由此，一个比单模型持续学习更困难的问题自然出现：\textbf{当 Kernel、KRA 和 BPCC 都具有学习能力时，如何避免三个系统相互追逐、相互补偿和共同漂移，最终使整体闭环失去真实参照？}
 
 本章将这一问题定义为\textbf{多时间尺度共同学习稳定性问题}。我们的基本判断是：长期智能系统真正需要维持的并不是每一个模型参数的静止，而是 Kernel、KRA、BPCC 与现实之间的\textbf{功能关系稳定性}。因此本章提出
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Relationship\ Stability > Parameter\ Stability
-}
-\]
+\)}
+\end{statementbox}
 作为共同学习的首要原则，并进一步建立时间尺度分离、Primary Learner、交替适配、漂移归因、适配预算、运行态--巩固态分离以及现实锚定等机制。最终目标不是阻止各组件学习，而是在允许组件持续改变的同时，使整个
 \[
 World\rightarrow BodyRuntime\rightarrow KRA\rightarrow Kernel
@@ -65,25 +66,27 @@ B,A,K,\mathcal{R}
 \right),
 \]
 其中 $\mathcal{R}$ 表示来自 Reality 的实际观测、执行结果与残差。因此真正的系统并不是三个独立梯度下降器，而是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 D_K
 \overset{D_A}{\longleftrightarrow}
 D_B
 \quad\bowtie\quad
 Reality
-}
-\]
+\)}
+\end{statementbox}
 构成的非平稳耦合学习系统。
 
 这一变化带来一个非常重要的理论后果。如果 BPCC 改变了身体控制方式，那么相同的高层 Control Reference 可能产生不同的底层轨迹；KRA 为了维持 Kernel 所期待的控制语义，就可能修改映射；Kernel 随后观察到已经被 KRA ``修正'' 后的世界，又可能据此更新自身世界模型。若三个学习过程没有进一步约束，即使每个局部损失都在下降，整体系统仍然可能逐步离开原来的真实语义关系。例如 Kernel 对 ``向前移动一米'' 的内部表征逐渐变化，KRA 同时改变这一表征到身体控制空间的映射，而 BPCC 又重新学习新的运动动力学。三者完全可能在内部继续互相适配，使训练误差保持很低，却使实际行为逐渐偏离最初的任务语义。
 
 因此，本章首先必须放弃一个过于简单的目标：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \theta_K,\theta_A,\theta_B\rightarrow Constant
-}
-\]
+\)}
+\end{statementbox}
 长期智能不可能要求三个组件参数保持不变。真正需要保持的是某些跨模块关系。例如，对于一类语义状态 $s$、控制意图 $u$ 与现实结果 $y$，我们希望
 \[
 \mathcal{F}
@@ -123,13 +126,14 @@ E_{safe}\leq\epsilon_{safe}
 或者在存在短暂扰动时至少保证系统能够重新回到这一兼容集合。
 
 由此我们得到本章第一条基本原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Relationship\ Stability
 >
 Parameter\ Stability.
-}
-\]
+\)}
+\end{statementbox}
 Kernel 可以变，KRA 可以变，BPCC 也可以变；真正不可失去的是它们对现实、对语义以及对控制结果之间的稳定关系。这个转变使共同学习问题从传统的 ``三个模型怎样一起训练'' 上升为一个多时间尺度自适应系统的稳定性问题。
 
 \section{共同学习的第一原则是时间尺度分离，而不是同时快速更新}
@@ -196,13 +200,14 @@ G_K(K;A,B,\mathcal R).
 在理想情况下，对于 Kernel 的短时间观察窗口，$K$ 可以近似视为常量；对于 KRA 的适配窗口，Kernel 也是准静态变量，而 BPCC 的快速变化可以通过局部平均被吸收。这样的结构正是快--慢动力系统和奇异摄动理论所提供的基本分析直觉。
 
 时间尺度分离并不意味着 ``低层永远比高层学习快''。例如遭遇全新身体、重大身体损伤或环境突变时，BPCC 的高频控制律仍然可能需要受到冻结；相反，在离线巩固阶段，Kernel 可能集中进行结构更新。因此这里真正要求的是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Simultaneous\ Unconstrained\ Fast\ Adaptation
 \quad
 \text{is forbidden}.
-}
-\]
+\)}
+\end{statementbox}
 也就是说，任意时刻必须有明确的主导适配层，并保持其他层在一个可作为参考的准稳定区间。
 
 我们可以进一步定义相对漂移率
@@ -336,14 +341,15 @@ Primary Learner 原则的本质并不是人为限制系统智能，而是维护�
 而长期 Agent 必须拥有这种因果可解释性，否则系统既无法稳定巩固正确能力，也无法在异常发生后回滚真正的问题来源。
 
 因此可以把本节原则概括为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 One\ dominant\ structural\ learner
 \quad
 +\quad
 multiple\ operational\ participants.
-}
-\]
+\)}
+\end{statementbox}
 这使 AgentOS 的共同学习从 ``所有组件一起训练'' 转变为 ``在统一闭环中有治理地轮流学习''。
 
 \section{交替适配将联合学习从同步追逐转化为分阶段坐标下降}
@@ -630,13 +636,14 @@ SemanticTransparency\downarrow.
 最终 KRA 变成历史补丁的累积层，而不是稳定耦合层。
 
 因此 KRA 的学习必须满足一个额外条件：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InterfaceError
 \ \text{rather than}\ 
 ArbitrarySystemError
-}
-\]
+\)}
+\end{statementbox}
 才是其主要学习对象。
 
 漂移归因的更深意义在于，它使 AgentOS 对自己具有一种类似科学实验的认识论纪律：系统不能看到预测失败就立刻修改理论，而必须首先判断是测量变了、身体变了、接口变了，还是理论本身确实错误。只有这样，持续学习才不会退化成持续自我解释。
@@ -875,21 +882,23 @@ S_R\geq S_{min},
 (K,A,B)\in\mathcal M_{compatible}.
 \]
 换言之：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Interface=SemanticSkeleton+LatentMuscle.
-}
-\]
+\)}
+\end{statementbox}
 Semantic Skeleton 提供长期稳定的公共结构，而 latent muscle 允许不同组件在内部继续优化。
 
 这也解释了为什么我们一直强调
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalAlignment
 >
 RepresentationAlignment.
-}
-\]
+\)}
+\end{statementbox}
 长期智能不需要所有内部神经表示逐元素一致，而需要不同内部实现继续保持可预测的功能对应关系。
 
 从生命周期角度看，Compatibility Manifold 可以理解为 Agent 在某一发展阶段允许的 ``结构自由区域''。成熟不是停止变化，而是在不失去核心功能连续性的前提下扩展可行结构空间。因此本节实际上给出了一个重要答案：
@@ -915,13 +924,14 @@ E_{A-B}\downarrow,
 E_R\uparrow.
 \]
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InternalAgreement
 \neq
 RealityCorrectness.
-}
-\]
+\)}
+\end{statementbox}
 
 这使前面确立的 Reality Authority 原则在共同学习中获得更强形式。我们要求整体损失始终含有不可被其他模型代理替代的现实项：
 \[
@@ -993,15 +1003,17 @@ KRA 同样不能为了接口连续而篡改 Reality Evidence 的来源等级。
 \|\bar\varepsilon_R^{global}\|>\theta_R
 \]
 时进入上层认知。这样才能维持
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictLocally,\ EscalateResidualGlobally.
-}
-\]
+\)}
+\end{statementbox}
 
 这与本书更一般的认识论完全一致：智能体的内部模型永远只是现实结构的有限表示，任何内部一致性最终都必须接受外部世界检验。因此对于 Kernel--KRA--BPCC 的共同学习而言，现实不是第四个普通学习器，而是整个学习系统的最终边界条件：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reality
 >
 Kernel,
@@ -1013,8 +1025,8 @@ KRA,
 Reality
 >
 BPCC.
-}
-\]
+\)}
+\end{statementbox}
 三个系统都可以修改自己对现实的解释，却不能通过互相适应来修改 ``什么算作现实证据''。
 
 \section{运行态与巩固态分离，使实时智能与深层学习不必同时承担全部风险}
@@ -1136,13 +1148,14 @@ P(H_i\mid\mathcal E).
 只有在证据明确时才提高相应层级的适配预算。这样便将 ``看到错误立即改参数'' 转变为 ``积累经验以后改变最合适的结构''。
 
 Operational/Consolidation 分离还自然连接 AgentOS 的生命周期稳定性。长期系统不应在所有时间尺度上同时可塑；快结构负责在线应变，慢结构负责总结经验。于是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 OnlineAdaptation
 \neq
 LongTermConsolidation.
-}
-\]
+\)}
+\end{statementbox}
 前者追求即时恢复，后者追求结构正确。
 
 这也是为什么 BPCC、KRA 与 Kernel 三者虽然都能学习，却不应该成为三个永远高速更新的在线学习器。真正成熟的共同学习系统应该表现出一种节律：
@@ -1303,8 +1316,9 @@ CalibrationCost
 如果当前身体上性能不断提高，但 TransferScore 持续下降，则说明系统很可能通过过拟合当前 Body 破坏了更一般的 Kernel--Body 关系。
 
 最终，共同学习稳定性并不能用单一 Accuracy 指标评价。更合理的是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Stability
 =
 Performance
@@ -1316,8 +1330,8 @@ RealityClosure
 Recoverability
 +
 Transferability.
-}
-\]
+\)}
+\end{statementbox}
 只有这些维度共同保持，才能说一个持续改变自身参数的 Agent 仍然具有长期可治理性。
 
 \section{从“共同训练三个模型”到“维持一个可成长的关系系统”}
@@ -1341,11 +1355,12 @@ K_t,A_t,B_t
 本章由此得到七条基本原则。
 
 第一，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RelationshipStability>ParameterStability.
-}
-\]
+\)}
+\end{statementbox}
 真正需要保护的是功能和语义关系，而不是具体权重值。
 
 第二，

@@ -69,11 +69,12 @@ p_K(z\mid\cdots)>\epsilon
 \mathcal R_K.
 \]
 我们由此得到一个重要原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 KernelPrediction\neq FineGrainedPhysicalSimulation.
-}
-\]
+\)}
+\end{statementbox}
 成熟的 Kernel 不应该知道得越来越“细”，而应该知道哪些细节无需进入自身，以及在什么条件下必须把某些低层异常重新提升到认知层处理。Global Prediction 的价值不在于比局部控制器更快，而在于比局部控制器看得更远、覆盖更广，并能够把未来放在目标、自我和生命周期的结构中进行解释。
 
 \section{Local Prediction：BPCC 的短时间尺度身体预测}
@@ -140,13 +141,14 @@ g_B(\hat x_{t+k},u_{t+k})\leq0.
 这里的 $r_t$ 并不是 BPCC 自己生成的全局目标，而是来自上层的 Control Reference；$c_t$ 则代表环境、身体和安全约束。
 
 这种结构说明 BPCC 具有一定程度的局部自主性。所谓自主，不是让 BPCC 获得独立目标，而是允许它在高层规定的可行域中自由寻找最优局部轨迹：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \qquad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 如果 BPCC 每一次微小变化都必须等待 Kernel 给出新的具体动作，那么高层延迟会直接破坏快速闭环；反过来，如果 BPCC 可以自行改变目标，就会破坏单一主体原则。因此双预测架构真正需要的不是“高层控制低层的一切”，而是\textbf{权限分层}。
 
 我们还可以把 BPCC 的预测误差定义为
@@ -171,8 +173,9 @@ x_B^{obs}(t)
 其中控制残差描述动作没有按照预测实现的程度，SGC 残差描述外部语义状态和几何结构偏差，FCS 残差描述身体影响状态偏差，而动力学残差反映 BPCC 内部模型本身对身体行为的建模不足。
 
 因此 BPCC 不只是一块“控制器”。更准确地说：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BPCC
 =
 FastPredictor
@@ -182,8 +185,8 @@ FastController
 ResidualEstimator
 +
 LocalAdaptiveLearner.
-}
-\]
+\)}
+\end{statementbox}
 它之所以被类比为“小脑”，不是因为我们假定它复制生物小脑，而是因为它承担了类似的系统职能：把大量稳定、重复、时间敏感的身体预测与控制从显式认知层移出，使高层有限工作记忆能够专注于真正需要跨尺度处理的问题。
 
 \section{Predictive Envelope：高层预测如何约束低层未来}
@@ -255,13 +258,14 @@ FastMicromanagement.
 预测包络也天然适用于数字 Body。例如对于浏览器 Agent，高层可以规定：“在当前网站完成登录并进入设置页面，不执行支付，不修改安全设置，不离开目标域名。”这些都属于包络，而不是具体点击序列。Body Runtime 可以根据页面变化自主选择点击、滚动、等待和重试，只要不突破高层限制。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictiveEnvelope
 =
 CompressedFutureConstraint.
-}
-\]
+\)}
+\end{statementbox}
 它把大尺度未来预测压缩成低层能够执行的结构约束，是 Kernel Global Prediction 与 BPCC Local Prediction 之间最重要的跨尺度桥梁之一。
 
 \section{Control Reference：从未来约束到当前可执行目标}
@@ -301,13 +305,14 @@ r_t=
 \]
 
 这里需要强调一个重要的单向权限关系：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 KernelOwnsIntent,
 \qquad
 BPCCOwnsLocalRealization.
-}
-\]
+\)}
+\end{statementbox}
 Kernel 决定当前动作为什么发生以及什么结果构成成功；BPCC 决定在当前身体和局部环境条件下怎样实现。因而 BPCC 可以对 $r_t$ 进行局部追踪、插值甚至短时回避，却不应在没有升级事件的情况下自行改写 $G_t$。
 
 Control Reference 的一个重要价值，是把高层认知节奏与低层控制节奏解耦。假设 Kernel 更新频率为
@@ -483,13 +488,14 @@ F(\mathbf m_t),
 能力裕度越高，低层越可以自治；越接近边界，高层介入概率越高。
 
 这恰好与我们早期智能频谱中的“中心—半径”模型对应。高层定义局部运行中心，而 Capability Margin 决定低层围绕该中心可自由波动的有效半径。因而 Body Runtime 的自治不是一个固定权限，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Autonomy
 =
 Function(CapabilityMargin,Risk,Confidence).
-}
-\]
+\)}
+\end{statementbox}
 
 在具身机器人场景中，如果机械臂目前对一个五百克物体拥有很大抓取裕量，就无需 Kernel 参与每一次微调；如果对象接近负载极限，或者摩擦系数极不确定，则 Capability Margin 快速下降，身体应自动进入更保守模式。数字 Agent 同样如此：如果网页 DOM 稳定、目标元素明确、操作权限充分，那么局部执行可以高速自动完成；如果页面发生异常重排、权限边界模糊或关键按钮存在高影响后果，Capability Margin 就不再仅是物理概念，而成为广义的执行能力裕度。
 
@@ -653,23 +659,25 @@ q_K^{pred}\approx1,
 q_B^{pred}\rightarrow0,
 \]
 那么下层现实证据必须有能力挑战高层判断，而不是因为 Kernel “更高级”就自动压制局部反馈。这正是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityAuthority>HierarchyAuthority.
-}
-\]
+\)}
+\end{statementbox}
 高层具有决策权限，但下层拥有关于局部现实的高频证据。如果两者冲突，应首先承认高层模型可能已经过时。
 
 反过来，当 BPCC 对当前局部动力学高度有信心，也不意味着它可以推翻 Kernel 的长期目标。例如车辆可以确信“继续加速在物理上完全可控”，但如果高层目标要求停车，那么 BPCC 的控制知识不能自动变成行为目标。
 
 因此可以总结：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictionConfidence
 \neq
 ControlAuthority.
-}
-\]
+\)}
+\end{statementbox}
 置信度是认识论量，权限是治理量。把二者混为一谈，是许多自主系统设计中非常危险的错误。
 
 \section{Residual Feedback：现实如何重新连接双预测系统}
@@ -747,11 +755,12 @@ KernelEscalation.
 \]
 
 这使我们得到一个贯穿整个 AgentOS 的核心原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictLocally,\ EscalateResidualGlobally.
-}
-\]
+\)}
+\end{statementbox}
 真正进入认知层的不是“现实本身的全部变化”，而是\textbf{局部闭环无法解释、无法吸收、持续存在且具有更高层意义的偏差}。
 
 从 CSO 理论看，这一机制还可以解释为 Agent-CSO 的跨尺度提升。局部残差最初只是 Body Runtime 内部的动态结构。当它持续存在并影响高层目标时，相应结构被提升成为当前认知的一部分：
@@ -822,8 +831,9 @@ SlowRevision.\)}
 
 因此，本章最终得到的双预测原则可以写成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \begin{aligned}
 Kernel &: \quad
 \text{Predict the meaningful, feasible and goal-consistent future},\\
@@ -832,8 +842,8 @@ BPCC &: \quad
 Reality &: \quad
 \text{Determine which prediction actually survives}.
 \end{aligned}
-}
-\]
+\)}
+\end{statementbox}
 
 从智能动力学的角度看，这一体系揭示了成熟智能的一个重要特征：\textbf{它不是依靠一个越来越庞大的模型同时预测所有尺度，而是让不同时间尺度的预测结构各自闭合自己的局部循环，并通过包络、参考、约束、置信度和残差形成有限带宽的跨尺度耦合。}
 

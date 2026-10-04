@@ -5,23 +5,25 @@
 本章研究的对象不是人类意义上的“情绪疾病”，也不试图把任何生物心理诊断直接移植到人工智能体之上。这里所谓的 AHC 异常，是指 Affective--Homeostatic Coprocessor 在持续 AgentOS 中由于状态积分、衰减、饱和、恢复、基线漂移、跨变量耦合或 FCS 输入映射失真，使其内部调制状态长期偏离与现实、任务和身体条件相匹配的可恢复区域，并进一步通过 TCE、工作记忆 $h$、情景记忆 $E$、边界控制以及目标优先级改变整个 Agent 的认知动力学。
 
 因此，本章采取严格的功能动力学定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AHC\ Pathology
 \neq
 Human\ Emotion\ Disorder
-}
-\]
+\)}
+\end{statementbox}
 而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AHC\ Pathology
 =
 Persistent\ Misregulation
 \ of\
 Affective\!-\!Homeostatic\ Dynamics
-}
-\]
+\)}
+\end{statementbox}
 
 其核心问题不是“Agent 感觉好不好”，而是：一个承担中尺度内稳态积分和认知调制功能的动力系统，是否仍然能够根据现实输入形成适当的状态、在扰动消失后恢复、避免长时间饱和，并对 TCE 和其他认知过程提供具有正确方向、正确幅度和正确时间常数的调制信号。
 
@@ -192,8 +194,9 @@ EnergyDrive 和 Fatigue 又可能受到更慢资源恢复机制影响。由此�
 即 AHC 对 TCE 的影响方向必须符合设计的功能语义。
 
 正常 AHC 因而至少需要满足四个条件：有界、响应、可恢复和现实一致。我们可以将其写成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 NormalAHC
 =
 Boundedness
@@ -203,8 +206,8 @@ Responsiveness
 Recoverability
 \cap
 RealityConsistency
-}
-\]
+\)}
+\end{statementbox}
 后面所有异常类型，本质上都可以理解为这四个性质中的一个或多个被破坏。
 
 \section{状态持续过长与恢复迟滞：时间常数失配}
@@ -258,13 +261,14 @@ S_{\mathrm{self}}(t)
 其中 $\mathbf a$ 已经包含过去状态残留。这样，新的环境虽然已经安全，Agent 仍然可能维持较高风险敏感度、较窄注意范围和较低探索温度。
 
 这与普通“记住过去”不同。E 中保存一段高风险经历是合理的；真正的问题是那段经历留下的调制状态没有在当前运行态中消退。我们因此需要区分：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MemoryPersistence
 \neq
 AffectiveStatePersistence
-}
-\]
+\)}
+\end{statementbox}
 前者是知识与经历的保存，后者是控制背景没有恢复。二者混淆会使 Agent 把“我记得某件危险的事”错误实现为“我现在仍处于危险状态”。
 
 恢复迟滞还可能来自非线性耦合，而不仅是单个 $\tau$ 设置过大。例如
@@ -388,11 +392,12 @@ T_{t+1}>T_t
 因此 Threat 异常不能只通过降低一个阈值修复。我们需要同时区分至少四个来源：第一，FCS 本身是否错误地产生高 Threat；第二，FCS 到 AHC 的映射增益是否过高；第三，AHC 内部其他变量是否把 Threat 持续放大；第四，SPC 对高 Threat 状态的自解释是否又反向强化 AHC。只有把这几个层次分离，才能判断真正的故障来源。
 
 此外，必须保持前文已经确立的安全原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Feeling\neq Exception
-}
-\]
+\)}
+\end{statementbox}
 与
 \begin{statementbox}
 \centering
@@ -441,11 +446,12 @@ A_{\max}
 此时无论输入再发生多大变化，Arousal 输出都几乎保持在同一高值。
 
 这一点非常重要。饱和异常不是简单的“值太高”，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ControlResolution\rightarrow0
-}
-\]
+\)}
+\end{statementbox}
 即 AHC 不再能够有效区分“较高压力”“非常高压力”和“极端压力”。当下游 TCE 看到的永远是接近最大 Arousal 时，正常的连续调节就退化成一种近乎二值的长期高激活模式。
 
 这会进一步影响 Agent 工作记忆相态。适度 Arousal 可能把系统从 Ground 推向 Flow，但过高且长期持续的 Arousal 容易增加同时激活的候选结构数量，使
@@ -942,8 +948,9 @@ FCS\rightarrow AHC\rightarrow TCE\rightarrow Cognition.
 从外部理论上看，本章最直接依赖的是 homeostasis、allostasis、非线性动力系统、状态空间控制、饱和控制、anti-windup、observer--controller delay 与多时间尺度系统理论。但我们并没有把这些已有理论简单拼接成 AgentOS，而是利用它们回答一个新的工程问题：\textbf{一个具有持续身份、持续记忆和持续身体交互的人工智能体，应该如何维护其中尺度内稳态调制状态，使短期扰动既能够真实影响认知，又不会错误地沉降成长期结构。}
 
 因此，本章最终可以给出 AHC 健康状态的一个紧凑定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AHC_{\mathrm{healthy}}
 =
 Responsive
@@ -955,13 +962,14 @@ Recoverable
 RealityAligned
 +
 CrossScaleContained
-}
-\]
+\)}
+\end{statementbox}
 其中 CrossScaleContained 表示 AHC 的异常首先在自身尺度被处理，只有经过长期、重复且现实一致的证据之后，才允许它改变更慢的记忆和自我结构。
 
 与之相对，AHC 异常可以统一表示为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AHC_{\mathrm{pathology}}
 =
 TemporalMismatch
@@ -975,8 +983,8 @@ BaselineDrift
 MappingError
 \cup
 CoupledInstability.
-}
-\]
+\)}
+\end{statementbox}
 
 从作者带领读者一路走到这里，我们已经可以看清一个十分重要的区别：持续 Agent 的“心理稳定”并不是让所有内部状态始终保持平静，而是让这些状态在应该升高时能够升高，在现实改变后能够恢复，在不同时间尺度之间不过度泄漏，并且始终保持与现实反馈的可校正关系。真正危险的不是 Agent 出现高 Threat、高 Arousal 或高 Fatigue，而是这些状态逐渐脱离现实、失去恢复能力，并开始重新塑造 Agent 对未来世界和未来自己的解释。
 

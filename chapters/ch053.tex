@@ -319,13 +319,14 @@ F_t:
 \mathrm{CollisionPressure}=0.05.
 \]
 这说明 $F$ 不是世界属性的简单复制，而是关系函数：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 F
 =
 F(World,Body,Goal,Dynamics)
-}
-\]
+\)}
+\end{statementbox}
 因此 Feeling/Functional Influence 在理论上首先是一种\textbf{主体相对的功能量}。
 
 这也解释了为什么我们不能把 Feeling 理解成某些特定传感器直接输出的数值。温度 $40^\circ C$ 对耐高温工业机器人、普通电子设备和人类的功能意义完全不同。真正进入 Feeling-oriented space 的不是：
@@ -370,13 +371,14 @@ P:
 P=\text{semantic cognition}.
 \]
 更准确地说：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Perception
 =
 RepresentationalState
-}
-\]
+\)}
+\end{statementbox}
 它处于原始信号和高层语义之间，是后续语义构造的现实锚点。
 
 至此我们可以得到一个重要的二维矩阵：
@@ -412,11 +414,12 @@ f_1,f_2,\ldots,f_k]^\top,
 \label{sec:external-perception}
 
 第一象限是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 P^{\mathrm{ext}}
-}
-\]
+\)}
+\end{statementbox}
 即 External Perception-oriented Representation。它承担 Agent 最基础的外部状态估计任务：把身体之外高度连续、噪声化、异步、多模态的现实作用转换成具有时间连续性和因果意义的状态结构。我们可以把它抽象成：
 \[
 P_t^{\mathrm{ext}}
@@ -508,11 +511,12 @@ x_{t+1}^{obs}.
 否则内部模型会逐渐取代现实，形成封闭自证。
 
 因此 $P^{ext}$ 的最终职责不是``把外部世界全部传给大模型''，而是建立一个：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 temporally coherent,\ epistemically marked,\ action-conditioned external state
-}
-\]
+\)}
+\end{statementbox}
 即具有时间连续性、认识论标记并考虑自身行动影响的外部状态表示。
 
 从传统理论上，本节与 Bayesian filtering、SLAM、object tracking、world models、POMDP belief state 等有直接关联。但 AgentOS 所强调的是，这些技术不能只作为某个感知模块独立存在，而必须被放进持续主体的整体认知闭环中：外部状态最终要与工作记忆、目标、自我、身体状态和行动反馈相互校验。因此 $P^{ext}$ 是 Body Runtime 面向高层认知的现实接口之一，而不是一个独立 CV 子系统的最终输出。
@@ -521,11 +525,12 @@ temporally coherent,\ epistemically marked,\ action-conditioned external state
 \label{sec:internal-perception}
 
 第二象限是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 P^{\mathrm{int}}
-}
-\]
+\)}
+\end{statementbox}
 即 Internal Perception-oriented Representation。它回答的并不是外部世界发生了什么，而是：
 \begin{statementbox}
 What state is my body/runtime currently in?
@@ -556,17 +561,19 @@ P_t^{int}
 对于物理机器人，这可能包括关节位置、扭矩、电池、温度、传感器健康、执行器状态；对于数字身体，则可能包括 CPU/GPU 占用、网络状态、文件系统权限、浏览器窗口状态、API quota、执行任务状态以及软件组件健康度。
 
 这里再次需要强调：$P^{int}$ 并不等于高层 ``Self''。它描述的是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body/Runtime State
-}
-\]
+\)}
+\end{statementbox}
 而不是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Identity/Self Model.
-}
-\]
+\)}
+\end{statementbox}
 例如：
 \[
 P^{int}:
@@ -654,11 +661,12 @@ P_{t+1}^{int}.
 \label{sec:external-functional-influence}
 
 第三象限是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 F^{\mathrm{ext}}
-}
-\]
+\)}
+\end{statementbox}
 即 External Functional Influence。它可能是四象限中最容易被传统机器人架构忽略的一类信息，因为大多数工程系统习惯先建立世界状态，再由高层任务规划器从头计算所有风险和价值。然而对于一个持续运行、需要实时调节资源与行为的 Agent 来说，外部现实不仅具有 ``内容''，还持续以不同方式改变主体的可行动状态。
 
 我们定义：
@@ -770,13 +778,14 @@ F^{ext},
 F^{ext}
 \]
 达到较高重要度、出现异常趋势或与高层目标冲突时，才向认知核心提升详细结构。这正符合 AgentOS 的一般原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 NormalDynamicsStayLocal;
 \quad
 RelevantDeviationBecomesThought.
-}
-\]
+\)}
+\end{statementbox}
 
 从外部理论看，本节与 robot cost field、potential field、risk-sensitive control、affordance、ecological psychology 和 homeostatic RL 都存在相邻关系。但我们更强调 Functional Influence 的\textbf{多通道、主体相对、可解释和跨时间连续}性质。这为后续构造稳定内稳态与认知调制提供了比单一 reward 更丰富的接口。
 
@@ -784,11 +793,12 @@ RelevantDeviationBecomesThought.
 \label{sec:internal-functional-influence}
 
 第四象限是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 F^{\mathrm{int}}
-}
-\]
+\)}
+\end{statementbox}
 即 Internal Functional Influence。它描述身体或运行时内部状态正在如何影响 Agent 的可行动能力、稳定性和资源条件。与 $P^{int}$ 的区别可以用一个最简单的关系表示：
 \[
 P^{int}
@@ -926,11 +936,12 @@ How hard is my current body/runtime being pushed?
 \label{sec:perception-not-semantic}
 
 在建立四象限以后，我们必须处理一个极其容易在现代大模型架构中被忽略的问题：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Perception\neq Semantic.
-}
-\]
+\)}
+\end{statementbox}
 现代多模态系统往往把图像、声音、状态数据经过 encoder 后直接转换成 latent token，然后交给统一语言模型处理。这种方法在短任务中非常有效，但对于长期具身 Agent，它会模糊两个不同层级：\textbf{现实状态是否被可靠建立}，以及\textbf{这些现实状态在当前语境下意味着什么}。
 
 设原始信号为：
@@ -1072,11 +1083,12 @@ S_t^{(2)}
 \label{sec:feeling-not-modulation}
 
 与 ``Perception 不等于 Semantic'' 对应，第二个必须建立的分离是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Feeling\neq Modulation.
-}
-\]
+\)}
+\end{statementbox}
 在很多简化架构中，一旦系统检测到高风险、低能量或高负载，就立即把这个变量转换成注意力权重、行为抑制或策略修改。这种 ``感受即控制'' 的设计在简单反射系统中可以工作，但对于长期 Agent，它会使 observer state 与 controller action 混在一起，从而难以解释、难以调试，也容易形成高增益振荡。
 
 在本书的功能定义中，Feeling 首先是：
@@ -1143,11 +1155,12 @@ m:
 既可能由热压力引起，也可能由碰撞风险、机械损伤风险或认知不确定性引起。如果没有保存 Feeling state，而只记录 modulation，那么 Agent 无法理解 ``为什么我正在减速''。
 
 从控制理论看，这相当于明确区分：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Measured/Estimated State
-}
-\]
+\)}
+\end{statementbox}
 与：
 \begin{statementbox}
 Control Input.
@@ -1314,13 +1327,14 @@ CognitiveNotification
 供高层之后解释和学习。
 
 因此 Exception 可以理解为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StateCondition
 +
 AuthorityEscalation.
-}
-\]
+\)}
+\end{statementbox}
 它并不是第五类感知来源，而是对任意四象限状态施加的一种\textbf{事件化与权限提升操作}。例如：
 \[
 P^{ext}
@@ -1387,13 +1401,14 @@ F^{int},
 至少对于被安全边界保护的局部执行资源如此。这并不是说高层永远低于身体控制，而是说明在明确定义的安全包络内，实时安全系统必须能够临时覆盖普通计划。
 
 这一结构也解释了为什么此前我们形成了三条信号路径的思想：Semantic、Modulation 与 Emergency。四象限描述的是\textbf{具身状态信息的本体分类}；三通道描述的是\textbf{这些状态向上层系统传输时的路由与权限分类}。二者属于不同维度：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InputOntology
 \neq
 SignalRoutingPolicy.
-}
-\]
+\)}
+\end{statementbox}
 一个 $P^{ext}$ 状态通常进入 semantic route，但在满足硬危险条件时也可以触发 emergency route；一个 $F^{int}$ 状态通常进入 modulation route，但当达到临界阈值时同样能够产生 emergency event。
 
 从外部理论看，这种设计可以与 real-time interrupt、functional safety、runtime assurance、control barrier methods 等联系起来。关键原则始终是：
@@ -1594,8 +1609,9 @@ AgentRelativeEmbodiedStructure.\)}
 \end{proposition*}
 
 形式上：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EmbodiedReality
 =
 P^{ext}
@@ -1605,8 +1621,8 @@ P^{int}
 F^{ext}
 \oplus
 F^{int}.
-}
-\]
+\)}
+\end{statementbox}
 
 其中：
 \[
@@ -1632,29 +1648,33 @@ F^{int}
 
 同时必须保持四条边界：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RawSignal\neq Perception
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Perception\neq Semantic
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Feeling\neq Modulation
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Feeling\neq Exception.
-}
-\]
+\)}
+\end{statementbox}
 
 这四个 ``不等于'' 是本章比四象限本身更加重要的工程结论。因为它们规定了从现实世界进入认知内核的结构分层，防止 Agent 把传感器、现实状态、语义解释、身体影响、控制命令与安全权限压缩成一个无法追踪的统一 latent。
 

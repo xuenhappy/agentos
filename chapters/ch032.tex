@@ -152,8 +152,9 @@ TCE 最初的直觉来自“认知温度”。在普通生成模型中，tempera
     T_{\mathrm{converge}}.
 \end{equation}
 重要的问题不再是“应该使用多大的 temperature”，而变成：
-\begin{equation}
-    \boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
     T_{\mathrm{cog}}^\star
     =
     T^\star
@@ -164,28 +165,29 @@ TCE 最初的直觉来自“认知温度”。在普通生成模型中，tempera
     Progress,
     Residual
     )
-    }
-\end{equation}
+\)}
+\end{statementbox}
 
 在熟悉环境中，高温意味着不必要地重新打开已经稳定的结构；在未知环境中，低温意味着过早把已有 $\Theta$ 当成现实本身。TCE 的作用恰恰是根据当前状态决定系统应该多大程度相信已有结构，又应该多大程度允许新结构进入显式竞争。
 
 这也说明认知温度实际上连接了本书前面两个重要思想。一方面，它受到慢结构的约束，即 $\Theta$、$\Psi$ 等已经形成的稳定结构决定哪些状态区域具有较高先验；另一方面，它仍然必须允许现实中的持续残差推动系统离开已有吸引域。因此：
-\begin{equation}
-    \boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
     \text{Stable Prior}
     +
     \text{Controlled Exploration}
     =
     \text{Adaptive Cognition}
-    }
-\end{equation}
+\)}
+\end{statementbox}
 TCE 就是调节这两者平衡的运行时控制器。
 
 \section{从单维温度到多维认知控制向量}
 
 一旦把 TCE 从语言模型 sampling temperature 中解放出来，我们就必须进一步承认：真实认知控制不可能由一个标量完全描述。认知搜索的宽度、深度、激活范围、推理速度、资源使用和收敛倾向虽然存在耦合，却并不是同一个变量。因此，本书将 TCE 的输出正式写成一个多维控制向量：
-\begin{equation}
-    \boxed{
+\[
+\boxed{
     u_{\mathrm{TCE}}(t)
     =
     \begin{bmatrix}
@@ -198,8 +200,8 @@ TCE 就是调节这两者平衡的运行时控制器。
     \nu_t\\
     \kappa_t
     \end{bmatrix}
-    }
-\end{equation}
+}
+\]
 其中，$T_t$ 表示认知温度，$R_t$ 表示激活或搜索范围，$D_t$ 表示推理深度预算，$G_t$ 表示整体控制增益，$\alpha_t$ 表示探索权重，$\beta_t$ 表示收敛或抑制强度，$\nu_t$ 表示认知节奏或更新频率，而 $\kappa_t$ 表示资源投入水平。这个向量不是唯一可能形式，但它提供了一种比“调温度”更准确的抽象。
 
 认知温度 $T_t$ 主要决定状态空间中候选路径的多样性；搜索范围 $R_t$ 决定从当前 Agent-CSO 网络向外扩散多远；推理深度 $D_t$ 决定一个候选路径允许连续展开多少层关系；控制增益 $G_t$ 决定 TCE 对状态偏差作出多强响应；探索权重 $\alpha_t$ 和收敛强度 $\beta_t$ 则形成典型张力：
@@ -324,13 +326,14 @@ TCE 实际上控制的是这个“认知可达集合”的形状和大小。
 它并不是追求最大思考量，而是追求在任务损失、认知成本、风险和不确定性之间取得动态平衡。
 
 这里出现一个重要原则：
-\begin{equation}
-    \boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
     \text{More Cognition}
     \neq
     \text{Better Cognition}
-    }
-\end{equation}
+\)}
+\end{statementbox}
 成熟的智能系统并不是每次都进行最深推理，而是在不确定性足够低时迅速停止；在低风险熟悉环境中保持局部闭环；在异常发生时重新扩大认知域。换言之，真正的认知效率来自\textbf{可变认知分辨率}。
 
 我们甚至可以把一个成熟 Agent 的运行策略近似划分成三个区域。若当前不确定性、风险和新颖性都低，则：
@@ -394,13 +397,14 @@ TCE 的第二个重要作用是控制什么能够进入显式认知，以及进�
 则可以由 TCE 调节。
 
 这意味着 TCE 并不需要直接告诉认知系统“正确答案是什么”，而只需要改变结构之间的竞争环境。某个高风险事件出现时，与风险相关的 Agent-CSO 可以获得增益；某个任务接近完成时，与最终验证有关的结构获得更高优先级，而无关支线被逐步抑制。于是注意力可以从静态资源分配重新理解为：
-\begin{equation}
-    \boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
     Attention
     =
     ControlledGainAllocationOverActiveCSOs.
-    }
-\end{equation}
+\)}
+\end{statementbox}
 
 这一观点解释了为什么注意力和认知温度虽然相关，却不能混同。提高温度可能增加候选结构数量，而提高某个结构的 attention gain 则只是让已有候选中的特定部分得到更高权重。例如在技术故障诊断中，Agent 可以保持较高认知温度以允许多个故障假设同时存在，同时又把当前最危险的假设赋予最高注意增益。若把这两个机制合并成单一参数，就无法表达这种“广泛探索但重点监控”的状态。
 
@@ -780,13 +784,14 @@ TCE 具有改变认知动力学的能力，但它不应该决定“什么值得�
 换句话说，TCE 可以为了高风险目标提高验证强度，可以为了低价值任务减少计算预算，但它不应因为当前认知状态不舒服就自主把长期价值结构改写成另一套价值。
 
 这一点可以用多尺度控制原则表述：
-\begin{equation}
-    \boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
     SlowStructureShapesFastActivity,
     \qquad
     FastControllerDoesNotRewriteSlowValueDirectly.
-    }
-\end{equation}
+\)}
+\end{statementbox}
 较慢的 $\Psi$ 对认知控制提供长期偏置；TCE 则在这个约束域内调节短时动力学。如果把所有层级压缩进 TCE，它就会变成一个同时决定目标、价值、注意、记忆和行动的全能中央控制器，这不仅违背本书的多尺度原则，也会使整个 AgentOS 丧失可分析性。
 
 可以把 $\Psi$ 诱导的控制可行域写成：
@@ -816,21 +821,23 @@ TCE 具有改变认知动力学的能力，但它不应该决定“什么值得�
 \end{equation}
 
 这一限制实际上对应本书反复强调的：
-\begin{equation}
-    \boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
     SlowGovernance
     \neq
     FastMicromanagement
-    }
-\end{equation}
+\)}
+\end{statementbox}
 与其反向命题：
-\begin{equation}
-    \boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
     FastControl
     \neq
     SlowStructuralAuthority.
-    }
-\end{equation}
+\)}
+\end{statementbox}
 
 前者要求慢层不要直接控制每一个 token 或动作；后者则要求快层不能因为局部状态变化而轻易改写慢层身份和长期约束。只有当两个方向同时成立，多尺度智能才能兼具稳定性和适应性。
 
@@ -902,13 +909,14 @@ TCE 具有改变认知动力学的能力，但它不应该决定“什么值得�
     h'.
 \end{equation}
 如果只有第一个闭环，系统能够自我稳定，却不一定真实；如果只有第二个闭环，系统可以对世界反应，却缺乏对自身运行状态的治理。真正的 AgentOS 必须使二者耦合：
-\begin{equation}
-    \boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
     InternalRegulation
     \bowtie
     RealityVerification
-    }
-\end{equation}
+\)}
+\end{statementbox}
 
 这一点与我们在认识论部分建立的 World--Agent--World 闭环完全一致。内部认知结构不是现实本身，而只是现实在 Agent 中形成的功能性承载。因而 TCE 调节的对象只是 Agent 内部动力学，而不是宇宙真实状态。任何控制器只要忘记这一点，就可能把“内部一致”误认为“外部正确”。
 
@@ -919,13 +927,14 @@ TCE 具有改变认知动力学的能力，但它不应该决定“什么值得�
 即使 Agent 当前处于高度确定状态，也不能把现实反证增益降为零。
 
 这一原则可以进一步浓缩成：
-\begin{equation}
-    \boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
     RealityAuthority
     >
     InternalConfidence.
-    }
-\end{equation}
+\)}
+\end{statementbox}
 TCE 的成熟并不是让 Agent 越来越坚定，而是让它能够根据现实证据决定什么时候应该坚定，什么时候应该重新打开自己的认知结构。
 
 \section{TCE 的工程实现：从规则控制到自适应认知控制器}
@@ -1074,13 +1083,14 @@ TCEControlMustRemainInspectable.
 成立，自我状态开始成为未来认知状态转移的因果变量。
 
 因此，本章可以将 TCE 的最小理论定义凝练为：
-\begin{equation}
-    \boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
     \mathrm{TCE}
     =
     \text{State-Dependent Controller of Cognitive Dynamics}
-    }
-\end{equation}
+\)}
+\end{statementbox}
 其核心控制对象至少包括：
 \begin{equation}
     u_{\mathrm{TCE}}

@@ -6,13 +6,14 @@
 
 AgentOS 控制工程的研究对象并不是某一个具体模块的控制律，也不是传统意义上对机器人位置、速度或力矩的直接控制，而是\textbf{多时间尺度、多闭环、多记忆相态、多权限层级的持续智能体如何维持可运行、可恢复、可成长且身份连续的整体动力学稳定性}。因此，本章提出：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{AgentOS Control Engineering}
 =
 \text{Control of Coupled Control Loops}
-}
-\]
+\)}
+\end{statementbox}
 
 更严格地说，它研究的是一个带有状态估计、慢变量、自我表征、记忆演化、资源有限性、身体闭环、离散治理和现实反馈的混合多尺度动力系统。控制目标不是把 Agent 固定在某个静态平衡点，而是在允许学习、探索、经历形成和结构缓慢改变的同时，使系统轨迹始终停留在一个可治理、可解释、可恢复的可行区域中。
 
@@ -33,16 +34,17 @@ AgentOS 控制工程的研究对象并不是某一个具体模块的控制律，
 Controller\rightarrow Plant,
 \]
 而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Loop_i
 \longleftrightarrow
 Loop_j
 \longleftrightarrow
 Loop_k
 \longleftrightarrow\cdots
-}
-\]
+\)}
+\end{statementbox}
 其中每一个局部闭环都可能同时成为另一个闭环的对象、约束、扰动或者参考信号。我们可以将 AgentOS 抽象成闭环超图
 \[
 \mathcal H_A=(V,\mathcal L,\mathcal C),
@@ -69,13 +71,14 @@ Stable(\mathcal H_A).
 局部闭环稳定不等价于整体多回路系统稳定。
 
 我们因此把 AgentOS 控制工程的第一研究对象定义为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal D_A
 =
 \text{Coupled Multiscale Closed-Loop Dynamics}.
-}
-\]
+\)}
+\end{statementbox}
 这里的核心不是让所有变量趋向零，也不是把 Agent 保持在一个静止状态。相反，一个成熟 Agent 必须能够探索、学习、改变 Goal、形成新经验、更新 $\Theta$，甚至缓慢调整 $\Psi$。真正需要控制的是：这些变化是否停留在系统允许的动力学区域中，是否保持时间尺度有序，是否能够在受到扰动以后重新回到可治理状态，以及某一局部回路的调整是否会把另一个慢速回路推入不可逆失稳。
 
 由此我们可以给出本书后续一切控制分析的第一原则：
@@ -164,13 +167,14 @@ F_\Omega(x_\Omega,x_\Psi,\xi_\Omega),
 \]
 
 这一结构对于控制工程具有根本意义。它告诉我们：不能用相同更新律和相同控制强度处理所有状态。如果一个数秒尺度的认知冲突能够立即大幅重写 $\Psi$，那么身份连续性必然遭到破坏；反过来，如果 $\Psi$ 完全无法缓慢吸收长期经历，Agent 又失去了生命周期成长能力。因此正确控制目标不是让所有状态“稳定不变”，而是让每一个状态在其适当时间尺度上保持合理的可塑性：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Stability}
 \neq
 \text{Immobility}.
-}
-\]
+\)}
+\end{statementbox}
 
 为此，我们引入一个尺度相关的可塑度矩阵
 \[
@@ -214,15 +218,16 @@ Risk
 表示 Agent-CSO 在功能位置 $f$ 与时间尺度 $\tau$ 上的结构分布。这样，AgentOS 控制工程不仅控制具体状态量，还控制结构是否被放在合适的承载层。例如，一个反复需要显式推理的任务如果已经高度稳定，继续占据 $h$ 就是一种不良控制状态；系统应允许其逐渐向 $\Theta$、Skill 或 Body Runtime 的更局部闭环沉降。相反，当一个已经自动化的技能产生持续残差时，又必须允许相关结构重新进入更高层认知处理。
 
 所以统一状态空间的真正价值在于，它使我们能够同时讨论：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StateControl,\quad
 MemoryControl,\quad
 StructurePlacement,\quad
 IdentityStability,\quad
 EmbodiedControl.
-}
-\]
+\)}
+\end{statementbox}
 这些此前容易被划分到“推理”“记忆”“人格”“机器人控制”等不同学科的问题，在持续 Agent 中实际上共同组成一个状态空间。AgentOS 控制工程的任务就是寻找这些状态块之间可以长期共存的动力学关系。
 
 \section{控制对象不是瞬时状态，而是趋势、可行域与未来分布}
@@ -245,12 +250,13 @@ EmbodiedControl.
 \mathbf X_A(t)=\mathbf X^\ast(t).
 \]
 例如，TCE 可以要求当前认知活动保持在“低风险、可解释、资源可接受、目标相关”的区域，但不必规定 LLM 每一层激活具体是多少。类似地，$\Psi$ 可以提供身份和价值边界，却不应微观控制每一个 token 的生成。这个思想可以概括为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,\qquad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 
 这一原则和我们此前形成的 Body Runtime 理论完全一致。Kernel 给 BPCC 的不是每一个毫秒级关节控制量，而是 Control Reference 与 Predictive Envelope；BPCC 在该区域内自行完成高速预测与控制。同样，在认知层，慢变量 $\Psi$ 与 $\Omega$ 更适合定义某类长期可接受轨迹，而不是直接操纵快速工作记忆。因此，若 $x_f$ 表示快速状态、$c_s$ 表示慢层给出的移动中心，可以写成
 \[
@@ -320,13 +326,14 @@ L
 其意义是：AgentOS 控制工程关注的是未来轨迹分布是否向更可接受区域偏移，而不是强迫系统执行确定性单路径。
 
 这一观点还能够解释为什么 AgentOS 控制是“面向未来趋势”的。TCE 调节 exploration、attention、depth 或 temperature，本质上都是改变未来认知轨迹的分布；CCM 决定是否 Fold、Pause、Offload，本质上是在改变未来工作记忆负载曲线；Boundary 决定哪些信息进入系统，则是在改变未来状态空间的输入分布。换言之：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Control
 =
 ShapingFutureReachability
-}
-\]
+\)}
+\end{statementbox}
 比“直接改变当前状态”更适合作为持续认知系统的控制定义。
 
 因此，我们在本章明确拒绝一种过于机械的“认知遥控器”想象。AgentOS 不应该成为一个高层模块逐 token 命令底层模型的系统，而应该形成多尺度约束：越慢、越高的结构越主要控制趋势、允许域、风险边界和长期方向；越快、越局部的结构越拥有具体执行自由。只有这样，系统才能同时获得稳定性与自主性。
@@ -535,20 +542,22 @@ x_i,\varepsilon_i,context_i
 并交给第 $i+1$ 层处理。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictLocally,\qquad
 EscalateResidualGlobally.
-}
-\]
+\)}
+\end{statementbox}
 
 这一原则对于工作记忆有限定理至关重要。现实世界产生的数据远远超过 $h$ 能够承载的范围。AgentOS 不能把 Reality 直接变成 Thought，而必须经过多层局部闭合：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityDoesNotContinuouslyBecomeThought;
 RelevantDeviationBecomesThought.
-}
-\]
+\)}
+\end{statementbox}
 例如一个机器人正常行走时，数百万传感器采样并不会持续进入 $h$；只有地面突然打滑、路径被阻断、身体状态失常或 Goal 无法推进时，相应残差才被压缩为具有语义意义的 Agent-CSO 进入显式认知层。
 
 与“残差上浮”相对的另一个方向是“稳定能力下沉”。如果某种高层认知过程反复出现并逐渐稳定，则继续让它占用 $h$ 也不合理。因此系统应允许：
@@ -584,11 +593,12 @@ SuccessfulBehavior
 \]
 
 在这一结构中，高层控制的真正价值也变得清晰。高层不是因为“更聪明”就应该持续微观控制下层，而是负责处理那些局部闭环无法解释、无法恢复或者具有跨尺度影响的残差。我们将其称为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance\neq FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 这条原则不仅是性能优化，而是整个多尺度系统能够稳定扩张的条件。如果没有局部闭合，所有异常都会淹没高层；如果没有残差上浮，局部错误又可能无限积累。两者的平衡构成 AgentOS 控制工程的基本组织规律。
 
 \section{稳定性的多重定义：运行稳定、认知稳定、身份稳定与生命周期稳定}
@@ -731,21 +741,23 @@ SGC/FCS.
 }
 \]
 于是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ActionIssued
 \neq
 ActionSucceeded.
-}
-\]
+\)}
+\end{statementbox}
 Kernel 发出一个行动意图，并不能直接把该意图写成已完成状态；BPCC 的预测状态也不能直接伪装成 Observed SGC。只有新的真实观测才能改变系统对于行动结果的最终信念。
 
 这一原则意味着 AgentOS 控制工程不是封闭认知控制，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 World\text{--}Agent\text{--}World
-}
-\]
+\)}
+\end{statementbox}
 控制工程。Agent 的内在稳定性最终必须经由外部现实检验。例如，$\Theta$ 形成了某种世界规律后，新的行动和观测必须能够持续验证该规律；$\Psi$ 对自身形成某种解释后，也必须保留外部反证路径。如果内部自我解释与现实持续不一致，则控制系统需要提高 Epistemic Uncertainty，而不是通过增加内部一致性强度掩盖矛盾。
 
 身体在这里承担另一个重要作用。Body Runtime 不是 AgentOS 的简单 I/O 驱动，而是现实高频动力学进入认知系统之前的第一层闭环屏障。设身体状态为
@@ -797,15 +809,16 @@ Authority_{\mathrm{task}}
 高层可以修改目标、约束和 Control Reference，但任一时刻一个具体执行资源只能存在一个最终 writer。这就是 Single-Writer Principle。其意义在于防止 Kernel、BPCC、Skill 和 Emergency Controller 同时直接驱动同一执行器而形成竞争。
 
 因此 AgentOS 控制工程的外部边界不是“模型输出 token 的正确率”，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityVerification
 +
 BodyLocalClosure
 +
 SafetyAuthority.
-}
-\]
+\)}
+\end{statementbox}
 任何内部稳定性如果无法通过真实世界反馈维持，都只能算作内部自洽，而不能算作整个 Agent 的稳定性。这也是我们整个 AgentOS 理论区别于纯认知模拟系统的根本位置之一。
 
 \section{连续动力学、离散治理与控制权限}
@@ -868,12 +881,13 @@ CompiledSkill.
 \]
 
 因此 AgentOS 的原则可以概括为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DiscreteGovernance,\qquad
 ContinuousExecution.
-}
-\]
+\)}
+\end{statementbox}
 这一点对于身份、自我和权限问题尤其重要。我们不能允许每一次连续梯度变化都自动获得改变 $\Psi$、$\Omega$ 或权限边界的权力。慢变量可以在内部累积“修改证据”，但最终结构变化往往需要经过更慢、更明确的离散治理。例如：
 \[
 Evidence_\Psi(t)
@@ -915,15 +929,16 @@ override
 表示模块 $i$ 对变量 $j$ 的控制级别。例如 SPC 主要拥有 observe 权限，TCE 拥有对快速认知参数的 modulate 权限，Safety 对安全关键 actuator 拥有 override 权限，而普通 Goal 不应拥有直接重写 $\Psi$ 的权限。
 
 这就使 AgentOS 控制工程从纯动力系统扩展到：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Dynamics
 +
 Governance
 +
 Authority.
-}
-\]
+\)}
+\end{statementbox}
 在持续人工智能体中，“谁能够改变什么”与“某个变量如何变化”同样重要。事实上，身份连续性和安全性的很多问题都不是状态方程错误，而是 Authority Boundary 设计错误。一个数学上稳定的更新律，如果赋予了错误模块，也可以破坏系统。因此，控制工程必须同时研究控制律和控制权。
 
 \section{从鲁棒性到可恢复性：持续智能体的控制目标}
@@ -1064,8 +1079,9 @@ MinimumNecessaryIntervention.
 也就是具有 input-to-state stability 类似性质：扰动有限时，状态误差也受到控制。对于认知系统，这可以解释为：环境噪声、新颖性、工具故障等会增加内部残差，但不应无限放大成整体认知崩溃。
 
 因此 AgentOS 控制工程最终追求的不是“完美状态”，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Stable
 +
 Bounded
@@ -1075,16 +1091,17 @@ Observable
 Recoverable
 +
 Adaptable.
-}
-\]
+\)}
+\end{statementbox}
 其中 Adaptable 尤其重要：系统必须能够在恢复以后吸收这次失败的经验。如果每一次恢复都只是回到旧状态而不改变 $E$ 或 $\Theta$，系统便无法成长；如果每次失败又都重写 $\Psi$，系统则失去连续性。真正成熟的控制系统必须决定\textbf{哪些扰动应该被吸收，哪些应该被学习，哪些应该被隔离，哪些才值得改变更慢结构}。
 
 \section{AgentOS 控制工程的研究边界与统一问题形式}
 
 在完成上述讨论以后，我们可以给 AgentOS 控制工程一个正式定义：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \begin{aligned}
 \text{AgentOS Control Engineering}
 =
@@ -1093,8 +1110,8 @@ Adaptable.
 &\text{authority, stability, recovery and}\\
 &\text{bounded adaptation of persistent agents.}
 \end{aligned}
-}
-\]
+\)}
+\end{statementbox}
 
 中文可以定义为：
 
@@ -1183,8 +1200,9 @@ Authority_i
 AgentOS 控制工程正是为回答这个问题而存在。
 
 本章最终可以留下七条基础控制原则，作为整门工程学的起点：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \begin{aligned}
 &1.\quad
 \text{Control of Control Loops};\\
@@ -1201,7 +1219,7 @@ AgentOS 控制工程正是为回答这个问题而存在。
 &7.\quad
 \text{Stability Includes Recoverability and Controlled Plasticity}.
 \end{aligned}
-}
-\]
+\)}
+\end{statementbox}
 
 这七条原则共同规定了 AgentOS 控制工程的研究对象：我们控制的不是一个静止机器，也不是一条固定算法，而是一个会观察自己、调节自己、记住自己、改变自己，并且必须在真实世界中长期保持连续性的多尺度动力系统。后续对于 SPC Observer、AHC 动力学、TCE 控制律、多闭环稳定性以及递归自主边界的具体研究，都只是这一统一控制问题在不同层面的展开。

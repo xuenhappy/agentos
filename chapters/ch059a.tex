@@ -36,11 +36,12 @@ AgentKernel.
 
 因此应严格区分三个层次。第一层是 Body Runtime 当前维护的尽可能完整的身体相关现实状态：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal G_t^{full}=SGC_{full}(t)
-}
-\]
+\)}
+\end{statementbox}
 
 其中包含 Body Runtime 当前有能力维护的实体、场、几何、关系和状态。这里所谓 ``full'' 并不意味着宇宙真实状态的完整副本，而只是相对于当前身体感知和局部世界模型而言的最大可用 SGC。
 
@@ -72,11 +73,12 @@ SGC_{full}(t),A_t
 
 因此必须建立：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC_{full}\neq SGC_{view}
-}
-\]
+\)}
+\end{statementbox}
 
 这一工程原则。Body Runtime 可以持续拥有较广泛的现实，但认知内核不应永久拥有同等分辨率的整个现实。
 
@@ -206,8 +208,9 @@ R_t(o_i),
 
 因此一个更加一般的分辨率控制律可以写成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 R_i
 =
 f(
@@ -218,8 +221,8 @@ Risk_i,
 U_i,
 C_h
 )
-}
-\]
+\)}
+\end{statementbox}
 
 其中 $D_i$ 表示空间距离，$G_i$ 表示目标相关度，$V_i$ 表示动态变化速度，$Risk_i$ 表示风险，$U_i$ 表示预测不确定性，而 $C_h$ 表示当前工作记忆可用容量。
 
@@ -233,12 +236,13 @@ Semantic-Epistemic Aperture.
 
 这里可以正式定义 SGC Epistemic Aperture，简称 SEA：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SEA=
 SGC\ Epistemic\ Aperture.
-}
-\]
+\)}
+\end{statementbox}
 
 SEA 接收：
 
@@ -298,11 +302,12 @@ TaskRelevantInformation(SGC_{full}).
 
 这一机制不应仅被理解为信息压缩，因为它实际上有意识地向 Kernel 保留一个认识论缺口。因此可以进一步提出：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Principle\ of\ Productive\ Perceptual\ Scarcity
-}
-\]
+\)}
+\end{statementbox}
 
 即：
 
@@ -384,13 +389,14 @@ E_t,
 
 此时系统开始出现一个非常重要的区分：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ObservedWorld
 \neq
 BelievedWorld
-}
-\]
+\)}
+\end{statementbox}
 
 其中 ObservedWorld 是当前孔径内直接获得的信息，而 BelievedWorld 是 Agent 根据当前观测、历史经验和生成结构共同维持的内部世界。
 
@@ -414,11 +420,12 @@ Context
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Visible\neq Exists.
-}
-\]
+\)}
+\end{statementbox}
 
 对象恒常性、空间连续性和隐藏状态预测由此成为 Kernel 必须主动学习的能力，而不再能够依赖传感器每个周期重新回答。
 
@@ -567,11 +574,12 @@ p_t,\theta_t,\dot p_t,
 
 而 $h$ 更适合保留：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Cup\ is\ stably\ located\ on\ the\ target\ table.
-}
-\]
+\)}
+\end{statementbox}
 
 这种结构才适合继续进入：
 
@@ -662,18 +670,20 @@ WorldModelTrainingPressure.
 
 必须满足：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BPCCInput
 \neq
 SGC_{view}.
-}
-\]
+\)}
+\end{statementbox}
 
 BPCC 应使用自己需要的高速控制状态：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 I_{BPCC}
 =
 SGC_{control}
@@ -683,8 +693,8 @@ FCS
 z_{BPCC}
 \oplus
 ControlReference.
-}
-\]
+\)}
+\end{statementbox}
 
 其中：
 
@@ -702,8 +712,9 @@ z_{BPCC}
 
 Kernel 的输入则是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 I_K
 =
 SGC_{view}
@@ -715,18 +726,19 @@ E
 \Psi
 \oplus
 Goal.
-}
-\]
+\)}
+\end{statementbox}
 
 因此应该严格建立：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitiveAttention
 \neq
 ControlAttention.
-}
-\]
+\)}
+\end{statementbox}
 
 例如机器人正在端一杯水并与用户交谈。Kernel 的认知焦点可能位于：
 
@@ -751,12 +763,13 @@ NearbyObstacle.
 
 因此必须遵循：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FoveationAffectsCognition,
 NotRealtimeControlClosure.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{FCS不能简单服从SGC认知孔径}
 
@@ -862,8 +875,9 @@ Kernel 预测：
 
 但不必把完整未来世界传给 BPCC，而应抽取高层约束：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal E_K
 =
 (
@@ -875,8 +889,8 @@ RiskConstraint,
 Priority,
 Confidence
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 BPCC 则在该约束面内求自己的局部最优控制：
 
@@ -919,11 +933,12 @@ SlowStructureShapesFastDynamics
 
 由此可以正式提出 AgentOS 的：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Anti\text{-}Micromanagement\ Principle
-}
-\]
+\)}
+\end{statementbox}
 
 即反微操原则：
 
@@ -933,37 +948,41 @@ Agent Kernel 不应获得足以诱导其长期接管快速身体闭环的大量�
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Resolution(KernelInput)
 <
 Resolution(BPCCControlState)
-}
-\]
+\)}
+\end{statementbox}
 
 而在抽象等级上：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Abstraction(KernelPrediction)
 >
 Abstraction(BPCCPrediction).
-}
-\]
+\)}
+\end{statementbox}
 
 这样才能真正形成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Kernel=Meaning/FutureConstraint,
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BPCC=RealtimePhysicalRealization.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{从SGC输入限制到BPCC控制的完整因果链}
 
@@ -1129,8 +1148,9 @@ OnlyFovea,
 
 而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 KernelInput
 =
 FovealDetail
@@ -1138,8 +1158,8 @@ FovealDetail
 PeripheralSummary
 +
 SaliencyInterrupt.
-}
-\]
+\)}
+\end{statementbox}
 
 这样既保持认知有限性，又避免产生严重注意盲区。
 
@@ -1291,14 +1311,15 @@ World_t.
 
 所以：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ReadOnlyControl
 =
 ControlOfObservation,
 NotControlOfWorld.
-}
-\]
+\)}
+\end{statementbox}
 
 由此以后 AgentOS 的 Action 可以至少区分成三类：
 
@@ -1675,12 +1696,13 @@ KernelAttention
 
 换句话说：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitionMayLookAway;
 ControlMayNotLoseReality.
-}
-\]
+\)}
+\end{statementbox}
 
 这是整个 Body Runtime 设计必须严格保证的安全原则。
 
@@ -1706,11 +1728,12 @@ World
 \downarrow
 \]
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC\ Foveation
-}
-\]
+\)}
+\end{statementbox}
 
 控制现实的结构分辨率；
 
@@ -1748,15 +1771,16 @@ h(t)
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC\ Foveation
 \neq
 Boundary
 \neq
 CCM.
-}
-\]
+\)}
+\end{statementbox}
 
 三者分别回答：
 
@@ -1838,8 +1862,9 @@ Kernel.
 
 而 Kernel 的预测来自：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC_{view}
 +
 h
@@ -1847,8 +1872,8 @@ h
 E
 +
 \Theta.
-}
-\]
+\)}
+\end{statementbox}
 
 因此完整结构为：
 
@@ -1889,27 +1914,30 @@ BPCC
 
 这意味着整个架构并不存在单一 ``Agent 所看到的世界''，而至少存在三个不同功能层面的现实状态：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC_{full}
-}
-\]
+\)}
+\end{statementbox}
 
 Body Runtime 当前维护的广泛现实；
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC_{view}
-}
-\]
+\)}
+\end{statementbox}
 
 Kernel 当前高层认知真正获得的现实；
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC_{control}
-}
-\]
+\)}
+\end{statementbox}
 
 BPCC 当前高速局部控制必须知道的现实。
 
@@ -1943,13 +1971,14 @@ BPCC 当前高速局部控制必须知道的现实。
 
 第四，\textbf{世界连续性原则}：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 NotObserved
 \neq
 NotExisting.
-}
-\]
+\)}
+\end{statementbox}
 
 第五，\textbf{预测优先原则}：
 
@@ -1969,13 +1998,14 @@ NotExisting.
 
 第七，\textbf{认知注意—控制注意分离原则}：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Attention_{cognition}
 \neq
 Attention_{control}.
-}
-\]
+\)}
+\end{statementbox}
 
 第八，\textbf{FCS独立调制原则}：
 

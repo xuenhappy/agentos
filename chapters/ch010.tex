@@ -8,13 +8,14 @@
 
 因此，本章首先建立 CSO 的本体层，而暂不讨论同一 CSO 在某一具体智能体内部如何表示、存储和承载。后者将在下一章通过 Agent-CSO 正式展开。这样的层级分离具有决定性意义：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{CSO Ontology}
 \neq
 \text{Agent-Specific Representation}
-}
-\]
+\)}
+\end{statementbox}
 
 本章所要建立的是前者。
 
@@ -140,15 +141,16 @@ StructuredCognitiveObject\)}
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Data}
 \neq
 \text{Information}
 \neq
 \text{Cognitive Structure}.
-}
-\]
+\)}
+\end{statementbox}
 
 CSO 理论真正研究的是第三层。
 
@@ -268,8 +270,9 @@ Unlock(Door).
 
 更一般地，一个 CSO 的认知有效性可以写成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Gamma(C_i)
 =
 F(
@@ -279,20 +282,21 @@ PredictiveUtility,
 ActionRelevance,
 Persistence
 )
-}
-\]
+\)}
+\end{statementbox}
 
 其中 \(\Gamma(C_i)\) 表示结构 \(C_i\) 在某个认知过程中成为有效对象的程度。
 
 这一表达还揭示一个重要事实：CSO 并不要求具有永久、清晰、离散的边界。某些 CSO 可以非常稳定，例如“我工作的城市”；某些则可能只在几秒钟的任务过程中存在，例如“当前推理中的第三个候选假设”。还有一些结构本身是概率性的，比如“明天下雨的可能场景”。因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CSO
 \neq
 PermanentSymbol.
-}
-\]
+\)}
+\end{statementbox}
 
 我们真正要求的是它在某一认知尺度内形成了足够的结构闭合，使智能系统可以把它作为一个整体继续操作。
 
@@ -321,13 +325,14 @@ PermanentSymbol.
 
 这与本书前面讨论的多尺度思想直接一致。同一个结构可以在某一尺度被当作 CSO，而在更细尺度重新展开。例如“汽车”可以作为驾驶 Agent 的一个 CSO；但对于维修 Agent，汽车本身又展开为发动机、电池、轮胎、制动系统等更细 CSO。因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CSO
 =
 ScaleRelativeCognitiveStructure.
-}
-\]
+\)}
+\end{statementbox}
 
 这里的“相对”不是否认现实，而是在强调智能必须通过有限认知容量工作。任何 Agent 都不可能同时在每个尺度上展开全部结构。
 
@@ -420,8 +425,9 @@ I(C_O;Y_{\mathrm{task}})
 
 因此，对象形成实际上是一种任务相关的结构压缩：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ObjectFormation
 =
 Compression
@@ -429,15 +435,16 @@ Compression
 IdentityPersistence
 +
 ActionRelevance.
-}
-\]
+\)}
+\end{statementbox}
 
 值得注意的是，对象边界并不完全来自现实，也不完全来自主体。现实中确实存在稳定结构，但 Agent 的任务会决定哪些稳定结构值得被单独建模。例如城市交通控制系统可能把“车流”作为一个整体 CSO，而不跟踪每辆汽车；自动驾驶汽车则必须跟踪具体车辆。对于高层城市规划系统，一整条道路甚至可以成为单一对象。
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ObjectBoundary
 =
 RealityStructure
@@ -445,8 +452,8 @@ RealityStructure
 AgentResolution
 \cap
 TaskRelevance.
-}
-\]
+\)}
+\end{statementbox}
 
 这个交集观点非常重要。它避免了两个极端：一个极端认为对象完全是主体任意构造；另一个极端则认为世界天然已经按照唯一尺度切分成对象。
 
@@ -519,13 +526,14 @@ Depends(Task_2,Task_1).
 
 于是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Relation
 \in
 \mathfrak C
-}
-\]
+\)}
+\end{statementbox}
 
 而不是：
 
@@ -639,13 +647,14 @@ Coupling(E_h)
 
 我们将目标定义为一种特殊 CSO：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 C_G
 =
 GoalStructure
-}
-\]
+\)}
+\end{statementbox}
 
 它描述的不是当前已经成立的世界结构，而是智能体希望未来达到或维持的结构条件。
 
@@ -709,13 +718,14 @@ Utilities
 
 等结构依赖；还需要同时维护安全、材料、时间、环境等约束。因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Goal
 \neq
 ScalarReward.
-}
-\]
+\)}
+\end{statementbox}
 
 奖励可以参与评价目标，但目标本身是一个结构对象。
 
@@ -816,13 +826,14 @@ GoalCSOGraph.
 
 因此我们定义：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 C_K
 =
 ConstraintStructure.
-}
-\]
+\)}
+\end{statementbox}
 
 如果状态空间为 \(\mathcal X\)，动作空间为 \(\mathcal U\)，那么一个约束可以写成：
 
@@ -908,13 +919,14 @@ C_{self}.
 
 不同约束的 Authority 必须不同。后续 AgentOS 工程中我们会明确：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SafetyAuthority
 >
 OrdinaryCognitiveAuthority.
-}
-\]
+\)}
+\end{statementbox}
 
 这一原则在本体层已经有基础：并不是所有 Constraint-CSO 都具有相同可修改性。
 
@@ -942,8 +954,9 @@ p(C_K)\rightarrow0.
 
 目标与约束还形成一个重要二元关系：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Goal
 =
 WhereToGo,
@@ -951,8 +964,8 @@ WhereToGo,
 Constraint
 =
 WhereYouMayGo.
-}
-\]
+\)}
+\end{statementbox}
 
 这将在后续多尺度控制理论中发展为：
 
@@ -991,8 +1004,9 @@ LowerLevelOptimization.
 
 一个事件可以定义为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 C_E
 =
 Event(
@@ -1001,8 +1015,8 @@ C_{before},
 C_{after},
 \tau
 )
-}
-\]
+\)}
+\end{statementbox}
 
 其中 \(C_{before}\) 表示事件发生之前的相关结构，\(\Delta\) 表示变化，\(C_{after}\) 表示变化后的结构，\(\tau\) 表示时间位置或持续区间。
 
@@ -1026,25 +1040,27 @@ On(Cup,Floor).
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Event
 =
 StructuredTransition.
-}
-\]
+\)}
+\end{statementbox}
 
 而情景记忆 \(E\) 在后续章节中本质上就是大量事件 CSO 及其关系形成的轨迹块。
 
 进一步，如果系统发现某类事件具有稳定条件依赖，就会形成因果 CSO。可以写成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 C_{\mathrm{cause}}
 =
 Cause(A,B\mid Z),
-}
-\]
+\)}
+\end{statementbox}
 
 表达在条件 \(Z\) 下，结构 \(A\) 的变化对 \(B\) 的变化具有稳定解释或干预意义。
 
@@ -1367,13 +1383,14 @@ WorldModel.
 
 而真正主体化的内部世界至少需要：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 WorldModel
 +
 SelfInWorldModel.
-}
-\]
+\)}
+\end{statementbox}
 
 即：
 
@@ -1428,13 +1445,14 @@ C_{self}^{(2)}
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfCSO
 \neq
 \Psi.
-}
-\]
+\)}
+\end{statementbox}
 
 更准确地：
 
@@ -1501,13 +1519,14 @@ WorldIncludingSelf.\)}
 
 定义：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 C_V
 =
 ValueStructure.
-}
-\]
+\)}
+\end{statementbox}
 
 价值 CSO 不应被简单理解成 reward scalar。一个标量：
 
@@ -1642,15 +1661,16 @@ C_V(t)
 
 这一区分非常重要：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ValueCSO
 \neq
 \Psi
 \neq
 \Omega.
-}
-\]
+\)}
+\end{statementbox}
 
 Value-CSO 是局部、具体、可以针对某个对象或事件的评价结构；
 
@@ -1765,13 +1785,14 @@ E_{self}.
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal G_C
 \neq
 PhysicalMemoryGraph.
-}
-\]
+\)}
+\end{statementbox}
 
 它表示的是：
 
@@ -1886,13 +1907,14 @@ Event.
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitiveOntology
 =
 DynamicStructuredSpace.
-}
-\]
+\)}
+\end{statementbox}
 
 这里尤其需要区分“语义本体”与“语言词典”。一个新 CSO 完全可能在尚未获得名字以前已经存在。比如一个机器人经过长期行动发现“某种身体姿态下施加某种力能够稳定通过狭窄区域”，这一结构最初可能没有自然语言标签，但它已经具有：
 
@@ -1908,13 +1930,14 @@ DynamicStructuredSpace.
 
 所以：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SemanticStructure
 \neq
 NaturalLanguageSymbol.
-}
-\]
+\)}
+\end{statementbox}
 
 语言是一种非常强大的 CSO 外显接口，但不是 CSO 存在的必要条件。
 
@@ -2112,23 +2135,25 @@ CSO
 
 与：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Agent\text{-}CSO
-}
-\]
+\)}
+\end{statementbox}
 
 正式分离。
 
 也正因此，下一章将从本体层进入实现层：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CSO
 \xrightarrow{\pi_A}
 AgentCSO_A.
-}
-\]
+\)}
+\end{statementbox}
 
 到那时，我们才能进一步讨论一个认知结构如何获得：
 
@@ -2144,13 +2169,14 @@ AgentCSO_A.
 
 而这一分离将最终使学习获得一个新的定义：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Learning
 =
 ChangeOfCognitiveStructureRealizationAndPlacement.
-}
-\]
+\)}
+\end{statementbox}
 
 本章因此不是一个孤立的“知识表示章节”，而是整个后续理论的本体入口。它使我们可以从这一刻开始，不再把智能描述成一个模糊的“信息处理系统”，而把它严格地看成：
 

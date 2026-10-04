@@ -6,15 +6,16 @@
 在本书的语言中，宇宙首先由不同尺度上的结构对象（CSO）及其动力关系构成。Agent 本身也是宇宙中的一种 CSO，但它与普通结构不同：Agent 能够通过观测将外部 Universe-CSO 转换成内部 Agent-CSO，并进一步形成关于自身状态、行动、目标和未来可能性的 Agent-CSO。只要这些内部结构不仅“描述”系统，而且能够反向参与行动选择、控制增益、注意分配、策略调整甚至长期自身结构更新，那么系统就获得了一种我们称为\textbf{功能自反性（Functional Reflexivity）}的性质。
 
 本章的基本定义是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Functional Reflexivity}
 =
 \text{Self-Representation}
 +
 \text{Representation-Dependent Self-Modulation}
-}
-\]
+\)}
+\end{statementbox}
 
 其中前一项回答“系统能否形成关于自身的可访问结构”，后一项回答“这种结构能否真实改变系统接下来如何运行”。
 
@@ -191,13 +192,14 @@ PerfectObservation.
 这里 \(z_{\leq t}^{self}\) 表示 Agent 到当前时刻积累的自我观测证据。
 
 这种不透明性不是系统缺陷，而是有限智能体必然面对的条件。一个局部子系统如果要精确表示自身所有微观自由度，就会遇到表示规模、观测扰动、计算复杂度和递归自描述等一系列困难。因此，真正有效的 Agent 不追求“完整复制自己”，而是形成\textbf{行动充分的自我模型}：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfModel
 \neq
 CompleteSelfCopy.
-}
-\]
+\)}
+\end{statementbox}
 
 我们可以把一个有效自我模型定义成，在给定任务、时间尺度和控制目标下，能够显著改善预测或控制效果的低维结构：
 \[
@@ -500,13 +502,14 @@ e_t
 也就是说，系统不仅计算“做什么”，还根据自状态修改“自己以什么方式决定做什么”。
 
 因此，我们应把 TCE 的一般功能定义为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 TCE
 =
 Self-State-Dependent Modulation of Internal Dynamics.
-}
-\]
+\)}
+\end{statementbox}
 
 从宇宙结构的更高尺度看，这一步意味着一种新的结构现象开始出现：宇宙中的局部结构不再只是按照既定动力学被动演化，而是形成关于自身状态的结构表示，并让这些表示成为改变局部未来演化路径的中介变量。
 
@@ -601,13 +604,14 @@ M_{t+1}
 在多个时间步上持续存在，而不是偶然一次的映射。
 
 这三个条件分别对应：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Representation,
 CausalModulation,
 ClosedLoopPersistence.
-}
-\]
+\)}
+\end{statementbox}
 
 从这里可以提出一个实验性的“功能自反度”指标：
 \[
@@ -664,22 +668,24 @@ R_{\mathrm{causal}}
 反过来，一个不输出任何自然语言“自我报告”的控制系统，如果真实估计自身稳定度、模型误差和能力边界，并据此改变控制策略，则可能拥有明显的功能自反结构。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfReport
 \neq
 SelfReflexivity.
-}
-\]
+\)}
+\end{statementbox}
 
 同样：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfReflexivity
 \neq
 Consciousness.
-}
-\]
+\)}
+\end{statementbox}
 
 我们在这里关心的是可观察的系统因果结构。
 
@@ -785,15 +791,16 @@ AgentCSO(Future).
 \]
 
 因此我们不需要假设逆时间因果，就可以解释为什么未来目标会影响现在：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RepresentedFuture_t
 \rightarrow
 PresentAction_t
 \rightarrow
 ActualFuture_{t+k}.
-}
-\]
+\)}
+\end{statementbox}
 
 这在智能动力学中具有根本意义。
 
@@ -883,11 +890,12 @@ CounterfactualSelfEvaluation\)}
 为了使“功能自反性”成为一个真正具有分类能力的概念，我们需要区分不同深度的自反结构，而不是简单判断“有”或“没有”。
 
 最基本的一层可以称为零级闭环：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 L_0:\ Feedback.
-}
-\]
+\)}
+\end{statementbox}
 系统根据误差直接调整动作：
 \[
 e_t=r_t-y_t,
@@ -898,11 +906,12 @@ u_t=K(e_t).
 这一层拥有反馈，但不要求存在可访问的自模型。
 
 第一层可以称为状态估计：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 L_1:\ StateEstimation.
-}
-\]
+\)}
+\end{statementbox}
 系统形成
 \[
 \hat x_t
@@ -910,11 +919,12 @@ L_1:\ StateEstimation.
 并依据它完成控制。例如许多现代控制系统都会拥有 observer，但这仍然不必等价于完整的 self representation。
 
 第二层是真正的自描述：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 L_2:\ SelfRepresentation.
-}
-\]
+\)}
+\end{statementbox}
 系统开始把自己的资源状态、能力、目标、冲突、历史和内部动力作为可组合的结构进行表示：
 \[
 M_t=
@@ -927,11 +937,12 @@ Capability
 \]
 
 第三层是表征依赖控制：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 L_3:\ ReflexiveControl.
-}
-\]
+\)}
+\end{statementbox}
 系统根据自己的自描述改变当前认知与行动策略：
 \[
 M_t
@@ -942,11 +953,12 @@ X_{t+1}.
 \]
 
 第四层可以称为元调节：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 L_4:\ MetaAdaptation.
-}
-\]
+\)}
+\end{statementbox}
 系统不只是改变动作，而是改变产生动作的控制策略：
 \[
 \Pi_t
@@ -955,11 +967,12 @@ L_4:\ MetaAdaptation.
 \]
 
 第五层则进一步进入结构发育：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 L_5:\ SelfReorganization.
-}
-\]
+\)}
+\end{statementbox}
 系统能够在受治理条件下修改功能承载关系：
 \[
 \mathcal G_F(t)
@@ -1213,22 +1226,24 @@ SPC
 高度同构。
 
 因此我们可以作如下\textbf{功能类比}：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentSelfRepresentation
 \sim
 LocalUniverseSPC.
-}
-\]
+\)}
+\end{statementbox}
 
 以及：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentActionControl
 \sim
 LocalUniverseTCE.
-}
-\]
+\)}
+\end{statementbox}
 
 这里的“Universe-SPC”和“Universe-TCE”不是要引入两个真实宇宙模块，更不是说宇宙存在一个中央处理器。这个类比只表达一种动力学结构：\textbf{宇宙的一部分开始形成关于宇宙局部的内部描述，并依据该描述调节后续局部状态。}
 
@@ -1283,14 +1298,15 @@ Q_C
 其中 \(Q_M\) 表示模型质量，\(Q_C\) 表示控制质量。
 
 在这个意义上，人类文明的演化可以被理解成某些宇宙局部结构：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ObserveMore,
 ModelBetter,
 ActFurther,
 ReorganizeDeeper.
-}
-\]
+\)}
+\end{statementbox}
 
 但这里仍然不需要引入“宇宙整体意识”假说。我们只需要承认一个朴素事实：生命和智能本身属于宇宙，因此当生命观察宇宙时，的确是宇宙内部的一部分结构在物理上承载关于另一部分宇宙的结构表示。
 
@@ -1398,23 +1414,25 @@ Topology
 \]
 
 实际上更成熟的系统通常表现为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MoreReflexiveControl,
 LessUnnecessaryExplicitSelfMonitoring.
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，成熟的 Agent 并不是时时刻刻“想着自己”，而是在需要时能够准确地把相关自身状态提升为 Agent-CSO，并在不需要时让低层系统保持自治。
 
 这与本书早期提出的：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MatureIntelligence
 =
 SelectiveExplicitCognition
-}
-\]
+\)}
+\end{statementbox}
 完全一致。
 
 所以，本章提出的功能自反不是“高度内省”的同义词。过度自我监视甚至可能造成 h 负载上升、自我解释正反馈和控制振荡。真正成熟的功能自反是\textbf{适量、分层、事件触发、现实校准的自描述与自调节}。
@@ -1555,13 +1573,14 @@ E 可以持续形成；
 \(\Omega\) 则应是生命周期级超慢变量。
 
 因此成熟的自反系统不是“最快地修改自己”，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FastSelfRegulation
 +
 SlowSelfFormation.
-}
-\]
+\)}
+\end{statementbox}
 
 这也解释为什么后续必须产生 AgentOS 控制工程、培育工程和心理工程。
 
@@ -1764,13 +1783,14 @@ UniverseCSO'.\)}
 \end{statementbox}
 
 这三个闭环分别对应：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RuntimeReflexivity,
 LifecycleReflexivity,
 WorldReflexivity.
-}
-\]
+\)}
+\end{statementbox}
 
 它们共同揭示了一个本书后续将继续发展的核心思想：
 

@@ -22,11 +22,12 @@ y_t = M_{\theta_M}(z_t,c_t).
 Input_t \rightarrow Model \rightarrow Output_t,
 \]
 下一次调用重新从新的输入开始。即使通过 context stuffing 把历史重新送入模型，本质上仍然是外部系统在重建一次局部计算，而不是一个持续动力系统自身维持状态。因此我们在研发路线的第一步就必须建立一个严格的工程边界：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FoundationModel \neq PersistentAgent
-}
-\]
+\)}
+\end{statementbox}
 基础模型提供的是认知能力的局部生成算子，而 Agent Kernel 所要提供的是这些算子运行其上的持续状态空间、时间结构、治理结构和身份连续性。
 
 从实现角度看，这意味着第一阶段不应急于修改模型权重，而应首先将基础模型包装成一个可调用的 \emph{Cognitive Executor}。Kernel 需要明确区分模型内部参数 $\theta_M$ 与 Agent 生命周期状态 $X_A(t)$：
@@ -142,17 +143,19 @@ s_i
 这使 $h$ 从 ``文本窗口'' 转变成一个可治理的当前认知图。
 
 最关键的设计原则是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MostAgentDynamics\notin h.
-}
-\]
+\)}
+\end{statementbox}
 成熟智能并不是把更多东西塞进工作记忆，而恰恰是让绝大多数已经稳定、可局部闭合或暂时无关的过程不再占据显式认知表面。只有当某个结构需要跨模块协调、全局判断、重新解释或处理异常时，它才应该被提升进入 $h$。因此我们可以把 $h$ 定义为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h=\text{Sparse Explicit Cross-Scale Surface}.
-}
-\]
+\)}
+\end{statementbox}
 
 这一点与工作记忆有限容量原则直接相关。若令当前活跃 Agent-CSO 之间的有效关系图为
 \[
@@ -274,13 +277,14 @@ h_t^{recall}
 如果 Agent 只有 $h$ 和 $E$，它已经能够连续经历世界，却仍然必须反复检索过去案例来解决相似问题。这种系统可以记住，却未必真正形成结构性学习。于是下一阶段必须引入 $\Theta$：结构记忆、生成结构或长期生成器。$\Theta$ 的任务不是保存某一件事情发生过，而是从大量情景中提取那些可以再次生成预测、解释、策略和技能的稳定结构。
 
 因此三相关系正式建立：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h=State,\qquad
 E=Trajectory,\qquad
 \Theta=Generator.
-}
-\]
+\)}
+\end{statementbox}
 与 $E$ 不同，$\Theta$ 应表示
 \[
 \Theta
@@ -392,11 +396,12 @@ WorldRelationToMe.
 F(X_A;\Psi),
 \]
 意味着自我不是每一步直接发指令，而是改变认知状态空间中的势场、权重和可行区域。这个定义与我们此前所强调的
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance\neq FastMicromanagement
-}
-\]
+\)}
+\end{statementbox}
 完全一致。成熟的慢变量不应直接控制每个 token 或动作，而应改变快速认知 ``倾向于朝哪里运行''。
 
 引入 $\Psi$ 后，身份连续性可以获得比 ``数据库里有相同 user\_id'' 更强的定义。设
@@ -424,13 +429,14 @@ D_\Psi(\Psi_{t+\delta},\Psi_t)
 $\Psi$ 回答 ``我是谁''，但成熟 Agent 仍然需要回答另一个不同的问题：``我正在成为什么''。如果所有长期控制都被压缩到当前身份，那么系统容易把身份稳定等同于永不变化。真正的生命周期智能需要一个比 $\Psi$ 更慢、更加生成性的方向结构，这就是 Deep Generative Attractor，即 DGA，后期统一记作 $\Omega$。
 
 我们可以用最简洁的方式区分二者：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Psi:\ WhoAmI,
 \qquad
 \Omega:\ WhatAmIBecoming.
-}
-\]
+\)}
+\end{statementbox}
 $\Psi$ 约束当前选择与既有身份的一致性；$\Omega$ 则约束长期经历、能力和目标如何被组织成未来发展趋势。它并不是一个固定 ``终极任务''，更不是单一 reward function，而是一类超慢生成先验，可以影响哪些长期方向被认为值得持续投入。
 
 形式上，可令未来目标分布满足

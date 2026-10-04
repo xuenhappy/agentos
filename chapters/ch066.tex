@@ -16,13 +16,14 @@
 \text{Adapt Continuously}\)}
 \end{statementbox}
 并进一步建立：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalAlignment
 >
 RepresentationAlignment
-}
-\]
+\)}
+\end{statementbox}
 这一基本准则。所谓 ``$>$'' 并非表示表示对齐没有价值，而是表示在 Kernel--Body Runtime 的跨模型长期耦合中，\textbf{功能正确性具有比内部坐标一致性更高的系统优先级。}
 
 KRA 的最终锚点不是 Kernel，也不是 BPCC，更不是任何一个学习模型，而是现实：
@@ -242,15 +243,16 @@ z^{soft}_{BK}
 \]
 这样的 Soft Latent Channel，用于表达难以完全离散化、但对跨模块协同有价值的细粒度动力学特征。于是形成我们此前概括的设计：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Interface
 =
 SemanticSkeleton
 +
 LatentMuscle
-}
-\]
+\)}
+\end{statementbox}
 
 语义骨架保证身份连续、可检查、版本兼容和跨身体迁移；latent muscle 提供高性能、低损失的细粒度适应能力。KRA 的真正作用不是从 ``语义'' 与 ``latent'' 二选一，而是建立一种层级契约：越接近 Agent 身份、Goal、Reality Authority 和 Safety 的结构越需要稳定语义化；越接近快速身体细节的变量越可以保留私有或软 latent 表示。
 
@@ -528,13 +530,14 @@ Task
 EverythingChangesAllTheTime,
 \]
 而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AdaptWhenNeeded,
 AtTheAppropriateLayer,
 AtTheAppropriateTimescale.
-}
-\]
+\)}
+\end{statementbox}
 
 由此，KRA 更像一个长期关系维护系统。它维护的不是固定参数，而是：
 \begin{statementbox}
@@ -545,13 +548,14 @@ RelationshipContinuity.
 \section{Functional Alignment $>$ Representation Alignment：跨实现智能的核心原则}
 
 本章最核心的理论判断可以正式写成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalAlignment
 >
 RepresentationAlignment.
-}
-\]
+\)}
+\end{statementbox}
 为了避免误解，我们首先需要说明这里的 ``$>$'' 表示系统设计优先级，而不是数学上的数值大小关系。它意味着：当内部表示的一致性和现实功能的一致性无法同时满足时，AgentOS 应首先保证后者。
 
 设 Kernel 存在表示：
@@ -614,14 +618,15 @@ d_R(z_K,z_B)\gg 0.
 也就是说，representation 可以非常不同，但 functional outcome 仍然接近。
 
 一个直观例子是 ``避开障碍物''。机械臂可能通过 joint-space trajectory optimization 实现，轮式机器人通过 local planner 实现，人形机器人通过全身 MPC 实现，数字 Agent 则可能通过修改鼠标路径避开 UI 中的禁止区域。这些系统内部不存在天然统一的 latent 表示，但它们可能共享：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Obstacle,
 ForbiddenRegion,
 SafePath,
 GoalState
-}
-\]
+\)}
+\end{statementbox}
 这些 Agent-CSO，并在其各自 Body Runtime 中实现相同功能关系。
 
 因此真正实现 Body Scale 的不是：
@@ -655,21 +660,23 @@ C
 
 但是 Functional Alignment 并不意味着内部 representation 完全无关。一个极端不可解释、持续漂移的 latent 会提高 KRA 映射成本，也可能使 functional alignment 非常脆弱。因此更准确的工程原则是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RepresentationAlignment
 \quad
 \text{is useful when it reduces alignment cost,}
-}
-\]
+\)}
+\end{statementbox}
 但：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalAlignment
 \quad
 \text{is the acceptance criterion.}
-}
-\]
+\)}
+\end{statementbox}
 
 我们可以定义：
 \[
@@ -707,13 +714,14 @@ Agreement(K,B)\rightarrow1,
 但真实杯子仍然放在桌面上。
 
 这揭示了纯模型间 alignment 的根本缺陷：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MutualConsistency
 \neq
 RealityConsistency.
-}
-\]
+\)}
+\end{statementbox}
 
 因此 KRA 必须遵循全书最重要的现实原则：
 \begin{statementbox}
@@ -748,13 +756,14 @@ Kernel.
 \]
 
 尤其必须保持：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictedState
 \neq
 ObservedState.
-}
-\]
+\)}
+\end{statementbox}
 
 可以让 BPCC 产生：
 \[
@@ -1160,13 +1169,14 @@ J_{task}(\Theta_{sys}),
 
 这实际上给出了 ``持续智能体中的稳定'' 一个比参数不变更深刻的定义：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RelationshipStability
 >
 ParameterStability.
-}
-\]
+\)}
+\end{statementbox}
 
 一个 Agent 在生命周期中完全可以更换模型版本、更换身体、重新学习控制策略，甚至重新组织部分内部 representation；真正需要保持的是：世界中的对象仍然能够被它可靠认识，身体状态仍然能够被正确解释，目标仍然能够被身体落实，行动后果仍然重新接受现实验证，而安全边界仍然保持有效。
 
@@ -1200,23 +1210,25 @@ Adapt Continuously
 
 同时始终满足：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalAlignment
 >
 RepresentationAlignment
-}
-\]
+\)}
+\end{statementbox}
 
 以及最根本的：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reality
 >
 ModelAgreement.
-}
-\]
+\)}
+\end{statementbox}
 
 因此，本章最终确立的并不是一种普通模型对齐算法，而是一条持续人工智能体的架构原则：
 

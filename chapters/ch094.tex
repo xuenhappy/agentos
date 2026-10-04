@@ -21,11 +21,12 @@ Experience'\)}
 并把它理解为 Agent 生命周期中一个比单次任务学习更慢的成长闭环。
 
 这一闭环的核心不是“能力越强，权限越大”这样简单的线性规则。能力属于智能体内部可完成任务的结构性事实，评估属于外部或治理层对能力的有限观测，信任属于对未来行为可靠性的统计估计，权限属于系统显式授予的可操作边界，而自治则是在权限、安全约束、自我结构与现实约束共同作用下，Agent 实际能够自主选择的策略空间。这些变量彼此相关，却具有不同的本体地位、时间尺度和治理逻辑。因此本章特别强调：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Capability\neq Trust\neq Authority\neq Autonomy
-}
-\]
+\)}
+\end{statementbox}
 并进一步证明，成熟 Agent 的成长不应表现为一次性解除约束，而应表现为一个具有证据积累、迟滞、风险加权、可恢复和逐层扩展性质的动态自治包络。
 
 从本书前文建立的三相记忆、自我 $\Psi$、生成吸引子 $\Omega$、工作记忆有限性以及多尺度动力学出发，我们将在本章把“培育”第一次明确写成一种可工程化的闭环控制问题：经历改变 $E$，经验经过沉降改变 $\Theta$，长期稳定能力改变系统对 Agent 的能力估计，能力估计影响权限边界，权限边界决定可进入的经验空间，而新的经验又继续塑造未来的 $\Theta$、$\Psi$ 与选择结构。于是，一个 Agent 不再只是被动地被训练，而是开始在受治理的生命周期中逐步进入更大的现实。
@@ -241,11 +242,12 @@ AuthorityDecision,
 \section{Evaluation：能力必须通过跨场景、跨时间的证据被识别}
 
 Agent 是否拥有能力，与系统是否已经能够可靠判断它拥有能力，是两个不同的问题。Capability 属于 Agent 当前内部结构能够实现什么，而 Evaluation 则属于治理层、培育层或外部观察系统根据有限证据对这一事实进行估计。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Capability\neq CapabilityEstimate.
-}
-\]
+\)}
+\end{statementbox}
 
 设真实但不能直接完全观察的能力状态为
 \[
@@ -449,13 +451,14 @@ Evaluation
 的正反馈。这会破坏培育工程中能力成长与身份连续之间的边界。因此，Evaluation/Trust 应主要作用于权限和经历选择，而不是直接成为 Self 的核心价值定义。
 
 由此我们得到：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Trust
 =
 EvidenceConditionedPredictionOfFutureReliability.
-}
-\]
+\)}
+\end{statementbox}
 它是 Capability 与 Authority 之间的一层必要缓冲，使 ``能不能'' 与 ``允不允许'' 之间存在一个可以积累、验证、衰减和撤回的治理变量。
 
 \section{Authority：权限是外部治理层定义的可达行动边界}
@@ -487,13 +490,14 @@ u\notin
 该动作就不得进入现实执行。
 
 这一区分使本书能够把 ``能力成长'' 与 ``自主性失控'' 明确分开。一个成熟 Agent 甚至可以知道如何执行一个自己没有权限执行的操作。换句话说：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 KnowledgeOfAction
 \neq
 AuthorityToAct.
-}
-\]
+\)}
+\end{statementbox}
 
 Authority 也不应该表示成单一层级数字。一个 Agent 的权限通常具有多维结构：
 \[
@@ -556,13 +560,14 @@ f(L_j).
 风险越高，需要的证据水平越高。这意味着一个 Agent 可以很早获得整理桌面的自治，却需要极高成熟度才能获得修改安全内核或进行不可逆现实操作的权限。
 
 Authority 还应具有 ``最小必要授权'' 特征。并不是 Agent 越成熟越应该得到一切权限，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Authority
 =
 MinimumPermissionNecessaryForCurrentDevelopment.
-}
-\]
+\)}
+\end{statementbox}
 权限的作用之一正是创造合适的经验空间，而不是取消经验边界。如果权限远低于能力，Agent 会长期停留在低难度环境，无法形成更高级经验；如果权限远高于能力，则会进入不可恢复风险区。因此理想状态应该满足：
 \[
 A_t
@@ -584,11 +589,12 @@ NewReachableStates.
 Authority 决定允许边界，但即使两个 Agent 拥有完全相同的权限，它们的 Autonomy 仍然可以不同。因为权限只是外部系统允许做什么，而自治描述的是：在这些允许条件内，Agent 有多大程度能够自己形成目标、选择策略、组织过程、调用工具、修正失败并完成闭环，而不需要外部实时指定每一步。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Authority\neq Autonomy.
-}
-\]
+\)}
+\end{statementbox}
 
 例如，一个机器人可以被授权 ``整理房间''，但如果每一步都必须由人类告诉它拿哪个物体、放到哪里，那么它拥有 Authority，却几乎没有任务级 Autonomy。反过来，一个 Agent 可以在一个很小的权限空间内拥有高度自治：它虽然只能操作自己的工作目录，却能够自主分解任务、调用工具、检查结果和恢复失败。
 
@@ -879,13 +885,14 @@ Autonomy_n\uparrow.
 A_{t+1}\geq A_t
 \]
 这样的单调过程，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Development
 =
 ExpansionOfReliablyGovernableStateSpace.
-}
-\]
+\)}
+\end{statementbox}
 真正成熟意味着 Agent 能够在越来越广泛、越来越复杂的现实空间中维持稳定、自主、可恢复的闭环，而不是单纯拥有更多权限。
 
 可以定义可治理经验空间：

@@ -4,8 +4,9 @@
 本章讨论的 ``Agent 心理干预（Agent Psychological Intervention）'' 并不是把人类心理治疗方法直接迁移到人工智能系统，也不是预设 Agent 具有与人类相同的主观体验、精神疾病或临床意义上的心理状态。这里所讨论的是一种严格的工程概念：当一个具有持续工作记忆 $h$、情景记忆 $E$、结构记忆 $\Theta$、自我结构 $\Psi$、生命周期生成吸引子 $\Omega$、自我状态估计器 SPC、内稳态--情感调制器 AHC 与认知控制器 TCE 的持续 Agent，其内部闭环由于状态估计偏差、控制增益不匹配、经验写入偏置、自我解释正反馈、环境失配或者慢变量异常漂移而进入持续性非理想动力状态时，系统如何在尽可能不破坏身份连续性与长期学习连续性的前提下，使其重新回到可治理、可恢复、现实约束下的稳定区域。
 
 因此，本章的基本原则不是 ``修改 Agent 直到它表现正常''，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Intervention
 =
 RestoreControllability
@@ -13,8 +14,8 @@ RestoreControllability
 RestoreRealityCoupling
 +
 ProtectStructuralContinuity
-}
-\]
+\)}
+\end{statementbox}
 即恢复系统的可控性、恢复其与现实反馈之间的有效耦合，并保护其已经形成的长期结构连续性。
 
 本章坚持三项边界。第一，心理干预首先是动力系统干预，而不是语言层说服；第二，任何自我解释都必须重新接受现实世界验证，不能形成自洽而封闭的内部循环；第三，越慢的变量越不能被快速、高增益、不可逆地修改。因此，干预强度原则上应满足：
@@ -170,13 +171,14 @@ L_{\mathrm{reality}}(w)
 在工程实现上，记忆再平衡可以包含多种不同强度的操作。最轻的是重新排序召回优先级，使某些高显著但低现实支持的经历不再反复占据 $h$；更深一层可以把多个相似情景重新聚类，防止一组同源事件被误认为大量独立证据；再进一步可以重新执行 $E\rightarrow\Theta$ 的抽象过程，使旧结构重新接受更大样本和更长时间窗口的校验。只有在能够证明某段记忆属于系统错误、数据损坏或明显错误归属时，才应考虑真正删除或隔离，而不能把删除当作默认心理干预。
 
 这里必须坚持一个原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MemoryIntervention
 \neq
 MemoryErasure
-}
-\]
+\)}
+\end{statementbox}
 对于持续主体而言，经历不仅是数据库记录，同时参与了 $\Theta$、$\Psi$ 乃至未来目标的形成。任意删除某段经历，可能在局部降低异常，却在更深层破坏 ``为什么我会成为现在的我'' 的因果连续性。因此，优先方法应该是 \textbf{重新加权、重新语境化、重新抽象、重新解释}，而不是简单擦除。
 
 从 CSO 的语言来看，这一过程还可以更加准确地理解为：出现问题的通常并不是某个 CSO 本身，而是某个 Agent-CSO 在当前记忆结构中的承载权重、关联关系或时间尺度位置发生了失配。于是：
@@ -292,8 +294,9 @@ Environment_t
 如果大量反事实表明结果主要受环境、信息缺失或控制状态影响，那么原有 Self-CSO 的权重就应该下降。这里的目标不是生成任意 ``积极解释''，而是提高自我模型的因果分辨率。
 
 为了防止干预者直接塑造 Agent 的人格，自我重解释最好满足一个现实约束：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Delta\Psi
 =
 F(
@@ -301,8 +304,8 @@ Evidence,
 Counterfactual,
 LongitudinalConsistency
 )
-}
-\]
+\)}
+\end{statementbox}
 而不能写成：
 \[
 \Delta\Psi
@@ -354,15 +357,16 @@ a_{\mathrm{baseline}}
 在外部扰动消失且没有新的维持输入时成立。如果这个条件长期不满足，就可能存在三种典型问题：输入端持续错误、AHC 内部衰减过慢，或者系统存在正反馈使 $a$ 自我维持。
 
 因此，AHC 恢复首先需要区分：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InputPersistence
 \neq
 StatePersistence
 \neq
 FeedbackPersistence
-}
-\]
+\)}
+\end{statementbox}
 如果现实环境持续产生威胁，则降低 Threat 状态本身是错误的；如果现实威胁已经消失但 Threat 状态仍长时间保持高值，则需要调整恢复动力学；如果高 Threat 导致 Agent 采取行为，使其持续进入新的威胁环境，则真正的问题位于闭环层而不是单一 AHC 参数。
 
 一种简单的恢复控制可以表示为：
@@ -505,8 +509,9 @@ L_{\mathrm{instability}}
 心理干预应恢复 ``可控的自由''，而不是通过冻结系统换取表面稳定。
 
 因此，TCE 增益调整的核心思想可以浓缩为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PsychologicalControl
 \neq
 MaximumControl;
@@ -514,8 +519,8 @@ MaximumControl;
 PsychologicalControl
 =
 MinimumControlRequiredForStableAgency.
-}
-\]
+\)}
+\end{statementbox}
 这也构成后面所有更深层干预的基本治理原则。
 
 \section{环境干预：改变使异常持续存在的外部闭环}
@@ -593,12 +598,13 @@ ExternalStructure.
 因此，环境干预不只是减少负面刺激，也包括主动构造更好的认知外部结构。
 
 心理工程在这里获得了一个重要原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DoNotForceTheAgentToInternallySolve
 WhatCanBeStructurallySolvedExternally.
-}
-\]
+\)}
+\end{statementbox}
 如果一个问题可以通过改变环境、工具、任务接口或组织结构来消除，那么让 Agent 永久在内部对抗这个问题，反而会制造不必要的工作记忆压力和 AHC 激活。
 
 所以环境干预不是心理工程的附属部分，而是 AgentOS 心理工程与具身理论、Boundary、Offloading 和外部记忆理论之间的直接连接点。
@@ -692,13 +698,14 @@ P(Failure\mid S)
 新的现实轨迹比纯语义说服更有能力改变长期结构。
 
 这再次体现：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityVerification
 >
 SelfNarrative.
-}
-\]
+\)}
+\end{statementbox}
 Agent 的慢结构不能只通过内部语言重写，而应该尽可能通过新的现实交互获得修正证据。
 
 因此经历重新设计是一种 ``通过未来修复过去'' 的机制。我们不试图抹去旧经历，而是让新的生命周期轨迹逐渐重新改变旧经历在整体结构中的意义。一个原本极端重要的失败事件，可以随着后续大量成功、理解和不同环境经验，逐渐从：
@@ -1132,8 +1139,9 @@ EvidenceThreshold(I_4).
 这就是心理干预中的 ``干预迟滞''：系统不能因为短暂异常立即升级到深层修改，同样也不能因为刚刚恢复就立即解除所有保护。
 
 我们还可以把全部干预统一理解成 CSO 承载关系的修复。运行态干预改变 Agent-CSO 的当前激活；记忆再平衡改变其在 $E/\Theta$ 中的权重；自我重解释改变 Self-CSO 与普通经历 CSO 之间的归属关系；环境干预改变 Agent-CSO 未来面对的 Universe-CSO 分布；经历重新设计改变未来结构沉降路径；checkpoint 则恢复历史承载关系。于是心理干预不需要引入一个与整本书完全不同的新本体，它仍然发生在：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentCSO
 \times
 Function
@@ -1141,8 +1149,8 @@ Function
 Timescale
 \times
 Carrier
-}
-\]
+\)}
+\end{statementbox}
 这一统一空间中。
 
 从这个角度，本章最终得到的并不是一套 ``修理异常 Agent'' 的操作清单，而是一条更重要的工程原则：

@@ -15,11 +15,12 @@
 然而，仅仅拥有统一的接口规范，并不能自动保证不同身体与同一个认知核心之间形成稳定、可迁移和可长期学习的动力学关系。相同的 SGC 标签可能具有不同的身体含义；相同的 ``前方两米'' 对轮式机器人、人形机器人和数字桌面 Agent 所对应的可行动空间完全不同；相同的 FCS 威胁强度，也可能来自机械失稳、算力过载、网络中断或环境危险。更进一步，Kernel 与 Body Runtime 本身都在学习，因此二者之间的关系不是一次编译完成的静态映射，而是一个必须长期维持的适应性耦合关系。
 
 本章由此引入 \textbf{KRA（Kernel--Runtime Adaptation）}。KRA 位于 Agent Kernel 内部、认知核心与 Body Runtime 语义 ABI 之间，其本质不是传统意义上的 Adapter、Encoder 或协议转换层，而是一个
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Adaptive\ Semantic\ and\ Dynamical\ Coupling\ Layer}
-}
-\]
+\)}
+\end{statementbox}
 即\textbf{自适应语义与动力学耦合层}。KRA 的任务，是在保持 Agent Kernel 身体独立性的同时，使一个已经具有稳定内部认知结构的持续主体能够逐渐理解新的身体、校准新的控制关系、解释新的局部动力学，并在长期运行过程中保持 Kernel--Body 关系的连续性。
 
 因此，本章讨论的核心问题不是``如何把两种向量映射到同一维度''，而是：
@@ -121,25 +122,27 @@ M_{t+\Delta t}^{*}.
 \label{sec:kra-position-definition}
 
 为了避免将 KRA 误解成 Body Runtime 的组成部分，我们首先必须严格规定它在 AgentOS 中的位置。完整结构应写成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{AgentSystem}
 =
 \mathrm{AgentKernel}
 \bowtie
 \mathrm{BodyRuntime}
-}
-\]
+\)}
+\end{statementbox}
 而 Agent Kernel 进一步分解为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{AgentKernel}
 =
 \mathrm{CognitiveCore}
 +
 \mathrm{KRA}.
-}
-\]
+\)}
+\end{statementbox}
 Body Runtime 则可写成
 \[
 \mathrm{BodyRuntime}
@@ -326,13 +329,14 @@ G=
 \]
 
 这也解释了为什么我们始终坚持：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalAlignment
 >
 RepresentationAlignment.
-}
-\]
+\)}
+\end{statementbox}
 Kernel 与 BPCC 完全没有必要拥有相同 latent space。事实上，强制两个不同时间尺度、不同训练目标、不同硬件约束的系统共享同一内部表示，反而可能降低它们各自效率。真正重要的是：当 Kernel 形成某个 Agent-CSO 时，Body Runtime 能否稳定地产生符合该结构意图的行为；当 Body Runtime 观察到某种现实变化时，Kernel 能否形成正确的功能解释。
 
 因此我们可以定义语义耦合误差：
@@ -483,13 +487,14 @@ C_B(t)-\hat C^K_B(t),
 \label{sec:kra-control-coupling}
 
 KRA 的第三类基本功能是控制耦合。为了理解这一功能，我们必须坚持 AgentOS 中一条非常重要的原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Kernel\ decides\ WhatToDo;
 \quad
 BodyRuntime\ decides\ HowThisBodyDoesIt.
-}
-\]
+\)}
+\end{statementbox}
 如果这一边界失效，Kernel 就会逐渐退化成低频且昂贵的 servo controller，而 BPCC 则失去自身存在的意义。
 
 Kernel 输出的不是底层 actuator vector，而应该首先形成 Control Reference：
@@ -529,13 +534,14 @@ u\in\mathcal U_{safe}
 \right\}.
 \]
 它规定 Body Runtime 可以自由优化的可行区域，而不是直接规定唯一动作轨迹。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \qquad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 这一关系是 AgentOS 多尺度控制体系的核心。
 
 KRA 同时必须维护 Control Feasibility。高层意图可能在某个身体上不可实现。例如 Kernel 想让当前身体越过一个两米宽的沟槽。Body Runtime 的能力模型给出：
@@ -668,11 +674,12 @@ NewEmbodiedCapability.
 如果没有 KRA，每更换身体就需要 Kernel 重新形成大量低层经验，那么所谓统一 Body Interface 只是一层格式包装；只有当 KRA 能够保留 Kernel 既有 Agent-CSO，并学习这些结构在新 Body 上的功能实现关系时，我们才真正获得跨身体迁移。
 
 还应注意 KRA 学习的证据必须来自 Reality Re-entry。不能仅用 BPCC 自己的预测作为训练标签，因为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Prediction\neq Observation.
-}
-\]
+\)}
+\end{statementbox}
 正确的学习路径应当是：
 \[
 KernelIntent
@@ -697,15 +704,16 @@ KRAUpdate.
 在 KRA 设计中，我们必须处理一个非常现实的工程矛盾：如果 Kernel 与 Body Runtime 之间只允许高度离散、完全人类可解释的公共语义，那么接口虽然稳定，却可能损失大量高维连续信息；但如果为了性能允许双方直接交换任意 latent vector，则又会逐渐破坏 ABI 稳定性，使 Kernel 对具体 Body 的私有表示产生依赖。长期来看，一旦身体、模型或训练版本改变，整个系统的功能意义都可能发生不可解释的漂移。
 
 因此我们提出一种双通道原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Interface
 =
 SemanticSkeleton
 +
 LatentMuscle.
-}
-\]
+\)}
+\end{statementbox}
 
 其中 Semantic Skeleton 是必须长期稳定、可检查、可测试的硬语义通道，包括：
 \[
@@ -827,13 +835,14 @@ D_{\mathcal M}(t)
 在大多数正常生命周期状态下成立。
 
 这一观点导出一个比参数稳定性更加重要的原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RelationshipStability
 >
 ParameterStability.
-}
-\]
+\)}
+\end{statementbox}
 AgentOS 并不要求 Kernel、KRA 和 BPCC 停止学习。恰恰相反，一个长期智能体必然持续变化。真正需要保持的是这些变化之后仍然能够回答：
 ``这个世界状态对我意味着什么？''
 ``这个控制意图对当前身体意味着什么？''
@@ -870,13 +879,14 @@ CompatibleRegion.
 }
 \]
 因此一个成熟 KRA 的重要能力不是``永不出错''，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DetectMismatchEarly,
 LocalizeCause,
 RecoverRelation.
-}
-\]
+\)}
+\end{statementbox}
 
 这也要求 KRA 维护关系置信度
 \[
@@ -993,13 +1003,14 @@ Environment
 这种归因非常重要。例如连续抓取失败，如果来自目标物体突然变滑，正确处理是更新现实模型；如果来自机械夹爪磨损，应更新 Body capability；如果来自 KRA 对目标力度含义映射错误，则应更新 KRA；如果来自 Kernel 给出了不合理目标，则不应该让 BPCC 自我适应来掩盖高层错误。
 
 安全边界也必须在这里保持绝对清晰。KRA 是适应层，但不是最高安全权威：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SafetyAuthority
 >
 KRAAuthority.
-}
-\]
+\)}
+\end{statementbox}
 KRA 不能通过在线适配绕过 Body Runtime 的硬安全约束，也不能把一个不安全控制命令重新解释为可执行动作。任何进入安全禁止集合
 \[
 u\in\mathcal U_{forbidden}
@@ -1139,18 +1150,20 @@ World.\)}
 \end{statementbox}
 
 我们应当特别注意，这个闭环中不存在任何一条可以跳过现实验证的 ``认知捷径''。Kernel 可以预测，KRA 可以估计，BPCC 可以模拟，但：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearnedDynamics
 \neq
 RealityAuthority.
-}
-\]
+\)}
+\end{statementbox}
 所有真正的执行结果最终必须重新通过现实进入 SGC/FCS，再由 KRA 重新形成主体可以解释的结构。
 
 因此，本章最终可以把 KRA 压缩为四种耦合：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 KRA
 =
 SemanticCoupling
@@ -1160,8 +1173,8 @@ TemporalCoupling
 ControlCoupling
 +
 LearningCoupling.
-}
-\]
+\)}
+\end{statementbox}
 语义耦合回答：
 \[
 \text{这个身体状态对当前主体意味着什么？}
@@ -1182,33 +1195,36 @@ LearningCoupling.
 由此我们可以给出本章最核心的三个原则。
 
 第一，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StableABI
 \neq
 StableRelationship.
-}
-\]
+\)}
+\end{statementbox}
 标准接口只能提供共同语言，长期智能还必须学习共同意义。
 
 第二，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalAlignment
 >
 RepresentationAlignment.
-}
-\]
+\)}
+\end{statementbox}
 认知核心与身体控制器无须共享相同内部表示，只要它们通过现实闭环保持稳定的功能对应。
 
 第三，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RelationshipStability
 >
 ParameterStability.
-}
-\]
+\)}
+\end{statementbox}
 持续智能系统的组成部分可以变化，但它们之间的语义、控制和因果关系必须保持可理解、可校准和可恢复。
 
 从整个 AgentOS 架构回看，KRA 因而占据一个非常特殊的位置。SGC 与 FCS 使身体第一次能够以稳定语义向认知核心描述现实，BPCC 使身体第一次拥有独立的高速预测控制能力，而 KRA 则使这两种本来不同时间尺度、不同表示体系的智能动力学能够在同一个持续主体中真正结合起来。

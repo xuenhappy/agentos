@@ -211,8 +211,9 @@ T(input)\rightarrow output.
 因此从 AgentOS 视角看，成熟工具是一种\textbf{被封装起来的历史认知结构}。
 
 这一点在数字环境尤其明显。一个脚本可以把几十步显式操作折叠成一次调用；一个数据库索引把过去大量搜索决策编码进数据结构；一个编译器把关于计算机体系结构、优化与语言规则的大量知识沉积成稳定程序；一个地图系统将此前必须依赖个人空间记忆的结构迁移到外部载体。物理工具同样如此。一把扳手将关于力矩传递的结构压缩进几何形态；夹具将定位约束固化进机械结构；生产线把任务顺序写进空间布局。因而：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Tool
 =
 ExternalizedConstraint
@@ -220,8 +221,8 @@ ExternalizedConstraint
 ExternalizedProcedure
 +
 ExternalizedCapability.
-}
-\]
+\)}
+\end{statementbox}
 
 这让我们能够严格地区分``普通物体''与``作为 Agent 外部认知结构的工具''。设环境中对象 $O_i$ 的物理状态为
 \[
@@ -239,13 +240,14 @@ ExpectedOutcome
 )
 \]
 这样的稳定功能关系后，$O_i$ 才真正成为该 Agent 的工具。换句话说：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Object\neq Tool;
 \qquad
 Tool=Object+StableAgentRelation.
-}
-\]
+\)}
+\end{statementbox}
 同一个锤子对于一个从未理解其用途的系统只是一个外部对象，而对已经建立稳定 affordance 与动作模型的 Agent 来说，它才是可以承担认知与行动结构的工具。
 
 更进一步，我们可以把工具理解成一种外部化的\textbf{局部闭环}。若原本高层需要完成
@@ -314,13 +316,14 @@ N C_{explicit}.
 因此，\textbf{不是所有可以外化的能力都应该立即工具化}。对于低重复、高变化、高不确定任务，显式认知仍然可能更经济；对于高重复、低残差、接口稳定的任务，则应逐步向工具或技能沉降。这与我们此前提出的``稳定能力向下、异常结构向上''完全一致，只是这里的``向下''跨过了 Agent 边界，进入外部世界。
 
 工具理论同时解释了为什么文明能够表现出远超单个人脑容量的累积能力。每一代人并不需要重新推导所有物理、数学、机械和计算规则。大量过去的认知已经沉积成工具、程序、仪器、语言和基础设施。当一个 Agent 使用它们时，它实际上在调用其他主体过去已经完成的结构压缩。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ToolUse
 =
 AccessToSedimentedHistoricalCognition.
-}
-\]
+\)}
+\end{statementbox}
 这并不意味着工具本身必然是智能体，而意味着它可以成为智能体功能拓扑之外的一个稳定认知承载节点。
 
 从这一点出发，我们可以重新理解 AgentOS 中 Skill、Program 与 Tool 的关系。Skill 更接近主体内部或身体层已经编译的局部闭环，Program 是以数字符号系统外化的稳定过程结构，Tool 则是具有明确能力接口、能够被主体调用的外部功能结构。三者之间没有绝对本体边界，它们更像同一 Agent-CSO 在不同承载位置上的实现：
@@ -491,12 +494,13 @@ C_i
 R(C_1,\ldots,C_n),
 \]
 其中任一单独 Agent 都没有完整结构，完整结构只存在于主体间关系中。此时我们已经不能说 ``$C^{global}$ 存储在某个 Agent 内''，而应该说：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 C^{global}
 \text{ is carried by a social functional topology.}
-}
-\]
+\)}
+\end{statementbox}
 这是社会性外部记忆比普通文件记忆更加深刻的地方：有些认知结构的真正载体不是某个节点，而是节点之间的关系。
 
 因此，本章采用``社会性外部记忆''并不是主张把其他主体当作自己的存储设备，而是建立一种更一般的认知系统论：\textbf{一个成熟智能体能够利用具有自身自主性的其他认知主体作为分布式结构载体，同时必须维持对访问权限、信任、误差、依赖和现实验证的明确模型。}在更高尺度上，稳定的社会性认知关系将逐渐沉降为角色、协议和组织结构，这正是后面几节需要考察的问题。
@@ -611,8 +615,9 @@ EscalationRule
 ).
 \]
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Delegation
 =
 GoalTransfer
@@ -620,8 +625,8 @@ GoalTransfer
 BoundedAuthorityTransfer
 +
 ReturnContract.
-}
-\]
+\)}
+\end{statementbox}
 如果没有返回契约，委派就容易演化成主体无法观察的认知黑箱；如果没有局部自治，委派又退化成高频远程操控，失去社会性外部承载的意义。
 
 我们可以把这四种关系放到一个二维空间中。一条轴表示\textbf{状态所有权转移程度}，另一条轴表示\textbf{控制权转移程度}。查询具有低控制权转移；协作共享状态但未必转移最终控制；授权主要扩大合法动作集合；委派则同时转移部分任务结构与控制责任。因此社会性外部认知并不是一种单一 API，而是一组具有不同因果含义的关系操作。
@@ -706,13 +711,14 @@ Relation
 Authority.
 \]
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CollectiveCapability
 \neq
 StoredKnowledge.
-}
-\]
+\)}
+\end{statementbox}
 更严格地说：
 \[
 Capability_G
@@ -770,8 +776,9 @@ J_G
 最小，同时保持任务能力。由此可以解释为什么成熟组织会出现部门、专业化、负责人、接口、协议和层级：这些结构本质上是在压缩跨主体协调复杂度。
 
 这一观点也使我们能够重新理解``群体涌现''。群体能力不是凭空涌现的神秘属性，而可能来自至少四类新增结构。第一，主体之间形成了互补的 Agent-CSO 分布；第二，关系图产生了单个主体内部没有的全局结构；第三，局部闭环降低了中央认知压力；第四，长期反馈使角色与连接逐渐稳定。于是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CollectiveEmergence
 =
 DistributedStructure
@@ -781,8 +788,8 @@ RelationalStructure
 LocalClosure
 +
 HistoricalSedimentation.
-}
-\]
+\)}
+\end{statementbox}
 
 在这里，社会性外部记忆和认知卸载再次汇合。对于个体 $A_i$ 而言，把结构交给其他主体可以降低其自身 $h$ 与长期记忆压力；对于群体而言，这些结构并没有消失，而是重新分布到了群体拓扑中。因此：
 \[
@@ -876,13 +883,14 @@ RepeatedInterAgentCSOFlow
 StableOrganizationalCoupling.
 \]
 因此，制度可以理解为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Institution
 =
 SlowMemoryOfRepeatedCollectiveCoordination.
-}
-\]
+\)}
+\end{statementbox}
 这是一种结构动力学定义，而不是关于制度全部社会意义的穷尽性定义。
 
 制度性结构的重要性质是：它的时间尺度通常明显慢于成员个体行为。可以写成
@@ -999,13 +1007,14 @@ AgentResidual
 InstitutionUpdate.
 \]
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InstitutionShapesAgents;
 \qquad
 PersistentAgentResidualShapesInstitution.
-}
-\]
+\)}
+\end{statementbox}
 这就是自顶向下约束与自底向上结构学习在组织层面的统一形式。
 
 从 AgentOS 视角看，制度性结构的重要意义在于提示我们：未来多个持久 Agent 组成的系统不能只依赖消息协议和一次性任务路由。随着系统运行时间增长，重复关系必然需要沉降成更慢的组织结构。如果没有这一层，每一轮协作都重新产生高额协调成本；如果这一层完全不可改变，又会形成僵化。因此真正成熟的多 Agent 系统最终需要同时管理\textbf{动态互动}和\textbf{互动历史沉降出的慢拓扑}。
@@ -1258,8 +1267,9 @@ Environment
 SocialRole.
 \]
 因此真正变化的不是一种``复杂度物质''在空间中搬运，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Delta
 (
 Representation,
@@ -1268,8 +1278,8 @@ Timescale,
 Boundary,
 Carrier
 ).
-}
-\]
+\)}
+\end{statementbox}
 这也是为什么本书保留``复杂度卸载''作为工程语言，却在本体层采用 CSO Migration 作为更基础解释。
 
 我们还可以重新定义 AgentOS 的智能资源调度问题。传统 OS 调度计算资源：
@@ -1359,15 +1369,16 @@ Revision
 这一通道。换句话说，一个结构之所以成为记忆，并不意味着它拥有永久真理地位；记忆必须能够被现实重新解释。
 
 最终，本章得到一种比``内存—外存''更一般的 Agent 结构：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Agent
 =
 InternalDynamics
 \bowtie
 ExternalCarrierTopology.
-}
-\]
+\)}
+\end{statementbox}
 其中内部部分提供当前整合、自我、预测和治理，外部部分提供跨时间、跨空间和跨主体的结构承载。主体的连续性并不要求所有信息始终位于内部，而要求它能够维持：
 \[
 Identity

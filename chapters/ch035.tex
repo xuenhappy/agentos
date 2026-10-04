@@ -217,13 +217,14 @@ UncertaintyStress.
 前者是认知状态，后者是这种认知状态经过目标、价值和风险解释之后形成的调制量。
 
 由此我们得到一个重要原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AHCState
 \neq
 SemanticDescription.
-}
-\]
+\)}
+\end{statementbox}
 AHC 状态首先是动力状态，而自然语言描述只是其某种高层可解释映射：
 \[
 Label_t
@@ -619,13 +620,14 @@ Q_{\max}
 k(A_r-A^\ast)^2.
 \]
 这里不是说所有认知活动都严格满足这一公式，而是表达一个结构原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MaximumActivation
 \neq
 MaximumCognitivePerformance.
-}
-\]
+\)}
+\end{statementbox}
 
 Arousal 还可以改变系统内部的时间尺度。设基础观察周期为：
 \[
@@ -685,11 +687,12 @@ A_r\uparrow,\qquad Temperature\uparrow,
 例如高投入的创造性探索。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Arousal\neq CognitiveTemperature.
-}
-\]
+\)}
+\end{statementbox}
 前者属于 AHC 内部动力状态，后者是 TCE 可调控制变量。
 
 最终，我们可以把 Arousal 定义为：
@@ -848,13 +851,14 @@ E_d(1-F_g).
 如果一个智能体只有风险、能量和疲劳状态，它仍然会表现成一个主要以自我保存为目标的保守系统。真正的智能必须能够为了未来可能获得的高价值结果，在当前承担一定资源消耗、风险甚至暂时偏离内稳态区域。因此 AHC 还需要表示 Reward Expectation，即当前状态对未来正向结果的可达性预期。
 
 需要特别强调：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RewardExpectation
 \neq
 InstantReward.
-}
-\]
+\)}
+\end{statementbox}
 即时 reward 是当前发生的反馈，而 Reward Expectation 是一个关于未来的内部状态：
 \[
 R_e(t)
@@ -1145,8 +1149,9 @@ U_e
 H[p(x|\mathcal I)].
 \]
 后者则描述这种不确定性对于当前主体的控制意义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 U_s
 =
 F(
@@ -1156,8 +1161,8 @@ LossSensitivity,
 TimePressure,
 Recoverability
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 例如探索一个新的数学猜想时：
 \[
@@ -1190,13 +1195,14 @@ L_s
 其中 \(G_r\) 是目标相关性，\(L_s\) 是潜在损失敏感度，\(T_r\) 是剩余响应时间。
 
 这意味着：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 UncertaintyStress
 =
 Uncertainty\times Consequence.
-}
-\]
+\)}
+\end{statementbox}
 它不是纯知识论变量，而是知识不确定性与行动后果之间的桥梁。
 
 Uncertainty Stress 的一个重要功能是调节“继续探索”还是“先降低不确定性”。当：
@@ -1266,13 +1272,14 @@ U_s'.
 AHC 因此参与主动感知闭环。
 
 从更一般的认识论看，这一变量也揭示了 Agent 与世界关系的重要特点：智能并不是追求“知道一切”，而是在有限资源条件下决定“哪些未知值得被消除”。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 OptimalIntelligence
 \neq
 MinimumUncertaintyEverywhere.
-}
-\]
+\)}
+\end{statementbox}
 真正合理的是：
 \begin{statementbox}
 ReduceDecisionRelevantUncertainty.
@@ -1588,13 +1595,14 @@ p(a_i|\mathcal I_t).
 \]
 
 这使 AHC 同样遵循本书一直强调的认识论原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InternalStateEstimate
 \neq
 Reality.
-}
-\]
+\)}
+\end{statementbox}
 
 AHC 也不应把自身状态语义直接当成自我身份。例如系统长时间处于高 Threat 并不意味着：
 \[
@@ -1712,12 +1720,13 @@ a(t)\rightarrow\mathcal H.
 \theta_{\mathrm{off}},
 \]
 要求：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \theta_{\mathrm{on}}>
 \theta_{\mathrm{off}}.
-}
-\]
+\)}
+\end{statementbox}
 这样可以避免系统在阈值附近频繁来回切换。
 
 没有迟滞时，若信号在阈值附近波动：
@@ -1982,39 +1991,43 @@ PhenomenalExperience.
 最后，可以把本章压缩成五条基本命题。
 
 第一：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 InstantState
 \neq
 PersistentInfluence.
-}
-\]
+\)}
+\end{statementbox}
 持续智能需要把瞬时事件转换成有时间常数的内部状态。
 
 第二：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Affect
 =
 FunctionalModulation,
 \quad
 not\,
 EmotionLabel.
-}
-\]
+\)}
+\end{statementbox}
 
 第三：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AHC
 =
 DynamicCompressionOfSelfRelevantInfluence.
-}
-\]
+\)}
+\end{statementbox}
 
 第四：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AHCState
 \neq
 Self,
@@ -2022,12 +2035,13 @@ Self,
 AHCState
 \neq
 Reality.
-}
-\]
+\)}
+\end{statementbox}
 
 第五：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HealthyAHC
 =
 Bounded
@@ -2037,8 +2051,8 @@ Adaptive
 Recoverable
 +
 RealityCorrectable.
-}
-\]
+\)}
+\end{statementbox}
 
 因此，本章最终得到：
 

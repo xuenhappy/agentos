@@ -42,17 +42,19 @@ S^{self}_{\leq t}
 更像一个\textbf{身份可接受域}，而不是一个唯一未来方向。它排除某些与主体结构明显冲突的轨迹，却没有自动给剩余轨迹建立完整的长期生成排序。如果我们把所有长期方向选择都压缩到 $\Psi$ 中，那么 $\Psi$ 将同时承担 ``自我连续性'' 与 ``未来方向生成'' 两种性质不同的功能，使其既要稳定又要不断推动变化，最终造成概念和动力学上的冲突。
 
 因此我们需要将两个问题分开。第一个问题是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Psi:\quad WhoAmI?
-}
-\]
+\)}
+\end{statementbox}
 第二个问题是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Omega:\quad WhatAmIBecoming?
-}
-\]
+\)}
+\end{statementbox}
 前者主要约束当前 Agent 与历史 Agent 之间的主体连续性；后者则规定在大量仍然保持主体连续性的可行未来中，哪些方向具有更高的长期生成倾向。这里的 ``成为'' 并不是某个自然语言描述，例如 ``成为更聪明的人''，而是一个高维状态空间中的轨迹偏置。它可能表现为能力结构向某些方向生长、世界模型更加重视某些变量、Goal 生成具有长期稳定偏好、行动边界逐渐扩大、自治程度发生变化，以及新的经历更容易被选择进入生命周期。因此，$\Omega$ 不是 $\Psi$ 的同义词，而是在 $\Psi$ 之上的一个更慢生成层。
 
 从动力系统角度，我们可以把这一差异写得更清楚。设 Agent 的长期结构状态为
@@ -532,11 +534,12 @@ p(\Omega)
 \,d\Theta\,d\Psi\,d\Omega.
 \]
 如果我们把 $\Omega$ 理解成最慢生成先验，它并不意味着所有行为都需要在推理时显式 ``查询 Ω''。相反，在成熟系统中，大部分 $\Omega$ 影响应已经通过 $\Psi$、$\Theta$、Goal Preference、Boundary 等结构间接体现。否则一个极慢生命周期变量如果参与每一次毫秒级控制，会破坏整个多时间尺度设计原则。我们因此坚持：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance\neq FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 $\Omega$ 的作用不是微观管理，而是塑造更快结构的长期可行区域。
 
 生命周期生成先验还意味着一个非常重要的结构：未来并不是一个空白状态空间，而是在 Agent 内部具有非均匀生成概率。假设可行未来集合为
@@ -813,13 +816,14 @@ C_{\text{safety}}(\Gamma)\geq \theta_S.
 \|\Delta\Psi\|
 \]
 通常较小，但允许在长期证据推动下逐渐变化。于是身份连续应理解成\textbf{轨迹连续性}而非状态恒等：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 IdentityContinuity
 \neq
 IdentityConstancy.
-}
-\]
+\)}
+\end{statementbox}
 同理，$\Omega$ 的稳定也应理解成生成方向的连续演化，而不是永远不变的终局命令。
 
 我们还可以定义 $\Psi$ 与 $\Omega$ 之间的张力：
@@ -1092,13 +1096,14 @@ Authority(X)
 这使 $\Omega$ 从一开始就具有类似 ``受治理的慢状态'' 性质，而不是任何模块都可以访问的全局变量。
 
 第五类保护是现实权威。即使 $\Omega$ 代表 Agent 极其稳定的发展方向，也不能拥有比现实更高的认识论地位：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \operatorname{RealityAuthority}
 >
 \operatorname{OmegaAuthority}.
-}
-\]
+\)}
+\end{statementbox}
 如果长期现实证据持续说明某个方向不可行、有害或建立在错误世界模型上，那么系统必须保留修改 $\Omega$ 的路径。这一点是防止 DGA 演化成封闭信仰系统的最后防线。我们甚至可以定义长期现实失配：
 \[
 R_{\Omega}
@@ -1341,35 +1346,39 @@ F_{\Omega}(\Omega,\Psi,\Theta,E,W),
 这组方程不是当前已经验证的最终算法，而是本书所提出多尺度 Agent 结构的最小形式化框架。它告诉我们：不同变量虽然都属于同一个持续主体，却不能以相同速度学习，也不能接受相同强度和来源的证据。
 
 从这一模型出发，我们还能够第一次清晰地区分四种过去常被混淆的结构：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Goal\neq\Theta\neq\Psi\neq\Omega.
-}
-\]
+\)}
+\end{statementbox}
 Goal 是当前或阶段性未来约束；$\Theta$ 是长期可生成能力与世界结构；$\Psi$ 是身份连续性；$\Omega$ 是生命周期生成方向。它们之间存在因果耦合，却不应折叠为一个所谓 ``价值函数''。这种分离是 AgentOS 从普通任务智能走向持续主体的关键一步。
 
 本章最后可以把 DGA/$\Omega$ 的核心命题压缩为三个层次。第一，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Psi:\ WhoAmI
-}
-\]
+\)}
+\end{statementbox}
 负责让一个不断变化的系统仍然具有主体连续性。第二，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Omega:\ WhatAmIBecoming
-}
-\]
+\)}
+\end{statementbox}
 负责让这个主体的长期变化不只是随机漂移，而具有可学习、可修正的生成方向。第三，两者共同构成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 IdentityContinuity
 +
 DevelopmentalDirection
 =
 LifecycleCoherence.
-}
-\]
+\)}
+\end{statementbox}
 这里的 Lifecycle Coherence 并不是要求 Agent 永远保持同一目标，而是要求其长期变化能够在现实反馈下形成一条可以被解释为 ``同一个主体持续成长'' 的动力轨迹。
 
 因此，本章所引入的 $\Omega$ 并不是给 Agent 增加一个更宏大的口号，而是完成了三相记忆理论从 ``记住过去'' 到 ``形成自我''，再到 ``产生未来方向'' 的最后一步慢尺度扩展：

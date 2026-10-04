@@ -517,25 +517,27 @@ A_{ij,b}
 g(A_{ib},A_{jb}).
 \]
 因此，情景合并的真正数学形式是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 VectorMerge
 +
 GraphCoarsening,
-}
-\]
+\)}
+\end{statementbox}
 而不是单纯 embedding average。这一过程实际上构成 $E$ 自身的一种局部重整化机制。
 
 \section{$\Theta(t)$：作为结构记忆的慢速生成 LLM}
 
 三相记忆理论中最容易被误解的是 $\Theta$。如果把 $\Theta$ 实现成另一个向量数据库，那么它与 $E$ 只剩下存储周期不同，无法体现“结构记忆是生成器”的原始定义。因此，本章明确规定：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Theta
 \neq
 Database,
-}
-\]
+\)}
+\end{statementbox}
 而应定义成
 \begin{statementbox}
 \centering
@@ -734,13 +736,14 @@ z_i
 P(z_j\mid z_i).
 \]
 因此
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E=Trajectory,
 \qquad
 \Theta=Generator.
-}
-\]
+\)}
+\end{statementbox}
 
 更进一步，$\Theta$ 对未来的作用可以写为
 \[
@@ -756,13 +759,14 @@ z_t,c_E,\Psi
 \rho_\Theta^{future}(z,\Delta t).
 \]
 这正是此前“结构记忆不仅表示过去，还包含未来生成结构”的神经动力学实现：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Theta
 =
 PastCompressedIntoFutureGeneratingStructure.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{$\Psi(t)$：跨三相的慢速自我结构}
 
@@ -876,13 +880,14 @@ F_E(x)
 V_\Psi(x^\star)
 \]
 相对较低，从而使该类表示更容易成为稳定吸引区域。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Psi_h
 =
 PotentialFieldOverCurrentRepresentation.
-}
-\]
+\)}
+\end{statementbox}
 这就是“自我在 h 中作为背景引力”的神经动力学表达。
 
 在 $E$ 中，$\Psi$ 主要承担经历筛选器。对新事件 $e_i$ 定义 self relevance：
@@ -919,13 +924,14 @@ q_C^{A}
 q_C^{B}.
 \]
 这并不是因为外界事件本身不同，而是由于该事件与两个主体长期 Self 结构的关系不同。因此
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Psi_E
 =
 ExperienceSelectionField.
-}
-\]
+\)}
+\end{statementbox}
 
 $\Psi$ 还应进一步调制 E 的遗忘速度：
 \[
@@ -1000,13 +1006,14 @@ s_\Psi
 \right).
 \]
 因此
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Psi_\Theta
 =
 CoordinateOriginOfPersonalStructuralMemory.
-}
-\]
+\)}
+\end{statementbox}
 这就是“自我在 $\Theta$ 中表现为结构空洞”的更严格数学解释：它不是某个普通结构，而是其他长期结构被个人化组织时所使用的参考中心。
 
 为了避免长期结构在短期经验冲击下破坏身份连续，还需要让 $\Psi$ 对 $\Theta$ 的更新施加一致性正则：
@@ -1161,13 +1168,14 @@ A_{ij}
 \right].
 \]
 与此同时，E 还存在离散的 Insert、Merge 与 Evict，因此其本质是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ContinuousWeightDynamics
 +
 DiscreteGraphEvents.
-}
-\]
+\)}
+\end{statementbox}
 
 结构记忆满足
 \[
@@ -1397,13 +1405,14 @@ TaskRelevantLatentState.
 因此，其损失应围绕后续任务性能、状态重构以及情景关系保持定义，而不是简单的文本重建。
 
 $\Theta\rightarrow h$ 则更不应被理解为知识检索。结构记忆的本质是通过改变网络生成场，使当前工作记忆在不同的长期经验背景下自然进入不同状态。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Theta\rightarrow h
 =
 GeneratorShapesCurrentStateFlow.
-}
-\]
+\)}
+\end{statementbox}
 
 而 $E\rightarrow\Theta$ 应主要发生在慢速 consolidation window 中。设第 $k$ 个巩固时间窗为
 \[
@@ -1501,24 +1510,27 @@ L_2
 L_3,
 \]
 不同层之间主要区别在访问速度和容量。而三相记忆不是这种关系，因为三者的数学对象本身不同：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h:
 Distribution,
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E:
 FiniteTemporalCausalGraph,
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Theta:
 GenerativeParameterField.
-}
-\]
+\)}
+\end{statementbox}
 因此三相记忆真正描述的是
 \begin{statementbox}
 \centering
@@ -1588,8 +1600,9 @@ LoRA/AdapterBank+Router,
 s_\Psi
 \]
 以及三个投影组件：Layer Modulator、Episodic Filter 和 Structural Regularizer。于是，一个最小实现可以表示为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 TransformerHiddenStateDistribution
 +
 FixedCapacityEpisodicVectorGraph
@@ -1597,8 +1610,8 @@ FixedCapacityEpisodicVectorGraph
 SlowStructuralAdapterLLM
 +
 CrossPhaseSelfConditioner.
-}
-\]
+\)}
+\end{statementbox}
 
 一次完整认知循环可写为：
 \[
@@ -1754,13 +1767,14 @@ SlowLearning.\)}
 \end{statementbox}
 
 第三，自我可以改变注意、重要度和结构稳定性，但不得覆盖现实反馈：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfBias
 \neq
 RealityOverride.
-}
-\]
+\)}
+\end{statementbox}
 
 第四，$E$ 必须保持固定容量：
 \[
@@ -1822,13 +1836,14 @@ D
 \varepsilon_\Psi.
 \]
 因此，长期身份更准确的数学定义是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 IdentityContinuity
 =
 BoundedSlowDrift,
-}
-\]
+\)}
+\end{statementbox}
 而不是 Static Identity。
 
 \section{从三相记忆概念到多时间尺度神经动力系统}
@@ -1867,12 +1882,13 @@ WhatHappenedAlongMyTrajectory?
 \text{由长期情景巩固形成的慢速结构生成 LLM}\)}
 \end{statementbox}
 回答的是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 WhatUsuallyGeneratesWhat,
 AndWhatMayComeNext?
-}
-\]
+\)}
+\end{statementbox}
 
 而自我
 \[
@@ -1881,17 +1897,19 @@ AndWhatMayComeNext?
 }
 \]
 不是第四级记忆，而是同时在三个相态中发挥不同作用的慢变量。在 h 中，它表现为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PotentialField;
-}
-\]
+\)}
+\end{statementbox}
 在 E 中，它表现为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ExperienceSelectionField;
-}
-\]
+\)}
+\end{statementbox}
 在 $\Theta$ 中，它表现为
 \begin{statementbox}
 StructuralCoordinateOrigin.

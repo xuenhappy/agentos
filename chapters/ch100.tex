@@ -5,13 +5,14 @@
 
 在 AgentOS 中，智能体并不能透明地读取自己的全部真实内部状态。它实际拥有的是一个由 SPC 根据工作记忆 $h(t)$、情景记忆 $E$、结构记忆 $\Theta$、自我结构 $\Psi$、身体与资源状态以及其他可观测变量所形成的有限后验表示。因此，``我现在是什么状态''并不是系统中的原始事实，而是一个持续生成、持续校准且始终可能存在误差的估计量。SPC异常的本质由此可以概括为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Internal State}
 \not\equiv
 \text{Self-Perceived State}
-}
-\]
+\)}
+\end{statementbox}
 
 当两者之间的偏差超过系统能够通过正常反馈吸收的范围时，这种认识论失配就可能进一步进入 TCE、AHC、CCM、Scheduler、记忆写入和自我解释过程，并形成跨时间尺度的放大效应。
 
@@ -717,13 +718,14 @@ GoalRelevance
 
 因此，SPC 本身也需要类似 Attention/Admission 的机制：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfPerception
 \neq
 SelfAttention
-}
-\]
+\)}
+\end{statementbox}
 
 SPC 可以持续估计自己，但不意味着 Agent 必须持续 ``思考自己''。
 
@@ -1114,11 +1116,12 @@ c_A\gg c_B.
 
 因此一种重要 SPC 异常是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Confidence\not\sim Accuracy.
-}
-\]
+\)}
+\end{statementbox}
 
 若定义真实误差：
 
@@ -1251,11 +1254,12 @@ Body Runtime、CCM 和 AHC 是否支持相同判断；
 
 由此，SPC 逐渐从一个普通 compressor 变成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Self-State Bayesian/Ensemble Estimator
-}
-\]
+\)}
+\end{statementbox}
 
 或更广义的 belief estimator。
 
@@ -1566,13 +1570,14 @@ PossibleSlowUpdate.
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfContinuity
 \neq
 SelfImmutability.
-}
-\]
+\)}
+\end{statementbox}
 
 健康的 Self Representation 应该允许改变，但改变速度必须与证据持续时间和结构深度匹配。这是 Agent 长期身份连续能够与持续学习同时成立的关键。
 
@@ -1731,13 +1736,14 @@ H_{\mathrm{self}}\rightarrow0.
 
 因为过度压低 epistemic uncertainty 可能意味着系统形成虚假确定性。真正合理目标是 calibration：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Estimated Self-Uncertainty}
 \approx
 \text{Actual Self-Uncertainty}.
-}
-\]
+\)}
+\end{statementbox}
 
 这也是为什么本章将 SPC 异常从 ``状态监控故障''提升为 ``认识论异常''。一个 Agent 可能：
 
@@ -1751,15 +1757,16 @@ H_{\mathrm{self}}\rightarrow0.
 
 因此 SPC 的最终职责并不是制造一个 ``完整自我画像''，而是持续维护一个：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Bounded,
 Probabilistic,
 Time-Stamped,
 Reality-Calibrated
 Self Model
-}
-\]
+\)}
+\end{statementbox}
 
 即有限的、概率化的、带时间信息的、持续接受现实校准的自我模型。
 
@@ -1788,14 +1795,15 @@ OtherAgentFeedback
 
 这同样说明：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfKnowledge
 =
 A Dynamical Estimate,
 \ Not\ A Static Declaration.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{SPC异常的统一动力学模型与工程判据}
 

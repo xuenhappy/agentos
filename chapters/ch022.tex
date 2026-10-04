@@ -149,13 +149,14 @@ How much developmental intelligence can emerge on a stable functional skeleton?
 
 因此，我们首先区分两个概念：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Persistent Process}
 \neq
 \text{Persistent Subject}.
-}
-\]
+\)}
+\end{statementbox}
 
 Persistent Process 只要求计算过程没有结束；Persistent Subject 则要求系统存在一种跨时间的结构连续性，使：
 
@@ -309,15 +310,16 @@ A persistent agent must carry its own past into its future.
 
 为了把前两节的思想合并，我们现在可以给第一代 AgentOS 一个更加精确的定义：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{AgentOS}_{1}
 =
 \text{Stable Functional Topology}
 +
 \text{Plastic Multiscale Internal Dynamics}.
-}
-\]
+\)}
+\end{statementbox}
 
 这里最重要的是区分“结构稳定”与“状态静止”。固定功能拓扑并不意味着一个 AgentOS 像传统有限状态机一样只能在预先枚举的状态之间切换。相反，它允许极其高维、连续、历史依赖并且具有生成性的内部状态空间。
 
@@ -513,13 +515,14 @@ f_\theta(c_t),
 
 AgentOS 要解决的则是不同问题。我们希望：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Inference Event}
 \subset
 \text{Lifecycle Process}.
-}
-\]
+\)}
+\end{statementbox}
 
 一次推理只是主体生命轨迹上的局部事件，而不是主体本身。
 
@@ -658,13 +661,14 @@ FutureConstraint.\)}
 
 因此存在：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PhysicalProcessContinuity
 \neq
 IdentityContinuity.
-}
-\]
+\)}
+\end{statementbox}
 
 但这也不能走向另一极端：任意复制一份 checkpoint 就产生两个“同一个主体”。因此本书后面会坚持单一持续主体原则，对主体 fork 采取极其严格的限制。生命周期连续性应当是一条单值的治理轨迹，而不是可以无限复制的普通文件版本。
 
@@ -731,11 +735,12 @@ D_2,
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Worker\neq Subject.
-}
-\]
+\)}
+\end{statementbox}
 
 这类似于传统操作系统中一个用户可以同时运行多个进程，但不能因此说每个进程都是一个新的用户人格。AgentOS 中的区别更加严格，因为主体还承担长期自我与生命周期归属。
 
@@ -749,11 +754,12 @@ Owner(p_i)=A,
 
 并要求：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 D_2\nrightarrow Trap(D_1).
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，任何一个普通任务不能通过同步阻塞的方式占据整个持续主体，使 Agent 在等待某个任务时失去对世界、身体、安全事件、其他目标和生命周期状态的响应能力。一个真正持续运行的 AgentOS 必须类似实时操作系统中的核心调度器：任务可以等待，而主体不能被一个任务绑死。
 
@@ -785,13 +791,14 @@ BlockUntilReturn.
 
 SingleAgentMultiTaskOS 因而成为我们的基本抽象：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Single Persistent Subject}
 +
 \text{Multiple Concurrent Cognitive Processes}.
-}
-\]
+\)}
+\end{statementbox}
 
 这与 Multi-Agent Framework 最大的不同，是所有任务最终汇聚到同一主体记忆、自我、目标与责任体系中。即使某个 worker 给出了建议，该建议也不能自动获得主体身份。它必须重新进入 AgentOS 的认知治理路径，经过评估、整合、决策，才能成为主体行动。
 
@@ -845,11 +852,12 @@ t\mapsto A_t
 
 这一设计还解决了责任问题。当多个任务、多个模型甚至多个外部 Agent 参与决策时，最终的行动归属仍然可以写成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Responsibility(Action_t)=A.
-}
-\]
+\)}
+\end{statementbox}
 
 这对于未来具身系统、安全系统和社会性 Agent 尤其重要。否则系统很容易退化成“模型说的”“工具建议的”“某个子 Agent 决定的”，而没有一个稳定的治理中心承担行动一致性。
 
@@ -911,23 +919,25 @@ Authority
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ComputerOS
 =
 ComputeResourceRuntime
-}
-\]
+\)}
+\end{statementbox}
 
 而：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS
 =
 IntelligenceResourceRuntime.
-}
-\]
+\)}
+\end{statementbox}
 
 二者并不是竞争关系，而是分层关系：
 
@@ -1221,13 +1231,14 @@ Observation
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ActionIssued
 \neq
 ActionSucceeded.
-}
-\]
+\)}
+\end{statementbox}
 
 这个原则虽然会在 Body Runtime 章节中得到完整工程化，但在 AgentOS 原理论的入口处就必须建立。因为一旦一个长期智能体允许自己的预测直接写回“已发生事实”，就会形成危险的封闭自证环：
 
@@ -1326,9 +1337,9 @@ x^{ultraslow}
 
 所以本节真正建立的是 AgentOS 后续所有模块都必须满足的动力学骨架：
 
-\[
-\resizebox{.96\linewidth}{!}{$\displaystyle
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Persistent internal state}
 +
 \text{multiscale memory}
@@ -1338,9 +1349,8 @@ x^{ultraslow}
 \text{body/world coupling}
 +
 \text{reality verification}.
-}
-$}
-\]
+\)}
+\end{statementbox}
 
 缺少其中任何一项，系统都很难成为本书意义上的持续智能体。
 
@@ -1468,15 +1478,16 @@ E
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h=Present,
 \qquad
 E=ExperiencedPast,
 \qquad
 \Theta=LearnedGenerator.
-}
-\]
+\)}
+\end{statementbox}
 
 从时间尺度上，也自然要求：
 

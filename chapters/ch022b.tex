@@ -26,11 +26,12 @@ Module_n.
 
 而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{系统内部究竟有哪些不同性质的信号在流动？}
-}
-\]
+\)}
+\end{statementbox}
 
 因为任何模块最终都只是某些信号的：
 
@@ -64,59 +65,67 @@ Module_n.
 
 分别为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal S_S:
 \text{状态信号}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal S_I:
 \text{信息信号}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal S_U:
 \text{控制信号}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal S_C:
 \text{信用信号}
-}
-\]
+\)}
+\end{statementbox}
 
 四者分别回答四个不同的问题：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{状态：系统现在是什么？}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{信息：系统现在获得或表达了什么？}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{控制：系统接下来应该怎样变化？}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{信用：过去哪些结构应该因为结果而获得修改责任？}
-}
-\]
+\)}
+\end{statementbox}
 
 这四类信号共同构成 AgentOS 运行时最基本的信号本体。
 
@@ -124,13 +133,14 @@ Module_n.
 
 首先需要澄清：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{信号类型}
 \neq
 \text{数据类型}.
-}
-\]
+\)}
+\end{statementbox}
 
 一个向量：
 
@@ -144,11 +154,12 @@ x\in\mathbb R^d
 
 真正决定信号类别的是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{它在系统因果结构中承担什么作用。}
-}
-\]
+\)}
+\end{statementbox}
 
 例如同样一个标量：
 
@@ -172,11 +183,12 @@ RepresentationFormat,
 
 而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CausalRole.
-}
-\]
+\)}
+\end{statementbox}
 
 由此可以定义一个信号：
 
@@ -240,13 +252,14 @@ x_t\in\mathcal X
 
 状态信号的核心定义为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal S_S
 =
 \text{对当前系统状态及其局部变化的可观测表达}.
-}
-\]
+\)}
+\end{statementbox}
 
 典型状态可以包括：
 
@@ -270,11 +283,12 @@ x_t^{environment},
 
 而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{“现在是什么样？”}
-}
-\]
+\)}
+\end{statementbox}
 
 例如：
 
@@ -343,11 +357,12 @@ u_t
 
 所以状态不是静态数据库中的一条记录，而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{系统当前动力学的承载面}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{信息信号：关于世界与系统的结构表达}
 
@@ -407,13 +422,14 @@ i_t^{retrieved},
 
 信息信号的核心定义为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal S_I
 =
 \text{能够改变系统对可作用现实之内部表示的结构性信号}.
-}
-\]
+\)}
+\end{statementbox}
 
 这意味着：
 
@@ -474,13 +490,14 @@ Representation
 
 这一点对于整个 AgentOS 至关重要：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reality
 \neq
 InformationRepresentation.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{状态与信息为什么必须分离}
 
@@ -506,29 +523,32 @@ x_t=
 
 前者描述：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{正在处理什么}.
-}
-\]
+\)}
+\end{statementbox}
 
 后者描述：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{系统现在处于什么运行状态}.
-}
-\]
+\)}
+\end{statementbox}
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Information
 \neq
 State.
-}
-\]
+\)}
+\end{statementbox}
 
 然而两者又持续耦合。
 
@@ -564,11 +584,12 @@ u_t
 
 即：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{信息并不是脱离状态独立发挥作用，而是在状态条件下被解释。}
-}
-\]
+\)}
+\end{statementbox}
 
 \section{控制信号：改变系统状态转移方式}
 
@@ -588,21 +609,23 @@ u_t\in\mathcal U.
 
 其基本作用不是描述当前状态，也不是承载世界内容，而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{改变系统接下来如何演化}.
-}
-\]
+\)}
+\end{statementbox}
 
 所以控制的本体定义可以写成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal S_U
 =
 \text{对状态转移过程施加方向性约束或调制的信号}.
-}
-\]
+\)}
+\end{statementbox}
 
 如果没有控制：
 
@@ -646,11 +669,12 @@ u_t
 
 所以控制信号回答：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{“系统下一步应该怎样运行？”}
-}
-\]
+\)}
+\end{statementbox}
 
 而不是：
 
@@ -702,8 +726,9 @@ i_t
 
 于是形成最基本的运行闭环：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Information
 \rightarrow
 StateEvaluation
@@ -711,16 +736,17 @@ StateEvaluation
 Control
 \rightarrow
 StateChange.
-}
-\]
+\)}
+\end{statementbox}
 
 控制信号的本质不在于它表达了什么语言内容，而在于：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{它是否真正改变了系统的状态转移条件。}
-}
-\]
+\)}
+\end{statementbox}
 
 \section{信用信号：把结果重新分配给过去}
 
@@ -742,35 +768,39 @@ NewState.
 
 系统产生结果以后，还必须回答一个新的问题：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{为什么产生这个结果？}
-}
-\]
+\)}
+\end{statementbox}
 
 进一步：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{系统内部哪些结构应该因此发生变化？}
-}
-\]
+\)}
+\end{statementbox}
 
 这就引出了第四类信号：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CreditSignal.
-}
-\]
+\)}
+\end{statementbox}
 
 这里的 Credit 不是经济意义上的信用，而是机器学习和控制意义上的：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{责任归因}.
-}
-\]
+\)}
+\end{statementbox}
 
 设一次结果产生评价：
 
@@ -818,13 +848,14 @@ r_t=-1
 
 因此信用信号的基本定义为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal S_C
 =
 \text{把结果的学习责任分配给可塑性结构的信号}.
-}
-\]
+\)}
+\end{statementbox}
 
 设系统包含可塑性结构集合：
 
@@ -869,11 +900,12 @@ c_i(t)
 
 描述：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{发生了多大的偏差}.
-}
-\]
+\)}
+\end{statementbox}
 
 信用：
 
@@ -883,21 +915,23 @@ c_i(t)
 
 描述：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{这个偏差应该由谁承担}.
-}
-\]
+\)}
+\end{statementbox}
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Error
 \neq
 Credit.
-}
-\]
+\)}
+\end{statementbox}
 
 例如：
 
@@ -925,8 +959,9 @@ c_3=0.1.
 
 所以一般应有一个信用生成过程：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 c_t
 =
 R_C(
@@ -934,8 +969,8 @@ History_t,
 Outcome_t,
 \varepsilon_t
 ).
-}
-\]
+\)}
+\end{statementbox}
 
 其中：
 
@@ -947,39 +982,43 @@ R_C
 
 这意味着：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{误差是结果描述，信用是学习路由。}
-}
-\]
+\)}
+\end{statementbox}
 
 \section{信用与控制也不是同一种信号}
 
 控制信号回答：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{现在应该怎样改变运行状态？}
-}
-\]
+\)}
+\end{statementbox}
 
 信用信号回答：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{以后哪些结构应该因此发生学习？}
-}
-\]
+\)}
+\end{statementbox}
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Control
 \neq
 Credit.
-}
-\]
+\)}
+\end{statementbox}
 
 可以用一个简单例子说明。
 
@@ -1021,17 +1060,21 @@ x_{t+\Delta t}.
 
 因此控制主要属于：
 
-\[
-\boxed{
-\text{运行动力学}}
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{运行动力学}
+\)}
+\end{statementbox}
 
 而信用主要属于：
 
-\[
-\boxed{
-\text{学习动力学}}.
-\]
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{学习动力学}.
+\)}
+\end{statementbox}
 
 \section{AgentOS 的双动力系统}
 
@@ -1039,11 +1082,12 @@ x_{t+\Delta t}.
 
 第一个是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{运行动力系统}.
-}
-\]
+\)}
+\end{statementbox}
 
 其基本形式为：
 
@@ -1084,11 +1128,12 @@ u_t
 
 第二个是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{学习动力系统}.
-}
-\]
+\)}
+\end{statementbox}
 
 其基本形式为：
 
@@ -1135,8 +1180,9 @@ G(\Xi_t,c_t).
 
 运行闭环：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 State
 \rightarrow
 Information
@@ -1144,8 +1190,8 @@ Information
 Control
 \rightarrow
 NewState.
-}
-\]
+\)}
+\end{statementbox}
 
 更准确地说：
 
@@ -1159,8 +1205,9 @@ x_{t+1}.
 
 学习闭环：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Outcome
 \rightarrow
 Credit
@@ -1168,8 +1215,8 @@ Credit
 StructureChange
 \rightarrow
 FutureBehaviorChange.
-}
-\]
+\)}
+\end{statementbox}
 
 即：
 
@@ -1185,29 +1232,32 @@ F_{\Xi_{t+1}}.
 
 所以 AgentOS 并不是一个单闭环系统，而是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{运行闭环}
 \bowtie
 \text{学习闭环}.
-}
-\]
+\)}
+\end{statementbox}
 
 运行闭环解决：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{现在怎样行动}.
-}
-\]
+\)}
+\end{statementbox}
 
 学习闭环解决：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{以后怎样变得不同}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{四类信号之间的基本转换关系}
 
@@ -1217,13 +1267,14 @@ F_{\Xi_{t+1}}.
 
 首先：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Information
 \rightarrow
 State.
-}
-\]
+\)}
+\end{statementbox}
 
 系统获得新信息以后：
 
@@ -1239,13 +1290,14 @@ x_t.
 
 其次：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 State+Information
 \rightarrow
 Control.
-}
-\]
+\)}
+\end{statementbox}
 
 控制一般可以写成：
 
@@ -1260,13 +1312,14 @@ i_t
 
 第三：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StateTransition
 \rightarrow
 Outcome.
-}
-\]
+\)}
+\end{statementbox}
 
 即：
 
@@ -1278,13 +1331,14 @@ r_t.
 
 第四：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Outcome+History
 \rightarrow
 Credit.
-}
-\]
+\)}
+\end{statementbox}
 
 即：
 
@@ -1301,13 +1355,14 @@ r_t
 
 第五：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Credit
 \rightarrow
 StructureChange.
-}
-\]
+\)}
+\end{statementbox}
 
 即：
 
@@ -1332,8 +1387,9 @@ F_{t+1}.
 
 因此完整循环为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Information
 \rightarrow
 State
@@ -1347,8 +1403,8 @@ Credit
 Structure
 \rightarrow
 NewStateDynamics.
-}
-\]
+\)}
+\end{statementbox}
 
 这构成 AgentOS 最基本的长期循环之一。
 
@@ -1356,13 +1412,14 @@ NewStateDynamics.
 
 建立信号本体以后，必须避免另一个错误：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{一种信号}
 =
 \text{一个模块}.
-}
-\]
+\)}
+\end{statementbox}
 
 真实 AgentOS 中，一个模块可能：
 
@@ -1401,11 +1458,12 @@ ModuleGraph.
 
 还应理解成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SignalFlowGraph.
-}
-\]
+\)}
+\end{statementbox}
 
 模块图描述：
 
@@ -1415,11 +1473,12 @@ SignalFlowGraph.
 
 信号图描述：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{什么性质的因果量正在流动}.
-}
-\]
+\)}
+\end{statementbox}
 
 后者对于理解智能运行时更加基础。
 
@@ -1529,13 +1588,14 @@ w_S+w_I+w_U+w_C=1
 
 于是任何信号都具有：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Type
 \times
 Timescale
-}
-\]
+\)}
+\end{statementbox}
 
 两个属性。
 
@@ -1555,18 +1615,20 @@ Timescale
 
 因此 AgentOS 的信号结构至少是二维的：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SignalOntology
 \times
 TemporalScale.
-}
-\]
+\)}
+\end{statementbox}
 
 进一步结合功能拓扑，可以形成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS
 =
 FunctionalTopology
@@ -1574,28 +1636,31 @@ FunctionalTopology
 TemporalHierarchy
 \times
 SignalOntology.
-}
-\]
+\)}
+\end{statementbox}
 
 这三个维度分别描述：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{在哪里发生}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{以什么时间尺度发生}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{以什么因果角色发生}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{信号边界与信号权限}
 
@@ -1661,13 +1726,14 @@ P_L.
 
 因此可以形成一条基本安全原则：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 能够被认知的内容，不自动拥有控制系统或修改系统结构的权力。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 这是 AgentOS 区别于简单信息处理流水线的重要原则。
 
@@ -1689,11 +1755,12 @@ c_t
 
 信用信号的特殊之处在于：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{它具有结构修改指向性}.
-}
-\]
+\)}
+\end{statementbox}
 
 即：
 
@@ -1717,31 +1784,34 @@ x_{t+1}.
 
 所以：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Information
 \rightarrow
 RuntimeInterpretation
-}
-\]
+\)}
+\end{statementbox}
 
 而：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Credit
 \rightarrow
 PlasticityAllocation.
-}
-\]
+\)}
+\end{statementbox}
 
 正因为持续智能不仅需要运行，还需要决定：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{哪些结构应该因现实反馈而改变},
-}
-\]
+\)}
+\end{statementbox}
 
 信用才必须从信息中独立出来，成为 AgentOS 的第四类基本信号。
 
@@ -1769,13 +1839,14 @@ t_1\gg t_0
 
 所以：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CauseTime
 \neq
 CreditTime.
-}
-\]
+\)}
+\end{statementbox}
 
 第二是局部性。
 
@@ -1789,13 +1860,14 @@ Failure
 
 因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GlobalError
 \neq
 GlobalPlasticity.
-}
-\]
+\)}
+\end{statementbox}
 
 合理系统必须找到：
 
@@ -1831,41 +1903,45 @@ c_i.
 
 状态信号：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{横截面描述}
-}
-\]
+\)}
+\end{statementbox}
 
 描述当前系统。
 
 信息信号：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{表征输入}
-}
-\]
+\)}
+\end{statementbox}
 
 把外部或内部结构带入当前计算。
 
 控制信号：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{前向因果}
-}
-\]
+\)}
+\end{statementbox}
 
 影响未来状态。
 
 信用信号：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{反向因果归因}
-}
-\]
+\)}
+\end{statementbox}
 
 根据未来结果重新评价过去结构。
 
@@ -1879,43 +1955,48 @@ t\rightarrow t+\Delta t.
 
 所谓反向，是计算意义上的：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FutureOutcome
 \rightarrow
 PastResponsibilityAssignment.
-}
-\]
+\)}
+\end{statementbox}
 
 因此可以把四种角色压缩成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 State:
 Being
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Information:
 Representation
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Control:
 ForwardInfluence
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Credit:
 BackwardAttribution
-}
-\]
+\)}
+\end{statementbox}
 
 这四者共同形成一个完整的持续智能运行环。
 
@@ -1987,8 +2068,9 @@ c_t
 
 因此最小闭环可以写成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \begin{aligned}
 i_t
 &\rightarrow x_t,
@@ -2008,8 +2090,8 @@ i_t
 (\Xi_t,c_t)
 &\rightarrow\Xi_{t+1}.
 \end{aligned}
-}
-\]
+\)}
+\end{statementbox}
 
 这已经具备：
 
@@ -2043,11 +2125,12 @@ i_t
 
 系统能够：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{根据表示改变未来.}
-}
-\]
+\)}
+\end{statementbox}
 
 但仍然可能永远以相同方式行动。
 
@@ -2055,55 +2138,61 @@ i_t
 
 系统才能：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{根据行动结果改变以后如何行动.}
-}
-\]
+\)}
+\end{statementbox}
 
 因此可以得到一个递进关系：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 State
-}
-\]
+\)}
+\end{statementbox}
 
 提供存在基础；
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 State+Information
-}
-\]
+\)}
+\end{statementbox}
 
 产生表征能力；
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 State+Information+Control
-}
-\]
+\)}
+\end{statementbox}
 
 产生受表示驱动的主动作用；
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 State+Information+Control+Credit
-}
-\]
+\)}
+\end{statementbox}
 
 产生持续适应能力。
 
 所以对于持续智能：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 信用不是附加信号，而是把“会行动的系统”变成“会因行动结果而改变自己的系统”的关键闭环。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 \section{AgentOS 信号本体的第一性表述}
 
@@ -2181,13 +2270,14 @@ X\times I
 
 信用由：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 R_C:
 History\times Outcome
 \rightarrow C
-}
-\]
+\)}
+\end{statementbox}
 
 产生。
 
@@ -2231,53 +2321,59 @@ Output.
 
 持续智能体则必须同时处理：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 State,
 Information,
 Control,
 Credit.
-}
-\]
+\)}
+\end{statementbox}
 
 其中：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 State
-}
-\]
+\)}
+\end{statementbox}
 
 回答系统现在是什么；
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Information
-}
-\]
+\)}
+\end{statementbox}
 
 回答系统当前表示了什么；
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Control
-}
-\]
+\)}
+\end{statementbox}
 
 回答系统接下来怎样改变；
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Credit
-}
-\]
+\)}
+\end{statementbox}
 
 回答哪些过去结构应该因为结果而改变。
 
 四者形成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 (State,Information)
 \rightarrow
 Control
@@ -2289,8 +2385,8 @@ Outcome
 Credit
 \rightarrow
 Structure'
-}
-\]
+\)}
+\end{statementbox}
 
 而：
 
@@ -2300,39 +2396,42 @@ Structure'
 
 进一步改变下一轮状态动力学：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Structure'
 \rightarrow
 (State',Information')
 \rightarrow
 Control'.
-}
-\]
+\)}
+\end{statementbox}
 
 因此可以给 AgentOS 一个更基础的运行时定义：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 AgentOS 是状态、信息、控制与信用四类信号
 在多时间尺度功能结构中持续传播、转换和闭合的智能运行时。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 进一步：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 状态承担存在，
 信息承担表征，
 控制承担作用，
 信用承担学习。
 }
-}
-\]
+\)}
+\end{statementbox}
 
 这四种因果角色共同构成了持续智能体从：
 
@@ -2350,28 +2449,32 @@ AgentOS 是状态、信息、控制与信用四类信号
 
 因此，后续 AgentOS 的任何具体结构设计，都应能够回答四个问题：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{它读取和改变哪些状态？}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{它接收和产生哪些信息？}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{它能够产生哪些控制作用？}
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{它如何产生、接收或传递学习信用？}
-}
-\]
+\)}
+\end{statementbox}
 
 当一个模块无法回答这四个问题时，它在 AgentOS 中的动力学位置仍然是不完整的。

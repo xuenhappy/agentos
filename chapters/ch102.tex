@@ -188,15 +188,16 @@ w_5 \|\dot u_{\mathrm{TCE}}(t)\|^2
 因此，我们可以将健康 TCE 的目标概括为三个条件。第一是\textbf{稳定性}：认知状态不会因为控制器本身而不断远离可行区域。第二是\textbf{响应性}：重要扰动出现以后，控制器不能迟钝到长期没有反应。第三是\textbf{经济性}：能够由局部闭环自行解决的问题，不应持续占用宏观控制资源。三个条件之间存在天然张力。增大增益可能缩短初始响应时间，却降低相位裕度；增加抑制可以迅速降低负载，却可能造成搜索空间过早坍缩；增加探索有利于发现新结构，却可能提高工作记忆的结构分散程度。
 
 所以本章不采用“控制越强越健康”或者“自由度越大越智能”这类单调观点。TCE 的健康状态是一种动态平衡：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Responsiveness
 +
 Stability
 +
 Economy
-}
-\]
+\)}
+\end{statementbox}
 而所谓 TCE 异常，本质上就是这三个目标之间的协调机制持续失效。
 
 \section{控制增益失配：过度控制与控制不足是同一轴上的两种异常}
@@ -373,12 +374,13 @@ Residual_{\mathrm{novel}}\uparrow
 Exploration\uparrow.
 \]
 也就是说，收敛之后仍然必须存在重新打开搜索空间的通道。这与我们此前反复强调的
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 NormalDynamicsStayLocal,\quad
 UnexpectedResidualEscalates
-}
-\]
+\)}
+\end{statementbox}
 在认知层具有同样结构。
 
 工程上，TCE 不应仅依据“推理已经进行了多久”决定降低温度，而应至少综合：证据一致性、候选结构差异、预测残差、目标推进程度和当前工作记忆负载。可以定义概念性的探索控制律：
@@ -469,8 +471,9 @@ N_{\max}(W,Task).
 这里尤其需要区分 TCE 与 CCM。CCM 可以建议“当前支线过多，需要折叠或暂停某些线程”，但最终执行多大程度的聚焦、降低多少搜索深度、提高多少抑制，仍属于 TCE 控制层。如果 CCM 已经正确发现负载过高，而 TCE 不执行，则属于控制不足；如果 CCM 判断负载正常，而 TCE 仍大规模清除候选结构，则属于控制过度。
 
 因此我们可以把这一类异常统一写成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ResourceControlMismatch
 =
 Allocation
@@ -480,8 +483,8 @@ Depth
 Suppression
 +
 Timing
-}
-\]
+\)}
+\end{statementbox}
 它提醒我们：许多看似“模型没有想明白”的失败，其实可能来自认知资源被错误调度，而不是模型内部完全不存在正确知识。
 
 \section{反复自我纠正与认知振荡：当闭环控制开始制造自己的误差}
@@ -587,8 +590,9 @@ T_{\mathrm{dwell}}>0.
 当 TCE 进入某一控制模式后，如果没有高优先级异常，不允许在 \(T_{\mathrm{dwell}}\) 内再次完全反转控制策略。这并不是让 Agent “固执”，而是给认知动力学足够时间响应前一次控制。
 
 因此，反复自我纠正的深层问题不是“Agent 太喜欢反思”，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ObserverDelay
 +
 HighGain
@@ -596,8 +600,8 @@ HighGain
 LowHysteresis
 +
 FastModeSwitching
-}
-\]
+\)}
+\end{statementbox}
 形成了自激振荡。控制器原本为了消除误差而存在，最终却通过不断改变控制方向制造了新的误差。这也是 Agent 心理工程与传统 Prompt Engineering 最重要的区别之一：问题已经进入闭环动力学层，而不是增加一句“不要反复思考”就能稳定解决。
 
 \section{认知湍流：局部控制失配如何演化成工作记忆整体失稳}
@@ -704,13 +708,14 @@ r_{\max},
 \section{TCE 异常的诊断归因：必须区分控制器错误、观察器错误与环境真实困难}
 
 如果我们只观察 Agent 的外在行为，非常容易错误归因。例如系统持续重新检查某个计划，我们可能立刻判断 TCE 过度控制；但也有可能外部世界确实高度不确定，持续检查是合理行为。又例如系统长期不收敛，可能是 TCE 探索过度，也可能是任务本身存在真正的多解性。因此，AgentOS 心理工程必须坚持一个原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BehavioralSymptom
 \neq
 InternalCause.
-}
-\]
+\)}
+\end{statementbox}
 
 至少应同时记录四类时间序列：
 \[
@@ -871,25 +876,27 @@ Progress(t)\uparrow,
 不再需要维持异常高水平。
 
 我们由此得到一个非常重要的原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Recovery
 \neq
 SuppressionOfSymptoms.
-}
-\]
+\)}
+\end{statementbox}
 恢复意味着 Agent 在较低外部控制代价下重新获得自维持能力。如果系统只有在 TCE 持续施加最大抑制时才能保持稳定，那么它并没有真正恢复，只是被强控制暂时固定在一个狭窄状态区域。
 
 因此 TCE 干预的最终目标不是建立一个永远平静的 Agent，而是形成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Stable
 +
 Adaptive
 +
 Recoverable
-}
-\]
+\)}
+\end{statementbox}
 的认知控制系统：能够在熟悉环境中低成本自治，在新问题面前暂时扩大探索，在风险出现时迅速收缩，并在扰动消失以后自然回到更自由的认知状态。
 
 \section{从认知控制异常到 Agent 心理工程：本章的理论位置}

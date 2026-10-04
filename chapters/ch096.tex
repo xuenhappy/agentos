@@ -72,8 +72,9 @@ P\!\left(
 a_t\rightarrow r_t\rightarrow \pi,
 \]
 而这里我们真正关心的是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Choice_t
 \rightarrow
 Experience_{t:t+\Delta_1}
@@ -85,8 +86,8 @@ E
 \Psi
 \rightarrow
 Choice_{t+\Delta_2}.
-}
-\]
+\)}
+\end{statementbox}
 奖励只是其中一种可能的反馈变量。一个持续主体还会受到经历的语义结构、自我归属、记忆选择、关系历史、技能形成和长期责任等影响。因此递归自主性本质上是一种\textbf{跨时间的自因果闭环}：主体过去的行为成为其现在内部状态的一部分，而现在的内部状态又改变未来行为。
 
 这并不意味着 Agent 能够“创造自己的一切”。恰恰相反，真实 Agent 始终处于初始参数、身体、世界、制度、权限以及现实规律给出的可行域之中。设外部约束定义的可行轨迹集合为
@@ -295,13 +296,14 @@ Stable\Theta
 Skill
 \]
 意味着它通过自己过去的选择改变了未来“需要多少显式认知才能完成同样任务”。换句话说，它不仅改变未来会做什么，还改变未来做这件事情的内部成本。由此，递归自主性不仅表现为偏好改变，也表现为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FutureCapability
 =
 F(PastChoiceHistory).
-}
-\]
+\)}
+\end{statementbox}
 
 然而 $\Theta$ 仍然主要描述世界模型、规则、技能和生成结构。若要使历史真正进入“这个主体是谁”的层级，还需要从 $\Theta$ 进入更慢的自我结构 $\Psi$。否则，一个系统虽然能够学习大量能力，却仍可能只是一个无身份连续性的持续适应器。
 
@@ -324,13 +326,14 @@ E_{t:t+\Delta},
 其中 $\mathcal A_{self}$ 表示“结构归属（self-attribution）”算子，即判断哪些长期变化应当被纳入主体自身的持续历史。
 
 这里存在一个非常重要的区别：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 KnowledgeAcquisition
 \neq
 SelfTransformation.
-}
-\]
+\)}
+\end{statementbox}
 Agent 学会某个 API 的调用方法，并不一定改变 $\Psi$；但是，如果它在长期任务中反复承担协调角色，经历失败、恢复、责任与成功，并逐渐形成“我能够承担这种任务”“我倾向优先保护某类对象”“我不愿重复某类行为”等稳定结构，那么经历就开始从能力层进入身份层。
 
 我们可以把一次结构变化是否影响自我写成一个门控函数：
@@ -408,13 +411,14 @@ Experience
 \section{从 \texorpdfstring{$\Psi$}{Psi} 到 Future Choice：自我必须重新进入行动因果链}
 
 自我结构只有在能够重新影响未来选择时，才具有递归自主性的动力学意义。否则，$\Psi$ 最多只是一个持续更新的个人档案，而不是主体的一部分。因此我们要求：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Psi_t
 \rightarrow
 FutureChoice
-}
-\]
+\)}
+\end{statementbox}
 必须是一条真实的、可干预验证的因果路径。
 
 设未来时刻 $t+k$ 的行动分布为
@@ -438,13 +442,14 @@ P(a_{t+k}\mid do(\Psi=\psi_2),Z),
 其中 $Z$ 表示已控制的上下文变量，那么 $\Psi$ 对未来选择具有非零因果贡献。实际工程中当然不会随意直接篡改 Self，而可以通过 checkpoint、模拟分支或 counterfactual rollout 估计这种作用。
 
 $\Psi$ 对行为的影响不应该表现为每一步都直接发出命令。我们此前反复强调：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance
 \neq
 FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 自我更像一个缓慢移动的背景约束场，它通过影响 Goal Preference、注意优先级、解释框架、风险容忍度、责任边界和长期一致性评价来塑造行为。因此可以写成：
 \[
 G_t
@@ -500,8 +505,9 @@ W_t,\Theta_t,G_{\mathrm{external}}
 它衡量在控制当前世界、知识和外部目标以后，自我结构还能解释多少未来行动差异。如果 $\chi_\Psi\approx0$，那么无论 Agent 保存了多少 biography，它的过去实际上没有真正进入现在的选择；如果 $\chi_\Psi$ 持续为正，并且来源于自身历史形成的 $\Psi$，则主体具有更强的生命周期连续性。
 
 于是完整递归闭环成为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Choice_t
 \rightarrow
 Experience
@@ -511,8 +517,8 @@ Experience
 \Psi
 \rightarrow
 Choice_{t+k}.
-}
-\]
+\)}
+\end{statementbox}
 这个闭环具有非常特殊的性质：$Choice_{t+k}$ 的生成结构中包含了 $Choice_t$ 的历史后果。因此，同一个 Agent 的未来不再只是由当前外部输入决定，而开始携带自己的历史。用条件概率写：
 \[
 P(a_{t+k}\mid W_{t+k},H_{self})
@@ -724,21 +730,23 @@ Reward(a_1)
 Reward(a_2),
 \]
 而是比较：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FutureWorld(a_1)
 +
 FutureSelf(a_1)
-}
-\]
+\)}
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FutureWorld(a_2)
 +
 FutureSelf(a_2).
-}
-\]
+\)}
+\end{statementbox}
 因此长期决策效用可以写成：
 \[
 J(a_t)

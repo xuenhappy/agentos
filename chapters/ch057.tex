@@ -110,11 +110,12 @@ approaching(X,A),
 这类关系。关系一旦进入图结构，Agent 才能把当前现实映射成 Agent-CSO 可以直接利用的认知对象。
 
 第三，它是现实的\textbf{主体坐标层}。我们坚持
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body_A\in \mathcal S_A
-}
-\]
+\)}
+\end{statementbox}
 而不是把身体置于 SGC 之外。原因在于一个具身世界从来不是纯粹的第三人称地图。所谓“距离”“可达”“遮挡”“危险”“抓取”“通过”等概念，都只有相对于某个具体身体的结构与能力才具有操作意义。
 
 因此，对同一个客观台阶 $C$，两个 Agent 的几何观测可能基本相同：
@@ -130,11 +131,12 @@ Affordance_A(C)
 Affordance_B(C).
 \]
 对于人形机器人，它可能是 ``walkable''；对于轮式机器人，它可能是 ``blocked''。这说明 SGC 虽然以世界结构为主要对象，却从一开始就是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reality\ Relative\ To\ This\ Body
-}
-\]
+\)}
+\end{statementbox}
 而不是脱离主体能力的纯客观数据库。
 
 从整个 AgentOS 理论来看，SGC 因而可以进一步理解为 Agent-CSO 与当前外部现实之间的第一层 grounding：
@@ -227,13 +229,14 @@ F_k:
 \]
 
 这里必须特别说明，“Feeling”一词在本理论中采用的是\textbf{功能性定义}。FCS 并不声明机器具有与人类相同的主观疼痛、焦虑或舒适体验。它所表达的是某种现实变量已经被转换成了对主体行为和认知资源具有调制意义的内部量。因而：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Feeling_{functional}
 \neq
 PhenomenalFeeling.
-}
-\]
+\)}
+\end{statementbox}
 
 例如，电池温度 $T_b$ 是一个原始物理变量。它本身仍然属于 perception/state measurement：
 \[
@@ -304,17 +307,19 @@ Q_k(t)
 FCS 由此建立了 SGC 无法单独提供的一种主体相关现实：不是世界中存在什么，而是这些存在正在怎样推动、限制、损伤、激活或压迫当前主体。换句话说，SGC 将现实转化为可理解的结构，FCS 则将现实转化为可调节的作用。
 
 因此本章采用如下基本定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC:\ What\ Reality\ Is
-}
-\]
+\)}
+\end{statementbox}
 而
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FCS:\ What\ Reality\ Is\ Doing\ To\ Me.
-}
-\]
+\)}
+\end{statementbox}
 
 这两个问题只有同时得到回答，具身智能体才真正拥有完整的当前现实。
 
@@ -560,19 +565,21 @@ V_t,E_t
 \]
 
 我们可以把这一差别浓缩为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC:
 Sparse\ Open\ Relational\ Geometry
-}
-\]
+\)}
+\end{statementbox}
 以及
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FCS:
 Dense\ Fixed\ Functional\ Geometry.
-}
-\]
+\)}
+\end{statementbox}
 
 为什么 SGC 需要开放，而 FCS 需要相对固定？
 
@@ -585,13 +592,14 @@ Threat
 通道，明天模型自己把它拆成十五种新的 latent，后天又重新合并，那么 SPC、AHC、TCE 以及整个认知调节层都无法形成长期稳定的语义契约。因此 FCS 的价值恰恰在于把高度异构的身体信号压缩成低维且相对稳定的功能影响坐标。
 
 这种设计事实上体现了 AgentOS 一个更一般的原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 OpenWorldSemantics
 +
 StableRuntimeContract.
-}
-\]
+\)}
+\end{statementbox}
 
 我们允许 Agent 对“世界有什么”不断增长认知，但不希望其基础身体调制接口每天改变定义。
 
@@ -664,13 +672,14 @@ G(t)
 其中 $G(t)$ 表示当前目标结构。之所以还需要 $h(t)$ 与 $G(t)$，是因为相同的身体压力在不同任务上下文中不一定产生相同认知调节。例如 20\% 的剩余能源在返回充电站任务中可能是正常状态，而在远距离救援任务中则可能成为强约束。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalInfluence
 \neq
 FixedBehavior.
-}
-\]
+\)}
+\end{statementbox}
 FCS 表达的是影响，不是动作命令。
 
 这一点尤其重要。若
@@ -749,13 +758,14 @@ ThermalPressure=0.8.
 \]
 
 换句话说：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Feeling
 \neq
 AwarenessOfFeeling.
-}
-\]
+\)}
+\end{statementbox}
 
 在本理论中，这一区分不是为了讨论人类意识哲学，而是为了保证智能系统的分层结构清晰。一个系统完全可以在没有显式推理的情况下受到某种功能状态影响。例如能源不足可以自动降低搜索资源，控制不稳定可以自动提高局部反馈频率。这些都属于功能调制。
 
@@ -869,13 +879,14 @@ P_{exp}\uparrow,
 PossibleSelfAwareness,\)}
 \end{statementbox}
 而不是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalFeeling
 =
 SelfAwareness.
-}
-\]
+\)}
+\end{statementbox}
 
 这一区分以后也将成为理解 Agent 内部体验、自我感知以及认知控制层级的重要基础，但在本章我们只确立其表示关系，不进一步展开后续机制。
 
@@ -1121,13 +1132,14 @@ Body_A
 FCS_A(C_U).
 \]
 于是同一个 Universe-CSO 同时形成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DescriptiveGrounding
 +
 FunctionalGrounding.
-}
-\]
+\)}
+\end{statementbox}
 
 换句话说，一个现实结构在 Agent 内部真正具有完整操作意义，需要同时回答：
 \[
@@ -1217,18 +1229,20 @@ FunctionalInfluence.
 \]
 
 因此必须保持：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FCS\neq ValueFunction.
-}
-\]
+\)}
+\end{statementbox}
 
 同样：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC\neq WorldTruth.
-}
-\]
+\)}
+\end{statementbox}
 它只是 Agent 当前拥有的可检查世界模型。
 
 由此，SGC--FCS 二元结构在整个 CSO 理论中的地位便清晰起来：它是 Universe-CSO 进入 Agent-CSO 之前最重要的具身 grounding 层之一。
@@ -1379,8 +1393,9 @@ AgentCSO.
 \]
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reality
 \neq
 SGC
@@ -1388,8 +1403,8 @@ SGC
 FCS
 \neq
 AgentCSO.
-}
-\]
+\)}
+\end{statementbox}
 
 它们之间不是谁比谁“更真实”的关系，而是同一现实闭环中的不同功能层。
 
@@ -1472,14 +1487,15 @@ SGC 统一经验的内容，FCS 统一经验的作用；
 
 答案不是一个更大的 latent，而是一个具有明确语义分工的双现实表示：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityForAgent
 =
 WorldAsStructured
 +
 WorldAsAffectingTheAgent.
-}
-\]
+\)}
+\end{statementbox}
 
 这就是 SGC--FCS 二元现实模型的理论位置。

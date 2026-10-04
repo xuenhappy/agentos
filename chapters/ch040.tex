@@ -307,13 +307,14 @@ R(C,t)
 其中 $R_G$ 表示与当前 Goal 的关系，$R_{\Psi}$ 表示与身份/价值结构的关系，$R_{\mathrm{Safety}}$ 表示风险关系，$R_{\mathrm{Causal}}$ 表示对当前事件链的因果重要性，$R_{\mathrm{Prediction}}$ 表示对未来预测具有多大信息增益，而 $R_{\mathrm{Dependency}}$ 则表示如果缺失该 CSO，当前推理链是否无法闭合。
 
 这也说明“无关”并不等于“无价值”。一个结构可以在当前任务中无关，却在未来任务中非常重要。Boundary 所执行的不是永久删除判断，而更多是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Not relevant now}
 \neq
 \text{Never relevant}.
-}
-\]
+\)}
+\end{statementbox}
 因此正确动作往往不是 $\mathrm{Ignore}$，而可能是 $\mathrm{Defer}$、$\mathrm{Externalize}$ 或保留弱索引。
 
 我们还必须防止另一种错误：把“与当前目标相关”当成唯一准入标准。如果 Boundary 完全由当前 Goal 控制，那么 Agent 会形成极强的任务隧道效应（goal tunneling），忽略那些暂时不服务当前任务却代表重大风险、新机会或自我变化的信号。因此 Boundary 必须保留一定比例的非目标性探索窗口。可以写成：
@@ -469,13 +470,14 @@ C_{\mathrm{predicted}}
 \]
 
 这里已经隐约体现出整个 AgentOS 后来反复出现的基本规律：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 NormalDynamicsStayLocal,
 \qquad
 UnexpectedResidualEscalates.
-}
-\]
+\)}
+\end{statementbox}
 
 Boundary 因而不仅是在挡住不重要的信息，更是在不断判断：\textbf{世界是否仍处于已有模型可以安全处理的范围之内。}
 
@@ -549,15 +551,16 @@ Boundary 在这里承担一个重要角色：\textbf{决定主体在哪里结束
 作为粗略指标。不同 Agent 可以采取完全不同的边界策略：某些系统内部模型庞大、外部依赖少；另一些系统保持极小内部核心，但依靠丰富工具、文件和其他 Agent 工作。
 
 这说明真正意义上的智能规模不应该仅测量内部参数量：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EffectiveAgent
 =
 InternalStructure
 +
 StableExternalCouplings.
-}
-\]
+\)}
+\end{statementbox}
 
 Boundary 所管理的，正是这两部分之间的动态分界。
 
@@ -704,13 +707,14 @@ Experience_t
 第一条关系表示已有自我结构影响边界选择。例如同一外部事件，对不同 Agent 可能具有不同价值相关性，因此形成不同准入策略。第二条关系则更加重要：边界长期决定 Agent 会接触什么、忽略什么、记住什么，因而它反过来参与未来自我的形成。
 
 这意味着：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SelfShapesBoundary,
 \qquad
 BoundaryShapesFutureSelf.
-}
-\]
+\)}
+\end{statementbox}
 
 如果一个 Agent 长期只允许符合已有 $\Psi$ 的结构进入，那么会形成：
 \[
@@ -783,13 +787,14 @@ P_{\mathrm{admit}}\to0.
 系统逐渐无法被真实世界修正，形成封闭内部模型。
 
 因此一个健康的 Self-Boundary 关系更接近：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StableCore
 +
 PermeableEvidenceBoundary.
-}
-\]
+\)}
+\end{statementbox}
 
 核心身份结构应具有较慢时间尺度，而证据边界必须保持可渗透。外部事实进入以后，也不应直接修改 $\Psi$，而通常需要经过：
 \[

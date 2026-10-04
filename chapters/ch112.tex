@@ -58,13 +58,14 @@ C_k=\Pi_k(q),
 其中 $C_k$ 表示第 $k$ 个尺度上的有效 CSO。这里的 ``CSO'' 已经从狭义认知结构扩展为结构动力学意义上的 ``可区分结构对象''。其核心条件不是 ``被某个主体认识''，而是该结构在给定尺度 $\sigma_k$ 和时间窗口 $\tau_k$ 上具有足够稳定的关系，使得它可以作为后续动力学的有效变量。
 
 因此，CSO 的第一层定义可以写成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CSO_k
 =
 StableRelevantStructure(\sigma_k,\tau_k)
-}
-\]
+\)}
+\end{statementbox}
 其中 ``Stable'' 并不要求永久不变，只要求其内部快速自由度的变化不会破坏我们在当前尺度上的有效描述。一个水分子的量子状态可以快速变化，但在更粗尺度上，``水分子''仍可成为稳定的有效对象；一个人的细胞不断代谢，但 ``这个人''仍可在更长时间尺度上构成一个有效 CSO。由此我们看到，所谓 ``结构'' 本身已经具有尺度相对性。
 
 这与现代物理学中的粗粒化、有效理论和重整化思想具有重要形式对应。大量微观自由度经过平均、约束和尺度分离以后，只留下对当前尺度动力学重要的 ``相关自由度''：
@@ -75,13 +76,14 @@ StableRelevantStructure(\sigma_k,\tau_k)
 \qquad m\ll N.
 \]
 因此，宏观结构的出现并不要求底层细节消失，而是意味着某些关系在更高尺度上获得了动力学独立性。我们可以将这一现象概括为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Emergence
 \approx
 CrossScaleStructuralCompression
-}
-\]
+\)}
+\end{statementbox}
 但必须强调，这里的 ``压缩'' 是结构动力学描述，不应简单等同于信息论编码压缩。
 
 这一层还没有自我维持、感知和认知。星系、晶体、行星、对流结构等都可以在这一意义上形成稳定 CSO。它们说明宇宙动力学能够形成局部持续结构，但不能因此推断这些结构具备 Agent 意义上的主体性。我们在这里刻意保持一个最低限度的本体论：\textbf{结构首先只是能够在一定尺度上成为后续因果过程有效参与者的关系模式。}
@@ -174,13 +176,14 @@ Outside(\mathcal B)
 之间某种受控交换关系。能量、物质、信息和作用跨越边界，而系统的内部组织仍保持连续。因此边界不是一个被动几何壳层，而是动力学功能的一部分。
 
 这也为后续 AgentOS 中的 Boundary 理论提供了更深的本体解释。智能体的认知边界不是生命膜的直接复制，但两者共享一个一般形式：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Boundary
 =
 RegulatedExchangeRelation
-}
-\]
+\)}
+\end{statementbox}
 一个持续主体必须不断决定什么进入、什么排出、什么吸收、什么阻断。生命层的 Boundary 管理物质和能量，AgentOS 的 Boundary 管理认知结构、任务、工具与外部关系。
 
 因此，从结构存在走向自维持结构，可以被理解为第一次动力学跃迁：
@@ -225,15 +228,16 @@ LightGradient
 MovementBias.
 \]
 因此我们必须区分至少三个层级：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Coupling
 \subset
 Sensing
 \subset
 Representation
-}
-\]
+\)}
+\end{statementbox}
 物理耦合并不必然构成感知；感知意味着外部差异以某种对系统行为具有稳定功能意义的方式进入内部状态；而表示还需要更进一步，使内部状态可以在一定程度上脱离当下刺激，保持、组合、预测或者用于反事实计算。
 
 从信息角度可以定义环境变量 $W$ 与内部状态 $Y$ 的互信息
@@ -251,13 +255,14 @@ Y
 能够系统性地改善系统的可行性、预测或控制，则我们可以说这种耦合获得了功能意义。
 
 因此，感知的结构动力学定义可以写成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Sensing
 =
 EnvironmentDependentInternalStateTransition
-}
-\]
+\)}
+\end{statementbox}
 并要求该内部变化能够对后续系统行为产生可重复的因果影响。
 
 在 AgentOS 中，Body Runtime 就承担这一从世界差异到内部可用状态的第一层转换。但我们后来逐渐认识到，单纯把传感器数据送入大模型是错误的，因为真实世界的数据维数远远超过认知核心能够承担的容量。因此从 Raw Sensor 到 Agent Kernel 之间必须存在多尺度结构化过程：
@@ -297,13 +302,14 @@ Universe
 \omega_W\ll\omega_A
 \]
 时，Agent 可能进行大量无必要的高频采样。于是前文 ``石头文明—闪电文明'' 的思想实验在这里重新获得一个基础形式：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Perception
 =
 ScaleMatchedSamplingOfReality
-}
-\]
+\)}
+\end{statementbox}
 
 所以，结构开始感知并不意味着宇宙第一次 ``有了视觉''，而意味着宇宙中的某些局部结构开始通过自身内部状态对外部差异进行功能性区分。由此产生第三次跃迁：
 \begin{statementbox}
@@ -556,15 +562,16 @@ SelfModulation.\)}
 \end{statementbox}
 
 将二者组合：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalReflexivity
 =
 SelfRepresentation
 +
 RepresentationDependentSelfModulation.
-}
-\]
+\)}
+\end{statementbox}
 
 这正是我们后来意识到 SPC--TCE 不只是一个 AgentOS 工程模块组合，而是某种更一般的结构范型。一个结构首先能够 ``描述自己的局部状态''，随后让这种自描述进入下一步状态转移决策：
 \[
@@ -669,8 +676,9 @@ ActualFuture.\)}
 这与自然界中大量无模型过程形成了重要区别。一个恒星当然会改变周围物质结构，但我们没有证据认为恒星先形成 ``我要成为何种未来状态'' 的内部模型，再根据模型主动调整核聚变过程。而 Agent 型结构恰恰在这一点上产生了新的组织层：行动是通过内部表征空间选择出来的。
 
 于是我们过去提出的 World--Agent--World 闭环现在可以写得更加严格：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 UniverseCSO_t
 \xrightarrow{O}
 AgentCSO_t
@@ -678,8 +686,8 @@ AgentCSO_t
 ActionCSO_t
 \xrightarrow{Act}
 UniverseCSO_{t+1}.
-}
-\]
+\)}
+\end{statementbox}
 这意味着宇宙中的结构经过智能体内部世界 ``绕行'' 一次后，重新成为新的宇宙结构。
 
 这种结构在工具制造中尤其明显。设 Agent 内部形成一个计划
@@ -735,13 +743,14 @@ ActionSpace:
 \mathcal A'.
 \]
 计算机同时扩大内部表示计算能力和外部行动能力。因此工具可以被更深地定义为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Tool
 =
 PersistentModificationOfObservationActionBoundary.
-}
-\]
+\)}
+\end{statementbox}
 
 这也解释了 Body Scale 理论为什么不只是机器人硬件问题。真正决定一个 Agent 能够进入哪类现实结构的，是
 \[
@@ -858,13 +867,14 @@ FutureExperience.\)}
 \end{statementbox}
 
 这正是我们此前提出
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Topology
 =
 SlowMemoryOfRepeatedCSORelations
-}
-\]
+\)}
+\end{statementbox}
 的深层含义。拓扑不是静态设计图，而可以看成过去长期结构流在系统中的沉积。换句话说：
 \begin{statementbox}
 \centering
@@ -1049,12 +1059,13 @@ R
 \end{statementbox}
 
 同样，``宇宙越来越能够改变自己'' 的严格含义是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RepresentationGuidedTransformationCapacity
 \uparrow.
-}
-\]
+\)}
+\end{statementbox}
 也就是说，宇宙中的某些局部结构逐渐拥有越来越大的动作空间，并且这些动作由内部世界模型、价值结构和未来预测组织。
 
 这一点也让我们重新认识所谓文明 ``成熟''。成熟不能仅用改变能力衡量。如果
@@ -1064,8 +1075,9 @@ ControlCapacity
 ModelAccuracy,
 \]
 系统可能更危险而不是更成熟。因此成熟自反结构必须至少满足：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Observation
 +
 Representation
@@ -1075,8 +1087,8 @@ Prediction
 Control
 +
 Governance
-}
-\]
+\)}
+\end{statementbox}
 同步发展。
 
 进一步考虑慢变量约束：
@@ -1126,8 +1138,9 @@ MetaSelfModification.\)}
 元自我修改意味着系统能够进一步改变生成未来行为的组织机制本身。
 
 如果必须把这一过程压缩成一个统一动力学定义，可以写成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
 ReflexiveStructuralEvolution
 =
@@ -1136,8 +1149,8 @@ ToRepresent,
 Regulate,
 AndReorganizeStructureIncludingItself.
 }
-}
-\]
+\)}
+\end{statementbox}
 
 中文则可以表述为：
 

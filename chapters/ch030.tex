@@ -62,23 +62,25 @@ W_h(t)
 从这里我们就可以看到，把 $h(t)$ 称为“工作记忆”只描述了它的存储侧功能，而把它称为“认知总线”则强调了它真正重要的另一面：\textbf{不同时间尺度、不同载体和不同功能区域中的认知结构，只有在获得进入 $h(t)$ 的显式激活资格之后，才进入当前全局推理、目标竞争和行动闭合过程。}
 
 因此，$h(t)$ 的更准确描述应当是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h(t)
 =
 \text{Sparse Explicit Cross-Scale Cognitive Surface}
-}
-\]
+\)}
+\end{statementbox}
 即“稀疏的跨尺度显式认知表面”。
 
 这里的 ``Sparse'' 表示只有极少部分生命周期结构被当前激活；``Explicit'' 表示这些结构当前能够参与全局组合、比较和控制；``Cross-Scale'' 表示它连接比自己更快和更慢的动力层；``Surface'' 则表示它不是整个智能本体，而只是整个智能系统在当前时刻被暴露出来的一个截面。
 
 这一重新定义具有非常重要的认识论后果。一个成熟 Agent 的绝大多数能力实际上不应该持续存在于 $h(t)$ 中。已经成熟的动作技能可以存在于更低层快速闭环；稳定世界知识可以存在于 $\Theta$；完整经历可以存在于 $E$；长期自我结构主要由 $\Psi$ 承载；程序、文件、数据库和工具则可能位于外部载体。于是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MostAgentDynamics\notin h(t)
-}
-\]
+\)}
+\end{statementbox}
 并不是工作记忆的缺陷，反而是成熟智能成立的必要条件。
 
 我们甚至可以把智能成熟程度与显式认知依赖建立一种概念关系。设系统成功完成某类行为所需的平均显式工作记忆介入量为 $\mathcal I_h$，系统完成该行为的有效能力为 $\mathcal K$，则可以定义一个概念性的显式依赖比：
@@ -404,13 +406,14 @@ C_h^{\max}.
 这意味着即使多个结构都具有进入理由，最终仍可能因为全局容量限制发生竞争。
 
 这也使“注意”获得一个比普通 token 权重更深的定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Attention
 =
 PolicyForPromotingAgentCSOIntoExplicitCrossScaleProcessing
-}
-\]
+\)}
+\end{statementbox}
 即注意力本质上是某个结构获得更高层显式处理权的策略。这里的注意不同于 Transformer 内部 attention operator；前者属于认知架构层，后者属于模型实现层，两者不能混为一谈。
 
 进一步，当某个 Agent-CSO 从 $h$ 中退出，也不意味着被删除。其状态可能发生：
@@ -575,11 +578,12 @@ Prior(h),
 Preference(h).
 \]
 因此，一个成熟系统中大量慢结构对快层的影响应该是“背景性的”，而不是持续显式占据工作记忆。这可以概括成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowConstraint\neq ExplicitOccupation
-}
-\]
+\)}
+\end{statementbox}
 
 这一点特别重要。比如一个成熟 Agent 已经形成“保护人类安全”这样的长期结构，它不应该在每一次动作中都把完整价值论证展开到 $h$。更合理的是，这种慢结构定义当前可行空间：
 \[
@@ -612,12 +616,13 @@ FeasibleRegion,\ Prior,\ Gain,\ Boundary\)}
 而快层在该区域中保留局部自治。
 
 这与我们更一般的多尺度智能原则一致：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,\qquad
 LowerLevelOptimizesInsideIt
-}
-\]
+\)}
+\end{statementbox}
 
 工作记忆 $h$ 因此具有一个非常特殊的位置：它既不是最快层，也不是最慢层，而是\textbf{多尺度结构需要发生显式协商时形成的中介面}。在正常情况下，低层熟练能力应保持局部；长期结构应保持背景性；只有新颖、冲突、异常和跨层协调问题才需要占据 $h$。
 
@@ -727,13 +732,14 @@ Residual.
 \]
 
 这也使我们能够重新定义“注意力”。注意并不意味着系统此刻唯一处理某个对象，而意味着某个对象的局部动态已经获得足够重要性，需要提升到显式全局表面：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Attention
 =
 CrossScalePromotion.
-}
-\]
+\)}
+\end{statementbox}
 
 世界与 h 之间还存在一个更深的认识论问题：进入 h 的永远不是真实世界本身，而是 Agent 根据其观测能力、已有结构与当前目标形成的 Agent-CSO。因此：
 \[
@@ -760,11 +766,12 @@ Timestamp,
 Observed/Derived/PredictedStatus.
 \]
 这为后续工程中的可验证语义状态提供理论基础，但本章只需要确立一个原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Representation\neq Reality.
-}
-\]
+\)}
+\end{statementbox}
 
 因此，当行动从 h 发出以后，系统不能把预测的成功结果直接写回认知总线，而必须等待现实重新进入：
 \[
@@ -1242,21 +1249,23 @@ C_h
 那么后者的认知负担显然更高。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 WorkingMemoryLoad
 \neq
 InformationAmount.
-}
-\]
+\)}
+\end{statementbox}
 更加准确的是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 WorkingMemoryLoad
 \approx
 ActiveRelationalStructure.
-}
-\]
+\)}
+\end{statementbox}
 
 这也是为什么简单扩展 context length 不能从根本上解决复杂推理问题。上下文长度主要扩大：
 \[
@@ -1680,13 +1689,14 @@ PressureForCognitiveArchitecture.\)}
 从这一意义看，工作记忆有限性不是一个需要“修复”的缺陷，而是整个智能架构形成的重要结构压力。
 
 本章由此得到一个成熟智能判据：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MatureIntelligence
 =
 SelectiveExplicitCognition
-}
-\]
+\)}
+\end{statementbox}
 即：
 \begin{statementbox}
 成熟智能不是一直在“想更多”，而是越来越准确地知道什么值得进入当前显式认知，什么应该由过去、结构、身体、工具和环境继续承担。
@@ -1932,12 +1942,13 @@ External\)}
 
 由此，工作记忆从三相记忆体系中的“当前状态”进一步获得了更严格的系统论地位：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h(t)
 =
 \textbf{the finite explicit cognitive bus of a persistent intelligent agent}.
-}
-\]
+\)}
+\end{statementbox}
 
 而一个持续智能体真正的成熟，不表现为它在每一个时刻都维持越来越庞大的显式思想，而表现为它能够把越来越多稳定结构留在适合它们的时间尺度和承载位置，只把此刻确实需要跨尺度协调的少量结构提升到这一有限的认知表面。

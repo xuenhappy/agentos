@@ -33,11 +33,12 @@
 
 因此，本书把六阶段路线建立在一个基本的系统工程原则上：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{One\ New\ Dominant\ Closed\ Loop\ Per\ Stage}
-}
-\]
+\)}
+\end{statementbox}
 
 这里并不要求每一阶段只能增加一个模块，而是要求每一阶段只能引入一种主要的新型长期因果闭环，并保证这个闭环能够在前一阶段形成的稳定基础上进行独立测量。设第 \(k\) 阶段 AgentOS 的状态空间、动力学、接口集合和治理约束分别为
 
@@ -826,15 +827,16 @@ C_{\mathrm{revalidation}}.
 
 第五阶段不是简单增加摄像头、机械臂或者机器人驱动。它解决的是整个 AgentOS 工程中一个非常基础的尺度分裂：认知 Kernel 的时间尺度通常在秒、分钟甚至更慢，而身体局部控制可能处于毫秒级。如果我们让 Kernel 对每一个传感器输入和每一次执行器修正进行显式推理，那么工作记忆和模型推理会立即成为高频闭环瓶颈。因此这一阶段必须把系统正式分解为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentSystem
 =
 AgentKernel
 \bowtie
 BodyRuntime
-}
-\]
+\)}
+\end{statementbox}
 
 并明确：
 
@@ -848,12 +850,13 @@ BodyRuntime=\mathrm{HowThisBodyDoesIt}.
 
 SGC 表示：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC=
 BodyCenteredSemanticRepresentationOfActionableReality
-}
-\]
+\)}
+\end{statementbox}
 
 并至少包括几何位置、实体身份、关系、属性、语义标签、可行动性以及认识论状态。重要的是：
 
@@ -879,8 +882,9 @@ FCS=\mathrm{FunctionalInfluence}.
 
 Body Runtime 的第二个核心是 BPCC：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BPCC
 =
 FastPrediction
@@ -890,8 +894,8 @@ FastControl
 ResidualEstimation
 +
 AdaptiveLearning
-}
-\]
+\)}
+\end{statementbox}
 
 它承担局部快速预测和控制，可以使用私有 latent：
 
@@ -932,13 +936,14 @@ J_B
 
 因此形成：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \quad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 
 这里必须建立 Reality Re-entry 原则。Kernel 发出 Action 并不意味着世界已经改变：
 
@@ -1046,22 +1051,24 @@ World
 
 因此我们在 Agent Kernel 内部、Cognitive Core 与 Body Runtime ABI 之间加入：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 KRA
 =
 KernelRuntimeAdaptation
-}
-\]
+\)}
+\end{statementbox}
 
 其更一般的理论定义为：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 KRA=
 AdaptiveSemanticAndDynamicalCouplingLayer.
-}
-\]
+\)}
+\end{statementbox}
 
 于是：
 
@@ -1075,13 +1082,14 @@ KRA.
 
 KRA 的第一任务是语义耦合。即使 SGC/FCS 的公共结构稳定，不同 Body Runtime 对同一个语义概念的内部实现仍然可能不同。例如“可抓取”在机械手、无人机和数字鼠标身体中的控制意义完全不同。KRA 不要求这些内部表示同构，而要求它们在 Agent 的任务语义上保持功能对应。因此：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalAlignment
 >
 RepresentationAlignment.
-}
-\]
+\)}
+\end{statementbox}
 
 设 Kernel 内部抽象状态为 \(z_t^K\)，Body Runtime 的公共状态为 \(s_t^B\)，则 KRA 建立：
 
@@ -1254,8 +1262,9 @@ Compiled.
 
 因此第六阶段并不是“AgentOS 完成以后再加一些在线学习”，而是系统第一次实现：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PersistentSubject
 +
 PersistentMemory
@@ -1267,8 +1276,8 @@ ExternalCognition
 EmbodiedReality
 +
 ControlledCoAdaptation
-}
-\]
+\)}
+\end{statementbox}
 
 的统一生命周期。
 
@@ -1492,8 +1501,9 @@ FailureShouldBeLocalizedToTheSlowestNecessaryLayer.
 
 从这一点看，阶段路线同时也是故障隔离结构：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StageArchitecture
 =
 DevelopmentPath
@@ -1501,8 +1511,8 @@ DevelopmentPath
 DiagnosticHierarchy
 +
 RecoveryHierarchy.
-}
-\]
+\)}
+\end{statementbox}
 
 这使“怎样构建 AgentOS”和“怎样维护一个已经存在多年的 AgentOS”第一次被放进同一套工程理论中。
 
@@ -1604,15 +1614,16 @@ Model_t\rightarrow Model_{t+1}.
 
 AgentOS 所要求的则是：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Agent_t
 \rightarrow
 Agent_{t+1},
 \qquad
 IdentityContinuity(Agent_t,Agent_{t+1})=1.
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，真正困难的问题已经不再是“系统能不能变化”，而是\textbf{系统能不能在变化中仍然持续成为同一个可治理主体}。
 

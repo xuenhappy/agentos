@@ -95,13 +95,14 @@ x_0\rightarrow x_1\rightarrow\cdots\rightarrow x_T.
 \mathrm{Executable\ Local\ Loop}\)}
 \end{statementbox}
 它使一个成熟 Agent 的高层认知逐渐从“亲自完成每个动作”转变为“只在需要时建立结构、设定约束并处理异常”。这也是我们此前提出
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Mature\ Intelligence}
 =
 \mathrm{Selective\ Explicit\ Cognition}
-}
-\]
+\)}
+\end{statementbox}
 这一命题的具体工程含义：真正成熟的智能，不是所有时候都在进行最多的显式思考，而是能够准确判断哪些问题已经不再值得占据显式认知。
 
 \section{重复轨迹：经验如何形成可编译结构}
@@ -300,17 +301,19 @@ FailureSemantics(C_g).
 \section{预测编译：把高层理解变成局部前向模型}
 
 技能能够成为真正稳定的闭环，仅有策略还不够。一个成熟局部能力通常还必须具有关于动作后果的快速预测结构。否则本地控制只能不断进行反应式修正，而不能提前判断即将发生的状态变化。因此，我们把技能编译拆成两个相互关联但不能混同的过程：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Predictive\ Compilation}
-}
-\]
+\)}
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Control\ Compilation}.
-}
-\]
+\)}
+\end{statementbox}
 前者解决“如果这样做，接下来会发生什么”，后者解决“为了使状态向目标移动，现在应该做什么”。
 
 在显式认知阶段，高层预测可能具有丰富的语义结构。Agent 会利用 $h$、$E$ 和 $\Theta$ 推断：
@@ -389,13 +392,14 @@ R_t^{pred}<\theta_s^{normal},
 则说明现实仍处于技能所学习的局部动力区域；如果持续超过阈值，则说明实际世界与技能模型之间出现结构失配。这样，技能就不只是一个动作生成器，还具备最基本的“我是否仍然理解当前局部现实”的能力。
 
 这里必须保留我们此前确立的 Reality Authority 原则。预测模型无论训练得多好，都不能取代真实观测：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Prediction
 \neq
 Observation.
-}
-\]
+\)}
+\end{statementbox}
 因此 $\hat f_s$ 只具有预测权，没有现实定义权。实际状态仍必须通过真实世界重新进入 Body Runtime，再形成新的 SGC/FCS 或局部状态估计。技能只能依据预测提高控制速度，而不能把自己的预测结果直接写成“现实已经如此”。这一边界确保所谓技能编译不会使系统逐渐进入一个只和自己预测互动的封闭世界。
 
 因此，从三相记忆角度看，预测编译可以被理解为：
@@ -433,13 +437,14 @@ r_t^s,
 \right),
 \]
 其中 $r_t^s$ 是上层给出的局部参考，$\mathcal E_s$ 是允许的控制包络。这里出现了我们在 Body Runtime 理论中反复强调的分层原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \qquad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 高层不再规定每一个细节动作，而是给出目标、允许区域、风险边界和退出条件；局部技能则在这个范围内以更快频率解决具体控制问题。
 
 因此，控制编译不是简单把高层输出蒸馏成一个神经网络，而是把高层显式决策的一部分因果责任重新分配给局部功能环。我们可以定义编译前后高层介入率
@@ -518,8 +523,9 @@ u_{t+k}\in\mathcal U_s^{allowed}.
 \section{BodySkill：技能作为可执行的局部预测控制闭环}
 
 在完成预测编译和控制编译以后，我们终于可以严格定义 BodySkill。此前我们曾经用一个极简公式表达：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{BodySkill}
 =
 \mathrm{LocalPredictor}
@@ -527,8 +533,8 @@ u_{t+k}\in\mathcal U_s^{allowed}.
 \mathrm{LocalController}
 +
 \mathrm{ResidualModel}.
-}
-\]
+\)}
+\end{statementbox}
 这个公式值得保留，因为它抓住了技能区别于普通记忆、脚本和动作模板的核心结构。Local Predictor 负责快速预测局部状态变化；Local Controller 负责根据目标与预测产生具体动作；Residual Model 负责判断现实是否仍处于技能可解释、可控制的区域。
 
 为了进行更严格的工程形式化，我们可以把技能 $S$ 表示为
@@ -690,8 +696,9 @@ Observability
 风险越高、动作越不可逆、现实状态越难充分观测，下沉所需要的验证强度就越高。这一点防止我们把“认知沉降”误解成一种无条件追求速度的优化策略。AgentOS 所追求的不是最大程度自动化，而是\textbf{在可验证、可恢复和受约束的前提下，把已经不值得高层反复处理的问题迁移到更合适的时间尺度。}
 
 因此，技能成熟应当定义为一组结构条件同时成立，而不是一个单一成功率指标：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{SkillMaturity}
 =
 \mathrm{Repeatability}
@@ -705,8 +712,8 @@ Observability
 \mathrm{Generalization}
 +
 \mathrm{Recoverability}.
-}
-\]
+\)}
+\end{statementbox}
 只有满足这些条件，认知沉降才真正降低了系统未来的认知成本，而不是把今天的错误隐藏进明天的自动化结构。
 
 \section{失败后的重新认知：技能编译必须保持可逆}
@@ -786,13 +793,14 @@ Confidence
 \rightarrow h.
 \]
 高层得到的不是毫秒级控制历史，而是一个具有语义意义的认知事件，例如：“抓取策略连续三次预测滑移小于实际滑移，夹持稳定裕度下降，当前局部模型可信度不足。”只有在需要进一步诊断时，高层才向下请求更多局部细节。这样才能实现我们此前概括的：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityDoesNotContinuouslyBecomeThought;
 \quad
 RelevantDeviationBecomesThought.
-}
-\]
+\)}
+\end{statementbox}
 
 一旦问题重新进入 $h$，Agent 可以利用 $E$ 召回过去类似异常，通过 $\Theta$ 重新构造因果解释，形成新的局部策略，并产生新的现实实验。于是失败不只是技能中断，而成为新的经验生成源：
 \[
@@ -872,13 +880,14 @@ M_B
 那么技能学习正是同时发生了表示迁移、功能迁移、时间尺度迁移和承载边界迁移。
 
 这种表述还解释了为什么
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ThinkingLess
 \neq
 KnowingLess.
-}
-\]
+\)}
+\end{statementbox}
 当一个专家不再需要逐步思考一个熟练动作时，并不意味着相关认知结构消失。相反，它往往意味着这些结构已经以更加稳定、更快速、更局部的方式被重新承载。因此我们应当用“结构连续性原则”替代早期容易被误解成物理守恒的“复杂度守恒”直觉：
 \begin{proposition*}
 有效认知结构在成熟过程中通常不是简单消失，而是改变表示与承载位置。
@@ -886,13 +895,14 @@ KnowingLess.
 这里仍然允许遗忘、抽象、合并和结构损失，因此它不是严格守恒定律。
 
 从这一角度，技能编译实际上就是 Agent-CSO 的程序化迁移。所谓“程序化”并不限定为传统软件程序，它泛指认知结构从开放式显式推理表示转化成具有稳定输入、局部状态、预测、控制和退出条件的可执行闭环。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Proceduralization}
 =
 \mathrm{CSORealizationChange}
-}
-\]
+\)}
+\end{statementbox}
 而不是简单
 \[
 \mathrm{Memory}

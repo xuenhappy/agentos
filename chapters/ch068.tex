@@ -3,15 +3,16 @@
 
 \begin{chapterlead}
 本章对前述三相记忆、工作记忆有限性、SPC--AHC--TCE 认知调节、CCM、Scheduler、Boundary、认知卸载、Body Runtime、SGC/FCS、BPCC、技能编译与 KRA 等机制进行一次结构性的统一。我们不再把 AgentOS 理解为若干模块的并列集合，而把它严格描述为一个由\textbf{功能层级轴（Functional Hierarchy）}与\textbf{时间尺度轴（Temporal Hierarchy）}共同张成的多尺度认知动力系统。任何 Agent-CSO 在系统中的运行状态，都必须同时回答两个问题：第一，它当前由哪个功能结构承载；第二，它当前以什么时间尺度存在和变化。由此，本章确立 AgentOS 的双轴基本原理：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS
 =
 FunctionalHierarchy
 \times
 TemporalHierarchy
-}
-\]
+\)}
+\end{statementbox}
 并进一步说明，持续智能的学习过程并非简单的参数增量，而主要表现为 Agent-CSO 在该双轴空间中的持续重新配置：结构可以向更慢时间尺度沉降，也可以由慢结构重新激活进入快速过程；异常和新颖结构可以从局部功能向更高层级提升，而成熟能力则可以从显式认知向更低、更局部、更快速的执行闭环编译。最终，AgentOS 的运行可以概括为四种基本跨尺度流：\textbf{向慢巩固、向快激活、向上升级、向下编译}。
 
 本章所讨论的是一个固定总体功能骨架内部的多尺度动力学原理，而非任意自修改的软件拓扑。功能边、时间常数、承载位置和局部策略可以发生受控变化，但智能主体、现实验证路径以及安全边界保持结构连续。因而，本章既是前述各模块从局部机制走向统一系统动力学的收束，也是理解 AgentOS 为什么能够在有限工作记忆条件下形成长期学习、技能成熟和选择性显式认知的关键章节。
@@ -67,25 +68,27 @@ EachScaleShouldCloseItsOwnFastLoop
 
 从这一点出发，我们可以重新理解所谓“智能成熟”。幼稚系统往往具有高度中央化的运行方式：大量细节必须经过同一个模型、同一个上下文和同一个推理循环；成熟系统则逐渐形成大量局部自治闭环，只把少数真正无法局部闭合的问题提升到显式认知层。因而：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MatureIntelligence
 \neq
 MoreCentralReasoning
-}
-\]
+\)}
+\end{statementbox}
 
 而更加接近：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MatureIntelligence
 =
 MoreLocalClosure
 +
 MoreSelectiveGlobalCognition.
-}
-\]
+\)}
+\end{statementbox}
 
 这正是功能层级存在的根本意义。它不是为了增加系统结构的复杂程度，而是为了使不同类型的 Agent-CSO 能够在最适合自己的功能区域完成处理，使有限的全局认知资源只承担真正具有跨域、跨目标和跨时间尺度意义的问题。
 
@@ -458,12 +461,13 @@ ModelUncertainty
 相关 Agent-CSO 被提升至更高功能层级。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityDoesNotContinuouslyBecomeThought;
 RelevantDeviationBecomesThought.
-}
-\]
+\)}
+\end{statementbox}
 
 这是 AgentOS 与简单“所有传感器数据都送进大模型”架构之间的根本区别。现实世界每一毫秒都在发生大量变化。如果所有变化都持续进入 $h$，那么工作记忆有限性将立即被突破。Body Runtime、工具、文件系统以及局部任务执行器存在的意义，就是让大量普通变化在局部形成闭合。只有那些无法被既有局部结构解释的残差，才具有成为全局认知事件的资格。
 
@@ -477,21 +481,23 @@ RelevantDeviationBecomesThought.
 \]
 
 这种机制使 AgentOS 具备一种计算上极其重要的性质：显式认知是稀疏的。高层不负责持续监控所有底层细节，而只接收具有足够结构意义的偏差事件。于是注意力也可以重新定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Attention
 =
 CrossScalePromotionPolicy.
-}
-\]
+\)}
+\end{statementbox}
 它并不只是选择当前文本 token 权重，而是决定哪些局部结构值得跨越功能层级进入稀缺的全局认知空间。
 
 从控制理论来看，这类似事件触发控制；从操作系统角度看，它类似异常、中断和优先级提升；从认知角度看，它则表现为“某件原本自动进行的事情突然进入意识”。AgentOS 将这些现象统一到同一个原则之下：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictLocally,\ EscalateResidualGlobally.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{第四种跨尺度流：成熟能力的功能向下编译}
@@ -569,13 +575,14 @@ F^{compiled}_T.
 前者是慢速生成和监督结构，后者是快速执行闭环。
 
 这使我们能够严格解释“熟练以后为什么不用思考”。不是相关认知结构消失，而是其主要功能承载位置发生迁移：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ThinkingLess
 \neq
 KnowingLess.
-}
-\]
+\)}
+\end{statementbox}
 更准确地说：
 \begin{statementbox}
 StructureChangedCarrierAndFunctionalLocation.
@@ -609,13 +616,14 @@ Automatic.\)}
 传统模型语境中的 attention 通常被理解为对当前表示空间中不同元素分配权重。在 AgentOS 中，这一概念必须扩展。因为持续智能面临的最稀缺资源并不是单纯计算量，而是\textbf{哪些结构能够进入有限全局工作区并获得跨系统协调权}。
 
 因此，本章把 Attention 定义为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Attention
 =
 CrossScalePromotionPolicy.
-}
-\]
+\)}
+\end{statementbox}
 
 设系统当前存在候选 Agent-CSO 集合
 \[
@@ -685,13 +693,14 @@ Evidence_E.
 从这一角度看，一个真正成熟的 Agent 并不是拥有无限注意，而是形成了一套越来越精确的跨尺度提升策略。它可以让绝大多数已知过程保持在局部，让真正重要的新颖结构进入工作记忆，让持续重复的经验进入慢结构，同时保护最慢的身份和生成先验不被瞬时噪声扰动。
 
 因此注意力真正解决的是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FiniteGlobalCapacity
 \quad\text{vs.}\quad
 InfinitePotentialWorldEvents.
-}
-\]
+\)}
+\end{statementbox}
 它是有限主体能够在开放世界中持续存在的核心选择机制。
 
 
@@ -700,19 +709,21 @@ InfinitePotentialWorldEvents.
 双轴架构最终给出了一个与“大模型越强就应该思考得越多”完全不同的智能成熟观。若一个 Agent 每面对任何熟悉问题仍然必须重新加载大量上下文、执行完整链式推理、调用中央模型并显式维护所有细节，那么它即使单次推理能力很强，仍然是一种结构上不成熟的智能。
 
 成熟智能真正应该出现的趋势是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ExplicitGlobalInterventionRatio
 \downarrow
-}
-\]
+\)}
+\end{statementbox}
 同时：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SuccessfulLocalClosureRatio
 \uparrow.
-}
-\]
+\)}
+\end{statementbox}
 
 可以定义一个概念性的显式认知率
 \[
@@ -739,13 +750,14 @@ N_{\mathrm{behaviorally\ relevant\ events}}
 这与人的熟练行为具有明显的结构相似性：初学驾驶时，大量视觉对象、规则、动作顺序都进入显式工作记忆；熟练以后，大量低层操作在局部闭环中完成，而显式注意主要处理路线选择、异常车辆、复杂交通和新环境。但本理论并不依赖人类认知类比。任何受有限全局容量约束的长期智能，只要需要在高频环境中保持高效运行，就会面临类似的层级化压力。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MatureIntelligence
 =
 SelectiveExplicitCognition.
-}
-\]
+\)}
+\end{statementbox}
 
 所谓“选择性”，至少包含三层含义。第一，正常局部动力不进入 $h$；第二，稳定经验不长期占据 $h$，而应沉降到 $E/\Theta$ 或局部 Skill；第三，即使长期记忆非常丰富，也只有与当前目标、风险和残差有关的部分才重新进入显式认知。
 
@@ -768,12 +780,13 @@ Hierarchy.
 因此有限性促成结构。
 
 当然，显式认知率下降不能被误解为“越少思考越聪明”。如果一个系统在新环境中仍然拒绝提升异常结构，那么它只是僵化。成熟的关键不是显式认知少，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ExplicitWhenNecessary,
 LocalWhenSufficient.
-}
-\]
+\)}
+\end{statementbox}
 
 因此我们可以把成熟度写成一个更完整的函数：
 \[
@@ -876,13 +889,14 @@ F_i\rightarrow F_j
 迁移如果持续出现，则可能进一步沉降为新的功能连接。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Learning
 =
 StructuralRedistributionAcrossScales.
-}
-\]
+\)}
+\end{statementbox}
 
 这一定义比“模型权重更新”更适合持续 Agent。因为一个 Agent 完全可以在基础模型参数几乎不变的情况下，通过写入 $E$、重构 $\Theta$、形成 Skill、建立工具、改变 Boundary 策略和重新分配功能承载位置而发生显著学习。反过来，即使基础模型参数被持续更新，如果所有任务仍然需要同一种中央推理过程，也不意味着系统真正发生了成熟意义上的结构发展。
 
@@ -920,13 +934,14 @@ NormalDynamicsStayLocal.
 任何已经可以在较低功能层级可靠解决的过程，不应持续占用高层工作记忆。
 
 第二是\textbf{慢约束原则}：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance
 \neq
 FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 $\Theta$、$\Psi$ 和 $\Omega$ 应通过边界、先验、目标偏置和可行域约束快速系统，而不是逐步决定每一个局部动作。否则慢变量不仅失去稳定性，还会成为整个系统的实时瓶颈。
 
 第三是\textbf{残差提升原则}：
@@ -957,13 +972,14 @@ SlowGlobalStructure.\)}
 不同层级之间必须存在证据累积时间窗和迟滞，否则一次局部异常就可能层层放大成身份和长期方向变化。
 
 第六是\textbf{现实闭合原则}：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reality
 =
 UltimateConstraint.
-}
-\]
+\)}
+\end{statementbox}
 无论一个 Agent-CSO 在内部经历多少层激活、压缩、预测和重新解释，其关于外部现实的有效性最终都必须通过行动—观测闭环重新接受现实约束。预测不能冒充观测，内部一致性不能代替世界验证，自我模型也不能成为不可证伪的封闭系统。
 
 在数学上，我们可以把完整系统抽象成：
@@ -1023,23 +1039,25 @@ Environment
 \section{统一结论：AgentOS 是功能层级与时间层级的乘积空间}
 
 现在我们可以重新回到本章开头的基本命题：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS
 =
 FunctionalHierarchy
 \times
 TemporalHierarchy.
-}
-\]
+\)}
+\end{statementbox}
 这一公式并不是为了提供一个漂亮的架构口号，而是指出 AgentOS 中任何关键结构都不能只用“模块归属”描述。一个 Agent-CSO 真正的系统位置至少必须同时包含：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 WhereItIsProcessed
 +
 HowFastItChanges.
-}
-\]
+\)}
+\end{statementbox}
 
 功能层级决定它由哪个闭环承担；时间层级决定它在多长时间范围内保持稳定。学习则改变这种位置：
 \[
@@ -1069,8 +1087,9 @@ HowFastItChanges.
 如果没有功能向下编译，成熟能力永远占据昂贵的显式处理资源。
 
 因此四者缺一不可：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PersistentIntelligence
 =
 Consolidation
@@ -1080,8 +1099,8 @@ Activation
 Promotion
 +
 Compilation.
-}
-\]
+\)}
+\end{statementbox}
 
 但这四种动力又受到两个更基础的约束。
 
@@ -1106,14 +1125,15 @@ RealityConstraint.
 \end{proposition*}
 
 进一步，如果我们把学习理解为 Agent-CSO 的双轴重新分布：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Learning
 =
 RedistributionOfAgentCSO
 AcrossFunctionAndTimescale,
-}
-\]
+\)}
+\end{statementbox}
 那么所谓“能力增长”就不再只是内部知识数量增加，而表现为越来越多过去必须昂贵显式处理的问题，被转化为稳定结构、局部技能、外部工具和环境结构；与此同时，系统仍然保留把失效结构重新提升到显式认知层进行修正的能力。
 
 因此，一个真正成熟的 AgentOS 应呈现出一种看似矛盾但实际上高度统一的特征：

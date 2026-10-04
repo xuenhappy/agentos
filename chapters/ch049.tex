@@ -5,15 +5,16 @@
 在前述 AgentOS 原理论中，我们已经建立了一个能够在固定功能拓扑上维持工作记忆、三相记忆、自我、生命周期生成倾向以及认知调节的持续主体。然而，到目前为止，这一主体仍主要被描述为一个“内部认知动力系统”。本章完成一个决定性的理论跃迁：我们不再把智能理解为封闭在认知内核中的计算过程，而把完整 Agent 定义为一个通过稳定的观测--行动边界持续嵌入现实的闭环系统。
 
 本章的核心命题是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentSystem
 =
 AgentKernel
 \bowtie
 BodyRuntime
-}
-\]
+\)}
+\end{statementbox}
 其中，Agent Kernel 维持长期认知连续性、记忆、自我、目标与跨尺度决策；Body Runtime 则承担智能体与具体物理世界或数字世界之间的实时耦合。两者并非简单的“软件与硬件”关系，而是两个不同时间尺度、不同状态空间和不同职责域之间的动力学嵌合。
 
 由此，Body 不再被限定为机器人机械身体。任何能够稳定地承载感知、行动、状态反馈并构成 Agent 与某一现实环境之间持续因果边界的系统，都可以成为 Agent 的 Body。机器人、汽车、浏览器、桌面操作系统、Shell、文件系统乃至由多个数字服务构成的操作环境，都可以在这一统一定义下成为不同形式的身体。
@@ -73,8 +74,9 @@ Reasoning
 Output,
 \]
 而应当是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 World_t
 \rightarrow
 Observation_t
@@ -86,18 +88,19 @@ Action_t
 World_{t+1}
 \rightarrow
 Observation_{t+1}.
-}
-\]
+\)}
+\end{statementbox}
 只有后一种结构，系统的预测、判断和行动才能最终受到现实重新验证。否则，内部世界模型可能不断自洽，却不必与真实世界保持一致。
 
 因此我们在这里引入一个重要区别：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 CognitiveClosure
 \neq
 WorldClosure.
-}
-\]
+\)}
+\end{statementbox}
 一个系统可以形成内部的认知闭环，例如
 \[
 h
@@ -148,15 +151,16 @@ O
 这一区别正是现实约束进入智能理论的数学入口。
 
 因此，一个没有 Body Runtime 的认知内核面临三类基本边界。第一，它无法自行保证输入与现实具有可靠因果联系；第二，它无法自行保证行动意图真正改变了世界；第三，它无法可靠地区分“我预测行动成功”与“行动事实上已经成功”。换言之：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ActionIntention
 \neq
 ActionExecution
 \neq
 ActionOutcome.
-}
-\]
+\)}
+\end{statementbox}
 这三者只有通过现实闭环才能被区分。
 
 从智能动力学的角度，我们因此得到一个更严格的判断：持续智能并不只是“长期记忆加推理”，而是一个长期存在的结构必须不断在
@@ -176,13 +180,14 @@ World
 当我们第一次把 Body 引入 AgentOS 时，最容易出现的误解是把 Body 直接等同于机器人机械结构。例如，把摄像头看成眼睛，把机械臂看成手，把轮式底盘看成腿，然后认为只有具有这些物理部件的 Agent 才是具身智能。这种定义对于机器人学而言具有直观性，但对于通用 AgentOS 来说过于狭窄。因为从智能动力学的角度，我们真正关心的不是一个载体是否“长得像身体”，而是它是否建立了主体与现实之间稳定的观测--行动因果边界。
 
 因此我们将 Body 定义为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body
 =
 ControlledAndSensedCarrierOfAgency.
-}
-\]
+\)}
+\end{statementbox}
 即：
 \begin{statementbox}
 身体是主体能够持续感知、持续控制，并借此对某一现实环境施加因果影响的承载结构。
@@ -236,13 +241,14 @@ u_B
 使 Agent 能够持续通过 $y_B$ 感知现实，并通过 $u_B$ 对现实产生可归因的影响，那么该系统就满足 Body 的最低功能条件。
 
 因此 Body 的本体身份并不取决于材料：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodyOntology
 \perp
 Substrate.
-}
-\]
+\)}
+\end{statementbox}
 金属、硅、电子设备、软件进程甚至某些受控网络服务，在满足上述因果关系时都可以成为身体的一部分。这里体现的是我们在认识论部分已经建立的一个基本原则：同类智能不应由实现材料分类，而应依据功能闭环、语义结构与多尺度动力关系进行判断。
 
 这一点同时说明，Body 不能简单定义成“Agent 能调用的全部工具”。工具与身体之间存在重要差异。一个偶尔调用的外部服务不一定属于 Body。若 Agent 调用一个天气 API，API 更适合被理解成 Tool；而如果一个系统持续向 Agent 提供自身状态，具有稳定控制接口，并成为 Agent 行动闭环的一部分，那么它可能逐渐具有 Body 的功能属性。因此，Body 与 Tool 之间不是纯粹二元分类，而存在一个由持续性、控制深度、状态反馈和主体归属感共同决定的谱系。
@@ -263,13 +269,14 @@ R_{\mathrm{feedback}}
 其中 $C_{\mathrm{observe}}$ 表示可观测程度，$C_{\mathrm{control}}$ 表示可控制程度，$P_{\mathrm{continuity}}$ 表示耦合持续性，$I_{\mathrm{identity}}$ 表示该载体是否被纳入主体持续状态，$R_{\mathrm{feedback}}$ 表示行动结果是否稳定回流。$\kappa_B$ 越高，一个载体就越接近 Agent 的身体；越低，则越接近偶发工具或外部资源。
 
 这一连续谱十分重要，因为未来 Agent 很可能同时拥有多种身体。例如，一个持续数字 Agent 可以长期拥有桌面操作环境，同时临时接管一台移动机器人，又通过网络控制家庭设备。在这种情况下，如果坚持“一 Agent 对应一具机械身体”，理论会立即失效。更准确的是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Agent
 \rightarrow
 \{Body_1,Body_2,\ldots,Body_n\}
-}
-\]
+\)}
+\end{statementbox}
 而不同 Body 可以在不同时间拥有不同的有效控制权和感知权。
 
 但是，这并不意味着主体也随 Body 分裂。我们此前已经建立了单一持续主体原则。因此：
@@ -282,23 +289,25 @@ OnePhysicalBody.\)}
 同一个 Agent 可以拥有多个身体，却仍维持单一的 $h/E/\Theta/\Psi/\Omega$ 生命周期结构。真正连续的是主体，而不是某一套具体传感器或执行器。
 
 这一理论转变还有一个更深的含义：Body 实际上定义了 Agent 的现实边界。没有身体时，“世界”只是一个输入集合；有了 Body 后，世界出现了可达性结构。一扇门对于具有机械臂的机器人与没有机械臂的机器人不是同一个功能世界；文件系统对于能够执行文件操作的数字 Agent 与只能阅读文本的 Agent 也不是同一个功能世界。因此，Body 不只是输入输出接口，而是在事实上决定：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 WhatCanBeObserved,\quad
 WhatCanBeChanged,\quad
 WhatCanBeReached.
-}
-\]
+\)}
+\end{statementbox}
 换言之，Body 定义了 Agent 的 \emph{actionable reality}。
 
 因此，本书之后所说的具身，不应被狭义理解为“拥有类人生理形态”，而应理解为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Embodiment
 =
 PersistentCausalEmbeddingIntoAnEnvironment.
-}
-\]
+\)}
+\end{statementbox}
 这个定义同时覆盖物理机器人与数字 Agent，也为后续建立统一 Body Scale、语义现实表示和快速身体控制提供了共同本体基础。
 
 \section{物理 Body：进入连续物理世界的因果承载}
@@ -344,32 +353,35 @@ d_B
 \tau_{\mathrm{cognition}}.
 \]
 让 Agent Kernel 在每一个 servo timestep 上决定电流或扭矩，不仅低效，而且会破坏实时性。因此，物理 Body 天然要求多尺度闭环：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FastLocalLoop
 \subset
 SlowGlobalLoop.
-}
-\]
+\)}
+\end{statementbox}
 
 这与我们前面关于智能频谱的认识完全一致。高层智能并不需要“管理所有细节”，而应定义较慢尺度上的目标、约束和可行区域；低层系统则在这些约束内部完成快速稳定控制。于是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,
 \qquad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 例如，认知内核可以决定“把这个杯子安全放到桌面指定区域”，但不应逐毫秒指定每个电机的控制量。后一过程属于身体内部快速闭环，而高层只需要获得足以判断任务进展、异常和结果的结构化反馈。
 
 由此我们得到一个重要状态分离：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodyState(t)
 \neq
 h(t).
-}
-\]
+\)}
+\end{statementbox}
 工作记忆 $h(t)$ 是当前需要全局显式处理的认知结构，而 BodyState 是身体真实运行所需的高频状态。两者之间可能存在映射，但绝不能等同。如果 Body 的所有内部状态都进入 $h$，工作记忆有限容量定理将立即被底层噪声和高频变量击穿。
 
 因此，物理身体实际上成为认知复杂度的第一道屏障。大量可局部解决的扰动，应当在 Body 层被吸收：
@@ -429,13 +441,14 @@ WhatThisBodyCanCurrentlyDo.
 一个成熟智能体必须持续估计自己的能力边界，而不是假设“曾经做得到的事情永远做得到”。
 
 这一点与自我理论存在深刻联系。$\Psi$ 描述“我是谁”主要位于慢认知结构层，而 Body 描述“我现在通过什么载体进入现实”。两者不能混为一谈，但也不能完全分离。一个 Agent 换了一具身体，可能仍然保持身份连续；但新的身体会逐渐改变其行动经验、技能结构和未来发展空间。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 IdentityContinuity
 \neq
 BodyIdentity,
-}
-\]
+\)}
+\end{statementbox}
 同时：
 \begin{statementbox}
 \centering
@@ -560,20 +573,22 @@ Delete(SystemFile).
 这与物理身体的力学能力边界具有功能同构。
 
 数字 Body 还使“身体可替换性”表现得更加清楚。同一个 Agent 可以从 Browser Body 切换到 Shell Body，或者从桌面操作环境切换到移动设备环境。它的长期记忆、自我和目标可以保持，而底层交互方式发生变化。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentIdentity
 \neq
 InterfaceIdentity.
-}
-\]
+\)}
+\end{statementbox}
 这为我们后面讨论 Body Scale 提供了最直接的工程实验条件：一个成熟 Agent 应该能够最大程度地保留关于任务、对象、目标和策略的高层 CSO，而只重新学习“这个新身体怎样观察和行动”。
 
 数字具身还使一个长期以来模糊的问题变得明确：Computer Use Agent 并不是“语言模型调用 GUI 工具”的简单组合。如果系统能够维持持续主体、持续环境状态、操作历史、行动能力模型以及动作--反馈闭环，那么 Computer Use 本身已经构成一种完整的具身智能实验场。也正因此，在我们的工程路线中，数字身体可以成为 AgentOS 最早的现实验证平台，而不只是人形机器人之前的廉价替代品。
 
 从理论上讲，物理 Body 与 Digital Body 可以统一写成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body_i
 =
 (
@@ -583,8 +598,8 @@ Body_i
 \mathcal D_i,
 \mathcal C_i
 ),
-}
-\]
+\)}
+\end{statementbox}
 其中 $\mathcal X_i$ 是身体与环境状态空间，$\mathcal O_i$ 是可观测映射，$\mathcal U_i$ 是动作空间，$\mathcal D_i$ 是动力学/状态转移结构，$\mathcal C_i$ 是约束集合。这样，我们就获得了一个与材料无关的身体定义，也为真正跨物理--数字世界的通用 AgentOS 建立了统一数学入口。
 
 \section{Browser、Shell 与 Filesystem 也是身体的一部分}
@@ -888,21 +903,23 @@ Click(Button_i)
 DOMEvent(i).
 \]
 尽管身体实现完全不同，高层 Agent-CSO：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Click(TargetEntity)
-}
-\]
+\)}
+\end{statementbox}
 可以保持相对稳定。
 
 这正是后面 Body Scale 原理的一个重要前提：通用智能的扩展能力不只取决于“会不会某个动作”，还取决于该动作的语义结构能否跨 Body 保留。换句话说：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ActionMeaning
 \neq
 ActionImplementation.
-}
-\]
+\)}
+\end{statementbox}
 
 Cursor 还揭示了动作反馈的必要性。如果 Agent 移动并点击 Cursor 后，只根据自己的动作命令推断“按钮已经被点击”，就会产生：
 \[
@@ -950,15 +967,16 @@ RealityIsUltimateConstraint
 经过前面的分析，我们现在可以正式给出本书意义上的完整 Agent 定义。一个完整 Agent 不再等同于模型、不等同于认知内核，也不等同于机器人身体，而是一个由持续认知主体、具体身体运行时以及现实环境共同组成的闭环动力系统。
 
 首先定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentSystem
 =
 AgentKernel
 \bowtie
 BodyRuntime.
-}
-\]
+\)}
+\end{statementbox}
 这里使用符号 $\bowtie$ 而不是简单的加号，是为了强调两者不是静态拼接，而是存在持续双向耦合。
 
 设认知状态为：
@@ -1155,15 +1173,16 @@ BodySpecificStructure.
 前者包括较高层目标、对象语义、长期自我和许多世界结构；后者则包括动作映射、身体能力、快速预测模型和具体控制策略。真正通用的 AgentOS 应尽可能使前者保持稳定，而重新适配后者。
 
 因此我们可以进一步写：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentKernel
 =
 PersistentCognitiveInvariant
 +
 AdaptiveBodyCoupling.
-}
-\]
+\)}
+\end{statementbox}
 这并不表示 Kernel 完全不受身体影响，而是说主体最核心的连续结构不应该与某一种具体 Body 绑定。
 
 现在我们可以给出本章的完整定义：
@@ -1182,45 +1201,50 @@ AdaptiveBodyCoupling.
 这个定义具有几个重要推论。
 
 第一：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Model\neq Agent.
-}
-\]
+\)}
+\end{statementbox}
 模型可以成为 Agent Kernel 的核心计算基础，但单独模型并不自动构成持续主体。
 
 第二：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Robot\neq Agent.
-}
-\]
+\)}
+\end{statementbox}
 机器人硬件可以成为 Body，但没有持续认知主体时，它只是可控制系统。
 
 第三：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Agent\neq Kernel.
-}
-\]
+\)}
+\end{statementbox}
 Kernel 维持内部认知，但完整 Agent 必须通过 Body 与现实形成闭环。
 
 第四：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body\neq PhysicalBodyOnly.
-}
-\]
+\)}
+\end{statementbox}
 数字环境同样可以成为严格意义上的 Agent Body。
 
 第五：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Embodiment
 =
 PersistentCausalEmbedding,
-}
-\]
+\)}
+\end{statementbox}
 而不是某种特定材料或形态。
 
 由此，我们终于能够把此前相对独立的两条理论线统一起来。一条是：
@@ -1259,12 +1283,13 @@ CausalPositionInReality.
 \end{statementbox}
 二者结合以后，我们才真正得到本书意义上的持续人工智能生命体的最小结构条件：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PersistentIdentity
 +
 EmbodiedWorldClosure.
-}
-\]
+\)}
+\end{statementbox}
 
 因此，本章不是从“软件 Agent”突然跳向“机器人”的附加章节，而是整个 AgentOS 原理论从内部认知动力学迈向完整世界动力学的分水岭。此前我们研究的是一个主体如何在内部维持自己；从本章开始，我们研究的是这个主体如何拥有一个现实位置，以及怎样通过这个位置真正观察、影响并重新进入世界。

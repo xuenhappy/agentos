@@ -160,13 +160,14 @@ L_k.
 \end{equation}
 
 这实际上建立了一种多尺度异常传播机制。它避免两个极端：一方面避免``所有事情都交给中央智能''，另一方面也避免``底层自治到无法被高层纠正''。因此本节的核心不是传统意义上的异常抛出，而是一条智能动力学原则：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Reality Does Not Continuously Become Thought;}
 \quad
 \text{Relevant Unresolved Residual Becomes Thought.}
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 在这个意义上，注意力也可以获得一个更加一般的定义：注意力并不只是 Transformer 中某个矩阵运算，而可以理解成某些局部结构被允许跨尺度提升、进入更大认知闭环的策略。残差升级因此成为具身感知、注意、异常处理和认知形成之间的重要统一机制。
 
@@ -431,21 +432,23 @@ Recoverability
 并持续足够时间以后，系统才开始把该能力从显式认知路径中剥离。
 
 这一理论解释了一个看似矛盾的现象：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ThinkingLess\neq KnowingLess.
-}
-\]
+\)}
+\end{statementbox}
 专家在熟悉领域常常比新手进行更少的显式思考，但行为质量反而更高。原因并不是专家内部结构减少，而是大量结构已经转移到更稳定、更快速、更低成本的承载层。换句话说：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Maturity}
 \approx
 \text{Less Necessary Explicit Cognition}
 +
 \text{More Stable Distributed Structure}.
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 这也是 AgentOS 与仅靠 Context 累积的 Agent 架构之间的重要区别。如果一个 Agent 使用某项工具数千次以后，每一次仍然需要大模型重新阅读完整说明书、重新推理每一步操作，那么它虽然``记住了很多历史''，却没有真正发生结构成熟。真正的持续学习必须让过去反复发生的显式认知逐渐转化为未来低成本的可执行结构。
 
@@ -474,11 +477,12 @@ J_C^{mature}
 StableAbility\downarrow
 \]
 相对应的必须是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 UnexpectedResidual\uparrow.
-}
-\]
+\)}
+\end{statementbox}
 这并不是普通软件意义上的``报错''，而是一个更加一般的认知结构恢复机制：当现实偏离某个已经沉降结构的适用范围时，系统必须重新把与该残差相关的 Agent-CSO 提升到更大、更慢、更具表达能力的功能空间中。
 
 设能力 $C$ 已经在低层形成局部闭环
@@ -714,13 +718,14 @@ LocalController.
 在解释了局部闭合、残差升级、能力沉降和相邻尺度耦合以后，我们终于可以回答多尺度控制中最核心的权力分配问题：\textbf{高层究竟应该控制低层到什么程度？}
 
 如果高层完全不约束低层，局部自治可能偏离整体目标；如果高层直接决定低层每一步动作，多尺度体系又会退化成中央集权式控制。因此更加合理的关系是：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Higher Level Sets Feasible Region,}
 \qquad
 \text{Lower Level Optimizes Inside It.}
-}
-\end{equation}
+\)}
+\end{statementbox}
 
 设第 $i+1$ 层拥有较长时间尺度的目标 $g_{i+1}$、价值约束 $v_{i+1}$、安全边界 $s_{i+1}$ 和资源约束 $r_{i+1}$。高层并不直接产生每一个 $u_i(t)$，而是构造一个低层可行集合：
 \begin{equation}
@@ -780,13 +785,14 @@ M_i(t)<0,
 则说明预测或实际状态已经越界，应立即触发局部修正甚至残差升级。
 
 由此，高层与低层的关系可以进一步写成：
-\begin{equation}
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowConstraint
 \neq
 FastMicromanagement.
-}
-\end{equation}
+\)}
+\end{statementbox}
 这是整套多尺度智能理论极其重要的原则。高层真正成熟的控制不是``做更多决定''，而是设计一个能够让低层安全自治的结构空间。
 
 更进一步，高层自身也处于更高层给出的可行域之中。例如任务规划受到 Self $\Psi$、长期价值以及安全治理的约束；而这些更慢结构同样不应该决定任务规划中的每一步。于是形成递归关系：

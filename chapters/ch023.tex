@@ -10,13 +10,14 @@
 }
 \]
 并分别把三者理解为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h=\mathrm{State},\qquad
 E=\mathrm{Trajectory},\qquad
 \Theta=\mathrm{Generator}.
-}
-\]
+\)}
+\end{statementbox}
 
 这里的 $h(t)$ 是当前被激活并参与实时计算的认知状态，$E$ 是由过去运行过程形成的经历轨迹集合，$\Theta$ 是从大量经历中缓慢形成、能够重新生成预测、解释、规则和行为结构的长期生成结构。真正的持续学习并不等价于“不断向某个数据库追加内容”，而是发生在
 \[
@@ -326,15 +327,16 @@ E=\text{历史轨迹},
 \section{State--Trajectory--Generator：三相记忆的统一形式}
 
 到这里，我们已经分别定义了 $h$、$E$ 和 $\Theta$，但如果仅仅把它们看成三个记忆盒子，理论仍然是不完整的。真正重要的是看见三者之间存在一个比“短期、中期、长期”更深的结构：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h=\mathrm{State},
 \qquad
 E=\mathrm{Trajectory},
 \qquad
 \Theta=\mathrm{Generator}.
-}
-\]
+\)}
+\end{statementbox}
 这意味着三相记忆实际上对应动力系统研究中的三个不同观察层次。
 
 设一个智能系统在任意时刻具有当前状态
@@ -860,15 +862,16 @@ h_t,z_t
 p(h_{t+\Delta}\mid h_t,\Theta).
 \]
 当前输入不再从零开始解释，而是在已有长期结构约束下进行。于是 $\Theta$ 对 $h$ 的作用可以表现为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Prediction,
 Constraint,
 Completion,
 Interpretation,
 ActionPrior.
-}
-\]
+\)}
+\end{statementbox}
 
 这同时说明，长期记忆真正的价值不是“有多少知识”，而是知识能否在正确时机以正确粒度进入当前状态。如果所有 $\Theta$ 都被激活，$h$ 会被无关知识淹没；如果激活机制过于严格，系统又表现得像“知道但想不起来”。因此结构激活必须是条件性的：
 \[

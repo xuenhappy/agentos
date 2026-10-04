@@ -8,17 +8,19 @@ SGC 的目的不是把传感器数据重新包装成另一组特征，也不是�
 的可检查结构空间之中。
 
 本章采用如下定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC
 =
 \text{Body-Centered Semantic Representation of Actionable Reality}
-}
-\]
+\)}
+\end{statementbox}
 
 其最重要的性质可以进一步概括为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC
 =
 Geometry
@@ -34,19 +36,20 @@ Semantic
 Affordance
 +
 EpistemicMetadata
-}
-\]
+\)}
+\end{statementbox}
 
 在物理身体的典型情况下，可用近似形式表示为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC_t
 \approx
 \mathbb{R}^{3}_{B}
 \times
 \mathcal S_t
-}
-\]
+\)}
+\end{statementbox}
 其中 $\mathbb{R}^{3}_{B}$ 表示相对于当前 Body 的空间坐标结构，$\mathcal S_t$ 表示绑定于这些空间实体、区域和关系之上的语义结构。对于数字身体，$\mathbb{R}^{3}_{B}$ 可以进一步推广为身体所处的
 \emph{action-coordinate manifold}，因此 SGC 的本质并不是“三维地图”，而是
 \textbf{现实结构在当前身体可感知、可理解、可作用坐标系中的显式语义落地}。
@@ -96,17 +99,19 @@ and what I can do with it now.
 在外部理论上，SGC 与 SLAM、object-centric perception、scene graph、knowledge graph、world model、affordance theory 都存在明显联系，但它并不是这些技术的简单组合。SLAM 更关心几何定位与地图一致性，Scene Graph 更强调图像或场景中的实体关系，Knowledge Graph 更强调抽象语义关系，而 SGC 试图建立一个长期 Agent 所需要的统一现实 ABI：它既必须足够显式以支持检查、调试和安全验证，又必须足够丰富以支撑认知和行动。
 
 因此我们在本章中始终坚持一个基本原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RawPerception\neq SGC
-}
-\]
+\)}
+\end{statementbox}
 同样，
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LatentWorldModel\neq SGC .
-}
-\]
+\)}
+\end{statementbox}
 SGC 是二者之间经过现实锚定之后形成的公共语义界面。
 
 \section{Body-Centered Reality：现实必须从“这个身体”出发}
@@ -116,11 +121,12 @@ SGC 是二者之间经过现实锚定之后形成的公共语义界面。
 World ,
 \]
 而必须首先被表示为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 World+MeInWorld .
-}
-\]
+\)}
+\end{statementbox}
 SGC 因此从定义上就是 Body-Centered 的。
 
 设当前身体状态为 $B_t$，外部现实状态为 $W_t$。Agent 真正能够形成的现实表示并不是某个独立于主体的函数 $M(W_t)$，而是
@@ -165,13 +171,14 @@ p(\mathbf p_i\mid y_{\leq t}),
 或者在工程实现中附带 covariance、confidence 或 error bound。这样一来，SGC 不是一张假装全知的精确地图，而是一张携带认识论边界的可行动现实图。
 
 这一原则同样适用于数字身体。对于浏览器 Agent，“身体”并不是三维机械结构，但仍然存在一个行动坐标系：当前页面、viewport、DOM、cursor、keyboard focus、active tab、filesystem namespace、shell working directory 等，都共同定义 Agent 当前可以直接感知和操作的现实边界。因此更一般地，可以把物理空间 $\mathbb R_B^3$ 推广为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal M_B
 =
 \text{Body-Specific Action Coordinate Manifold}
-}
-\]
+\)}
+\end{statementbox}
 物理机器人使用几何坐标流形，数字 Agent 则可能使用界面、对象层级和命名空间共同组成的混合坐标结构。
 
 由此我们得到一个重要结论：SGC 并不追求一个与任何主体无关的“终极世界表示”，而追求一个能够使具体 Agent 在现实中稳定行动的
@@ -310,13 +317,14 @@ a_i\in\mathcal A_{\mathrm{fixed}},
 s_i\in\mathcal S_{\mathrm{open}},
 \]
 其中 $\mathcal S_{\mathrm{open}}$ 允许动态扩展。两者共同形成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StableSemanticSkeleton
 +
 OpenSemanticExtension .
-}
-\]
+\)}
+\end{statementbox}
 
 这一设计也直接影响跨 Body 迁移。假设两个不同身体 $B_1$ 和 $B_2$ 都观察到“门”，内部视觉模型可能完全不同，但如果最终都能输出符合相同 fixed schema 的实体：
 \[
@@ -408,8 +416,9 @@ Entity\times Geometry\times Time\times EpistemicState
 SGC 最重要、同时也是与很多传统世界模型最不同的设计之一，是所有重要现实结构都必须附带 Epistemic Metadata。一个 Agent 如果只能存储“什么是真的”，却不能区分“我亲眼看见的”“模型推导的”“根据历史预测的”“假设如果采取某个行动可能发生的”，那么长期运行后必然会出现严重的现实与内部生成结构混淆。
 
 因此，对于任何 SGC 元素 $x$，我们定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \xi(x)=
 (
 z,
@@ -419,8 +428,8 @@ confidence,
 provenance,
 validity
 )
-}
-\]
+\)}
+\end{statementbox}
 其中 $z$ 是认识论状态，主要包括：
 \[
 z\in
@@ -435,13 +444,14 @@ Pending
 $source$ 表示传感器、数据库、模型、其他 Agent 或内部推理来源；$t$ 是状态产生或最后验证时间；$confidence$ 表示可信程度；$provenance$ 保存推导依赖；$validity$ 则描述该信息的适用范围或有效条件。
 
 这里最重要的原则是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EpistemicStatus
 \neq
 TruthValue .
-}
-\]
+\)}
+\end{statementbox}
 Observed 并不意味着绝对真实，传感器可能出错；Predicted 也不意味着错误，预测可能非常准确。Epistemic status 回答的是：
 \[
 \text{“这一结构通过何种认识过程进入 SGC？”}
@@ -511,11 +521,12 @@ IsThisObservedOrGenerated?
 \section{Object 与 Field：现实既包含离散实体，也包含连续结构}
 
 现实并不天然由一个个离散物体组成。我们可以识别桌子、车辆和人，但温度分布、光照、地形高度、占用概率、烟雾浓度、可通行区域等结构更适合用连续场或区域场表示。如果 SGC 只支持 Object Graph，那么系统就会被迫把大量连续现实人为切割成对象，导致表示低效甚至语义失真。因此 SGC 从定义上同时包含
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Objects+Fields .
-}
-\]
+\)}
+\end{statementbox}
 
 对于对象，可以定义
 \[
@@ -681,13 +692,14 @@ WhatCanIBodyDoHere?
 这就是 affordance 的位置。
 
 Affordance 不是物体单方面具有的绝对属性，而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Affordance
 =
 Relation(Object,Body,Context,Action)
-}
-\]
+\)}
+\end{statementbox}
 例如“杯子可抓取”只有在 Agent 拥有合适执行器、杯子处于可达区域、当前姿态允许操作并且环境没有阻挡时才成立。对于另一个身体，同一个杯子的 affordance 可能完全不同。
 
 因此，我们可以定义：
@@ -720,17 +732,19 @@ confidence
 \text{door is openable},
 \]
 但是否打开门仍然需要由更高层目标、安全和控制系统共同决定。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Affordance\neq Intention
-}
-\]
+\)}
+\end{statementbox}
 也不等于：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Affordance\neq ActionCommand .
-}
-\]
+\)}
+\end{statementbox}
 SGC 只是把现实从“是什么”进一步解释成“对这个身体而言有哪些行动可能”。
 
 Affordance 还可以作为 Body Scale 的重要桥梁。换身体以后，同一个语义对象可以保留：
@@ -746,13 +760,14 @@ Walkable(\texttt{stairs})\approx 1,
 Walkable(\texttt{stairs})\approx 0.
 \]
 这说明 Kernel 可以保留“楼梯是什么”的高层 Agent-CSO，而 Body Runtime 只需要重新学习“这个身体如何与楼梯相互作用”。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StableSemanticMeaning
 +
 BodySpecificAffordance
-}
-\]
+\)}
+\end{statementbox}
 是实现跨身体认知迁移的重要结构。
 
 Affordance theory 在生态心理学和机器人学中已有长期发展。SGC 借鉴其“行动可能性相对于主体存在”的核心思想，但把它进一步工程化为公开世界状态的一部分，使得上层 Agent 不必从原始几何和身体参数中反复重新推断所有基本行动可能性。
@@ -769,11 +784,12 @@ ActionableReality .
 \section{Observed：被现实直接锚定的结构}
 
 Observed 是 SGC 认识论体系中最接近现实证据的一类状态，但我们必须从一开始就避免一个危险误解：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Observed\neq GroundTruth .
-}
-\]
+\)}
+\end{statementbox}
 Observed 只意味着某个 SGC 结构当前具有直接观测证据，而不是意味着它在本体论上绝对正确。
 
 设传感器观测为 $y_t$，状态估计器为 $\mathcal O$，则：
@@ -894,13 +910,14 @@ modelVersion(d_t)=k.
 因为模型升级以后，同样的观测可能产生不同推论。如果不记录版本，Agent 很难解释为什么过去认为某个对象具有某种性质，而现在判断不同。
 
 Derived 还需要与上层开放推理保持边界。不是所有语言模型生成的结论都应该立即写进 SGC。SGC 中的 Derived 应尽量要求：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GroundedInputs
 +
 ExplicitInferencePath
-}
-\]
+\)}
+\end{statementbox}
 至少在概念上成立。若一个模型只是根据语义关联“猜测”某个现实属性，但缺乏足够当前证据，则更适合标记为 Pending 或 Predicted，而非高可信 Derived。
 
 这一机制使 Agent 能够保持一种重要的自我认识：
@@ -1081,11 +1098,12 @@ Counterfactual 与 causal inference、model-based planning、mental simulation �
 \section{Pending / Suggested：允许智能提出结构，但不允许它擅自把猜测变成现实}
 
 长期 Agent 需要开放式智能。如果 SGC 只允许传感器和硬编码规则写入，那么系统无法利用语言模型、长期知识、其他 Agent 或高层推理提出新的现实解释。然而，如果任何模型输出都可以直接写入 SGC 的事实层，系统又会非常容易产生现实污染。为解决这一矛盾，我们需要一个缓冲认识论状态：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Pending/Suggested .
-}
-\]
+\)}
+\end{statementbox}
 
 Pending 表示：
 \[
@@ -1150,12 +1168,13 @@ source=Agent_B.
 Pending 还可以用于系统调试。人类工程师、规则系统或安全检查器都可以向 SGC 提交 suggested entity/relation，而不破坏事实层。这种事务式设计使 SGC 不仅是 perception output，也是一个受控、多来源的现实语义协作空间。
 
 因此我们可以把 SGC 的写入原则总结为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AnyoneMaySuggest;
 RealityEvidenceDecidesWhatBecomesGrounded.
-}
-\]
+\)}
+\end{statementbox}
 这正是开放智能与现实约束之间的一条重要工程边界。
 
 \section{Body $\in$ SGC：身体必须成为世界模型中的第一类实体}
@@ -1168,11 +1187,12 @@ SGC 最容易犯的架构错误，是系统维护了一张越来越精细的世�
 World .\)}
 \end{statementbox}
 因此本书明确规定：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body\in SGC .
-}
-\]
+\)}
+\end{statementbox}
 
 这里的 Body 不是一个抽象变量，而应作为 SGC 中具有 geometry、state、parts、capabilities 和 relations 的第一类结构。对于机器人：
 \[
@@ -1225,11 +1245,12 @@ OCCLUDES(object,cameraFOV).
 这样，Agent 对世界的理解自然包含“我在这个世界中的位置与限制”。
 
 这与自我 $\Psi$ 必须严格区分。SGC 中的 Body 是现实意义上的：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Physical/DigitalSelfInWorld .
-}
-\]
+\)}
+\end{statementbox}
 而 $\Psi$ 是更慢尺度上的身份、价值和自我结构。前者可以在毫秒到秒级变化，后者则保持长期连续。如果把两者混为一谈，就会把“我的机械臂当前抬起”错误上升为“我的自我身份发生改变”。
 
 对于数字 Agent，也必须满足：
@@ -1260,13 +1281,14 @@ Body $\in$ SGC 还具有认识论意义。Agent 并不能完全透明地知道�
 BodyState^{obs}.
 \]
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodyState
 \neq
 PerfectlyKnownState .
-}
-\]
+\)}
+\end{statementbox}
 身体本身也属于被观测世界的一部分。
 
 这一步使 SGC 从“外界地图”真正变成：
@@ -1357,13 +1379,14 @@ Metadata
 作为核心形式，语言只是其中一种视图。因为自然语言虽然对人友好，却不适合承担实时几何和精确控制接口。
 
 因此我们最终得到一个非常重要的双层原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PrivateLatentForPerformance
 +
 PublicSemanticStateForCoordination .
-}
-\]
+\)}
+\end{statementbox}
 SGC 属于后者。
 
 从 AgentOS 全局来看，这一设计还具有更深的理论意义。我们前面已经把智能理解成 Universe-CSO 与 Agent-CSO 之间通过观测—行动形成的闭环。SGC 正是这一抽象关系第一次获得具体工程落点的位置：
@@ -1380,13 +1403,14 @@ AgentCSO .
 \textbf{公共语义接地层}。
 
 这也解释了为什么本章始终坚持如下最终定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC
 =
 \text{Body-Centered Semantic Representation of Actionable Reality}
-}
-\]
+\)}
+\end{statementbox}
 
 它同时包含三项约束：
 
@@ -1415,8 +1439,9 @@ SGC 之上，系统才开始处理“这个现实意味着什么，以及接下�
 \paragraph{本章结论}
 
 我们在本章完成了 SGC 的基本理论封闭。一个严格的 SGC 不是 Scene Graph 的重新命名，而应同时满足：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Geometry
 +
 PersistentEntity
@@ -1432,20 +1457,22 @@ EpistemicProvenance
 BodyGrounding
 +
 Inspectability .
-}
-\]
+\)}
+\end{statementbox}
 其中最重要的两个不可退让条件分别是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body\in SGC
-}
-\]
+\)}
+\end{statementbox}
 以及
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Observed\neq Derived\neq Predicted\neq Counterfactual\neq Pending .
-}
-\]
+\)}
+\end{statementbox}
 前者保证 Agent 永远不是一个脱离现实的上帝视角观察者，后者保证其内部生成能力不会逐渐侵蚀现实边界。
 
 于是，从本书更大的认知结构理论来看，SGC 的地位可以被压缩为：

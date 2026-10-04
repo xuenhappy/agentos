@@ -5,8 +5,9 @@
 本章完成本书从“持续个体智能体”向“多主体组织智能”的第一次尺度扩展。前文已经建立了一个基本事实：对于单个 Agent 而言，智能并不是某一次孤立计算，而是认知结构对象（CSO）在不同功能位置、时间尺度和承载边界之间持续生成、变换、迁移和稳定化的动力过程。现在我们将沿着完全相同的思想继续向外推进：当多个具有持续身份、记忆、目标、行动能力和外部交互能力的 Agent 长期共同存在时，它们之间反复发生的 CSO 交换并不会永远停留在一次次临时通信层面；稳定、重复并具有功能价值的跨主体 CSO 流会逐渐沉降为角色、协议、权限关系、协作闭环和制度结构，从而形成一种比单个 Agent 更慢、更大尺度的功能拓扑。
 
 因此，本章并不把“组织智能”简单定义为“多个 Agent 的能力之和”，也不预设组织具有单一意识主体。我们研究的是一种严格的功能意义上的高尺度自适应认知系统：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Organization}
 =
 \text{Persistent Inter-Agent CSO Flow}
@@ -16,8 +17,8 @@
 \text{Collective Memory}
 +
 \text{Multiscale Governance}
-}
-\]
+\)}
+\end{statementbox}
 组织之所以能够表现出超越单个成员生命周期的能力，不是因为它产生了神秘的“集体大脑”，而是因为个体之间的历史互动被外化并沉降成了比个体更慢的结构。角色保存重复的责任分配，协议保存重复的交互关系，制度保存重复的约束与治理逻辑，组织记忆保存跨主体、跨时间的经验，而组织拓扑则保存“谁在什么条件下应该与谁发生什么类型的认知与行动耦合”。
 
 本章的核心命题因此可以预先写为：
@@ -75,13 +76,14 @@ AgentCSO_B(\hat C).
 \hat C\simeq_{\mathrm{functional}} C,
 \]
 这里的等价不是表示空间中的逐元素一致，而是前文所定义的功能—语义一致：关键对象、关系、约束、因果和行动含义在新的 Agent 中仍然成立。由此我们可以把跨 Agent 信息交换重新定义为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Inter-Agent Communication}
 =
 \text{CSO Re-grounding Across Agent Boundaries}
-}
-\]
+\)}
+\end{statementbox}
 即认知结构跨主体边界的重新落地，而不只是 token、消息或数据包的传输。
 
 为了进一步研究组织，我们需要从“单次传递”进入“流”的概念。设组织中存在 Agent 集合
@@ -178,11 +180,12 @@ O_\alpha
 \eta_t:A_i\mapsto\{R_{\alpha_1},R_{\alpha_2},\ldots\}.
 \]
 这一表达明确说明，一个 Agent 可以同时承担多个角色，一个角色也可以被多个 Agent 实例化。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Agent\neq Role.
-}
-\]
+\)}
+\end{statementbox}
 这一区分在未来 AgentOS 组织中尤其重要，因为持续主体具有自己的 $E,\Theta,\Psi$ 和生命周期历史，而角色只是组织赋予其的一组阶段性功能约束。如果将角色直接写进 Agent 的身份层 $\Psi$，就可能发生严重的尺度混淆：组织职责的变化会被错误解释为主体身份崩溃。正确的结构应该是：
 \[
 \Psi_i
@@ -232,13 +235,14 @@ P(R_\alpha\mid C_k)\approx 1.
 当某一角色持续出现高残差、过度负载、输出失真或者大量跨角色反复退回时，说明当前角色分解已经不再匹配实际 CSO 结构，应触发组织层的重估。
 
 从传统组织理论看，角色与 division of labor、job specialization、responsibility allocation 等概念存在明显联系；从多智能体系统看，它与 role-based MAS 的设计相似。但本书的不同之处在于，我们不把角色作为人为预先指定的静态标签，而尝试从\textbf{历史 CSO 流的稳定统计结构}中解释它的形成。也就是说：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Role
 =
 StableFunctionalAbstractionOfRepeatedInter-AgentCSOTransformation.
-}
-\]
+\)}
+\end{statementbox}
 这种定义把角色从行政名词重新带回智能动力学，使它能够进一步进入协议、制度和组织拓扑的统一数学描述。
 
 
@@ -281,13 +285,14 @@ RepeatedInteraction
 StableProtocol.
 \]
 所以可以定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Protocol
 =
 CompiledInter-AgentCoordination.
-}
-\]
+\)}
+\end{statementbox}
 
 如果从工作记忆有限容量定理看，协议具有直接意义。假设每次互动需要实时解决 $k$ 个协调变量：
 \[
@@ -331,13 +336,14 @@ CrossRoleImpact
 则触发更高层角色、治理结构或者制度审议。这个机制比“所有异常都报给最高管理层”具有更好的尺度稳定性，也与我们在 AgentOS 内部得到的“预测局部完成，异常全局升级”原则完全一致。
 
 协议同时也是跨主体语义连续性的关键。如果不同 Agent 的 Agent-CSO 表示并不相同，那么协议不能依赖内部 latent 一致，而应依赖公共语义契约。这一点与 KRA 的思想相同：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalAlignment
 >
 RepresentationAlignment.
-}
-\]
+\)}
+\end{statementbox}
 组织无需让所有成员“内部想法完全一样”，只需要保证他们在协议边界上对关键对象、状态、责任、完成条件和失败信号存在足够一致的功能解释。因此未来 Agent 组织中的协议更可能类似“语义 ABI”，而不仅是传统 RPC 接口。
 
 然而，协议同样会产生“编译过度”问题。一个在旧环境中高效的协议可能由于环境改变而变成阻塞。例如它规定某类结构必须按 $A\rightarrow B\rightarrow C\rightarrow D$ 路径流动，但长期观察发现 $A$ 与 $D$ 已经能够直接可靠闭合任务。这时继续坚持旧协议就形成不必要的拓扑长度：
@@ -409,12 +415,13 @@ X_{\mathrm{org}}(t)\in\mathcal F_I.
 组织系统就可以拒绝这一动作。
 
 这个表达与前文的一个核心原则完全同构：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,\qquad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 制度因此更接近慢尺度的 feasible region，而不是高速微观控制器。它的成熟形式不应该变成：
 \[
 Institution
@@ -428,11 +435,12 @@ Institution
 Boundary/Authority/Constraint,
 \]
 然后允许局部角色和协议在内部自治运行。这正是我们此前反复强调的：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance\neq FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 如果制度直接控制每一个快速局部动作，就会把原本应该在低层关闭的反馈环拖入高层，产生巨大协调延迟；反过来，如果制度完全缺失，局部 Agent 可能为了即时收益不断破坏长期安全、身份、信任和组织连续性。
 
 制度的形成同样可以由长期 CSO 流解释。假设在多个局部互动中反复出现某一类高代价失败：
@@ -452,13 +460,14 @@ InstitutionalConstraint.
 h\rightarrow E\rightarrow\Theta
 \]
 具有明显同构性：短期异常首先形成事件，重复事件形成结构，最终结构反过来约束未来快速过程。因此制度可以被理解成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Institution
 =
 Slow Structural Memory of Repeated Cross-Organizational Constraints.
-}
-\]
+\)}
+\end{statementbox}
 
 这也解释为什么成熟制度具有迟滞。若每次短期异常都立即修改制度：
 \[
@@ -595,25 +604,27 @@ P(C_{\mathrm{old}}\text{ valid}\mid W_t)
 1.
 \]
 所以组织记忆必须像 Agent 的内部记忆一样支持召回、重新解释、降权、冲突检测和遗忘。成熟组织不是“记住一切”，而是能够保持：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 MemoryContinuity
 +
 RealityRevalidation
 +
 SelectiveForgetting.
-}
-\]
+\)}
+\end{statementbox}
 否则历史经验会从认知资本变成结构惯性。
 
 在分布式认知和 organizational memory 研究中，人、文档、工具、制度和环境长期以来就被认为能够共同承担组织认知。但本书进一步试图用 CSO 承载迁移给出统一语言：组织记忆的本质，是一个认知结构从某个瞬时 Agent-CSO 脱离个体生命周期，转移到可跨主体恢复的慢载体，并能够重新进入未来 Agent 的认知闭环。于是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 OrganizationalMemory
 =
 Cross-Agent, Cross-Lifetime Persistence of Recoverable CSO Structure.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \section{组织拓扑学习：从重复协作到结构自重组}
@@ -761,15 +772,16 @@ P_{\mathcal T}>\theta_{\mathcal T}
 且持续时间足够长时，组织才进入 topology search。
 
 因此，本章对“组织学习”的定义比知识管理更严格：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Organizational Learning}
 =
 \text{Change of Collective CSO Representation and Placement}
 +
 \text{Adaptation of Functional Topology}.
-}
-\]
+\)}
+\end{statementbox}
 前者让组织知道更多；后者让组织改变自己以后如何知道、如何判断以及如何行动。只有后者开始出现时，我们才真正从“很多 Agent 一起工作”进入了“组织作为高尺度自适应智能结构”的范围。
 
 
@@ -777,11 +789,12 @@ P_{\mathcal T}>\theta_{\mathcal T}
 \label{sec:agentos-organizational-system}
 
 前面所有分析最终都会引出一个非常现实的工程问题：如果未来社会中存在大量长期运行、具有持续身份、记忆、自我结构、工具能力和 Body Runtime 的 Agent，它们应当怎样组成组织？传统 multi-agent framework 通常擅长解决消息路由、任务分派和并行执行，但这些机制默认 Agent 更像可替换 worker；而本书构造的 AgentOS 主体具有明显不同的性质：每个 Agent 拥有长期 $E$、$\Theta$、$\Psi$，其经历会影响未来能力和身份，因此不能像无状态函数一样任意创建、替换和销毁。这意味着未来 Agent 组织首先需要承认：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PersistentAgent\neq EphemeralWorker.
-}
-\]
+\)}
+\end{statementbox}
 
 于是组织系统至少必须维护三个不同层级的对象。第一层是\textbf{主体}：
 \[
@@ -859,11 +872,12 @@ Institution
 ).
 \]
 能力并不自动产生权限。一个非常强的 Agent 仍然可能由于任务风险、制度边界或现实安全原因而只能在有限自治包络内行动。这与我们后面在 Agent 培育与控制工程中进一步讨论的 capability--authority--autonomy 闭环具有一致性，但本章只需确定组织层原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Capability\neq Authority.
-}
-\]
+\)}
+\end{statementbox}
 
 AgentOS 还可能给组织带来一种此前软件系统缺乏的能力：让组织拓扑本身可被观测。传统组织往往依赖人工调查才能知道“谁实际在和谁协作”；未来 AgentOS 可以直接记录经过脱敏和治理后的结构流统计：
 \[
@@ -905,13 +919,14 @@ Authority,\quad
 Topology.
 \]
 这并不意味着我们应该在工程上把组织系统塞进一个巨大中央控制器。恰恰相反，整个理论要求组织采用：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LocalAutonomy
 +
 SlowGlobalGovernance.
-}
-\]
+\)}
+\end{statementbox}
 正常闭环尽量在角色和协议局部完成；只有持续残差、高风险和跨角色结构冲突才提升到更高尺度。否则组织 AgentOS 将重演单 Agent 的工作记忆过载，只不过把 $h$ 换成了一个“中央管理 AI”。
 
 因此，我们最终得到一种非常不同于“中央超级 Agent 指挥所有子 Agent”的未来组织图景。成熟组织更接近一个多尺度闭环网络：个体 Agent 保持持续主体性，角色承载稳定责任，协议关闭高频跨主体协作，组织记忆保存跨生命周期 CSO，制度提供慢尺度可行域，而组织拓扑本身根据长期残差和结构流缓慢变化。
@@ -959,12 +974,13 @@ FutureExperience.\)}
 
 而这一结论又与本书从个体智能中得到的最基本规律完全一致：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{Flow Shapes Structure;}
 \qquad
 \text{Structure Shapes Future Flow.}
-}
-\]
+\)}
+\end{statementbox}
 
 对于单个 Agent，这个“流”是 Agent-CSO 在功能拓扑上的迁移；对于组织，它变成跨 Agent 的 CSO 流；而角色、协议、制度和组织记忆，则是这些流在更慢尺度上的沉降。我们由此完成了一次真正的尺度提升：组织不再只是 Agent 的容器，而成为了\textbf{Agent 之间认知关系本身逐渐获得结构连续性的地方}。

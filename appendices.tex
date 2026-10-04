@@ -157,31 +157,34 @@ Boundary 表示认知边界与准入控制，Offloading 表示结构向外部载
 \section{Body、SGC、FCS、BPCC 与 KRA 的统一术语}
 
 Body 统一定义为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body=ControlledAndSensedCarrierOfAgency
-}
-\]
+\)}
+\end{statementbox}
 即被主体持续感知和控制、并构成其现实作用边界的载体。Body 可以是人形机器人，也可以是浏览器、桌面、Shell、文件系统、网络账户或其他数字执行环境。Body Runtime 则是管理这一载体的快速运行层。
 
 SGC 统一记为 Semantic Graph Coordinate Space：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SGC=
 Body\mbox{-}Centered\;Semantic\;Representation\;of\;Actionable\;Reality.
-}
-\]
+\)}
+\end{statementbox}
 它表示“世界是什么以及我位于世界何处”。SGC 应包含几何、实体、关系、固定属性、语义标签、认识论状态以及 affordance，并坚持
 \[
 Body\in SGC.
 \]
 
 FCS 统一使用该拼写，不再使用早期偶然出现的 FSC。FCS 表示 Fixed Typed Multilayer Feeling Field，其核心问题是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 How\;Reality\;and\;Body\;Are\;Affecting\;Me.
-}
-\]
+\)}
+\end{statementbox}
 因此 SGC 与 FCS 的统一关系写成
 \begin{statementbox}
 \centering
@@ -216,11 +219,12 @@ BodyRuntimeSemanticSpace
 KernelInternalRepresentation.
 \]
 KRA 不追求内部 latent 完全一致，而追求行为关系、控制语义和预测语义的一致，因此本书统一坚持
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalAlignment>RepresentationAlignment.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \chapter{AgentOS 多时间尺度统一表}
@@ -288,11 +292,12 @@ c(z_s(t))
 \delta x_f(t).
 \]
 因此本书统一采用
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance\neq FastMicromanagement
-}
-\]
+\)}
+\end{statementbox}
 作为多尺度控制原则。
 
 反方向上，如果快层持续存在非零平均残差
@@ -308,13 +313,14 @@ SlowGovernance\neq FastMicromanagement
 这就是“长期异常向上改变慢结构”的数学原型。它既可以描述 BPCC 对身体模型的长期更新，也可以描述经历 $E$ 对 $\Theta$ 的结构学习，乃至长期经验对 $\Psi$ 的身份重解释。
 
 这种双向关系可以概括为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowStructureShapesFastActivity,
 \qquad
 PersistentFastResidualShapesSlowStructure.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{尺度保护与慢变量不可被短时噪声直接写入}
 
@@ -378,15 +384,16 @@ Agent 可响应的闭环谱为
 因此真正的 Body Scale 和 Cognitive Scale 都包含一种“频谱匹配”问题。最早关于石头文明和闪电文明的思想实验在这里获得工程版本：两个系统如果缺乏重叠的有效交互带宽，就算二者都拥有高度智能，也可能无法形成稳定实时交互。
 
 因此后续任何 AgentOS 性能指标都不应只有 throughput 或 tokens per second，而至少应同时测量：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ResponseLatency,\;
 LoopClosureTime,\;
 PredictionHorizon,\;
 AdaptationTimescale,\;
 EnvironmentMatch.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \chapter{AgentOS 多层闭环统一规范}
@@ -468,14 +475,15 @@ LocalClosure.
 重复成熟能力逐渐离开昂贵的显式认知层，进入更加局部、快速和稳定的执行结构。
 
 四类流统一起来可以写成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ConsolidateSlowward,\;
 ActivateFastward,\;
 EscalateUpward,\;
 CompileDownward.
-}
-\]
+\)}
+\end{statementbox}
 它们构成 AgentOS 多尺度结构迁移的基本方向。
 
 \section{系统生态尺度 S0--S5}
@@ -499,11 +507,12 @@ S5
 描述的是系统尺度，而不是认知时间尺度。一个 $S3$ Agent 内部仍然完整具有 L0--L6。类似地，一个 $S4$ 组织也可能形成自己的快慢闭环和长期结构，只是状态空间完全不同。
 
 这种双轴表示说明：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SystemScale\neq CognitiveTimescale.
-}
-\]
+\)}
+\end{statementbox}
 一个高层组织不一定每个动力过程都慢，一个单体 Agent 也可以拥有极慢生命周期变量。正式理论因而更适合使用二维坐标
 \[
 (S_i,L_j)
@@ -551,12 +560,13 @@ Interpretation'.
 \section{统一 ModuleSpec}
 
 本书规定任意模块 $M_i$ 至少使用
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ModuleSpec_i=
 (F_i,X_i,I_i,O_i,\tau_i,L_i,A_i)
-}
-\]
+\)}
+\end{statementbox}
 描述。其中 $F_i$ 为功能，$X_i$ 为内部状态，$I_i$ 为输入，$O_i$ 为输出，$\tau_i$ 为主导时间尺度，$L_i$ 为学习或适应机制，$A_i$ 为 Authority，即该模块能够直接改变哪些系统变量。
 
 Authority 是整个规范中极其重要但传统 AI 架构常被忽略的维度。两个模块即便能够看到相同状态，也不意味着拥有相同修改权。例如 SPC 可以观测认知状态，但不能直接修改执行器；TCE 可以改变认知控制参数，但不能伪造 SGC 的 observed state；BPCC 可以控制身体快速局部动作，但不能重写 $\Psi$；Safety Controller 可以覆盖普通执行命令，但不能因此成为主体。
@@ -604,13 +614,14 @@ BPCC 维护快速局部状态 $z_t^{BPCC}$，输入高层 ControlReference 与 P
 KRA 读取 Kernel 和 Body Runtime 两侧的公共状态与内部适配信号，负责语义映射、时间尺度校准、控制参考适配和长期关系校准。其核心 Authority 是 adapter-level，而不是 subject-level。
 
 Safety Boundary 具有比普通 BPCC 更高的实时执行权限，但其目标必须局限于安全可行域，不应扩展成一般任务决策者。由此保持：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SafetyAuthority>BPCCAuthority,
 \qquad
 SafetyAuthority\neq SubjectAuthority.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \chapter{三相记忆双向转换算法规范}
@@ -887,11 +898,12 @@ M_{\mathrm{cog}}\uparrow.
 \]
 
 这对应我们此前提出的
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ThinkingLess\neq KnowingLess.
-}
-\]
+\)}
+\end{statementbox}
 Agent 不再反复显式推理一个熟练动作，并不表示能力消失，而通常意味着相关结构已经改变载体和功能位置。这也是后续技能编译、Body Skill 和拓扑资本理论的容量基础。
 
 
@@ -1108,14 +1120,15 @@ d(x_t,\mathcal R_{safe})<\epsilon
 Recovery Time 则更广，允许系统经历 checkpoint、offloading、task reset 或环境改变后重新获得可持续运行能力。
 
 因此成熟 AgentOS 的稳定性指标不应只是“从不出错”，而应包括：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 DisturbanceTolerance,
 RecoveryProbability,
 RecoveryTime,
 StateReconstructionQuality.
-}
-\]
+\)}
+\end{statementbox}
 
 这与生命系统和复杂工程系统具有相似性：绝对不受扰动是不现实的，更关键的是系统在异常后能否回到可治理区域，并保持重要慢变量不被异常过程永久污染。
 
@@ -1190,11 +1203,12 @@ SGC 不应假设所有对象都有全局绝对坐标。对于数字 Body，坐�
 \section{Body-Centered 原则}
 
 SGC 的一个核心定义是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Body\in SGC.
-}
-\]
+\)}
+\end{statementbox}
 智能体不能只拥有世界地图而不知道自身位于何处。Body 的姿态、能力、执行器可达范围和当前状态都必须成为世界表示的一部分。
 
 因此同一个外部对象 $o$ 对不同 Body 会产生不同 affordance：
@@ -1340,11 +1354,12 @@ CurrentTask
 同一个 $30\%$ 电量对于停在充电座旁的机器人与正在远距离执行救援任务的机器人具有完全不同功能意义。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RawValue\neq FeelingValue.
-}
-\]
+\)}
+\end{statementbox}
 FCS 是对状态的“主体相关影响编码”，而不是传感数据副本。
 
 这种结构允许 Kernel 在不理解每个硬件传感器的情况下直接获得统一功能信号。例如不同机器人可能使用电池、电容、燃料电池或外接电源，但都能输出 EnergyPressure。Body Scale 的迁移性正来自这种语义标准化。
@@ -1441,12 +1456,13 @@ u_t
 Kernel 不需要预测每一个关节下一毫秒的位置，而 BPCC 也不应独立决定数分钟后的长期任务目标。
 
 因此 BPCC 的基本工程哲学是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 HigherLevelSetsFeasibleRegion,\qquad
 LowerLevelOptimizesInsideIt.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{Predictive Envelope 与 Control Reference}
 
@@ -1521,11 +1537,12 @@ BPCC 在本地解决；
 才形成高层认知事件。
 
 这正是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PredictLocally,\;EscalateResidualGlobally.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{只读 SGC 操作与 BPCC 的特殊控制}
 
@@ -1597,13 +1614,14 @@ Behavior_B(T(C))
 以及预测和控制语义保持一致。
 
 因此本书统一采用
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalAlignment
 >
 RepresentationAlignment.
-}
-\]
+\)}
+\end{statementbox}
 
 这意味着两个系统可以内部表示完全不同，只要它们对同一公共语义具有稳定、可验证的因果响应。现实本身成为最终 anchor：
 \[
@@ -1631,13 +1649,14 @@ Exception.
 这一设计避免两个极端。若所有状态都强制转换成人类可解释符号，快速控制会因信息损失和延迟而受限；若一切都通过不透明 latent 连接，Kernel 与 Body Runtime 的长期兼容、安全审计和身体迁移就会变得困难。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Interface
 =
 SemanticSkeleton+LatentMuscle.
-}
-\]
+\)}
+\end{statementbox}
 KRA 就位于两者交界处，在保证公共语义稳定的同时允许私有内部表征持续优化。
 
 \section{KRA 的校准与兼容流形}
@@ -1669,11 +1688,12 @@ L_{\mathrm{compat}}<\epsilon,
 各组件可以继续独立学习。
 
 这个观点产生重要原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RelationshipStability>ParameterStability.
-}
-\]
+\)}
+\end{statementbox}
 长期 AgentOS 的目标不是冻结所有模型，而是在持续变化中维持关键关系不被破坏。
 
 
@@ -1887,13 +1907,14 @@ N_{\mathrm{goal\;types\;expected}}
 \]
 
 因此完整 Body Scale 可以概念化为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 BodyScale
 =
 w_PT_P+w_FT_F+w_{Pred}T_{Pred}+w_CT_C.
-}
-\]
+\)}
+\end{statementbox}
 这不是现成标准，而是 AgentOS 提出的迁移度量框架。
 
 \section{Body Scale 与 Agent 身份连续}
@@ -2384,13 +2405,14 @@ ControlledPlasticity
 稳定不意味着永不变化；可恢复不意味着永不失败；身份连续不意味着 $\Psi$ 永不修改；现实对齐也不意味着内部表示必须和世界一一同构。
 
 一个健康持续 Agent 应能够在异常后恢复，在新经验后学习，在长期变化中保持身份连续，并始终允许现实证据修正自身。换言之：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 PsychologicalHealth
 =
 StableButRevisableSelf-Regulation.
-}
-\]
+\)}
+\end{statementbox}
 
 
 \chapter{AgentOS 控制工程统一指标}
@@ -2703,12 +2725,13 @@ External.
 \]
 
 因此 Learning 的统一定义可以写为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Learning=
 ChangeOfCSORealizationAndPlacement.
-}
-\]
+\)}
+\end{statementbox}
 这比“参数变化”覆盖更广，也能够统一神经学习、记忆、技能、软件生成和环境改造。
 
 \section{拓扑学习}
@@ -2752,12 +2775,13 @@ Benefit(J_{ij}^{CSO})
 形成迟滞。
 
 这保证短时噪声不会造成架构频繁抖动。于是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Topology=
 SlowMemoryOfRepeatedFunctionalCSORelations.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{最小必要重组原则}
 
@@ -2886,13 +2910,14 @@ x_{t+1}=F(x_t,u_t).
 因此系统不仅发生变化，还形成关于变化的结构，并让这一结构参与下一次变化。
 
 这就是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 FunctionalReflexivity
 =
 SelfRepresentation+SelfModulation.
-}
-\]
+\)}
+\end{statementbox}
 
 在这一意义上，Agent-CSO 的出现可以被描述为“宇宙局部开始形成对自身和环境的可操作表示”。但这只是功能意义上的自反，不等于证明宇宙整体具有统一主体意识。
 
@@ -2974,11 +2999,12 @@ SafetyGovernance.
 \]
 
 这些标准不应规定模型内部 transformer 层数、latent 尺寸或控制算法，而只规定跨系统交换的语义和权限。换句话说：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 StandardizeContracts,\;NotImplementations.
-}
-\]
+\)}
+\end{statementbox}
 
 只有这样，同一 Agent Kernel 才能连接多个 Body Runtime，不同 BPCC 才能竞争，同一 Skill 才可能声明需要什么能力而不是绑定某一机器人。
 
@@ -3040,11 +3066,12 @@ CommercialRuntime.
 开放规范保证 Body/Skill/Agent 的长期可互操作性；参考实现降低生态进入门槛并验证规范可行；商业实现则可以在性能、硬件、云服务和安全认证上形成差异。
 
 长期壁垒不应依赖破坏接口兼容，而更可能来自：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Trust+Ecosystem+Execution+Scale.
-}
-\]
+\)}
+\end{statementbox}
 这也符合 AgentOS 作为基础设施而非封闭应用框架的长期定位。
 
 
@@ -3066,15 +3093,16 @@ Trust+Ecosystem+Execution+Scale.
 第三类是 AgentOS Hypothesis，例如三相记忆能否支持长期人工主体、Agent-CSO 迁移是否能统一解释技能形成、Topological Learning 是否真的能由长期 CSO 流预测、$\Omega$ 是否是有用的生命周期变量。这些必须通过实验检验。
 
 统一写作原则为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 EstablishedScience
 \neq
 StructuralAnalogy
 \neq
 AgentOSHypothesis.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{核心可证伪命题}
 
@@ -3269,8 +3297,9 @@ StableCoupling
 \]
 
 因此可以把发展写成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Development
 =
 Coevolution(
@@ -3278,8 +3307,8 @@ Coevolution(
 \mathcal G_F,
 \mu_t
 ).
-}
-\]
+\)}
+\end{statementbox}
 智能体不仅学习“世界是什么”，还逐渐学习“未来应该以什么方式组织自己来理解和行动”。
 
 这正是从固定拓扑 AgentOS 向真正发育型 AgentOS 的理论方向。
@@ -3325,13 +3354,14 @@ Representation'.
 \]
 
 AgentOS 则可以被定义为这一理论的第一种系统工程尝试：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AgentOS
 =
 PersistentMultiscaleCognitiveRuntime
-}
-\]
+\)}
+\end{statementbox}
 它通过有限工作记忆、三相记忆、自我和生命周期慢变量、认知控制、复杂度治理、外部卸载、Body Runtime 与现实反馈，使一个有限计算系统获得长期持续成长的结构条件。
 
 \section{附录体系的最终使用原则}

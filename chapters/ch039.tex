@@ -128,11 +128,12 @@ Scheduler:
 其中 $\widehat X_t$ 是由 SPC 等状态估计机制提供的当前系统估计，$\mathcal P_t$ 是待调度进程集合，$\mathcal G_t$ 是目标结构，$\mathcal R_t$ 是当前可用资源，而 $\mathcal A_t$ 是下一控制窗口的资源分配和执行策略。
 
 这个定义有一个十分重要的含义：Scheduler 调度的是\textbf{认知过程}，而不是 CSO 本体本身。CSO 可以长期存在于 $E$、$\Theta$ 或外部载体中，即使当前没有任何 Scheduler 资源分配给它。只有当某个 CSO 被激活、召回、参与决策或者进入特定任务时，它才通过某个认知进程取得运行资源。由此必须区分
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Existence\neq Activation\neq Scheduling
-}
-\]
+\)}
+\end{statementbox}
 一个结构可以存在而未激活，可以激活但仅处于低优先级后台状态，也可以被 Scheduler 提升为当前显式处理对象。
 
 这也说明为什么 Scheduler 不是 Self。长期自我结构 $\Psi$ 可以影响 Scheduler 的优先级函数，但 Scheduler 本身只是一个运行机制。类似地，Goal 不是 Scheduler：目标定义“为什么值得做”，Scheduler 负责“什么时候做以及分配多少资源”。如果把二者混在一起，系统会失去层级分工，任何临时资源争夺都可能反过来改写长期目标。AgentOS 必须保持
@@ -254,11 +255,12 @@ P_1\rightarrow Checkpoint(P_1),
 随后暂停 $P_1$，释放部分 $R_h$；与此同时，TCE 降低探索温度并提高风险敏感增益，使新进入的 $P_2$ 在更加保守的认知动态下获得资源。整个过程不是任何一个单独模块能够完成的。
 
 因此必须坚持：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SPC\neq Scheduler\neq TCE\neq CCM.
-}
-\]
+\)}
+\end{statementbox}
 四者分别对应
 \[
 Observation,\quad
@@ -411,11 +413,12 @@ V(P_i)
 其中 $\omega_{ij}$ 表示认知进程 $P_i$ 对目标 $G_j$ 的当前贡献估计。该贡献并非固定，随着环境和任务状态变化可以重新估计。
 
 这里需要一个重要原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalPriority\neq ProcessPriority.
-}
-\]
+\)}
+\end{statementbox}
 一个长期高度重要的 Goal 可能暂时没有任何需要显式运行的进程；相反，一个价值较低的维护任务可能因为时间窗口即将关闭而需要立即执行。Scheduler 因此管理的是“Goal 对当前执行机会的投影”，而不是直接把长期价值大小转换成 CPU 时间。
 
 为了避免大型 Goal 永久占据认知核心，可以引入预算机制。对目标 $G_j$ 定义认知预算
@@ -507,17 +510,19 @@ C(\mathcal S)\leq W_h.
 \sum_i\alpha_i(t)=1.
 \]
 TCE 可以调节注意分布的整体温度，例如高探索状态下令注意分布更加平坦，而高风险状态下令注意迅速集中；Scheduler 则决定哪些 CSO 根本有资格参与这个注意竞争。二者分别对应
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Scheduler:\ WhoEnters
-}
-\]
+\)}
+\end{statementbox}
 与
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 TCE:\ HowStronglyToFocus.
-}
-\]
+\)}
+\end{statementbox}
 
 准入机制还必须具有退出策略。如果某个结构长期不再影响当前推理，其注意权重下降到
 \[
@@ -540,17 +545,19 @@ h\rightarrow External,
 这是一种典型迟滞机制。如果两者相同，当一个结构的评分在阈值附近波动时，就会不断进出工作记忆，造成极高的上下文切换成本。通过双阈值，只有显著重要的新结构才进入，而已进入结构只有在持续失去价值后才退出。
 
 从认知理论角度看，这意味着“注意力”不再只是模型内部 token 权重，而是整个 AgentOS 的一种跨尺度晋升政策。我们此前已经提出
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Attention=CrossScalePromotionPolicy.
-}
-\]
+\)}
+\end{statementbox}
 Scheduler 正是这一政策的主要离散执行机制。绝大多数身体、工具、记忆和后台过程都应在局部闭环中自行运行，只有那些产生足够高残差、风险、价值或者新颖性的结构才被提升到 $h(t)$。因此成熟智能的标志之一反而是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 ExplicitCognitionRatio\downarrow.
-}
-\]
+\)}
+\end{statementbox}
 系统能力越成熟，越多正常过程不需要持续占据工作记忆；Scheduler 的作用也从“让更多事情同时进入思考”转变成“保护显式认知只处理真正需要全局整合的问题”。
 
 \section{记忆召回调度：不是能想起什么，而是什么值得现在想起}
@@ -740,11 +747,12 @@ Delegate(P_i,A_j).
 这一机制还有一个更深的认知意义。人类在现实中能够同时推进很多事情，并不是因为意识真正并行执行大量复杂推理，而是因为大量任务处于“等待世界”的状态。邮件已经发出、文件正在下载、其他人正在处理、程序正在运行，而主体只保留恢复索引。AgentOS 需要同样的结构。否则一个功能越来越丰富的 Agent 反而会因工具增加而更加容易被阻塞。
 
 因此，成熟 Scheduler 必须遵循：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Waiting\neq Thinking.
-}
-\]
+\)}
+\end{statementbox}
 外部等待应尽可能从显式认知中卸载，并通过事件驱动机制重新进入。这样才能使单一持续主体在不复制自己的情况下管理大量并行世界进程。
 
 \section{事件驱动调度与认知抢占}
@@ -791,12 +799,13 @@ GoalRelevance
 ).
 \]
 我们此前已经反复提出一条重要原则：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 RealityDoesNotContinuouslyBecomeThought;
 RelevantDeviationBecomesThought.
-}
-\]
+\)}
+\end{statementbox}
 也就是说，世界绝大部分变化都应由低层闭环或背景系统自行吸收，只有足够重要的偏差才提升到全局认知。Scheduler 正是实现这一晋升机制的核心组件之一。
 
 当
@@ -932,11 +941,12 @@ SlowTask.
 \Gamma_{\mathrm{identity}}.
 \]
 即慢变量定义允许区域，快 Scheduler 在其中进行局部资源优化。因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance\neq FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 如果长期价值结构必须对每一个 token 级选择进行显式推理，系统不仅低效，而且可能失去快尺度闭环的自治性。
 
 从调度角度，这可以实现为两类信息：慢层向下发送 constraint，而快层向上发送 residual summary。高层无需持续下达每一步操作，只规定：
@@ -1133,13 +1143,14 @@ Scheduler 的学习就是寻找
 这里 $c$ 表示环境、主体状态和任务类型。这样 Agent 不是每一次都从零决定“现在做什么”，而是在经验基础上形成更稳定的时间组织方式。
 
 这与我们此前关于技能沉降的思想具有一致性。认知内容可以从显式推理沉降为结构，调度策略本身也可以从显式权衡逐渐变成稳定运行策略。不同的是，在当前固定拓扑阶段，这种变化仍然发生在参数和策略层，而不直接增加新的功能节点或连接。换言之：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 AdaptiveScheduling
 \neq
 TopologicalRewriting.
-}
-\]
+\)}
+\end{statementbox}
 这一区分十分重要，它使我们能够在较安全、较可验证的系统结构中先研究长期认知调度学习，然后再讨论更加激进的结构自重组问题。
 
 \section{从操作系统调度到“现在性的治理”}
@@ -1261,27 +1272,30 @@ Dispatch
 \bfseries SPC 负责观察，TCE 负责调制，CCM 负责负载治理，Scheduler 负责资源分配。
 \end{center}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 GoalPriority\neq ProcessPriority.
-}
-\]
+\)}
+\end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 Waiting\neq Thinking.
-}
-\]
+\)}
+\end{statementbox}
 
 \begin{statementbox}
 RelevantDeviationBecomesThought.
 \end{statementbox}
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 SlowGovernance\neq FastMicromanagement.
-}
-\]
+\)}
+\end{statementbox}
 
 以及最重要的一条：
 \begin{statementbox}

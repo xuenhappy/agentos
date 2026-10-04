@@ -20,22 +20,24 @@ E
 因此，在专门物理介质尚不存在的条件下，可以利用现有 GPU 对同一动力结构进行软件模拟。此时 GPU 仍然执行矩阵乘法、张量运算与离散数值积分，但被模拟的对象不再必须是传统 Transformer 的逐层前向传播，而可以是一个具有内部状态、几何结构、时间尺度、残留状态和情景绑定机制的连续认知动力系统。
 
 因此需要区分两个层面：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{ExecutionSubstrate}
 \neq
 \mathrm{CognitiveDynamics}.
-}
-\]
+\)}
+\end{statementbox}
 
 GPU 是执行介质，而软件中定义的状态空间、动力学、记忆相态和关系绑定机制才是认知系统本身。
 
 由此定义
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{SoftGeometricMemorySystem}
-}
-\]
+\)}
+\end{statementbox}
 为：利用现有代数计算硬件，对具有显式表示空间、状态动力学、多时间尺度记忆和关系绑定机制的几何认知系统进行数值模拟的软件架构。
 
 它不是对物理芯片的简单接口模拟，而首先是一种可以独立运行、训练和验证的三相记忆实现。
@@ -152,24 +154,26 @@ X_S(t)\in\mathcal{S}.
 \]
 
 二者满足
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Identity}
 \neq
 \mathrm{Situation}.
-}
-\]
+\)}
+\end{statementbox}
 
 对象身份可以长期稳定，而对象所处场景持续变化。
 
 因此软件双通路的基本目标不是复制生物脑结构，而是提供
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{StableSemanticIdentity}
 +
 \mathrm{VariableSpatiotemporalContext}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{从结构流与语义流到What--Where表示}
 
@@ -268,13 +272,14 @@ $u_W,u_S$ 表示外部输入；
 $Z$ 表示较慢的全局控制变量。
 
 核心原则是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Coupled}
 \neq
 \mathrm{Collapsed}.
-}
-\]
+\)}
+\end{statementbox}
 
 What 与 Where 可以相互影响，但不必在每一层中彻底融合为同一表示。
 
@@ -300,27 +305,30 @@ X_S(t),
 \]
 
 真正的情景记忆还必须回答：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{过去的什么对象，在什么时间、什么地方，发生了什么变化？}
-}
-\]
+\)}
+\end{statementbox}
 
 因此需要一个新的功能层：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{EpisodicBindingLayer}.
-}
-\]
+\)}
+\end{statementbox}
 
 这一层负责把当前分散存在于多个表示空间中的状态绑定成一个具有时间连续性的事件结构。
 
 为了与未来可能的物理情景绑定单元区分，本章将这一软件组件定义为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Soft\text{-}HGU}
-}
-\]
+\)}
+\end{statementbox}
 即 Software Hippocampal Geometric Unit。
 
 这里的名称只表示它承担快速情景绑定、索引、模式补全和情景召回功能；其软件实现可以完全基于 GPU Tensor，不要求任何专用硬件。
@@ -352,18 +360,20 @@ P_V(X_{W,i}),
 
 其功能定义完全不同：
 
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 K_i:
 \text{在什么情境下寻找这段经历},
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 V_i:
 \text{这段经历包含什么内容}.
-}
-\]
+\)}
+\end{statementbox}
 
 最简单地，
 \[
@@ -400,13 +410,14 @@ r_i
 \]
 
 这样便形成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{CurrentWhere}
 \rightarrow
 \mathrm{PastWhat}.
-}
-\]
+\)}
+\end{statementbox}
 
 例如：
 \[
@@ -460,11 +471,12 @@ C^{\mathrm{self}}_i
 \]
 
 于是 Key 所表达的已经不是简单坐标，而是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{SpatiotemporalSelfContext}.
-}
-\]
+\)}
+\end{statementbox}
 
 这更加接近真正的情景记忆寻址问题。
 
@@ -582,11 +594,12 @@ E_i
 K\rightarrow V,
 \]
 而应理解成
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{RelationalAssociativeMemory}.
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，只要给定 Episode 中足够一部分结构，系统就可以恢复剩余关系。
 
@@ -610,30 +623,33 @@ Z(t)
 其中 $X_H^{\mathrm{active}}$ 表示当前被召回或正在形成的 Episode 状态。
 
 因此软件系统中的工作记忆不是中央 KV Cache，而是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{TemporarilyCoherentDistributedState}.
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说，只有当前需要协同参与同一认知过程的 What、Where、Episode 和全局调制状态形成当前 $h$。
 
 这与此前定义
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h=\mathrm{SparseExplicitCrossScaleSurface}
-}
-\]
+\)}
+\end{statementbox}
 完全兼容。
 
 大量局部视觉状态、运动控制状态和低层预测过程可以继续留在局部系统中，并不需要全部复制进入 $h$。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{MostDynamics}\notin h.
-}
-\]
+\)}
+\end{statementbox}
 
 成熟智能的关键不是扩大 $h$ 到无限，而是只让真正需要跨系统协调的结构进入当前工作面。
 
@@ -688,22 +704,24 @@ $O_i$ 表示事件结果。
 \text{当时有什么},
 \]
 还保存
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{发生了什么变化}.
-}
-\]
+\)}
+\end{statementbox}
 
 因此
 \[
 E
 \]
 真正成为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{StateTransitionMemory}
-}
-\]
+\)}
+\end{statementbox}
 而不仅仅是对象检索数据库。
 
 \section{事件边界：什么时候开始形成一个Episode}
@@ -711,11 +729,12 @@ E
 情景记忆不能每一个计算 step 都写一条记录，否则情景数量将无限增长，而且真正事件结构会被大量连续微小变化淹没。
 
 因此必须首先定义
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{EpisodeBoundary}.
-}
-\]
+\)}
+\end{statementbox}
 
 设当前运行状态变化量为
 \[
@@ -725,15 +744,16 @@ E
 \]
 
 可以观察到，一个典型事件往往具有如下动力过程：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{StableState}_A
 \rightarrow
 \mathrm{Transition}
 \rightarrow
 \mathrm{StableState}_B.
-}
-\]
+\)}
+\end{statementbox}
 
 因此可以定义：
 
@@ -880,13 +900,14 @@ p_i^{write}>\theta_E
 时，Episode 才真正进入情景记忆集合。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{EventDetected}
 \neq
 \mathrm{EpisodeStored}.
-}
-\]
+\)}
+\end{statementbox}
 
 一个系统可以经历大量现实变化，却只选择少数具有长期认知价值的经历成为自己的情景历史。
 
@@ -927,11 +948,12 @@ N_i
 其中 $H_i$ 可以表示当前内部路由、选择或竞争的熵。
 
 这一设计使系统不需要在第一版立即实现完整自我系统。它首先只需要学会：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{当前发生的变化是否值得留下？}
-}
-\]
+\)}
+\end{statementbox}
 
 以后再逐步把 Self、Goal、Affect 等更慢结构加入同一写入函数。
 
@@ -983,13 +1005,14 @@ m_i(t)\uparrow,
 则它可以成为长期巩固候选。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E
 =
 \mathrm{DynamicEpisodePopulation}.
-}
-\]
+\)}
+\end{statementbox}
 
 情景记忆不是不断增长的日志，而是一个持续演化的事件群体。
 
@@ -1055,11 +1078,12 @@ R_\Psi(i)
 \]
 
 这样 Episode Recall 就成为
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{RelationalEpisodeResonance},
-}
-\]
+\)}
+\end{statementbox}
 而不是单一向量余弦相似度。
 
 不同查询可以动态改变这些权重。例如寻找物体时提高 What 匹配，重新进入过去场景时提高 Where 匹配，反思个人经历时提高 Self 匹配。
@@ -1117,13 +1141,14 @@ E\rightarrow h
 \mathrm{ReplaceCurrentState},
 \]
 而是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Memory}
 \rightarrow
 \mathrm{BiasCurrentDynamics}.
-}
-\]
+\)}
+\end{statementbox}
 
 过去经历改变当前状态向哪里演化，但现实输入仍然拥有最终约束权。
 
@@ -1180,22 +1205,24 @@ E\rightarrow\Theta.
 分别表示 What 动力参数、Where 动力参数、跨通路耦合参数、情景召回规则和其他长期动力结构。
 
 因此软件三相记忆中的 $\Theta$ 不只是语言模型权重，而是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{ParametersDefiningFutureDynamics}.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{E到Theta不必等于全模型梯度更新}
 
 一个重要设计原则是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Consolidation}
 \neq
 \mathrm{FullModelTraining}.
-}
-\]
+\)}
+\end{statementbox}
 
 Episode 的长期巩固可以具有多个层级。
 
@@ -1220,8 +1247,9 @@ Episode 的长期巩固可以具有多个层级。
 \]
 
 因此应形成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Index}
 \rightarrow
 \mathrm{Prototype}
@@ -1229,8 +1257,8 @@ Episode 的长期巩固可以具有多个层级。
 \mathrm{LocalStructure}
 \rightarrow
 \mathrm{GlobalStructure}.
-}
-\]
+\)}
+\end{statementbox}
 
 这是一种逐级减慢的结构学习路径。
 
@@ -1241,15 +1269,16 @@ Episode 的长期巩固可以具有多个层级。
 因此 Soft-HGU 不应把每一个事件永久保存成完整自然语言故事。
 
 更加适合的形式是保存
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{RelationalTrace}
 +
 \mathrm{RawEvidenceIndex}
 +
 \mathrm{Metadata}.
-}
-\]
+\)}
+\end{statementbox}
 
 召回时利用当前 $\Theta$ 生成解释：
 \[
@@ -1293,13 +1322,14 @@ F_\Theta
 已经由过去经历改变，那么任何新的认知状态都会自然受到过去学习的影响。
 
 这可以写为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{StructuralMemory}
 =
 \mathrm{ChangedFutureDynamics}.
-}
-\]
+\)}
+\end{statementbox}
 
 因此软件 $\Theta$ 与传统数据库的本质区别是：数据库只有被读取时才影响系统，而 $\Theta$ 始终存在于状态转移规律内部。
 
@@ -1338,11 +1368,12 @@ Validation>\theta_V.
 \]
 
 这形成软件版本的
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{SlowVariableProtection}.
-}
-\]
+\)}
+\end{statementbox}
 
 长期结构越慢、越靠近身份和通用世界模型，其修改门槛越高。
 
@@ -1378,12 +1409,13 @@ T\uparrow
 \]
 
 但必须强调：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 T
 \text{ controls exploration, not memory writing}.
-}
-\]
+\)}
+\end{statementbox}
 
 也就是说：
 \[
@@ -1395,8 +1427,9 @@ T\uparrow
 \]
 
 正确关系是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Explore}
 \rightarrow
 \mathrm{Evaluate}
@@ -1406,19 +1439,20 @@ T\uparrow
 \mathrm{Validate}
 \rightarrow
 \mathrm{Consolidate}.
-}
-\]
+\)}
+\end{statementbox}
 
 这一分离对于保持长期结构稳定至关重要。
 
 \section{元认知控制器的最小定义}
 
 为了控制认知温度、注意增益、抑制程度和搜索深度，可以定义一个较慢的全局控制器
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathcal C_{\mathrm{meta}}.
-}
-\]
+\)}
+\end{statementbox}
 
 它接收：
 \[
@@ -1463,11 +1497,12 @@ $D_{\mathrm{depth}}$ 控制继续认知演化的深度。
 为了与完整 AgentOS 连接，可以进一步定义两个功能角色。
 
 第一类角色负责观察当前认知系统自身的运行状态：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{SelfStateObserver}.
-}
-\]
+\)}
+\end{statementbox}
 
 它把大量分布式状态压缩为
 \[
@@ -1475,11 +1510,12 @@ S_{\mathrm{self}}.
 \]
 
 第二类角色根据该状态调节认知动力：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{CognitiveDynamicsController}.
-}
-\]
+\)}
+\end{statementbox}
 
 它输出
 \[
@@ -1547,13 +1583,14 @@ A_i^{episode}
 可以重新调制当前认知控制，但不会直接覆盖现实身体状态。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{RememberedImpact}
 \neq
 \mathrm{CurrentImpact}.
-}
-\]
+\)}
+\end{statementbox}
 
 这避免过去经历制造虚假的当前现实状态。
 
@@ -1588,11 +1625,12 @@ P(E_i\rightarrow\Theta).
 \]
 
 也就是说，Self 主要决定：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{什么经历被认为是``我的经历''，以及这些经历如何影响未来的我。}
-}
-\]
+\)}
+\end{statementbox}
 
 因此 $\Psi$ 是跨记忆相态的慢约束，而不是第四种普通记忆。
 
@@ -1603,26 +1641,30 @@ Soft-HGU 的底层存储可以使用 GPU Tensor、CPU 内存、SSD、ANN 索引�
 但是这些都只是 Storage Backend。
 
 Soft-HGU 本身至少必须包含四种过程：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Bind},
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Store},
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Complete},
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Consolidate}.
-}
-\]
+\)}
+\end{statementbox}
 
 Bind 将当前分布式状态形成 Episode；
 
@@ -1633,24 +1675,26 @@ Complete 根据部分线索恢复完整关系；
 Consolidate 将稳定跨情景结构逐步写入 $\Theta$。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{SoftHGU}
 \neq
 \mathrm{VectorDB}.
-}
-\]
+\)}
+\end{statementbox}
 
 更加准确地说：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{SoftHGU}
 =
 \mathrm{EpisodicDynamicsLayer}
 +
 \mathrm{StorageBackend}.
-}
-\]
+\)}
+\end{statementbox}
 
 数据库只是其中最下层的一种实现选择。
 
@@ -1674,11 +1718,12 @@ E_{\mathrm{cold}}
 位于 SSD 或远程存储。
 
 但：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{GPU/CPU/SSD}
-}
-\]
+\)}
+\end{statementbox}
 是物理存储层级；
 
 而：
@@ -1696,13 +1741,14 @@ h/E/\Theta
 而某个当前被召回并重新进入认知状态的 Episode，其激活部分已经重新成为 $h$。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{MemoryPhase}
 \neq
 \mathrm{StorageTier}.
-}
-\]
+\)}
+\end{statementbox}
 
 这一分离使软件三相记忆能够自由使用现有硬件缓存层次，而不破坏理论定义。
 
@@ -1830,13 +1876,14 @@ C_\Theta,
 但三者可以保持同一认知结构的语义连续性。
 
 由此得到：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{MemoryConsolidation}
 =
 \mathrm{CarrierTransformationOfAgentCSO}.
-}
-\]
+\)}
+\end{statementbox}
 
 软件三相记忆不是复制同一个向量三次，而是让同一认知结构以越来越慢、越来越稳定的方式存在。
 
@@ -1874,13 +1921,14 @@ E\rightarrow\Theta
 表示经历继续向慢生成结构迁移。
 
 因此：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{MemoryConsolidation}
 =
 \mathrm{CSOSpectralMigration}.
-}
-\]
+\)}
+\end{statementbox}
 
 召回则执行相反方向：
 \[
@@ -1960,15 +2008,16 @@ T
 \]
 
 因此更加合理的研究顺序为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{SoftDynamics}
 \rightarrow
 \mathrm{CognitiveValidation}
 \rightarrow
 \mathrm{HardwarePhysicalization}.
-}
-\]
+\)}
+\end{statementbox}
 
 第一阶段先在 GPU 上验证 What--Where 分离是否提高组合泛化能力；
 
@@ -2123,8 +2172,9 @@ Action.
 \]
 
 最终形成：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{Reality}
 \rightarrow
 h
@@ -2140,8 +2190,8 @@ E
 \mathrm{FutureAction}
 \rightarrow
 \mathrm{Reality}'.
-}
-\]
+\)}
+\end{statementbox}
 
 \section{软件与物理三相记忆的统一定义}
 
@@ -2182,28 +2232,31 @@ E_H
 \]
 
 两者都满足：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{State}
 \leftrightarrow
 \mathrm{Trajectory}
 \leftrightarrow
 \mathrm{Generator}.
-}
-\]
+\)}
+\end{statementbox}
 
 因此它们的根本区别只是：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{DifferentCarrier},
-}
-\]
+\)}
+\end{statementbox}
 而不是
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{DifferentMemoryTheory}.
-}
-\]
+\)}
+\end{statementbox}
 
 这再次说明，三相记忆真正描述的是认知结构的时间尺度和动力学角色，而不是某种具体存储技术。
 
@@ -2259,8 +2312,9 @@ E
 这一实现并不要求新的物理芯片。GPU 仍然承担全部底层代数运算，但系统的软件本体已经可以被组织成一个具有几何表示、状态流、情景绑定和多时间尺度结构沉降的认知动力系统。
 
 因此可以把这一研究路线概括为：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{GPU}
 \rightarrow
 \mathrm{SoftwareGeometricDynamics}
@@ -2272,44 +2326,49 @@ E
 \mathrm{ThreePhaseMemory}
 \rightarrow
 \mathrm{AgentLifecycle}.
-}
-\]
+\)}
+\end{statementbox}
 
 更进一步：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \mathrm{ValidatedSoftDynamics}
 \rightarrow
 \mathrm{PhysicalGeometricRealization}.
-}
-\]
+\)}
+\end{statementbox}
 
 其最重要的意义并不是证明未来一定需要某一种几何芯片，而是使三相记忆理论第一次获得一个可以直接在现有计算设备上实验的工程载体。
 
 最终，软件三相记忆可以被压缩成三个定义：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 h:
 \text{当前仍在发生的分布式计算状态},
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 E:
 \text{从当前状态中被切分、绑定并跨时间保存的关系轨迹},
-}
-\]
-\[
-\boxed{
+\)}
+\end{statementbox}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Theta:
 \text{由大量经历沉降形成、持续改变未来状态演化方式的慢动力结构}.
-}
-\]
+\)}
+\end{statementbox}
 
 由此，三相记忆的软件实现并不是在传统 LLM 外部附加一个 ``长期记忆数据库''，而是在计算系统内部重新建立：
-\[
-\boxed{
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \text{状态如何成为经历，经历如何成为结构，结构又如何重新塑造未来状态}
-}
-\]
+\)}
+\end{statementbox}
 这一完整动力闭环。
