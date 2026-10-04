@@ -29,7 +29,11 @@
 .
 ├── main.tex              # 全书入口与版式配置
 ├── includes.tex          # 分编结构及章节编排
-├── chapters/             # 114 个章节正文
+├── chapters/             # 131 个章节正文，按 ch_{分编类别}_{编号}.tex 命名
+│                         #   prologue 序论 / epistemology 第一编 / principle 第二编 /
+│                         #   design 第三编 / roadmap 第四编 / derivative 第五编 /
+│                         #   control 第六编 / cultivation 第七编 / psyche 第八编 /
+│                         #   finale 终编
 ├── preface.tex           # 前言
 ├── appendices.tex        # 附录
 ├── references.tex        # 参考文献与理论锚点
