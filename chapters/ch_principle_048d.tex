@@ -1,1119 +1,1803 @@
-\chapter{AgentOS 的自指学习调度原理}
+\chapter{情景记忆学习与自指学习调度：从经历组织到多时间尺度可塑性治理}
 
 \begin{chapterlead}
-前一章从情景记忆学习的角度引入了自指学习调度与多时间尺度可塑性治理，回答了“一次真实经历到来以后，系统究竟应该改变什么”这一基本问题。本章进一步给出这一调度机制背后的数学原理：AgentOS 的学习首先不是参数更新，而是一个结构修改分配问题——决定现实反馈应该获得改变哪一部分结构的权力。为此，我们把时刻 $t$ 的全部可塑结构统一表示为集合 $\mathcal{X}_t$，其中包括情景记忆 $E$、结构记忆 $\Theta$、自我结构 $\Psi$、生命周期方向结构 $\Omega$ 以及各类治理与调度策略，并用一张多尺度可塑性超图 $\mathcal{H}_L$ 统一刻画结构之间的学习依赖、信用传播权重与特征时间尺度。
+本章是第二编学习理论的一次关键转折。前两章已经为记忆系统建立了完整的结构与动力学基础：前一章给出情景记忆的数学表示 \(\mathcal{E}(t)=(\mu_E(t),\mathcal{G}_E(t))\)，刻画了它的液态动力学——新经历持续流入，旧情景被强化、流动、整合、分裂与蒸发，并逐渐向结构记忆 \(\Theta\) 沉降；本章之前的一章则进一步澄清，进入三相记忆的信息本身具有异构的信息几何，局部拓扑结构 \(L\) 与全局分布式结构 \(D\) 经由绑定机制组织进 \(h\)、\(E\)、\(\Theta\)。但表示、结构与动力学只回答了“记忆以什么形式存在”，还没有回答一个对学习更为根本的问题：一次真实经历到来之后，系统究竟应当改变什么？是只更新当前工作状态 \(h\)，还是形成新的情景 \(E_i\)，还是经过长期验证之后改变慢结构 \(\Theta\)？如果经验揭示的甚至是记忆治理方式 \(\Lambda_E\)、跨时间自我结构 \(\Psi\) 或长期发展方向 \(\Omega\) 的问题，允许的变化对象与变化幅度又必须进一步收紧。持续学习因此不能继续简化为 \(\Theta_{t+1}=\Theta_t-\eta\nabla_{\Theta}\mathcal L_t\) 这样的参数更新；真正的问题是：现实产生的学习信号，应当在什么时间、以什么强度、通过什么学习方式，被路由到智能体的哪一种结构。本章把这个问题称为学习调度（Learning Scheduling）。
 
-在此基础上，本章把信用确立为学习调度的基本变量。学习信号空间 $\mathbf{s}_t^L$ 汇集监督、预测误差、奖励、惊奇、新颖性、约束违反、资源成本与跨时间一致性等信号，但学习信号并不等于学习目标：同一个误差可以被分配给不同结构，同一个结构也可以同时接收多种信号。学习调度器的任务，就是把这些信号转化为各可塑节点获得的信用向量 $\mathbf{c}_t$；整个学习过程由此压缩为三层结构——学习调度、学习控制与学习适应，分别对应信用的路由、变换与落地。
+本章沿两条彼此不可分割的线索推进。第一条线索研究情景记忆本身如何学习：从工作记忆到情景记忆的事件形成是第一种学习；模式分离保证情景保持“那一次”的身份，关系绑定使同一次经历的变化成为一个整体，模式补全使召回成为状态恢复而非数据库检索；在此之上，情景经历强化、重构、整合、合并、分裂与蒸发，事实核心与解释结构被分离，稳定经历被整理为充分统计并逐渐沉降为 \(\Theta\)——学习的本质是从实例到生成器。第二条线索研究 AgentOS 如何调度整个过程中的可塑性：学习调度、学习控制与学习适应构成三层统一结构，调度本质上是结构信用分配；调度器自身也必须学习，但这种自指不是无限元递归，而是接受长期现实结果反馈的有界闭环递归。我们进一步说明，可塑性是一种稀缺资源，学习越慢的结构证据门槛越高，边界治理必须覆盖学习权限，复杂度治理与短时间尺度调制同样作用于学习过程。两条线索最终汇合为两个嵌套闭环——对象学习闭环与学习治理闭环，并凝结为统一的自指学习状态方程与学习调度的六条基本原则。
 
-本章随后沿两条线索展开。第一条线索考察信用在三相记忆之间的沉降与升级：从 $E$ 到 $\Theta$ 的信用升级、$\Theta$ 对 $E$ 的间接反向作用、$\Psi$ 的信用升级条件与 $\Omega$ 的超慢信用积累，并由此导出学习权限、可塑性预算与慢结构保护等治理原则，说明越慢的结构为何需要越长的证据积累与越强的写入保护。第二条线索处理自指本身：学习调度器自身也是超图中的一个可塑节点，AgentOS 因此能够依据过去学习调度的长期结果，反过来有限地修改自己的路由策略；我们证明这种自指是有界的而非无限元的递归，并给出其稳定性约束、慢变量保护与调度器自身的反事实信用。
-
-最后，本章把连续学习动力学与离散学习治理统一在同一框架中，写出自指闭环的统一方程，并归结出三条核心命题与最简表达：学习即信用传播，调度即信用路由，控制即信用变换，适应即信用落地；而自指学习，就是信用路由规则自身也接受长期信用。作为第二编的收尾，本章补上了固定拓扑认知内核中“智能体如何决定自己应当怎样学习”的最后一环；从下一章开始，本书将转入第三编，从认知内核走向运行在现实中的完整 Agent。
+通过本章，情景记忆 \(E\) 被确立为智能体的学习证据层，学习调度器被确立为可塑性治理层；持续学习的核心也从“不断训练”提升为让现实经验经过历史组织与可塑性治理、以正确的时间尺度改变正确的内部结构。这为下一章系统阐述 AgentOS 的自指学习调度原理准备了统一的问题形式与结构框架。
 \end{chapterlead}
 
-前面我们讨论了 AgentOS 的学习调度的基本运行机制，现在我们进一步深入探讨其自指学习调度的数学原理。
+\section{本章位置：从固定拓扑持续学习进入学习治理}
 
-\section{问题定义：从参数学习到可塑性调度}
+此前的章节已经建立了固定功能拓扑条件下的持续学习统一闭环。到这里，一个持续智能体已经不再被理解为一个仅通过参数更新获得能力的静态模型，而被理解为一个具有多时间尺度状态、多层记忆结构以及持续结构变化能力的动力系统。
 
-传统机器学习通常将学习写为参数优化：
-\begin{equation}
-\Theta_{k+1}
-=
-\Theta_k
--
-\eta_k
-\nabla_{\Theta}\mathcal{L}_k .
-\end{equation}
+但是，只要继续追问一个最基本的问题，就会发现前面的理论仍然缺少一个关键环节：
 
-对于持续运行的 Agent，该表示并不充分。原因在于：一次经验并不必然只应修改结构记忆
-$\Theta$，而可能首先改变情景记忆 $E$，也可能改变记忆治理策略、认知控制策略、
-资源调度策略、自我结构 $\Psi$ 或生命周期方向结构 $\Omega$。
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{一次真实经历到来以后，系统究竟应该改变什么？}
+\)}
+\end{statementbox}
 
-因此，AgentOS 中的学习首先不是一个参数更新问题，而是一个结构修改分配问题。
+它可能只应该改变当前工作状态：
 
-设 Agent 在时刻 $t$ 的全部可塑结构集合为
-\begin{equation}
-\mathcal{X}_t
-=
-\{
-E_t,
-\Theta_t,
-\Lambda_{E,t},
-\Pi_{C,t},
-\Pi_{S,t},
-\Pi_{B,t},
-\Psi_t,
-\Omega_t
-\},
-\end{equation}
-其中：
+\[
+h.
+\]
 
-\begin{equation}
+也可能应该形成一个新的情景：
+
+\[
+E_i.
+\]
+
+也可能经过多次经历以后，最终改变慢结构：
+
+\[
+\Theta.
+\]
+
+还可能说明的不是世界规律本身，而是：
+
+\[
 \Lambda_E
-=
-\text{情景记忆治理参数},
-\end{equation}
+\]
 
-\begin{equation}
-\Pi_C
-=
-\text{认知控制与复杂度治理策略},
-\end{equation}
+即系统原有的记忆治理方式存在问题。
 
-\begin{equation}
-\Pi_S
-=
-\text{资源与学习调度策略},
-\end{equation}
+进一步，如果这种长期变化涉及：
 
-\begin{equation}
-\Pi_B
-=
-\text{边界与结构写入权限策略}.
-\end{equation}
+\[
+\Psi
+\]
 
-定义 AgentOS 学习为：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-Learning
-=
-ExperienceDrivenChangeOfFutureStateTransition
-\)}
-\end{statementbox}
+所描述的跨时间自我结构，
 
-即：凡是经验驱动并能够持续改变未来状态转移规律的结构变化，都属于学习。
+或者：
 
-由此，AgentOS 学习问题可以重写为：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-Experience
-\rightarrow
-CreditAssignment
-\rightarrow
-PlasticityAllocation
-\rightarrow
-StructureChange
-\)}
-\end{statementbox}
-
-学习调度的核心任务因此变为：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-\text{决定现实反馈应该获得改变 Agent 哪一部分结构的权力。}
-\)}
-\end{statementbox}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.9\textwidth,height=.45\textheight,keepaspectratio]{images/struct.png}
-\caption{自指递归调度器学习过程}
-\end{figure}
-
-
-\section{多尺度可塑性超图}
-
-为了统一描述 AgentOS 中不同结构之间的学习依赖关系，定义多尺度可塑性超图：
-\begin{equation}
-\boxed{
-\mathcal{H}_L
-=
-(
-V_L,
-\mathcal{E}_L,
-W_L,
-\mathcal{T}_L,
-\mathcal{B}_L
-)
-}
-\end{equation}
-
-其中：
-
-\begin{equation}
-V_L
-=
-\{v_1,v_2,\ldots,v_n\}
-\end{equation}
-表示全部可塑结构节点；
-
-\begin{equation}
-\mathcal{E}_L
-\end{equation}
-表示结构之间的学习依赖超边；
-
-\begin{equation}
-W_L
-\end{equation}
-表示信用传播权重；
-
-\begin{equation}
-\mathcal{T}_L
-=
-\{\tau_1,\tau_2,\ldots,\tau_n\}
-\end{equation}
-表示各节点的特征学习时间尺度；
-
-\begin{equation}
-\mathcal{B}_L
-=
-\{B_1^P,B_2^P,\ldots,B_n^P\}
-\end{equation}
-表示各节点的可塑性预算。
-
-典型节点包括：
-\begin{equation}
-V_L
-\supset
-\{
-E,
-\Theta,
-\Lambda_E,
-\Pi_C,
-\Pi_S,
-\Pi_B,
-\Psi,
+\[
 \Omega
-\}.
-\end{equation}
+\]
 
-由于一个结果通常由多个结构共同产生，因此一般有：
-\begin{equation}
-\mathcal{H}_L
-\neq
-\text{Tree}.
-\end{equation}
+所描述的长期发展方向，
 
-更准确地说：
+那么学习的对象和允许的变化幅度又必须进一步收紧。
+
+因此，进入这一阶段以后，持续学习问题已经不能继续简化为：
+
+\[
+\Theta_{t+1}
+=
+\Theta_t-\eta\nabla_{\Theta}\mathcal L_t.
+\]
+
+真正的问题变成：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-\mathcal{H}_L
-=
-\text{Hierarchical Multi-timescale Plasticity Hypergraph}
-\)}
-\end{statementbox}
-
-其几何直觉为多层金字塔，但其拓扑结构允许：
-
-\begin{equation}
-\text{one-to-many},
-\qquad
-\text{many-to-one},
-\qquad
-\text{cross-level coupling}.
-\end{equation}
-
-
-\section{学习信号空间}
-
-定义时刻 $t$ 的学习信号向量：
-\begin{equation}
-\mathbf{s}_t^L
-=
-\left[
-s_t^{sup},
-s_t^{pred},
-s_t^{rew},
-s_t^{sur},
-s_t^{nov},
-s_t^{con},
-s_t^{cost},
-s_t^{cons}
-\right].
-\end{equation}
-
-其中：
-
-\begin{equation}
-s_t^{sup}
-=
-\text{监督信号},
-\end{equation}
-
-\begin{equation}
-s_t^{pred}
-=
-\varepsilon_t
-=
-D(\hat h_{t+1},h_{t+1}),
-\end{equation}
-
-\begin{equation}
-s_t^{rew}
-=
-r_t,
-\end{equation}
-
-\begin{equation}
-s_t^{sur}
-=
-\text{惊奇信号},
-\end{equation}
-
-\begin{equation}
-s_t^{nov}
-=
-\text{新颖性信号},
-\end{equation}
-
-\begin{equation}
-s_t^{con}
-=
-\text{约束违反信号},
-\end{equation}
-
-\begin{equation}
-s_t^{cost}
-=
-\text{资源成本信号},
-\end{equation}
-
-\begin{equation}
-s_t^{cons}
-=
-\text{跨时间一致性信号}.
-\end{equation}
-
-重要的是：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-LearningSignal
-\neq
-LearningTarget
-\)}
-\end{statementbox}
-
-同一个误差信号可以被分配给不同结构，而同一个结构也可以同时接收多种学习信号。
-
-
-\section{信用作为学习调度的基本变量}
-
-定义节点 $v_i$ 在时刻 $t$ 获得的信用为：
-\begin{equation}
-c_i(t).
-\end{equation}
-
-信用并不一定表示正奖励，也可表示责任、误差归因或结构修改需求。
-
-定义全局信用向量：
-\begin{equation}
-\mathbf{c}_t
-=
-[
-c_1(t),
-c_2(t),
-\ldots,
-c_n(t)
-].
-\end{equation}
-
-学习调度器的基本映射为：
-\begin{equation}
-\boxed{
-\mathcal{R}_L:
-(\mathbf{s}_t^L,\mathcal{X}_t,\mathcal{H}_L)
-\rightarrow
-\mathbf{c}_t
+\textbf{
+现实产生的学习信号，应当在什么时间、以什么强度、通过什么学习方式，被路由到智能体的哪一种结构。
 }
-\end{equation}
-
-因此学习调度的本体可以定义为：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-LearningScheduling
-=
-CreditRoutingOnPlasticityHypergraph
 \)}
 \end{statementbox}
 
-若采用归一化信用表示，则可以令：
-\begin{equation}
-c_i(t)\geq 0,
-\end{equation}
+本章将这个问题称为：
 
-\begin{equation}
-\sum_i c_i(t)=1.
-\end{equation}
-
-若希望同时表达学习强度，则无需归一化，而采用：
-\begin{equation}
-\sum_i |c_i(t)|
-\leq
-B_L(t),
-\end{equation}
-其中 $B_L(t)$ 为当前总学习信用预算。
-
-
-\section{信用不是标量，而是多通道向量}
-
-由于 AgentOS 同时存在监督、自监督、强化、约束与资源反馈，因此更一般地定义节点信用：
-\begin{equation}
-\mathbf{c}_i(t)
-=
-\left[
-c_i^{sup},
-c_i^{self},
-c_i^{RL},
-c_i^{constraint},
-c_i^{cost}
-\right].
-\end{equation}
-
-于是同一结构可以同时接收不同来源的学习压力：
-\begin{equation}
-\mathbf{c}_i
-\in
-\mathbb{R}^{d_c}.
-\end{equation}
-
-局部更新不再简单写为：
-\begin{equation}
-\Delta\xi_i
-\propto
-c_i,
-\end{equation}
-而应写为：
-\begin{equation}
-\boxed{
-\Delta\xi_i
-=
-\mathcal{A}_i
-(
-\xi_i,
-\mathbf{c}_i,
-\mathbf{u}_i^L
-)
-}
-\end{equation}
-
-其中 $\mathbf{u}_i^L$ 是 Learning Control 输出的局部学习控制变量。
-
-
-\section{三层学习结构}
-
-AgentOS 的全部学习过程可以压缩为三个功能层级：
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-LearningScheduling
-\rightarrow
-LearningControl
-\rightarrow
-LearningAdaptation
+\textbf{Learning Scheduling}
 \)}
 \end{statementbox}
 
-三层分别对应：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-CreditRouting
-\rightarrow
-CreditTransformation
-\rightarrow
-CreditRealization
-\)}
-\end{statementbox}
+即学习调度。
 
+但学习调度并不是孤立出现的。
 
-\section{第一层：学习调度}
+三相记忆进一步表明，真正承担“当前经历如何成为长期学习证据”的关键，并不是两端的：
 
-学习调度解决：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-\text{谁获得学习信用？}
-\)}
-\end{statementbox}
-
-定义调度器：
-\begin{equation}
-\mathbf{g}_t
-=
-S_{\Phi_S}
-(
-\mathcal{X}_t,
-\mathbf{s}_t^L,
-B_L(t)
-),
-\end{equation}
-其中：
-\begin{equation}
-\mathbf{g}_t
-=
-[g_1,g_2,\ldots,g_n],
-\qquad
-g_i\in[0,1].
-\end{equation}
-
-$g_i$ 表示节点 $v_i$ 获得结构修改资格的程度。
-
-信用最终可以写为：
-\begin{equation}
-\mathbf{c}_i
-=
-g_i
-\,
-\mathcal{Q}_i(
-\mathbf{s}_t^L,
-\mathcal{X}_t
-).
-\end{equation}
-
-因此：
-\begin{equation}
-g_i\approx0
-\end{equation}
-意味着即使存在误差，该结构当前仍然不获得学习权限。
-
-
-\section{第二层：学习控制}
-
-Learning Control 解决：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-\text{获得信用以后应该怎样学习？}
-\)}
-\end{statementbox}
-
-定义：
-\begin{equation}
-\mathbf{u}_i^L
-=
-C_{\Phi_C}
-(
-\xi_i,
-\mathbf{c}_i,
-\mathcal{X}_t
-).
-\end{equation}
-
-其中：
-\begin{equation}
-\mathbf{u}_i^L
-=
-[
-\eta_i,
-B_i^P,
-M_i,
-K_i,
-R_i,
-\alpha_i^{sup},
-\alpha_i^{self},
-\alpha_i^{RL},
-\ldots
-].
-\end{equation}
-
-分别可以控制：
-
-\begin{equation}
-\eta_i
-=
-\text{有效学习率},
-\end{equation}
-
-\begin{equation}
-B_i^P
-=
-\text{局部可塑性预算},
-\end{equation}
-
-\begin{equation}
-M_i
-=
-\text{允许修改的结构掩码},
-\end{equation}
-
-\begin{equation}
-K_i
-=
-\text{更新步数},
-\end{equation}
-
-\begin{equation}
-R_i
-=
-\text{Replay 强度},
-\end{equation}
-
-以及不同学习算子的组合权重。
-
-
-\section{第三层：学习适应}
-
-Learning Adaptation 执行真正的结构变化：
-\begin{equation}
-\boxed{
-\xi_i(t+1)
-=
-\xi_i(t)
-+
-\Delta\xi_i(t)
-}
-\end{equation}
-
-其中：
-\begin{equation}
-\Delta\xi_i
-=
-\sum_k
-\alpha_{ik}
-\mathcal{A}_{ik}
-(
-\xi_i,\mathbf{s}_t^L
-).
-\end{equation}
-
-这里 $\mathcal{A}_{ik}$ 可以是：
-
-\begin{equation}
-\mathcal{A}^{sup}
-\end{equation}
-监督更新；
-
-\begin{equation}
-\mathcal{A}^{self}
-\end{equation}
-自监督更新；
-
-\begin{equation}
-\mathcal{A}^{RL}
-\end{equation}
-强化学习更新；
-
-\begin{equation}
-\mathcal{A}^{replay}
-\end{equation}
-重放更新；
-
-\begin{equation}
-\mathcal{A}^{local}
-\end{equation}
-局部可塑性更新；
-
-\begin{equation}
-\mathcal{A}^{struct}
-\end{equation}
-结构重组更新。
-
-因此：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-SupervisedLearning,
-SelfSupervisedLearning,
-ReinforcementLearning
-\)}
-\end{statementbox}
-
-在 AgentOS 中不再是顶层学习结构，而是：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-LearningAdaptationOperators.
-\)}
-\end{statementbox}
-
-
-\section{三相记忆是最基本的信用沉降路径}
-
-对于三相记忆：
-\begin{equation}
+\[
 h
-\rightarrow
-E
-\rightarrow
+\]
+
+与：
+
+\[
 \Theta,
-\end{equation}
-可以重新解释为：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-InstantError
-\rightarrow
-EpisodeCredit
-\rightarrow
-StructuralCredit.
-\)}
-\end{statementbox}
+\]
 
-当前预测残差：
-\begin{equation}
-\varepsilon_t
-=
-D(
-\hat h_{t+1},
-h_{t+1}
-)
-\end{equation}
-首先不应默认直接全部作用于 $\Theta$。
+而是位于二者之间的：
 
-对于单次异常，可令：
-\begin{equation}
-c_E\gg0,
-\end{equation}
-
-\begin{equation}
-c_\Theta\approx0.
-\end{equation}
-
-经过多个 Episode：
-\begin{equation}
-E_1,E_2,\ldots,E_n
-\end{equation}
-后，如果某种残差结构持续存在，则结构信用逐渐积累：
-\begin{equation}
-c_\Theta
-=
-F(
-Support,
-Confidence,
-Coverage,
-ResidualPersistence
-).
-\end{equation}
-
-于是：
-\begin{equation}
+\[
 \boxed{
-h
-\rightarrow
-E
-\rightarrow
-\Theta
+E.
 }
-\end{equation}
-不仅是记忆相变，也是一条信用从快速状态向慢结构沉降的基本路径。
+\]
 
+因此，本章实际上研究的是两个彼此不可分割的问题：
 
-\section{结构信用的时间积累}
+第一，
 
-定义某一结构模式 $\rho$ 的累计信用：
-\begin{equation}
-C_\rho(t)
-=
-\int_{0}^{t}
-K_\rho(t-\tau)
-\,
-\varepsilon_\rho(\tau)
-\,d\tau .
-\end{equation}
-
-其中：
-\begin{equation}
-K_\rho(\Delta t)
-\end{equation}
-为时间信用核。
-
-若采用指数核：
-\begin{equation}
-K_\rho(\Delta t)
-=
-\exp
-\left(
--\frac{\Delta t}{\tau_\rho}
-\right),
-\end{equation}
-则：
-\begin{equation}
-\tau_\rho
-\end{equation}
-决定一个结构需要多长的历史支持才能获得显著信用。
-
-对于不同层级：
-\begin{equation}
-\tau_E
-<
-\tau_\Theta
-<
-\tau_\Psi
-<
-\tau_\Omega
-\end{equation}
-可以作为一种默认稳定性设计关系，而不是自然定律。
-
-
-\section{Eligibility Trace 与延迟信用}
-
-现实反馈经常晚于导致结果的学习决策。
-
-定义节点 $i$ 的学习资格痕迹：
-\begin{equation}
-e_i^L(t)
-=
-\gamma_e
-e_i^L(t-1)
-+
-\phi_i(t),
-\end{equation}
-其中：
-\begin{equation}
-0\leq\gamma_e<1.
-\end{equation}
-
-当延迟结果 $r_t$ 到达时：
-\begin{equation}
-c_i(t)
-=
-e_i^L(t)
-\delta_t,
-\end{equation}
-其中 $\delta_t$ 为当前价值残差或长期结果误差。
-
-因此：
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-EligibilityTrace
-=
-TemporalBridgeForDelayedCredit
+E\text{ 如何形成、组织、重构、蒸发并沉降为 }\Theta;
 \)}
 \end{statementbox}
 
-它允许过去的：
+第二，
 
-\begin{equation}
-\text{记忆写入决策},
-\end{equation}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+AgentOS\text{ 如何调度整个过程中的可塑性。}
+\)}
+\end{statementbox}
 
-\begin{equation}
-\text{Theta 更新决策},
-\end{equation}
+这两个问题最终会汇合成一个统一结构：
 
-\begin{equation}
-\text{调度决策}
-\end{equation}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{经历动力学}
+\rightarrow
+\text{证据组织}
+\rightarrow
+\text{学习调度}
+\rightarrow
+\text{结构适应}.
+\)}
+\end{statementbox}
 
-接受未来结果的责任归因。
+这也是持续人工智能生命体从“能够学习”进一步走向“能够治理自身学习”的关键一步。
 
 
-\section{信用在超图中的传播}
+\section{三相记忆中的真正学习核心是情景记忆}
 
-对于普通图，可以定义：
-\begin{equation}
-c_j^{(l+1)}
-=
-\sum_i
-g_{i\rightarrow j}
-c_i^{(l)}.
-\end{equation}
+三相记忆最基本的结构为：
+
+\[
+h
+\leftrightarrow
+E
+\leftrightarrow
+\Theta.
+\]
 
 其中：
-\begin{equation}
-g_{i\rightarrow j}
-\in[0,1]
-\end{equation}
-为信用传播门。
 
-在超图中，一条超边：
-\begin{equation}
-e
-=
-\{v_{i_1},v_{i_2},\ldots,v_{i_k}\}
-\end{equation}
-允许多个结构共同对同一结果负责。
+\[
+h
+\]
 
-因此更一般地：
-\begin{equation}
+是当前仍然直接参与认知过程的快速状态；
+
+\[
+E
+\]
+
+是已经退出当前活动、但仍保持经历个体性的结构化过去；
+
+\[
+\Theta
+\]
+
+是由历史沉降形成、已经参与未来状态生成的慢结构。
+
+从功能上可以分别写成：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+h=\text{CurrentState}
+\)}
+\end{statementbox}
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+E=\text{OrganizedHistory}
+\)}
+\end{statementbox}
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\Theta=\text{SlowGenerator}.
+\)}
+\end{statementbox}
+
+从工程角度看，\(h\) 与 \(\Theta\) 的基本职责都相对清楚。
+
+工作记忆的核心动力学可以抽象为：
+
+\[
 \boxed{
-c_v^{(l+1)}
+h_{t+1}
 =
-\sum_{e\ni v}
-\alpha_{e,v}
-\,
-\Phi_e
+F_{\Theta}
 \left(
-\{c_u^{(l)}:u\in e\},
-\mathcal{X}_t
+h_t,
+u_t,
+r_t^E
 \right)
 }
-\end{equation}
+\]
 
 其中：
-\begin{equation}
-\Phi_e
-\end{equation}
-是该超边的联合信用函数。
 
-这允许表示：
-\begin{equation}
-\text{Knowledge}
-+
-\text{MemoryPolicy}
-+
-\text{ControlPolicy}
-\rightarrow
-\text{JointOutcome}.
-\end{equation}
+\[
+r_t^E
+\]
 
+是必要时从情景记忆召回的历史信息。
 
-\section{纵向、横向与跨时间尺度信用}
+结构记忆则可以抽象为一个慢生成结构：
 
-AgentOS 中至少存在三类信用传播。
+\[
+\boxed{
+p_{\Theta}
+\left(
+h_{t+1}
+\mid
+h_t,u_t
+\right).
+}
+\]
 
-纵向传播：
-\begin{equation}
-Outcome
-\rightarrow
-Policy
-\rightarrow
-Parameter.
-\end{equation}
+也就是说：
 
-横向传播：
-\begin{equation}
+\[
 \Theta
-\leftrightarrow
-E
-\leftrightarrow
-\Pi_C
-\leftrightarrow
-\Pi_S.
-\end{equation}
+\]
 
-跨时间尺度传播：
+主要回答：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-InstantResidual
-\rightarrow
-EpisodeCredit
-\rightarrow
-StructuralCredit
-\rightarrow
-SelfCredit.
+\text{在当前状态和作用条件下，接下来更可能发生什么？}
 \)}
 \end{statementbox}
 
-因此 Learning Scheduler 不是一个单层分类器，而是一个：
+或者更一般地：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-Multi-scale Credit Routing Process.
+\text{未来状态应该怎样生成？}
+\)}
+\end{statementbox}
+
+真正复杂的是中间的：
+
+\[
+E.
+\]
+
+因为 \(E\) 必须同时回答：
+
+\[
+\text{什么值得成为一次经历？}
+\]
+
+\[
+\text{不同经历怎样保持个体性？}
+\]
+
+\[
+\text{相似经历怎样建立关系？}
+\]
+
+\[
+\text{什么时候应该召回？}
+\]
+
+\[
+\text{什么时候应该重新解释？}
+\]
+
+\[
+\text{什么时候应该合并？}
+\]
+
+\[
+\text{什么时候应该拆分？}
+\]
+
+\[
+\text{什么时候应该蒸发？}
+\]
+
+以及最重要的：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{什么时候一组经历已经足以改变 }\Theta?
+\)}
+\end{statementbox}
+
+因此，三相记忆真正需要重点设计的并不是三个彼此平行的记忆模块，而是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{
+一个位于当前状态和长期生成结构之间、具有自身动力学的情景历史层。
+}
+\)}
+\end{statementbox}
+
+从这个意义上，可以把三者重新解释为：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+h=\text{状态端},
+\qquad
+E=\text{历史治理端},
+\qquad
+\Theta=\text{生成端}.
+\)}
+\end{statementbox}
+
+而三相记忆的核心工程问题则变成：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{
+如何构造一个能够把现在组织成历史，再把历史转化为未来生成结构的 }E.
 \)}
 \end{statementbox}
 
 
-\section{学习权限与可塑性预算}
+\section{情景记忆不是 Replay Buffer，而是可演化的历史状态}
 
-定义节点 $i$ 的可塑性预算：
-\begin{equation}
-B_i^P(t)\geq0.
-\end{equation}
+传统持续学习中经常使用经验回放：
 
-学习更新必须满足：
-\begin{equation}
+\[
+D_E
+=
+\{
+x_i,y_i
+\}_{i=1}^{N}.
+\]
+
+或者在 Agent 中使用向量检索：
+
+\[
+q
+\rightarrow
+\operatorname{TopK}(E).
+\]
+
+这些机制可以作为情景记忆的一部分实现技术，但都不足以定义完整的 \(E\)。
+
+原因是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{Sample}\neq\text{Episode}.
+\)}
+\end{statementbox}
+
+一次真正的 Episode 必须保持：
+
+发生了什么；
+
+怎样发生；
+
+在什么上下文中发生；
+
+状态怎样变化；
+
+结果是什么；
+
+它与其他事件有什么关系。
+
+因此一个 Episode 更适合表示为：
+
+\[
 \boxed{
-\|\Delta\xi_i\|
-\leq
-B_i^P(t).
+e_i
+=
+(
+z_i,
+\tau_i,
+c_i,
+\Delta_i,
+o_i,
+\rho_i,
+m_i
+)
 }
-\end{equation}
+\]
 
-全局还满足：
-\begin{equation}
-\boxed{
-\sum_i
-C_i^{learn}(t)
-\leq
-B_L(t).
-}
-\end{equation}
+其中：
+
+\[
+z_i
+\]
+
+是该经历的压缩表示；
+
+\[
+\tau_i
+\]
+
+是事件时间结构；
+
+\[
+c_i
+\]
+
+是上下文；
+
+\[
+\Delta_i
+\]
+
+表示过程中的关键状态变化；
+
+\[
+o_i
+\]
+
+表示较稳定的观测核心；
+
+\[
+\rho_i
+\]
+
+表示可以随着新经验变化的解释结构；
+
+\[
+m_i
+\]
+
+表示当前记忆强度。
 
 因此：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-Plasticity
+E_i
 =
-FiniteAgentResource.
-\)}
-\end{statementbox}
-
-对于快慢结构，可以采用默认关系：
-\begin{equation}
-B_E^P
->
-B_\Theta^P
->
-B_\Psi^P.
-\end{equation}
-
-该关系表达的是稳定性设计原则：
-
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-\text{结构越慢，单位时间允许的修改幅度越小。}
-\)}
-\end{statementbox}
-
-
-\section{慢结构保护原则}
-
-定义结构 $i$ 的稳定尺度：
-\begin{equation}
-\tau_i.
-\end{equation}
-
-则允许的平均可塑性强度可设计为：
-\begin{equation}
-\bar B_i^P
-\propto
-\frac{1}{\tau_i}.
-\end{equation}
-
-更一般地：
-\begin{equation}
-B_i^P
-=
-F_B(
-\tau_i,
-Confidence_i,
-Risk_i,
-Support_i
-).
-\end{equation}
-
-从而：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-SlowStructure
-\Rightarrow
-HighEvidenceThreshold
+\text{Trajectory}
 +
-LowPlasticityRate.
+\text{Context}
++
+\text{Relation}
++
+\text{MemoryMass}.
 \)}
 \end{statementbox}
 
+这使 \(E\) 不再是过去数据的简单集合，而成为一个真正可以继续演化的历史对象。
 
-\section{E 到 Theta 的信用升级}
 
-对情景记忆 $E_i$，定义其结构学习资格：
-\begin{equation}
-Q_i^\Theta
+\section{从工作记忆到情景记忆：事件形成是第一种学习}
+
+工作记忆是连续变化的：
+
+\[
+h(t).
+\]
+
+但是情景记忆不应该把每一个瞬时状态都永久写入。
+
+因此第一步不是“存储”，而是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{EventFormation}.
+\)}
+\end{statementbox}
+
+定义事件边界强度：
+
+\[
+b_t
 =
 \sigma
 \left(
-w_s S_i
-+
-w_c C_i
-+
-w_v V_i
-+
-w_r R_i
-+
-w_u U_i
--
-w_f F_i
-\right).
-\end{equation}
+f_b
+\left(
+h_t,
+h_t-h_{t-1},
+\varepsilon_t,
+n_t,
+g_t
+\right)
+\right)
+\]
 
 其中：
 
-\begin{equation}
-S_i
-=
-Support_i,
-\end{equation}
+\[
+\varepsilon_t
+\]
 
-\begin{equation}
-C_i
-=
-Confidence_i,
-\end{equation}
+表示预测残差；
 
-\begin{equation}
-V_i
-=
-Coverage_i,
-\end{equation}
+\[
+n_t
+\]
 
-\begin{equation}
-R_i
-=
-ResidualPersistence_i,
-\end{equation}
+表示新颖性；
 
-\begin{equation}
-U_i
-=
-FutureUtility_i,
-\end{equation}
+\[
+g_t
+\]
 
-\begin{equation}
-F_i
-=
-Conflict_i.
-\end{equation}
+表示当前目标相关性。
 
-结构写入信用为：
-\begin{equation}
-c_\Theta^{(i)}
+当：
+
+\[
+b_t
+\]
+
+逐渐升高时，系统认为原有事件结构正在结束或者新的事件结构正在形成。
+
+但从持续动力学角度看，不需要立即进行硬切分。
+
+可以维护一个事件累积状态：
+
+\[
+c_t
 =
-g_\Theta
-Q_i^\Theta.
-\end{equation}
+(1-b_t)c_{t-1}
++
+\alpha_t\phi(h_t).
+\]
+
+同时维护状态变化摘要：
+
+\[
+d_t
+=
+(1-b_t)d_{t-1}
++
+\beta_t
+\psi(h_{t-1},h_t).
+\]
+
+当事件边界形成以后：
+
+\[
+\boxed{
+e_i
+=
+B(c_t,d_t,\tau_t,\ldots).
+}
+\]
 
 于是：
+
+\[
+\boxed{
+h_{t_0:t_1}
+\rightarrow
+E_i.
+}
+\]
+
+这一步本身已经是一种学习。
+
+因为系统需要学会：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{什么样的状态变化值得被视为“一次经历”。}
+\)}
+\end{statementbox}
+
+这一过程主要可以依赖自监督信号。
+
+如果一个候选边界能够显著提高：
+
+后续状态预测；
+
+事件内部一致性；
+
+跨事件区分度；
+
+情景召回质量，
+
+那么这种边界划分就具有更高效用。
+
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+EventSegmentation
+\)}
+\end{statementbox}
+
+本身就属于 \(E\) 的第一层适应。
+
+
+\section{模式分离：情景必须保持“那一次”的身份}
+
+如果两个高度相似的经历最终映射成几乎完全相同的表示：
+
+\[
+z_i\approx z_j,
+\]
+
+那么系统就会失去情景记忆最重要的属性：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+EpisodeIdentity.
+\)}
+\end{statementbox}
+
+例如：
+
+昨天打开一扇门；
+
+今天再次打开同一扇门。
+
+两次事件在对象和行为上非常相似，但它们仍然是两次不同经历。
+
+因此 \(E\) 必须同时保留：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{语义相似性}
+\)}
+\end{statementbox}
+
+和：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{经历个体性}.
+\)}
+\end{statementbox}
+
+可以使用可学习的模式分离映射：
+
+\[
+z_i
+=
+P_{\phi}^{sep}(c_i).
+\]
+
+对应该区分的经历，可以定义：
+
+\[
+\mathcal L_{sep}
+=
+\sum_{i,j}
+y_{ij}^{diff}
+\max
+\left(
+0,
+m_{sep}-D(z_i,z_j)
+\right).
+\]
+
+这里：
+
+\[
+y_{ij}^{diff}=1
+\]
+
+表示两个经历虽然可能语义接近，但应该保持不同的 Episode 身份。
+
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{Pattern Separation}
+\)}
+\end{statementbox}
+
+不是简单地把所有表示无限拉开。
+
+真正目标是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{
+在保持经验之间可比较性的同时，避免具有不同时间身份和结果结构的 Episode 彼此覆盖。
+}
+\)}
+\end{statementbox}
+
+这是情景记忆能够真正承担历史功能的基本条件。
+
+
+\section{关系绑定：Episode 的核心不是内容，而是“这些变化属于同一次经历”}
+
+一次 Episode 中包含的不同信息通常来自不同来源：
+
+对象；
+
+位置；
+
+时间；
+
+动作；
+
+结果；
+
+上下文；
+
+状态变化。
+
+因此 E 的核心不是把这些信息简单拼接，而是建立：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{RelationalBinding}.
+\)}
+\end{statementbox}
+
+可以写成：
+
+\[
+\boxed{
+e_i
+=
+B_{\phi}
+(
+W_i,
+S_i,
+T_i,
+A_i,
+O_i,
+\Delta_i
+)
+}
+\]
+
+其中：
+
+\[
+W_i
+\]
+
+表示发生了什么；
+
+\[
+S_i
+\]
+
+表示空间或一般上下文位置；
+
+\[
+T_i
+\]
+
+表示时间结构；
+
+\[
+A_i
+\]
+
+表示作用或行为；
+
+\[
+O_i
+\]
+
+表示结果；
+
+\[
+\Delta_i
+\]
+
+表示过程中真正发生的状态变化。
+
+因此情景记忆不是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+What.
+\)}
+\end{statementbox}
+
+而更接近：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+What
++
+Where
++
+When
++
+How
++
+WhatChanged.
+\)}
+\end{statementbox}
+
+其中最容易被传统记忆系统忽略的是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+WhatChanged.
+\)}
+\end{statementbox}
+
+因为如果 E 最终要支持：
+
+\[
+E\rightarrow\Theta,
+\]
+
+那么它必须保存足够多的状态转移信息，使系统能够从具体经历中学习：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{状态怎样演化。}
+\)}
+\end{statementbox}
+
+因此可以把 Episode 进一步写成：
+
+\[
+\boxed{
+E_i
+=
+\operatorname{CompressedTrajectory}
+}
+\]
+
+而不是一个静态快照。
+
+
+\section{模式补全：真正的召回不是检索，而是状态恢复}
+
+情景记忆必须支持：
+
+\[
+\boxed{
+E\rightarrow h.
+}
+\]
+
+但真正的情景召回并不是简单地执行：
+
+\[
+q
+\rightarrow
+TopK(E).
+\]
+
+因为现实中提供的线索通常是不完整的。
+
+所以真正需要的是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+PartialCue
+\rightarrow
+EpisodeCompletion.
+\)}
+\end{statementbox}
+
+设当前查询：
+
+\[
+q_t=f_q(h_t).
+\]
+
+先计算情景匹配：
+
+\[
+a_i
+=
+\operatorname{softmax}
+\left(
+\frac{s(q_t,k_i)}
+{T_R}
+\right).
+\]
+
+初始召回：
+
+\[
+z^{(0)}
+=
+\sum_i a_iz_i.
+\]
+
+然后执行若干步内部补全：
+
+\[
+\boxed{
+z^{(l+1)}
+=
+F_{comp}
+\left(
+z^{(l)},
+E
+\right).
+}
+\]
+
+最终：
+
+\[
+z^{(L)}
+\]
+
+才作为完整情景状态重新进入：
+
+\[
+h.
+\]
+
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+Recall
+=
+Retrieval
++
+PatternCompletion.
+\)}
+\end{statementbox}
+
+训练时可以随机遮蔽 Episode 的一部分：
+
+\[
+q_i=
+Mask(e_i)
+\]
+
+并要求：
+
+\[
+\hat e_i
+\approx e_i.
+\]
+
+形成：
+
+\[
+\boxed{
+\mathcal L_{completion}
+=
+D(
+\hat e_i,
+e_i
+).
+}
+\]
+
+这种训练主要属于自监督，因为完整 Episode 本身可以作为训练目标。
+
+
+\section{召回不应该默认发生：E 应当保持潜伏状态}
+
+一个成熟智能体不应该在每一步认知过程中都检索过去。
+
+如果：
+
+\[
+\Theta
+\]
+
+已经能够直接支持当前状态演化，那么：
+
+\[
+\Theta\rightarrow h
+\]
+
+本身已经足够。
+
+因此 E 更合理的工作方式是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{默认潜伏，必要时浮现。}
+\)}
+\end{statementbox}
+
+可以定义 Recall Gate：
+
+\[
+g_t^R
+=
+f_R
+\left(
+\varepsilon_t,
+u_t,
+n_t,
+g_t,
+C_t
+\right)
+\]
+
+其中：
+
+\[
+u_t
+\]
+
+表示当前不确定性；
+
+\[
+C_t
+\]
+
+表示召回成本。
+
+于是：
+
+\[
+\boxed{
+\varepsilon_t\downarrow
+\Rightarrow
+g_t^R\downarrow.
+}
+\]
+
+而：
+
+\[
+\boxed{
+\varepsilon_t\uparrow
+\lor
+u_t\uparrow
+\Rightarrow
+g_t^R\uparrow.
+}
+\]
+
+这产生一个十分重要的原则：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{
+Recall should be residual-driven rather than continuously active.
+}
+\)}
+\end{statementbox}
+
+即：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{当前结构能够处理，就不必回忆；
+当前结构解释失败，历史才重新进入现在。}
+\)}
+\end{statementbox}
+
+这不仅降低计算成本，也为后面的情景蒸发机制提供了关键基础。
+
+
+\section{情景记忆的液态性质：强化、流动与重构}
+
+情景记忆的一个核心特点是：
+
+\[
+\boxed{
+E_t\neq E_{t+1}.
+}
+\]
+
+即使没有形成新的 Episode，已有历史本身也可能发生变化。
+
+这种变化至少包括：
+
+召回强化；
+
+重新解释；
+
+关系变化；
+
+相似情景聚合；
+
+复杂情景拆分；
+
+低价值情景蒸发。
+
+因此，一个 Episode 可以具有记忆质量：
+
+\[
+m_i(t)\ge0.
+\]
+
+最简单的动力学为：
+
+\[
+\boxed{
+\dot m_i
+=
+-\lambda_i m_i
++
+\alpha_RR_i
++
+\alpha_SS_i
++
+\alpha_GG_i.
+}
+\]
+
+其中：
+
+\[
+R_i
+\]
+
+表示召回强化；
+
+\[
+S_i
+\]
+
+表示惊奇；
+
+\[
+G_i
+\]
+
+表示长期目标相关性。
+
+因此一个 Episode 的长期存在不是由“年龄”单独决定，而由它在整个系统中的持续功能决定。
+
+这使 E 不再是静态存储，而成为：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{带质量的历史动力系统}.
+\)}
+\end{statementbox}
+
+
+\section{情景重构：事实核心与解释结构必须分离}
+
+情景记忆能够随着新的经验发生重新理解。
+
+但如果这种机制不加区分，就可能退化成任意重写历史。
+
+因此一个 Episode 最好区分：
+
+\[
+\boxed{
+e_i=(o_i,\rho_i)
+}
+\]
+
+其中：
+
+\[
+o_i
+\]
+
+是较稳定的观测核心；
+
+\[
+\rho_i
+\]
+
+是解释结构。
+
+在重构过程中：
+
+\[
+o_i'
+\approx
+o_i,
+\]
+
+而：
+
+\[
+\boxed{
+\rho_i'
+=
+F_{recon}
+(
+\rho_i,
+h_t,
+E_t,
+\Theta_t
+).
+}
+\]
+
+这意味着：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{过去发生过什么}
+\)}
+\end{statementbox}
+
+和：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{现在怎样理解过去}
+\)}
+\end{statementbox}
+
+必须被区分。
+
+因此情景记忆重构应满足：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+EvidencePreservation
++
+InterpretationPlasticity.
+\)}
+\end{statementbox}
+
+这是一个十分关键的认知稳定条件。
+
+否则所谓“液态”会退化成：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+HistoryWithoutIdentity.
+\)}
+\end{statementbox}
+
+而真正的 E 应当是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{可重构但仍保持历史连续性的过去。}
+\)}
+\end{statementbox}
+
+
+\section{情景整合：从 Episode 集合到动态关系图}
+
+单个 Episode 不能构成完整历史。
+
+真正的历史还依赖：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
 Episode
-\rightarrow
-EvidenceAccumulation
-\rightarrow
-StructuralCredit.
+\leftrightarrow
+Episode
+\)}
+\end{statementbox}
+
+之间的关系。
+
+因此可以定义：
+
+\[
+\boxed{
+\mathcal G_E(t)
+=
+(
+V_E(t),
+A_E(t)
+)
+}
+\]
+
+其中：
+
+\[
+V_E
+=
+\{
+e_1,\ldots,e_N
+\}
+\]
+
+为 Episode 节点，
+
+而：
+
+\[
+A_{ij}^{(r)}
+\in[0,1]
+\]
+
+表示第 \(r\) 类关系。
+
+关系可以包括：
+
+\[
+Temporal,
+\]
+
+\[
+Causal,
+\]
+
+\[
+Semantic,
+\]
+
+\[
+SharedObject,
+\]
+
+\[
+PartOf.
+\]
+
+因此：
+
+\[
+\boxed{
+A_{ij}^{(r)}
+=
+\sigma
+\left(
+f_r(e_i,e_j)
+\right).
+}
+\]
+
+然后通过图上的信息传播：
+
+\[
+\boxed{
+\tilde e_i
+=
+e_i
++
+\sum_{j,r}
+A_{ij}^{(r)}
+W_r e_j.
+}
+\]
+
+使过去的 Episode 不再作为孤立记录存在，而逐渐组织为：
+
+因果链；
+
+项目；
+
+任务阶段；
+
+长期经历簇；
+
+重复模式。
+
+因此：
+
+\[
+\boxed{
+E
+}
+\]
+
+最终不是一个 memory list，而是一个：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{动态历史关系场。}
 \)}
 \end{statementbox}
 
 
-\section{Theta 对 E 的间接反向作用}
+\section{情景合并：重复经历必须形成更高层历史对象}
 
-结构记忆更新：
-\begin{equation}
-\Theta_t
-\rightarrow
-\Theta_{t+1}
-\end{equation}
-会改变未来工作状态生成：
-\begin{equation}
-\hat h_{t+1}
+如果系统长期保留：
+
+\[
+E_1,E_2,\ldots,E_n
+\]
+
+但永远不能形成更高层结构，那么 E 的规模最终会随生命周期近似线性增长。
+
+因此相似 Episode 必须能够逐渐凝聚。
+
+定义：
+
+\[
+p_{ij}^{merge}
 =
-F_{\Theta_{t+1}}(h_t,u_t).
-\end{equation}
+\sigma
+\left(
+f_m(e_i,e_j)
+\right).
+\]
 
-如果结构学习成功，则：
-\begin{equation}
-\varepsilon_{t+1}\downarrow.
-\end{equation}
+当多个 Episode 在：
 
-进一步导致：
-\begin{equation}
-Recall(E_i)\downarrow,
-\end{equation}
+语义结构；
 
-\begin{equation}
-Reinforcement(E_i)\downarrow,
-\end{equation}
+状态转移；
 
-最终：
-\begin{equation}
-m_i(E)\downarrow.
-\end{equation}
+结果；
 
-因此：
+因果关系
+
+上持续相似时，可以形成 Macro Episode：
+
+\[
+\boxed{
+\bar e_k
+=
+\frac{
+\sum_i a_{ik}m_ie_i
+}{
+\sum_i a_{ik}m_i
+}.
+}
+\]
+
+其中：
+
+\[
+a_{ik}
+\]
+
+表示 Episode \(i\) 属于宏情景 \(k\) 的软权重。
+
+但宏情景的形成不应该简单删除原 Episode。
+
+更合理的是形成层级：
+
+\[
+\boxed{
+E_{macro}
+\rightarrow
+\{
+E_1,E_2,\ldots,E_n
+\}.
+}
+\]
+
+这样：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-\Theta
+\text{具体性}
+\)}
+\end{statementbox}
+
+和：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{抽象组织性}
+\)}
+\end{statementbox}
+
+可以同时存在。
+
+因此 E 内部本身就会形成：
+
+\[
+\boxed{
+h
+\rightarrow
+E^{fast}
+\rightarrow
+E^{org}.
+}
+\]
+
+其中：
+
+\[
+E^{fast}
+\]
+
+更加接近新鲜具体经历；
+
+\[
+E^{org}
+\]
+
+更加接近经过整理后的历史结构。
+
+但二者仍然属于同一个情景记忆相，而不是新的第四相。
+
+
+\section{情景分裂：过去也需要重新切分}
+
+情景组织不仅包括合并，也包括分裂。
+
+一个早期 Episode 可能粒度过粗：
+
+\[
+E_i.
+\]
+
+随着后来的理解增加，系统可能发现：
+
+\[
+E_i
+\]
+
+实际上包含多个不同子事件。
+
+因此可以定义：
+
+\[
+p_i^{split}
+=
+\sigma
+\left(
+f_s(
+Var_i,
+Conflict_i,
+BoundaryDensity_i
+)
+\right).
+\]
+
+当 Episode 内部：
+
+状态变化过于异质；
+
+存在多个事件边界；
+
+出现多个不同因果结构；
+
+或者召回时持续产生冲突，
+
+则：
+
+\[
+\boxed{
+E_i
+\rightarrow
+\{
+E_i^{(1)},
+E_i^{(2)},
+\ldots
+\}.
+}
+\]
+
+这意味着：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{历史的组织方式本身也是可以学习的。}
+\)}
+\end{statementbox}
+
+因此 E 的液态性质不是简单“容易忘”，而是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{其内部粒度、关系和解释结构都可以持续重组。}
+\)}
+\end{statementbox}
+
+
+\section{情景蒸发：遗忘不是失败，而是历史功能的迁移}
+
+如果 E 具有无限存储能力，并且所有 Episode 永久存在，那么：
+
+\[
+|E(t)|
+\propto
+t.
+\]
+
+随着生命周期增长：
+
+检索成本；
+
+组织成本；
+
+关系维护成本；
+
+重构成本
+
+都会不断增加。
+
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{情景蒸发是持续智能的必要治理机制之一。}
+\)}
+\end{statementbox}
+
+但蒸发不应仅仅由时间决定。
+
+更合理的形式是：
+
+\[
+\boxed{
+\dot m_i
+=
+-
+\left[
+\lambda_0
++
+\alpha_C C_E
++
+\alpha_X X_i^\Theta
+\right]m_i
++
+\beta_RR_i
++
+\beta_SS_i
++
+\beta_GG_i.
+}
+\]
+
+其中：
+
+\[
+\lambda_0
+\]
+
+是基础蒸发；
+
+\[
+C_E
+\]
+
+是当前记忆压力；
+
+\[
+X_i^\Theta
+\]
+
+表示该 Episode 已经被结构记忆解释或吸收的程度。
+
+而：
+
+\[
+R_i
+\]
+
+表示召回；
+
+\[
+S_i
+\]
+
+表示惊奇；
+
+\[
+G_i
+\]
+
+表示长期效用。
+
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{常用的历史被召回强化；}
+\)}
+\end{statementbox}
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{异常历史因惊奇而被保留；}
+\)}
+\end{statementbox}
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{已被慢结构充分吸收的普通经历逐渐蒸发。}
+\)}
+\end{statementbox}
+
+
+\section{Theta 并不需要直接删除 E}
+
+这是理解三相记忆闭环的一个关键点。
+
+当：
+
+\[
+E
+\rightarrow
+\Theta'
+\]
+
+以后，不应该立即执行：
+
+\[
+\Theta'\Rightarrow Delete(E_i).
+\]
+
+真正更自然的机制是：
+
+\[
+\boxed{
+\Theta'
+\rightarrow
+h'
+\rightarrow
+\varepsilon'\downarrow
+}
+\]
+
+新的结构记忆使系统面对相似情况时预测更准确：
+
+\[
+\varepsilon'\downarrow.
+\]
+
+于是：
+
+\[
+Recall(E_i)\downarrow.
+\]
+
+召回减少意味着：
+
+\[
+Reinforcement(E_i)\downarrow.
+\]
+
+于是 Episode 的动力学逐渐变成：
+
+\[
+\dot m_i
+\approx
+-\lambda_im_i.
+\]
+
+最终：
+
+\[
+m_i\downarrow.
+\]
+
+因此可以写成完整链：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+E
+\rightarrow
+\Theta'
 \rightarrow
 BetterPrediction
 \rightarrow
@@ -1121,447 +1805,1288 @@ LessSurprise
 \rightarrow
 LessRecall
 \rightarrow
-EpisodeEvaporation
+LessReinforcement
+\rightarrow
+EpisodeEvaporation.
 \)}
 \end{statementbox}
 
-比直接：
-\begin{equation}
-\Theta\rightarrow Delete(E)
-\end{equation}
-更符合三相记忆的连续动力学。
+这意味着：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{
+遗忘有时不是学习失败，而是结构学习成功以后具体历史失去了原有功能。
+}
+\)}
+\end{statementbox}
+
+这也是：
+
+\[
+\boxed{
+E\rightarrow\Theta
+}
+\]
+
+与：
+
+\[
+\boxed{
+E\rightarrow\varnothing
+}
+\]
+
+之间真正的动力联系。
 
 
-\section{E 治理策略也是可塑节点}
+\section{从 E 到 Theta：学习的本质是从实例到生成器}
 
-定义情景记忆治理参数：
-\begin{equation}
-\Lambda_E
+结构记忆不是经过压缩以后保存得更久的 Episode。
+
+真正的：
+
+\[
+E\rightarrow\Theta
+\]
+
+应当表示：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+Instance
+\rightarrow
+Generator.
+\)}
+\end{statementbox}
+
+假设一个 Episode 提供一段轨迹：
+
+\[
+e_i
 =
 \{
-\lambda_{evap},
-\theta_{write},
-\theta_{recall},
-\beta_{surprise},
-\tau_{cons},
-\ldots
-\}.
-\end{equation}
+h_t,
+a_t,
+h_{t+1}
+\}_{t=t_i^0}^{t_i^1}.
+\]
 
-这些变量决定：
-\begin{equation}
-WhatToRemember,
-\end{equation}
+那么 \(\Theta\) 可以学习：
 
-\begin{equation}
-WhatToRecall,
-\end{equation}
-
-\begin{equation}
-WhatToForget,
-\end{equation}
-
-\begin{equation}
-WhatToConsolidate.
-\end{equation}
-
-因此：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-\Lambda_E
-=
-MemoryGovernancePolicy.
-\)}
-\end{statementbox}
-
-定义长期记忆治理效用：
-\begin{equation}
-J_E
-=
-U_{future}
--
-\alpha C_{storage}
--
-\beta C_{recall}
--
-\gamma C_{false}
--
-\delta C_{update}.
-\end{equation}
-
-则：
-\begin{equation}
-\Lambda_{E,t+1}
-=
-\Lambda_{E,t}
-+
-\eta_E
-\widehat{\nabla}_{\Lambda_E}
-J_E.
-\end{equation}
-
-这构成：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-LearningToRemember.
-\)}
-\end{statementbox}
-
-
-\section{Psi 的信用升级条件}
-
-自我结构 $\Psi$ 不应响应单次异常事件。
-
-定义 Episode $E_i$ 对 $\Psi$ 的更新资格：
-\begin{equation}
-Q_i^\Psi
-=
-f(
-SelfRelevance_i,
-Persistence_i,
-CrossContextSupport_i,
-Confidence_i
-).
-\end{equation}
-
-只有当：
-\begin{equation}
-Q_i^\Psi
->
-\theta_\Psi
-\end{equation}
-时，才允许：
-\begin{equation}
-c_\Psi>0.
-\end{equation}
-
-因此：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-EpisodeCredit
-\not\Rightarrow
-SelfCredit.
-\)}
-\end{statementbox}
-
-只有跨时间、跨情景、持续稳定的自我相关证据，才能获得慢自我结构的修改权限。
-
-
-\section{Omega 的超慢信用积累}
-
-生命周期方向结构 $\Omega$ 的更新资格应依赖更长时间尺度：
-
-\begin{equation}
-Q^\Omega
-=
-f(
-LongTermOutcome,
-GoalConsistency,
-RepeatedTrajectory,
-\Psi
-).
-\end{equation}
-
-因此通常有：
-\begin{equation}
-\tau_\Omega
->
-\tau_\Psi.
-\end{equation}
-
-并且：
-\begin{equation}
-B_\Omega^P
-<
-B_\Psi^P.
-\end{equation}
-
-这保证生命周期方向不会被短期局部奖励轻易改写。
-
-
-\section{Boundary 对学习权限的治理}
-
-外部信息进入工作状态并不等于拥有长期结构写入权限。
-
-定义三级权限：
-\begin{equation}
-P_{observe},
-\qquad
-P_{remember},
-\qquad
-P_{consolidate}.
-\end{equation}
-
-一般设计为：
-\begin{equation}
+\[
 \boxed{
-P_{observe}
-\geq
-P_{remember}
-\geq
-P_{consolidate}.
+p_{\Theta}
+(
+h_{t+1}
+\mid
+h_t,a_t,c_t
+).
 }
-\end{equation}
+\]
+
+最简单的预测目标：
+
+\[
+\mathcal L_{\Theta}
+=
+\sum_i
+w_i
+\sum_{t\in e_i}
+D
+\left(
+F_{\Theta}(h_t,a_t),
+h_{t+1}
+\right).
+\]
+
+但：
+
+\[
+w_i
+\]
+
+不能对所有 Episode 完全相同。
+
+它应该依赖：
+
+\[
+Support_i,
+\]
+
+\[
+Confidence_i,
+\]
+
+\[
+Coverage_i,
+\]
+
+\[
+Residual_i,
+\]
+
+\[
+Utility_i.
+\]
 
 因此：
-\begin{equation}
-Input
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+w_i
+=
+f(
+Support_i,
+Confidence_i,
+Coverage_i,
+Residual_i,
+Utility_i
+).
+\)}
+\end{statementbox}
+
+这说明：
+
+\[
+\boxed{
+E
+}
+\]
+
+实际上承担了：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{长期结构学习的数据治理层。}
+\)}
+\end{statementbox}
+
+
+\section{从具体经历到充分统计：E 的整理为 Theta 提供训练结构}
+
+如果有大量相似 Episode：
+
+\[
+E_1,E_2,\ldots,E_n,
+\]
+
+结构学习没有必要永远逐条 Replay。
+
+经过 E 的组织以后，可以形成：
+
+\[
+\boxed{
+S_k
+=
+(
+\mu_k,
+\Sigma_k,
+N_k,
+R_k,
+P_k^{outcome}
+)
+}
+\]
+
+其中：
+
+\[
+\mu_k
+\]
+
+表示代表性中心；
+
+\[
+\Sigma_k
+\]
+
+表示变化范围；
+
+\[
+N_k
+\]
+
+表示支持度；
+
+\[
+R_k
+\]
+
+表示稳定关系结构；
+
+\[
+P_k^{outcome}
+\]
+
+表示结果分布。
+
+于是：
+
+\[
+\{
+E_i
+\}_{i\in C_k}
 \rightarrow
-h
-\end{equation}
-并不自动意味着：
-\begin{equation}
-Input
+S_k
 \rightarrow
 \Theta.
-\end{equation}
+\]
 
-未经验证的信息可以：
-\begin{equation}
-h\rightarrow E,
-\end{equation}
-但：
-\begin{equation}
-E\nrightarrow\Theta
-\end{equation}
-直到结构信用达到要求。
+这意味着 E 的合并不是简单的数据压缩。
 
+其真正目的之一是：
 
-\section{CCM 对学习调度的约束}
-
-学习本身消耗工作记忆、计算与时间资源。
-
-设当前认知负载：
-\begin{equation}
-L_C(t).
-\end{equation}
-
-当：
-\begin{equation}
-L_C(t)
-\rightarrow
-L_{critical},
-\end{equation}
-则应降低高成本学习活动：
-\begin{equation}
-g_\Theta\downarrow,
-\end{equation}
-
-同时仍可允许：
-\begin{equation}
-g_E>0.
-\end{equation}
-
-因此：
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-HighLoad
-\Rightarrow
-RecordNow,
-ConsolidateLater.
+\textbf{
+把大量具体历史逐渐组织成足以支持慢结构学习的经验统计结构。
+}
 \)}
 \end{statementbox}
 
-由此形成：
-\begin{equation}
-OnlineExperiencePhase
-\end{equation}
-与：
-\begin{equation}
-OfflineConsolidationPhase
-\end{equation}
-的时间分离。
+因此：
 
+\[
+\boxed{
+E^{org}
+}
+\]
 
-\section{Scheduler 与 Learning Scheduler 的关系}
+既仍然属于情景记忆，
 
-普通 Scheduler 分配：
-\begin{equation}
-Compute,
-Memory,
-Tool,
-Time.
-\end{equation}
+又已经开始承担：
 
-Learning Scheduler 分配：
-\begin{equation}
-Plasticity,
-LearningCredit,
-StructuralWritePermission.
-\end{equation}
-
-因此 AgentOS Scheduler 可以统一写为：
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-Scheduler
+\text{EvidencePreparationForTheta}.
+\)}
+\end{statementbox}
+
+
+\section{为什么 E 到 Theta 必须由学习调度控制}
+
+一个 Episode 具有高预测残差：
+
+\[
+Residual_i\gg0
+\]
+
+并不意味着它应该立刻进入 \(\Theta\)。
+
+因为高残差可能来自：
+
+新的真实规律；
+
+偶发异常；
+
+观测噪声；
+
+错误解释；
+
+一次性环境扰动。
+
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+Surprise
+\neq
+StructuralTruth.
+\)}
+\end{statementbox}
+
+这正是为什么需要学习调度。
+
+定义 Episode 对 \(\Theta\) 的结构学习资格：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+Q_i^\Theta
 =
-ResourceScheduling
+f(
+Support_i,
+Confidence_i,
+Coverage_i,
+Residual_i,
+Utility_i,
+Conflict_i
+).
+\)}
+\end{statementbox}
+
+可以写成：
+
+\[
+\begin{aligned}
+Q_i^\Theta
+={}&
+\sigma
+\left(
+w_sSupport_i
 +
-ProcessScheduling
+w_cConfidence_i
 +
+w_vCoverage_i
+{}\right.\\
+&\left.\quad+
+w_uUtility_i
++
+w_rResidual_i
+-
+w_fConflict_i
+\right).
+\end{aligned}
+\]
+
+当只有一次异常：
+
+\[
+Support_i\approx0,
+\]
+
+即使：
+
+\[
+Residual_i\gg0,
+\]
+
+仍可能：
+
+\[
+Q_i^\Theta\ll1.
+\]
+
+此时：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{先进入 E，而不是立即修改 }\Theta.
+\)}
+\end{statementbox}
+
+随着相似 Episode 增加：
+
+\[
+Support_i\uparrow,
+\]
+
+\[
+Confidence_i\uparrow,
+\]
+
+\[
+Coverage_i\uparrow,
+\]
+
+才逐渐：
+
+\[
+Q_i^\Theta\uparrow.
+\]
+
+于是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{EvidenceAccumulation}
+\rightarrow
+\text{StructuralPlasticityPermission}.
+\)}
+\end{statementbox}
+
+这是三相记忆和学习调度真正连接的地方。
+
+
+\section{从学习算法转向学习调度}
+
+传统机器学习通常根据学习信号进行分类：
+
+\[
+SupervisedLearning,
+\]
+
+\[
+SelfSupervisedLearning,
+\]
+
+\[
+ReinforcementLearning,
+\]
+
+\[
+MetaLearning.
+\]
+
+但在 AgentOS 中，这种分类不应该成为最高层架构。
+
+原因是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+LearningSignal
+\neq
+LearningTarget.
+\)}
+\end{statementbox}
+
+一次监督纠正可以用于：
+
+\[
+\Theta.
+\]
+
+也可能只用于：
+
+\[
+E.
+\]
+
+一次 prediction error 可以用于：
+
+Episode formation；
+
+Recall；
+
+\(\Theta\) 更新；
+
+CCM 状态估计。
+
+一个 reward 可以用于：
+
+action policy；
+
+E 的保留；
+
+记忆治理参数；
+
+学习调度器自身。
+
+因此，监督、自监督和强化学习更适合作为：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+LearningPrimitives.
+\)}
+\end{statementbox}
+
+而 AgentOS 需要在其上建立：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 LearningScheduling.
 \)}
 \end{statementbox}
 
-其中 Learning Scheduling 的特殊资源为：
+学习调度回答的不是：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-PlasticityBudget.
+\text{怎样算梯度？}
+\)}
+\end{statementbox}
+
+而是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{这个信号应该改变谁？}
 \)}
 \end{statementbox}
 
 
-\section{学习冲突}
+\section{AgentOS 学习的三层统一结构}
 
-一个节点可能同时获得多个方向不一致的学习信号。
+为了避免为监督学习、自监督学习、强化学习、元学习分别建立独立的顶层体系，可以把 AgentOS 的全部学习压缩为三个功能层：
 
-若：
-\begin{equation}
-\mathbf{g}_a
-\cdot
-\mathbf{g}_b
-<
-0,
-\end{equation}
-则发生梯度冲突。
-
-更一般地，AgentOS 学习冲突包括：
-
-\begin{equation}
-GradientConflict,
-\end{equation}
-
-\begin{equation}
-TimescaleConflict,
-\end{equation}
-
-\begin{equation}
-GoalConflict,
-\end{equation}
-
-\begin{equation}
-StructuralStabilityConflict.
-\end{equation}
-
-Learning Control 应求解受约束优化：
-\begin{equation}
-\min_{\Delta\xi}
-\mathcal{L}_{task}(\xi+\Delta\xi)
-\end{equation}
-subject to
-\begin{equation}
-\|\Delta\xi\|
-\leq
-B_i^P,
-\end{equation}
-
-\begin{equation}
-C_{risk}(\Delta\xi)
-\leq
-R_{\max},
-\end{equation}
-
-\begin{equation}
-C_{stability}(\Delta\xi)
-\leq
-S_{\max}.
-\end{equation}
-
-因此：
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-Learning
+\textbf{LearningScheduling}
+\rightarrow
+\textbf{LearningControl}
+\rightarrow
+\textbf{LearningAdaptation}.
+\)}
+\end{statementbox}
+
+三层不是按照快、中、慢时间尺度划分，而是按照功能划分。
+
+学习调度负责：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{谁学习、何时学习。}
+\)}
+\end{statementbox}
+
+学习控制负责：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{怎样学习、学习多少。}
+\)}
+\end{statementbox}
+
+学习适应负责：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{真正发生什么结构变化。}
+\)}
+\end{statementbox}
+
+这个三层结构可以覆盖：
+
+监督；
+
+自监督；
+
+强化；
+
+Replay；
+
+蒸馏；
+
+局部学习；
+
+参数更新；
+
+记忆重写；
+
+图结构重组。
+
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{学习范式}
+\)}
+\end{statementbox}
+
+从顶层体系下降为：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{学习适应算子集合}.
+\)}
+\end{statementbox}
+
+
+\section{第一层：学习调度决定谁获得可塑性}
+
+设 Agent 当前所有可学习结构组成：
+
+\[
+\boxed{
+X_t
 =
-ConstrainedStructuralControl.
-\)}
-\end{statementbox}
+\{
+E_t,
+\Theta_t,
+\Lambda_{E,t},
+\Pi_t,
+\Psi_t,
+\Omega_t,
+\Phi_{S,t},
+\Phi_{C,t}
+\}.
+}
+\]
 
+其中：
 
-\section{学习调度器的自指条件}
+\[
+\Lambda_E
+\]
 
-令 Learning Scheduler 的参数为：
-\begin{equation}
-\Phi_S.
-\end{equation}
+是 E 的治理参数；
 
-因为：
-\begin{equation}
+\[
+\Pi
+\]
+
+代表各种可学习控制策略；
+
+\[
 \Phi_S
-\in
-V_L,
-\end{equation}
-所以调度器本身也是可塑性超图节点。
+\]
 
-因此：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-CreditRouter
-\in
-CreditGraph.
-\)}
-\end{statementbox}
+是学习调度器自身参数；
 
-它对其他结构分配信用，同时自身也可能因长期调度结果获得信用。
+\[
+\Phi_C
+\]
 
-设调度器产生：
-\begin{equation}
+是学习控制器参数。
+
+定义学习信号：
+
+\[
+s_t^L.
+\]
+
+学习调度器：
+
+\[
+\boxed{
 g_t
 =
-S_{\Phi_S}(X_t,s_t).
-\end{equation}
+S_{\Phi_S}
+(
+X_t,
+s_t^L
+).
+}
+\]
 
-其调度行为最终产生长期结果：
-\begin{equation}
-J_{t:T}.
-\end{equation}
+输出：
 
-则调度器本身获得：
-\begin{equation}
-c_{\Phi_S}
+\[
+g_t
 =
-\widehat{
-\frac{\partial J_{t:T}}
-{\partial \Phi_S}
-}.
-\end{equation}
+[
+g_E,
+g_\Theta,
+g_{\Lambda_E},
+g_{\Pi},
+g_\Psi,
+g_\Omega,
+g_{\Phi_S},
+g_{\Phi_C}
+].
+\]
 
-并更新：
-\begin{equation}
+其中：
+
+\[
+g_i\in[0,1].
+\]
+
+它表示第 \(i\) 类结构当前获得学习权限的程度。
+
+例如：
+
+一次新颖但低置信事件：
+
+\[
+g_E\approx1,
+\]
+
+\[
+g_\Theta\approx0.
+\]
+
+一次经过大量历史验证的规律变化：
+
+\[
+g_E>0,
+\qquad
+g_\Theta\uparrow.
+\]
+
+长期发现记忆系统总是错误地忘记某一类重要 Episode：
+
+\[
+g_{\Lambda_E}\uparrow.
+\]
+
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+LearningScheduling
+=
+PlasticityRouting.
+\)}
+\end{statementbox}
+
+
+\section{第二层：学习控制决定如何改变}
+
+获得学习权限并不意味着立即更新。
+
+学习控制器还要决定：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{用什么方式改变。}
+\)}
+\end{statementbox}
+
+定义：
+
+\[
 \boxed{
+u_t^L
+=
+C_{\Phi_C}
+(
+X_t,
+s_t^L,
+g_t
+).
+}
+\]
+
+输出可以包括：
+
+\[
+u_i^L
+=
+(
+\eta_i,
+B_i,
+M_i,
+R_i,
+K_i,
+\alpha_i^{sup},
+\alpha_i^{self},
+\alpha_i^{RL},
+\ldots
+).
+\]
+
+其中：
+
+\[
+\eta_i
+\]
+
+是有效学习率；
+
+\[
+B_i
+\]
+
+是可塑性预算；
+
+\[
+M_i
+\]
+
+是允许修改的结构范围；
+
+\[
+R_i
+\]
+
+是 Replay 策略；
+
+\[
+K_i
+\]
+
+是允许的更新步数。
+
+同时：
+
+\[
+\alpha_i^{sup},
+\alpha_i^{self},
+\alpha_i^{RL}
+\]
+
+决定不同学习算子的权重。
+
+因此：
+
+\[
+\boxed{
+\Delta\xi_i
+=
+\alpha_i^{sup}
+A_i^{sup}
++
+\alpha_i^{self}
+A_i^{self}
++
+\alpha_i^{RL}
+A_i^{RL}
++\cdots
+}
+\]
+
+这意味着：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{监督、自监督、强化学习的选择与组合，本身属于学习控制问题。}
+\)}
+\end{statementbox}
+
+
+\section{第三层：学习适应真正执行结构变化}
+
+在学习适应层：
+
+\[
+\boxed{
+X_{t+1}
+=
+A
+(
+X_t,
+s_t^L,
+u_t^L
+).
+}
+\]
+
+这里可能发生：
+
+\[
+E_t\rightarrow E_{t+1},
+\]
+
+\[
+\Theta_t\rightarrow\Theta_{t+1},
+\]
+
+\[
+\Lambda_{E,t}
+\rightarrow
+\Lambda_{E,t+1},
+\]
+
+\[
+\Psi_t
+\rightarrow
+\Psi_{t+1}.
+\]
+
+具体适应算子可以是：
+
+梯度下降；
+
+对比学习；
+
+自监督预测；
+
+强化学习；
+
+局部可塑性；
+
+Replay；
+
+蒸馏；
+
+参数冻结与解冻；
+
+图重写；
+
+Episode 合并与拆分。
+
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+LearningAdaptation
+=
+\text{真正的状态、参数或拓扑变化。}
+\)}
+\end{statementbox}
+
+到这里，学习的三个问题被完全分离：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+Scheduling:
+\text{谁应该改变？}
+\)}
+\end{statementbox}
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+Control:
+\text{应该怎样改变？}
+\)}
+\end{statementbox}
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+Adaptation:
+\text{实际上改变了什么？}
+\)}
+\end{statementbox}
+
+
+\section{学习信号的统一来源}
+
+AgentOS 不需要假设所有学习都来自同一种损失。
+
+可以定义：
+
+\[
+\boxed{
+s_t^L
+=
+[
+s_t^{sup},
+\varepsilon_t,
+r_t,
+S_t,
+N_t,
+V_t,
+C_t,
+I_t
+].
+}
+\]
+
+其中：
+
+\[
+s_t^{sup}
+\]
+
+是监督信号；
+
+\[
+\varepsilon_t
+\]
+
+是预测误差；
+
+\[
+r_t
+\]
+
+是 reward；
+
+\[
+S_t
+\]
+
+是惊奇；
+
+\[
+N_t
+\]
+
+是新颖性；
+
+\[
+V_t
+\]
+
+是约束违反；
+
+\[
+C_t
+\]
+
+是资源成本；
+
+\[
+I_t
+\]
+
+是长期一致性。
+
+这些信号本身并不决定最终更新对象。
+
+真正关系是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+LearningSignal
+\rightarrow
+LearningScheduler
+\rightarrow
+LearningTarget.
+\)}
+\end{statementbox}
+
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+PredictionError
+\)}
+\end{statementbox}
+
+可以主要进入 E；
+
+也可以经过长期证据积累以后进入 \(\Theta\)。
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+Reward
+\)}
+\end{statementbox}
+
+可以更新行为策略；
+
+也可能最终改变 E 的治理方式。
+
+学习调度负责在这些可能性之间进行路由。
+
+
+\section{学习调度本质上是结构信用分配}
+
+传统强化学习主要解决：
+
+\[
+a_t
+\rightarrow
+r_{t+k}
+\]
+
+之间的时间信用分配。
+
+AgentOS 还必须解决：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{一个长期结果究竟应该归因于哪个内部结构？}
+\)}
+\end{statementbox}
+
+这可以称为：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{Structural Credit Assignment}.
+\)}
+\end{statementbox}
+
+设长期性能：
+
+\[
+J_{t:T}.
+\]
+
+可学习对象：
+
+\[
+\xi_i.
+\]
+
+理论上的结构责任可以写成：
+
+\[
+\boxed{
+C_i
+=
+\frac{\partial J_{t:T}}
+{\partial \xi_i}.
+}
+\]
+
+但对于持续生命周期系统，不可能始终对整个历史进行端到端反向传播。
+
+因此需要组合：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+Gradient
++
+EligibilityTrace
++
+Replay
++
+CounterfactualEvaluation
++
+LongTermStatistics.
+\)}
+\end{statementbox}
+
+例如记录某个过去学习决策的资格痕迹：
+
+\[
+e_i^L(t)
+=
+\gamma_e e_i^L(t-1)
++
+\phi_i(t).
+\]
+
+当未来结果到来：
+
+\[
+r_{t+k},
+\]
+
+可以估计：
+
+\[
+\Delta\xi_i
+\propto
+e_i^L(t)r_{t+k}.
+\]
+
+于是系统能够学习：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{过去哪一次“允许谁学习”的决策最终是正确的。}
+\)}
+\end{statementbox}
+
+
+\section{学习调度器自身为什么也必须学习}
+
+如果 Learning Scheduler 完全由人工规则固定，那么 Agent 可以持续学习世界，却无法学习：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{怎样学习更好。}
+\)}
+\end{statementbox}
+
+因此学习调度器自身参数：
+
+\[
+\Phi_S
+\]
+
+也应该属于可学习状态：
+
+\[
+\boxed{
+\Phi_S\in X.
+}
+\]
+
+这带来一个关键结构。
+
+调度器：
+
+\[
+S_{\Phi_{S,t}}
+\]
+
+首先产生：
+
+\[
+g_t.
+\]
+
+它决定：
+
+哪些 Episode 被保存；
+
+哪些结构被更新；
+
+哪些策略保持冻结。
+
+这些学习决策经过一段时间以后产生真实结果：
+
+\[
+Outcome_{t:T}.
+\]
+
+然后这些结果反过来形成调度器自身的学习信号：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
 \Phi_{S,t+1}
 =
-\Phi_{S,t}
-+
-\eta_S
-c_{\Phi_S}.
-}
-\end{equation}
+F_S
+(
+\Phi_{S,t},
+Outcome_{t:T}
+).
+\)}
+\end{statementbox}
 
-这就是 AgentOS 学习调度的自指闭环。
+于是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+Scheduler_t
+\rightarrow
+LearningDecision_t
+\rightarrow
+Outcome_{t:T}
+\rightarrow
+Scheduler_{t+1}.
+\)}
+\end{statementbox}
+
+这就是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{自指学习调度。}
+\)}
+\end{statementbox}
 
 
-\section{自指不是无限元递归}
+\section{自指不是无限元递归，而是闭环递归}
 
-自指学习不定义为：
-\begin{equation}
+这里必须严格区分：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{Self-reference}
+\)}
+\end{statementbox}
+
+和：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{InfiniteMetaHierarchy}.
+\)}
+\end{statementbox}
+
+AgentOS 不需要建立：
+
+\[
 S_1
 \rightarrow
 S_2
 \rightarrow
 S_3
-\rightarrow
-\cdots.
-\end{equation}
+\rightarrow\cdots
+\]
 
-而定义为：
+无限多层“调度器的调度器”。
+
+真正需要的是：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
@@ -1573,339 +3098,1135 @@ S_{t+1}.
 \)}
 \end{statementbox}
 
-因此它是动力学递归：
-\begin{equation}
-x_{t+1}=F(x_t),
-\end{equation}
-而不是无限结构递归。
+即：
 
-由此可定义：
-\begin{equation}
-\boxed{
-MetaLearningDepth<\infty.
-}
-\end{equation}
-
-
-\section{Learning Controller 的自适应}
-
-Learning Controller 参数：
-\begin{equation}
-\Phi_C
-\end{equation}
-同样属于：
-\begin{equation}
-V_L.
-\end{equation}
-
-其输出：
-\begin{equation}
-u_t^L
-=
-C_{\Phi_C}(X_t,c_t)
-\end{equation}
-决定：
-
-\begin{equation}
-LearningRate,
-\end{equation}
-
-\begin{equation}
-Replay,
-\end{equation}
-
-\begin{equation}
-UpdateMask,
-\end{equation}
-
-\begin{equation}
-GradientCombination,
-\end{equation}
-
-\begin{equation}
-PlasticityBudget.
-\end{equation}
-
-若过去控制策略导致：
-
-\begin{equation}
-LearningInstability\uparrow
-\end{equation}
-或：
-\begin{equation}
-LearningEfficiency\downarrow,
-\end{equation}
-则：
-\begin{equation}
-\Phi_C
-\rightarrow
-\Phi_C'.
-\end{equation}
-
-因此：
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-LearningControl
+x_{t+1}
+=
+F(x_t,result_t).
 \)}
 \end{statementbox}
-也属于自适应对象。
+
+学习调度器把自己也视为一种可适应结构。
+
+因此不需要增加新的元层。
+
+整个系统仍然只有：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+LearningScheduling
+\rightarrow
+LearningControl
+\rightarrow
+LearningAdaptation.
+\)}
+\end{statementbox}
+
+区别只是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+Scheduling
+\)}
+\end{statementbox}
+
+和：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+Control
+\)}
+\end{statementbox}
+
+自身也进入 Adaptation 的对象集合。
 
 
-\section{调度器的长期目标}
+\section{学习调度器的长期目标函数}
 
-Learning Scheduler 不应优化瞬时损失下降，而应优化长期综合效用。
+调度器不能只优化当前 loss。
 
-定义：
-\begin{equation}
+因为“当前学得快”可能造成：
+
+灾难性遗忘；
+
+结构漂移；
+
+历史污染；
+
+未来泛化下降。
+
+所以更合理的目标是：
+
+\[
 \boxed{
 J_S
 =
-J_{task}
+J_{future}
 -
-\lambda_1 C_{learn}
+\alpha C_{learn}
 -
-\lambda_2 C_{forget}
+\beta C_{forget}
 -
-\lambda_3 C_{instability}
+\gamma C_{instability}
 -
-\lambda_4 C_{memory}
+\delta C_{memory}
 -
-\lambda_5 C_{risk}.
+\zeta C_{risk}.
 }
-\end{equation}
+\]
 
 其中：
 
-\begin{equation}
+\[
+J_{future}
+\]
+
+是未来任务效用；
+
+\[
 C_{learn}
-=
-\text{学习计算成本},
-\end{equation}
+\]
 
-\begin{equation}
+是学习成本；
+
+\[
 C_{forget}
-=
-\text{旧结构破坏成本},
-\end{equation}
+\]
 
-\begin{equation}
+是旧能力损失；
+
+\[
 C_{instability}
-=
-\text{系统漂移成本},
-\end{equation}
+\]
 
-\begin{equation}
+是结构漂移；
+
+\[
 C_{memory}
-=
-\text{情景历史维护成本},
-\end{equation}
+\]
 
-\begin{equation}
+是记忆维护成本；
+
+\[
 C_{risk}
-=
-\text{错误慢结构更新风险}.
-\end{equation}
+\]
+
+是错误慢结构更新带来的风险。
+
+于是：
+
+\[
+\boxed{
+\max_{\Phi_S}J_S
+}
+\]
+
+真正优化的是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{
+整个生命周期中的学习效率、稳定性和未来适应能力。
+}
+\)}
+\end{statementbox}
+
+因此 Learning Scheduler 更接近一个：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+LongHorizonMetaPolicy.
+\)}
+\end{statementbox}
+
+
+\section{学习控制器自身也需要适应}
+
+Learning Controller：
+
+\[
+C_{\Phi_C}
+\]
+
+决定：
+
+学习率；
+
+Replay 次数；
+
+训练步数；
+
+梯度权重；
+
+冻结范围；
+
+正则强度；
+
+更新预算。
+
+这些控制变量通常能够获得比 Scheduler 更快的反馈。
+
+例如一次结构更新后，很快可以观察：
+
+loss 是否下降；
+
+gradient 是否爆炸；
+
+旧能力是否恶化；
+
+表示是否漂移。
 
 因此：
+
+\[
+\boxed{
+\Phi_C
+}
+\]
+
+也应该允许根据结果更新：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-LearningScheduler
+\Phi_{C,t+1}
+=
+F_C
+(
+\Phi_{C,t},
+LearningOutcome_t
+).
+\)}
+\end{statementbox}
+
+通常可以认为：
+
+\[
+\boxed{
+\tau_{\Phi_C}
+<
+\tau_{\Phi_S}.
+}
+\]
+
+也就是说：
+
+学习控制策略比学习调度的长期路由策略更快适应。
+
+
+\section{E 的治理参数是学习调度中的特殊学习对象}
+
+情景记忆自身具有：
+
+\[
+\Lambda_E.
+\]
+
+它包括：
+
+写入阈值；
+
+召回阈值；
+
+基础蒸发率；
+
+惊奇强化强度；
+
+合并倾向；
+
+拆分倾向；
+
+巩固门槛。
+
+这些参数并不等同于：
+
+\[
+E.
+\]
+
+也不等同于：
+
+\[
+\Theta.
+\]
+
+可以区分：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+E=\text{当前历史状态}
+\)}
+\end{statementbox}
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\Lambda_E=\text{历史治理策略}.
+\)}
+\end{statementbox}
+
+因此：
+
+\[
+\Lambda_E
+\]
+
+本身也是一个学习对象。
+
+例如系统长期发现：
+
+关键异常经常被过快蒸发。
+
+那么真正需要改变的不是某个 Episode，而可能是：
+
+\[
+\lambda_{evap}
+\]
+
+或者：
+
+\[
+\beta_{surprise}.
+\]
+
+于是：
+
+\[
+\boxed{
+g_{\Lambda_E}\uparrow.
+}
+\]
+
+这种学习的目标可以定义为：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+J_E
+=
+FutureUtility
+-
+StorageCost
+-
+RecallCost
+-
+FalseMemoryCost.
+\)}
+\end{statementbox}
+
+因此：
+
+\[
+\boxed{
+\Lambda_E
+}
+\]
+
+学习的是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{如何管理历史。}
+\)}
+\end{statementbox}
+
+而不是：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{世界本身是什么。}
+\)}
+\end{statementbox}
+
+
+\section{E 的治理策略具有生命周期发育性质}
+
+在 Agent 生命周期的不同阶段，最优的情景记忆策略并不相同。
+
+早期：
+
+\[
+\Theta
+\]
+
+尚弱。
+
+大量经历仍然可能具有学习价值。
+
+因此：
+
+\[
+WriteRate\uparrow,
+\]
+
+\[
+Evaporation\downarrow,
+\]
+
+\[
+RecallCost\downarrow.
+\]
+
+系统更多采用：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{多经历、多保留、多比较。}
+\)}
+\end{statementbox}
+
+随着：
+
+\[
+\Theta
+\]
+
+逐渐成熟，
+
+大量常规情况已经能够直接由：
+
+\[
+\Theta\rightarrow h
+\]
+
+处理。
+
+此时：
+
+\[
+RoutineWrite\downarrow,
+\]
+
+\[
+RoutineRecall\downarrow,
+\]
+
+\[
+RoutineEvaporation\uparrow,
+\]
+
+而：
+
+\[
+AnomalyRetention\uparrow.
+\]
+
+于是成熟 Agent 的 E 逐渐从：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{大量记录日常}
+\)}
+\end{statementbox}
+
+转向：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{重点保留异常、转折和未解释历史。}
+\)}
+\end{statementbox}
+
+因此：
+
+\[
+\boxed{
+\Lambda_E(t)
+}
+\]
+
+本身也具有生命周期发育轨迹。
+
+
+\section{E 治理与自我结构的慢尺度耦合}
+
+随着：
+
+\[
+\Psi
+\]
+
+逐渐形成，情景记忆治理不再只依赖：
+
+惊奇；
+
+新颖性；
+
+reward。
+
+还会逐渐依赖：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+SelfRelevance_{\Psi}.
+\)}
+\end{statementbox}
+
+可以把 Episode 的保留或写入价值写成：
+
+\[
+Q_i^E
+=
+f(
+Novelty_i,
+Surprise_i,
+Goal_i,
+SelfRelevance_i,
+FutureUtility_i
+).
+\]
+
+于是 Agent 的长期记忆选择逐渐从：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{什么显著就记什么}
+\)}
+\end{statementbox}
+
+过渡为：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{什么对长期自身结构重要就更值得保留。}
+\)}
+\end{statementbox}
+
+反过来，被长期保留并反复召回的情景又会参与：
+
+\[
+\Psi
+\]
+
+的慢更新。
+
+因此：
+
+\[
+\boxed{
+\Psi
+\rightarrow
+\Lambda_E
+\rightarrow
+E
+\rightarrow
+\Psi'
+}
+\]
+
+可以形成慢尺度耦合。
+
+但必须保持：
+
+\[
+\boxed{
+\Lambda_E\neq\Psi.
+}
+\]
+
+前者主要回答：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{怎样管理历史？}
+\)}
+\end{statementbox}
+
+后者主要回答：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{跨时间而言，我是谁？}
+\)}
+\end{statementbox}
+
+二者只是部分共享相近的慢发育时间尺度。
+
+
+\section{学习权限是一种稀缺资源}
+
+传统 OS 调度：
+
+CPU；
+
+内存；
+
+IO。
+
+AgentOS 还必须调度一种特殊资源：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{Plasticity}.
+\)}
+\end{statementbox}
+
+定义全局学习预算：
+
+\[
+B_L(t).
+\]
+
+每个可学习对象获得：
+
+\[
+P_i^L(t).
+\]
+
+满足：
+
+\[
+\boxed{
+\sum_iP_i^L(t)
+\le
+B_L(t).
+}
+\]
+
+其中预算可以表示：
+
+允许修改多少参数；
+
+允许写入多少 Episode；
+
+允许执行多少 Replay；
+
+允许多少慢结构变化；
+
+允许多少治理策略更新。
+
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+LearningScheduling
+=
+PlasticityScheduling.
+\)}
+\end{statementbox}
+
+越慢、越稳定的结构，其可塑性预算一般应该越小。
+
+例如可以采用默认关系：
+
+\[
+\boxed{
+B_E^P
+>
+B_{\Theta}^P
+>
+B_{\Psi}^P.
+}
+\]
+
+这不是自然规律，而是持续系统稳定性所要求的一种合理设计原则。
+
+
+\section{学习越慢，证据门槛越高}
+
+由于不同结构变化的长期代价不同，因此学习调度必须体现一种基本非对称性：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{越慢的结构，越难被修改。}
+\)}
+\end{statementbox}
+
+对于：
+
+\[
+E,
+\]
+
+一次经历即可形成：
+
+\[
+E_i.
+\]
+
+对于：
+
+\[
+\Theta,
+\]
+
+需要：
+
+重复支持；
+
+跨情景一致性；
+
+较高置信；
+
+未来价值。
+
+对于：
+
+\[
+\Psi,
+\]
+
+还应该要求：
+
+长期持续；
+
+自我相关；
+
+跨场景稳定；
+
+身份一致性。
+
+因此可以形成：
+
+\[
+\boxed{
+h
+\rightarrow
+E
+\rightarrow
+\Theta/\Psi
+}
+\]
+
+越来越严格的证据沉降过程。
+
+这可以称为：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{Evidence Sedimentation Principle}.
+\)}
+\end{statementbox}
+
+即：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{
+瞬时经验可以快速进入情景历史，但只有经过时间组织和多次验证的结构才能获得慢结构修改权。
+}
+\)}
+\end{statementbox}
+
+
+\section{Boundary 必须控制的不只是输入，还包括学习权限}
+
+外部信息能够进入：
+
+\[
+h
+\]
+
+不意味着它自动拥有：
+
+\[
+\Theta
+\]
+
+的写入权限。
+
+因此 Boundary 至少应该区分三种权限：
+
+\[
+P_{observe},
+\]
+
+\[
+P_{remember},
+\]
+
+\[
+P_{consolidate}.
+\]
+
+通常：
+
+\[
+\boxed{
+P_{observe}
+\ge
+P_{remember}
+\ge
+P_{consolidate}.
+}
+\]
+
+某条未经验证的外部信息可以：
+
+\[
+Input\rightarrow h.
+\]
+
+必要时：
+
+\[
+h\rightarrow E.
+\]
+
+但默认：
+
+\[
+E\nrightarrow\Theta
+\]
+
+直到它获得足够的：
+
+来源可信度；
+
+跨经验支持；
+
+现实验证。
+
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+InputAccess
 \neq
-FastLossMinimizer.
+LearningAccess.
 \)}
 \end{statementbox}
 
-更准确是：
+更进一步：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-LearningScheduler
-=
-LongHorizonPlasticityPolicy.
+MemoryAccess
+\neq
+StructuralWriteAccess.
 \)}
 \end{statementbox}
 
+这是持续 Agent 学习安全的基本原则。
 
-\section{学习调度可以表述为强化控制问题}
 
-定义 Learning Action：
-\begin{equation}
-a_t^L
-=
-(
-g_t,
-u_t^L
-).
-\end{equation}
+\section{CCM 使学习本身进入复杂度治理}
 
-状态：
-\begin{equation}
-s_t^A
-=
-(
-X_t,
-s_t^L,
-B_L,
-L_C
-).
-\end{equation}
+学习并不是零成本过程。
 
-则学习调度可以写成：
-\begin{equation}
-a_t^L
-\sim
-\pi_L(
-a^L|s_t^A
-).
-\end{equation}
+如果当前：
 
-长期目标：
-\begin{equation}
+\[
+h
+\]
+
+已经处于高负荷状态，
+
+同时执行：
+
+大量 Episode 整理；
+
+Replay；
+
+\(\Theta\) 更新；
+
+图关系重构，
+
+可能进一步增加认知复杂度。
+
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+CognitiveLoad_t
+\)}
+\end{statementbox}
+
+应成为学习调度输入。
+
+当：
+
+\[
+Load_t\uparrow,
+\]
+
+可以：
+
+\[
+g_E
+\]
+
+继续保持较高，用于先记录经历；
+
+但：
+
+\[
+g_\Theta\downarrow.
+\]
+
+即：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{先记，后学。}
+\)}
+\end{statementbox}
+
+这使 AgentOS 可以自然形成：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+OnlineExperiencePhase
+\)}
+\end{statementbox}
+
+和：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+OfflineConsolidationPhase.
+\)}
+\end{statementbox}
+
+前者重点保持实时运行；
+
+后者重点执行：
+
+Episode 整理；
+
+Replay；
+
+结构巩固；
+
+学习策略评估。
+
+因此学习本身也成为 CCM 所治理的认知负载。
+
+
+\section{TCE 可以成为短时间尺度可塑性调制器}
+
+TCE 已经负责当前运行时的：
+
+探索；
+
+抑制；
+
+搜索深度；
+
+增益；
+
+认知温度。
+
+在学习调度框架下，还可以引入一个：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+PlasticityGain
+\)}
+\end{statementbox}
+
+记为：
+
+\[
+g_P(t).
+\]
+
+使实际学习强度：
+
+\[
 \boxed{
-\max_{\pi_L}
-\mathbb{E}
-\left[
-\sum_{t=0}^{\infty}
-\gamma^t
-r_t^L
-\right]
-}
-\end{equation}
-
-其中：
-\begin{equation}
-r_t^L
+\eta_i^{eff}
 =
-R_t^{task}
--
-C_t^{learning}
--
-C_t^{forgetting}
--
-C_t^{instability}.
-\end{equation}
+g_P(t)\eta_i.
+}
+\]
 
-因此学习调度可以采用强化学习技术，但强化学习只是其一种可能实现。
+在探索阶段：
+
+\[
+g_P\uparrow,
+\]
+
+系统允许：
+
+更多新情景形成；
+
+更强新颖性保留；
+
+更高策略尝试。
+
+在稳定执行阶段：
+
+\[
+g_P\downarrow,
+\]
+
+保护已有结构。
+
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+TCE
+\)}
+\end{statementbox}
+
+主要调制：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{当前学习可塑性强度},
+\)}
+\end{statementbox}
+
+而 Learning Scheduler 主要决定：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{哪些结构具有学习资格}.
+\)}
+\end{statementbox}
+
+二者不能混淆。
 
 
-\section{调度器的反事实信用}
+\section{Scheduler 与 Learning Scheduler 的关系}
 
-仅根据真实执行路径可能难以判断：
-\begin{equation}
-\text{“如果当时把信用分给另一个结构会怎样？”}
-\end{equation}
+普通 Agent Scheduler 负责：
 
-定义反事实结果：
-\begin{equation}
-J^{cf}
+计算；
+
+记忆；
+
+进程；
+
+工具；
+
+资源。
+
+Learning Scheduler 则负责：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{可塑性分配。}
+\)}
+\end{statementbox}
+
+但学习本身又需要计算资源。
+
+因此，一个完整学习过程可以被表示为：
+
+\[
+L_i
+=
 (
-a_t^{L'}
+Priority_i,
+ExpectedGain_i,
+ComputeCost_i,
+MemoryCost_i,
+Risk_i
 ).
-\end{equation}
+\]
 
-则调度动作优势：
-\begin{equation}
-A_L(
-s_t,
-a_t^L
-)
-=
-J(
-a_t^L
-)
--
-\mathbb{E}_{a_t^{L'}}
-[
-J^{cf}(a_t^{L'})
-].
-\end{equation}
-
-于是调度器可以利用：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-CounterfactualCreditAssignment
-\)}
-\end{statementbox}
-估计某次结构信用分配是否合理。
-
-
-\section{自指学习的稳定性约束}
-
-设整个学习系统：
-\begin{equation}
-X_{t+1}
-=
-F_L(
-X_t,s_t
-).
-\end{equation}
-
-局部稳定性可以通过 Jacobian：
-\begin{equation}
-J_L
-=
-\frac{\partial F_L}
-{\partial X}
-\end{equation}
-分析。
-
-在线性化邻域内，一个充分但非必要的局部收敛条件为：
-\begin{equation}
-\boxed{
-\rho(J_L)<1,
-}
-\end{equation}
-其中 $\rho$ 为谱半径。
-
-这不是 AgentOS 必须全局满足的物理定律，而是用于表达一个重要设计原则：
+普通 Scheduler 决定：
 
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-\text{学习闭环本身必须保持有界。}
+\text{这个学习进程现在能不能运行。}
 \)}
 \end{statementbox}
 
+Learning Scheduler 决定：
 
-\section{自指学习的慢变量保护}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{这个结构现在有没有资格发生学习。}
+\)}
+\end{statementbox}
 
-为了避免：
-\begin{equation}
+因此可以写成：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+AgentScheduling
+=
+ResourceScheduling
++
+LearningScheduling.
+\)}
+\end{statementbox}
+
+二者相互耦合，但治理对象不同。
+
+
+\section{自指学习调度必须是有界的}
+
+如果 Learning Scheduler 能够修改自身：
+
+\[
+\Phi_S
+\rightarrow
+\Phi_S',
+\]
+
+就会产生一个新的风险。
+
+错误调度器可能产生错误学习：
+
+\[
 BadScheduler
 \rightarrow
 BadLearning
+\]
+
+错误学习导致更差结果：
+
+\[
+BadLearning
+\rightarrow
+BadOutcome
+\]
+
+如果系统又根据这个结果进一步错误地修改 Scheduler：
+
+\[
+BadOutcome
 \rightarrow
 WorseScheduler,
-\end{equation}
-需要限制自修改强度。
+\]
 
-可采用：
-\begin{equation}
-\|\Delta\Phi_S\|
-\leq
-B_S,
-\end{equation}
-
-\begin{equation}
-\eta_S
-\ll
-\eta_{local},
-\end{equation}
-
-以及：
-\begin{equation}
-J_S^{new}
->
-J_S^{old}
--
-\epsilon
-\end{equation}
-等保守接受条件。
+就可能形成发散正反馈。
 
 因此：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
@@ -1915,910 +4236,831 @@ UnboundedSelfModification.
 \)}
 \end{statementbox}
 
-而应满足：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-SelfReferentialLearning
-=
-BoundedRecursiveAdaptation.
-\)}
-\end{statementbox}
+学习调度器自身必须受到：
 
+可塑性预算；
 
-\section{连续学习动力学与离散学习治理}
+更新幅度限制；
 
-AgentOS 中并非所有学习过程都必须可微。
+长期评估；
 
-连续部分可写为：
-\begin{equation}
-\dot\xi_i
-=
-F_i(
-\xi_i,c_i,u_i^L
-).
-\end{equation}
+保守更新
 
-而离散治理可以包括：
-\begin{equation}
-Merge,
-\end{equation}
+约束。
 
-\begin{equation}
-Split,
-\end{equation}
+例如：
 
-\begin{equation}
-Freeze,
-\end{equation}
-
-\begin{equation}
-Activate,
-\end{equation}
-
-\begin{equation}
-Consolidate,
-\end{equation}
-
-\begin{equation}
-Offload.
-\end{equation}
-
-因此整体学习系统更适合写成混合动力系统：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-\mathcal{L}_{Agent}
-=
-ContinuousPlasticity
-\bowtie
-DiscreteLearningGovernance.
-\)}
-\end{statementbox}
-
-
-\section{多时间尺度学习方程}
-
-设第 $i$ 个结构具有：
-\begin{equation}
-\tau_i.
-\end{equation}
-
-则可以统一写成：
-\begin{equation}
+\[
 \boxed{
-\tau_i
-\dot\xi_i
-=
-g_i(t)
-F_i(
-\xi_i,
-\mathbf{c}_i,
-\mathbf{u}_i^L
-).
+\|
+\Delta\Phi_S
+\|
+\le
+B_S.
 }
-\end{equation}
+\]
 
-其中：
+并采用：
 
-\begin{equation}
-g_i(t)
-\end{equation}
-决定是否获得学习权限；
+\[
+\eta_S
+\]
 
-\begin{equation}
-\mathbf{c}_i
-\end{equation}
-决定为什么改变；
+明显低于快速学习控制参数的更新速度。
 
-\begin{equation}
-\mathbf{u}_i^L
-\end{equation}
-决定怎样改变；
+可以进一步要求：
 
-\begin{equation}
-\tau_i
-\end{equation}
-决定改变速度。
+\[
+J_S^{candidate}
+>
+J_S^{baseline}
+\]
 
-这给出 AgentOS 学习调度的一个核心统一微分形式。
+才允许新 Scheduler 获得更高权重。
+
+这使：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{自指学习}
+\)}
+\end{statementbox}
+
+成为：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{Bounded Self-Modification}.
+\)}
+\end{statementbox}
 
 
-\section{信用扩散的连续近似}
+\section{学习闭环自身也必须满足稳定性要求}
 
-如果将大量可塑结构视为连续结构空间 $\mathcal{M}_L$，可定义信用场：
-\begin{equation}
-c(x,t).
-\end{equation}
+学习本身是一个动力系统。
 
-其演化可抽象为：
-\begin{equation}
+设：
+
+\[
+X_{t+1}
+=
+F_L(X_t,s_t).
+\]
+
+如果一个小的学习策略变化会导致后续变化不断放大，那么系统即使任务模型本身稳定，也可能因为“学习机制”而失稳。
+
+局部上可以考虑：
+
+\[
 \boxed{
-\frac{\partial c}{\partial t}
-=
--\nabla\cdot
-(
-v_c c
-)
-+
-\nabla\cdot
-(
-D_c\nabla c
-)
-+
-S_c
--
-\Gamma_c c.
+\rho
+\left(
+\frac{\partial F_L}
+{\partial X}
+\right)
+<1
 }
-\end{equation}
+\]
 
 其中：
 
-\begin{equation}
-v_c
-=
-\text{信用定向迁移场},
-\end{equation}
+\[
+\rho
+\]
 
-\begin{equation}
-D_c
-=
-\text{信用扩散张量},
-\end{equation}
+为局部 Jacobian 的谱半径。
 
-\begin{equation}
-S_c
-=
-\text{新误差、奖励与约束产生的信用源},
-\end{equation}
+这里并不是要求所有实际 AgentOS 都严格按线性系统满足这一不等式，而是提出一个基本原则：
 
-\begin{equation}
-\Gamma_c
-=
-\text{信用衰减与抑制}.
-\end{equation}
-
-该方程不是对 AgentOS 必须采用连续 PDE 实现的要求，而是对多尺度信用传播的连续极限表示。
-
-
-\section{金字塔中的信用上迁}
-
-设结构层级为：
-\begin{equation}
-L_0,L_1,\ldots,L_K.
-\end{equation}
-
-底层代表快速、具体结构，上层代表慢速、抽象结构。
-
-定义信用上迁：
-\begin{equation}
-c^{(k+1)}
-=
-M_k
-c^{(k)}.
-\end{equation}
-
-其中：
-\begin{equation}
-M_k
-=
-M_k(
-Persistence,
-Support,
-Confidence,
-Utility
-).
-\end{equation}
-
-因此：
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-CreditPromotion
-=
-EvidenceBasedTimescaleMigration.
-\)}
-\end{statementbox}
-
-只有满足跨时间稳定性的信用，才向更慢结构传播。
-
-
-\section{信用下行与结构激活的区别}
-
-必须区分：
-\begin{equation}
-\Theta\rightarrow h
-\end{equation}
-的正常结构激活，
-
-和：
-\begin{equation}
-c_\Theta
-\end{equation}
-的结构学习信用。
-
-前者是：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-StructureActivation
-\)}
-\end{statementbox}
-
-后者是：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-StructureModificationSignal.
+\textbf{
+学习动力学本身也必须被视为需要稳定性的闭环，而不能假定学习过程天然稳定。
+}
 \)}
 \end{statementbox}
 
 因此：
-\begin{equation}
-\Theta
-\rightarrow
-h
-\end{equation}
-可以高速发生，
 
-而：
-\begin{equation}
-h
-\rightarrow
-\Theta
-\end{equation}
-仍应受到信用沉降和可塑性预算限制。
+slow update；
 
-这保证：
+trust region；
+
+plasticity budget；
+
+rollback；
+
+延迟巩固
+
+都不是附加工程技巧，而是自指学习治理的基本稳定机制。
+
+
+\section{学习系统不要求全部端到端可微}
+
+AgentOS 内部一部分学习可以完全可微：
+
+\[
+\Theta
+\]
+
+的神经网络更新；
+
+E 的 soft attention；
+
+Episode completion；
+
+可微 merge。
+
+但另一些治理行为天然可能是离散的：
+
+Episode 删除；
+
+Episode hard split；
+
+结构权限切换；
+
+模块冻结；
+
+Boundary 拒绝；
+
+学习窗口切换。
+
+因此整体更合理地写成：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-FastRead,
-SlowWrite.
+\text{DifferentiableLearningCore}
++
+\text{DiscreteLearningGovernance}.
+\)}
+\end{statementbox}
+
+离散治理部分仍然可以利用：
+
+policy gradient；
+
+Gumbel-softmax；
+
+straight-through estimator；
+
+bandit；
+
+黑盒优化。
+
+所以：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{AgentOS 自指学习}
+\neq
+\text{全系统必须使用反向传播}.
+\)}
+\end{statementbox}
+
+其本质是一个：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{连续学习动力学与离散结构事件耦合的混合系统。}
 \)}
 \end{statementbox}
 
 
-\section{学习调度与三相记忆的非对称性}
+\section{三相记忆与学习调度最终形成两个嵌套闭环}
 
-三相记忆因此具有基本非对称性：
+到这里，可以看见两个不同但嵌套的学习循环。
 
-结构激活：
-\begin{equation}
-\Theta
-\rightarrow
-h
-\end{equation}
-可以是直接和快速的；
+第一个是对象学习闭环：
 
-情景召回：
-\begin{equation}
-E
-\rightarrow
-h
-\end{equation}
-根据需要触发；
-
-结构学习：
-\begin{equation}
+\[
+\boxed{
 h
 \rightarrow
 E
 \rightarrow
 \Theta
-\end{equation}
-通常应当缓慢。
+\rightarrow
+h'.
+}
+\]
+
+它解决：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{经历怎样成为未来能力。}
+\)}
+\end{statementbox}
+
+第二个是学习治理闭环：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+LearningScheduler_t
+\rightarrow
+LearningDecision_t
+\rightarrow
+Outcome_t
+\rightarrow
+LearningScheduler_{t+1}.
+\)}
+\end{statementbox}
+
+它解决：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{系统怎样逐渐学会更好地学习。}
+\)}
+\end{statementbox}
 
 因此：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-ReadPath
-\neq
-WritePath.
+ObjectLearningLoop
+\subset
+LearningGovernanceLoop.
 \)}
 \end{statementbox}
 
-并且：
+外层并不是一个无限新的元结构，而是对内层学习结果的长期反馈控制。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\textwidth,height=.45\textheight,keepaspectratio]{images/learn_struct.png}
+\caption{学习调度器原理}
+\end{figure}
+
+\section{统一的自指学习状态方程}
+
+现在可以把整个系统压缩成一组统一方程。
+
+首先，现实和内部状态产生学习信号：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-ActivationTopology
-\neq
-PlasticityTopology.
-\)}
-\end{statementbox}
-
-这是学习调度超图与普通认知执行图必须区分的重要原因。
-
-
-\section{学习调度器的最优化问题}
-
-定义调度器输出信用：
-\begin{equation}
-\mathbf{c}_t.
-\end{equation}
-
-目标为：
-\begin{equation}
-\boxed{
-\max_{\mathbf{c}_t}
-\;
-\mathbb{E}
-\left[
-J_{future}
+s_t^L
+=
+\mathcal O_L
 (
-X_t+\Delta X(\mathbf{c}_t)
-)
-\right]
--
-\lambda_P
-C_{plasticity}
--
-\lambda_I
-C_{instability}
--
-\lambda_M
-C_{memory}
-}
-\end{equation}
-
-subject to：
-\begin{equation}
-\sum_i
-C_i^{learn}
-\leq
-B_L,
-\end{equation}
-
-\begin{equation}
-\|\Delta\xi_i\|
-\leq
-B_i^P,
-\end{equation}
-
-\begin{equation}
-Risk(X_t+\Delta X)
-\leq
-R_{\max}.
-\end{equation}
-
-因此 Learning Scheduling 本质上是：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-ConstrainedMulti-timescaleCreditAllocation.
+h_t,
+E_t,
+\Theta_t,
+Outcome_t
+).
 \)}
 \end{statementbox}
 
+学习调度：
 
-\section{三层学习的最终统一形式}
-
-第一层：
-\begin{equation}
+\[
 \boxed{
-\mathbf{c}_t
+g_t
 =
 S_{\Phi_S}
 (
 X_t,
-s_t^L
-)
+s_t^L,
+B_t
+).
 }
-\end{equation}
+\]
 
-即：
-\begin{equation}
-LearningScheduling
-=
-CreditRouting.
-\end{equation}
+学习控制：
 
-第二层：
-\begin{equation}
+\[
 \boxed{
-\mathbf{u}_t^L
+u_t^L
 =
 C_{\Phi_C}
 (
 X_t,
-\mathbf{c}_t
-)
+s_t^L,
+g_t
+).
 }
-\end{equation}
+\]
 
-即：
-\begin{equation}
-LearningControl
-=
-CreditTransformation.
-\end{equation}
+学习适应：
 
-第三层：
-\begin{equation}
+\[
 \boxed{
 X_{t+1}
 =
-A(
+A
+(
 X_t,
-\mathbf{c}_t,
-\mathbf{u}_t^L
-)
+s_t^L,
+u_t^L
+).
 }
-\end{equation}
+\]
 
-即：
-\begin{equation}
-LearningAdaptation
+而：
+
+\[
+X_t
 =
-CreditRealization.
-\end{equation}
-
-因此：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-Learning
-=
-CreditRouting
-\rightarrow
-CreditControl
-\rightarrow
-CreditRealization.
-\)}
-\end{statementbox}
-
-
-\section{自指闭环的统一方程}
+(
+E_t,
+\Theta_t,
+\Lambda_{E,t},
+\Pi_t,
+\Psi_t,
+\Omega_t,
+\Phi_{S,t},
+\Phi_{C,t}
+).
+\]
 
 由于：
-\begin{equation}
-\Phi_S,\Phi_C
-\in
-X_t,
-\end{equation}
-有：
-\begin{equation}
-X_{t+1}
-=
-A
-\left(
-X_t,
-C_{\Phi_C}
-\left(
-X_t,
-S_{\Phi_S}(X_t,s_t)
-\right)
-\right).
-\end{equation}
 
-定义：
-\begin{equation}
-\boxed{
-\mathcal{F}_{SL}
-=
-A
-\circ
-C_{\Phi_C}
-\circ
-S_{\Phi_S}.
-}
-\end{equation}
+\[
+\Phi_S,\Phi_C\in X,
+\]
 
-则整个自指学习系统可写为：
-\begin{equation}
-\boxed{
-X_{t+1}
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\Phi_{S,t+1}
 =
-\mathcal{F}_{SL}
+A_S
 (
-X_t,s_t
-).
-}
-\end{equation}
+\Phi_{S,t},
+Outcome_{t:T}
+)
+\)}
+\end{statementbox}
 
-而由于：
-\begin{equation}
-\mathcal{F}_{SL}
-\end{equation}
-自身部分参数包含于 $X_t$，
+以及：
 
-所以：
-\begin{equation}
-\boxed{
-X_{t+1}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\Phi_{C,t+1}
 =
-\mathcal{F}_{X_t}
+A_C
 (
-X_t,s_t
+\Phi_{C,t},
+LearningOutcome_t
 ).
+\)}
+\end{statementbox}
+
+于是整个闭环成为：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+Experience
+\rightarrow
+Schedule
+\rightarrow
+Control
+\rightarrow
+Adapt
+\rightarrow
+Outcome
+\rightarrow
+Schedule'.
+\)}
+\end{statementbox}
+
+这就是 AgentOS 自指学习调度的核心动力学形式。
+
+
+\section{学习调度的六条基本原则}
+
+由以上结构，可以得到六条基本原则。
+
+第一条是学习对象分离原则：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{
+不同时间尺度、不同功能的结构必须拥有不同的学习权限和可塑性边界。
 }
-\end{equation}
-
-这构成有限自指动力系统。
-
-
-\section{自指学习调度原则}
-
-由上述结构可以得到以下基本原则。
-
-\subsection{学习对象分离原则}
-
-不同结构必须拥有独立的可塑性边界：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-LearningSignal
-\neq
-AutomaticGlobalUpdate.
 \)}
 \end{statementbox}
 
-\subsection{信用路由原则}
+第二条是证据沉降原则：
 
-现实反馈首先形成信用，然后决定结构修改位置：
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-Feedback
-\rightarrow
-Credit
-\rightarrow
-Target.
+\textbf{
+越慢的结构，越需要经过 E 的历史组织和时间验证。
+}
 \)}
 \end{statementbox}
 
-\subsection{证据沉降原则}
+第三条是可塑性预算原则：
 
-越慢的结构，越需要经过更长期证据积累：
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-SlowStructure
-\Rightarrow
-LongerEvidenceAccumulation.
+\textbf{
+可塑性是一种有限资源，而不是默认无限开放的能力。
+}
 \)}
 \end{statementbox}
 
-\subsection{可塑性预算原则}
+第四条是学习信号路由原则：
 
-学习不是无限资源：
-\begin{equation}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{
+监督、预测误差、reward、惊奇等信号都不能自动获得所有结构的修改权。
+}
+\)}
+\end{statementbox}
+
+第五条是结果反馈原则：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{
+学习调度策略本身必须接受长期现实结果评价。
+}
+\)}
+\end{statementbox}
+
+第六条是自指有界原则：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{
+学习调度器可以学习自己，但其自修改必须受到预算、稳定性和现实反馈约束。
+}
+\)}
+\end{statementbox}
+
+
+\section{从持续学习到学习运行时}
+
+传统持续学习主要解决：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{怎样不断获得新能力，同时减少旧能力损失。}
+\)}
+\end{statementbox}
+
+进入 AgentOS 后，这个问题被进一步展开为：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{什么值得学习？}
+\)}
+\end{statementbox}
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{应该由什么结构学习？}
+\)}
+\end{statementbox}
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{应该什么时候学习？}
+\)}
+\end{statementbox}
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{应该使用什么学习方式？}
+\)}
+\end{statementbox}
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{应该改变多少？}
+\)}
+\end{statementbox}
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{什么必须暂时保持不变？}
+\)}
+\end{statementbox}
+
+因此：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+SupervisedLearning,
+SelfSupervisedLearning,
+ReinforcementLearning,
+MetaLearning
+\)}
+\end{statementbox}
+
+不再是 AgentOS 最高层的学习分类。
+
+它们成为：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+LearningAdaptationPrimitives.
+\)}
+\end{statementbox}
+
+而更高层的 AgentOS 学习结构只有三个基本抽象：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+LearningScheduling
+\)}
+\end{statementbox}
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+LearningControl
+\)}
+\end{statementbox}
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+LearningAdaptation.
+\)}
+\end{statementbox}
+
+由此，AgentOS 从：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{执行学习算法的系统}
+\)}
+\end{statementbox}
+
+转变为：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{管理学习过程本身的智能运行时。}
+\)}
+\end{statementbox}
+
+
+\section{本章结论：E 是学习证据层，Learning Scheduler 是可塑性治理层}
+
+三相记忆表明：
+
+\[
+h
+\]
+
+主要承担当前状态；
+
+\[
+\Theta
+\]
+
+主要承担慢生成结构。
+
+真正决定：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\text{历史怎样成为学习证据}
+\)}
+\end{statementbox}
+
+的是：
+
+\[
+E.
+\]
+
+因此：
+
+\[
 \boxed{
-\sum_i C_i^{learn}
-\leq
-B_L.
+E
 }
-\end{equation}
+\]
 
-\subsection{慢结构保护原则}
+不应被设计成普通 Replay Buffer，而应成为具有：
 
-\begin{equation}
-\boxed{
-\tau_i\uparrow
-\Rightarrow
-B_i^P\downarrow.
+事件形成；
+
+模式分离；
+
+关系绑定；
+
+模式补全；
+
+召回；
+
+重构；
+
+合并；
+
+分裂；
+
+蒸发；
+
+巩固
+
+能力的动态历史系统。
+
+其核心作用可以概括为：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{
+E 把当前经历转化成经过时间组织的结构学习证据。
 }
-\end{equation}
-
-\subsection{自指有界原则}
-
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-SchedulerCanLearnScheduler
-\)}
-\end{statementbox}
-但必须满足：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-BoundedSelfModification.
 \)}
 \end{statementbox}
 
-\subsection{现实优先原则}
+而一旦系统中同时存在：
 
-无论内部信用模型如何预测：
+\[
+E,
+\Theta,
+\Lambda_E,
+\Psi,
+\Omega
+\]
+
+以及各种控制策略，
+
+学习就不能再等同于单一参数更新。
+
+AgentOS 必须增加：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-RealityAuthority
->
-InternalLearningExpectation.
+LearningScheduling.
 \)}
 \end{statementbox}
 
+用于决定：
 
-\section{与传统学习范式的统一关系}
-
-监督学习可理解为：
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-ExternallyProvidedCredit.
+\text{谁有权被经验改变。}
 \)}
 \end{statementbox}
 
-自监督学习可理解为：
+并进一步通过：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-PredictionDerivedCredit.
+LearningControl
 \)}
 \end{statementbox}
 
-强化学习可理解为：
+决定：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-DelayedUtilityCredit.
+\text{应该怎样改变。}
 \)}
 \end{statementbox}
 
-Replay 可理解为：
+最后由：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-HistoricalCreditReinjection.
+LearningAdaptation
 \)}
 \end{statementbox}
 
-Eligibility Trace 可理解为：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-DelayedCreditBridge.
-\)}
-\end{statementbox}
+真正实施结构变化。
 
-元学习可理解为：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-LearningRuleCredit.
-\)}
-\end{statementbox}
+更重要的是，学习调度器与学习控制器自身也属于可学习对象，因此形成：
 
-三相记忆则提供：
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-InstantCredit
+Schedule_t
 \rightarrow
-EpisodeCredit
+Control_t
 \rightarrow
-StructuralCredit.
+Adaptation_t
+\rightarrow
+Outcome_t
+\rightarrow
+Schedule_{t+1}.
 \)}
 \end{statementbox}
 
-因此这些学习技术并不是互斥体系，而是同一信用超图中的不同信用生成与实现机制。
+这使 AgentOS 获得一种有限递归的自指学习能力。
 
+因此，本章最终可以得到两个统一定义：
 
-\section{AgentOS 学习的完整动力闭环}
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{
+E 是持续智能体中把“经历”转化为“可学习历史”的证据动力层。
+}
+\)}
+\end{statementbox}
 
-最终，现实交互产生：
-\begin{equation}
-World_t
+以及：
+
+\begin{statementbox}
+\centering
+\adjustbox{max width=.96\linewidth}{\(\displaystyle
+\textbf{
+AgentOS 的自指学习调度，是对整个智能体内部可塑性进行路由、控制、结果反馈与有界自修改的学习治理机制。
+}
+\)}
+\end{statementbox}
+
+如果把两者合并起来，整个持续学习过程最终不再只是：
+
+\[
+Data
 \rightarrow
-h_t.
-\end{equation}
-
-当前状态与预测比较产生：
-\begin{equation}
-\varepsilon_t.
-\end{equation}
-
-外部行为产生：
-\begin{equation}
-r_t,
-\qquad
-Constraint_t,
-\qquad
-Cost_t.
-\end{equation}
-
-这些形成学习信号：
-\begin{equation}
-\mathbf{s}_t^L.
-\end{equation}
-
-Learning Scheduler 在多尺度可塑性超图上进行：
-\begin{equation}
-\mathbf{s}_t^L
+Training
 \rightarrow
-\mathbf{c}_t.
-\end{equation}
+Model.
+\]
 
-Learning Controller 将信用转化为具体学习控制：
-\begin{equation}
-\mathbf{c}_t
-\rightarrow
-\mathbf{u}_t^L.
-\end{equation}
+而变成：
 
-Learning Adaptation 执行：
-\begin{equation}
-X_t
-\rightarrow
-X_{t+1}.
-\end{equation}
-
-新的结构改变未来状态：
-\begin{equation}
-X_{t+1}
-\rightarrow
-h_{t+1}.
-\end{equation}
-
-现实再次给出结果，从而：
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
 Reality
 \rightarrow
-Error/Credit
+h
 \rightarrow
-Scheduling
+E
 \rightarrow
-Control
+LearningScheduling
 \rightarrow
-Adaptation
+LearningControl
 \rightarrow
-NewBehavior
+StructuralAdaptation
 \rightarrow
-Reality'.
+\Theta/\Psi/\Lambda_E
+\rightarrow
+NewFutureDynamics.
 \)}
 \end{statementbox}
 
-同时，由于 Scheduler 与 Controller 自身属于 $X$：
+于是持续智能的核心也从：
+
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
-Scheduling_t
-\rightarrow
-LearningOutcome
-\rightarrow
-Scheduling_{t+1}.
+\text{不断训练}
 \)}
 \end{statementbox}
 
-由此整个学习系统闭合。
+提升为：
 
-
-\section{本章核心命题}
-
-本章最终提出三个核心命题。
-
-第一：
 \begin{statementbox}
 \centering
 \adjustbox{max width=.96\linewidth}{\(\displaystyle
 \textbf{
-AgentOS 中的学习，本质上不是参数更新，而是信用在多尺度可塑性超图中的传播。
+让现实经验经过历史组织和可塑性治理，以正确的时间尺度改变正确的内部结构。
 }
 \)}
 \end{statementbox}
 
-第二：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-\textbf{
-Learning Scheduler 的核心职责，是控制误差、奖励、惊奇、约束与长期结果所产生的信用，在不同结构和时间尺度之间如何分配。
-}
-\)}
-\end{statementbox}
-
-第三：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-\textbf{
-由于 Learning Scheduler 自身也是可塑性超图中的节点，所以 AgentOS 能够依据过去学习调度的长期结果，反过来修改自己的学习调度策略，从而形成有界的自指学习闭环。
-}
-\)}
-\end{statementbox}
-
-
-\section{最简统一表达}
-
-整个理论最终可以压缩为：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-\text{学习}
-=
-\text{信用传播}
-\)}
-\end{statementbox}
-
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-\text{调度}
-=
-\text{信用路由}
-\)}
-\end{statementbox}
-
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-\text{控制}
-=
-\text{信用变换}
-\)}
-\end{statementbox}
-
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-\text{适应}
-=
-\text{信用落地}
-\)}
-\end{statementbox}
-
-以及：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-\text{自指学习}
-=
-\text{信用路由规则自身也接受长期信用。}
-\)}
-\end{statementbox}
-
-因此，AgentOS 的统一学习方程可以写为：
-\begin{equation}
-\boxed{
-\mathcal{X}_{t+1}
-=
-\mathcal{A}
-\left[
-\mathcal{X}_t,
-\mathcal{C}
-\left(
-\mathcal{R}_L
-(
-\mathbf{s}_t^L,
-\mathcal{X}_t,
-\mathcal{H}_L
-)
-\right)
-\right].
-}
-\end{equation}
-
-其中：
-\begin{equation}
-\mathcal{R}_L
-=
-\text{Learning Scheduling},
-\end{equation}
-
-\begin{equation}
-\mathcal{C}
-=
-\text{Learning Control},
-\end{equation}
-
-\begin{equation}
-\mathcal{A}
-=
-\text{Learning Adaptation}.
-\end{equation}
-
-最终：
-\begin{statementbox}
-\centering
-\adjustbox{max width=.96\linewidth}{\(\displaystyle
-\textbf{
-AgentOS 的自指学习调度，
-就是在一个由不同时间尺度、不同稳定程度和不同结构修改权限组成的多层可塑性超图上，
-对现实反馈所产生的信用进行受约束路由，
-并允许这种路由策略依据其长期结果有限地修改自身。
-}
-\)}
-\end{statementbox}
+这正是从普通持续学习系统走向持续人工智能生命体所需要跨越的关键一步。
