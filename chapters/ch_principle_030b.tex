@@ -1,0 +1,230 @@
+% AgentOS 理论章节：建议使用 XeLaTeX 编译，主文档加载 xeCJK、amsmath、amssymb、amsthm、tikz
+% TikZ libraries: arrows.meta, positioning, calc, shapes.geometric, fit
+% 可作为 book/report 文档中的独立章节 \input{...}
+\chapter{有限认知界面的三重约束原理}
+\label{chap:triple_bounded_interface}
+
+\noindent\textbf{章首语}\quad
+在前述三相记忆理论中，我们将智能体的记忆系统划分为工作记忆 $h(t)$、情景记忆 $E$ 与结构记忆 $\Theta$。其中，$h(t)$ 是智能体与外部世界及其记忆系统发生实时耦合的认知界面：外部信息、情景召回、结构知识和自我状态经由这一界面参与当前判断，而决策结果又通过它驱动行动、更新经历并改变长期结构。此前的有限工作记忆容量原理已经指出，任何有限资源的智能体都不可能在同一时刻维持任意规模的活跃认知状态。然而，容量有限尚不足以刻画认知过程的完整边界。即使一个输入可以被接纳，也不表示其复杂关系能够被一次性求解；即使每个局部关系都可以求解，也不表示系统能在规定时间内完成全部关系处理。本章据此提出\emph{有限认知界面三重约束原理}：认知界面同时受单次有效输入量、单次有效处理复杂度、有限时间内有效关联处理量的共同限制。第三种限制称为\emph{有限认知带宽}，它使认知问题由静态状态承载转向动态关联吞吐，并直接导出 AgentOS 的持续调度问题。
+
+\section{理论对象及三重有限性}
+\label{sec:three_limits}
+
+这里所谓认知界面并不等同于模型接收的原始 Token 序列，也不等同于某个固定长度的缓存。它是智能体在一个认知周期内实际参与判断、推理、规划与控制的\emph{有效活跃状态}。我们把离散认知周期记为 $k$，连续时间记为 $t$，并以
+\begin{equation}
+ h_k=(V_k,R_k,X_k),\qquad h(t)=\mathcal{I}(\Theta,E,u_{\leq t},\Psi; t)
+ \label{eq:h_interface}
+\end{equation}
+表示这一界面。其中 $V_k$ 为当前可区分的信息单元，$R_k$ 为当前显式或隐式维持的语义、因果、时空与任务依赖关系，$X_k$ 为置信度、激活程度、优先级及控制上下文；$\mathcal I$ 表示界面形成过程，而不是假定存在一个可完全观测的封闭函数。$\Psi$ 表示智能体自我及其持续目标施加的选择性约束。界面状态可以由显式知识图、隐状态向量、注意分布或这些表示的混合体实现，因此理论并不绑定特定数据结构。
+
+定义单次\emph{有效接纳负载} $I_k$，单次\emph{活跃关联复杂度} $C_k$，以及时间窗口 $[t,t+T]$ 内\emph{有效关联处理工作量} $W_c(t,T)$。在固定架构、计算预算、任务分布、表示规约及最低质量要求 $q_0$ 的条件下，三重约束写作
+\begin{equation}
+\boxed{ I_k\leq I_{\max},\qquad C_k\leq C_{\max},\qquad W_c(t,T)\leq B_{\max}T. }
+\label{eq:triple_bound}
+\end{equation}
+第一式回答一次认知更新究竟能够\emph{有效接纳}多少新信息；第二式回答单次认知过程能够\emph{联合维持与处理}多复杂的关联结构；第三式回答有限时间内能够\emph{完成}多少有质量保证的关联工作。三者具有不同量纲与测量方法，不能将其归结为上下文窗口长度，也不能把一个维度的富余视为另两个维度必然存在富余。
+
+这里的“最大”总是\emph{条件性最大值}而非跨任务、跨设备的普适自然常数。若允许无限外部计算、无限延迟或逐步降低结果质量，则相关上界的定义也会变化。本章所称有限性，均在给定的资源与验收条件下讨论。
+
+\section{单次有效输入的有限性}
+\label{sec:input_bound}
+
+设周期 $k$ 到达的外部或记忆召回信息为 $u_k$，其原始信息规模为 $L_{\rm raw}(u_k)$。由 Boundary、检索、感知过滤、抽象和压缩等机制组成的输入变换为 $\mathcal A_k$。真正纳入认知界面的信息为 $\tilde u_k=\mathcal A_k(u_k)$，因此
+\begin{equation}
+ I_k=L_{\rm eff}(\tilde u_k\mid h_{k-1},\Theta,E),\qquad I_k\leq I_{\max}.
+ \label{eq:input_capacity}
+\end{equation}
+$L_{\rm eff}$ 是在指定表示规约下的有效负载函数，可通过语义单元、任务相关新颖性或所需编码长度近似。若直接采用比特或 Token，则必须另外说明该数值为何能代表认知接纳，而非仅代表传输或存储。一个大型文件可以完整地存在外部记忆 $M_e$ 中，而此时仅有摘要、索引和少量证据进入 $h_k$；系统“持有文件”不等于“已在当前周期理解文件”。
+
+输入容量边界首先要求\emph{选择}。界面无法不加区分地承担所有到达的细节，必须根据当前目标、自我状态、预测误差和任务紧迫性决定哪些信息进入、哪些延迟、哪些仅保留在外部。输入限制也进一步要求\emph{分块}：当任务素材超过 $I_{\max}$ 时，只有将其拆成能被逐次接纳、且可通过记忆可靠连接的局部块，后续推理才有可能继续。分块可能损失跨块关系，因此它不是无条件正确的操作；可靠索引、上下文恢复与边界关系记录是其必要补偿。
+
+\section{单次关联处理复杂度的有限性}
+\label{sec:complexity_bound}
+
+被接纳的信息并不自动形成理解。认知的困难通常来自多条关系的联合绑定及相互约束，而非元素数量本身。十个相互独立的事实，可能比五个相互冲突且具有多层因果依赖的事实更易处理。故定义复杂度时必须同时考虑节点、关系以及联合求解难度。一种可用于工程估计的代理量为
+\begin{equation}
+ C_k=\alpha |V_k|+\beta\sum_{r\in R_k}\omega(r)+\gamma D_k+\delta K_k+\xi H_k,
+ \label{eq:complexity_proxy}
+\end{equation}
+其中 $D_k$ 为需同时保持的依赖深度，$K_k$ 为约束耦合与冲突代价，$H_k$ 为跨 What--Where--When 通路及局部拓扑与全局分布表征之间的绑定代价。参数由实验校准；式 \eqref{eq:complexity_proxy} 不是普适的复杂度定律，尤其不能假定真实代价永远线性可加。在此代理定义下，认知周期需满足
+\begin{equation}
+ C_k\leq C_{\max}.
+ \label{eq:complexity_limit}
+\end{equation}
+这揭示了有限输入与有限复杂度之间的第一种分离：$I_k\leq I_{\max}$ 并不保证 $C_k\leq C_{\max}$。信息量很少但蕴含高阶约束的问题，仍可能迫使系统拆解求解；反之，结构记忆 $\Theta$ 所提供的成熟抽象可以将原本复杂的关联组合收束为少量高层符号，使 $C_k$ 在任务语义不变的条件下下降。值得注意的是，压缩之后的表面表示变小，不代表底层关系已被可靠处理，只有在所要求的判断与行动仍然正确时，压缩才是有效的。
+
+\section{有限认知带宽：时间中的关联能力边界}
+\label{sec:bandwidth}
+
+前两重约束刻画认知界面一个周期内能够容纳与联合处理什么，第三重约束则刻画\emph{认知状态变化的速度}。若把认知理解为关联的建立、更新、消歧、检验、撤销、传播和用于决策的组合，那么任何这些操作都需要有限的计算、访存、通信或模型调用成本。具有有限资源和有界并行度的智能体，在给定质量标准下不可能于有限时间完成无穷多次彼此可区分且非零成本的有效关联操作。这就是有限认知带宽的资源基础。
+
+\subsection*{关联操作及有效工作量}
+
+令 $\mathcal P(t,T)$ 为在区间 $[t,t+T]$ 内\emph{已完成并通过验收}的关联操作集合。一个操作可以是两实体的关系识别、一个因果假设的证据检验、跨时空线索绑定，或一项约束传播的完成。为避免把难度不同的操作一律当作“一个关系”，需要在固定基准任务族中指定归一化权重 $w(a)>0$，并定义质量得分 $q(a)\in[0,1]$：
+\begin{equation}
+ W_c(t,T)=\sum_{a\in\mathcal P(t,T)}w(a)q(a),
+ \qquad
+ B_c(t,T)=\frac{W_c(t,T)}{T}.
+ \label{eq:cognitive_bandwidth}
+\end{equation}
+$W_c$ 是\emph{有效关联工作量}，$B_c$ 是指定窗口上的\emph{平均有效认知带宽}。关联操作的权重必须锚定可复现的任务单位，质量得分应通过外部可检验的判据评价；否则系统可能通过反复计数、拆分空操作或自我报告“理解”来虚增指标。任务难度权重与计算实际消耗要分别记录，因为“工作成果”与“资源成本”不是同一数量。
+
+定义在固定预算 $\mathcal R$、任务族 $\mathcal D$、质量阈值 $q_0$、时间尺度 $T$ 及可用策略集合 $\Pi$ 下的带宽上界
+\begin{equation}
+ B_{\max}(T;\mathcal R,\mathcal D,q_0)
+ =\sup_{\pi\in\Pi}\,\mathbb E_{\mathcal D}\!\left[B_c(t,T;\pi)\right].
+ \label{eq:bandwidth_sup}
+\end{equation}
+因此 $B_{\max}$ 严格说具有窗口与任务依赖性；只有在特定运行区间内可视为近似常量时，才能简写为 $B_{\max}$。对于一次性的过短窗口，还可能存在预先计算结果与缓存输出带来的突发效应。为获得物理及工程上稳健的上界，可以引入初始储备 $W_{\rm cache}$：
+\begin{equation}
+ W_c(t,T)\leq W_{\rm cache}+B_{\rm sustained}T.
+ \label{eq:burst_sustained}
+\end{equation}
+当明确排除预计算储备并采用稳定运行窗口时，式 \eqref{eq:burst_sustained} 退化为式 \eqref{eq:triple_bound} 的带宽约束。由此区分\emph{短时突发能力}与\emph{可持续认知带宽}；对一个长期运行的 AgentOS 来说，后者尤为关键。
+
+\subsection*{关联带宽不是输入吞吐，也不是硬件算力}
+
+Token/s 测量模型生成速率，bit/s 测量通道数据传输率，FLOP/s 测量数值运算吞吐，均不能直接表示单位时间内完成了多少\emph{有效关系处理}。两组输入可能具有相同 Token 量，却分别要求独立分类和多层因果联合求解；两次模型运行可能消耗相同 FLOPs，却在正确性、知识复用与关联修正上取得不同成果。认知带宽是面向任务语义与质量的\emph{系统层有效吞吐}，不能由任何单一底层吞吐指标直接替代。
+
+认知带宽还不同于单次复杂度。$C_{\max}$ 限制\emph{某一时刻或周期必须联合维护的关系结构}，$B_{\max}$ 限制\emph{多个周期累计能够完成的关系工作量}。一个系统可以顺序处理大量低复杂度关系，因此累计处理量大于任何一次界面可容纳的关系数；也可以因为每次关系绑定都要多轮验证，而在结构未超载时仍然发生带宽不足。二者不能互推。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex, node distance=9mm, every node/.style={font=\small},box/.style={draw,rounded corners,align=center,minimum height=10mm,inner sep=5pt}]
+\node[box,fill=gray!10] (source) {世界输入／记忆召回\\$u_k,\ E,\ \Theta,\ M_e$};
+\node[box,fill=cyan!10,right=16mm of source] (gate) {输入接纳\ $I_k\le I_{\max}$};
+\node[box,fill=green!9,right=16mm of gate] (state) {活跃认知界面 $h_k$\\$C_k\le C_{\max}$};
+\node[box,fill=orange!10,below=15mm of state] (time) {关联操作跨周期累计\\$W_c(t,T)\le B_{\max}T$};
+\node[box,fill=gray!10,left=16mm of time] (act) {行动、记忆更新\\及延续性任务状态};
+\draw[->,thick] (source)--(gate);
+\draw[->,thick] (gate)--(state);
+\draw[->,thick] (state)--node[right,font=\scriptsize]{连续认知周期}(time);
+\draw[->,thick] (time)--(act);
+\draw[->,dashed] (act.west) -- ++(-15mm,0) |- node[pos=.25,left,font=\scriptsize]{下一周期} (source.south);
+\end{tikzpicture}
+\caption{三重约束作用于不同位置：输入门控、活跃关联状态与跨时间的有效关联工作。回路表示认知过程的持续推进，而不是一次性完成全部任务。}
+\label{fig:triple_constraints}
+\end{figure}
+
+\section{带宽不足如何演化为认知积压}
+\label{sec:queues}
+
+为研究动态运行，令 $\lambda_c(t)$ 为单位时间到达且需要处理的\emph{关联工作需求}，$\mu_c(t)$ 为单位时间实际完成的有效关联工作，$Q_c(t)$ 为尚未完成的工作积压。在忽略任务撤销、过期和重定义的简化条件下，可写为
+\begin{equation}
+ \dot Q_c(t)=\lambda_c(t)-\mu_c(t)
+ \quad\text{当 }Q_c(t)>0,\qquad
+ \mu_c(t)\le B_{\rm sustained}.
+ \label{eq:cognitive_queue}
+\end{equation}
+在 $Q_c=0$ 的边界处施加非负约束。若长期平均到达负载超过长期平均服务能力，即 $\overline\lambda_c>\overline\mu_c$，且缺乏丢弃、简化或外部卸载，积压将持续上升。对于有限认知界面，这种积压不一定表现为物理队列，还可能表现为未决问题、依赖关系悬置、反复重启的思维链、延迟行动及答案质量下降。
+
+为了分析负载状况，可定义
+\begin{equation}
+ \rho_c=\frac{\overline\lambda_c}{\overline\mu_c^{\rm capacity}},
+ \label{eq:utilization}
+\end{equation}
+其中分母表示在所选任务分布与质量阈值下的可持续服务能力。$\rho_c<1$ 是许多理想化队列模型获得稳态的必要操作目标，但不能孤立地视为充分条件：任务关联性、负载突发、上下文切换、错误返工和队列调度不当都可能导致有限窗口中的认知失稳。
+
+一个尤其重要的事实是：\emph{输入量不过载，并不能保证带宽不过载}。例如，一个仅含几条约束的任务可能需要漫长的搜索与校验；其 $I_k$ 很小，局部表示也可以保持在 $C_{\max}$ 内，但 $\lambda_c$ 在截止时间尺度上仍超过系统可用关联带宽。因此认知带宽检测必须独立于输入长度检测与瞬时复杂度检测。
+
+\section{三重约束的联合可行域}
+\label{sec:coupled_feasibility}
+
+输入接纳、活跃关系维护和关联处理通常共享模型计算、注意资源、内存、检索频次及通信时间。故三重上界不是三个可以同时达到的独立峰值。令 $r$ 表示资源分配策略，$\Theta,E$ 表示已有知识对工作负载的改变，则可以定义联合可行域
+\begin{equation}
+ \mathcal F_h(\Theta,E,\mathcal R)
+ =\bigl\{(I,C,B):\Phi(I,C,B\mid\Theta,E,\mathcal R)\le 1\bigr\}.
+ \label{eq:feasible_region}
+\end{equation}
+$\Phi$ 表示由实测或可分析的资源成本得到的归一化占用函数，而不是预先宣称其总能写成 $I/I_{\max}+C/C_{\max}+B/B_{\max}$。在高关联复杂度状态下，更多资源用于保持及求解当前依赖，可供新信息接纳的资源可能减少；在高输入吞吐模式下，深层关系验证可能被压缩；而大量工具调用则可能引入通信与结果整合开销。真正的系统边界是一张随任务、知识结构及资源策略变化的可行曲面，而非三个互不干涉的开关。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex,scale=1.0, every node/.style={font=\small}]
+\draw[->] (0,0)--(8,0) node[below] {$I$：单次接纳负载};
+\draw[->] (0,0)--(0,5) node[above] {$C$：活跃关联复杂度};
+\fill[teal!12] (0,0)--(7.0,0) .. controls (6.4,1.0) and (5.0,2.2) .. (3.0,3.5) .. controls (1.9,4.2) and (.8,4.55) .. (0,4.65)--cycle;
+\draw[thick,teal!70!black] (7.0,0) .. controls (6.4,1.0) and (5.0,2.2) .. (3.0,3.5) .. controls (1.9,4.2) and (.8,4.55) .. (0,4.65);
+\node[teal!60!black] at (2,1.5) {联合可行区（$B$ 固定）};
+\fill (2.1,2) circle (2pt) node[below right] {可行状态};
+\fill[red!70!black] (6.4,3.3) circle (2pt) node[right] {超出边界};
+\node[align=left,font=\scriptsize] at (5.4,4.35) {边界随 $B$、任务类别、\\资源和知识结构变化};
+\end{tikzpicture}
+\caption{联合约束的二维切片示意。曲线形状不代表经验测量结果，旨在表示输入接纳和活跃关联处理存在资源竞争；改变带宽需求 $B$ 将改变这张切片。}
+\label{fig:feasible_slice}
+\end{figure}
+
+\section{三相记忆为什么能够跨越单次界面边界}
+\label{sec:memory_multiscale}
+
+三重约束不意味着智能体只能求解尺寸小于 $I_{\max}$ 或 $C_{\max}$ 的问题。它意味着\emph{任何一个认知周期}都必须遵守有限界面，而复杂问题必须通过跨周期组织求解。三相记忆正是在不同时间尺度上承担这一任务：工作记忆 $h(t)$ 维持实时状态与判断；情景记忆 $E$ 保存经历片段、未完成的推理分支、证据链和任务延续所需上下文；结构记忆 $\Theta$ 将重复出现的关系模式沉淀为规则、技能、抽象及生成性知识。它们并不增加同一认知周期的无限容量，而是通过\emph{分时、保留与结构复用}减少每个周期必须承担的负担。
+
+设一个任务若在缺乏可复用知识时需要 $W_0$ 单位有效关联工作，而通过调用 $\Theta$ 中的抽象和 $E$ 中的先前处理结果之后，总关联工作（包括检索、对齐、校验及整合开销）为 $W_{\Theta,E}$。定义结构复用增益
+\begin{equation}
+ G_{\Theta,E}=\frac{W_0}{W_{\Theta,E}}.
+ \label{eq:reuse_gain}
+\end{equation}
+当 $G_{\Theta,E}>1$ 且任务质量未降低时，记忆结构提高的是\emph{有效问题解决效率}；它未必改变认知核心在同一硬件条件下的基础吞吐上限。这一区分可以解释为何经验丰富的智能体更善于处理复杂情境：并非它每次都对更多原始细节重新计算，而是它能够以较少的在线关联工作激活更高层的结构。
+
+另一方面，时间分解也不是没有代价。若大问题被切成 $n$ 个子问题，系统还必须承担上下文恢复、子问题边界保存、跨块依赖检验与最终组合成本。分解可行性的条件是各子问题的峰值输入与活跃复杂度处于可行域内，且累计工作加上协调开销能在可用时间和资源内完成。因此，对可解问题的持续处理能力不能被误读为“任何有限带宽智能体都能在任意期限内解决任意问题”。可计算性、算法复杂度、外部环境不确定性及验证资源仍是独立边界。
+
+\section{有限认知带宽与多频闭环的耦合}
+\label{sec:multifrequency_bandwidth}
+
+在多时间尺度的智能系统中，高频闭环面对实时感知、动作纠偏及局部关系绑定，通常要求短延迟；中频闭环负责事件积累与任务阶段整理；低频闭环负责长期策略、知识结构和自我约束更新。各频率层并非拥有彼此完全独立的认知带宽。它们共享部分底层资源，同时又可通过异步执行、缓存和外部调度形成不同的有效服务能力。
+
+令 $B_i$ 表示第 $i$ 层闭环在其自身时间尺度上的有效带宽，$\lambda_i$ 为该层任务负载，$\kappa_{ij}$ 为层间同步与整合开销。多频调度必须在资源预算内协调
+\begin{equation}
+ \sum_i \operatorname{cost}_i(B_i)+\sum_{i\ne j}\kappa_{ij}\leq\mathcal R,
+ \label{eq:multifrequency_budget}
+\end{equation}
+而不能简单把各层峰值带宽加总当作整体能力。低频结构形成对高频活动的关键作用，在于改变高频闭环所需处理的\emph{问题表示与关联成本}；它不必通过提高高频原始计算速率来提高效率。另一方面，若低频推断频繁打断高频控制，高层调度也可能降低整体有效带宽。由此，AgentOS 调度不是追求所有环路始终满载，而是在保障任务目标与响应截止时间的前提下管理不同频率之间的资源占用和信息回流。
+
+\section{AgentOS 的认知容量—复杂度—带宽联合调度}
+\label{sec:joint_scheduler}
+
+三重约束使 CCM（认知复杂度管理）由单一的界面超载检测发展为\emph{联合认知资源管理机制}。CCM 需要同时估计输入负载 $I_k$、活跃关系复杂度 $C_k$、短时与长时有效带宽 $B_c(t,T)$、待处理工作积压 $Q_c$，并识别这些指标在不同任务与时间尺度上的关联变化。SPC 则从当前认知状态分布形成面向自我 $\Psi$ 的压缩感知，识别认知活动的组织状态与偏离方向；TCE 依据任务优先级、SPC 返回的状态信息和 CCM 的资源测量，控制信息增益、抑制强度、任务切换、计算预算和执行节奏。Boundary 决定内外输入输出的界限，Offloading 将部分中间结果、操作程序和求解任务迁移到 $M_e$、工具或其他 Agent。
+
+可以把联合调度形式化为如下受约束优化问题：
+\begin{align}
+ \max_{\pi,\mathcal A,\mathcal O}\quad &\mathbb E\bigl[U(\text{正确决策、任务完成与长期适应})\bigr]
+ \label{eq:joint_optimization}\\
+ \text{s.t.}\quad & (I_k,C_k,B_c(t,T))\in\mathcal F_h,\nonumber\\
+ & Q_c(t)\leq Q_{\rm tolerable}(t),\quad \operatorname{Cost}(\pi,\mathcal A,\mathcal O)\leq\mathcal R,\nonumber\\
+ & \operatorname{Quality}\geq q_0,\quad \operatorname{Deadline}\ \text{满足任务要求}.\nonumber
+\end{align}
+其中 $\pi$ 表示认知调度，$\mathcal A$ 表示输入选择与压缩，$\mathcal O$ 表示外部卸载策略。这里的优化目标不是最大化每一时刻的 Token 输出，也不是让认知界面一直处于最高负载，而是在正确性、延迟、成本与长期学习之间取得满足约束的有效运行状态。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex, every node/.style={font=\scriptsize},box/.style={draw,rounded corners,align=center,minimum height=10mm,inner sep=5pt},node distance=9mm and 9mm]
+\node[box,fill=blue!7] (in) {World／$E$／$\Theta$／$M_e$\\候选输入与召回};
+\node[box,fill=green!8,right=of in] (h) {$h(t)$ 有限认知界面\\输入 $I$｜复杂度 $C$｜带宽 $B$};
+\node[box,fill=blue!7,right=of h] (out) {Action／记忆更新\\任务持续演化};
+\node[box,fill=orange!9,below=13mm of h] (ccm) {CCM：三重负载与积压监控\\$I,C,B,Q_c$};
+\node[box,fill=purple!9,left=of ccm] (spc) {SPC：自我状态压缩\\与状态感知};
+\node[box,fill=yellow!12,right=of ccm] (tce) {TCE：资源分配／节奏\\与控制调节};
+\node[box,fill=gray!12,below=14mm of ccm] (bound) {Boundary／Offloading：过滤、分块、外化、延迟与复用};
+\draw[->,thick] (in)--(h);
+\draw[->,thick] (h)--(out);
+\draw[->] (h)--(ccm);
+\draw[->] (h.south west)--(spc.north);
+\draw[->] (spc)--(tce);
+\draw[->] (ccm)--(tce);
+\draw[->] (tce.north) |- ([yshift=3mm]h.east) -- (h.east);
+\draw[->] (tce)--(bound);
+\draw[->] (bound.west) -| (in.south);
+\draw[->,dashed] (bound.north)--(ccm.south);
+\end{tikzpicture}
+\caption{AgentOS 的三重约束闭环调度。CCM 提供容量、复杂度与带宽测量；SPC 提供面向自我的状态感知；TCE 发出调控；Boundary 和 Offloading 改变进入认知界面的负载及其处理位置。}
+\label{fig:agentos_bandwidth_control}
+\end{figure}
+
+\section{可检验性、边界条件与理论结论}
+\label{sec:theory_tests}
+
+本理论若要成为工程科学命题，就必须给出可检验的实验规约。首先，在固定模型、硬件、时间预算、工具权限与质量阈值下，分别控制输入长度、活跃依赖复杂度和截止时间压力，测量其对成功率、延迟及有效关联完成量的影响。其次，用相同节点数量、不同关系密度和依赖深度的任务测量 $C_{\max}$，避免把“信息多”与“关联难”混为一谈。再次，用多任务持续到达负载测试 $B_{\rm sustained}$、积压变化和过载后的质量损失，并与短时缓存命中形成的突发吞吐分开报告。最后，在相同任务集合下比较有无 $E$、$\Theta$、CCM、Boundary 与 Offloading 的系统，观察在线关联工作量、上下文恢复损失、调度代价及长期有效解决率的变化。
+
+理论还需承认若干边界：一是关联工作单位并非天然唯一，必须由公开的任务标准和结果验收约束；二是难以直接观测的隐式推理状态通常只能通过行为实验和代理指标推断；三是更好的算法、更大的硬件预算、并行化或更优知识结构可以改变测得的上界，因此不能把某个具体 $B_{\max}$ 误写成智能的永恒常数；四是资源有限性不直接证明三相记忆形式的唯一性，它说明的是为什么一个追求长期适应的系统需要跨时间的状态保持、结构复用与资源调度，三相架构是我们对此提出的系统性实现。
+
+综上，有限认知界面并非单一的“工作记忆容量墙”，而是三种相互耦合的资源边界：\emph{一次能有效接纳多少、一次能联合处理多复杂、有限时间能完成多少有效信息关联}。其中，有限认知带宽将智能系统的理论描述从静态承载能力扩展为持续的语义工作吞吐能力，并揭示即使局部认知界面未达到输入或复杂度峰值，智能体仍可能因关联积压而失稳。由此，AgentOS 的核心工程任务可表述为：在有限界面与有限资源条件下，通过三相记忆的跨时组织、知识复用、多频调控及内外记忆调度，最大化具有正确性与持续性的长期问题求解能力。其决定性优势不只可能来自扩大原始带宽，更来自\emph{减少完成同一任务所必需的在线关联工作}，从而把有限的认知带宽转化为更高的智能有效产出。
