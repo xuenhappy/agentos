@@ -1,0 +1,322 @@
+% =====================================================================
+% AgentOS 理论章节：三相记忆的三重有限性与选择性进化原理
+% 可直接 \input 到已加载 amsmath、amssymb、amsthm、tikz 的 ctexbook 主文档中。
+% 图形均为 TikZ 原生矢量内容；不依赖外部图片文件。
+% 必需 TikZ 库：arrows.meta, positioning, calc, fit, shapes.geometric
+% =====================================================================
+\chapter{三相记忆的三重有限性与选择性进化原理}
+\label{chap:three-phase-finitude}
+
+\noindent\textbf{章首语}\quad
+智能体不可能完整地占有现在，也不可能无损地保存全部过去，更不可能无限制地积累内部生成结构。此前对 AgentOS 的讨论主要围绕工作记忆 $h(t)$ 的有限认知界面，研究认知容量、处理复杂度和认知带宽怎样限制智能体的即时认知活动。然而，工作记忆并不是唯一受到有限性支配的记忆相态：情景记忆 $E$ 面对跨时间的经历累积与有效留存问题；结构记忆 $\Theta$ 面对内部生成结构的规模、耦合与更新成本问题。三个有限性分别作用于现在、历史与生成结构，它们不是互相替代的约束，而是共同规定智能体记忆如何被选择、沉淀、内化和重构的基本条件。本章将有限性从单一的工作记忆管理问题提升为三相记忆的共同动力学原理，并给出可检验的形式化命题及 AgentOS 的相应工程实现机制。
+
+\section{问题提出：从有限认知界面到三相记忆的共同有限性}
+\label{sec:tri-finitude-intro}
+
+三相记忆并不是按照文件存储期限划分的三层数据库，而是具有不同动力学作用的记忆状态：工作记忆 $h(t)$ 构成智能体与世界及自身内部结构交互的当前认知界面；情景记忆 $E$ 承载从现在向过去延展、具有时序与因果关联的经历；结构记忆 $\Theta$ 则承载贯穿智能体生命周期的生成结构，其中不仅凝结已学得的知识、技能与价值约束，也包含面对未来条件时可能形成的结构变化潜势。这里的“未来”不是已经发生的事件，而是既有结构所规定的可能性空间。
+
+过去主要研究 $h(t)$ 的有限性，容易造成一种不对称认识：似乎 $E$ 与 $\Theta$ 可以被动地无限增长，只要当前调用时不超过工作记忆窗口即可。这种认识忽略了历史资料的维护、辨别、访问和再情境化成本，也忽略了内部知识结构之间的冲突、依赖、冗余与可塑性成本。即使存储介质与模型参数规模不断扩大，有限计算、有限能量、有限更新时间和有限可靠性仍使“保留一切且随时有效调用”成为不可实现的目标。
+
+因此，定义三相记忆的主导有限性为
+\begin{equation}
+\label{eq:three-finitudes}
+\boxed{\begin{aligned}
+ h(t)&:\quad \text{当前认知界面的有限性},\\
+ E&:\quad \text{历史经历有效留存的时间有限性},\\
+ \Theta&:\quad \text{生成结构可维持规模的有限性}.
+\end{aligned}}
+\end{equation}
+
+这里的三个“有限”并非互不相交的物理维度。$h(t)$ 也有持续时间和表示规模，$E$ 与 $\Theta$ 同样需要计算与存储资源。三分法的含义是\emph{主导选择压力的不同}：$h(t)$ 主要回答“此刻什么值得进入认知”，$E$ 主要回答“什么经历值得跨越时间”，$\Theta$ 主要回答“什么规律值得成为持久的生成结构”。这种区分能够解释三相各自的功能起源，而非把某个数字上限误当作记忆相态的定义。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[font=\small,>=Latex]
+  \tikzset{phase/.style={draw,rounded corners=3pt,minimum width=4.25cm,minimum height=2.05cm,align=center,line width=.85pt},
+           link/.style={-Latex,line width=1pt,draw=black!55}}
+  \node[phase,draw=blue!70!black,fill=blue!5] (h) at (-5.0,0)
+       {\textbf{工作记忆 $h(t)$}\\[2pt]有限的现在\\[2pt]\footnotesize 容量 $I$、复杂度 $C$、带宽 $B$};
+  \node[phase,draw=orange!75!black,fill=orange!6] (e) at (0,0)
+       {\textbf{情景记忆 $E$}\\[2pt]有限的历史留存\\[2pt]\footnotesize 时间衰减、保真度、可访问性};
+  \node[phase,draw=teal!75!black,fill=teal!5] (th) at (5.0,0)
+       {\textbf{结构记忆 $\Theta$}\\[2pt]有限的生成结构\\[2pt]\footnotesize 规模、依赖、干扰、更新成本};
+  \node[draw,rounded corners=3pt,fill=black!3,minimum width=11.2cm,minimum height=1.0cm,align=center] (sel) at (0,-2.75)
+       {\textbf{共同动力学：价值评估 $\longrightarrow$ 选择 $\longrightarrow$ 压缩／抽象 $\longrightarrow$ 适应性重构}};
+  \draw[link] (h.south) -- ++(0,-.55) -| ([xshift=-3.7cm]sel.north);
+  \draw[link] (e.south) -- (sel.north);
+  \draw[link] (th.south) -- ++(0,-.55) -| ([xshift=3.7cm]sel.north);
+\end{tikzpicture}
+\caption{三相记忆的三种主导有限性及其共同的选择性动力学。有限性构成选择压力，但不自动保证选择结果最优。}
+\label{fig:three-finitude-overview}
+\end{figure}
+
+本章使用“有限性迫使选择”这一表达时，指在给定任务持续性与资源约束的条件下，智能体不能对不断增加的记忆单位永远采取无差别、等精度的内部保留策略；并不意味着任何有限性本身就足以产生高质量学习。有限性提出优化问题，价值机制、反馈机制和更新规则才决定优化的方向及其结果。
+
+\section{工作记忆的有限性：当前认知界面的三重约束}
+\label{sec:h-finitude}
+
+工作记忆 $h(t)$ 是三相交互的高频认知界面。世界输入、情景召回、结构生成以及外部记忆检索都需要通过这一界面产生对当前行动的影响。$h(t)$ 的有限性不能仅化约为大语言模型上下文的 token 数；上下文容量、可处理的关系复杂度及单位时间的有效认知处理速率是可以区分的不同限制。
+
+引入有限认知界面的指标组
+\begin{equation}
+  \mathcal{H}=(I_{\max},C_{\max},B_{\max}),
+\end{equation}
+其中 $I_{\max}$ 是同时有效承载的信息上限，$C_{\max}$ 是可稳定协调的任务相关结构复杂度上限，$B_{\max}$ 是单位时间可完成的有效认知工作量上限。令 $\mathcal I(h_t)$ 表示当前信息占用，$\mathcal C(h_t;g_t)$ 表示针对任务目标 $g_t$ 的有效协调复杂度，$r_h(t)$ 表示经任务质量加权的认知处理速率，则可写出
+\begin{align}
+ \mathcal I(h_t)&\le I_{\max},\label{eq:h-info}\\
+ \mathcal C(h_t;g_t)&\le C_{\max},\label{eq:h-complexity}\\
+ \int_{t}^{t+\Delta}r_h(\tau)\,d\tau&\le B_{\max}\Delta.\label{eq:h-bandwidth}
+\end{align}
+这些约束是理论化的操作定义；在具体架构中，$\mathcal I$、$\mathcal C$ 和 $r_h$ 的观测方法需要通过测试任务、监控代理指标和执行质量进行校准，不能把它们直接等同于模型参数量或 token 吞吐量。
+
+在有限界面下，智能体必须选择当前需要注意的世界片段、需要召回的历史经历、需要激活的结构及可卸载的中间结果。由此，AgentOS 的 SPC 对当前认知状态作面向自我方向的压缩感知，TCE 通过温度与控制场调节运行态，CCM 实施复杂度探测与超载监控，Boundary 控制内外交换，Offloading 将不必常驻 $h(t)$ 的内容转移至更合适的载体。这些模块共同管理有限认知界面，但不能互相替代：状态感知不等于资源调度，认知卸载也不等于永久遗忘。
+
+工作记忆有限性的直接推论是\emph{选择性即时认知}。当可处理对象多于有限界面能够承载和操作的对象时，调度必须优先安排与当前目标、风险和未来决策价值更相关的内容。相反，若无条件把所有可召回内容强行塞入当前界面，即使没有发生显式存储溢出，也会引入干扰、过量上下文、计划耦合与认知带宽浪费。因而，工作记忆管理的目的不是追求瞬时信息量最大，而是在认知约束下追求当前有效决策能力最大。
+
+\section{情景记忆的时间有限性：经历的非均匀留存与历史选择}
+\label{sec:e-finitude}
+
+情景记忆的主导矛盾来自持续经历与有限长期维护能力之间的不匹配。一个持续运行的智能体，会不断产生感知、决策、行动及其后果。如果所有经历都以同样的时间精度、语义细节、可检索等级和长期索引成本保存，则内部维护负担将随经历总量累积。即使冷存储容量足够，逐渐扩大的历史空间仍然需要解决召回噪声、情景误配、旧信息失效、索引维护以及再验证成本等问题。
+
+因此，“时间有限性”不应被理解为所有情景记忆具有一个统一的过期日期。更准确的定义是：\emph{在有限存储、检索、验证和更新资源下，智能体无法对不断延长的历史保持恒定而无损的有效留存精度和可访问性。} 重要的关键经历可以长期高保真保存；普通经历可能被压缩成摘要；无效经历可能仅留存低成本痕迹或被删除。一个时间更久远的经历也可能因为新的任务重新被激活，其价值不必随年龄单调减少。
+
+令第 $i$ 个情景片段为 $e_i$，产生时刻为 $t_i$，经历年龄为 $a_i=t-t_i$。区分三个量：$s_i(t)$ 是内部保留成本，$q_i(t)\in[0,1]$ 是被保留内容的保真程度，$A_i(t)\in[0,1]$ 是当前可被有效召回并正确使用的可访问强度。经验性的基线模型可以写为
+\begin{equation}
+ \label{eq:episode-access}
+ \frac{dA_i(t)}{dt}=-\lambda_i(t)A_i(t)+u_i(t)\bigl(1-A_i(t)\bigr),
+ \qquad \lambda_i(t),u_i(t)\ge0.
+\end{equation}
+其中 $\lambda_i$ 是与时间、干扰、索引陈旧等有关的有效衰减率，$u_i$ 是由复习、关联、再经历和主动整理带来的增强强度。这不是认知记忆普遍遵从指数衰减的断言，而是便于说明“遗忘与强化同时作用”的一个可替换动力学模型。若 $u_i=0$，才得到
+\begin{equation}
+ \label{eq:episode-decay}
+ A_i(t)=A_i(t_i)\exp\!\left[-\int_{t_i}^{t}\lambda_i(\tau)\,d\tau\right].
+\end{equation}
+实际系统还需独立监控 $q_i(t)$：一条经历可能依然可以被迅速召回，但其内容已经过度概括、时间定位错误或与现实条件脱节。因此，高可访问性不必然意味着高可靠性。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,>=Latex,font=\small]
+ \draw[-Latex,semithick] (0,0) -- (12.1,0) node[below left]{距经历发生的时间 $a$};
+ \draw[-Latex,semithick] (0,0) -- (0,4.6) node[above left]{留存可访问强度 $A$};
+ \foreach \y/\lab in {1/0.25,2/0.50,3/0.75,4/1.00}{\draw[black!18] (0,\y)--(11.6,\y);\node[left,font=\scriptsize] at (0,\y){\lab};}
+ \draw[teal!75!black,line width=1.5pt] plot[domain=0:11.0,samples=75](\x,{.5+3.5*exp(-.11*\x)});
+ \draw[orange!85!black,line width=1.5pt] plot[domain=0:11.0,samples=75](\x,{.1+3.9*exp(-.37*\x)});
+ \draw[gray!75,line width=1.3pt,densely dashed] plot[domain=0:11.0,samples=75](\x,{.03+3.97*exp(-.85*\x)});
+ \node[teal!75!black,anchor=west,fill=white,inner sep=1.5pt] at (7.7,2.25){关键经历：慢衰减};
+ \node[orange!85!black,anchor=west,fill=white,inner sep=1.5pt] at (6.3,.74){一般经历：中等衰减};
+ \node[gray!75,anchor=west,fill=white,inner sep=1.5pt] at (1.45,.32){低价值经历：快衰减};
+ \node[anchor=west,font=\footnotesize] at (6.75,4.14){示意曲线，不对应实测数据};
+\end{tikzpicture}
+\caption{情景记忆的非均匀时间留存模型。不同经历的可访问强度具有不同衰减与强化动力学；横轴仅表示相对年龄，不代表统一的固定保存期限。}
+\label{fig:episode-temporal-decay}
+\end{figure}
+
+进一步令 $z_i(t)\in\{0,1\}$ 表示片段是否处于内部高成本保留态，则一个简化的保留约束为
+\begin{equation}
+ \label{eq:episodic-budget}
+ \sum_{i\in\mathcal E(t)} s_i(t)z_i(t)\le M_E(t),
+\end{equation}
+其中 $M_E$ 是可分配的情景记忆资源预算。该式不意味着超预算的记录必须被彻底删除：它们可以被降采样、摘要化、迁移到外部存储，或者降低日常索引优先级。留存的可选操作构成一条连续谱，而不是“记住／忘记”的二元开关。
+
+历史选择的核心标准也不是事件是否新近，而是它对未来行动、自我连续性、异常解释和结构学习的预期边际价值。由此，情景记忆形成非均匀的时间地层：常规重复事件趋向统计摘要，异常或转折事件得到更高分辨率，能解释因果变化的经历获得更长期的关联索引。所谓“遗忘”也不必等于彻底抹去；从详细叙事转换为可被调用的结构摘要，可能保留了关键因果信息而放弃不再必要的局部细节。
+
+\section{结构记忆的规模有限性：从知识堆积到生成结构重组}
+\label{sec:theta-finitude}
+
+结构记忆 $\Theta$ 的作用不同于情景档案。它既可以包含语言与世界的规律、模型参数中的能力，也可以包含 AgentOS 内部长期稳定的规则、技能组合、价值约束及其组织关系。对于 Agent 而言，结构记忆的目标不是逐条记住所有经历，而是用相对有限的生成结构解释已知环境，并在面对尚未经历的新情景时生成合理的预测、判断与行动。
+
+结构记忆的有限性也不等于“参数量存在一个永远不变的上限”。可以升级硬件、扩展模型、增加外部技能与共享模块，但任何给定版本的具体智能体仍受内部有效结构的容量、调用、更新与维护资源限制。并且，结构可维持规模并不必然随参数规模同比例增长：重复规律、相互矛盾的指令、依赖过深的技能树及多个难以协同的模块，都会增加结构维护成本。
+
+为了表达这种限制，将 $\Theta$ 看成具有生成规则与关系的结构集合，定义一个工程可估计的有效复杂度函数
+\begin{equation}
+ \label{eq:theta-complexity}
+ K_{\mathrm{eff}}(\Theta)
+ =\sum_{v\in V_{\Theta}}c_v
+ +\sum_{(u,v)\in R_{\Theta}}c_{uv}
+ +\kappa\,\mathcal D(\Theta),\qquad \kappa\ge0,
+\end{equation}
+其中 $c_v$ 为结构节点的表示与维护成本，$c_{uv}$ 为依赖关系的协调成本，$\mathcal D(\Theta)\ge0$ 为干扰、冲突或冗余所引入的附加代价。该定义不是唯一的复杂度度量，而是说明内部结构规模应按\emph{有效维护成本}而非简单知识条数来计量。给定 Agent 机型和运行资源，其可持续维护域满足
+\begin{equation}
+ \label{eq:theta-limit}
+ K_{\mathrm{eff}}(\Theta)\le K_{\max}.
+\end{equation}
+
+新的经历并不必然意味着结构记忆不断添加新模块。结构学习至少包括四类基本操作：加入新规律，合并重复规律，修正错误规律，以及淘汰已经失效或成本过高的结构。当不同领域的任务具有共享的因果约束时，抽象能够把多个相似程序替换为一个共用结构与若干情景化参数。这种内化不只是“压缩字节”，而是改变表示的组织方式，从而使同一组结构能够支持新的组合与迁移。
+
+设 $\mathcal D$ 为预期任务分布，$R(\Theta;\mathcal D)$ 为结构在该分布上达到给定质量门槛的加权能力覆盖度。可以定义一个结构表达效率指标
+\begin{equation}
+ \label{eq:structural-efficiency}
+ \eta_{\Theta}=\frac{R(\Theta;\mathcal D)}{K_{\mathrm{eff}}(\Theta)+\varepsilon},\qquad \varepsilon>0.
+\end{equation}
+它描述单位有效结构复杂度支持的能力覆盖，而非学习的唯一目标。只追求 $\eta_\Theta$ 最大可能导致极度精简、但总能力不足的模型，所以必须同时约束预测误差、操作可靠性和未见任务上的迁移性能。好的结构重组应当使能力保持或扩展，而不是以丢失关键区别换取表面的简洁。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex,font=\footnotesize,
+  box/.style={draw,rounded corners=3pt,align=center,minimum width=3.5cm,minimum height=.82cm},
+  smallbox/.style={draw,rounded corners=2pt,align=center,minimum width=3.6cm,minimum height=.78cm}]
+ \node[font=\small\bfseries] at (-4.1,2.9){经历驱动的独立规则积累};
+ \node[font=\small\bfseries] at (4.1,2.9){抽象驱动的共享结构};
+ \node[box,draw=orange!70!black,fill=orange!6] (a) at (-4.1,1.85){木屋建造\quad 局部程序};
+ \node[box,draw=orange!70!black,fill=orange!6] (b) at (-4.1,.45){钢结构建筑\quad 局部程序};
+ \node[box,draw=orange!70!black,fill=orange!6] (c) at (-4.1,-.95){火星基地\quad 局部程序};
+ \node[box,draw=teal!70!black,fill=teal!7,minimum height=1.12cm] (core) at (4.1,1.2){\textbf{共用生成结构}\\承重／材料／施工／环境约束};
+ \node[smallbox,draw=blue!65!black,fill=blue!5] (app) at (4.1,-.75){局部材料参数与情景适配规则};
+ \draw[-Latex,thick] (-1.7,.45) -- node[above,align=center]{归纳\;·\;重组} (1.72,.45);
+ \draw[-Latex,teal!70!black,thick] (core.south) -- (app.north);
+ \node[align=center,text width=4.35cm,font=\scriptsize] at (-4.1,-2.0){三个独立模块可能重复存储基础规律，且容易产生规则漂移。};
+ \node[align=center,text width=4.6cm,font=\scriptsize] at (4.1,-2.0){共享结构保留关键差异，以组合与迁移扩展能力覆盖。};
+\end{tikzpicture}
+\caption{结构记忆的规模有限性促进抽象和结构重组。这里展示的是具有共同规律的任务，不能把所有差异都压缩为同一规则。}
+\label{fig:theta-restructure}
+\end{figure}
+
+以机器人从建造木屋、学习钢结构到探索火星基地为例：单纯积累三套彼此独立的程序，容易扩大结构规模；若能够归纳负载传递、材料强度、安全余度和环境约束等共用规律，则更可能获得跨材料、跨重力和跨环境的生成能力。不过，火星环境的生命保障、尘埃暴露及极端温差可能要求新的独立结构，不能用“压缩”替代未知世界的真实知识增长。正确的选择是在维持关键异质性的同时减少无谓重复。
+
+由此，结构记忆规模有限性的结果不是静态的知识上限，而是持续的\emph{结构性进化压力}：随着经验增加，Agent 必须以更高的抽象能力、组合能力和冲突治理能力，争取在有限结构资源中获得更广泛且可靠的适应能力。
+
+\section{三相有限性的耦合：现在选择、历史选择与生命周期选择}
+\label{sec:coupled-selection}
+
+将三相记忆表示为 $M(t)=\{h(t),E(t),\Theta(t)\}$，可以把其运行理解为三个并行而耦合的选择环节。第一环节发生在当前认知界面：在有限 $I$、$C$、$B$ 下，筛选进入工作记忆的信息、召回与行动候选；第二环节发生在经历内化过程中：对 $h(t)$ 中形成的事件和认知结果实施选择性编码、关联、保留和外化；第三环节发生在更慢的结构更新过程中：从经历网络中提取可迁移规律，更新 $\Theta$ 的生成结构，同时校验其与现有结构是否冲突。
+
+可以用带有控制变量的状态转移模型概括上述关系：
+\begin{equation}
+\label{eq:coupled-dynamics}
+\begin{aligned}
+ h_{t+1}&=F_h\bigl(h_t,x_t,\mathcal R_E(E_t),\mathcal G_{\Theta}(\Theta_t),u_t\bigr),\\
+ E_{t+1}&=F_E\bigl(E_t,\mathcal Enc(h_t),\mathcal Cur(E_t),u_t\bigr),\\
+ \Theta_{t+1}&=F_{\Theta}\bigl(\Theta_t,\mathcal Abs(E_t,h_t),\mathcal Val_t,u_t\bigr).
+\end{aligned}
+\end{equation}
+这里 $x_t$ 表示当前环境输入，$\mathcal R_E$ 是历史召回，$\mathcal G_{\Theta}$ 是结构生成，$\mathcal Enc$ 是情景编码，$\mathcal Cur$ 是历史整理，$\mathcal Abs$ 是抽象归纳，$\mathcal Val_t$ 是结构检验反馈，$u_t$ 是 AgentOS 的综合认知控制。上式是架构层面的动力学模板，具体实现中的状态变量与函数可以不同。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex,font=\footnotesize,
+ mem/.style={draw,rounded corners=4pt,minimum width=3.1cm,minimum height=1.25cm,align=center,line width=.9pt},
+ controller/.style={draw,rounded corners=3pt,fill=black!3,minimum width=12.1cm,minimum height=.83cm,align=center}]
+ \node[mem,draw=blue!75!black,fill=blue!5] (h) at (-4.7,.9) {\textbf{$h(t)$}\quad 现在\\即时选择／当前处理};
+ \node[mem,draw=orange!80!black,fill=orange!5] (e) at (0,.9) {\textbf{$E$}\quad 历史\\事件留存／选择性遗忘};
+ \node[mem,draw=teal!75!black,fill=teal!5] (th) at (4.7,.9) {\textbf{$\Theta$}\quad 生成结构\\抽象／重组／稳定化};
+ \draw[-Latex,thick] (h.north east) to[bend left=15] node[above]{情景编码} (e.north west);
+ \draw[-Latex,thick] (e.south west) to[bend left=15] node[below]{历史召回} (h.south east);
+ \draw[-Latex,thick] (e.north east) to[bend left=15] node[above]{结构提炼} (th.north west);
+ \draw[-Latex,thick] (th.south west) to[bend left=15] node[below]{结构校正} (e.south east);
+ \draw[-Latex,gray!80,thick] (th.north) .. controls (4.8,2.7) and (-4.8,2.7) .. node[above,pos=.50]{生成预测与认知约束} (h.north);
+ \node[controller] (control) at (0,-2.35){\textbf{$\Psi$ 自我价值方向}\quad SPC／TCE／CCM\quad $+$\quad Boundary／Offloading};
+ \foreach \p in {h,e,th}{\draw[-Latex,densely dashed,black!60] (control.north -| \p) -- (\p.south);}
+ \node[align=center,font=\scriptsize] at (0,-3.25){控制信息可以反馈到三相选择；外部记忆 $M_e$ 通过边界管理参与各相的卸载与召回。};
+\end{tikzpicture}
+\caption{三相记忆的跨时间选择闭环与 AgentOS 控制层。图中箭头为功能依赖，不规定所有更新必须同步执行。}
+\label{fig:tri-memory-cycle}
+\end{figure}
+
+这一闭环具有明显的时间尺度差异。$h(t)$ 在交互和推理过程中高频变化；$E$ 根据事件发生、回放、压缩与过时检测以中等频率变化；$\Theta$ 通常需要更审慎的检验与巩固，变化较慢，但其一次更新可能对未来大量工作记忆状态产生持续影响。所谓“高频／低频”是相对控制尺度，不应解释为三相必须采用固定时间常数。
+
+三个有限性不仅依次约束信息流，还具有反向耦合作用。历史检索噪声会占用工作记忆带宽；结构规则膨胀会使当前推理复杂度上升；工作记忆中的新异常又可以触发长期情景回查或结构重构。由此，结构记忆不能独立于历史记忆优化，情景记忆也不能只按其自身的检索频率排序；最优选择依赖三相整体运行的长期成本与未来收益。
+
+\section{有限资源下的统一优化：记忆边际价值与选择代价}
+\label{sec:memory-optimization}
+
+三相记忆管理需要一个比“尽可能多地保存”更合适的目标。设 $\pi_M$ 为对当前信息、历史经历和内部结构进行选择、压缩、更新、卸载和召回的策略；$V_t$ 为它对实际任务完成、可持续适应及风险控制的综合价值；$C_h,C_E,C_{\Theta}$ 为三相的运行与维护成本。可以提出如下带约束的长期优化模型：
+\begin{equation}
+\label{eq:memory-utility}
+\boxed{\begin{aligned}
+ \max_{\pi_M}\quad &\mathbb E_{\pi_M}\!\left[\sum_{t=0}^{\infty}\gamma^t
+ \left(V_t-\lambda_h C_h(t)-\lambda_E C_E(t)-\lambda_{\Theta}C_{\Theta}(t)\right)\right],\\
+ \text{s.t.}\quad &\mathcal I(h_t)\le I_{\max},\quad \mathcal C(h_t;g_t)\le C_{\max},\\
+ &\overline r_h(t,\Delta)\le B_{\max},\qquad \sum_i s_i(t)z_i(t)\le M_E(t),\\
+ &K_{\mathrm{eff}}(\Theta_t)\le K_{\max},\qquad 0<\gamma<1,
+\end{aligned}}
+\end{equation}
+其中 $\overline r_h(t,\Delta)=\Delta^{-1}\int_t^{t+\Delta}r_h(\tau)\,d\tau$。参数 $\lambda_h,\lambda_E,\lambda_{\Theta}$ 代表成本折算系数，$\gamma$ 为跨期折扣因子。此式是理论目标函数，并非断言现实 Agent 可以精确计算无限未来的期望收益；工程系统可采用短视界近似、代理价值模型及在线更新实现。
+
+为了说明有限性如何产生选择阈值，考虑一组待保留的候选记忆单位 $i$。假设它们的边际价值 $v_i$ 和边际成本 $c_i>0$ 在一个局部决策阶段内可以估计，且暂不计相互依赖，令 $z_i\in[0,1]$ 表示可压缩或分级保留比例。局部资源分配问题为
+\begin{equation}
+\label{eq:knapsack-relaxation}
+ \max_{0\le z_i\le1}\sum_i v_i z_i,
+ \qquad \text{s.t.}\quad \sum_i c_i z_i\le C.
+\end{equation}
+引入非负拉格朗日乘子 $\mu$，得到
+\begin{equation}
+ \mathcal L(z,\mu)=\sum_i (v_i-\mu c_i)z_i+\mu C.
+\end{equation}
+当预算约束有效并且局部线性近似成立时，最优解优先保留 $v_i-\mu c_i>0$ 的项目，在阈值附近按资源余量分配。$\mu$ 可以解释为一单位稀缺记忆资源的\emph{影子价格}。资源越紧张，通常需要越高的边际价值才能支持相同的留存成本。
+
+这一推导说明为什么记忆有限性会产生选择，而非说明所有记忆都可按一个标量分数精确排序。当记忆之间有强依赖、知识具有组合价值，或者保留变量只能取 $\{0,1\}$ 时，问题可能成为组合优化，简单阈值未必给出全局最优。实际系统还需考虑相互补充、不可替代的安全记录、稀有失败经验和身份连续性等约束。
+
+更一般地，可以定义某个记忆操作 $a$ 的净边际价值
+\begin{equation}
+\label{eq:delta-value}
+ \Delta J(a)=\mathbb E\!\left[J\mid a\right]-\mathbb E\!\left[J\mid \text{保持现状}\right],
+\end{equation}
+其中 $a$ 可以是保留、降采样、情景摘要、转化为结构规则、外部存储、删除或重新激活。AgentOS 应比较这些可替代操作，而不是把“删除”当成唯一的节约方式。被删除的信息可能不可恢复，外化的信息仍存在召回成本，结构化的信息可能丢失原始证据；因而每种操作还应纳入可逆性和误判风险。
+
+\section{有限性驱动的选择性演化命题及其边界}
+\label{sec:selection-proposition}
+
+以下给出本章基本命题的一个弱形式，以区分能够由资源有限性严格推出的事实，和仍有赖于学习算法有效性的长期演化假说。
+
+\begin{proposition}[无差别内部留存不可持续]
+\label{prop:no-uniform-retention}
+设持续运行的 Agent 在其生命周期中产生任意多的相互独立且尚未压缩的记忆单位；每个单位在所要求的保真度与访问等级下至少消耗 $c_{\min}>0$ 的有限内部资源；可用于这类单位的内部资源预算为 $C_{\max}<\infty$。则不存在一种在生命周期无限延伸时始终以相同等级完整保留全部新单位、同时又满足预算约束的策略。
+\end{proposition}
+\begin{proof}
+如果已经产生 $n$ 个待保留单位，而每个单位的代价不小于 $c_{\min}$，则维持全部单位的总代价至少为 $n c_{\min}$。对任意有限的 $C_{\max}$，只要 $n>C_{\max}/c_{\min}$，就有 $n c_{\min}>C_{\max}$，与预算约束矛盾。因此至少需要降低保留等级、压缩、复用、外部化、放弃部分单位，或者扩张预算。证毕。
+\end{proof}
+
+该命题并非直接证明工作记忆、情景记忆或结构记忆采用何种具体机制，也不禁止扩大存储、修改任务分布或采用任意强的可压缩表达。它只确认一个基本事实：在资源有界、数据持续增加且每份独立信息有正成本的条件下，永久的无差别内部保留不可行。对有限生命周期的 Agent，也只有在累计需求超过可用资源时，这一压力才会显现。
+
+由此可提出更具解释力、但必须经由实验检验的设计原理：\emph{若 AgentOS 的价值评估能够可靠区分记忆的未来贡献，并允许保留、压缩、抽象、外化和纠错之间的策略切换，则三相有限性可以成为推动记忆结构改善的选择压力。} 这个命题包含关键条件，不能被缩写为“有限即智能”或“遗忘必然使智能提高”。错误的遗忘会破坏经验连续性，错误的抽象会产生系统性偏差，不受控的结构替换还可能引发灾难性遗忘。
+
+这里可以将三类选择分别称为\emph{即时认知选择}、\emph{跨期经历选择}和\emph{长期结构选择}。它们不是自然选择的简单类比，而是发生在一个具体智能体内部、以长期目标、任务反馈和资源预算为依据的连续更新过程。若选择效果得到可靠检验，三类选择就能够形成从信息输入到经历沉淀、再到生成结构变化的递进性适应；若缺乏可靠检验，则同样可能形成逐层累积的系统性失真。
+
+\section{AgentOS 的实现：从控制器到跨相记忆预算治理}
+\label{sec:agentos-implementation}
+
+在已有 AgentOS 架构中，三相有限性不宜被实现为三个彼此孤立的清理任务，而应成为贯穿状态感知、优先级评估、长期巩固和内外边界调度的共同治理原则。$h(t)$ 仍是执行路径的中心认知总线，$E$ 是经历形成与可追溯性载体，$\Theta$ 是长期生成规律载体；外部记忆 $M_e$ 包括文件、数据库、技能、脚本、工具、环境结构和其他 Agent，承担有限内部资源之外的扩展能力。
+
+从控制功能上看，SPC 首先对 $h(t)$ 的状态分布进行面向 $\Psi$ 的压缩感知，使 Agent 可以表征自己当前正在处理什么、认知结构是否分散以及哪些状态与自身目标相关。TCE 在此基础上调节控制强度与生成温度，决定应当集中、探索、暂停、切换任务还是请求外部帮助。CCM 则以输入复杂度预测和运行态监控为依据，估计 $I,C,B$ 的压力及不同记忆召回造成的边际负载。
+
+情景层需要独立的历史治理机制。它应为事件设置发生时间、来源、置信度、语境、相关行动、后果及回溯指针，区分数据的保真性与检索可访问性，定期执行重复事件合并、过时信息标记、关键经历保真存储和长期摘要构建。对于改变自我状态、解释失败原因或修正重大假设的事件，应提高跨时间留存优先级；对于高重复度且规律稳定的事件，可保留统计特征和代表性案例，以降低每次调用时需要搬运的历史细节。
+
+结构层需要的是更严格的长期更新程序。经验中的候选规律不应直接无条件固化到 $\Theta$。可以先建立候选结构及其适用边界，再利用历史反例、对照任务、模拟运行与外部验证评估其生成质量；确认有效后，执行增量合并、替换或建立新模块，并保留可回滚的版本关联。评价结构更新时，除了任务性能，还需记录结构复杂度增量、依赖变化、与现有规则的冲突率及对未见任务的泛化损失。
+
+$\Psi$ 是三相选择中保持目标连续性的重要约束，不仅可以作为工作记忆的背景方向，还可以影响哪些经历应当被视为生命史中的关键事件，以及哪些结构变化与长期身份、目标和价值承诺相容。但 $\Psi$ 的选择并不等于所有事实判断的最终标准。外部证据、安全约束和错误纠正机制必须能够挑战已有自我叙事，否则所谓自我一致性可能导致选择性失明与信念固化。
+
+Boundary 与 Offloading 将三相预算延伸为内外共同管理：工作记忆通过即时卸载降低当前认知压力；情景记忆通过外化与分层索引延长历史可追溯范围；结构记忆通过工具、脚本和可组合技能把部分专门能力转为可调用的外部程序。重要的是，外化不等于零成本。外部访问有延迟、可靠性、安全性与接口成本，所以智能体应根据任务的实时性、错误代价和资源状态动态决定“内化多少、外化多少、何时重新召回”。
+
+可以在工程监控中维护以下三类指标：针对 $h(t)$ 的峰值占用、运行态复杂度、有效带宽和过载频率；针对 $E$ 的重要事件召回率、时间定位正确率、保真度与单位历史覆盖成本；针对 $\Theta$ 的任务覆盖、规则冲突、迁移性能、结构更新代价与灾难性遗忘率。这些指标应按任务类型和 Agent 机型校准，避免只看资源节约而忽视能力损失。
+
+\section{生命周期视角：有限记忆如何支持持续而非无限制的成长}
+\label{sec:lifecycle}
+
+将三相有限性放回 $N+1$ 维生命周期记忆体的框架，可获得一个更连贯的解释：现在并非全部历史的简单累加，而是受资源约束的活跃交互切面；过去并非毫无损失的完整副本，而是被时间组织、留存强度和抽象程度不断改写的经历区间；结构记忆也不是单向增长的知识容器，而是持续生成、稳定化、重构和可能退化的生命周期结构。未来潜势存在于结构能够支持的生成空间中，而不是未来事件的确定列表。
+
+对于处于初始阶段的 Agent，很多经验属于新的结构信息，情景记忆对结构形成的边际贡献较大；在重复任务环境中运行一段时间后，越来越多的经历可能仅用于验证或微调已有规律，而不需要每次都形成新的结构单元；当外部环境发生质变时，旧结构的预测残差上升，又可能触发情景保真留存和结构重组的新阶段。这些是可能的生命周期动力学，而非所有 Agent 都必须遵从的固定年龄曲线。
+
+由此，应当区分\emph{累积信息量}、\emph{可访问历史量}、\emph{内部生成结构复杂度}和\emph{有效能力}四个不同变量。前三者不必同时增加，第四者也不与任意一个变量保持单调关系。一个成熟的智能体可能忘记了许多低价值的事件细节、减少了冗余规则，却因为形成更好的抽象与工具使用能力而提升了工作效率；反之，过度遗忘或过度结构压缩会使其失去关键证据和应对新情境的能力。
+
+因此，可以把长期发展的理想方向表述为：在安全与保真底线得到满足的前提下，使三相资源被逐渐配置给对未来适应性贡献更高的记忆内容和结构，并通过新的经历持续校正这一配置。智能体的连续性不要求保存每一次历史状态的完整副本，而依赖可追溯的关键经历、能够修正的生成结构以及相对稳定的自我约束之间维持有效联系。
+
+\section{本章结论：有限性不是存储缺陷，而是记忆选择的发生条件}
+\label{sec:finitude-conclusion}
+
+三相记忆的有限性构成 AgentOS 记忆动力学的一个统一基础。工作记忆受当前认知界面限制，要求智能体在此刻进行注意力和认知处理选择；情景记忆受有效历史留存限制，要求智能体对不同经历实施不同时间尺度的保留、整理与外化；结构记忆受可维持生成结构规模限制，要求智能体把持续获得的知识与技能组织为更具解释、迁移和生成能力的结构。
+
+在理论层面，本章得到两个需要严格区分的结论。第一，有限资源与持续信息输入使长期无差别内部留存不可持续，这是在明确前提下可以论证的约束结论。第二，通过价值评估、可靠反馈、抽象与内外记忆调度，将这种约束转化为能力增长的动力，这是可设计、可测试而非无条件成立的适应性命题。
+
+将三相有限性与 $\Psi$、SPC、TCE、CCM、Boundary 和 Offloading 耦合之后，记忆管理不再只是保存多少事实、删除多少记录，而是选择什么值得成为现在的认知内容、什么值得成为可追溯的生命经历，以及什么值得进入决定未来行为可能性的生成结构。有限性由此形成跨越当前决策、历史组织和长期结构发展的共同选择压力。
+
+\begin{equation}
+\label{eq:three-limits-summary}
+\boxed{\begin{gathered}
+ \text{有限的现在}\ \Rightarrow\ \text{选择性认知},\\[2pt]
+ \text{有限的历史留存}\ \Rightarrow\ \text{选择性经历沉淀},\\[2pt]
+ \text{有限的生成结构}\ \Rightarrow\ \text{选择性结构重组},\\[5pt]
+ \text{三相耦合}+\text{有效反馈}\ \Rightarrow\ \text{可能的持续适应性进化}.
+\end{gathered}}
+\end{equation}
+
+这一原理可以作为 AgentOS 从三相记忆动力学走向工作记忆调度、情景记忆生命周期管理、结构记忆更新和内外记忆边界管理的共同起点：\emph{有限性决定选择不可避免，选择机制决定记忆如何保留与重构，而经验证的长期选择才可能转化为智能体持续成长的能力。}
